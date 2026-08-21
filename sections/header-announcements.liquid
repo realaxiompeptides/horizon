@@ -9,13 +9,21 @@
 {% render 'contrast-override', background_color: section.settings.background_color, section_id: section.id %}
 
 <div class="section-background color-custom-{{ section.id }}"></div>
+
 <aside
   class="announcement-bar spacing-style section section--{{ section.settings.section_width }} color-custom-{{ section.id }}"
-  style="{% render 'spacing-padding', settings: section.settings %}; --border-bottom-width: {{ section.settings.divider_width }}px;{% if section.settings.divider_color != blank %} --color-border: {{ section.settings.divider_color }};{% endif %}"
+  style="
+    {% render 'spacing-padding', settings: section.settings %};
+    --border-bottom-width: {{ section.settings.divider_width }}px;
+    {% if section.settings.divider_color != blank %}
+      --color-border: {{ section.settings.divider_color }};
+    {% endif %}
+  "
 >
   {% liquid
     assign autoplay = false
     assign show_arrows = false
+
     if section.blocks.size > 1
       assign autoplay = true
       assign show_arrows = true
@@ -25,7 +33,8 @@
   <announcement-bar-component
     class="announcement-bar__slider"
     {% if autoplay == true %}
-      autoplay="{{ section.settings.speed }}" aria-live="polite"
+      autoplay="{{ section.settings.speed }}"
+      aria-live="polite"
     {% endif %}
   >
     {% if show_arrows %}
@@ -67,8 +76,12 @@
   }
 
   .announcement-bar__slide {
-    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+    transition:
+      opacity 0.5s ease-in-out,
+      visibility 0.5s ease-in-out;
+
     content-visibility: visible;
+    place-content: center;
 
     &[aria-hidden='true'] {
       opacity: 0;
@@ -96,7 +109,9 @@
     animation: none;
 
     @media screen and (min-width: 750px) {
-      --slideshow-control-offset: calc((var(--button-size) - var(--icon-size-xs)) / 2);
+      --slideshow-control-offset: calc(
+        (var(--button-size) - var(--icon-size-xs)) / 2
+      );
 
       .section--page-width &.slideshow-control--previous {
         transform: translateX(var(--slideshow-control-offset));
@@ -109,10 +124,6 @@
     height: var(--icon-size-xs);
   }
 
-  .announcement-bar__slide {
-    place-content: center;
-  }
-
   .announcement-bar__text:first-child {
     margin: 0;
   }
@@ -120,6 +131,37 @@
   .announcement-bar__link {
     position: absolute;
     inset: 0;
+  }
+
+  /*
+    Avonent custom announcement support.
+
+    The actual Avonent block controls its own
+    background, text color, typography, and height.
+  */
+
+  .announcement-bar__slides
+    > .avonent-sale-announcement {
+    max-width: none;
+    width: 100%;
+  }
+
+  .announcement-bar:has(.avonent-sale-announcement) {
+    padding-block-start: 0;
+    padding-block-end: 0;
+  }
+
+  .announcement-bar:has(.avonent-sale-announcement)
+    .announcement-bar__slides {
+    max-width: none;
+    width: 100%;
+  }
+
+  @media screen and (max-width: 749px) {
+    .announcement-bar:has(.avonent-sale-announcement)
+      .announcement-bar__slides {
+      width: 100%;
+    }
   }
 {% endstylesheet %}
 
@@ -129,6 +171,9 @@
   "blocks": [
     {
       "type": "_announcement"
+    },
+    {
+      "type": "avonent-sale-announcement"
     }
   ],
   "enabled_on": {
@@ -162,7 +207,7 @@
           "label": "t:options.full"
         }
       ],
-      "default": "page-width"
+      "default": "full-width"
     },
     {
       "type": "color",
@@ -199,7 +244,7 @@
       "max": 100,
       "step": 1,
       "unit": "px",
-      "default": 15
+      "default": 0
     },
     {
       "type": "range",
@@ -209,7 +254,7 @@
       "max": 100,
       "step": 1,
       "unit": "px",
-      "default": 15
+      "default": 0
     }
   ],
   "presets": [
