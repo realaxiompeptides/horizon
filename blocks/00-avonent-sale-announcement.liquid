@@ -18,7 +18,6 @@
     "
     data-duration-minutes="{{ block.settings.timer_minutes }}"
   >
-
     {% if block.settings.link != blank %}
       <a
         href="{{ block.settings.link }}"
@@ -28,7 +27,6 @@
     {% endif %}
 
     <div class="avonent-sale-bar__content">
-
       <div class="avonent-sale-bar__message">
         <div class="avonent-sale-bar__heading">
           {{ block.settings.heading }}
@@ -47,7 +45,6 @@
           role="timer"
           aria-label="Sale countdown"
         >
-
           <div class="avonent-sale-bar__unit">
             <span data-av-hours>02</span>
             <small>Hrs</small>
@@ -66,12 +63,9 @@
             <span data-av-seconds>00</span>
             <small>Secs</small>
           </div>
-
         </div>
       {% endif %}
-
     </div>
-
   </div>
 </slideshow-slide>
 
@@ -174,23 +168,16 @@
 
 {% stylesheet %}
 
-  /*
-   * AVONENT SALE BAR
-   */
-
   .avonent-sale-bar {
     display: block;
-
     width: 100%;
     max-width: none;
-
     margin: 0;
     padding: 0;
 
     background: var(--av-sale-bg);
     color: var(--av-sale-color);
   }
-
 
   .avonent-sale-bar__inner {
     position: relative;
@@ -218,11 +205,6 @@
     color: var(--av-sale-color);
   }
 
-
-  /*
-   * CENTERED CONTENT
-   */
-
   .avonent-sale-bar__content {
     position: relative;
     z-index: 1;
@@ -231,21 +213,16 @@
     align-items: center;
     justify-content: center;
 
-    width: 100%;
-    max-width: 720px;
+    width: fit-content;
+    max-width: 100%;
 
     margin: 0 auto;
 
-    gap: clamp(30px, 5vw, 70px);
+    gap: 28px;
   }
 
-
-  /*
-   * SALE MESSAGE
-   */
-
   .avonent-sale-bar__message {
-    flex: 0 1 auto;
+    flex: 0 0 auto;
 
     display: flex;
     flex-direction: column;
@@ -255,7 +232,6 @@
 
     text-align: center;
   }
-
 
   .avonent-sale-bar__heading {
     margin: 0;
@@ -272,7 +248,6 @@
 
     white-space: nowrap;
   }
-
 
   .avonent-sale-bar__subheading {
     margin: 3px 0 0;
@@ -292,11 +267,6 @@
     white-space: nowrap;
   }
 
-
-  /*
-   * COUNTDOWN
-   */
-
   .avonent-sale-bar__timer {
     flex: 0 0 auto;
 
@@ -307,7 +277,6 @@
     font-variant-numeric: tabular-nums;
   }
 
-
   .avonent-sale-bar__unit {
     display: flex;
     flex-direction: column;
@@ -315,7 +284,6 @@
 
     min-width: 34px;
   }
-
 
   .avonent-sale-bar__unit > span {
     font-family: var(--font-heading--family);
@@ -329,7 +297,6 @@
 
     color: inherit;
   }
-
 
   .avonent-sale-bar__unit small {
     margin-top: 3px;
@@ -346,11 +313,8 @@
     opacity: 0.82;
   }
 
-
   .avonent-sale-bar__colon {
-    margin:
-      0
-      2px;
+    margin: 0 2px;
 
     font-family: var(--font-heading--family);
 
@@ -364,125 +328,88 @@
     opacity: 0.9;
   }
 
-
-  /*
-   * LINK
-   */
-
   .avonent-sale-bar__link {
     position: absolute;
-
     inset: 0;
-
     z-index: 2;
   }
 
-
-  /*
-   * MOBILE
-   */
-
   @media screen and (max-width: 749px) {
-
     .avonent-sale-bar__inner {
-      padding:
-        6px
-        12px;
+      padding: 6px 12px;
     }
 
-
     .avonent-sale-bar__content {
-      max-width: 440px;
+      width: fit-content;
+      max-width: 100%;
+
+      margin: 0 auto;
 
       justify-content: center;
 
-      gap: clamp(16px, 5vw, 28px);
+      gap: 18px;
     }
-
 
     .avonent-sale-bar__message {
-      flex: 1 1 52%;
+      flex: 0 0 auto;
     }
-
 
     .avonent-sale-bar__timer {
       flex: 0 0 auto;
     }
 
-
     .avonent-sale-bar__heading {
       font-size: 15px;
     }
 
-
     .avonent-sale-bar__subheading {
       margin-top: 3px;
-
       font-size: 9px;
     }
-
 
     .avonent-sale-bar__unit {
       min-width: 27px;
     }
 
-
     .avonent-sale-bar__unit > span {
       font-size: 18px;
     }
 
-
     .avonent-sale-bar__unit small {
       margin-top: 2px;
-
       font-size: 7px;
     }
 
-
     .avonent-sale-bar__colon {
       margin-inline: 1px;
-
       font-size: 17px;
     }
-
   }
 
-
-  /*
-   * VERY SMALL PHONES
-   */
-
   @media screen and (max-width: 370px) {
-
     .avonent-sale-bar__inner {
       padding-inline: 8px;
     }
-
 
     .avonent-sale-bar__content {
       gap: 12px;
     }
 
-
     .avonent-sale-bar__heading {
       font-size: 14px;
     }
-
 
     .avonent-sale-bar__subheading {
       font-size: 8px;
     }
 
-
     .avonent-sale-bar__unit {
       min-width: 25px;
     }
 
-
     .avonent-sale-bar__unit > span {
       font-size: 17px;
     }
-
   }
 
 {% endstylesheet %}
