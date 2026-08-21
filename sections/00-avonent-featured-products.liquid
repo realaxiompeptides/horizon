@@ -1,0 +1,1327 @@
+{% liquid
+  assign section_id = 'avonent-featured-products-' | append: section.id
+%}
+
+<section
+  id="{{ section_id }}"
+  class="avonent-featured-products"
+  style="
+    --av-featured-bg: {{ section.settings.background_color }};
+    --av-featured-text: {{ section.settings.text_color }};
+    --av-featured-card-bg: {{ section.settings.card_background }};
+    --av-featured-card-text: {{ section.settings.card_text_color }};
+    --av-featured-blue: {{ section.settings.accent_color }};
+    --av-featured-star: {{ section.settings.star_color }};
+    --av-featured-border: {{ section.settings.border_color }};
+    --av-featured-radius: {{ section.settings.card_radius }}px;
+  "
+>
+  <div class="avonent-featured-products__container">
+
+    {% if section.settings.eyebrow != blank %}
+      <div class="avonent-featured-products__eyebrow">
+        {{ section.settings.eyebrow }}
+      </div>
+    {% endif %}
+
+    {% if section.settings.heading != blank %}
+      <h2 class="avonent-featured-products__heading">
+        {{ section.settings.heading }}
+      </h2>
+    {% endif %}
+
+    {% if section.settings.subheading != blank %}
+      <div class="avonent-featured-products__subheading">
+        {{ section.settings.subheading }}
+      </div>
+    {% endif %}
+
+    <div class="avonent-featured-products__grid">
+
+      {% for block in section.blocks %}
+        {% assign product = block.settings.product %}
+
+        {% if product != blank %}
+          {% assign selected_variant = product.selected_or_first_available_variant %}
+
+          <article
+            class="avonent-featured-card"
+            {{ block.shopify_attributes }}
+          >
+
+            <div class="avonent-featured-card__media">
+
+              {% if block.settings.badge_text != blank %}
+                <div class="avonent-featured-card__badge">
+                  {{ block.settings.badge_text }}
+                </div>
+              {% endif %}
+
+              {% if block.settings.show_sale_badge
+                and product.compare_at_price_max > product.price
+              %}
+                {% assign savings_amount =
+                  product.compare_at_price_max
+                  | minus: product.price
+                %}
+
+                {% assign savings_percent =
+                  savings_amount
+                  | times: 100.0
+                  | divided_by: product.compare_at_price_max
+                  | round
+                %}
+
+                <div class="avonent-featured-card__sale-badge">
+                  SAVE {{ savings_percent }}%
+                </div>
+              {% endif %}
+
+              <a
+                href="{{ product.url }}"
+                class="avonent-featured-card__image-link"
+                aria-label="{{ product.title | escape }}"
+              >
+                {% if product.featured_image != blank %}
+                  {{
+                    product.featured_image
+                    | image_url: width: 1000
+                    | image_tag:
+                      class: 'avonent-featured-card__image',
+                      loading: 'lazy',
+                      widths: '220, 320, 450, 600, 800, 1000',
+                      sizes: '(max-width: 749px) 50vw, 25vw'
+                  }}
+                {% else %}
+                  {{ 'product-1' | placeholder_svg_tag: 'avonent-featured-card__placeholder' }}
+                {% endif %}
+              </a>
+            </div>
+
+            <div class="avonent-featured-card__content">
+
+              {% if block.settings.category_text != blank %}
+                <div class="avonent-featured-card__category">
+                  {{ block.settings.category_text }}
+                </div>
+              {% endif %}
+
+              <a
+                href="{{ product.url }}"
+                class="avonent-featured-card__title-link"
+              >
+                <h3 class="avonent-featured-card__title">
+                  {{ product.title }}
+                </h3>
+              </a>
+
+              {% if block.settings.show_rating %}
+                <div class="avonent-featured-card__rating">
+
+                  <div
+                    class="avonent-featured-card__stars"
+                    aria-label="{{ block.settings.rating }} out of 5 stars"
+                  >
+                    {% for i in (1..5) %}
+                      <span aria-hidden="true">★</span>
+                    {% endfor %}
+                  </div>
+
+                  {% if block.settings.rating_text != blank %}
+                    <span class="avonent-featured-card__rating-text">
+                      {{ block.settings.rating_text }}
+                    </span>
+                  {% endif %}
+
+                </div>
+              {% endif %}
+
+              {% if block.settings.benefit != blank %}
+                <div class="avonent-featured-card__benefit">
+                  {{ block.settings.benefit }}
+                </div>
+              {% endif %}
+
+              {% if block.settings.benefit_2 != blank %}
+                <div class="avonent-featured-card__mini-benefit">
+                  <span aria-hidden="true">✓</span>
+                  {{ block.settings.benefit_2 }}
+                </div>
+              {% endif %}
+
+              <div class="avonent-featured-card__bottom">
+
+                <div class="avonent-featured-card__price">
+
+                  <span class="avonent-featured-card__current-price">
+                    {{ product.price | money }}
+                  </span>
+
+                  {% if product.compare_at_price_max > product.price %}
+                    <span class="avonent-featured-card__compare-price">
+                      {{ product.compare_at_price_max | money }}
+                    </span>
+                  {% endif %}
+
+                </div>
+
+                {% if block.settings.price_note != blank %}
+                  <div class="avonent-featured-card__price-note">
+                    {{ block.settings.price_note }}
+                  </div>
+                {% endif %}
+
+                {% if section.settings.button_behavior == 'product' %}
+
+                  <a
+                    href="{{ product.url }}"
+                    class="avonent-featured-card__button"
+                  >
+                    {{ block.settings.button_text }}
+
+                    <span aria-hidden="true">
+                      →
+                    </span>
+                  </a>
+
+                {% else %}
+
+                  {% if product.available %}
+                    {% form 'product',
+                      product,
+                      class: 'avonent-featured-card__form'
+                    %}
+                      <input
+                        type="hidden"
+                        name="id"
+                        value="{{ selected_variant.id }}"
+                      >
+
+                      <input
+                        type="hidden"
+                        name="quantity"
+                        value="1"
+                      >
+
+                      <button
+                        type="submit"
+                        name="add"
+                        class="avonent-featured-card__button"
+                      >
+                        {{ block.settings.button_text }}
+                      </button>
+                    {% endform %}
+                  {% else %}
+                    <button
+                      class="avonent-featured-card__button is-disabled"
+                      disabled
+                    >
+                      Sold Out
+                    </button>
+                  {% endif %}
+
+                {% endif %}
+
+              </div>
+
+            </div>
+
+          </article>
+        {% endif %}
+      {% endfor %}
+
+    </div>
+
+    {% if section.settings.bottom_button_text != blank %}
+      <div class="avonent-featured-products__bottom-action">
+        <a
+          {% if section.settings.bottom_button_link != blank %}
+            href="{{ section.settings.bottom_button_link }}"
+          {% else %}
+            role="link"
+            aria-disabled="true"
+          {% endif %}
+          class="avonent-featured-products__view-all"
+        >
+          {{ section.settings.bottom_button_text }}
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+{% stylesheet %}
+
+  /*
+   * AVONENT FEATURED PRODUCTS
+   */
+
+  .avonent-featured-products {
+    width: 100%;
+
+    padding:
+      82px
+      0;
+
+    background:
+      var(--av-featured-bg);
+
+    color:
+      var(--av-featured-text);
+  }
+
+  .avonent-featured-products__container {
+    width:
+      min(
+        calc(100% - 48px),
+        1400px
+      );
+
+    margin:
+      0
+      auto;
+  }
+
+
+  /*
+   * SECTION HEADER
+   */
+
+  .avonent-featured-products__eyebrow {
+    margin-bottom: 10px;
+
+    font-family:
+      var(--font-body--family);
+
+    font-size: 12px;
+    font-weight: 650;
+
+    line-height: 1;
+
+    letter-spacing: 0.08em;
+
+    text-align: center;
+    text-transform: uppercase;
+
+    color:
+      var(--av-featured-blue);
+  }
+
+  .avonent-featured-products__heading {
+    max-width: 760px;
+
+    margin:
+      0
+      auto;
+
+    color: inherit;
+
+    font-family:
+      var(--font-heading--family);
+
+    font-size:
+      clamp(
+        38px,
+        4vw,
+        54px
+      );
+
+    font-weight: 600;
+
+    line-height: 1.04;
+
+    letter-spacing: -0.03em;
+
+    text-align: center;
+  }
+
+  .avonent-featured-products__subheading {
+    max-width: 640px;
+
+    margin:
+      14px
+      auto
+      0;
+
+    font-family:
+      var(--font-body--family);
+
+    font-size: 16px;
+    font-weight: 400;
+
+    line-height: 1.45;
+
+    text-align: center;
+
+    opacity: 0.72;
+  }
+
+  .avonent-featured-products__subheading p {
+    margin: 0;
+  }
+
+
+  /*
+   * PRODUCT GRID
+   */
+
+  .avonent-featured-products__grid {
+    display: grid;
+
+    grid-template-columns:
+      repeat(
+        4,
+        minmax(0, 1fr)
+      );
+
+    gap: 18px;
+
+    margin-top: 44px;
+  }
+
+
+  /*
+   * CARD
+   */
+
+  .avonent-featured-card {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+
+    overflow: hidden;
+
+    border:
+      1px solid
+      var(--av-featured-border);
+
+    border-radius:
+      var(--av-featured-radius);
+
+    background:
+      var(--av-featured-card-bg);
+
+    color:
+      var(--av-featured-card-text);
+
+    box-shadow:
+      0 8px 28px
+      rgba(0, 0, 0, 0.035);
+
+    transition:
+      transform 180ms ease,
+      box-shadow 180ms ease;
+  }
+
+  @media (hover: hover) {
+    .avonent-featured-card:hover {
+      transform:
+        translateY(-3px);
+
+      box-shadow:
+        0 14px 38px
+        rgba(0, 0, 0, 0.07);
+    }
+  }
+
+
+  /*
+   * MEDIA
+   */
+
+  .avonent-featured-card__media {
+    position: relative;
+
+    width: 100%;
+
+    aspect-ratio: 1 / 1;
+
+    overflow: hidden;
+
+    background:
+      #f4fbfd;
+  }
+
+  .avonent-featured-card__image-link {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+  }
+
+  .avonent-featured-card__image,
+  .avonent-featured-card__placeholder {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    padding: 9%;
+
+    object-fit: contain;
+
+    transition:
+      transform 300ms ease;
+  }
+
+  @media (hover: hover) {
+    .avonent-featured-card:hover
+      .avonent-featured-card__image {
+      transform:
+        scale(1.025);
+    }
+  }
+
+
+  /*
+   * BADGES
+   */
+
+  .avonent-featured-card__badge,
+  .avonent-featured-card__sale-badge {
+    position: absolute;
+    z-index: 2;
+
+    top: 12px;
+
+    padding:
+      7px
+      10px;
+
+    border-radius: 999px;
+
+    font-family:
+      var(--font-body--family);
+
+    font-size: 10px;
+    font-weight: 700;
+
+    line-height: 1;
+
+    letter-spacing: 0.045em;
+
+    text-transform: uppercase;
+  }
+
+  .avonent-featured-card__badge {
+    left: 12px;
+
+    background:
+      var(--av-featured-blue);
+
+    color:
+      #ffffff;
+  }
+
+  .avonent-featured-card__sale-badge {
+    right: 12px;
+
+    border:
+      1px solid
+      rgba(0, 0, 0, 0.09);
+
+    background:
+      rgba(255, 255, 255, 0.94);
+
+    color:
+      #111111;
+
+    backdrop-filter:
+      blur(6px);
+  }
+
+
+  /*
+   * CARD CONTENT
+   */
+
+  .avonent-featured-card__content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    padding: 20px;
+  }
+
+  .avonent-featured-card__category {
+    margin-bottom: 6px;
+
+    color:
+      var(--av-featured-blue);
+
+    font-family:
+      var(--font-body--family);
+
+    font-size: 10px;
+    font-weight: 650;
+
+    line-height: 1.1;
+
+    letter-spacing: 0.065em;
+
+    text-transform: uppercase;
+  }
+
+  .avonent-featured-card__title-link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .avonent-featured-card__title {
+    margin: 0;
+
+    color: inherit;
+
+    font-family:
+      var(--font-heading--family);
+
+    font-size: 21px;
+    font-weight: 600;
+
+    line-height: 1.15;
+
+    letter-spacing: -0.02em;
+  }
+
+
+  /*
+   * RATING
+   */
+
+  .avonent-featured-card__rating {
+    display: flex;
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 6px;
+
+    margin-top: 10px;
+  }
+
+  .avonent-featured-card__stars {
+    display: flex;
+
+    gap: 1px;
+
+    color:
+      var(--av-featured-star);
+
+    font-size: 14px;
+
+    line-height: 1;
+  }
+
+  .avonent-featured-card__rating-text {
+    font-family:
+      var(--font-body--family);
+
+    font-size: 11px;
+    font-weight: 500;
+
+    line-height: 1;
+
+    opacity: 0.62;
+  }
+
+
+  /*
+   * BENEFITS
+   */
+
+  .avonent-featured-card__benefit {
+    margin-top: 12px;
+
+    font-family:
+      var(--font-body--family);
+
+    font-size: 14px;
+    font-weight: 400;
+
+    line-height: 1.4;
+
+    opacity: 0.78;
+  }
+
+  .avonent-featured-card__mini-benefit {
+    display: flex;
+    align-items: center;
+
+    gap: 6px;
+
+    margin-top: 10px;
+
+    font-family:
+      var(--font-body--family);
+
+    font-size: 12px;
+    font-weight: 600;
+
+    line-height: 1.2;
+  }
+
+  .avonent-featured-card__mini-benefit span {
+    color:
+      var(--av-featured-blue);
+
+    font-size: 12px;
+  }
+
+
+  /*
+   * PRICE / CTA
+   */
+
+  .avonent-featured-card__bottom {
+    margin-top: auto;
+
+    padding-top: 20px;
+  }
+
+  .avonent-featured-card__price {
+    display: flex;
+    align-items: baseline;
+
+    flex-wrap: wrap;
+
+    gap: 7px;
+  }
+
+  .avonent-featured-card__current-price {
+    font-family:
+      var(--font-heading--family);
+
+    font-size: 19px;
+    font-weight: 650;
+
+    line-height: 1;
+  }
+
+  .avonent-featured-card__compare-price {
+    font-family:
+      var(--font-body--family);
+
+    font-size: 13px;
+
+    text-decoration:
+      line-through;
+
+    opacity: 0.45;
+  }
+
+  .avonent-featured-card__price-note {
+    margin-top: 5px;
+
+    font-family:
+      var(--font-body--family);
+
+    font-size: 10px;
+    font-weight: 500;
+
+    opacity: 0.55;
+  }
+
+  .avonent-featured-card__form {
+    width: 100%;
+  }
+
+  .avonent-featured-card__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    width: 100%;
+    min-height: 50px;
+
+    margin-top: 15px;
+
+    padding:
+      12px
+      16px;
+
+    border: 0;
+    border-radius: 10px;
+
+    background:
+      #111111;
+
+    color:
+      #ffffff;
+
+    cursor: pointer;
+
+    text-decoration: none;
+
+    font-family:
+      var(--font-body--family);
+
+    font-size: 13px;
+    font-weight: 700;
+
+    line-height: 1;
+
+    letter-spacing: 0.035em;
+
+    text-transform: uppercase;
+
+    transition:
+      transform 160ms ease,
+      background 160ms ease;
+  }
+
+  @media (hover: hover) {
+    .avonent-featured-card__button:hover {
+      background:
+        var(--av-featured-blue);
+
+      transform:
+        translateY(-1px);
+    }
+  }
+
+  .avonent-featured-card__button.is-disabled {
+    cursor:
+      not-allowed;
+
+    opacity: 0.45;
+  }
+
+
+  /*
+   * VIEW ALL
+   */
+
+  .avonent-featured-products__bottom-action {
+    display: flex;
+    justify-content: center;
+
+    margin-top: 34px;
+  }
+
+  .avonent-featured-products__view-all {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 8px;
+
+    min-height: 52px;
+
+    padding:
+      13px
+      24px;
+
+    border:
+      1px solid
+      rgba(0, 0, 0, 0.14);
+
+    border-radius: 10px;
+
+    color: inherit;
+
+    text-decoration: none;
+
+    font-family:
+      var(--font-body--family);
+
+    font-size: 14px;
+    font-weight: 650;
+  }
+
+
+  /*
+   * TABLET
+   */
+
+  @media screen and (max-width: 989px) {
+    .avonent-featured-products__grid {
+      grid-template-columns:
+        repeat(
+          2,
+          minmax(0, 1fr)
+        );
+    }
+  }
+
+
+  /*
+   * MOBILE
+   *
+   * IMPORTANT:
+   * 2 products per row remains enabled.
+   */
+
+  @media screen and (max-width: 749px) {
+
+    .avonent-featured-products {
+      padding:
+        58px
+        0;
+    }
+
+    .avonent-featured-products__container {
+      width:
+        calc(100% - 24px);
+    }
+
+    .avonent-featured-products__heading {
+      font-size:
+        clamp(
+          31px,
+          9vw,
+          40px
+        );
+    }
+
+    .avonent-featured-products__subheading {
+      margin-top: 11px;
+
+      font-size: 14px;
+    }
+
+    .avonent-featured-products__grid {
+      grid-template-columns:
+        repeat(
+          2,
+          minmax(0, 1fr)
+        );
+
+      gap: 10px;
+
+      margin-top: 28px;
+    }
+
+    .avonent-featured-card {
+      border-radius:
+        min(
+          var(--av-featured-radius),
+          16px
+        );
+    }
+
+    .avonent-featured-card__badge,
+    .avonent-featured-card__sale-badge {
+      top: 7px;
+
+      padding:
+        5px
+        7px;
+
+      font-size: 8px;
+    }
+
+    .avonent-featured-card__badge {
+      left: 7px;
+    }
+
+    .avonent-featured-card__sale-badge {
+      right: 7px;
+    }
+
+    .avonent-featured-card__image,
+    .avonent-featured-card__placeholder {
+      padding: 7%;
+    }
+
+    .avonent-featured-card__content {
+      padding:
+        13px
+        11px
+        12px;
+    }
+
+    .avonent-featured-card__category {
+      margin-bottom: 4px;
+
+      font-size: 8px;
+    }
+
+    .avonent-featured-card__title {
+      font-size: 15px;
+
+      line-height: 1.15;
+    }
+
+    .avonent-featured-card__rating {
+      gap: 4px;
+
+      margin-top: 7px;
+    }
+
+    .avonent-featured-card__stars {
+      font-size: 11px;
+    }
+
+    .avonent-featured-card__rating-text {
+      font-size: 9px;
+    }
+
+    .avonent-featured-card__benefit {
+      margin-top: 8px;
+
+      font-size: 11px;
+
+      line-height: 1.35;
+    }
+
+    .avonent-featured-card__mini-benefit {
+      gap: 4px;
+
+      margin-top: 7px;
+
+      font-size: 9px;
+    }
+
+    .avonent-featured-card__bottom {
+      padding-top: 14px;
+    }
+
+    .avonent-featured-card__current-price {
+      font-size: 15px;
+    }
+
+    .avonent-featured-card__compare-price {
+      font-size: 10px;
+    }
+
+    .avonent-featured-card__price-note {
+      font-size: 8px;
+    }
+
+    .avonent-featured-card__button {
+      min-height: 43px;
+
+      margin-top: 11px;
+
+      padding:
+        9px
+        7px;
+
+      border-radius: 8px;
+
+      font-size: 10px;
+
+      letter-spacing: 0.025em;
+    }
+
+    .avonent-featured-products__bottom-action {
+      margin-top: 25px;
+    }
+
+  }
+
+
+  /*
+   * VERY SMALL PHONES
+   */
+
+  @media screen and (max-width: 360px) {
+
+    .avonent-featured-products__container {
+      width:
+        calc(100% - 16px);
+    }
+
+    .avonent-featured-products__grid {
+      gap: 7px;
+    }
+
+    .avonent-featured-card__title {
+      font-size: 14px;
+    }
+
+    .avonent-featured-card__benefit {
+      font-size: 10px;
+    }
+
+  }
+
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "00 Avonent Featured",
+  "tag": "section",
+  "class": "avonent-featured-products-section",
+
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Small heading",
+      "default": "HOT NOW"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Meet the formulas everyone is talking about."
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "<p>Premium everyday supplements made to fit naturally into your routine.</p>"
+    },
+
+    {
+      "type": "header",
+      "content": "Product behavior"
+    },
+    {
+      "type": "select",
+      "id": "button_behavior",
+      "label": "Product button",
+      "options": [
+        {
+          "value": "product",
+          "label": "Open product page"
+        },
+        {
+          "value": "quick_add",
+          "label": "Quick add to cart"
+        }
+      ],
+      "default": "product"
+    },
+
+    {
+      "type": "header",
+      "content": "Bottom button"
+    },
+    {
+      "type": "text",
+      "id": "bottom_button_text",
+      "label": "Button text",
+      "default": "Shop All Products"
+    },
+    {
+      "type": "url",
+      "id": "bottom_button_link",
+      "label": "Button link"
+    },
+
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Section text",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "card_text_color",
+      "label": "Card text",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Avonent accent",
+      "default": "#02C6EA"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Stars",
+      "default": "#02C6EA"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Card border",
+      "default": "#E7EEF0"
+    },
+
+    {
+      "type": "header",
+      "content": "Card styling"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card roundness",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    }
+  ],
+
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Featured product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+
+        {
+          "type": "header",
+          "content": "Badge"
+        },
+        {
+          "type": "text",
+          "id": "badge_text",
+          "label": "Badge",
+          "default": "BEST SELLER"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_sale_badge",
+          "label": "Show automatic savings badge",
+          "default": true
+        },
+
+        {
+          "type": "header",
+          "content": "Product copy"
+        },
+        {
+          "type": "text",
+          "id": "category_text",
+          "label": "Small category text",
+          "default": "DAILY WELLNESS"
+        },
+        {
+          "type": "text",
+          "id": "benefit",
+          "label": "Primary benefit",
+          "default": "Designed for simple, consistent daily support."
+        },
+        {
+          "type": "text",
+          "id": "benefit_2",
+          "label": "Small checkmark benefit",
+          "default": "Premium formula"
+        },
+
+        {
+          "type": "header",
+          "content": "Reviews"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_rating",
+          "label": "Show rating",
+          "default": true
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "text",
+          "id": "rating_text",
+          "label": "Rating text",
+          "default": "5.0"
+        },
+
+        {
+          "type": "header",
+          "content": "Price"
+        },
+        {
+          "type": "text",
+          "id": "price_note",
+          "label": "Text below price",
+          "default": "One-time purchase"
+        },
+
+        {
+          "type": "header",
+          "content": "Button"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text",
+          "default": "SHOP NOW"
+        }
+      ]
+    }
+  ],
+
+  "presets": [
+    {
+      "name": "00 Avonent Featured",
+      "blocks": [
+        {
+          "type": "product",
+          "settings": {
+            "badge_text": "BEST SELLER",
+            "category_text": "DAILY WELLNESS",
+            "benefit": "Premium daily support made simple.",
+            "benefit_2": "Premium formula",
+            "rating_text": "5.0"
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "badge_text": "POPULAR",
+            "category_text": "DAILY SUPPORT",
+            "benefit": "An easy addition to your everyday routine.",
+            "benefit_2": "Easy daily use",
+            "rating_text": "5.0"
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "badge_text": "CUSTOMER FAVORITE",
+            "category_text": "WELLNESS",
+            "benefit": "Carefully selected ingredients in every serving.",
+            "benefit_2": "Quality ingredients",
+            "rating_text": "5.0"
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "badge_text": "TRENDING",
+            "category_text": "DAILY ROUTINE",
+            "benefit": "Simple support made for everyday consistency.",
+            "benefit_2": "Made for your routine",
+            "rating_text": "5.0"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
