@@ -14,8 +14,8 @@
     "header_announcements_9jGBFp": {
       "type": "header-announcements",
       "blocks": {
-        "avonent_sale_announcement_78dHDy": {
-          "type": "avonent-sale-announcement",
+        "00_avonent_sale_announcement_QcfEEx": {
+          "type": "00-avonent-sale-announcement",
           "name": "Avonent Summer Sale",
           "settings": {
             "heading": "SUMMER SALE",
@@ -25,13 +25,13 @@
             "timer_minutes": 120,
             "background_color": "#02C6EA",
             "text_color": "#FFFFFF",
-            "bar_height": 68
+            "bar_height": 52
           },
           "blocks": {}
         }
       },
       "block_order": [
-        "avonent_sale_announcement_78dHDy"
+        "00_avonent_sale_announcement_QcfEEx"
       ],
       "name": "t:names.announcement_bar",
       "settings": {
