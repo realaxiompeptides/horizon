@@ -37,6 +37,98 @@
         "mobile_height": 720
       }
     },
+    "00_avonent_featured_products_VTU4KW": {
+      "type": "00-avonent-featured-products",
+      "blocks": {
+        "product_RkNjry": {
+          "type": "product",
+          "settings": {
+            "product": "example-supplement-1",
+            "badge_text": "BEST SELLER",
+            "show_sale_badge": true,
+            "category_text": "DAILY WELLNESS",
+            "benefit": "Premium daily support made simple.",
+            "benefit_2": "Premium formula",
+            "show_rating": true,
+            "rating": 5,
+            "rating_text": "5.0",
+            "price_note": "One-time purchase",
+            "button_text": "SHOP NOW"
+          }
+        },
+        "product_m3tCFa": {
+          "type": "product",
+          "settings": {
+            "product": "",
+            "badge_text": "POPULAR",
+            "show_sale_badge": true,
+            "category_text": "DAILY SUPPORT",
+            "benefit": "An easy addition to your everyday routine.",
+            "benefit_2": "Easy daily use",
+            "show_rating": true,
+            "rating": 5,
+            "rating_text": "5.0",
+            "price_note": "One-time purchase",
+            "button_text": "SHOP NOW"
+          }
+        },
+        "product_iXCyMz": {
+          "type": "product",
+          "settings": {
+            "product": "",
+            "badge_text": "CUSTOMER FAVORITE",
+            "show_sale_badge": true,
+            "category_text": "WELLNESS",
+            "benefit": "Carefully selected ingredients in every serving.",
+            "benefit_2": "Quality ingredients",
+            "show_rating": true,
+            "rating": 5,
+            "rating_text": "5.0",
+            "price_note": "One-time purchase",
+            "button_text": "SHOP NOW"
+          }
+        },
+        "product_eqUx3c": {
+          "type": "product",
+          "settings": {
+            "product": "",
+            "badge_text": "TRENDING",
+            "show_sale_badge": true,
+            "category_text": "DAILY ROUTINE",
+            "benefit": "Simple support made for everyday consistency.",
+            "benefit_2": "Made for your routine",
+            "show_rating": true,
+            "rating": 5,
+            "rating_text": "5.0",
+            "price_note": "One-time purchase",
+            "button_text": "SHOP NOW"
+          }
+        }
+      },
+      "block_order": [
+        "product_RkNjry",
+        "product_m3tCFa",
+        "product_iXCyMz",
+        "product_eqUx3c"
+      ],
+      "name": "00 Avonent Featured",
+      "settings": {
+        "eyebrow": "HOT NOW",
+        "heading": "Meet the formulas everyone is talking about.",
+        "subheading": "<p>Premium everyday supplements made to fit naturally into your routine.</p>",
+        "button_behavior": "product",
+        "bottom_button_text": "Shop All Products",
+        "bottom_button_link": "",
+        "background_color": "#FFFFFF",
+        "text_color": "#111111",
+        "card_background": "#FFFFFF",
+        "card_text_color": "#111111",
+        "accent_color": "#02C6EA",
+        "star_color": "#02C6EA",
+        "border_color": "#E7EEF0",
+        "card_radius": 18
+      }
+    },
     "product_list_fa6P9H": {
       "type": "product-list",
       "blocks": {
@@ -308,6 +400,7 @@
   },
   "order": [
     "00_avonent_home_hero_BbUK9F",
+    "00_avonent_featured_products_VTU4KW",
     "product_list_fa6P9H",
     "00_avonent_testimonials_NVx8W4"
   ]
