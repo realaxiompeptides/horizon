@@ -28,8 +28,6 @@
     {% endif %}
 
     <div class="avonent-sale-bar__content">
-
-      <!-- LEFT: SALE MESSAGE -->
       <div class="avonent-sale-bar__message">
         <div class="avonent-sale-bar__heading">
           {{ block.settings.heading }}
@@ -42,7 +40,6 @@
         {% endif %}
       </div>
 
-      <!-- RIGHT: COUNTDOWN -->
       {% if block.settings.show_countdown %}
         <div
           class="avonent-sale-bar__timer"
@@ -50,7 +47,6 @@
           aria-label="Sale countdown"
         >
           <div class="avonent-sale-bar__numbers">
-
             <div class="avonent-sale-bar__time-unit">
               <span data-avonent-hours>02</span>
               <small>Hrs</small>
@@ -69,11 +65,9 @@
               <span data-avonent-seconds>00</span>
               <small>Secs</small>
             </div>
-
           </div>
         </div>
       {% endif %}
-
     </div>
   </div>
 </slideshow-slide>
@@ -88,71 +82,38 @@
 
     root.dataset.timerInitialized = 'true';
 
-    const hoursElement =
-      root.querySelector('[data-avonent-hours]');
+    const hoursElement = root.querySelector('[data-avonent-hours]');
+    const minutesElement = root.querySelector('[data-avonent-minutes]');
+    const secondsElement = root.querySelector('[data-avonent-seconds]');
 
-    const minutesElement =
-      root.querySelector('[data-avonent-minutes]');
-
-    const secondsElement =
-      root.querySelector('[data-avonent-seconds]');
-
-    if (
-      !hoursElement ||
-      !minutesElement ||
-      !secondsElement
-    ) {
+    if (!hoursElement || !minutesElement || !secondsElement) {
       return;
     }
 
     const durationMinutes =
       parseInt(root.dataset.durationMinutes, 10) || 120;
 
-    const durationMilliseconds =
-      durationMinutes * 60 * 1000;
-
-    /*
-      Each browser keeps its own countdown.
-
-      Refreshing the page does not reset it.
-
-      Once it reaches zero, another countdown
-      automatically begins.
-    */
-
-    const storageKey =
-      'avonent_sale_timer_{{ block.id }}';
+    const durationMilliseconds = durationMinutes * 60 * 1000;
+    const storageKey = 'avonent_sale_timer_{{ block.id }}';
 
     function createNewEndTime() {
-      const endTime =
-        Date.now() + durationMilliseconds;
+      const endTime = Date.now() + durationMilliseconds;
 
       try {
-        localStorage.setItem(
-          storageKey,
-          String(endTime)
-        );
-      } catch (error) {
-        // Timer still works if localStorage is unavailable.
-      }
+        localStorage.setItem(storageKey, String(endTime));
+      } catch (error) {}
 
       return endTime;
     }
 
     function getEndTime() {
       try {
-        const savedEndTime =
-          Number(localStorage.getItem(storageKey));
+        const savedEndTime = Number(localStorage.getItem(storageKey));
 
-        if (
-          savedEndTime &&
-          savedEndTime > Date.now()
-        ) {
+        if (savedEndTime && savedEndTime > Date.now()) {
           return savedEndTime;
         }
-      } catch (error) {
-        // Ignore storage errors.
-      }
+      } catch (error) {}
 
       return createNewEndTime();
     }
@@ -160,278 +121,184 @@
     let endTime = getEndTime();
 
     function updateTimer() {
-      let remaining =
-        endTime - Date.now();
+      let remaining = endTime - Date.now();
 
       if (remaining <= 0) {
         endTime = createNewEndTime();
         remaining = endTime - Date.now();
       }
 
-      const totalSeconds =
-        Math.max(
-          0,
-          Math.floor(remaining / 1000)
-        );
+      const totalSeconds = Math.max(0, Math.floor(remaining / 1000));
 
-      const hours =
-        Math.floor(totalSeconds / 3600);
+      const hours = Math.floor(totalSeconds / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
 
-      const minutes =
-        Math.floor(
-          (totalSeconds % 3600) / 60
-        );
-
-      const seconds =
-        totalSeconds % 60;
-
-      hoursElement.textContent =
-        String(hours).padStart(2, '0');
-
-      minutesElement.textContent =
-        String(minutes).padStart(2, '0');
-
-      secondsElement.textContent =
-        String(seconds).padStart(2, '0');
+      hoursElement.textContent = String(hours).padStart(2, '0');
+      minutesElement.textContent = String(minutes).padStart(2, '0');
+      secondsElement.textContent = String(seconds).padStart(2, '0');
     }
 
     updateTimer();
-
-    window.setInterval(
-      updateTimer,
-      1000
-    );
+    window.setInterval(updateTimer, 1000);
   })();
 </script>
 
 {% stylesheet %}
-
-  /*
-   * AVONENT SALE ANNOUNCEMENT
-   */
-
   .avonent-sale-bar {
     width: 100%;
-    color: var(--avonent-sale-color);
   }
 
   .avonent-sale-bar__inner {
     position: relative;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
     width: 100%;
     min-height: var(--avonent-sale-height);
-
-    padding: 7px 20px;
-
     background: var(--avonent-sale-bg);
     color: var(--avonent-sale-color);
+    padding: 8px 18px;
+    overflow: hidden;
   }
 
   .avonent-sale-bar__content {
     position: relative;
     z-index: 1;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    gap: 40px;
-
     width: 100%;
-    max-width: 760px;
+    max-width: 100%;
 
-    margin: 0 auto;
-
-    pointer-events: none;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 18px;
   }
-
-
-  /*
-   * SALE TEXT
-   */
 
   .avonent-sale-bar__message {
     display: flex;
     flex-direction: column;
-
+    align-items: center;
     justify-content: center;
-
     text-align: center;
+    min-width: 0;
   }
 
   .avonent-sale-bar__heading {
     margin: 0;
-
     font-family: var(--font-heading--family);
-    font-size: 19px;
-    font-weight: 600;
-
-    line-height: 1.05;
-
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1;
     letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: inherit;
   }
 
   .avonent-sale-bar__subheading {
     margin-top: 4px;
-
     font-family: var(--font-body--family);
-    font-size: 11px;
-    font-weight: 400;
-
+    font-size: 13px;
+    font-weight: 500;
     line-height: 1.15;
-
-    opacity: 0.78;
+    color: inherit;
+    opacity: 0.92;
   }
-
-
-  /*
-   * TIMER
-   */
 
   .avonent-sale-bar__timer {
     display: flex;
     align-items: center;
+    justify-content: center;
   }
 
   .avonent-sale-bar__numbers {
     display: flex;
     align-items: flex-start;
-
     font-variant-numeric: tabular-nums;
   }
 
   .avonent-sale-bar__time-unit {
     display: flex;
     flex-direction: column;
-
-    min-width: 35px;
-
     align-items: center;
+    min-width: 42px;
   }
 
   .avonent-sale-bar__time-unit > span {
     font-family: var(--font-heading--family);
-
-    font-size: 21px;
-    font-weight: 600;
-
+    font-size: 28px;
+    font-weight: 700;
     line-height: 0.95;
-
     letter-spacing: 0.02em;
+    color: inherit;
   }
 
   .avonent-sale-bar__time-unit small {
-    margin-top: 5px;
-
+    margin-top: 4px;
     font-family: var(--font-body--family);
-
-    font-size: 9px;
-    font-weight: 400;
-
+    font-size: 10px;
+    font-weight: 500;
     line-height: 1;
-
-    opacity: 0.72;
+    color: inherit;
+    opacity: 0.9;
+    text-transform: none;
   }
 
   .avonent-sale-bar__colon {
-    margin: 0 3px;
-
+    margin: 0 4px;
     font-family: var(--font-heading--family);
-
-    font-size: 20px;
-    font-weight: 500;
-
-    line-height: 0.9;
-
-    opacity: 0.85;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 0.95;
+    color: inherit;
+    opacity: 0.95;
   }
-
-
-  /*
-   * CLICKABLE BAR
-   */
 
   .avonent-sale-bar__full-link {
     position: absolute;
     inset: 0;
-
     z-index: 2;
   }
 
-
-  /*
-   * MOBILE
-   */
-
   @media screen and (max-width: 749px) {
-
     .avonent-sale-bar__inner {
-      min-height: var(--avonent-sale-height);
-
-      padding:
-        7px
-        10px;
+      padding: 8px 12px;
     }
 
     .avonent-sale-bar__content {
-      justify-content: center;
-
-      gap: 22px;
-
-      max-width: 100%;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
     }
 
     .avonent-sale-bar__heading {
-      font-size: 17px;
+      font-size: 18px;
     }
 
     .avonent-sale-bar__subheading {
       margin-top: 3px;
-
       font-size: 10px;
-
-      white-space: nowrap;
+      line-height: 1.1;
     }
 
     .avonent-sale-bar__time-unit {
-      min-width: 29px;
+      min-width: 30px;
     }
 
     .avonent-sale-bar__time-unit > span {
-      font-size: 19px;
+      font-size: 21px;
     }
 
     .avonent-sale-bar__time-unit small {
-      margin-top: 4px;
-
+      margin-top: 3px;
       font-size: 8px;
     }
 
     .avonent-sale-bar__colon {
-      margin-inline: 1px;
-
-      font-size: 18px;
+      margin: 0 2px;
+      font-size: 20px;
     }
-
   }
 
-
-  /*
-   * VERY SMALL PHONES
-   */
-
   @media screen and (max-width: 390px) {
-
-    .avonent-sale-bar__content {
-      gap: 14px;
-    }
-
     .avonent-sale-bar__heading {
-      font-size: 15px;
+      font-size: 16px;
     }
 
     .avonent-sale-bar__subheading {
@@ -443,11 +310,13 @@
     }
 
     .avonent-sale-bar__time-unit > span {
-      font-size: 17px;
+      font-size: 18px;
     }
 
+    .avonent-sale-bar__colon {
+      font-size: 18px;
+    }
   }
-
 {% endstylesheet %}
 
 {% schema %}
@@ -476,7 +345,6 @@
       "id": "link",
       "label": "Bar link"
     },
-
     {
       "type": "header",
       "content": "Countdown"
@@ -497,7 +365,6 @@
       "unit": "min",
       "default": 120
     },
-
     {
       "type": "header",
       "content": "Colors"
@@ -512,9 +379,8 @@
       "type": "color",
       "id": "text_color",
       "label": "Text",
-      "default": "#000000"
+      "default": "#FFFFFF"
     },
-
     {
       "type": "header",
       "content": "Layout"
@@ -527,10 +393,9 @@
       "max": 90,
       "step": 1,
       "unit": "px",
-      "default": 60
+      "default": 68
     }
   ],
-
   "presets": [
     {
       "name": "Avonent Summer Sale"
