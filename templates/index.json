@@ -37,6 +37,45 @@
         "mobile_height": 720
       }
     },
+    "00_avonent_trust_strip_Bj7dMJ": {
+      "type": "00-avonent-trust-strip",
+      "blocks": {
+        "trust_item_BwDW9U": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "shield",
+            "text": "30-Day Risk-Free Trial"
+          }
+        },
+        "trust_item_KQPpPn": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "lab",
+            "text": "Third-Party Lab Tested"
+          }
+        },
+        "trust_item_cgyceP": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "flag",
+            "text": "Ships from USA"
+          }
+        }
+      },
+      "block_order": [
+        "trust_item_BwDW9U",
+        "trust_item_KQPpPn",
+        "trust_item_cgyceP"
+      ],
+      "name": "00 Avonent Trust Strip",
+      "settings": {
+        "background_color": "#FFFFFF",
+        "text_color": "#111111",
+        "accent_color": "#02C6EA",
+        "padding_top": 22,
+        "padding_bottom": 22
+      }
+    },
     "00_avonent_featured_products_VTU4KW": {
       "type": "00-avonent-featured-products",
       "blocks": {
@@ -126,7 +165,7 @@
         "accent_color": "#02c6ea",
         "star_color": "#02c6ea",
         "border_color": "#e7eef0",
-        "card_radius": 18
+        "card_radius": 16
       }
     },
     "00_avonent_testimonials_NVx8W4": {
@@ -196,45 +235,6 @@
         "star_color": "#02c6ea",
         "border_color": "#e7eef0",
         "card_radius": 18
-      }
-    },
-    "00_avonent_trust_strip_Bj7dMJ": {
-      "type": "00-avonent-trust-strip",
-      "blocks": {
-        "trust_item_BwDW9U": {
-          "type": "trust_item",
-          "settings": {
-            "icon": "shield",
-            "text": "30-Day Risk-Free Trial"
-          }
-        },
-        "trust_item_KQPpPn": {
-          "type": "trust_item",
-          "settings": {
-            "icon": "lab",
-            "text": "Third-Party Lab Tested"
-          }
-        },
-        "trust_item_cgyceP": {
-          "type": "trust_item",
-          "settings": {
-            "icon": "flag",
-            "text": "Ships from USA"
-          }
-        }
-      },
-      "block_order": [
-        "trust_item_BwDW9U",
-        "trust_item_KQPpPn",
-        "trust_item_cgyceP"
-      ],
-      "name": "00 Avonent Trust Strip",
-      "settings": {
-        "background_color": "#FFFFFF",
-        "text_color": "#111111",
-        "accent_color": "#02C6EA",
-        "padding_top": 22,
-        "padding_bottom": 22
       }
     }
   },
