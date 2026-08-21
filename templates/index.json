@@ -69,9 +69,9 @@
       ],
       "name": "00 Avonent Trust Strip",
       "settings": {
-        "background_color": "#FFFFFF",
+        "background_color": "#ffffff",
         "text_color": "#111111",
-        "accent_color": "#02C6EA",
+        "accent_color": "#02c6ea",
         "padding_top": 22,
         "padding_bottom": 22
       }
@@ -158,6 +158,12 @@
         "button_behavior": "product",
         "bottom_button_text": "Shop All Products",
         "bottom_button_link": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 48,
+        "header_to_products_gap": 32,
+        "products_to_bottom_button_gap": 28,
         "background_color": "#ffffff",
         "text_color": "#111111",
         "card_background": "#ffffff",
