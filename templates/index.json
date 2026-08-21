@@ -119,13 +119,13 @@
         "button_behavior": "product",
         "bottom_button_text": "Shop All Products",
         "bottom_button_link": "",
-        "background_color": "#FFFFFF",
+        "background_color": "#ffffff",
         "text_color": "#111111",
-        "card_background": "#FFFFFF",
+        "card_background": "#ffffff",
         "card_text_color": "#111111",
-        "accent_color": "#02C6EA",
-        "star_color": "#02C6EA",
-        "border_color": "#E7EEF0",
+        "accent_color": "#02c6ea",
+        "star_color": "#02c6ea",
+        "border_color": "#e7eef0",
         "card_radius": 18
       }
     },
@@ -189,18 +189,58 @@
         "summary_rating": 5,
         "summary_bold_text": "5.0",
         "summary_text": "from verified customers",
-        "background_color": "#02C6EA",
-        "text_color": "#FFFFFF",
-        "card_background": "#FFFFFF",
+        "background_color": "#02c6ea",
+        "text_color": "#ffffff",
+        "card_background": "#ffffff",
         "card_text_color": "#111111",
-        "star_color": "#02C6EA",
-        "border_color": "#E7EEF0",
+        "star_color": "#02c6ea",
+        "border_color": "#e7eef0",
         "card_radius": 18
+      }
+    },
+    "00_avonent_trust_strip_Bj7dMJ": {
+      "type": "00-avonent-trust-strip",
+      "blocks": {
+        "trust_item_BwDW9U": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "shield",
+            "text": "30-Day Risk-Free Trial"
+          }
+        },
+        "trust_item_KQPpPn": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "lab",
+            "text": "Third-Party Lab Tested"
+          }
+        },
+        "trust_item_cgyceP": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "flag",
+            "text": "Ships from USA"
+          }
+        }
+      },
+      "block_order": [
+        "trust_item_BwDW9U",
+        "trust_item_KQPpPn",
+        "trust_item_cgyceP"
+      ],
+      "name": "00 Avonent Trust Strip",
+      "settings": {
+        "background_color": "#FFFFFF",
+        "text_color": "#111111",
+        "accent_color": "#02C6EA",
+        "padding_top": 22,
+        "padding_bottom": 22
       }
     }
   },
   "order": [
     "00_avonent_home_hero_BbUK9F",
+    "00_avonent_trust_strip_Bj7dMJ",
     "00_avonent_featured_products_VTU4KW",
     "00_avonent_testimonials_NVx8W4"
   ]
