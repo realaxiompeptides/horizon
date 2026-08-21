@@ -28,8 +28,8 @@
         "counter_duration": 1600,
         "text_color": "#000000",
         "button_background": "#000000",
-        "button_text_color": "#FFFFFF",
-        "star_color": "#02C6EA",
+        "button_text_color": "#ffffff",
+        "star_color": "#02c6ea",
         "overlay_opacity": 0,
         "content_alignment": "center",
         "vertical_position": "top",
@@ -235,10 +235,80 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "00_avonent_testimonials_NVx8W4": {
+      "type": "00-avonent-testimonials",
+      "blocks": {
+        "review_H8F4gL": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "Simple, easy, and premium.",
+            "review": "<p>I wanted something easy to stay consistent with. The packaging, routine, and overall experience have been great.</p>",
+            "customer_name": "Emily R.",
+            "show_verified": true,
+            "verified_text": "Verified Customer",
+            "show_product": false,
+            "product_label": "Reviewing",
+            "product_name": "Avonent Daily Formula"
+          }
+        },
+        "review_k8UhBt": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "Exactly what I wanted.",
+            "review": "<p>It fits naturally into my routine and feels like a product that was actually designed with quality in mind.</p>",
+            "customer_name": "Jordan T.",
+            "show_verified": true,
+            "verified_text": "Verified Customer",
+            "show_product": false,
+            "product_label": "Reviewing",
+            "product_name": "Avonent Daily Formula"
+          }
+        },
+        "review_9GrVUf": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "Definitely ordering again.",
+            "review": "<p>The experience has been excellent from ordering through delivery. I'm very happy with Avonent so far.</p>",
+            "customer_name": "Michael C.",
+            "show_verified": true,
+            "verified_text": "Verified Customer",
+            "show_product": false,
+            "product_label": "Reviewing",
+            "product_name": "Avonent Daily Formula"
+          }
+        }
+      },
+      "block_order": [
+        "review_H8F4gL",
+        "review_k8UhBt",
+        "review_9GrVUf"
+      ],
+      "name": "00 Avonent Testimonials",
+      "settings": {
+        "eyebrow": "REAL EXPERIENCES",
+        "heading": "Loved by people who make wellness a priority.",
+        "subheading": "<p>See what customers are saying about making Avonent part of their routine.</p>",
+        "show_summary": true,
+        "summary_rating": 5,
+        "summary_bold_text": "5.0",
+        "summary_text": "from verified customers",
+        "background_color": "#02C6EA",
+        "text_color": "#FFFFFF",
+        "card_background": "#FFFFFF",
+        "card_text_color": "#111111",
+        "star_color": "#02C6EA",
+        "border_color": "#E7EEF0",
+        "card_radius": 18
+      }
     }
   },
   "order": [
     "00_avonent_home_hero_BbUK9F",
-    "product_list_fa6P9H"
+    "product_list_fa6P9H",
+    "00_avonent_testimonials_NVx8W4"
   ]
 }
