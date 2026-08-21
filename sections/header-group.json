@@ -14,23 +14,24 @@
     "header_announcements_9jGBFp": {
       "type": "header-announcements",
       "blocks": {
-        "avonent_sale_announcement_xr6TWQ": {
+        "avonent_sale_announcement_78dHDy": {
           "type": "avonent-sale-announcement",
           "name": "Avonent Summer Sale",
           "settings": {
-            "text": "SUMMER SALE — SAVE UP TO 50%",
+            "heading": "SUMMER SALE",
+            "subheading": "Shop Now and Get Up To 50% Off",
             "link": "",
+            "show_countdown": true,
+            "timer_minutes": 120,
             "background_color": "#02C6EA",
-            "text_color": "#000000",
-            "font_size": 14,
-            "font_weight": "600",
-            "bar_height": 42
+            "text_color": "#FFFFFF",
+            "bar_height": 68
           },
           "blocks": {}
         }
       },
       "block_order": [
-        "avonent_sale_announcement_xr6TWQ"
+        "avonent_sale_announcement_78dHDy"
       ],
       "name": "t:names.announcement_bar",
       "settings": {
