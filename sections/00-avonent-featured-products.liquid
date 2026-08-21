@@ -14,6 +14,15 @@
     --av-featured-star: {{ section.settings.star_color }};
     --av-featured-border: {{ section.settings.border_color }};
     --av-featured-radius: {{ section.settings.card_radius }}px;
+
+    --av-featured-padding-top-desktop: {{ section.settings.padding_top_desktop }}px;
+    --av-featured-padding-bottom-desktop: {{ section.settings.padding_bottom_desktop }}px;
+
+    --av-featured-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
+    --av-featured-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
+
+    --av-featured-header-gap: {{ section.settings.header_to_products_gap }}px;
+    --av-featured-bottom-gap: {{ section.settings.products_to_bottom_button_gap }}px;
   "
 >
   <div class="avonent-featured-products__container">
@@ -178,10 +187,7 @@
                     class="avonent-featured-card__button"
                   >
                     {{ block.settings.button_text }}
-
-                    <span aria-hidden="true">
-                      →
-                    </span>
+                    <span aria-hidden="true">→</span>
                   </a>
 
                 {% else %}
@@ -254,16 +260,14 @@
 
 {% stylesheet %}
 
-  /*
-   * AVONENT FEATURED PRODUCTS
-   */
-
   .avonent-featured-products {
     width: 100%;
 
-    padding:
-      82px
-      0;
+    padding-top:
+      var(--av-featured-padding-top-desktop);
+
+    padding-bottom:
+      var(--av-featured-padding-bottom-desktop);
 
     background:
       var(--av-featured-bg);
@@ -286,7 +290,7 @@
 
 
   /*
-   * SECTION HEADER
+   * HEADER
    */
 
   .avonent-featured-products__eyebrow {
@@ -378,7 +382,8 @@
 
     gap: 18px;
 
-    margin-top: 44px;
+    margin-top:
+      var(--av-featured-header-gap);
   }
 
 
@@ -537,7 +542,7 @@
 
 
   /*
-   * CARD CONTENT
+   * CONTENT
    */
 
   .avonent-featured-card__content {
@@ -802,7 +807,8 @@
     display: flex;
     justify-content: center;
 
-    margin-top: 34px;
+    margin-top:
+      var(--av-featured-bottom-gap);
   }
 
   .avonent-featured-products__view-all {
@@ -852,17 +858,16 @@
 
   /*
    * MOBILE
-   *
-   * IMPORTANT:
-   * 2 products per row remains enabled.
    */
 
   @media screen and (max-width: 749px) {
 
     .avonent-featured-products {
-      padding:
-        58px
-        0;
+      padding-top:
+        var(--av-featured-padding-top-mobile);
+
+      padding-bottom:
+        var(--av-featured-padding-bottom-mobile);
     }
 
     .avonent-featured-products__container {
@@ -894,7 +899,8 @@
 
       gap: 10px;
 
-      margin-top: 28px;
+      margin-top:
+        var(--av-featured-header-gap);
     }
 
     .avonent-featured-card {
@@ -1011,7 +1017,8 @@
     }
 
     .avonent-featured-products__bottom-action {
-      margin-top: 25px;
+      margin-top:
+        var(--av-featured-bottom-gap);
     }
 
   }
@@ -1109,6 +1116,71 @@
       "type": "url",
       "id": "bottom_button_link",
       "label": "Button link"
+    },
+
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Desktop top spacing",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Desktop bottom spacing",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Mobile top spacing",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Mobile bottom spacing",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "header_to_products_gap",
+      "label": "Heading to products spacing",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "products_to_bottom_button_gap",
+      "label": "Products to bottom button spacing",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 28
     },
 
     {
