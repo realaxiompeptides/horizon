@@ -1,51 +1,221 @@
-{%- liquid
-  assign text = block.settings.text
-  assign text_color = block.settings.text_color
-  assign background_color = block.settings.background_color
-  assign font_size = block.settings.font_size
-  assign font_weight = block.settings.font_weight
-  assign bar_height = block.settings.bar_height
--%}
+{% liquid
+  assign block_id = 'avonent-sale-' | append: block.id
+%}
 
-{%- if text != blank -%}
-  <slideshow-slide
-    ref="slides[]"
-    class="announcement-bar__slide avonent-sale-announcement"
+<slideshow-slide
+  ref="slides[]"
+  class="announcement-bar__slide avonent-sale-bar"
+  {{ block.shopify_attributes }}
+  aria-hidden="false"
+>
+  <div
+    id="{{ block_id }}"
+    class="avonent-sale-bar__inner"
     style="
-      --avonent-sale-bg: {{ background_color }};
-      --avonent-sale-text: {{ text_color }};
-      --avonent-sale-font-size: {{ font_size }}px;
-      --avonent-sale-font-weight: {{ font_weight }};
-      --avonent-sale-height: {{ bar_height }}px;
+      --avonent-sale-bg: {{ block.settings.background_color }};
+      --avonent-sale-color: {{ block.settings.text_color }};
+      --avonent-sale-height: {{ block.settings.bar_height }}px;
     "
-    {{ block.shopify_attributes }}
-    aria-hidden="false"
+    data-avonent-sale-timer
+    data-duration-minutes="{{ block.settings.timer_minutes }}"
   >
-    <div class="avonent-sale-announcement__inner">
-      <span class="avonent-sale-announcement__text">
-        {{ text }}
-      </span>
+    {% if block.settings.link != blank %}
+      <a
+        href="{{ block.settings.link }}"
+        class="avonent-sale-bar__full-link"
+        aria-label="{{ block.settings.heading | escape }}"
+      ></a>
+    {% endif %}
 
-      {% if block.settings.link != blank %}
-        <a
-          href="{{ block.settings.link }}"
-          class="avonent-sale-announcement__link"
-          aria-label="{{ text | strip_html | escape }}"
-        ></a>
+    <div class="avonent-sale-bar__content">
+
+      <!-- LEFT: SALE MESSAGE -->
+      <div class="avonent-sale-bar__message">
+        <div class="avonent-sale-bar__heading">
+          {{ block.settings.heading }}
+        </div>
+
+        {% if block.settings.subheading != blank %}
+          <div class="avonent-sale-bar__subheading">
+            {{ block.settings.subheading }}
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- RIGHT: COUNTDOWN -->
+      {% if block.settings.show_countdown %}
+        <div
+          class="avonent-sale-bar__timer"
+          role="timer"
+          aria-label="Sale countdown"
+        >
+          <div class="avonent-sale-bar__numbers">
+
+            <div class="avonent-sale-bar__time-unit">
+              <span data-avonent-hours>02</span>
+              <small>Hrs</small>
+            </div>
+
+            <span class="avonent-sale-bar__colon">:</span>
+
+            <div class="avonent-sale-bar__time-unit">
+              <span data-avonent-minutes>00</span>
+              <small>Mins</small>
+            </div>
+
+            <span class="avonent-sale-bar__colon">:</span>
+
+            <div class="avonent-sale-bar__time-unit">
+              <span data-avonent-seconds>00</span>
+              <small>Secs</small>
+            </div>
+
+          </div>
+        </div>
       {% endif %}
+
     </div>
-  </slideshow-slide>
-{%- endif -%}
+  </div>
+</slideshow-slide>
+
+<script>
+  (() => {
+    const root = document.getElementById('{{ block_id }}');
+
+    if (!root || root.dataset.timerInitialized === 'true') {
+      return;
+    }
+
+    root.dataset.timerInitialized = 'true';
+
+    const hoursElement =
+      root.querySelector('[data-avonent-hours]');
+
+    const minutesElement =
+      root.querySelector('[data-avonent-minutes]');
+
+    const secondsElement =
+      root.querySelector('[data-avonent-seconds]');
+
+    if (
+      !hoursElement ||
+      !minutesElement ||
+      !secondsElement
+    ) {
+      return;
+    }
+
+    const durationMinutes =
+      parseInt(root.dataset.durationMinutes, 10) || 120;
+
+    const durationMilliseconds =
+      durationMinutes * 60 * 1000;
+
+    /*
+      Each browser keeps its own countdown.
+
+      Refreshing the page does not reset it.
+
+      Once it reaches zero, another countdown
+      automatically begins.
+    */
+
+    const storageKey =
+      'avonent_sale_timer_{{ block.id }}';
+
+    function createNewEndTime() {
+      const endTime =
+        Date.now() + durationMilliseconds;
+
+      try {
+        localStorage.setItem(
+          storageKey,
+          String(endTime)
+        );
+      } catch (error) {
+        // Timer still works if localStorage is unavailable.
+      }
+
+      return endTime;
+    }
+
+    function getEndTime() {
+      try {
+        const savedEndTime =
+          Number(localStorage.getItem(storageKey));
+
+        if (
+          savedEndTime &&
+          savedEndTime > Date.now()
+        ) {
+          return savedEndTime;
+        }
+      } catch (error) {
+        // Ignore storage errors.
+      }
+
+      return createNewEndTime();
+    }
+
+    let endTime = getEndTime();
+
+    function updateTimer() {
+      let remaining =
+        endTime - Date.now();
+
+      if (remaining <= 0) {
+        endTime = createNewEndTime();
+        remaining = endTime - Date.now();
+      }
+
+      const totalSeconds =
+        Math.max(
+          0,
+          Math.floor(remaining / 1000)
+        );
+
+      const hours =
+        Math.floor(totalSeconds / 3600);
+
+      const minutes =
+        Math.floor(
+          (totalSeconds % 3600) / 60
+        );
+
+      const seconds =
+        totalSeconds % 60;
+
+      hoursElement.textContent =
+        String(hours).padStart(2, '0');
+
+      minutesElement.textContent =
+        String(minutes).padStart(2, '0');
+
+      secondsElement.textContent =
+        String(seconds).padStart(2, '0');
+    }
+
+    updateTimer();
+
+    window.setInterval(
+      updateTimer,
+      1000
+    );
+  })();
+</script>
 
 {% stylesheet %}
 
-  .avonent-sale-announcement {
+  /*
+   * AVONENT SALE ANNOUNCEMENT
+   */
+
+  .avonent-sale-bar {
     width: 100%;
-    background: var(--avonent-sale-bg);
-    color: var(--avonent-sale-text);
+    color: var(--avonent-sale-color);
   }
 
-  .avonent-sale-announcement__inner {
+  .avonent-sale-bar__inner {
     position: relative;
 
     display: flex;
@@ -55,44 +225,227 @@
     width: 100%;
     min-height: var(--avonent-sale-height);
 
-    padding: 6px 20px;
+    padding: 7px 20px;
 
     background: var(--avonent-sale-bg);
-    color: var(--avonent-sale-text);
+    color: var(--avonent-sale-color);
+  }
+
+  .avonent-sale-bar__content {
+    position: relative;
+    z-index: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 40px;
+
+    width: 100%;
+    max-width: 760px;
+
+    margin: 0 auto;
+
+    pointer-events: none;
+  }
+
+
+  /*
+   * SALE TEXT
+   */
+
+  .avonent-sale-bar__message {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
 
     text-align: center;
   }
 
-  .avonent-sale-announcement__text {
-    color: inherit;
+  .avonent-sale-bar__heading {
+    margin: 0;
 
-    font-family: var(--font-body--family);
-    font-size: var(--avonent-sale-font-size);
-    font-weight: var(--avonent-sale-font-weight);
+    font-family: var(--font-heading--family);
+    font-size: 19px;
+    font-weight: 600;
 
-    line-height: 1.2;
-    letter-spacing: 0.04em;
+    line-height: 1.05;
 
-    text-transform: uppercase;
+    letter-spacing: 0.02em;
   }
 
-  .avonent-sale-announcement__link {
+  .avonent-sale-bar__subheading {
+    margin-top: 4px;
+
+    font-family: var(--font-body--family);
+    font-size: 11px;
+    font-weight: 400;
+
+    line-height: 1.15;
+
+    opacity: 0.78;
+  }
+
+
+  /*
+   * TIMER
+   */
+
+  .avonent-sale-bar__timer {
+    display: flex;
+    align-items: center;
+  }
+
+  .avonent-sale-bar__numbers {
+    display: flex;
+    align-items: flex-start;
+
+    font-variant-numeric: tabular-nums;
+  }
+
+  .avonent-sale-bar__time-unit {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 35px;
+
+    align-items: center;
+  }
+
+  .avonent-sale-bar__time-unit > span {
+    font-family: var(--font-heading--family);
+
+    font-size: 21px;
+    font-weight: 600;
+
+    line-height: 0.95;
+
+    letter-spacing: 0.02em;
+  }
+
+  .avonent-sale-bar__time-unit small {
+    margin-top: 5px;
+
+    font-family: var(--font-body--family);
+
+    font-size: 9px;
+    font-weight: 400;
+
+    line-height: 1;
+
+    opacity: 0.72;
+  }
+
+  .avonent-sale-bar__colon {
+    margin: 0 3px;
+
+    font-family: var(--font-heading--family);
+
+    font-size: 20px;
+    font-weight: 500;
+
+    line-height: 0.9;
+
+    opacity: 0.85;
+  }
+
+
+  /*
+   * CLICKABLE BAR
+   */
+
+  .avonent-sale-bar__full-link {
     position: absolute;
     inset: 0;
+
     z-index: 2;
   }
 
+
+  /*
+   * MOBILE
+   */
+
   @media screen and (max-width: 749px) {
-    .avonent-sale-announcement__inner {
-      padding-inline: 12px;
+
+    .avonent-sale-bar__inner {
+      min-height: var(--avonent-sale-height);
+
+      padding:
+        7px
+        10px;
     }
 
-    .avonent-sale-announcement__text {
-      font-size: min(
-        var(--avonent-sale-font-size),
-        14px
-      );
+    .avonent-sale-bar__content {
+      justify-content: center;
+
+      gap: 22px;
+
+      max-width: 100%;
     }
+
+    .avonent-sale-bar__heading {
+      font-size: 17px;
+    }
+
+    .avonent-sale-bar__subheading {
+      margin-top: 3px;
+
+      font-size: 10px;
+
+      white-space: nowrap;
+    }
+
+    .avonent-sale-bar__time-unit {
+      min-width: 29px;
+    }
+
+    .avonent-sale-bar__time-unit > span {
+      font-size: 19px;
+    }
+
+    .avonent-sale-bar__time-unit small {
+      margin-top: 4px;
+
+      font-size: 8px;
+    }
+
+    .avonent-sale-bar__colon {
+      margin-inline: 1px;
+
+      font-size: 18px;
+    }
+
+  }
+
+
+  /*
+   * VERY SMALL PHONES
+   */
+
+  @media screen and (max-width: 390px) {
+
+    .avonent-sale-bar__content {
+      gap: 14px;
+    }
+
+    .avonent-sale-bar__heading {
+      font-size: 15px;
+    }
+
+    .avonent-sale-bar__subheading {
+      font-size: 9px;
+    }
+
+    .avonent-sale-bar__time-unit {
+      min-width: 26px;
+    }
+
+    .avonent-sale-bar__time-unit > span {
+      font-size: 17px;
+    }
+
   }
 
 {% endstylesheet %}
@@ -103,16 +456,48 @@
   "tag": null,
   "settings": [
     {
-      "type": "inline_richtext",
-      "id": "text",
-      "label": "Announcement text",
-      "default": "SUMMER SALE — SAVE UP TO 50%"
+      "type": "header",
+      "content": "Sale message"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "SUMMER SALE"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Text under heading",
+      "default": "Shop Now and Get Up To 50% Off"
     },
     {
       "type": "url",
       "id": "link",
-      "label": "Announcement link"
+      "label": "Bar link"
     },
+
+    {
+      "type": "header",
+      "content": "Countdown"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_countdown",
+      "label": "Show countdown",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "timer_minutes",
+      "label": "Countdown length",
+      "min": 30,
+      "max": 240,
+      "step": 10,
+      "unit": "min",
+      "default": 120
+    },
+
     {
       "type": "header",
       "content": "Colors"
@@ -120,53 +505,16 @@
     {
       "type": "color",
       "id": "background_color",
-      "label": "Background color",
+      "label": "Background",
       "default": "#02C6EA"
     },
     {
       "type": "color",
       "id": "text_color",
-      "label": "Text color",
+      "label": "Text",
       "default": "#000000"
     },
-    {
-      "type": "header",
-      "content": "Typography"
-    },
-    {
-      "type": "range",
-      "id": "font_size",
-      "label": "Text size",
-      "min": 10,
-      "max": 24,
-      "step": 1,
-      "unit": "px",
-      "default": 14
-    },
-    {
-      "type": "select",
-      "id": "font_weight",
-      "label": "Font weight",
-      "options": [
-        {
-          "value": "400",
-          "label": "Regular"
-        },
-        {
-          "value": "500",
-          "label": "Medium"
-        },
-        {
-          "value": "600",
-          "label": "Semi bold"
-        },
-        {
-          "value": "700",
-          "label": "Bold"
-        }
-      ],
-      "default": "600"
-    },
+
     {
       "type": "header",
       "content": "Layout"
@@ -174,14 +522,15 @@
     {
       "type": "range",
       "id": "bar_height",
-      "label": "Bar height",
-      "min": 30,
-      "max": 70,
+      "label": "Minimum bar height",
+      "min": 48,
+      "max": 90,
       "step": 1,
       "unit": "px",
-      "default": 42
+      "default": 60
     }
   ],
+
   "presets": [
     {
       "name": "Avonent Summer Sale"
