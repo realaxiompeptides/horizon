@@ -1,0 +1,191 @@
+{%- liquid
+  assign text = block.settings.text
+  assign text_color = block.settings.text_color
+  assign background_color = block.settings.background_color
+  assign font_size = block.settings.font_size
+  assign font_weight = block.settings.font_weight
+  assign bar_height = block.settings.bar_height
+-%}
+
+{%- if text != blank -%}
+  <slideshow-slide
+    ref="slides[]"
+    class="announcement-bar__slide avonent-sale-announcement"
+    style="
+      --avonent-sale-bg: {{ background_color }};
+      --avonent-sale-text: {{ text_color }};
+      --avonent-sale-font-size: {{ font_size }}px;
+      --avonent-sale-font-weight: {{ font_weight }};
+      --avonent-sale-height: {{ bar_height }}px;
+    "
+    {{ block.shopify_attributes }}
+    aria-hidden="false"
+  >
+    <div class="avonent-sale-announcement__inner">
+      <span class="avonent-sale-announcement__text">
+        {{ text }}
+      </span>
+
+      {% if block.settings.link != blank %}
+        <a
+          href="{{ block.settings.link }}"
+          class="avonent-sale-announcement__link"
+          aria-label="{{ text | strip_html | escape }}"
+        ></a>
+      {% endif %}
+    </div>
+  </slideshow-slide>
+{%- endif -%}
+
+{% stylesheet %}
+
+  .avonent-sale-announcement {
+    width: 100%;
+    background: var(--avonent-sale-bg);
+    color: var(--avonent-sale-text);
+  }
+
+  .avonent-sale-announcement__inner {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    min-height: var(--avonent-sale-height);
+
+    padding: 6px 20px;
+
+    background: var(--avonent-sale-bg);
+    color: var(--avonent-sale-text);
+
+    text-align: center;
+  }
+
+  .avonent-sale-announcement__text {
+    color: inherit;
+
+    font-family: var(--font-body--family);
+    font-size: var(--avonent-sale-font-size);
+    font-weight: var(--avonent-sale-font-weight);
+
+    line-height: 1.2;
+    letter-spacing: 0.04em;
+
+    text-transform: uppercase;
+  }
+
+  .avonent-sale-announcement__link {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+  }
+
+  @media screen and (max-width: 749px) {
+    .avonent-sale-announcement__inner {
+      padding-inline: 12px;
+    }
+
+    .avonent-sale-announcement__text {
+      font-size: min(
+        var(--avonent-sale-font-size),
+        14px
+      );
+    }
+  }
+
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Avonent Summer Sale",
+  "tag": null,
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "text",
+      "label": "Announcement text",
+      "default": "SUMMER SALE — SAVE UP TO 50%"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Announcement link"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#02C6EA"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Text size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "font_weight",
+      "label": "Font weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Regular"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semi bold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "bar_height",
+      "label": "Bar height",
+      "min": 30,
+      "max": 70,
+      "step": 1,
+      "unit": "px",
+      "default": 42
+    }
+  ],
+  "presets": [
+    {
+      "name": "Avonent Summer Sale"
+    }
+  ]
+}
+{% endschema %}
