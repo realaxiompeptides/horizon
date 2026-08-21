@@ -1,0 +1,460 @@
+{% liquid
+  assign section_id = 'avonent-trust-strip-' | append: section.id
+%}
+
+<section
+  id="{{ section_id }}"
+  class="avonent-trust-strip"
+  style="
+    --av-trust-bg: {{ section.settings.background_color }};
+    --av-trust-text: {{ section.settings.text_color }};
+    --av-trust-accent: {{ section.settings.accent_color }};
+    --av-trust-card-bg: {{ section.settings.card_background }};
+    --av-trust-border: {{ section.settings.border_color }};
+    --av-trust-radius: {{ section.settings.card_radius }}px;
+    --av-trust-padding-top: {{ section.settings.padding_top }}px;
+    --av-trust-padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="avonent-trust-strip__container">
+
+    {% if section.settings.eyebrow != blank %}
+      <div class="avonent-trust-strip__eyebrow">
+        {{ section.settings.eyebrow }}
+      </div>
+    {% endif %}
+
+    {% if section.settings.heading != blank %}
+      <h2 class="avonent-trust-strip__heading">
+        {{ section.settings.heading }}
+      </h2>
+    {% endif %}
+
+    {% if section.settings.subheading != blank %}
+      <div class="avonent-trust-strip__subheading">
+        {{ section.settings.subheading }}
+      </div>
+    {% endif %}
+
+    <div class="avonent-trust-strip__grid">
+      {% for block in section.blocks %}
+        <div class="avonent-trust-item" {{ block.shopify_attributes }}>
+          <div class="avonent-trust-item__icon">
+            {% case block.settings.icon %}
+              {% when 'check' %}
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M8 12.3 10.7 15 16.2 9.5"></path>
+                </svg>
+
+              {% when 'lab' %}
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M10 3h4"></path>
+                  <path d="M10 3v5l-5.8 9.4A2.4 2.4 0 0 0 6.2 21h11.6a2.4 2.4 0 0 0 2-3.6L14 8V3"></path>
+                  <path d="M8.5 14h7"></path>
+                </svg>
+
+              {% when 'shipping' %}
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M3 7h11v8H3z"></path>
+                  <path d="M14 10h3.4l2.6 2.7V15H14z"></path>
+                  <circle cx="8" cy="17.5" r="1.8"></circle>
+                  <circle cx="18" cy="17.5" r="1.8"></circle>
+                </svg>
+
+              {% when 'flag' %}
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M6 3v18"></path>
+                  <path d="M6 4h10l-2 3 2 3H6"></path>
+                </svg>
+
+              {% when 'shield' %}
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 3 19 6v5c0 4.8-2.9 8.2-7 10-4.1-1.8-7-5.2-7-10V6z"></path>
+                  <path d="M9 12.2 11.1 14.3 15.5 9.9"></path>
+                </svg>
+
+              {% else %}
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M8 12.3 10.7 15 16.2 9.5"></path>
+                </svg>
+            {% endcase %}
+          </div>
+
+          <div class="avonent-trust-item__content">
+            {% if block.settings.heading != blank %}
+              <div class="avonent-trust-item__heading">
+                {{ block.settings.heading }}
+              </div>
+            {% endif %}
+
+            {% if block.settings.subtext != blank %}
+              <div class="avonent-trust-item__subtext">
+                {{ block.settings.subtext }}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+
+{% stylesheet %}
+
+  .avonent-trust-strip {
+    width: 100%;
+    padding-top: var(--av-trust-padding-top);
+    padding-bottom: var(--av-trust-padding-bottom);
+    background: var(--av-trust-bg);
+    color: var(--av-trust-text);
+  }
+
+  .avonent-trust-strip__container {
+    width: min(calc(100% - 48px), 1320px);
+    margin: 0 auto;
+  }
+
+  .avonent-trust-strip__eyebrow {
+    margin-bottom: 10px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-family: var(--font-body--family);
+    font-size: 12px;
+    font-weight: 650;
+    color: var(--av-trust-accent);
+  }
+
+  .avonent-trust-strip__heading {
+    margin: 0;
+    text-align: center;
+    font-family: var(--font-heading--family);
+    font-size: clamp(30px, 4vw, 46px);
+    font-weight: 600;
+    line-height: 1.06;
+    letter-spacing: -0.03em;
+    color: var(--av-trust-text);
+  }
+
+  .avonent-trust-strip__subheading {
+    max-width: 700px;
+    margin: 14px auto 0;
+    text-align: center;
+    font-family: var(--font-body--family);
+    font-size: 16px;
+    line-height: 1.5;
+    opacity: 0.72;
+  }
+
+  .avonent-trust-strip__subheading p {
+    margin: 0;
+  }
+
+  .avonent-trust-strip__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 30px;
+  }
+
+  .avonent-trust-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    min-width: 0;
+    padding: 18px 16px;
+    border: 1px solid var(--av-trust-border);
+    border-radius: var(--av-trust-radius);
+    background: var(--av-trust-card-bg);
+  }
+
+  .avonent-trust-item__icon {
+    flex: 0 0 34px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(2, 198, 234, 0.12);
+    color: var(--av-trust-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .avonent-trust-item__icon svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.9;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .avonent-trust-item__content {
+    min-width: 0;
+  }
+
+  .avonent-trust-item__heading {
+    font-family: var(--font-body--family);
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--av-trust-text);
+  }
+
+  .avonent-trust-item__subtext {
+    margin-top: 4px;
+    font-family: var(--font-body--family);
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--av-trust-text);
+    opacity: 0.68;
+  }
+
+  @media screen and (max-width: 989px) {
+    .avonent-trust-strip__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .avonent-trust-strip__container {
+      width: calc(100% - 24px);
+    }
+
+    .avonent-trust-strip__heading {
+      font-size: clamp(28px, 9vw, 36px);
+    }
+
+    .avonent-trust-strip__subheading {
+      margin-top: 12px;
+      font-size: 14px;
+    }
+
+    .avonent-trust-strip__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .avonent-trust-item {
+      gap: 10px;
+      padding: 14px 12px;
+    }
+
+    .avonent-trust-item__icon {
+      flex: 0 0 30px;
+      width: 30px;
+      height: 30px;
+    }
+
+    .avonent-trust-item__icon svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .avonent-trust-item__heading {
+      font-size: 13px;
+      line-height: 1.25;
+    }
+
+    .avonent-trust-item__subtext {
+      font-size: 11px;
+      line-height: 1.35;
+    }
+  }
+
+  @media screen and (max-width: 380px) {
+    .avonent-trust-strip__grid {
+      gap: 8px;
+    }
+
+    .avonent-trust-item {
+      padding: 12px 10px;
+    }
+
+    .avonent-trust-item__heading {
+      font-size: 12px;
+    }
+
+    .avonent-trust-item__subtext {
+      font-size: 10px;
+    }
+  }
+
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "00 Avonent Trust Strip",
+  "tag": "section",
+  "class": "avonent-trust-strip-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Small heading",
+      "default": "WHY PEOPLE CHOOSE AVONENT"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Built for trust, quality, and consistency."
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "<p>Highlight the reasons customers feel confident shopping with Avonent.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent",
+      "default": "#02C6EA"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "default": "#F4FBFD"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Card border",
+      "default": "#DCEEF4"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card roundness",
+      "min": 0,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Trust item",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "check", "label": "Check" },
+            { "value": "lab", "label": "Lab" },
+            { "value": "shipping", "label": "Shipping" },
+            { "value": "flag", "label": "USA flag" },
+            { "value": "shield", "label": "Shield" }
+          ],
+          "default": "check"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "30-Day Risk-Free Trial"
+        },
+        {
+          "type": "text",
+          "id": "subtext",
+          "label": "Subtext",
+          "default": "Shop with added peace of mind."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "00 Avonent Trust Strip",
+      "blocks": [
+        {
+          "type": "item",
+          "settings": {
+            "icon": "check",
+            "heading": "30-Day Risk-Free Trial",
+            "subtext": "Shop with added peace of mind."
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "lab",
+            "heading": "Third-Party Lab Tested",
+            "subtext": "Quality-focused formulas you can trust."
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "flag",
+            "heading": "Ships from USA",
+            "subtext": "Fast domestic fulfillment."
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "shipping",
+            "heading": "Shipped Within 48 Hours",
+            "subtext": "Quick processing on your order."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
