@@ -48,8 +48,16 @@
 </aside>
 
 {% stylesheet %}
+
+  /*
+   * HORIZON ANNOUNCEMENT BASE
+   */
+
   .announcement-bar {
-    border-block-end: var(--border-bottom-width) solid var(--color-border);
+    border-block-end:
+      var(--border-bottom-width)
+      solid
+      var(--color-border);
   }
 
   .announcement-bar__slider {
@@ -66,8 +74,10 @@
   .announcement-bar__slides {
     display: grid;
     grid: [stack] auto / [stack] auto;
+
     width: calc(100% - var(--button-size) * 2);
     max-width: 680px;
+
     margin-inline: auto;
   }
 
@@ -100,26 +110,34 @@
 
   .announcement-bar__slider .slideshow-control {
     display: flex;
-    padding: 0;
+
     width: var(--button-size);
     height: var(--button-size);
+
+    padding: 0;
+
     align-items: center;
     justify-content: center;
+
     opacity: 1;
     animation: none;
 
     @media screen and (min-width: 750px) {
-      --slideshow-control-offset: calc(
-        (var(--button-size) - var(--icon-size-xs)) / 2
-      );
+      --slideshow-control-offset:
+        calc(
+          (var(--button-size) - var(--icon-size-xs)) / 2
+        );
 
       .section--page-width &.slideshow-control--previous {
-        transform: translateX(var(--slideshow-control-offset));
+        transform:
+          translateX(var(--slideshow-control-offset));
       }
     }
   }
 
-  .announcement-bar__slider .slideshow-control .svg-wrapper {
+  .announcement-bar__slider
+    .slideshow-control
+    .svg-wrapper {
     width: var(--icon-size-xs);
     height: var(--icon-size-xs);
   }
@@ -133,36 +151,48 @@
     inset: 0;
   }
 
+
   /*
-    Avonent custom announcement support.
+   * AVONENT ANNOUNCEMENT OVERRIDES
+   *
+   * When our custom block exists, break out
+   * of Horizon's normal centered page column.
+   */
 
-    The actual Avonent block controls its own
-    background, text color, typography, and height.
-  */
+  .announcement-bar:has(.avonent-sale-bar) {
+    padding: 0 !important;
+  }
 
-  .announcement-bar__slides
-    > .avonent-sale-announcement {
-    max-width: none;
+  .announcement-bar:has(.avonent-sale-bar)
+    > .announcement-bar__slider {
+    grid-column: 1 / -1 !important;
+
     width: 100%;
+    max-width: none;
+
+    margin: 0;
+    padding: 0;
   }
 
-  .announcement-bar:has(.avonent-sale-announcement) {
-    padding-block-start: 0;
-    padding-block-end: 0;
-  }
-
-  .announcement-bar:has(.avonent-sale-announcement)
+  .announcement-bar:has(.avonent-sale-bar)
     .announcement-bar__slides {
-    max-width: none;
     width: 100%;
+    max-width: none;
+
+    margin: 0;
+    padding: 0;
   }
 
-  @media screen and (max-width: 749px) {
-    .announcement-bar:has(.avonent-sale-announcement)
-      .announcement-bar__slides {
-      width: 100%;
-    }
+  .announcement-bar:has(.avonent-sale-bar)
+    .announcement-bar__slides
+    > .avonent-sale-bar {
+    width: 100%;
+    max-width: none;
+
+    margin: 0;
+    padding: 0;
   }
+
 {% endstylesheet %}
 
 {% schema %}
@@ -173,7 +203,7 @@
       "type": "_announcement"
     },
     {
-      "type": "avonent-sale-announcement"
+      "type": "00-avonent-sale-announcement"
     }
   ],
   "enabled_on": {
