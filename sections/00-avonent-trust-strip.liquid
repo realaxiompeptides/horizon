@@ -1,9 +1,4 @@
-{% liquid
-  assign section_id = 'avonent-trust-strip-' | append: section.id
-%}
-
 <section
-  id="{{ section_id }}"
   class="avonent-trust-strip"
   style="
     --av-trust-bg: {{ section.settings.background_color }};
@@ -11,86 +6,72 @@
     --av-trust-accent: {{ section.settings.accent_color }};
     --av-trust-padding-top: {{ section.settings.padding_top }}px;
     --av-trust-padding-bottom: {{ section.settings.padding_bottom }}px;
-    --av-trust-icon-size: {{ section.settings.icon_size }}px;
   "
 >
-  <div class="avonent-trust-strip__container">
+  <div class="avonent-trust-strip__inner">
 
-    {% if section.settings.eyebrow != blank %}
-      <div class="avonent-trust-strip__eyebrow">
-        {{ section.settings.eyebrow }}
-      </div>
-    {% endif %}
+    {% for block in section.blocks %}
+      <div
+        class="avonent-trust-strip__item"
+        {{ block.shopify_attributes }}
+      >
+        <div class="avonent-trust-strip__icon">
 
-    {% if section.settings.heading != blank %}
-      <h2 class="avonent-trust-strip__heading">
-        {{ section.settings.heading }}
-      </h2>
-    {% endif %}
+          {% case block.settings.icon %}
 
-    {% if section.settings.subheading != blank %}
-      <div class="avonent-trust-strip__subheading">
-        {{ section.settings.subheading }}
-      </div>
-    {% endif %}
+            {% when 'check' %}
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="9"></circle>
+                <path d="M8.3 12.1 10.7 14.5 15.8 9.5"></path>
+              </svg>
 
-    <div class="avonent-trust-strip__items">
-      {% for block in section.blocks %}
-        <div class="avonent-trust-strip__item" {{ block.shopify_attributes }}>
-          <div class="avonent-trust-strip__icon">
-            {% case block.settings.icon %}
-              {% when 'check' %}
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <circle cx="12" cy="12" r="9"></circle>
-                  <path d="M8 12.2 10.7 14.9 16 9.7"></path>
-                </svg>
+            {% when 'shield' %}
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 3 19 6v5c0 4.8-2.8 8.2-7 10-4.2-1.8-7-5.2-7-10V6z"></path>
+                <path d="M9 12.1 11.1 14.2 15.3 10"></path>
+              </svg>
 
-              {% when 'lab' %}
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M10 3h4"></path>
-                  <path d="M10 3v5l-5.5 8.8A2.5 2.5 0 0 0 6.6 21h10.8a2.5 2.5 0 0 0 2.1-4.2L14 8V3"></path>
-                  <path d="M8.5 14h7"></path>
-                </svg>
+            {% when 'lab' %}
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 3h6"></path>
+                <path d="M10 3v6l-5 8.2A2.4 2.4 0 0 0 7 21h10a2.4 2.4 0 0 0 2-3.8L14 9V3"></path>
+                <path d="M8.5 14h7"></path>
+              </svg>
 
-              {% when 'shipping' %}
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M3 7h11v8H3z"></path>
-                  <path d="M14 10h3.6l2.4 2.6V15H14z"></path>
-                  <circle cx="8" cy="17.5" r="1.7"></circle>
-                  <circle cx="18" cy="17.5" r="1.7"></circle>
-                </svg>
+            {% when 'flag' %}
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6 3v18"></path>
+                <path d="M6 4h10l-2 3 2 3H6"></path>
+              </svg>
 
-              {% when 'flag' %}
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M6 3v18"></path>
-                  <path d="M6 4h10l-2 3 2 3H6"></path>
-                </svg>
+            {% when 'truck' %}
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3 6h11v9H3z"></path>
+                <path d="M14 10h3.5L21 13v2h-7z"></path>
+                <circle cx="8" cy="17" r="1.7"></circle>
+                <circle cx="18" cy="17" r="1.7"></circle>
+              </svg>
 
-              {% when 'shield' %}
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M12 3 19 6v5c0 4.9-2.9 8.3-7 10-4.1-1.7-7-5.1-7-10V6z"></path>
-                  <path d="M9.1 12.2 11.1 14.2 15.4 9.9"></path>
-                </svg>
+            {% when 'star' %}
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="m12 3 2.7 5.5 6 .9-4.4 4.2 1 6-5.3-2.8-5.3 2.8 1-6-4.4-4.2 6-.9z"></path>
+              </svg>
 
-              {% when 'star' %}
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M12 3.8 14.6 9l5.8.8-4.2 4 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.2-4 5.8-.8z"></path>
-                </svg>
+            {% else %}
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="9"></circle>
+                <path d="M8.3 12.1 10.7 14.5 15.8 9.5"></path>
+              </svg>
 
-              {% else %}
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <circle cx="12" cy="12" r="9"></circle>
-                  <path d="M8 12.2 10.7 14.9 16 9.7"></path>
-                </svg>
-            {% endcase %}
-          </div>
+          {% endcase %}
 
-          <div class="avonent-trust-strip__text">
-            {{ block.settings.text }}
-          </div>
         </div>
-      {% endfor %}
-    </div>
+
+        <div class="avonent-trust-strip__text">
+          {{ block.settings.text }}
+        </div>
+      </div>
+    {% endfor %}
 
   </div>
 </section>
@@ -99,166 +80,160 @@
 
   .avonent-trust-strip {
     width: 100%;
+
     padding-top: var(--av-trust-padding-top);
     padding-bottom: var(--av-trust-padding-bottom);
+
     background: var(--av-trust-bg);
     color: var(--av-trust-text);
   }
 
-  .avonent-trust-strip__container {
-    width: min(calc(100% - 48px), 1320px);
+  .avonent-trust-strip__inner {
+    width: min(calc(100% - 40px), 1180px);
+
     margin: 0 auto;
-  }
 
-  .avonent-trust-strip__eyebrow {
-    margin-bottom: 10px;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-family: var(--font-body--family);
-    font-size: 12px;
-    font-weight: 650;
-    color: var(--av-trust-accent);
-  }
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  .avonent-trust-strip__heading {
-    margin: 0;
-    text-align: center;
-    font-family: var(--font-heading--family);
-    font-size: clamp(28px, 4vw, 42px);
-    font-weight: 600;
-    line-height: 1.06;
-    letter-spacing: -0.03em;
-    color: var(--av-trust-text);
-  }
-
-  .avonent-trust-strip__subheading {
-    max-width: 700px;
-    margin: 14px auto 0;
-    text-align: center;
-    font-family: var(--font-body--family);
-    font-size: 16px;
-    line-height: 1.5;
-    opacity: 0.72;
-  }
-
-  .avonent-trust-strip__subheading p {
-    margin: 0;
-  }
-
-  .avonent-trust-strip__items {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 18px 22px;
-    margin-top: 28px;
-    align-items: start;
+    gap: clamp(32px, 7vw, 100px);
   }
 
   .avonent-trust-strip__item {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
-    gap: 10px;
+
+    gap: 9px;
+
     min-width: 0;
+
+    color: var(--av-trust-text);
+
     text-align: left;
   }
 
   .avonent-trust-strip__icon {
-    flex: 0 0 auto;
-    width: var(--av-trust-icon-size);
-    height: var(--av-trust-icon-size);
+    flex: 0 0 21px;
+
+    width: 21px;
+    height: 21px;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     color: var(--av-trust-accent);
-    margin-top: 1px;
   }
 
   .avonent-trust-strip__icon svg {
+    display: block;
+
     width: 100%;
     height: 100%;
-    stroke: currentColor;
+
     fill: none;
-    stroke-width: 1.9;
+
+    stroke: currentColor;
+    stroke-width: 1.8;
+
     stroke-linecap: round;
     stroke-linejoin: round;
   }
 
   .avonent-trust-strip__text {
     font-family: var(--font-body--family);
+
     font-size: 15px;
     font-weight: 500;
+
     line-height: 1.25;
-    color: var(--av-trust-text);
-    max-width: 180px;
+
+    color: inherit;
   }
 
-  @media screen and (max-width: 989px) {
-    .avonent-trust-strip__items {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px 18px;
-    }
 
-    .avonent-trust-strip__item {
-      justify-content: flex-start;
-    }
-  }
+  /*
+   * MOBILE
+   */
 
   @media screen and (max-width: 749px) {
-    .avonent-trust-strip {
-      padding-top: var(--av-trust-padding-top);
-      padding-bottom: var(--av-trust-padding-bottom);
-    }
 
-    .avonent-trust-strip__container {
+    .avonent-trust-strip__inner {
       width: calc(100% - 24px);
-    }
 
-    .avonent-trust-strip__heading {
-      font-size: clamp(26px, 8vw, 34px);
-    }
+      display: grid;
 
-    .avonent-trust-strip__subheading {
-      margin-top: 12px;
-      font-size: 14px;
-    }
+      grid-template-columns:
+        repeat(3, minmax(0, 1fr));
 
-    .avonent-trust-strip__items {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px 10px;
-      margin-top: 22px;
+      align-items: start;
+
+      gap: 8px;
     }
 
     .avonent-trust-strip__item {
+      display: flex;
+
+      align-items: flex-start;
       justify-content: center;
-      gap: 7px;
+
+      gap: 6px;
+
+      min-width: 0;
     }
 
     .avonent-trust-strip__icon {
-      width: calc(var(--av-trust-icon-size) - 2px);
-      height: calc(var(--av-trust-icon-size) - 2px);
+      flex: 0 0 17px;
+
+      width: 17px;
+      height: 17px;
+
+      margin-top: 1px;
     }
 
     .avonent-trust-strip__text {
-      font-size: 12px;
+      max-width: 95px;
+
+      font-size: 11px;
+      font-weight: 500;
+
       line-height: 1.25;
-      max-width: 90px;
     }
+
   }
 
+
+  /*
+   * SMALL PHONES
+   */
+
   @media screen and (max-width: 380px) {
-    .avonent-trust-strip__container {
-      width: calc(100% - 18px);
+
+    .avonent-trust-strip__inner {
+      width: calc(100% - 16px);
+
+      gap: 5px;
     }
 
-    .avonent-trust-strip__items {
-      gap: 12px 8px;
+    .avonent-trust-strip__item {
+      gap: 4px;
+    }
+
+    .avonent-trust-strip__icon {
+      flex-basis: 15px;
+
+      width: 15px;
+      height: 15px;
     }
 
     .avonent-trust-strip__text {
-      font-size: 11px;
-      max-width: 82px;
+      max-width: 88px;
+
+      font-size: 10px;
     }
+
   }
 
 {% endstylesheet %}
@@ -268,29 +243,8 @@
   "name": "00 Avonent Trust Strip",
   "tag": "section",
   "class": "avonent-trust-strip-section",
+
   "settings": [
-    {
-      "type": "header",
-      "content": "Optional heading"
-    },
-    {
-      "type": "text",
-      "id": "eyebrow",
-      "label": "Small heading",
-      "default": ""
-    },
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Heading",
-      "default": ""
-    },
-    {
-      "type": "richtext",
-      "id": "subheading",
-      "label": "Subheading",
-      "default": "<p></p>"
-    },
     {
       "type": "header",
       "content": "Colors"
@@ -298,7 +252,7 @@
     {
       "type": "color",
       "id": "background_color",
-      "label": "Section background",
+      "label": "Background",
       "default": "#FFFFFF"
     },
     {
@@ -310,47 +264,39 @@
     {
       "type": "color",
       "id": "accent_color",
-      "label": "Icon accent",
+      "label": "Icons",
       "default": "#02C6EA"
     },
+
     {
       "type": "header",
-      "content": "Layout"
-    },
-    {
-      "type": "range",
-      "id": "icon_size",
-      "label": "Icon size",
-      "min": 14,
-      "max": 26,
-      "step": 1,
-      "unit": "px",
-      "default": 18
+      "content": "Spacing"
     },
     {
       "type": "range",
       "id": "padding_top",
       "label": "Top padding",
       "min": 0,
-      "max": 100,
+      "max": 60,
       "step": 2,
       "unit": "px",
-      "default": 18
+      "default": 22
     },
     {
       "type": "range",
       "id": "padding_bottom",
       "label": "Bottom padding",
       "min": 0,
-      "max": 100,
+      "max": 60,
       "step": 2,
       "unit": "px",
-      "default": 18
+      "default": 22
     }
   ],
+
   "blocks": [
     {
-      "type": "item",
+      "type": "trust_item",
       "name": "Trust item",
       "settings": [
         {
@@ -358,12 +304,30 @@
           "id": "icon",
           "label": "Icon",
           "options": [
-            { "value": "check", "label": "Check" },
-            { "value": "lab", "label": "Lab" },
-            { "value": "shipping", "label": "Shipping" },
-            { "value": "flag", "label": "USA flag" },
-            { "value": "shield", "label": "Shield" },
-            { "value": "star", "label": "Star" }
+            {
+              "value": "check",
+              "label": "Check circle"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "lab",
+              "label": "Lab flask"
+            },
+            {
+              "value": "flag",
+              "label": "Flag"
+            },
+            {
+              "value": "truck",
+              "label": "Shipping truck"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            }
           ],
           "default": "check"
         },
@@ -376,26 +340,27 @@
       ]
     }
   ],
+
   "presets": [
     {
       "name": "00 Avonent Trust Strip",
       "blocks": [
         {
-          "type": "item",
+          "type": "trust_item",
           "settings": {
-            "icon": "check",
+            "icon": "shield",
             "text": "30-Day Risk-Free Trial"
           }
         },
         {
-          "type": "item",
+          "type": "trust_item",
           "settings": {
             "icon": "lab",
-            "text": "Third-Party Tested"
+            "text": "Third-Party Lab Tested"
           }
         },
         {
-          "type": "item",
+          "type": "trust_item",
           "settings": {
             "icon": "flag",
             "text": "Ships from USA"
