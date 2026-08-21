@@ -1,0 +1,943 @@
+{% liquid
+  assign section_id = 'avonent-home-hero-' | append: section.id
+
+  assign desktop_image = section.settings.desktop_image
+  assign mobile_image = section.settings.mobile_image
+
+  if mobile_image == blank
+    assign mobile_image = desktop_image
+  endif
+%}
+
+<section
+  id="{{ section_id }}"
+  class="avonent-home-hero"
+  style="
+    --av-hero-height-desktop: {{ section.settings.desktop_height }}px;
+    --av-hero-height-mobile: {{ section.settings.mobile_height }}px;
+    --av-hero-text-color: {{ section.settings.text_color }};
+    --av-hero-button-bg: {{ section.settings.button_background }};
+    --av-hero-button-text: {{ section.settings.button_text_color }};
+    --av-hero-stars: {{ section.settings.star_color }};
+    --av-hero-overlay: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+  "
+>
+  <div class="avonent-home-hero__media">
+    {% if desktop_image != blank %}
+      {{
+        desktop_image
+        | image_url: width: 2400
+        | image_tag:
+          class: 'avonent-home-hero__image avonent-home-hero__image--desktop',
+          loading: 'eager',
+          fetchpriority: 'high',
+          widths: '750, 1100, 1500, 2000, 2400',
+          sizes: '100vw'
+      }}
+    {% else %}
+      {{ 'lifestyle-1' | placeholder_svg_tag: 'avonent-home-hero__placeholder' }}
+    {% endif %}
+
+    {% if mobile_image != blank %}
+      {{
+        mobile_image
+        | image_url: width: 1200
+        | image_tag:
+          class: 'avonent-home-hero__image avonent-home-hero__image--mobile',
+          loading: 'eager',
+          fetchpriority: 'high',
+          widths: '375, 550, 750, 900, 1200',
+          sizes: '100vw'
+      }}
+    {% endif %}
+
+    <div class="avonent-home-hero__overlay"></div>
+  </div>
+
+  <div
+    class="
+      avonent-home-hero__content
+      avonent-home-hero__content--{{ section.settings.content_alignment }}
+      avonent-home-hero__content--vertical-{{ section.settings.vertical_position }}
+    "
+  >
+    <div class="avonent-home-hero__content-inner">
+
+      {% if section.settings.eyebrow != blank %}
+        <div class="avonent-home-hero__eyebrow">
+          {{ section.settings.eyebrow }}
+        </div>
+      {% endif %}
+
+      {% if section.settings.heading != blank %}
+        <h1 class="avonent-home-hero__heading">
+          {{ section.settings.heading }}
+        </h1>
+      {% endif %}
+
+      {% if section.settings.description != blank %}
+        <div class="avonent-home-hero__description">
+          {{ section.settings.description }}
+        </div>
+      {% endif %}
+
+      {% if section.settings.button_text != blank %}
+        <a
+          {% if section.settings.button_link != blank %}
+            href="{{ section.settings.button_link }}"
+          {% else %}
+            role="link"
+            aria-disabled="true"
+          {% endif %}
+          class="avonent-home-hero__button"
+        >
+          {{ section.settings.button_text }}
+
+          {% if section.settings.show_button_arrow %}
+            <span
+              class="avonent-home-hero__button-arrow"
+              aria-hidden="true"
+            >
+              →
+            </span>
+          {% endif %}
+        </a>
+      {% endif %}
+
+      {% if section.settings.show_social_proof %}
+        <div class="avonent-home-hero__social-proof">
+
+          <div
+            class="avonent-home-hero__stars"
+            aria-label="{{ section.settings.star_rating }} out of 5 stars"
+          >
+            {% for i in (1..5) %}
+              <span aria-hidden="true">★</span>
+            {% endfor %}
+          </div>
+
+          <div class="avonent-home-hero__customer-copy">
+
+            <strong
+              class="avonent-home-hero__customer-number"
+              data-avonent-counter
+              data-counter-start="{{ section.settings.counter_start }}"
+              data-counter-end="{{ section.settings.counter_end }}"
+              data-counter-duration="{{ section.settings.counter_duration }}"
+              data-counter-suffix="{{ section.settings.counter_suffix | escape }}"
+            >
+              {{ section.settings.counter_start | default: 0 }}
+            </strong>
+
+            {% if section.settings.customer_text != blank %}
+              <span>
+                {{ section.settings.customer_text }}
+              </span>
+            {% endif %}
+
+          </div>
+
+        </div>
+      {% endif %}
+
+    </div>
+  </div>
+</section>
+
+<script>
+  (() => {
+    const hero = document.getElementById('{{ section_id }}');
+
+    if (!hero || hero.dataset.avonentHeroReady === 'true') {
+      return;
+    }
+
+    hero.dataset.avonentHeroReady = 'true';
+
+    const counters = hero.querySelectorAll('[data-avonent-counter]');
+
+    const formatNumber = (number) => {
+      return Math.floor(number).toLocaleString();
+    };
+
+    const animateCounter = (counter) => {
+      if (counter.dataset.animated === 'true') return;
+
+      counter.dataset.animated = 'true';
+
+      const start =
+        Number(counter.dataset.counterStart) || 0;
+
+      const end =
+        Number(counter.dataset.counterEnd) || 0;
+
+      const duration =
+        Number(counter.dataset.counterDuration) || 1400;
+
+      const suffix =
+        counter.dataset.counterSuffix || '';
+
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        counter.textContent =
+          formatNumber(end) + suffix;
+
+        return;
+      }
+
+      const startTime = performance.now();
+
+      const tick = (currentTime) => {
+        const elapsed =
+          currentTime - startTime;
+
+        const progress =
+          Math.min(elapsed / duration, 1);
+
+        /*
+         * Smooth ease-out animation.
+         */
+        const eased =
+          1 - Math.pow(1 - progress, 3);
+
+        const currentValue =
+          start + ((end - start) * eased);
+
+        counter.textContent =
+          formatNumber(currentValue) + suffix;
+
+        if (progress < 1) {
+          requestAnimationFrame(tick);
+        } else {
+          counter.textContent =
+            formatNumber(end) + suffix;
+        }
+      };
+
+      requestAnimationFrame(tick);
+    };
+
+    if ('IntersectionObserver' in window) {
+      const observer =
+        new IntersectionObserver(
+          (entries, observerInstance) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+
+              animateCounter(entry.target);
+              observerInstance.unobserve(entry.target);
+            });
+          },
+          {
+            threshold: 0.4
+          }
+        );
+
+      counters.forEach((counter) => {
+        observer.observe(counter);
+      });
+    } else {
+      counters.forEach(animateCounter);
+    }
+  })();
+</script>
+
+{% stylesheet %}
+
+  /*
+   * AVONENT HOME HERO
+   */
+
+  .avonent-home-hero {
+    position: relative;
+
+    width: 100%;
+    min-height: var(--av-hero-height-desktop);
+
+    overflow: hidden;
+
+    background: #eefbfe;
+  }
+
+
+  /*
+   * MEDIA
+   */
+
+  .avonent-home-hero__media {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+  }
+
+  .avonent-home-hero__image,
+  .avonent-home-hero__placeholder {
+    position: absolute;
+    inset: 0;
+
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+  }
+
+  .avonent-home-hero__image--mobile {
+    display: none;
+  }
+
+  .avonent-home-hero__overlay {
+    position: absolute;
+    inset: 0;
+
+    background: rgba(
+      0,
+      0,
+      0,
+      var(--av-hero-overlay)
+    );
+  }
+
+
+  /*
+   * CONTENT
+   */
+
+  .avonent-home-hero__content {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+
+    width: min(
+      100% - 48px,
+      1440px
+    );
+
+    min-height: var(--av-hero-height-desktop);
+
+    margin-inline: auto;
+  }
+
+  .avonent-home-hero__content--vertical-top {
+    align-items: flex-start;
+    padding-top: 72px;
+  }
+
+  .avonent-home-hero__content--vertical-center {
+    align-items: center;
+  }
+
+  .avonent-home-hero__content--vertical-bottom {
+    align-items: flex-end;
+    padding-bottom: 72px;
+  }
+
+  .avonent-home-hero__content--left {
+    justify-content: flex-start;
+    text-align: left;
+  }
+
+  .avonent-home-hero__content--center {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .avonent-home-hero__content--right {
+    justify-content: flex-end;
+    text-align: right;
+  }
+
+  .avonent-home-hero__content-inner {
+    display: flex;
+    flex-direction: column;
+
+    width: min(100%, 720px);
+
+    color: var(--av-hero-text-color);
+  }
+
+  .avonent-home-hero__content--center
+    .avonent-home-hero__content-inner {
+    align-items: center;
+  }
+
+  .avonent-home-hero__content--right
+    .avonent-home-hero__content-inner {
+    align-items: flex-end;
+  }
+
+
+  /*
+   * EYEBROW
+   */
+
+  .avonent-home-hero__eyebrow {
+    margin-bottom: 12px;
+
+    font-family: var(--font-body--family);
+    font-size: 13px;
+    font-weight: 650;
+
+    line-height: 1.2;
+
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+
+  /*
+   * HEADING
+   */
+
+  .avonent-home-hero__heading {
+    max-width: 760px;
+
+    margin: 0;
+
+    color: inherit;
+
+    font-family: var(--font-heading--family);
+
+    font-size: clamp(
+      42px,
+      5vw,
+      72px
+    );
+
+    font-weight: 650;
+
+    line-height: 0.98;
+
+    letter-spacing: -0.035em;
+  }
+
+
+  /*
+   * DESCRIPTION
+   */
+
+  .avonent-home-hero__description {
+    max-width: 640px;
+
+    margin-top: 20px;
+
+    color: inherit;
+
+    font-family: var(--font-body--family);
+
+    font-size: 18px;
+    font-weight: 400;
+
+    line-height: 1.45;
+  }
+
+  .avonent-home-hero__description p {
+    margin: 0;
+  }
+
+
+  /*
+   * CTA
+   */
+
+  .avonent-home-hero__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 220px;
+    min-height: 58px;
+
+    margin-top: 28px;
+
+    padding:
+      15px
+      28px;
+
+    border: 0;
+    border-radius: 10px;
+
+    background: var(--av-hero-button-bg);
+    color: var(--av-hero-button-text);
+
+    text-decoration: none;
+
+    font-family: var(--font-body--family);
+    font-size: 15px;
+    font-weight: 700;
+
+    line-height: 1;
+
+    letter-spacing: 0.055em;
+
+    text-transform: uppercase;
+
+    transition:
+      transform 180ms ease,
+      opacity 180ms ease;
+  }
+
+  .avonent-home-hero__button:hover {
+    transform: translateY(-1px);
+    opacity: 0.92;
+  }
+
+  .avonent-home-hero__button-arrow {
+    margin-left: 9px;
+
+    font-size: 19px;
+    line-height: 0;
+  }
+
+
+  /*
+   * SOCIAL PROOF
+   */
+
+  .avonent-home-hero__social-proof {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    margin-top: 20px;
+
+    color: inherit;
+  }
+
+  .avonent-home-hero__content--left
+    .avonent-home-hero__social-proof {
+    justify-content: flex-start;
+  }
+
+  .avonent-home-hero__content--right
+    .avonent-home-hero__social-proof {
+    justify-content: flex-end;
+  }
+
+
+  /*
+   * STARS
+   */
+
+  .avonent-home-hero__stars {
+    display: flex;
+    align-items: center;
+
+    gap: 2px;
+
+    color: var(--av-hero-stars);
+
+    font-size: 20px;
+
+    line-height: 1;
+  }
+
+
+  /*
+   * CUSTOMER COUNT
+   */
+
+  .avonent-home-hero__customer-copy {
+    display: flex;
+    align-items: baseline;
+
+    gap: 5px;
+
+    font-family: var(--font-body--family);
+
+    font-size: 16px;
+    font-weight: 450;
+
+    line-height: 1.2;
+
+    white-space: nowrap;
+  }
+
+  .avonent-home-hero__customer-number {
+    font-size: 18px;
+    font-weight: 750;
+  }
+
+
+  /*
+   * MOBILE
+   */
+
+  @media screen and (max-width: 749px) {
+
+    .avonent-home-hero {
+      min-height:
+        var(--av-hero-height-mobile);
+    }
+
+    .avonent-home-hero__image--desktop {
+      {% if mobile_image != blank %}
+        display: none;
+      {% endif %}
+    }
+
+    .avonent-home-hero__image--mobile {
+      display: block;
+    }
+
+    .avonent-home-hero__content {
+      width: calc(100% - 32px);
+
+      min-height:
+        var(--av-hero-height-mobile);
+
+      justify-content: center;
+
+      text-align: center;
+    }
+
+    .avonent-home-hero__content--vertical-top {
+      padding-top: 38px;
+    }
+
+    .avonent-home-hero__content--vertical-bottom {
+      padding-bottom: 38px;
+    }
+
+    .avonent-home-hero__content-inner {
+      width: 100%;
+
+      align-items: center;
+    }
+
+    .avonent-home-hero__eyebrow {
+      margin-bottom: 9px;
+
+      font-size: 11px;
+    }
+
+    .avonent-home-hero__heading {
+      max-width: 520px;
+
+      font-size: clamp(
+        36px,
+        10vw,
+        50px
+      );
+
+      line-height: 1;
+
+      letter-spacing: -0.035em;
+    }
+
+    .avonent-home-hero__description {
+      max-width: 500px;
+
+      margin-top: 15px;
+
+      font-size: 16px;
+
+      line-height: 1.35;
+    }
+
+    .avonent-home-hero__button {
+      width: min(
+        100%,
+        330px
+      );
+
+      min-height: 54px;
+
+      margin-top: 22px;
+
+      padding-inline: 20px;
+
+      font-size: 14px;
+    }
+
+    .avonent-home-hero__social-proof {
+      justify-content: center;
+
+      gap: 8px;
+
+      margin-top: 17px;
+    }
+
+    .avonent-home-hero__stars {
+      font-size: 18px;
+    }
+
+    .avonent-home-hero__customer-copy {
+      font-size: 14px;
+    }
+
+    .avonent-home-hero__customer-number {
+      font-size: 15px;
+    }
+
+  }
+
+
+  /*
+   * SMALL PHONES
+   */
+
+  @media screen and (max-width: 390px) {
+
+    .avonent-home-hero__content {
+      width: calc(100% - 24px);
+    }
+
+    .avonent-home-hero__heading {
+      font-size: 35px;
+    }
+
+    .avonent-home-hero__description {
+      font-size: 14px;
+    }
+
+    .avonent-home-hero__stars {
+      font-size: 16px;
+    }
+
+    .avonent-home-hero__customer-copy {
+      font-size: 13px;
+    }
+
+  }
+
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "00 Avonent Home Hero",
+  "tag": "section",
+  "class": "avonent-home-hero-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Images"
+    },
+    {
+      "type": "image_picker",
+      "id": "desktop_image",
+      "label": "Desktop image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile image"
+    },
+
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Small text above heading",
+      "default": "PREMIUM DAILY WELLNESS"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Feel Better. Live Sharper."
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Premium formulas made for the routines that matter.</p>"
+    },
+
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "SHOP NOW"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button_arrow",
+      "label": "Show arrow",
+      "default": false
+    },
+
+    {
+      "type": "header",
+      "content": "Customer proof"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social_proof",
+      "label": "Show customer proof",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "star_rating",
+      "label": "Star rating",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "number",
+      "id": "counter_start",
+      "label": "Counter starting number",
+      "default": 8500
+    },
+    {
+      "type": "number",
+      "id": "counter_end",
+      "label": "Counter ending number",
+      "default": 10000
+    },
+    {
+      "type": "text",
+      "id": "counter_suffix",
+      "label": "Number suffix",
+      "default": "+"
+    },
+    {
+      "type": "text",
+      "id": "customer_text",
+      "label": "Text after number",
+      "default": "Trusted Customers"
+    },
+    {
+      "type": "range",
+      "id": "counter_duration",
+      "label": "Count animation duration",
+      "min": 500,
+      "max": 4000,
+      "step": 100,
+      "unit": "ms",
+      "default": 1600
+    },
+
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Button background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star color",
+      "default": "#02C6EA"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Image overlay",
+      "min": 0,
+      "max": 70,
+      "step": 5,
+      "unit": "%",
+      "default": 0
+    },
+
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "Content alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "vertical_position",
+      "label": "Vertical position",
+      "options": [
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        }
+      ],
+      "default": "top"
+    },
+    {
+      "type": "range",
+      "id": "desktop_height",
+      "label": "Desktop height",
+      "min": 450,
+      "max": 1000,
+      "step": 10,
+      "unit": "px",
+      "default": 720
+    },
+    {
+      "type": "range",
+      "id": "mobile_height",
+      "label": "Mobile height",
+      "min": 500,
+      "max": 1000,
+      "step": 10,
+      "unit": "px",
+      "default": 720
+    }
+  ],
+  "presets": [
+    {
+      "name": "00 Avonent Home Hero"
+    }
+  ]
+}
+{% endschema %}
