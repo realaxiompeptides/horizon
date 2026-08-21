@@ -13,7 +13,10 @@
   <div class="cart-totals__original-container cart-primary-typography">
     {%- if cart.cart_level_discount_applications.size > 0 -%}
       <span class="cart-totals__item cart-totals__original">
-        <span class="cart-totals__original-label">{{ 'content.cart_subtotal' | t }}</span>
+        <span class="cart-totals__original-label">
+          {{ 'content.cart_subtotal' | t }}
+        </span>
+
         <span
           class="cart-totals__original-value cart-secondary-typography"
           data-testid="cart-subtotal-value"
@@ -21,6 +24,7 @@
           {{- cart.items_subtotal_price | money -}}
         </span>
       </span>
+
       <ul
         class="cart-discounts"
         role="list"
@@ -32,6 +36,7 @@
               {{- 'icon-discount.svg' | inline_asset_content -}}
               {{ discount.title | escape }}
             </span>
+
             <span class="cart-discounts__value cart-secondary-typography">
               -{{ discount.total_allocated_amount | money -}}
             </span>
@@ -43,6 +48,7 @@
 
   {% if settings.show_cart_note or settings.show_add_discount_code %}
     <div class="cart-actions">
+
       {% if settings.show_cart_note %}
         <script
           type="module"
@@ -73,6 +79,7 @@
                 >
                   {{- 'content.seller_note' | t -}}
                 </label>
+
                 <textarea
                   form="cart-form"
                   on:input="/updateCartNote"
@@ -84,6 +91,7 @@
               </div>
             </details>
           {% endcapture %}
+
           {% render 'accordion-custom-component',
             children: cart_note_accordion_children,
             class: 'cart-note',
@@ -100,6 +108,7 @@
       {% if settings.show_add_discount_code %}
         {% liquid
           assign discount_codes = cart.cart_level_discount_applications | where: 'type', 'discount_code' | map: 'title'
+
           for item in cart.items
             for allocation in item.line_level_discount_allocations
               if allocation.discount_application.type == 'discount_code'
@@ -124,7 +133,9 @@
             {% endif %}
           >
             <summary class="cart-discount__summary">
-              <span class="cart-discount__label cart-primary-typography">{{ 'content.discount' | t }}</span>
+              <span class="cart-discount__label cart-primary-typography">
+                {{ 'content.discount' | t }}
+              </span>
 
               <span class="cart-totals__icon">
                 {{- 'icon-plus.svg' | inline_asset_content -}}
@@ -150,6 +161,7 @@
                       >
                         {{- 'accessibility.discount' | t -}}
                       </label>
+
                       <input
                         id="cart-discount"
                         class="cart-discount__input"
@@ -160,6 +172,7 @@
                         required
                         data-skip-node-update
                       >
+
                       <button
                         type="submit"
                         class="button cart-discount__button"
@@ -177,12 +190,14 @@
                     <span class="svg-wrapper">
                       {{- 'icon-error.svg' | inline_asset_content -}}
                     </span>
+
                     <small
                       class="cart-discount__error-text cart-primary-typography hidden"
                       ref="cartDiscountErrorDiscountCode"
                     >
                       {{ 'content.discount_code_error' | t: code: 'test' }}
                     </small>
+
                     <small
                       class="cart-discount__error-text cart-primary-typography hidden"
                       ref="cartDiscountErrorShipping"
@@ -201,6 +216,7 @@
                         <p class="cart-discount__pill-code">
                           {{ discount_code }}
                         </p>
+
                         <button
                           type="button"
                           on:click="/removeDiscount"
@@ -217,8 +233,13 @@
             </div>
           </details>
         {% endcapture %}
-        {% render 'accordion-custom-component', children: cart_discount_accordion_children, class: 'cart-discount' %}
+
+        {% render 'accordion-custom-component',
+          children: cart_discount_accordion_children,
+          class: 'cart-discount'
+        %}
       {% endif %}
+
     </div>
   {% endif %}
 
@@ -235,7 +256,10 @@
       class="cart-totals__item cart-totals__total"
       role="status"
     >
-      <span class="cart-totals__total-label cart-primary-typography">{{ 'content.cart_estimated_total' | t }}</span>
+      <span class="cart-totals__total-label cart-primary-typography">
+        {{ 'content.cart_estimated_total' | t }}
+      </span>
+
       <text-component
         ref="cartTotal"
         value="{{ total_price | strip_html }}"
@@ -256,55 +280,82 @@
     {% endif %}
 
     <div class="cart-totals__item cart-totals__tax-note cart-primary-typography">
-      {% render 'tax-info', has_discounts_enabled: settings.show_add_discount_code %}
+      {% render 'tax-info',
+        has_discounts_enabled: settings.show_add_discount_code
+      %}
     </div>
   </div>
 </div>
 
-<div class="cart__ctas">
+<div class="cart__ctas avonent-cart-ctas">
+
   <button
     type="submit"
     id="checkout"
-    class="cart__checkout-button button"
+    class="cart__checkout-button button avonent-cart-checkout"
     name="checkout"
     {% if cart == empty %}
       disabled
     {% endif %}
     form="cart-form"
   >
+    <span
+      class="avonent-cart-checkout__lock"
+      aria-hidden="true"
+    >
+      <svg viewBox="0 0 24 24">
+        <rect
+          x="5"
+          y="10"
+          width="14"
+          height="11"
+          rx="2"
+        ></rect>
+        <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+      </svg>
+    </span>
+
     <span class="button-text">
-      🔒 SECURE CHECKOUT
+      SECURE CHECKOUT
+    </span>
+
+    <span
+      class="avonent-cart-checkout__arrow"
+      aria-hidden="true"
+    >
+      →
     </span>
   </button>
 
-  {% if additional_checkout_buttons and settings.show_accelerated_checkout_buttons %}
-    <div
-      class="
-        additional-checkout-buttons
-        {% if accelerated_checkout_buttons_layout == 'vertical' %}additional-checkout-buttons--vertical{% endif %}
-      "
-    >
-      {{ content_for_additional_checkout_buttons }}
-    </div>
-  {% endif %}
-
   {% liquid
-    assign avonent_payment_types = 'american_express,diners_club,discover,google_pay,master,visa' | split: ','
+    assign avonent_payment_types = 'american_express,diners_club,discover,google_pay,master,paypal,shopify_pay,visa,apple_pay' | split: ','
   %}
-  <div class="cart-payment-icons-wrap">
-    <div class="cart-payment-icons" aria-label="Accepted payment methods">
-      {% for type in avonent_payment_types %}
-        <span class="cart-payment-icons__item">
-          {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
-        </span>
-      {% endfor %}
-    </div>
+
+  <div
+    class="avonent-cart-payment-icons"
+    aria-label="Accepted payment methods"
+  >
+    {% for type in avonent_payment_types %}
+      <span class="avonent-cart-payment-icon">
+        {{ type | payment_type_svg_tag }}
+      </span>
+    {% endfor %}
   </div>
 
-  <div class="cart-trusted-line">
-    <span class="cart-trusted-line__stars">★★★★★</span>
-    <span class="cart-trusted-line__text">10,000+ Trusted Customers</span>
+  <div class="avonent-cart-trusted-line">
+    <span
+      class="avonent-cart-trusted-stars"
+      aria-hidden="true"
+    >
+      ★★★★★
+    </span>
+
+    <span class="avonent-cart-trusted-text">
+      <strong>10,000+</strong>
+      Trusted Customers
+    </span>
   </div>
+
 </div>
 
 {% stylesheet %}
@@ -424,7 +475,6 @@
 
   .cart-totals__total-label {
     font-size: var(--cart-font-size--sm);
-    letter-spacing: 0.04em;
   }
 
   .cart-totals__total-value {
@@ -442,8 +492,7 @@
     font-size: var(--font-size--2xs);
   }
 
-  .cart-note,
-  .cart-discount {
+  .cart-note {
     width: 100%;
   }
 
@@ -459,25 +508,22 @@
     padding-block: var(--padding-2xs) var(--padding-sm);
   }
 
-  .cart-note__summary,
-  .cart-discount__summary {
+  .cart-note__summary {
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
 
-  .cart-note__summary:hover,
-  .cart-discount__summary:hover {
+  .cart-note__summary:hover {
     color: rgb(var(--color-rgb, var(--color-foreground-rgb)) / var(--opacity-subdued-text));
   }
 
-  .cart-note__label,
-  .cart-discount__label {
+  .cart-note__label {
     display: flex;
     align-items: flex-start;
     gap: var(--gap-2xs);
     font-size: var(--font-size--2xs);
-    font-weight: 600;
+    font-weight: 500;
   }
 
   .cart-note__instructions {
@@ -503,35 +549,15 @@
   .cart__ctas {
     width: 100%;
     display: grid;
-    gap: 14px;
+    gap: var(--checkout-button-gap);
     grid-auto-flow: row;
     grid-template-columns: 1fr;
   }
 
   .cart__ctas .cart__checkout-button {
     width: 100%;
-    min-height: 56px;
-    height: clamp(25px, var(--height-buy-buttons), 56px);
+    height: clamp(25px, var(--height-buy-buttons), 55px);
     padding-inline: var(--padding-4xl);
-    border-radius: 18px;
-    border: 0;
-    background: #02C6EA;
-    color: #111111;
-    box-shadow: 0 8px 24px rgba(2, 198, 234, 0.24);
-    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
-  }
-
-  .cart__ctas .cart__checkout-button:hover {
-    background: #26d0ef;
-    box-shadow: 0 10px 28px rgba(2, 198, 234, 0.3);
-    transform: translateY(-1px);
-  }
-
-  .cart__ctas .cart__checkout-button .button-text {
-    color: #111111;
-    font-size: 1rem;
-    font-weight: 800;
-    letter-spacing: 0.04em;
   }
 
   .cart-drawer__summary .cart-totals:not(:has(.cart-totals__original-container:empty)) {
@@ -575,6 +601,10 @@
     margin: 0;
   }
 
+  .cart-discount {
+    width: 100%;
+  }
+
   .cart-discount__codes {
     display: none;
     gap: var(--padding-xs);
@@ -603,7 +633,7 @@
     align-items: center;
     padding: var(--padding-xs) var(--padding-sm);
     border-radius: var(--style-border-radius-pills);
-    background-color: #edfafe;
+    background-color: var(--color-input-background);
     text-transform: uppercase;
   }
 
@@ -617,6 +647,7 @@
 
   :is(.cart-discount__pill-remove, .cart-discount__pill-remove:hover) {
     --close-icon-opacity: 0.4;
+
     color: var(--color-foreground);
     background-color: transparent;
     pointer-events: all;
@@ -642,119 +673,361 @@
     margin-block-start: var(--margin-3xs);
   }
 
-  .cart-payment-icons-wrap {
-    padding-top: 4px;
+  .cart-discount__summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
-  .cart-payment-icons {
+  .cart-discount__summary:hover {
+    color: rgb(var(--color-rgb, var(--color-foreground-rgb)) / var(--opacity-subdued-text));
+  }
+
+  .cart-discount__label {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--gap-2xs);
+    font-size: var(--font-size--2xs);
+    font-weight: 500;
+  }
+
+
+  /*
+   * AVONENT CART DRAWER CHECKOUT
+   */
+
+  .avonent-cart-ctas {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+  }
+
+  .cart-drawer__summary .avonent-cart-checkout {
+    width: 100%;
+    min-height: 58px;
+    height: auto;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    flex-wrap: wrap;
+
+    gap: 12px;
+
+    padding: 15px 20px;
+
+    border: 0;
+    border-radius: 16px;
+
+    background: #02C6EA;
+    color: #ffffff;
+
+    box-shadow:
+      0 8px 22px
+      rgba(2, 198, 234, 0.18);
+
+    font-family:
+      var(--font-body--family);
+
+    transition:
+      background 160ms ease,
+      transform 160ms ease,
+      box-shadow 160ms ease;
   }
 
-  .cart-payment-icons__item {
+  .cart-drawer__summary .avonent-cart-checkout:hover {
+    background: #19cbed;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+      0 10px 28px
+      rgba(2, 198, 234, 0.24);
+  }
+
+  .cart-drawer__summary .avonent-cart-checkout:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+
+  /*
+   * BLACK LOCK
+   */
+
+  .avonent-cart-checkout__lock {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 42px;
-    height: 28px;
-    padding: 4px 7px;
-    border: 1px solid #e7edf0;
-    border-radius: 8px;
-    background: #ffffff;
+
+    flex: 0 0 19px;
+
+    width: 19px;
+    height: 19px;
+
+    color: #111111;
   }
 
-  .cart-payment-icons__item svg {
+  .avonent-cart-checkout__lock svg {
     display: block;
-    height: 16px;
-    width: auto;
-    max-width: 32px;
+
+    width: 100%;
+    height: 100%;
+
+    fill: none;
+
+    stroke: currentColor;
+    stroke-width: 1.9;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
 
-  .cart-trusted-line {
+
+  /*
+   * WHITE CHECKOUT TEXT
+   */
+
+  .cart-drawer__summary
+  .avonent-cart-checkout
+  .button-text {
+    color: #ffffff !important;
+
+    font-size: 15px;
+    font-weight: 750;
+
+    line-height: 1;
+
+    letter-spacing: 0.055em;
+
+    text-transform: uppercase;
+  }
+
+
+  /*
+   * BLACK ARROW
+   */
+
+  .avonent-cart-checkout__arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #111111;
+
+    font-size: 22px;
+    font-weight: 400;
+
+    line-height: 1;
+  }
+
+
+  /*
+   * SMALL PAYMENT ICONS ONLY
+   * No accelerated checkout buttons.
+   */
+
+  .avonent-cart-payment-icons {
+    width: 100%;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+
     flex-wrap: wrap;
-    padding-top: 4px;
-    border-top: 1px solid rgb(var(--color-foreground-rgb) / 0.08);
+
+    gap: 7px;
+
+    padding-top: 1px;
+  }
+
+  .avonent-cart-payment-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 29px;
+
+    padding: 3px 6px;
+
+    border: 1px solid #e2e8eb;
+    border-radius: 7px;
+
+    background: #ffffff;
+  }
+
+  .avonent-cart-payment-icon svg {
+    display: block;
+
+    width: auto;
+    height: 20px;
+
+    max-width: 39px;
+  }
+
+
+  /*
+   * TRUSTED CUSTOMERS
+   */
+
+  .avonent-cart-trusted-line {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 9px;
+
     margin-top: 2px;
-    padding-top: 14px;
+    padding-top: 13px;
+
+    border-top: 1px solid #e8edef;
+
+    text-align: center;
   }
 
-  .cart-trusted-line__stars {
+  .avonent-cart-trusted-stars {
     color: #02C6EA;
-    font-size: 1.2rem;
+
+    font-size: 18px;
+
     line-height: 1;
-    letter-spacing: 0.08em;
+
+    letter-spacing: 1px;
   }
 
-  .cart-trusted-line__text {
+  .avonent-cart-trusted-text {
     color: #111111;
-    font-size: 0.98rem;
-    font-weight: 700;
+
+    font-family:
+      var(--font-body--family);
+
+    font-size: 14px;
+    font-weight: 600;
+
     line-height: 1.2;
   }
+
+  .avonent-cart-trusted-text strong {
+    font-weight: 750;
+  }
+
+
+  /*
+   * MOBILE
+   */
+
+  @media screen and (max-width: 749px) {
+
+    .avonent-cart-ctas {
+      gap: 12px;
+    }
+
+    .cart-drawer__summary .avonent-cart-checkout {
+      min-height: 57px;
+
+      padding-inline: 14px;
+
+      border-radius: 15px;
+
+      gap: 10px;
+    }
+
+    .cart-drawer__summary
+    .avonent-cart-checkout
+    .button-text {
+      font-size: 14px;
+    }
+
+    .avonent-cart-checkout__lock {
+      flex-basis: 18px;
+
+      width: 18px;
+      height: 18px;
+    }
+
+    .avonent-cart-checkout__arrow {
+      font-size: 21px;
+    }
+
+    .avonent-cart-payment-icons {
+      gap: 6px;
+    }
+
+    .avonent-cart-payment-icon {
+      height: 28px;
+
+      padding-inline: 5px;
+    }
+
+    .avonent-cart-payment-icon svg {
+      height: 18px;
+
+      max-width: 36px;
+    }
+
+    .avonent-cart-trusted-stars {
+      font-size: 17px;
+    }
+
+    .avonent-cart-trusted-text {
+      font-size: 13px;
+    }
+
+  }
+
+
+  /*
+   * SMALL PHONES
+   */
+
+  @media screen and (max-width: 360px) {
+
+    .cart-drawer__summary .avonent-cart-checkout {
+      min-height: 54px;
+
+      gap: 8px;
+    }
+
+    .cart-drawer__summary
+    .avonent-cart-checkout
+    .button-text {
+      font-size: 12px;
+    }
+
+    .avonent-cart-checkout__arrow {
+      font-size: 19px;
+    }
+
+    .avonent-cart-payment-icon {
+      height: 25px;
+    }
+
+    .avonent-cart-payment-icon svg {
+      height: 16px;
+
+      max-width: 31px;
+    }
+
+    .avonent-cart-trusted-stars {
+      font-size: 15px;
+    }
+
+    .avonent-cart-trusted-text {
+      font-size: 12px;
+    }
+
+  }
+
 
   @media screen and (min-width: 750px) {
     .cart-summary--extend {
       height: 100%;
     }
-
-    .cart-payment-icons {
-      gap: 10px;
-    }
-
-    .cart-payment-icons__item {
-      min-width: 46px;
-      height: 30px;
-    }
   }
 
-  @media screen and (max-width: 749px) {
-    .cart__ctas {
-      gap: 12px;
-    }
-
-    .cart__ctas .cart__checkout-button {
-      min-height: 54px;
-      border-radius: 16px;
-    }
-
-    .cart__ctas .cart__checkout-button .button-text {
-      font-size: 0.96rem;
-    }
-
-    .cart-payment-icons {
-      gap: 7px;
-    }
-
-    .cart-payment-icons__item {
-      min-width: 40px;
-      height: 27px;
-      padding: 4px 6px;
-    }
-
-    .cart-payment-icons__item svg {
-      height: 15px;
-      max-width: 30px;
-    }
-
-    .cart-trusted-line {
-      gap: 8px;
-      padding-top: 12px;
-    }
-
-    .cart-trusted-line__stars {
-      font-size: 1.1rem;
-    }
-
-    .cart-trusted-line__text {
-      font-size: 0.95rem;
-      text-align: center;
-    }
-  }
 {% endstylesheet %}
