@@ -59,7 +59,7 @@
         "product_m3tCFa": {
           "type": "product",
           "settings": {
-            "product": "",
+            "product": "example-supplement-1",
             "badge_text": "POPULAR",
             "show_sale_badge": true,
             "category_text": "DAILY SUPPORT",
@@ -75,7 +75,7 @@
         "product_iXCyMz": {
           "type": "product",
           "settings": {
-            "product": "",
+            "product": "example-supplement-1",
             "badge_text": "CUSTOMER FAVORITE",
             "show_sale_badge": true,
             "category_text": "WELLNESS",
