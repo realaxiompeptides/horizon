@@ -1,0 +1,386 @@
+{% liquid
+  assign selected_variant = product.selected_or_first_available_variant
+  assign current_inventory = selected_variant.inventory_quantity | default: 0
+  assign starting_inventory = section.settings.starting_inventory
+
+  if starting_inventory <= 0
+    assign starting_inventory = 100
+  endif
+
+  assign units_claimed = starting_inventory | minus: current_inventory
+
+  if units_claimed < 0
+    assign units_claimed = 0
+  endif
+
+  assign claimed_percent = units_claimed | times: 100.0 | divided_by: starting_inventory | round
+
+  if claimed_percent < section.settings.minimum_percent
+    assign claimed_percent = section.settings.minimum_percent
+  endif
+
+  if claimed_percent > section.settings.maximum_percent
+    assign claimed_percent = section.settings.maximum_percent
+  endif
+%}
+
+<section
+  class="avonent-demand-meter"
+  style="
+    --av-demand-background: {{ section.settings.background_color }};
+    --av-demand-track: {{ section.settings.track_color }};
+    --av-demand-fill: {{ section.settings.fill_color }};
+    --av-demand-text: {{ section.settings.text_color }};
+    --av-demand-radius: {{ section.settings.corner_radius }}px;
+    --av-demand-top: {{ section.settings.padding_top }}px;
+    --av-demand-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="avonent-demand-meter__container">
+
+    {% if section.settings.heading != blank %}
+      <div class="avonent-demand-meter__heading">
+        {{ section.settings.heading }}
+      </div>
+    {% endif %}
+
+    <div class="avonent-demand-meter__row">
+
+      <div
+        class="avonent-demand-meter__track"
+        role="progressbar"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow="{{ claimed_percent }}"
+        aria-label="{{ claimed_percent }} percent claimed"
+      >
+        <div
+          class="avonent-demand-meter__fill"
+          style="width: {{ claimed_percent }}%;"
+        ></div>
+      </div>
+
+      <div class="avonent-demand-meter__value">
+        {{ claimed_percent }}% {{ section.settings.percent_text }}
+      </div>
+
+    </div>
+
+    {% if section.settings.subtext != blank %}
+      <div class="avonent-demand-meter__subtext">
+        {{ section.settings.subtext }}
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+{% stylesheet %}
+
+  .avonent-demand-meter {
+    width: 100%;
+
+    padding-top:
+      var(--av-demand-top);
+
+    padding-bottom:
+      var(--av-demand-bottom);
+  }
+
+  .avonent-demand-meter__container {
+    width: 100%;
+
+    padding:
+      16px
+      18px;
+
+    border:
+      1px solid
+      rgba(0, 0, 0, 0.055);
+
+    border-radius:
+      var(--av-demand-radius);
+
+    background:
+      var(--av-demand-background);
+
+    box-shadow:
+      0 6px 20px
+      rgba(0, 0, 0, 0.035);
+  }
+
+  .avonent-demand-meter__heading {
+    margin-bottom: 9px;
+
+    color:
+      var(--av-demand-text);
+
+    font-family:
+      var(--font-body--family);
+
+    font-size: 12px;
+    font-weight: 650;
+
+    line-height: 1.2;
+  }
+
+  .avonent-demand-meter__row {
+    display: grid;
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      auto;
+
+    align-items: center;
+
+    gap: 13px;
+  }
+
+  .avonent-demand-meter__track {
+    position: relative;
+
+    width: 100%;
+    height: 9px;
+
+    overflow: hidden;
+
+    border-radius: 999px;
+
+    background:
+      var(--av-demand-track);
+  }
+
+  .avonent-demand-meter__fill {
+    position: absolute;
+
+    inset:
+      0
+      auto
+      0
+      0;
+
+    height: 100%;
+
+    border-radius: inherit;
+
+    background:
+      var(--av-demand-fill);
+
+    transition:
+      width 300ms ease;
+  }
+
+  .avonent-demand-meter__value {
+    color:
+      var(--av-demand-fill);
+
+    font-family:
+      var(--font-body--family);
+
+    font-size: 13px;
+    font-weight: 750;
+
+    line-height: 1;
+
+    white-space: nowrap;
+  }
+
+  .avonent-demand-meter__subtext {
+    margin-top: 8px;
+
+    color:
+      var(--av-demand-text);
+
+    font-family:
+      var(--font-body--family);
+
+    font-size: 11px;
+    font-weight: 400;
+
+    line-height: 1.35;
+
+    opacity: 0.62;
+  }
+
+
+  /*
+   * MOBILE
+   */
+
+  @media screen and (max-width: 749px) {
+
+    .avonent-demand-meter__container {
+      padding:
+        13px
+        14px;
+    }
+
+    .avonent-demand-meter__row {
+      gap: 10px;
+    }
+
+    .avonent-demand-meter__track {
+      height: 8px;
+    }
+
+    .avonent-demand-meter__value {
+      font-size: 12px;
+    }
+
+    .avonent-demand-meter__heading {
+      margin-bottom: 7px;
+
+      font-size: 11px;
+    }
+
+    .avonent-demand-meter__subtext {
+      margin-top: 6px;
+
+      font-size: 10px;
+    }
+
+  }
+
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "00 Avonent Demand Meter",
+  "tag": "section",
+
+  "settings": [
+    {
+      "type": "header",
+      "content": "Meter"
+    },
+
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": ""
+    },
+
+    {
+      "type": "text",
+      "id": "percent_text",
+      "label": "Text after percentage",
+      "default": "Claimed"
+    },
+
+    {
+      "type": "text",
+      "id": "subtext",
+      "label": "Small text",
+      "default": ""
+    },
+
+    {
+      "type": "number",
+      "id": "starting_inventory",
+      "label": "Starting inventory",
+      "default": 100,
+      "info": "Enter the actual inventory quantity at the beginning of the promotion."
+    },
+
+    {
+      "type": "range",
+      "id": "minimum_percent",
+      "label": "Minimum displayed percentage",
+      "min": 0,
+      "max": 90,
+      "step": 1,
+      "unit": "%",
+      "default": 0
+    },
+
+    {
+      "type": "range",
+      "id": "maximum_percent",
+      "label": "Maximum displayed percentage",
+      "min": 70,
+      "max": 99,
+      "step": 1,
+      "unit": "%",
+      "default": 96
+    },
+
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#F8FCFD"
+    },
+
+    {
+      "type": "color",
+      "id": "track_color",
+      "label": "Empty track",
+      "default": "#E2EDF0"
+    },
+
+    {
+      "type": "color",
+      "id": "fill_color",
+      "label": "Progress",
+      "default": "#02C6EA"
+    },
+
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#111111"
+    },
+
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+
+    {
+      "type": "range",
+      "id": "corner_radius",
+      "label": "Roundness",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top spacing",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom spacing",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    }
+  ],
+
+  "presets": [
+    {
+      "name": "00 Avonent Demand Meter"
+    }
+  ]
+}
+{% endschema %}
