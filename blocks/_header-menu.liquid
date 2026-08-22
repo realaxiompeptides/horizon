@@ -243,6 +243,18 @@
     }
   }
 
+  /* Avonent: desktop navigation always uses the drawer button. */
+  @media screen and (min-width: 750px) {
+    #header-component .header__drawer {
+      display: flex !important;
+      min-height: var(--header-drawer-min-height);
+    }
+
+    #header-component .header-menu {
+      display: none !important;
+    }
+  }
+
   .header--compact .header__drawer {
     min-height: var(--minimum-touch-target);
   }
@@ -961,7 +973,7 @@
           "label": "t:options.featured_collections"
         }
       ],
-      "default": "collection_images"
+      "default": "text"
     },
     {
       "type": "select",
@@ -1057,6 +1069,56 @@
       "id": "drawer_dividers",
       "label": "t:settings.dividers",
       "default": false
+    },
+    {
+      "type": "header",
+      "content": "Avonent desktop drawer"
+    },
+    {
+      "type": "range",
+      "id": "avonent_drawer_width",
+      "label": "Desktop drawer width",
+      "min": 320,
+      "max": 520,
+      "step": 10,
+      "unit": "px",
+      "default": 390
+    },
+    {
+      "type": "range",
+      "id": "avonent_drawer_link_size",
+      "label": "Main link size",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "color",
+      "id": "avonent_drawer_accent_color",
+      "label": "Drawer accent color",
+      "default": "#02C6EA"
+    },
+    {
+      "type": "checkbox",
+      "id": "avonent_drawer_show_support",
+      "label": "Show customer support footer",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "avonent_drawer_support_label",
+      "label": "Support label",
+      "default": "Customer Support",
+      "visible_if": "{{ block.settings.avonent_drawer_show_support == true }}"
+    },
+    {
+      "type": "text",
+      "id": "avonent_drawer_support_email",
+      "label": "Support email",
+      "default": "avonentbusiness@gmail.com",
+      "visible_if": "{{ block.settings.avonent_drawer_show_support == true }}"
     }
   ]
 }
