@@ -103,23 +103,9 @@
           aria-label="{{ 'content.account_title' | t | escape }}"
         >
           <span class="svg-wrapper" aria-hidden="true">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 20 22"
-              fill="none"
-            >
-              <path
-                d="M14.0833 5.08333C14.0833 7.3385 12.2552 9.16667 10 9.16667C7.74484 9.16667 5.91667 7.3385 5.91667 5.08333C5.91667 2.82817 7.74484 1 10 1C12.2552 1 14.0833 2.82817 14.0833 5.08333Z"
-                stroke="currentColor"
-                stroke-width="1.5"
-              />
-              <path
-                d="M1.83333 20.1667C2.25858 15.5614 5.63174 12.25 10 12.25C14.3683 12.25 17.7414 15.5614 18.1667 20.1667H1.83333Z"
-                stroke="currentColor"
-                stroke-width="1.5"
-              />
+            <svg viewBox="0 0 24 24" fill="none" focusable="false">
+              <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.7"/>
+              <path d="M4.75 20c.55-4.1 3.25-6.5 7.25-6.5s6.7 2.4 7.25 6.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
             </svg>
           </span>
         </a>
@@ -141,7 +127,10 @@
             data-testid="cart-icon"
           >
             <span class="svg-wrapper" aria-hidden="true">
-              {{ 'icon-cart.svg' | inline_asset_content }}
+              <svg viewBox="0 0 24 24" fill="none" focusable="false">
+                <path d="M6.5 8.25h11l.75 12H5.75l.75-12Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+                <path d="M9 8.25V6.5a3 3 0 0 1 6 0v1.75" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+              </svg>
             </span>
             {% render 'cart-bubble', limit: 100 %}
           </cart-icon>
@@ -158,12 +147,17 @@
             data-testid="cart-icon"
           >
             <span class="svg-wrapper" aria-hidden="true">
-              {{ 'icon-cart.svg' | inline_asset_content }}
+              <svg viewBox="0 0 24 24" fill="none" focusable="false">
+                <path d="M6.5 8.25h11l.75 12H5.75l.75-12Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+                <path d="M9 8.25V6.5a3 3 0 0 1 6 0v1.75" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+              </svg>
             </span>
             {% render 'cart-bubble', limit: 100 %}
           </cart-icon>
         </a>
       {% endif %}
+
+      <span class="visually-hidden" role="status"></span>
     </header-actions>
   endcapture
 
@@ -530,6 +524,12 @@
     </div>
   {% endif %}
 </header-component>
+
+<script
+  src="{{ 'cart-icon.js' | asset_url }}"
+  type="module"
+  fetchpriority="low"
+></script>
 
 <script
   src="{{ 'header.js' | asset_url }}"
@@ -1252,87 +1252,113 @@
   }
 
 
+
   /* =========================================================
-     AVONENT DESKTOP DRAWER HEADER
-     Hamburger left • logo truly centered • search/account/cart right
+     AVONENT CLEAN HEADER
+     Uses Horizon's native three-column layout:
+     hamburger left • true centered logo • search/account/cart right
      ========================================================= */
+  .avonent-header-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+  }
+
+  .avonent-header-actions .header-actions__action {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--color-foreground);
+    text-decoration: none;
+  }
+
+  .avonent-header-actions .svg-wrapper,
+  .avonent-header-actions .svg-wrapper svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .avonent-header-actions .header-actions__cart-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .avonent-header-actions .cart-bubble {
+    position: absolute;
+    top: -7px;
+    right: -9px;
+    width: 18px;
+  }
 
   @media screen and (min-width: 750px) {
-    #header-component[data-menu-style='drawer'] .header__row--top .header__columns {
-      position: relative;
+    .header__row--top .header__columns {
       width: calc(100% - 48px);
       max-width: 1280px;
       margin-inline: auto;
-
-      --header-template-columns: 44px minmax(0, 1fr) auto 44px auto;
-      grid-template-columns: var(--header-template-columns);
-      grid-template-areas: 'leftA leftB center rightA rightB';
-
-      column-gap: 12px;
-      align-items: center;
-
+      min-height: 52px;
+      padding-block: 0 !important;
       padding-inline: 0 !important;
-      padding-block: 10px;
-      min-height: 64px;
+      grid-template-columns: 1fr auto 1fr;
+      grid-template-areas: 'left center right';
+      gap: 20px;
     }
 
-    #header-component[data-menu-style='drawer']
-      .header__row--top
-      :is(.header__icon--menu, menu-drawer, .header-menu) {
-      grid-area: leftA;
-      justify-self: start;
+    .header__row--top .header__column--left {
+      justify-content: flex-start;
+      gap: 0;
     }
 
-    #header-component[data-menu-style='drawer']
-      .header__row--top
-      .search-action,
-    #header-component[data-menu-style='drawer']
-      .header__row--top
-      .search-action--hidden-on-menu,
-    #header-component[data-menu-style='drawer']
-      .header__row--top
-      .search-action--hidden-on-drawer {
-      grid-area: rightA !important;
-      justify-self: center !important;
+    .header__row--top .header__column--center {
+      justify-content: center;
+    }
+
+    .header__row--top .header__column--right {
+      justify-content: flex-end;
+      gap: 4px;
+    }
+
+    .header__row--top .header-logo {
       margin: 0 !important;
     }
 
-    #header-component[data-menu-style='drawer']
-      .header__row--top
-      header-actions {
-      grid-area: rightB !important;
-      justify-self: end !important;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin: 0 !important;
+    .header__row--top .header__drawer {
+      min-height: 44px !important;
     }
 
-    #header-component[data-menu-style='drawer']
-      .header__row--top
-      .header-logo {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      grid-area: unset !important;
-      justify-self: unset !important;
-      margin: 0 !important;
-      z-index: 2;
+    .header__row--top :is(.header__icon--menu, .search-action, .header-actions__action) {
+      min-width: 40px;
+      min-height: 40px;
     }
 
-    #header-component[data-menu-style='drawer']
-      .header__row--top
-      :is(.search-action, .header-actions__action, .header__icon--menu)
-      svg {
-      width: 21px;
-      height: 21px;
+    .header__row--top :is(.header__icon--menu, .search-action, .header-actions__action) svg {
+      width: 20px;
+      height: 20px;
     }
   }
 
   @media screen and (max-width: 749px) {
-    #header-component[data-menu-style='drawer'] .header__row--top .header__columns {
-      padding-inline: 12px !important;
+    .header__row--top .header__columns {
+      min-height: 52px;
+      padding-inline: 10px !important;
+      padding-block: 0 !important;
+    }
+
+    .avonent-header-actions {
+      gap: 0;
+    }
+
+    .avonent-header-actions .header-actions__action {
+      width: 40px;
+      height: 40px;
     }
   }
 
@@ -1347,78 +1373,6 @@
   </script>
 {% endunless %}
 
-
-{% stylesheet %}
-  /* AVONENT: self-contained header actions.
-     This intentionally does not depend on snippets/header-actions.liquid
-     or assets/header-actions.js. */
-  .avonent-header-actions {
-    display: flex;
-    align-items: center;
-    justify-self: flex-end;
-    gap: 14px;
-  }
-
-  .avonent-header-actions .header-actions__action {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 42px;
-    height: 42px;
-    padding: 0;
-    color: var(--color-foreground);
-    text-decoration: none;
-    background: transparent;
-    border: 0;
-    cursor: pointer;
-    transition: transform 180ms ease, opacity 180ms ease;
-  }
-
-  .avonent-header-actions .header-actions__action:hover {
-    transform: translateY(-1px);
-    opacity: 0.76;
-  }
-
-  .avonent-header-actions .svg-wrapper,
-  .avonent-header-actions svg {
-    width: 21px;
-    height: 21px;
-  }
-
-  .avonent-header-actions__cart {
-    position: relative;
-  }
-
-  .avonent-header-actions .header-actions__cart-icon {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .avonent-header-actions .cart-bubble {
-    position: absolute;
-    top: -7px;
-    right: -9px;
-  }
-
-  @media screen and (min-width: 750px) {
-    .avonent-header-actions {
-      gap: 10px;
-    }
-  }
-
-  @media screen and (max-width: 749px) {
-    .avonent-header-actions {
-      gap: 2px;
-    }
-
-    .avonent-header-actions .header-actions__action {
-      width: 40px;
-      height: 40px;
-    }
-  }
-{% endstylesheet %}
 
 {% schema %}
 {
