@@ -46,13 +46,6 @@
     data-section-id="{{ section.id }}"
     data-default-bundle="{{ selected_bundle }}"
   >
-    {% if block.settings.heading != blank or block.settings.subheading != blank %}
-      <div class="avonent-bundle__header">
-        {% if block.settings.heading != blank %}
-          <div class="avonent-bundle__heading">
-            {{ block.settings.heading }}
-          </div>
-        {% endif %}
 
         {% if block.settings.subheading != blank %}
           <div class="avonent-bundle__subheading">
@@ -65,7 +58,7 @@
     <div
       class="avonent-bundle__options"
       role="radiogroup"
-      aria-label="{{ block.settings.heading | default: 'Choose your bundle' | escape }}"
+      aria-label="Choose bundle quantity"
     >
       {% for i in (1..4) %}
         {% liquid
@@ -77,11 +70,6 @@
           assign badge_key = 'bundle_' | append: i | append: '_badge'
           assign savings_key = 'bundle_' | append: i | append: '_savings_text'
           assign image_key = 'bundle_' | append: i | append: '_image'
-          assign gift_enabled_key = 'bundle_' | append: i | append: '_gift_enabled'
-          assign gift_label_key = 'bundle_' | append: i | append: '_gift_label'
-          assign gift_1_key = 'bundle_' | append: i | append: '_gift_1'
-          assign gift_2_key = 'bundle_' | append: i | append: '_gift_2'
-          assign gift_3_key = 'bundle_' | append: i | append: '_gift_3'
 
           assign bundle_enabled = block.settings[enabled_key]
           assign bundle_title = block.settings[title_key]
@@ -91,11 +79,6 @@
           assign bundle_badge = block.settings[badge_key]
           assign bundle_savings_override = block.settings[savings_key]
           assign bundle_image_override = block.settings[image_key]
-          assign gift_enabled = block.settings[gift_enabled_key]
-          assign gift_label = block.settings[gift_label_key]
-          assign gift_1 = block.settings[gift_1_key]
-          assign gift_2 = block.settings[gift_2_key]
-          assign gift_3 = block.settings[gift_3_key]
 
           assign bundle_variant = default_variant
 
@@ -218,31 +201,6 @@
                 {% endunless %}
               </span>
             </button>
-
-            {% if gift_enabled %}
-              <div
-                class="avonent-bundle__gift{% unless is_default %} is-hidden{% endunless %}"
-                data-av-bundle-gift
-              >
-                <label
-                  class="avonent-bundle__gift-label"
-                  for="AvonentGift-{{ block.id }}-{{ i }}"
-                >
-                  <span class="avonent-bundle__gift-icon" aria-hidden="true">🎁</span>
-                  {{ gift_label | default: 'Choose your free gift' }}
-                </label>
-
-                <div class="avonent-bundle__select-wrap">
-                  <select
-                    id="AvonentGift-{{ block.id }}-{{ i }}"
-                    class="avonent-bundle__gift-select"
-                    data-av-gift-select
-                    data-bundle-number="{{ i }}"
-                  >
-                    <option value="">Select a free gift</option>
-                    {% if gift_1 != blank %}
-                      <option value="{{ gift_1 | escape }}">{{ gift_1 }}</option>
-                    {% endif %}
                     {% if gift_2 != blank %}
                       <option value="{{ gift_2 | escape }}">{{ gift_2 }}</option>
                     {% endif %}
@@ -263,22 +221,6 @@
         {% endif %}
       {% endfor %}
     </div>
-
-    {% if block.settings.helper_text != blank %}
-      <div class="avonent-bundle__helper">
-        {{ block.settings.helper_text }}
-      </div>
-    {% endif %}
-
-    {% if request.design_mode %}
-      <div class="avonent-bundle__editor-note">
-        <strong>How this works:</strong>
-        bundle cards control Horizon's native product quantity and native Add to Cart form.
-        Gift dropdown choices are saved on the line item as “Free Gift Selection.”
-        They do not add a separate gift product yet; that can be wired in when we build
-        the Avonent free-gift system.
-      </div>
-    {% endif %}
   </div>
 
   <script>
@@ -314,36 +256,7 @@
         return form?.querySelector('input[name="id"][ref="variantId"], input[name="id"]');
       }
 
-      function ensureGiftProperty(form) {
-        if (!form) return null;
-
-        let input = form.querySelector('[data-av-free-gift-property]');
-
-        if (!input) {
-          input = document.createElement('input');
-          input.type = 'hidden';
-          input.name = 'properties[Free Gift Selection]';
-          input.setAttribute('data-av-free-gift-property', '');
-          form.appendChild(input);
-        }
-
         return input;
-      }
-
-      function hideAllGiftDropdowns() {
-        shells.forEach((shell) => {
-          const gift = shell.querySelector('[data-av-bundle-gift]');
-          if (gift) gift.classList.add('is-hidden');
-        });
-      }
-
-      function syncGiftProperty(shell) {
-        const form = getNativeForm();
-        const propertyInput = ensureGiftProperty(form);
-        if (!propertyInput) return;
-
-        const select = shell?.querySelector('[data-av-gift-select]');
-        propertyInput.value = select?.value || '';
       }
 
       function setNativeQuantity(quantity) {
@@ -392,27 +305,13 @@
           item.setAttribute('aria-checked', selected ? 'true' : 'false');
         });
 
-        hideAllGiftDropdowns();
-
-        const gift = shell?.querySelector('[data-av-bundle-gift]');
-        if (gift) gift.classList.remove('is-hidden');
-
         setNativeQuantity(option.dataset.quantity);
         setNativeVariant(option.dataset.variantId);
-        syncGiftProperty(shell);
       }
 
       options.forEach((option) => {
         option.addEventListener('click', () => selectBundle(option));
       });
-
-      root.querySelectorAll('[data-av-gift-select]').forEach((select) => {
-        select.addEventListener('change', () => {
-          const shell = select.closest('[data-av-bundle-shell]');
-          if (shell?.classList.contains('is-selected')) {
-            syncGiftProperty(shell);
-          }
-        });
       });
 
       let initial = root.querySelector(
@@ -646,101 +545,6 @@
     white-space: nowrap;
   }
 
-  .avonent-bundle__gift {
-    padding: 0 12px 12px;
-    border-top: 1px solid color-mix(in srgb, var(--avb-accent) 20%, transparent);
-  }
-
-  .avonent-bundle__gift.is-hidden {
-    display: none;
-  }
-
-  .avonent-bundle__gift-label {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding-top: 10px;
-    margin-bottom: 7px;
-
-    color: var(--avb-text);
-    font-family: var(--font-body--family);
-    font-size: 11px;
-    font-weight: 650;
-    line-height: 1.2;
-  }
-
-  .avonent-bundle__gift-icon {
-    font-size: 14px;
-    line-height: 1;
-  }
-
-  .avonent-bundle__select-wrap {
-    position: relative;
-  }
-
-  .avonent-bundle__gift-select {
-    width: 100%;
-    min-height: 42px;
-    padding: 9px 38px 9px 11px;
-
-    appearance: none;
-    border: 1px solid var(--avb-border);
-    border-radius: 9px;
-    background: #fff;
-    color: var(--avb-text);
-
-    font-family: var(--font-body--family);
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 1.2;
-  }
-
-  .avonent-bundle__gift-select:focus {
-    outline: 2px solid color-mix(in srgb, var(--avb-accent) 28%, transparent);
-    outline-offset: 1px;
-    border-color: var(--avb-accent);
-  }
-
-  .avonent-bundle__select-chevron {
-    position: absolute;
-    top: 50%;
-    right: 11px;
-    transform: translateY(-50%);
-
-    display: flex;
-    width: 16px;
-    height: 16px;
-    pointer-events: none;
-    color: var(--avb-text);
-  }
-
-  .avonent-bundle__select-chevron svg {
-    width: 100%;
-    height: 100%;
-    fill: currentColor;
-  }
-
-  .avonent-bundle__helper {
-    margin-top: 7px;
-    color: var(--avb-muted);
-    font-family: var(--font-body--family);
-    font-size: 10px;
-    line-height: 1.3;
-    text-align: center;
-  }
-
-  .avonent-bundle__editor-note {
-    margin-top: 10px;
-    padding: 10px 11px;
-    border: 1px dashed var(--avb-border);
-    border-radius: 10px;
-    background: #fff;
-    color: var(--avb-muted);
-    font-family: var(--font-body--family);
-    font-size: 10px;
-    line-height: 1.4;
-  }
-
   /*
    * The bundle cards ARE the quantity chooser.
    * Keep Horizon's native Add to Cart button, but hide the redundant
@@ -814,14 +618,6 @@
       font-size: 9px;
     }
 
-    .avonent-bundle__gift {
-      padding: 0 10px 10px;
-    }
-
-    .avonent-bundle__gift-select {
-      min-height: 40px;
-      font-size: 11px;
-    }
 
     /*
      * Clean up the native Horizon buying area on mobile while preserving it.
@@ -862,30 +658,26 @@
   "tag": null,
   "settings": [
     {
-      "type": "header",
-      "content": "Heading"
-    },
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Heading",
-      "default": "Choose Your Bundle"
-    },
-    {
-      "type": "text",
-      "id": "subheading",
-      "label": "Small text",
-      "default": "More value with multi-packs"
-    },
-    {
       "type": "select",
       "id": "default_bundle",
       "label": "Selected bundle by default",
       "options": [
-        {"value":"1","label":"Bundle 1"},
-        {"value":"2","label":"Bundle 2"},
-        {"value":"3","label":"Bundle 3"},
-        {"value":"4","label":"Bundle 4"}
+        {
+          "value": "1",
+          "label": "Bundle 1"
+        },
+        {
+          "value": "2",
+          "label": "Bundle 2"
+        },
+        {
+          "value": "3",
+          "label": "Bundle 3"
+        },
+        {
+          "value": "4",
+          "label": "Bundle 4"
+        }
       ],
       "default": "2"
     },
@@ -895,13 +687,6 @@
       "label": "Show bundle images",
       "default": true
     },
-    {
-      "type": "text",
-      "id": "helper_text",
-      "label": "Text below bundles",
-      "default": "Select your preferred quantity, then add to cart below."
-    },
-
     {
       "type": "header",
       "content": "Bundle 1"
@@ -954,34 +739,6 @@
       "id": "bundle_1_image",
       "label": "Custom image"
     },
-    {
-      "type": "checkbox",
-      "id": "bundle_1_gift_enabled",
-      "label": "Show free gift dropdown",
-      "default": false
-    },
-    {
-      "type": "text",
-      "id": "bundle_1_gift_label",
-      "label": "Gift dropdown label",
-      "default": "Choose your free gift"
-    },
-    {
-      "type": "text",
-      "id": "bundle_1_gift_1",
-      "label": "Gift option 1"
-    },
-    {
-      "type": "text",
-      "id": "bundle_1_gift_2",
-      "label": "Gift option 2"
-    },
-    {
-      "type": "text",
-      "id": "bundle_1_gift_3",
-      "label": "Gift option 3"
-    },
-
     {
       "type": "header",
       "content": "Bundle 2"
@@ -1036,36 +793,6 @@
       "label": "Custom image"
     },
     {
-      "type": "checkbox",
-      "id": "bundle_2_gift_enabled",
-      "label": "Show free gift dropdown",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "bundle_2_gift_label",
-      "label": "Gift dropdown label",
-      "default": "Choose your free gift"
-    },
-    {
-      "type": "text",
-      "id": "bundle_2_gift_1",
-      "label": "Gift option 1",
-      "default": "Free Gift Option 1"
-    },
-    {
-      "type": "text",
-      "id": "bundle_2_gift_2",
-      "label": "Gift option 2",
-      "default": "Free Gift Option 2"
-    },
-    {
-      "type": "text",
-      "id": "bundle_2_gift_3",
-      "label": "Gift option 3"
-    },
-
-    {
       "type": "header",
       "content": "Bundle 3"
     },
@@ -1119,37 +846,6 @@
       "label": "Custom image"
     },
     {
-      "type": "checkbox",
-      "id": "bundle_3_gift_enabled",
-      "label": "Show free gift dropdown",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "bundle_3_gift_label",
-      "label": "Gift dropdown label",
-      "default": "Choose your free gift"
-    },
-    {
-      "type": "text",
-      "id": "bundle_3_gift_1",
-      "label": "Gift option 1",
-      "default": "Free Gift Option 1"
-    },
-    {
-      "type": "text",
-      "id": "bundle_3_gift_2",
-      "label": "Gift option 2",
-      "default": "Free Gift Option 2"
-    },
-    {
-      "type": "text",
-      "id": "bundle_3_gift_3",
-      "label": "Gift option 3",
-      "default": "Free Gift Option 3"
-    },
-
-    {
       "type": "header",
       "content": "Bundle 4"
     },
@@ -1202,34 +898,6 @@
       "label": "Custom image"
     },
     {
-      "type": "checkbox",
-      "id": "bundle_4_gift_enabled",
-      "label": "Show free gift dropdown",
-      "default": false
-    },
-    {
-      "type": "text",
-      "id": "bundle_4_gift_label",
-      "label": "Gift dropdown label",
-      "default": "Choose your free gift"
-    },
-    {
-      "type": "text",
-      "id": "bundle_4_gift_1",
-      "label": "Gift option 1"
-    },
-    {
-      "type": "text",
-      "id": "bundle_4_gift_2",
-      "label": "Gift option 2"
-    },
-    {
-      "type": "text",
-      "id": "bundle_4_gift_3",
-      "label": "Gift option 3"
-    },
-
-    {
       "type": "header",
       "content": "Colors"
     },
@@ -1269,7 +937,6 @@
       "label": "Secondary text",
       "default": "#6F7B80"
     },
-
     {
       "type": "header",
       "content": "Layout"
