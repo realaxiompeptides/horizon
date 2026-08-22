@@ -79,9 +79,13 @@
                 "link": "",
                 "star_color": "#02c6ea",
                 "text_color": "#111111",
+                "background_color": "#ffffff",
+                "border_color": "#eef1f2",
                 "star_size": 15,
                 "text_size": 13,
-                "gap": 8,
+                "corner_radius": 12,
+                "padding_y": 7,
+                "padding_x": 10,
                 "spacing_top": 0,
                 "spacing_bottom": 0
               },
@@ -277,7 +281,80 @@
               },
               "blocks": {}
             },
-            "00_avonent_bundle_selector_fCNCiE": {
+            "buy_buttons_eYQEYi": {
+              "type": "buy-buttons",
+              "settings": {
+                "stacking": true,
+                "text_color": "",
+                "show_pickup_availability": false,
+                "gift_card_form": true,
+                "recipient_button_style": "default",
+                "recipient_button_background": "{{ settings.color_palette.background }}",
+                "recipient_button_text": "{{ settings.color_palette.foreground }}",
+                "recipient_button_border": "{{ settings.color_palette.foreground }}",
+                "selected_recipient_button_style": "default",
+                "selected_recipient_button_background": "{{ settings.color_palette.foreground }}",
+                "selected_recipient_button_text": "{{ settings.color_palette.background }}",
+                "selected_recipient_button_border": "{{ settings.color_palette.foreground }}",
+                "input_style": "default",
+                "input_background_color": "{{ settings.color_palette.background }}",
+                "input_text_color": "{{ settings.color_palette.foreground }}",
+                "input_border_color": "{{ settings.color_palette.foreground }}",
+                "border_width": 1,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "quantity": {
+                  "type": "quantity",
+                  "static": true,
+                  "settings": {
+                    "input_style": "default",
+                    "input_background_color": "{{ settings.color_palette.background }}",
+                    "input_text_color": "{{ settings.color_palette.foreground }}",
+                    "input_border_color": "{{ settings.color_palette.foreground }}",
+                    "border_width": 1,
+                    "border_radius": 0
+                  },
+                  "blocks": {}
+                },
+                "add-to-cart": {
+                  "type": "add-to-cart",
+                  "static": true,
+                  "settings": {
+                    "style_class": "button",
+                    "custom_button_background": "{{ settings.color_palette.foreground }}",
+                    "custom_button_text": "{{ settings.color_palette.background }}",
+                    "custom_button_border": "{{ settings.color_palette.background }}"
+                  },
+                  "blocks": {}
+                },
+                "accelerated-checkout": {
+                  "type": "accelerated-checkout",
+                  "static": true,
+                  "settings": {},
+                  "blocks": {}
+                }
+              },
+              "block_order": []
+            },
+            "payment_icons_8y3yUJ": {
+              "type": "payment-icons",
+              "name": "t:names.payment_icons",
+              "settings": {
+                "horizontal_alignment": "flex-start",
+                "gap": 10,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "00_avonent_bundle_selector_default": {
               "type": "00-avonent-bundle-selector",
               "name": "Avonent Bundle Selector",
               "settings": {
@@ -311,12 +388,12 @@
                 "bundle_4_quantity": 4,
                 "bundle_4_badge": "",
                 "bundle_4_savings_text": "",
-                "accent_color": "#02c6ea",
-                "selected_background": "#f2fbfd",
-                "card_background": "#ffffff",
-                "border_color": "#dde8eb",
+                "accent_color": "#02C6EA",
+                "selected_background": "#F2FBFD",
+                "card_background": "#FFFFFF",
+                "border_color": "#DDE8EB",
                 "text_color": "#111111",
-                "muted_text_color": "#6f7b80",
+                "muted_text_color": "#6F7B80",
                 "card_radius": 12,
                 "card_gap": 10,
                 "spacing_top": 4,
@@ -324,7 +401,7 @@
               },
               "blocks": {}
             },
-            "00_avonent_delivery_estimate_Yg7bah": {
+            "00_avonent_delivery_estimate_default": {
               "type": "00-avonent-delivery-estimate",
               "name": "Avonent Delivery Estimate",
               "settings": {
@@ -332,15 +409,15 @@
                 "delivery_days": 4,
                 "skip_weekends": true,
                 "fallback_date_text": "Soon",
-                "separator": "·",
+                "separator": "\u00b7",
                 "shipping_text": "Ships from USA",
                 "show_flag": true,
                 "show_status_dot": true,
-                "accent_color": "#02c6ea",
+                "accent_color": "#02C6EA",
                 "text_color": "#111111",
                 "muted_text_color": "#748086",
-                "divider_color": "#d8e5e9",
-                "background_color": "#ffffff",
+                "divider_color": "#D8E5E9",
+                "background_color": "#FFFFFF",
                 "text_size": 12,
                 "corner_radius": 0,
                 "padding_y": 10,
@@ -350,69 +427,7 @@
               },
               "blocks": {}
             },
-            "buy_buttons_eYQEYi": {
-              "type": "buy-buttons",
-              "settings": {
-                "stacking": true,
-                "text_color": "",
-                "show_pickup_availability": false,
-                "gift_card_form": true,
-                "recipient_button_style": "default",
-                "recipient_button_background": "{{ settings.color_palette.background }}",
-                "recipient_button_text": "{{ settings.color_palette.foreground }}",
-                "recipient_button_border": "{{ settings.color_palette.foreground }}",
-                "selected_recipient_button_style": "default",
-                "selected_recipient_button_background": "{{ settings.color_palette.foreground }}",
-                "selected_recipient_button_text": "{{ settings.color_palette.background }}",
-                "selected_recipient_button_border": "{{ settings.color_palette.foreground }}",
-                "input_style": "default",
-                "input_background_color": "{{ settings.color_palette.background }}",
-                "input_text_color": "{{ settings.color_palette.foreground }}",
-                "input_border_color": "{{ settings.color_palette.foreground }}",
-                "border_width": 1,
-                "border_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {
-                "quantity": {
-                  "type": "quantity",
-                  "disabled": true,
-                  "static": true,
-                  "settings": {
-                    "input_style": "default",
-                    "input_background_color": "{{ settings.color_palette.background }}",
-                    "input_text_color": "{{ settings.color_palette.foreground }}",
-                    "input_border_color": "{{ settings.color_palette.foreground }}",
-                    "border_width": 1,
-                    "border_radius": 0
-                  },
-                  "blocks": {}
-                },
-                "add-to-cart": {
-                  "type": "add-to-cart",
-                  "static": true,
-                  "settings": {
-                    "style_class": "button",
-                    "custom_button_background": "{{ settings.color_palette.foreground }}",
-                    "custom_button_text": "{{ settings.color_palette.background }}",
-                    "custom_button_border": "{{ settings.color_palette.background }}"
-                  },
-                  "blocks": {}
-                },
-                "accelerated-checkout": {
-                  "type": "accelerated-checkout",
-                  "disabled": true,
-                  "static": true,
-                  "settings": {},
-                  "blocks": {}
-                }
-              },
-              "block_order": []
-            },
-            "00_avonent_accordion_cfBEhd": {
+            "00_avonent_accordion_default": {
               "type": "00-avonent-accordion",
               "name": "Avonent Accordion",
               "settings": {
@@ -437,9 +452,9 @@
                 "item_6_content": "<p>Add shipping information here.</p>",
                 "text_color": "#111111",
                 "muted_text_color": "#444444",
-                "border_color": "#e1e5e7",
-                "background_color": "#ffffff",
-                "accent_color": "#02c6ea",
+                "border_color": "#E1E5E7",
+                "background_color": "#FFFFFF",
+                "accent_color": "#02C6EA",
                 "title_size": 14,
                 "body_size": 13,
                 "corner_radius": 6,
@@ -457,10 +472,11 @@
             "price_C9qpLA",
             "divider_VJhene",
             "variant_picker_R3rGDr",
-            "00_avonent_bundle_selector_fCNCiE",
-            "00_avonent_delivery_estimate_Yg7bah",
+            "00_avonent_bundle_selector_default",
+            "00_avonent_delivery_estimate_default",
             "buy_buttons_eYQEYi",
-            "00_avonent_accordion_cfBEhd"
+            "payment_icons_8y3yUJ",
+            "00_avonent_accordion_default"
           ]
         }
       },
@@ -476,31 +492,31 @@
         "padding-block-end": 0
       }
     },
-    "00_avonent_wellness_journey_grhbJX": {
+    "avonent_wellness_journey": {
       "type": "00-avonent-wellness-journey",
       "blocks": {
-        "week_4fR6Fj": {
+        "week_1": {
           "type": "week",
           "settings": {
             "title": "Week 1: Build the Routine",
             "points": "<ul><li>Your daily routine starts to feel more intentional</li><li>You learn when the product fits best into your day</li><li>Consistency becomes easier to maintain</li></ul>"
           }
         },
-        "week_Hpr37j": {
+        "week_2": {
           "type": "week",
           "settings": {
             "title": "Week 2: Find Your Rhythm",
             "points": "<ul><li>Your routine starts to feel more automatic</li><li>You can better judge how the product fits your lifestyle</li><li>Staying consistent takes less effort</li></ul>"
           }
         },
-        "week_ff8AyG": {
+        "week_3": {
           "type": "week",
           "settings": {
             "title": "Week 3: Build Momentum",
             "points": "<ul><li>Your daily habit feels established</li><li>You have more context for your own experience</li><li>Consistency becomes part of your normal routine</li></ul>"
           }
         },
-        "week_neX36r": {
+        "week_4": {
           "type": "week",
           "settings": {
             "title": "Week 4+: Keep It Going",
@@ -509,55 +525,54 @@
         }
       },
       "block_order": [
-        "week_4fR6Fj",
-        "week_Hpr37j",
-        "week_ff8AyG",
-        "week_neX36r"
+        "week_1",
+        "week_2",
+        "week_3",
+        "week_4"
       ],
-      "name": "Avonent Wellness Journey",
       "settings": {
         "eyebrow": "Your Wellness",
         "heading": "Journey with Avonent",
-        "subheading": "Consistency matters. Here’s an example of how a simple daily Avonent routine can become easier to maintain over the first few weeks.",
+        "subheading": "Consistency matters. Here\u2019s an example of how a simple daily Avonent routine can become easier to maintain over the first few weeks.",
         "disclaimer": "Individual experiences vary. Follow the directions on your product label and consult a qualified healthcare professional when appropriate.",
         "activation_point": 58,
-        "background_color": "#ffffff",
+        "background_color": "#FFFFFF",
         "text_color": "#111111",
         "muted_text_color": "#596269",
-        "accent_color": "#02c6ea",
+        "accent_color": "#02C6EA",
         "inactive_color": "#111111",
-        "card_text_color": "#ffffff",
-        "line_color": "#b8bec2",
-        "check_color": "#02c6ea",
+        "card_text_color": "#FFFFFF",
+        "line_color": "#B8BEC2",
+        "check_color": "#02C6EA",
         "content_width": 680,
-        "padding_top": 20,
+        "padding_top": 72,
         "padding_bottom": 72
       }
     },
-    "00_avonent_vs_other_brands_KEiM6Y": {
+    "avonent_vs_other_brands": {
       "type": "00-avonent-vs-other-brands",
       "blocks": {
-        "comparison_row_dke7Dg": {
+        "row_1": {
           "type": "comparison_row",
           "settings": {
-            "icon": "shield",
-            "avonent_text": "Clinically-Studied Ingredients",
+            "icon": "flask",
+            "avonent_text": "Quality-Focused Formulas",
             "other_text": "Trend-Driven Formulas",
             "reason_title": "Quality-Focused",
             "reason_text": "Built around thoughtful formulation rather than short-lived trends."
           }
         },
-        "comparison_row_y7Phnw": {
+        "row_2": {
           "type": "comparison_row",
           "settings": {
-            "icon": "flask",
-            "avonent_text": "3rd-Party Tested",
+            "icon": "shield",
+            "avonent_text": "Transparent Product Information",
             "other_text": "Less Transparency",
             "reason_title": "Clear & Transparent",
             "reason_text": "Straightforward product information so you can make a more informed choice."
           }
         },
-        "comparison_row_wAxBQg": {
+        "row_3": {
           "type": "comparison_row",
           "settings": {
             "icon": "leaf",
@@ -567,7 +582,7 @@
             "reason_text": "Designed to fit naturally into a repeatable daily wellness routine."
           }
         },
-        "comparison_row_KcPwxw": {
+        "row_4": {
           "type": "comparison_row",
           "settings": {
             "icon": "sparkle",
@@ -577,7 +592,7 @@
             "reason_text": "A clean, modern experience from product discovery through delivery."
           }
         },
-        "comparison_row_Y3fMtm": {
+        "row_5": {
           "type": "comparison_row",
           "settings": {
             "icon": "check",
@@ -589,15 +604,13 @@
         }
       },
       "block_order": [
-        "comparison_row_dke7Dg",
-        "comparison_row_y7Phnw",
-        "comparison_row_wAxBQg",
-        "comparison_row_KcPwxw",
-        "comparison_row_Y3fMtm"
+        "row_1",
+        "row_2",
+        "row_3",
+        "row_4",
+        "row_5"
       ],
-      "name": "Avonent vs Other Brands",
       "settings": {
-        "avonent_image": "shopify://shop_images/532F6E97-60AF-4F05-9DB4-9DE8697FB650.jpg",
         "avonent_label": "AVONENT",
         "other_label": "Other Brands",
         "eyebrow": "THE AVONENT DIFFERENCE",
@@ -605,7 +618,7 @@
         "description": "A premium routine should feel simple, transparent, and built around quality. Customize the comparison below with product claims your brand can substantiate.",
         "button_text": "Shop Avonent",
         "button_link": "",
-        "guarantee_text": "30-day satisfaction guarantee",
+        "guarantee_text": "30 Day Money-Back Guarantee",
         "background_color": "#F5FCFE",
         "panel_color": "#DFF7FC",
         "panel_soft_color": "#FFFFFF",
@@ -627,7 +640,7 @@
   },
   "order": [
     "main",
-    "00_avonent_wellness_journey_grhbJX",
-    "00_avonent_vs_other_brands_KEiM6Y"
+    "avonent_wellness_journey",
+    "avonent_vs_other_brands"
   ]
 }
