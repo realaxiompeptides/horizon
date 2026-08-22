@@ -1769,29 +1769,133 @@
 
 /* AVONENT HEADER LAYOUT OVERRIDES */
 {% stylesheet %}
+  /*
+   * Avonent desktop header
+   * Left: hamburger
+   * Center: logo
+   * Right: search + account + cart
+   */
   #header-component[data-menu-style='drawer'] .header__columns {
     --header-template-columns: 44px 44px 1fr 44px 44px;
+
+    width: 100%;
+    max-width: 1500px;
+    margin-inline: auto;
+
+    box-sizing: border-box;
+    align-items: center;
+
+    /*
+     * Keep the controls away from the browser edges,
+     * similar to a premium contained DTC header.
+     */
+    padding-inline: clamp(24px, 3vw, 52px) !important;
   }
 
+  /*
+   * Hamburger stays on the far-left control position.
+   */
+  #header-component[data-menu-style='drawer'] .header__icon--menu,
+  #header-component[data-menu-style='drawer'] menu-drawer {
+    justify-self: start;
+  }
+
+  /*
+   * Keep the Avonent logo truly centered.
+   */
   #header-component[data-menu-style='drawer'] .header-logo {
+    grid-area: center;
     justify-self: center;
+    margin-inline: auto;
   }
 
-  #header-component[data-menu-style='drawer'] header-actions {
+  /*
+   * Horizon normally puts drawer-mode search beside
+   * the hamburger. Avonent moves it to the right.
+   */
+  #header-component[data-menu-style='drawer'] .search-action {
+    grid-area: rightA !important;
     justify-self: end;
+    margin-inline: 0 10px;
   }
 
+  /*
+   * Account + cart remain at the far right.
+   */
+  #header-component[data-menu-style='drawer'] header-actions {
+    grid-area: rightB !important;
+    justify-self: end;
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  /*
+   * The drawer hamburger must remain visible on desktop.
+   */
   #header-component[data-menu-style='drawer'] .header-menu {
     display: flex;
   }
 
+  /*
+   * Clean premium desktop header height.
+   */
   #header-component[data-menu-style='drawer'] .header__row--top {
-    min-height: 72px;
+    min-height: 64px;
   }
 
+  #header-component[data-menu-style='drawer'] .header__row--top .header__columns {
+    --padding-block-start: 10px;
+    --padding-block-end: 10px;
+  }
+
+  /*
+   * Keep icon sizing consistent.
+   */
+  #header-component[data-menu-style='drawer'] .search-action svg,
+  #header-component[data-menu-style='drawer'] header-actions svg,
+  #header-component[data-menu-style='drawer'] .header__icon--menu svg {
+    width: 21px;
+    height: 21px;
+  }
+
+  /*
+   * Desktop-specific polish.
+   */
   @media screen and (min-width: 750px) {
-    .header {
-      --header-padding: 12px;
+    #header-component[data-menu-style='drawer'] .header__columns {
+      column-gap: 0;
+    }
+
+    #header-component[data-menu-style='drawer'] header-actions {
+      gap: 16px;
+    }
+
+    #header-component[data-menu-style='drawer'] .search-action {
+      margin-inline-end: 14px;
+    }
+  }
+
+  /*
+   * Preserve a compact mobile header.
+   */
+  @media screen and (max-width: 749px) {
+    #header-component[data-menu-style='drawer'] .header__columns {
+      max-width: none;
+      padding-inline: 12px !important;
+    }
+
+    #header-component[data-menu-style='drawer'] .header__row--top {
+      min-height: 56px;
+    }
+
+    #header-component[data-menu-style='drawer'] .search-action {
+      margin-inline-end: 4px;
+    }
+
+    #header-component[data-menu-style='drawer'] header-actions {
+      gap: 8px;
     }
   }
 {% endstylesheet %}
