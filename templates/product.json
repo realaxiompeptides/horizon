@@ -437,9 +437,9 @@
                 "item_6_content": "<p>Add shipping information here.</p>",
                 "text_color": "#111111",
                 "muted_text_color": "#444444",
-                "border_color": "#E1E5E7",
-                "background_color": "#FFFFFF",
-                "accent_color": "#02C6EA",
+                "border_color": "#e1e5e7",
+                "background_color": "#ffffff",
+                "accent_color": "#02c6ea",
                 "title_size": 14,
                 "body_size": 13,
                 "corner_radius": 6,
@@ -475,9 +475,68 @@
         "padding-block-start": 0,
         "padding-block-end": 0
       }
+    },
+    "00_avonent_wellness_journey_grhbJX": {
+      "type": "00-avonent-wellness-journey",
+      "blocks": {
+        "week_4fR6Fj": {
+          "type": "week",
+          "settings": {
+            "title": "Week 1: Build the Routine",
+            "points": "<ul><li>Your daily routine starts to feel more intentional</li><li>You learn when the product fits best into your day</li><li>Consistency becomes easier to maintain</li></ul>"
+          }
+        },
+        "week_Hpr37j": {
+          "type": "week",
+          "settings": {
+            "title": "Week 2: Find Your Rhythm",
+            "points": "<ul><li>Your routine starts to feel more automatic</li><li>You can better judge how the product fits your lifestyle</li><li>Staying consistent takes less effort</li></ul>"
+          }
+        },
+        "week_ff8AyG": {
+          "type": "week",
+          "settings": {
+            "title": "Week 3: Build Momentum",
+            "points": "<ul><li>Your daily habit feels established</li><li>You have more context for your own experience</li><li>Consistency becomes part of your normal routine</li></ul>"
+          }
+        },
+        "week_neX36r": {
+          "type": "week",
+          "settings": {
+            "title": "Week 4+: Keep It Going",
+            "points": "<ul><li>Keep following the serving directions on the label</li><li>Support your routine with sleep, hydration, and nutrition</li><li>Adjust your routine based on your personal experience</li></ul>"
+          }
+        }
+      },
+      "block_order": [
+        "week_4fR6Fj",
+        "week_Hpr37j",
+        "week_ff8AyG",
+        "week_neX36r"
+      ],
+      "name": "Avonent Wellness Journey",
+      "settings": {
+        "eyebrow": "Your Wellness",
+        "heading": "Journey with Avonent",
+        "subheading": "Consistency matters. Here’s an example of how a simple daily Avonent routine can become easier to maintain over the first few weeks.",
+        "disclaimer": "Individual experiences vary. Follow the directions on your product label and consult a qualified healthcare professional when appropriate.",
+        "activation_point": 58,
+        "background_color": "#FFFFFF",
+        "text_color": "#111111",
+        "muted_text_color": "#596269",
+        "accent_color": "#02C6EA",
+        "inactive_color": "#111111",
+        "card_text_color": "#FFFFFF",
+        "line_color": "#B8BEC2",
+        "check_color": "#02C6EA",
+        "content_width": 680,
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "00_avonent_wellness_journey_grhbJX"
   ]
 }
