@@ -325,4 +325,98 @@
   body:has(#header-group #header-component[data-sticky-state='active']) .product-details.sticky-content--desktop {
     --sticky-header-offset: var(--header-height);
   }
+
+
+  /* =========================================================
+     AVONENT PREMIUM PDP — DESKTOP ONLY
+     Tightens the product gallery/details relationship while
+     leaving Horizon's mobile layout untouched.
+     ========================================================= */
+  @media screen and (min-width: 750px) {
+    /* Treat the entire hero as one contained purchase unit. */
+    .product-information.section--page-width .product-information__grid:not(.product-information--media-none),
+    .product-information.section--full-width .product-information__grid:not(.product-information--media-none) {
+      grid-column: 1 / -1;
+      width: min(100%, 1240px);
+      max-width: 1240px;
+      margin-inline: auto;
+      column-gap: 32px;
+      align-items: start;
+    }
+
+    /* Override Horizon's wide 2:1 desktop split. */
+    .product-information__grid:not(.product-information--media-none).product-information--media-left,
+    .product-information__grid:not(.product-information--media-none).product-information__grid--half.product-information--media-left {
+      grid-template-columns: minmax(0, 1.08fr) minmax(390px, 0.92fr);
+    }
+
+    .product-information__grid:not(.product-information--media-none).product-information--media-right,
+    .product-information__grid:not(.product-information--media-none).product-information__grid--half.product-information--media-right {
+      grid-template-columns: minmax(390px, 0.92fr) minmax(0, 1.08fr);
+    }
+
+    .product-information__grid:not(.product-information--media-none).product-information--media-left .product-information__media,
+    .product-information__grid:not(.product-information--media-none).product-information--media-left .product-details,
+    .product-information__grid:not(.product-information--media-none).product-information--media-right .product-information__media,
+    .product-information__grid:not(.product-information--media-none).product-information--media-right .product-details {
+      padding-inline: 0;
+      min-width: 0;
+    }
+
+    .product-information__grid:not(.product-information--media-none).product-information--media-left .product-information__media {
+      grid-column: 1;
+    }
+
+    .product-information__grid:not(.product-information--media-none).product-information--media-left .product-details {
+      grid-column: 2;
+    }
+
+    .product-information__grid:not(.product-information--media-none).product-information--media-right .product-details {
+      grid-column: 1;
+    }
+
+    .product-information__grid:not(.product-information--media-none).product-information--media-right .product-information__media {
+      grid-column: 2;
+    }
+
+    /* Give the buying column enough visual weight. */
+    .product-information .product-details {
+      justify-content: flex-start;
+      align-self: start;
+    }
+
+    .product-information .product-details > .group-block {
+      width: 100%;
+      max-width: 500px;
+      margin-inline: 0;
+    }
+
+    /* Keep a single isolated product render from becoming page-height. */
+    .product-information__media media-gallery {
+      width: 100%;
+      max-width: 650px;
+      margin-inline: auto;
+    }
+
+    .product-information__media .product-media-container.constrain-height {
+      --constrained-min-height: 420px;
+      --constrained-height: min(680px, calc(100vh - var(--header-height, 100px) - 32px));
+    }
+
+    .product-information__media .product-media-container img {
+      max-height: 680px;
+    }
+
+    /* Desktop-only removal of the thin line above the gallery. */
+    .product-information__media,
+    .product-information__media media-gallery,
+    .product-information__media .media-gallery__grid,
+    .product-information__media slideshow-component,
+    .product-information__media .product-media-container {
+      border-top: 0 !important;
+      border-block-start: 0 !important;
+      outline: 0 !important;
+      box-shadow: none !important;
+    }
+  }
 {% endstylesheet %}
