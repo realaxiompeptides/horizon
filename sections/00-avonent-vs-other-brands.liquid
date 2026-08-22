@@ -136,6 +136,7 @@
           </div>
         </div>
 
+
         {% if section.settings.button_text != blank %}
           <div class="avonent-compare__cta-wrap avonent-compare__cta-wrap--mobile">
             <a
@@ -146,14 +147,13 @@
               <span class="avonent-compare__button-arrow" aria-hidden="true">→</span>
             </a>
 
-            
-              <div class="avonent-compare__guarantee">
-                <span class="avonent-compare__guarantee-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24"><path d="M12 2 4.5 5v5.5c0 5.2 3 9.9 7.5 11.5 4.5-1.6 7.5-6.3 7.5-11.5V5L12 2Zm0 2.2 5.5 2.2v4.1c0 4.1-2.2 7.9-5.5 9.4-3.3-1.5-5.5-5.3-5.5-9.4V6.4L12 4.2Zm-1 10.1-2.3-2.3 1.4-1.4.9.9 2.9-2.9 1.4 1.4-4.3 4.3Z"/></svg>
-                </span>
-                {{ section.settings.guarantee_text | default: '30 Day Money-Back Guarantee' }}
-              </div>
-                      </div>
+            <div class="avonent-compare__guarantee">
+              <span class="avonent-compare__guarantee-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M12 2 4.5 5v5.5c0 5.2 3 9.9 7.5 11.5 4.5-1.6 7.5-6.3 7.5-11.5V5L12 2Zm0 2.2 5.5 2.2v4.1c0 4.1-2.2 7.9-5.5 9.4-3.3-1.5-5.5-5.3-5.5-9.4V6.4L12 4.2Zm-1 10.1-2.3-2.3 1.4-1.4.9.9 2.9-2.9 1.4 1.4-4.3 4.3Z"/></svg>
+              </span>
+              {{ section.settings.guarantee_text | default: '30 Day Money-Back Guarantee' }}
+            </div>
+          </div>
         {% endif %}
       </div>
 
@@ -207,17 +207,14 @@
               <span class="avonent-compare__button-arrow" aria-hidden="true">→</span>
             </a>
 
-            
-              <div class="avonent-compare__guarantee">
-                <span class="avonent-compare__guarantee-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24"><path d="M12 2 4.5 5v5.5c0 5.2 3 9.9 7.5 11.5 4.5-1.6 7.5-6.3 7.5-11.5V5L12 2Zm0 2.2 5.5 2.2v4.1c0 4.1-2.2 7.9-5.5 9.4-3.3-1.5-5.5-5.3-5.5-9.4V6.4L12 4.2Zm-1 10.1-2.3-2.3 1.4-1.4.9.9 2.9-2.9 1.4 1.4-4.3 4.3Z"/></svg>
-                </span>
-                {{ section.settings.guarantee_text | default: '30 Day Money-Back Guarantee' }}
-              </div>
-                      </div>
+            <div class="avonent-compare__guarantee">
+              <span class="avonent-compare__guarantee-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M12 2 4.5 5v5.5c0 5.2 3 9.9 7.5 11.5 4.5-1.6 7.5-6.3 7.5-11.5V5L12 2Zm0 2.2 5.5 2.2v4.1c0 4.1-2.2 7.9-5.5 9.4-3.3-1.5-5.5-5.3-5.5-9.4V6.4L12 4.2Zm-1 10.1-2.3-2.3 1.4-1.4.9.9 2.9-2.9 1.4 1.4-4.3 4.3Z"/></svg>
+              </span>
+              {{ section.settings.guarantee_text | default: '30 Day Money-Back Guarantee' }}
+            </div>
+          </div>
         {% endif %}
-      </div>
-
       </div>
     </div>
   </div>
