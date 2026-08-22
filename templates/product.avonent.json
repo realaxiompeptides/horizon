@@ -99,7 +99,7 @@
           "blocks": {}
         },
         "demand_meter": {
-          "type": "00-avonent-stock-meter",
+          "type": "_avonent-stock-meter",
           "name": "Avonent Stock Meter",
           "settings": {
             "heading": "Offer availability",
