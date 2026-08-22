@@ -5,12 +5,11 @@
     --avb-icon: {{ block.settings.icon_color }};
     --avb-text: {{ block.settings.text_color }};
     --avb-bg: {{ block.settings.background_color }};
-    --avb-border: {{ block.settings.border_color }};
     --avb-radius: {{ block.settings.corner_radius }}px;
     --avb-icon-size: {{ block.settings.icon_size }}px;
     --avb-text-size: {{ block.settings.text_size }}px;
-    --avb-gap-row: {{ block.settings.row_gap }}px;
-    --avb-gap-column: {{ block.settings.column_gap }}px;
+    --avb-row-gap: {{ block.settings.row_gap }}px;
+    --avb-column-gap: {{ block.settings.column_gap }}px;
     --avb-padding-y: {{ block.settings.padding_y }}px;
     --avb-padding-x: {{ block.settings.padding_x }}px;
     --avb-top: {{ block.settings.spacing_top }}px;
@@ -41,6 +40,11 @@
 
             {% case icon %}
 
+              {% when 'bolt' %}
+                <svg viewBox="0 0 24 24">
+                  <path d="M13.2 2L5 13h6l-.8 9L19 10h-6l.2-8z"/>
+                </svg>
+
               {% when 'heart' %}
                 <svg viewBox="0 0 24 24">
                   <path d="M12 21s-7.5-4.4-9.5-9.2C.7 7.5 3.2 4 7 4c2.2 0 4 1.2 5 2.8C13 5.2 14.8 4 17 4c3.8 0 6.3 3.5 4.5 7.8C19.5 16.6 12 21 12 21z"/>
@@ -51,35 +55,9 @@
                   <path d="M12 2l8 3v6c0 5-3.4 9.3-8 11-4.6-1.7-8-6-8-11V5l8-3zm0 3.1L7 7v4c0 3.4 2 6.4 5 7.8 3-1.4 5-4.4 5-7.8V7l-5-1.9z"/>
                 </svg>
 
-              {% when 'bolt' %}
+              {% when 'shield_check' %}
                 <svg viewBox="0 0 24 24">
-                  <path d="M13.2 2L5 13h6l-.8 9L19 10h-6l.2-8z"/>
-                </svg>
-
-              {% when 'leaf' %}
-                <svg viewBox="0 0 24 24">
-                  <path d="M20.9 3.1C13 3.2 6.5 5.9 4.2 10.4c-1.5 3-.8 6.2 1.3 8.3L3 21.2l1.8 1.8 2.5-2.5c2.2 1.4 5 1.5 7.5.1 4.4-2.5 6.2-9.2 6.1-17.5zM7.4 17.3c2.1-3.6 5.4-6.4 9.6-8.5-3.4 2.7-6.2 5.8-8 9.3-.6-.2-1.1-.5-1.6-.8z"/>
-                </svg>
-
-              {% when 'moon' %}
-                <svg viewBox="0 0 24 24">
-                  <path d="M20.8 15.5A8.5 8.5 0 018.5 3.2 9.5 9.5 0 1020.8 15.5z"/>
-                </svg>
-
-              {% when 'sun' %}
-                <svg viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="4"/>
-                  <path d="M11 1h2v4h-2zM11 19h2v4h-2zM1 11h4v2H1zM19 11h4v2h-4zM4 2.6L6.8 5.4 5.4 6.8 2.6 4zM17.2 18.6l1.4-1.4 2.8 2.8-1.4 1.4zM2.6 20l2.8-2.8 1.4 1.4L4 21.4zM17.2 5.4L20 2.6 21.4 4l-2.8 2.8z"/>
-                </svg>
-
-              {% when 'brain' %}
-                <svg viewBox="0 0 24 24">
-                  <path d="M9 3a4 4 0 00-4 4v.5A4.5 4.5 0 004 16a4 4 0 004 4h1V3zm6 0v17h1a4 4 0 004-4 4.5 4.5 0 00-1-8.5V7a4 4 0 00-4-4z"/>
-                </svg>
-
-              {% when 'droplet' %}
-                <svg viewBox="0 0 24 24">
-                  <path d="M12 2S5.5 9.5 5.5 15a6.5 6.5 0 0013 0C18.5 9.5 12 2 12 2zm0 17a4 4 0 01-4-4c0-2.6 2.4-6.3 4-8.4 1.6 2.1 4 5.8 4 8.4a4 4 0 01-4 4z"/>
+                  <path d="M12 2l8 3v6c0 5-3.4 9.3-8 11-4.6-1.7-8-6-8-11V5l8-3zm-1.2 13.5l5.5-5.5-1.6-1.6-3.9 3.9-1.9-1.9-1.6 1.6 3.5 3.5z"/>
                 </svg>
 
               {% when 'gut' %}
@@ -92,14 +70,35 @@
                   <path d="M2 13h5l2-7 4 13 2-6h7v-2h-5.5L13 3 9 16l-1.5-5H2z"/>
                 </svg>
 
-              {% when 'check' %}
+              {% when 'brain' %}
                 <svg viewBox="0 0 24 24">
-                  <path d="M9.2 17.6L3.6 12l2.1-2.1 3.5 3.5 9-9 2.2 2.1z"/>
+                  <path d="M9 3a4 4 0 00-4 4v.5A4.5 4.5 0 004 16a4 4 0 004 4h1V3zm6 0v17h1a4 4 0 004-4 4.5 4.5 0 00-1-8.5V7a4 4 0 00-4-4z"/>
+                </svg>
+
+              {% when 'leaf' %}
+                <svg viewBox="0 0 24 24">
+                  <path d="M20.9 3.1C13 3.2 6.5 5.9 4.2 10.4c-1.5 3-.8 6.2 1.3 8.3L3 21.2l1.8 1.8 2.5-2.5c2.2 1.4 5 1.5 7.5.1 4.4-2.5 6.2-9.2 6.1-17.5z"/>
+                </svg>
+
+              {% when 'moon' %}
+                <svg viewBox="0 0 24 24">
+                  <path d="M20.8 15.5A8.5 8.5 0 018.5 3.2 9.5 9.5 0 1020.8 15.5z"/>
+                </svg>
+
+              {% when 'sun' %}
+                <svg viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="4"/>
+                  <path d="M11 1h2v4h-2zM11 19h2v4h-2zM1 11h4v2H1zM19 11h4v2h-4z"/>
+                </svg>
+
+              {% when 'droplet' %}
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 2S5.5 9.5 5.5 15a6.5 6.5 0 0013 0C18.5 9.5 12 2 12 2z"/>
                 </svg>
 
               {% when 'sparkle' %}
                 <svg viewBox="0 0 24 24">
-                  <path d="M12 2l1.7 5.1L19 9l-5.3 1.9L12 16l-1.7-5.1L5 9l5.3-1.9L12 2zm7 13l.9 2.6L22.5 19l-2.6.9L19 22.5l-.9-2.6-2.6-.9 2.6-.9L19 15z"/>
+                  <path d="M12 2l1.7 5.1L19 9l-5.3 1.9L12 16l-1.7-5.1L5 9l5.3-1.9L12 2z"/>
                 </svg>
 
               {% when 'flame' %}
@@ -107,29 +106,9 @@
                   <path d="M13.5 2c.5 4-2.7 5.4-4.2 8.1-.8 1.5-.4 3.1.8 4.1-.1-2.1 1.2-3.5 2.5-4.9 2.2 2.2 4.2 4.3 4.2 7.3a4.8 4.8 0 01-9.6 0c0-1.8.7-3.2 1.6-4.6C6.1 14 5 16 5 18a7 7 0 0014 0c0-6-4.1-9.2-5.5-16z"/>
                 </svg>
 
-              {% when 'clock' %}
-                <svg viewBox="0 0 24 24">
-                  <path d="M12 2a10 10 0 1010 10A10 10 0 0012 2zm0 18a8 8 0 118-8 8 8 0 01-8 8zm1-13h-2v6l5 3 1-1.7-4-2.3z"/>
-                </svg>
-
-              {% when 'target' %}
-                <svg viewBox="0 0 24 24">
-                  <path d="M12 2a10 10 0 1010 10h-3a7 7 0 11-7-7V2zm0 5a5 5 0 105 5h-3a2 2 0 11-2-2V7zm5-5v3h-2v2h-2v3h4V8h2V6h3V2z"/>
-                </svg>
-
-              {% when 'lungs' %}
-                <svg viewBox="0 0 24 24">
-                  <path d="M11 2h2v8.5c1-1.6 2.1-3.7 3-5.1 1.2-1.8 3.5-1 3.7 1.1L21 18c.2 2-1.3 4-3.6 4H14v-8h-2v8H8.6C6.3 22 4.8 20 5 18L6.3 6.5C6.5 4.4 8.8 3.6 10 5.4c.9 1.4 2 3.5 3 5.1V2h-2z"/>
-                </svg>
-
-              {% when 'shield_check' %}
-                <svg viewBox="0 0 24 24">
-                  <path d="M12 2l8 3v6c0 5-3.4 9.3-8 11-4.6-1.7-8-6-8-11V5l8-3zm-1.2 13.5l5.5-5.5-1.6-1.6-3.9 3.9-1.9-1.9-1.6 1.6 3.5 3.5z"/>
-                </svg>
-
               {% else %}
                 <svg viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="9"/>
+                  <path d="M9.2 17.6L3.6 12l2.1-2.1 3.5 3.5 9-9 2.2 2.1z"/>
                 </svg>
 
             {% endcase %}
@@ -150,18 +129,14 @@
 </div>
 
 {% stylesheet %}
+
   .avonent-benefits {
     display: block;
-
     width: 100%;
-
     box-sizing: border-box;
 
-    padding-top:
-      var(--avb-top);
-
-    padding-bottom:
-      var(--avb-bottom);
+    padding-top: var(--avb-top);
+    padding-bottom: var(--avb-bottom);
   }
 
   .avonent-benefits__inner {
@@ -177,22 +152,17 @@
 
     box-sizing: border-box;
 
-    column-gap:
-      var(--avb-gap-column);
-
-    row-gap:
-      var(--avb-gap-row);
+    gap:
+      var(--avb-row-gap)
+      var(--avb-column-gap);
 
     padding:
       var(--avb-padding-y)
       var(--avb-padding-x);
 
-    background:
-      var(--avb-bg);
+    background: var(--avb-bg);
 
-    border:
-      1px solid
-      var(--avb-border);
+    border: none;
 
     border-radius:
       var(--avb-radius);
@@ -214,14 +184,10 @@
     align-items: center;
     justify-content: center;
 
-    width:
-      var(--avb-icon-size);
+    width: var(--avb-icon-size);
+    height: var(--avb-icon-size);
 
-    height:
-      var(--avb-icon-size);
-
-    color:
-      var(--avb-icon);
+    color: var(--avb-icon);
   }
 
   .avonent-benefits__icon svg {
@@ -236,23 +202,17 @@
   .avonent-benefits__text {
     min-width: 0;
 
-    color:
-      var(--avb-text);
+    color: var(--avb-text);
 
-    font-family:
-      var(--font-body--family);
+    font-family: var(--font-body--family);
+    font-size: var(--avb-text-size);
+    font-weight: 500;
 
-    font-size:
-      var(--avb-text-size);
-
-    font-weight:
-      500;
-
-    line-height:
-      1.2;
+    line-height: 1.2;
   }
 
   @media screen and (max-width: 749px) {
+
     .avonent-benefits__inner {
       grid-template-columns:
         repeat(
@@ -264,7 +224,9 @@
     .avonent-benefits__item {
       gap: 6px;
     }
+
   }
+
 {% endstylesheet %}
 
 {% schema %}
@@ -293,23 +255,20 @@
       "id": "benefit_1_icon",
       "label": "Icon",
       "options": [
-        {"value":"bolt","label":"Energy / Bolt"},
+        {"value":"bolt","label":"Energy"},
         {"value":"heart","label":"Heart"},
         {"value":"shield","label":"Shield"},
         {"value":"shield_check","label":"Shield Check"},
+        {"value":"gut","label":"Digestive"},
+        {"value":"activity","label":"Activity"},
+        {"value":"brain","label":"Brain"},
         {"value":"leaf","label":"Leaf"},
         {"value":"moon","label":"Moon"},
         {"value":"sun","label":"Sun"},
-        {"value":"brain","label":"Brain"},
         {"value":"droplet","label":"Droplet"},
-        {"value":"gut","label":"Gut"},
-        {"value":"activity","label":"Activity"},
-        {"value":"check","label":"Check"},
         {"value":"sparkle","label":"Sparkle"},
         {"value":"flame","label":"Flame"},
-        {"value":"clock","label":"Clock"},
-        {"value":"target","label":"Target"},
-        {"value":"lungs","label":"Lungs"}
+        {"value":"check","label":"Check"}
       ],
       "default": "bolt"
     },
@@ -335,23 +294,20 @@
       "id": "benefit_2_icon",
       "label": "Icon",
       "options": [
-        {"value":"bolt","label":"Energy / Bolt"},
+        {"value":"bolt","label":"Energy"},
         {"value":"heart","label":"Heart"},
         {"value":"shield","label":"Shield"},
         {"value":"shield_check","label":"Shield Check"},
+        {"value":"gut","label":"Digestive"},
+        {"value":"activity","label":"Activity"},
+        {"value":"brain","label":"Brain"},
         {"value":"leaf","label":"Leaf"},
         {"value":"moon","label":"Moon"},
         {"value":"sun","label":"Sun"},
-        {"value":"brain","label":"Brain"},
         {"value":"droplet","label":"Droplet"},
-        {"value":"gut","label":"Gut"},
-        {"value":"activity","label":"Activity"},
-        {"value":"check","label":"Check"},
         {"value":"sparkle","label":"Sparkle"},
         {"value":"flame","label":"Flame"},
-        {"value":"clock","label":"Clock"},
-        {"value":"target","label":"Target"},
-        {"value":"lungs","label":"Lungs"}
+        {"value":"check","label":"Check"}
       ],
       "default": "shield_check"
     },
@@ -377,23 +333,20 @@
       "id": "benefit_3_icon",
       "label": "Icon",
       "options": [
-        {"value":"bolt","label":"Energy / Bolt"},
+        {"value":"bolt","label":"Energy"},
         {"value":"heart","label":"Heart"},
         {"value":"shield","label":"Shield"},
         {"value":"shield_check","label":"Shield Check"},
+        {"value":"gut","label":"Digestive"},
+        {"value":"activity","label":"Activity"},
+        {"value":"brain","label":"Brain"},
         {"value":"leaf","label":"Leaf"},
         {"value":"moon","label":"Moon"},
         {"value":"sun","label":"Sun"},
-        {"value":"brain","label":"Brain"},
         {"value":"droplet","label":"Droplet"},
-        {"value":"gut","label":"Gut"},
-        {"value":"activity","label":"Activity"},
-        {"value":"check","label":"Check"},
         {"value":"sparkle","label":"Sparkle"},
         {"value":"flame","label":"Flame"},
-        {"value":"clock","label":"Clock"},
-        {"value":"target","label":"Target"},
-        {"value":"lungs","label":"Lungs"}
+        {"value":"check","label":"Check"}
       ],
       "default": "gut"
     },
@@ -419,23 +372,20 @@
       "id": "benefit_4_icon",
       "label": "Icon",
       "options": [
-        {"value":"bolt","label":"Energy / Bolt"},
+        {"value":"bolt","label":"Energy"},
         {"value":"heart","label":"Heart"},
         {"value":"shield","label":"Shield"},
         {"value":"shield_check","label":"Shield Check"},
+        {"value":"gut","label":"Digestive"},
+        {"value":"activity","label":"Activity"},
+        {"value":"brain","label":"Brain"},
         {"value":"leaf","label":"Leaf"},
         {"value":"moon","label":"Moon"},
         {"value":"sun","label":"Sun"},
-        {"value":"brain","label":"Brain"},
         {"value":"droplet","label":"Droplet"},
-        {"value":"gut","label":"Gut"},
-        {"value":"activity","label":"Activity"},
-        {"value":"check","label":"Check"},
         {"value":"sparkle","label":"Sparkle"},
         {"value":"flame","label":"Flame"},
-        {"value":"clock","label":"Clock"},
-        {"value":"target","label":"Target"},
-        {"value":"lungs","label":"Lungs"}
+        {"value":"check","label":"Check"}
       ],
       "default": "heart"
     },
@@ -461,23 +411,20 @@
       "id": "benefit_5_icon",
       "label": "Icon",
       "options": [
-        {"value":"bolt","label":"Energy / Bolt"},
+        {"value":"bolt","label":"Energy"},
         {"value":"heart","label":"Heart"},
         {"value":"shield","label":"Shield"},
         {"value":"shield_check","label":"Shield Check"},
+        {"value":"gut","label":"Digestive"},
+        {"value":"activity","label":"Activity"},
+        {"value":"brain","label":"Brain"},
         {"value":"leaf","label":"Leaf"},
         {"value":"moon","label":"Moon"},
         {"value":"sun","label":"Sun"},
-        {"value":"brain","label":"Brain"},
         {"value":"droplet","label":"Droplet"},
-        {"value":"gut","label":"Gut"},
-        {"value":"activity","label":"Activity"},
-        {"value":"check","label":"Check"},
         {"value":"sparkle","label":"Sparkle"},
         {"value":"flame","label":"Flame"},
-        {"value":"clock","label":"Clock"},
-        {"value":"target","label":"Target"},
-        {"value":"lungs","label":"Lungs"}
+        {"value":"check","label":"Check"}
       ],
       "default": "activity"
     },
@@ -503,23 +450,20 @@
       "id": "benefit_6_icon",
       "label": "Icon",
       "options": [
-        {"value":"bolt","label":"Energy / Bolt"},
+        {"value":"bolt","label":"Energy"},
         {"value":"heart","label":"Heart"},
         {"value":"shield","label":"Shield"},
         {"value":"shield_check","label":"Shield Check"},
+        {"value":"gut","label":"Digestive"},
+        {"value":"activity","label":"Activity"},
+        {"value":"brain","label":"Brain"},
         {"value":"leaf","label":"Leaf"},
         {"value":"moon","label":"Moon"},
         {"value":"sun","label":"Sun"},
-        {"value":"brain","label":"Brain"},
         {"value":"droplet","label":"Droplet"},
-        {"value":"gut","label":"Gut"},
-        {"value":"activity","label":"Activity"},
-        {"value":"check","label":"Check"},
         {"value":"sparkle","label":"Sparkle"},
         {"value":"flame","label":"Flame"},
-        {"value":"clock","label":"Clock"},
-        {"value":"target","label":"Target"},
-        {"value":"lungs","label":"Lungs"}
+        {"value":"check","label":"Check"}
       ],
       "default": "sparkle"
     },
@@ -538,30 +482,27 @@
       "type": "text",
       "id": "benefit_7_text",
       "label": "Text",
-      "default": "Calm & Focus"
+      "default": "Mental Clarity"
     },
     {
       "type": "select",
       "id": "benefit_7_icon",
       "label": "Icon",
       "options": [
-        {"value":"bolt","label":"Energy / Bolt"},
+        {"value":"bolt","label":"Energy"},
         {"value":"heart","label":"Heart"},
         {"value":"shield","label":"Shield"},
         {"value":"shield_check","label":"Shield Check"},
+        {"value":"gut","label":"Digestive"},
+        {"value":"activity","label":"Activity"},
+        {"value":"brain","label":"Brain"},
         {"value":"leaf","label":"Leaf"},
         {"value":"moon","label":"Moon"},
         {"value":"sun","label":"Sun"},
-        {"value":"brain","label":"Brain"},
         {"value":"droplet","label":"Droplet"},
-        {"value":"gut","label":"Gut"},
-        {"value":"activity","label":"Activity"},
-        {"value":"check","label":"Check"},
         {"value":"sparkle","label":"Sparkle"},
         {"value":"flame","label":"Flame"},
-        {"value":"clock","label":"Clock"},
-        {"value":"target","label":"Target"},
-        {"value":"lungs","label":"Lungs"}
+        {"value":"check","label":"Check"}
       ],
       "default": "brain"
     },
@@ -587,23 +528,20 @@
       "id": "benefit_8_icon",
       "label": "Icon",
       "options": [
-        {"value":"bolt","label":"Energy / Bolt"},
+        {"value":"bolt","label":"Energy"},
         {"value":"heart","label":"Heart"},
         {"value":"shield","label":"Shield"},
         {"value":"shield_check","label":"Shield Check"},
+        {"value":"gut","label":"Digestive"},
+        {"value":"activity","label":"Activity"},
+        {"value":"brain","label":"Brain"},
         {"value":"leaf","label":"Leaf"},
         {"value":"moon","label":"Moon"},
         {"value":"sun","label":"Sun"},
-        {"value":"brain","label":"Brain"},
         {"value":"droplet","label":"Droplet"},
-        {"value":"gut","label":"Gut"},
-        {"value":"activity","label":"Activity"},
-        {"value":"check","label":"Check"},
         {"value":"sparkle","label":"Sparkle"},
         {"value":"flame","label":"Flame"},
-        {"value":"clock","label":"Clock"},
-        {"value":"target","label":"Target"},
-        {"value":"lungs","label":"Lungs"}
+        {"value":"check","label":"Check"}
       ],
       "default": "moon"
     },
@@ -628,13 +566,7 @@
       "type": "color",
       "id": "background_color",
       "label": "Background",
-      "default": "#F7FCFD"
-    },
-    {
-      "type": "color",
-      "id": "border_color",
-      "label": "Border",
-      "default": "#E4F1F4"
+      "default": "#F4FBFD"
     },
 
     {
@@ -667,17 +599,17 @@
       "id": "icon_size",
       "label": "Icon size",
       "min": 12,
-      "max": 34,
+      "max": 32,
       "step": 1,
       "unit": "px",
-      "default": 17
+      "default": 16
     },
     {
       "type": "range",
       "id": "text_size",
       "label": "Text size",
       "min": 9,
-      "max": 18,
+      "max": 17,
       "step": 1,
       "unit": "px",
       "default": 12
@@ -690,17 +622,17 @@
       "max": 40,
       "step": 1,
       "unit": "px",
-      "default": 16
+      "default": 18
     },
     {
       "type": "range",
       "id": "row_gap",
       "label": "Row gap",
-      "min": 4,
-      "max": 30,
+      "min": 3,
+      "max": 28,
       "step": 1,
       "unit": "px",
-      "default": 11
+      "default": 9
     },
     {
       "type": "range",
@@ -710,7 +642,7 @@
       "max": 30,
       "step": 1,
       "unit": "px",
-      "default": 12
+      "default": 10
     },
 
     {
@@ -722,7 +654,7 @@
       "id": "spacing_top",
       "label": "Top spacing",
       "min": 0,
-      "max": 60,
+      "max": 50,
       "step": 1,
       "unit": "px",
       "default": 4
@@ -732,10 +664,10 @@
       "id": "spacing_bottom",
       "label": "Bottom spacing",
       "min": 0,
-      "max": 60,
+      "max": 50,
       "step": 1,
       "unit": "px",
-      "default": 4
+      "default": 5
     },
     {
       "type": "range",
@@ -745,7 +677,7 @@
       "max": 30,
       "step": 1,
       "unit": "px",
-      "default": 12
+      "default": 11
     },
     {
       "type": "range",
@@ -758,7 +690,6 @@
       "default": 12
     }
   ],
-
   "presets": [
     {
       "name": "Avonent Benefits Grid"
