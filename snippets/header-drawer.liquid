@@ -51,7 +51,13 @@
 
 <header-drawer
   class="header-drawer {{ class }}"
-  style="--menu-image-border-radius: {{ image_border_radius }}px; --resource-card-corner-radius: {{ image_border_radius }}px;"
+  style="
+    --menu-image-border-radius: {{ image_border_radius }}px;
+    --resource-card-corner-radius: {{ image_border_radius }}px;
+    --avonent-drawer-width: {{ block_settings.avonent_drawer_width | default: 390 }}px;
+    --avonent-drawer-link-size: {{ block_settings.avonent_drawer_link_size | default: 18 }}px;
+    --avonent-drawer-accent: {{ block_settings.avonent_drawer_accent_color | default: '#02C6EA' }};
+  "
 >
   <details
     id="Details-menu-drawer-container"
@@ -81,16 +87,27 @@
         {% endif %}
       "
     >
-      <button
-        class="button close-button menu-drawer__close-button focus-inset"
-        type="button"
-        aria-label="{{ 'actions.close' | t }}"
-        on:click="/close"
-      >
-        <span class="svg-wrapper header-drawer-icon header-drawer-icon--close">
-          {{- 'icon-close-menu.svg' | inline_asset_content -}}
-        </span>
-      </button>
+      <div class="avonent-menu-drawer__top">
+        <a
+          href="{{ routes.root_url }}"
+          class="avonent-menu-drawer__brand"
+          aria-label="{{ shop.name | escape }}"
+        >
+          {{ shop.name }}
+        </a>
+
+        <button
+          class="button close-button menu-drawer__close-button focus-inset"
+          type="button"
+          aria-label="{{ 'actions.close' | t }}"
+          on:click="/close"
+        >
+          <span class="svg-wrapper header-drawer-icon header-drawer-icon--close">
+            {{- 'icon-close-menu.svg' | inline_asset_content -}}
+          </span>
+        </button>
+      </div>
+
       <nav
         class="menu-drawer__navigation"
         style="
@@ -593,6 +610,22 @@
         class="menu-drawer__utility-links menu-drawer__animated-element"
         style="--menu-drawer-animation-index: {{ linklist.links.size }};"
       >
+        {% if block_settings.avonent_drawer_show_support and block_settings.avonent_drawer_support_email != blank %}
+          <div class="avonent-menu-drawer__support">
+            {% if block_settings.avonent_drawer_support_label != blank %}
+              <span class="avonent-menu-drawer__support-label">
+                {{ block_settings.avonent_drawer_support_label }}
+              </span>
+            {% endif %}
+            <a
+              href="mailto:{{ block_settings.avonent_drawer_support_email | escape }}"
+              class="avonent-menu-drawer__support-email"
+            >
+              {{ block_settings.avonent_drawer_support_email }}
+            </a>
+          </div>
+        {% endif %}
+
         {% liquid
           assign show_language = section.settings.show_language
           if localization.available_languages.size <= 1
@@ -891,7 +924,16 @@
     flex-direction: column;
 
     @media screen and (min-width: 750px) {
-      width: 25rem;
+      width: var(--avonent-drawer-width);
+      max-width: min(var(--avonent-drawer-width), 90vw);
+      border-start-end-radius: 18px;
+      border-end-end-radius: 18px;
+      box-shadow: 18px 0 48px rgb(0 0 0 / 0.12);
+    }
+
+    @media screen and (max-width: 749px) {
+      width: min(92vw, 390px);
+      max-width: 92vw;
     }
   }
 
@@ -906,7 +948,8 @@
     left: 0;
     width: 100vw;
     height: 100dvh;
-    backdrop-filter: brightness(0.75);
+    background: rgb(6 12 15 / 0.34);
+    backdrop-filter: blur(2px);
     z-index: var(--layer-overlay);
     opacity: 0;
     transition: opacity var(--drawer-animation-speed) ease;
@@ -1479,4 +1522,194 @@
   .drawer-localization .language-selector .svg-wrapper.icon-caret svg {
     transform: none;
   }
+
+
+  /* ============================================================
+   * AVONENT DRAWER POLISH
+   * ============================================================ */
+
+  .avonent-menu-drawer__top {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: calc(var(--layer-flat) + 1);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    min-height: 72px;
+    padding-inline: 24px 14px;
+
+    background: var(--color-background);
+    border-block-end: 1px solid rgb(var(--color-foreground-rgb) / 0.09);
+  }
+
+  .avonent-menu-drawer__brand {
+    color: var(--color-foreground);
+    font-family: var(--font-heading--family);
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+  }
+
+  .avonent-menu-drawer__top .menu-drawer__close-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 44px;
+    height: 44px;
+    padding: 0;
+
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+
+    transition: background-color 160ms ease, color 160ms ease;
+  }
+
+  .avonent-menu-drawer__top .menu-drawer__close-button:hover {
+    background: rgb(2 198 234 / 0.10);
+    color: var(--avonent-drawer-accent);
+  }
+
+  .menu-drawer-container .header__icon--summary {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border-radius: 999px;
+    transition: background-color 160ms ease, color 160ms ease;
+  }
+
+  .menu-drawer-container .header__icon--summary:hover {
+    background: rgb(2 198 234 / 0.09);
+    color: var(--avonent-drawer-accent);
+  }
+
+  .header__icon--summary .header-drawer-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .menu-drawer__navigation {
+    padding-block: 14px 8px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .menu-drawer__navigation {
+      margin-top: 0;
+    }
+  }
+
+  .menu-drawer__menu {
+    padding-inline: 18px;
+  }
+
+  .menu-drawer__menu > .menu-drawer__list-item {
+    min-height: 0;
+  }
+
+  .menu-drawer__menu-item--mainlist {
+    min-height: 52px;
+    padding: 10px 12px;
+
+    border-radius: 10px;
+
+    font-family: var(--font-heading--family);
+    font-size: var(--avonent-drawer-link-size);
+    font-weight: 600;
+    line-height: 1.2;
+
+    transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
+  }
+
+  .menu-drawer__menu-item--mainlist:hover,
+  .menu-drawer__menu-item--mainlist:focus-visible {
+    background: rgb(2 198 234 / 0.08);
+    color: var(--color-foreground);
+  }
+
+  .menu-drawer__menu-item--active {
+    color: var(--avonent-drawer-accent);
+  }
+
+  .menu-drawer__menu-item--parent,
+  .menu-drawer__menu-item--child {
+    border-radius: 8px;
+    padding: 9px 12px;
+  }
+
+  .menu-drawer__menu-item--parent:hover,
+  .menu-drawer__menu-item--child:hover {
+    background: rgb(2 198 234 / 0.07);
+  }
+
+  .menu-drawer__list-item--divider {
+    border-block-end-color: rgb(var(--color-foreground-rgb) / 0.10);
+  }
+
+  .menu-drawer__utility-links {
+    margin: auto 24px 24px;
+    padding-block-start: 18px;
+    padding-inline: 0;
+    border-block-start: 1px solid rgb(var(--color-foreground-rgb) / 0.10);
+  }
+
+  .avonent-menu-drawer__support {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .avonent-menu-drawer__support-label {
+    color: var(--color-foreground);
+    font-family: var(--font-heading--family);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .avonent-menu-drawer__support-email {
+    width: fit-content;
+    color: rgb(var(--color-foreground-rgb) / 0.68);
+    font-family: var(--font-body--family);
+    font-size: 13px;
+    line-height: 1.35;
+    text-decoration: none;
+    transition: color 160ms ease;
+  }
+
+  .avonent-menu-drawer__support-email:hover {
+    color: var(--avonent-drawer-accent);
+  }
+
+  @media screen and (max-width: 749px) {
+    .avonent-menu-drawer__top {
+      min-height: 64px;
+      padding-inline: 20px 10px;
+    }
+
+    .avonent-menu-drawer__brand {
+      font-size: 17px;
+    }
+
+    .menu-drawer__menu {
+      padding-inline: 14px;
+    }
+
+    .menu-drawer__menu-item--mainlist {
+      min-height: 50px;
+      font-size: max(16px, var(--avonent-drawer-link-size));
+    }
+
+    .menu-drawer__utility-links {
+      margin-inline: 20px;
+      margin-block-end: 20px;
+    }
+  }
+
 {% endstylesheet %}
