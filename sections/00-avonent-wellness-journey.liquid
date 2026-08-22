@@ -102,67 +102,88 @@
       Math.max(20, Number(section.dataset.activationPoint || 58))
     );
 
-    let ticking = false;
+    let targetProgress = 0;
+    let currentProgress = 0;
+    let scrollTicking = false;
+    let animationFrame = null;
 
-    function updateJourney() {
-      ticking = false;
+    function getMarkerCenters() {
+      return markers.map((marker) => {
+        const rect = marker.getBoundingClientRect();
+        return rect.top + rect.height / 2;
+      });
+    }
 
-      const viewportTrigger = window.innerHeight * (activationPercent / 100);
-      const timelineRect = timeline.getBoundingClientRect();
+    function updateTargetState() {
+      scrollTicking = false;
 
-      const firstMarkerRect = markers[0].getBoundingClientRect();
-      const lastMarkerRect = markers[markers.length - 1].getBoundingClientRect();
+      const triggerY = window.innerHeight * (activationPercent / 100);
+      const centers = getMarkerCenters();
 
-      const trackStart = firstMarkerRect.top + firstMarkerRect.height / 2;
-      const trackEnd = lastMarkerRect.top + lastMarkerRect.height / 2;
-      const trackLength = Math.max(1, trackEnd - trackStart);
+      if (!centers.length) return;
 
-      let fillProgress = (viewportTrigger - trackStart) / trackLength;
-      fillProgress = Math.max(0, Math.min(1, fillProgress));
+      const firstCenter = centers[0];
+      const lastCenter = centers[centers.length - 1];
+      const trackDistance = Math.max(1, lastCenter - firstCenter);
 
-      fill.style.height = `${fillProgress * 100}%`;
+      targetProgress = (triggerY - firstCenter) / trackDistance;
+      targetProgress = Math.max(0, Math.min(1, targetProgress));
 
-      let currentIndex = -1;
+      let lastPassedIndex = -1;
 
-      markers.forEach((marker, index) => {
-        const markerRect = marker.getBoundingClientRect();
-        const markerCenter = markerRect.top + markerRect.height / 2;
-        const active = markerCenter <= viewportTrigger;
+      centers.forEach((center, index) => {
+        const passed = center <= triggerY;
 
-        steps[index].classList.toggle('is-passed', active);
+        steps[index].classList.toggle('is-passed', passed);
 
-        if (active) {
-          currentIndex = index;
+        if (passed) {
+          lastPassedIndex = index;
         }
       });
 
       steps.forEach((step, index) => {
-        step.classList.toggle('is-current', index === currentIndex);
+        step.classList.toggle('is-current', index === lastPassedIndex);
       });
 
-      const beforeTimeline = timelineRect.top > viewportTrigger;
+      startProgressAnimation();
+    }
 
-      if (beforeTimeline) {
-        fill.style.height = '0%';
-        steps.forEach((step) => {
-          step.classList.remove('is-passed', 'is-current');
-        });
+    function animateProgress() {
+      const difference = targetProgress - currentProgress;
+
+      if (Math.abs(difference) < 0.001) {
+        currentProgress = targetProgress;
+        fill.style.transform = `scaleY(${currentProgress})`;
+        animationFrame = null;
+        return;
       }
+
+      currentProgress += difference * 0.16;
+      fill.style.transform = `scaleY(${currentProgress})`;
+
+      animationFrame = window.requestAnimationFrame(animateProgress);
     }
 
-    function requestUpdate() {
-      if (ticking) return;
-
-      ticking = true;
-      window.requestAnimationFrame(updateJourney);
+    function startProgressAnimation() {
+      if (animationFrame !== null) return;
+      animationFrame = window.requestAnimationFrame(animateProgress);
     }
 
-    updateJourney();
+    function requestScrollUpdate() {
+      if (scrollTicking) return;
 
-    window.addEventListener('scroll', requestUpdate, { passive: true });
-    window.addEventListener('resize', requestUpdate, { passive: true });
+      scrollTicking = true;
+      window.requestAnimationFrame(updateTargetState);
+    }
 
-    document.addEventListener('shopify:section:load', requestUpdate);
+    updateTargetState();
+    currentProgress = targetProgress;
+    fill.style.transform = `scaleY(${currentProgress})`;
+
+    window.addEventListener('scroll', requestScrollUpdate, { passive: true });
+    window.addEventListener('resize', requestScrollUpdate, { passive: true });
+
+    document.addEventListener('shopify:section:load', requestScrollUpdate);
   })();
 </script>
 
@@ -245,9 +266,11 @@
   }
 
   .avonent-journey__track-fill {
-    height: 0;
+    height: 100%;
     background: var(--avj-accent);
-    transition: height 90ms linear;
+    transform: scaleY(0);
+    transform-origin: top;
+    will-change: transform;
   }
 
   .avonent-journey__steps {
@@ -277,14 +300,16 @@
     background: var(--avj-inactive);
     box-sizing: border-box;
     transition:
-      background-color 220ms ease,
-      border-color 220ms ease,
-      transform 220ms ease;
+      background-color 300ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 300ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 300ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .avonent-journey__step.is-passed .avonent-journey__marker {
     border-color: var(--avj-accent);
     background: var(--avj-accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--avj-accent) 10%, transparent);
   }
 
   .avonent-journey__step.is-current .avonent-journey__marker {
@@ -310,16 +335,19 @@
     font-weight: 700;
     line-height: 1.15;
     transition:
-      background-color 220ms ease,
-      transform 220ms ease;
+      background-color 320ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 320ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  .avonent-journey__step.is-current .avonent-journey__week {
+  .avonent-journey__step.is-passed .avonent-journey__week {
     background: var(--avj-accent);
   }
 
   .avonent-journey__step.is-current .avonent-journey__week {
+    background: var(--avj-accent);
     transform: translateX(2px);
+    box-shadow: 0 6px 18px color-mix(in srgb, var(--avj-accent) 14%, transparent);
   }
 
   .avonent-journey__points {
@@ -437,7 +465,6 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .avonent-journey__track-fill,
     .avonent-journey__marker,
     .avonent-journey__week {
       transition: none;
