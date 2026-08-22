@@ -1,0 +1,1137 @@
+{% doc %}
+  Avonent bundle selector.
+
+  Mobile-first bundle / offer selector that works without a Shopify app.
+
+  By default, bundle cards add 1, 2, or 3 units of the currently selected
+  product variant. Each card can also be mapped to ANY specific Shopify
+  variant by entering that variant's exact title or numeric variant ID.
+
+  For real discounted bundle pricing without an app, create Shopify variants
+  for the bundle packs (for example "1 Bottle", "2 Bottles", "3 Bottles")
+  with their actual prices, then map each card to the corresponding variant.
+{% enddoc %}
+
+{% liquid
+  assign av_product = closest.product | default: product
+
+  if request.visual_preview_mode and av_product == blank
+    assign av_product = collections.all.products.first
+  endif
+
+  assign default_variant = av_product.selected_or_first_available_variant
+  assign selected_bundle = block.settings.default_bundle | default: '2'
+  assign form_id = 'AvonentBundleForm-' | append: section.id | append: '-' | append: block.id
+  assign root_id = 'AvonentBundle-' | append: block.id
+%}
+
+{% if av_product != blank %}
+  <div
+    id="{{ root_id }}"
+    class="avonent-bundle"
+    {{ block.shopify_attributes }}
+    style="
+      --avb-accent: {{ block.settings.accent_color }};
+      --avb-accent-soft: {{ block.settings.selected_background }};
+      --avb-text: {{ block.settings.text_color }};
+      --avb-muted: {{ block.settings.muted_text_color }};
+      --avb-border: {{ block.settings.border_color }};
+      --avb-card-bg: {{ block.settings.card_background }};
+      --avb-button-bg: {{ block.settings.button_background }};
+      --avb-button-text: {{ block.settings.button_text_color }};
+      --avb-radius: {{ block.settings.card_radius }}px;
+      --avb-gap: {{ block.settings.card_gap }}px;
+      --avb-top: {{ block.settings.spacing_top }}px;
+      --avb-bottom: {{ block.settings.spacing_bottom }}px;
+    "
+    data-default-bundle="{{ selected_bundle }}"
+  >
+    {% if block.settings.heading != blank or block.settings.subheading != blank %}
+      <div class="avonent-bundle__header">
+        {% if block.settings.heading != blank %}
+          <div class="avonent-bundle__heading">
+            {{ block.settings.heading }}
+          </div>
+        {% endif %}
+
+        {% if block.settings.subheading != blank %}
+          <div class="avonent-bundle__subheading">
+            {{ block.settings.subheading }}
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <product-form-component
+      class="avonent-bundle__product-form"
+      data-section-id="{{ section.id }}"
+      data-product-id="{{ av_product.id }}"
+      data-product-url="{{ av_product.url }}"
+      data-quantity-default="1"
+      data-quantity-error-max="{{ 'products.product.quantity_error_max' | t }}"
+      on:submit="/handleSubmit"
+    >
+      <div
+        class="visually-hidden"
+        aria-live="assertive"
+        role="status"
+        aria-atomic="true"
+        ref="liveRegion"
+      ></div>
+
+      {% form 'product', av_product, id: form_id, data-type: 'add-to-cart-form' %}
+        <input
+          type="hidden"
+          name="id"
+          ref="variantId"
+          value="{{ default_variant.id }}"
+          data-av-bundle-variant-input
+        >
+        <input
+          type="hidden"
+          name="quantity"
+          value="1"
+          data-av-bundle-quantity-input
+        >
+
+        <div
+          class="avonent-bundle__options"
+          role="radiogroup"
+          aria-label="{{ block.settings.heading | default: 'Choose your bundle' | escape }}"
+        >
+          {% for i in (1..4) %}
+            {% liquid
+              assign enabled_key = 'bundle_' | append: i | append: '_enabled'
+              assign title_key = 'bundle_' | append: i | append: '_title'
+              assign subtitle_key = 'bundle_' | append: i | append: '_subtitle'
+              assign mapping_key = 'bundle_' | append: i | append: '_variant'
+              assign quantity_key = 'bundle_' | append: i | append: '_quantity'
+              assign badge_key = 'bundle_' | append: i | append: '_badge'
+              assign savings_key = 'bundle_' | append: i | append: '_savings_text'
+              assign image_key = 'bundle_' | append: i | append: '_image'
+
+              assign bundle_enabled = block.settings[enabled_key]
+              assign bundle_title = block.settings[title_key]
+              assign bundle_subtitle = block.settings[subtitle_key]
+              assign bundle_mapping = block.settings[mapping_key] | strip
+              assign bundle_quantity = block.settings[quantity_key] | default: 1
+              assign bundle_badge = block.settings[badge_key]
+              assign bundle_savings_override = block.settings[savings_key]
+              assign bundle_image_override = block.settings[image_key]
+
+              assign bundle_variant = default_variant
+
+              if bundle_mapping != blank
+                for candidate_variant in av_product.variants
+                  assign candidate_id_string = candidate_variant.id | append: ''
+                  if candidate_id_string == bundle_mapping or candidate_variant.title == bundle_mapping
+                    assign bundle_variant = candidate_variant
+                    break
+                  endif
+                endfor
+              endif
+
+              assign bundle_total = bundle_variant.price | times: bundle_quantity
+
+              assign compare_unit = bundle_variant.compare_at_price
+              if compare_unit == blank or compare_unit <= bundle_variant.price
+                assign compare_unit = bundle_variant.price
+              endif
+              assign bundle_compare_total = compare_unit | times: bundle_quantity
+
+              assign automatic_savings_percent = 0
+              if bundle_compare_total > bundle_total
+                assign savings_amount = bundle_compare_total | minus: bundle_total
+                assign automatic_savings_percent = savings_amount | times: 100.0 | divided_by: bundle_compare_total | round
+              endif
+
+              assign bundle_image = bundle_image_override
+              if bundle_image == blank and bundle_variant.featured_media != blank
+                assign bundle_image = bundle_variant.featured_media.preview_image
+              endif
+              if bundle_image == blank
+                assign bundle_image = av_product.featured_image
+              endif
+
+              assign is_default = false
+              assign i_string = i | append: ''
+              if i_string == selected_bundle
+                assign is_default = true
+              endif
+            %}
+
+            {% if bundle_enabled %}
+              <button
+                type="button"
+                class="avonent-bundle__option{% if is_default %} is-selected{% endif %}"
+                role="radio"
+                aria-checked="{% if is_default %}true{% else %}false{% endif %}"
+                data-av-bundle-option
+                data-bundle-number="{{ i }}"
+                data-variant-id="{{ bundle_variant.id }}"
+                data-quantity="{{ bundle_quantity }}"
+                data-available="{{ bundle_variant.available }}"
+                data-button-price="{{ bundle_total | money | escape }}"
+                {% unless bundle_variant.available %}disabled{% endunless %}
+              >
+                {% if bundle_badge != blank %}
+                  <span class="avonent-bundle__badge">
+                    {{ bundle_badge }}
+                  </span>
+                {% endif %}
+
+                <span class="avonent-bundle__radio" aria-hidden="true">
+                  <span></span>
+                </span>
+
+                {% if block.settings.show_images and bundle_image != blank %}
+                  <span class="avonent-bundle__image-wrap">
+                    {{
+                      bundle_image
+                      | image_url: width: 180
+                      | image_tag:
+                        loading: 'lazy',
+                        widths: '60, 90, 120, 180',
+                        class: 'avonent-bundle__image',
+                        alt: bundle_title
+                    }}
+                  </span>
+                {% endif %}
+
+                <span class="avonent-bundle__copy">
+                  <span class="avonent-bundle__title">
+                    {{ bundle_title }}
+                  </span>
+
+                  {% if bundle_subtitle != blank %}
+                    <span class="avonent-bundle__subtitle">
+                      {{ bundle_subtitle }}
+                    </span>
+                  {% endif %}
+
+                  {% if bundle_savings_override != blank %}
+                    <span class="avonent-bundle__savings">
+                      {{ bundle_savings_override }}
+                    </span>
+                  {% elsif automatic_savings_percent > 0 %}
+                    <span class="avonent-bundle__savings">
+                      Save {{ automatic_savings_percent }}%
+                    </span>
+                  {% endif %}
+                </span>
+
+                <span class="avonent-bundle__price">
+                  <strong>{{ bundle_total | money }}</strong>
+
+                  {% if bundle_compare_total > bundle_total %}
+                    <s>{{ bundle_compare_total | money }}</s>
+                  {% endif %}
+
+                  {% unless bundle_variant.available %}
+                    <small>Sold out</small>
+                  {% endunless %}
+                </span>
+              </button>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        <button
+          type="submit"
+          class="avonent-bundle__atc"
+          data-av-bundle-atc
+          {% unless default_variant.available %}disabled{% endunless %}
+        >
+          <span data-av-bundle-atc-text>
+            {{ block.settings.button_text }}
+          </span>
+          {% if block.settings.show_price_in_button %}
+            <span
+              class="avonent-bundle__atc-price"
+              data-av-bundle-atc-price
+            >
+              {{ default_variant.price | money }}
+            </span>
+          {% endif %}
+          <span class="avonent-bundle__atc-arrow" aria-hidden="true">→</span>
+        </button>
+
+        {% if block.settings.trust_text != blank %}
+          <div class="avonent-bundle__trust">
+            <span class="avonent-bundle__lock" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M7 10V8a5 5 0 0110 0v2h1.25A1.75 1.75 0 0120 11.75v8.5A1.75 1.75 0 0118.25 22H5.75A1.75 1.75 0 014 20.25v-8.5A1.75 1.75 0 015.75 10H7zm2 0h6V8a3 3 0 00-6 0v2zm3 4a1.5 1.5 0 00-.75 2.8V19h1.5v-2.2A1.5 1.5 0 0012 14z"/>
+              </svg>
+            </span>
+            <span>{{ block.settings.trust_text }}</span>
+          </div>
+        {% endif %}
+      {% endform %}
+    </product-form-component>
+
+    {% if request.design_mode %}
+      <div class="avonent-bundle__editor-note">
+        <strong>Bundle mapping:</strong>
+        leave “Variant title or ID” blank to use the currently selected product variant.
+        Or enter any exact Shopify variant title (example: <em>Chocolate / 3 Bottles</em>)
+        or numeric variant ID. For true discounted bundle prices without an app,
+        create bundle variants in Shopify with the real prices and map each card to them.
+      </div>
+    {% endif %}
+  </div>
+
+  <script>
+    (() => {
+      const root = document.getElementById('{{ root_id }}');
+      if (!root || root.dataset.avBundleInitialized === 'true') return;
+
+      root.dataset.avBundleInitialized = 'true';
+
+      const options = Array.from(
+        root.querySelectorAll('[data-av-bundle-option]')
+      );
+
+      const variantInput = root.querySelector(
+        '[data-av-bundle-variant-input]'
+      );
+
+      const quantityInput = root.querySelector(
+        '[data-av-bundle-quantity-input]'
+      );
+
+      const addButton = root.querySelector(
+        '[data-av-bundle-atc]'
+      );
+
+      const buttonText = root.querySelector(
+        '[data-av-bundle-atc-text]'
+      );
+
+      const buttonPrice = root.querySelector(
+        '[data-av-bundle-atc-price]'
+      );
+
+      if (!options.length || !variantInput || !quantityInput || !addButton) return;
+
+      const baseButtonText = {{ block.settings.button_text | json }};
+
+      function selectBundle(option) {
+        if (!option || option.disabled) return;
+
+        options.forEach((item) => {
+          const selected = item === option;
+          item.classList.toggle('is-selected', selected);
+          item.setAttribute('aria-checked', selected ? 'true' : 'false');
+        });
+
+        const variantId = option.dataset.variantId || '';
+        const quantity = option.dataset.quantity || '1';
+        const available = option.dataset.available === 'true';
+        const price = option.dataset.buttonPrice || '';
+
+        variantInput.value = variantId;
+        quantityInput.value = quantity;
+
+        variantInput.dispatchEvent(
+          new Event('change', { bubbles: true })
+        );
+
+        addButton.disabled = !available;
+
+        if (buttonText) {
+          buttonText.textContent = available
+            ? baseButtonText
+            : 'Sold Out';
+        }
+
+        if (buttonPrice) {
+          buttonPrice.textContent = price;
+        }
+      }
+
+      options.forEach((option) => {
+        option.addEventListener('click', () => selectBundle(option));
+      });
+
+      let initial = root.querySelector(
+        '[data-av-bundle-option].is-selected:not(:disabled)'
+      );
+
+      if (!initial) {
+        initial = options.find((option) => !option.disabled);
+      }
+
+      if (initial) selectBundle(initial);
+    })();
+  </script>
+{% endif %}
+
+{% stylesheet %}
+  .avonent-bundle {
+    width: 100%;
+    box-sizing: border-box;
+    padding-top: var(--avb-top);
+    padding-bottom: var(--avb-bottom);
+    color: var(--avb-text);
+  }
+
+  .avonent-bundle__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .avonent-bundle__heading {
+    font-family: var(--font-heading--family);
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+
+  .avonent-bundle__subheading {
+    font-family: var(--font-body--family);
+    font-size: 11px;
+    line-height: 1.25;
+    color: var(--avb-muted);
+    text-align: right;
+  }
+
+  .avonent-bundle__options {
+    display: grid;
+    gap: var(--avb-gap);
+    width: 100%;
+  }
+
+  .avonent-bundle__option {
+    position: relative;
+    display: grid;
+    grid-template-columns: 20px 52px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 10px;
+
+    width: 100%;
+    min-height: 76px;
+    margin: 0;
+    padding: 12px 13px;
+
+    appearance: none;
+    border: 1px solid var(--avb-border);
+    border-radius: var(--avb-radius);
+    background: var(--avb-card-bg);
+    color: var(--avb-text);
+
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+
+    transition:
+      border-color 160ms ease,
+      background-color 160ms ease,
+      box-shadow 160ms ease,
+      transform 160ms ease;
+  }
+
+  .avonent-bundle__option:hover:not(:disabled) {
+    border-color: color-mix(in srgb, var(--avb-accent) 55%, var(--avb-border));
+  }
+
+  .avonent-bundle__option.is-selected {
+    border-color: var(--avb-accent);
+    background: var(--avb-accent-soft);
+    box-shadow: 0 0 0 1px var(--avb-accent);
+  }
+
+  .avonent-bundle__option:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+
+  .avonent-bundle__radio {
+    display: grid;
+    place-items: center;
+
+    width: 18px;
+    height: 18px;
+
+    border: 1.5px solid #AAB4B8;
+    border-radius: 50%;
+    background: #fff;
+  }
+
+  .avonent-bundle__radio span {
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: transparent;
+  }
+
+  .avonent-bundle__option.is-selected .avonent-bundle__radio {
+    border-color: var(--avb-accent);
+  }
+
+  .avonent-bundle__option.is-selected .avonent-bundle__radio span {
+    background: var(--avb-accent);
+  }
+
+  .avonent-bundle__image-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 52px;
+    height: 52px;
+    overflow: hidden;
+    border-radius: 9px;
+    background: #fff;
+  }
+
+  .avonent-bundle__image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .avonent-bundle__copy {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .avonent-bundle__title {
+    font-family: var(--font-body--family);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.15;
+  }
+
+  .avonent-bundle__subtitle {
+    margin-top: 3px;
+    font-family: var(--font-body--family);
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 1.25;
+    color: var(--avb-muted);
+  }
+
+  .avonent-bundle__savings {
+    margin-top: 4px;
+    font-family: var(--font-body--family);
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--avb-accent);
+  }
+
+  .avonent-bundle__price {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    min-width: max-content;
+    font-family: var(--font-body--family);
+  }
+
+  .avonent-bundle__price strong {
+    font-size: 14px;
+    font-weight: 750;
+    line-height: 1.1;
+  }
+
+  .avonent-bundle__price s {
+    margin-top: 3px;
+    font-size: 11px;
+    line-height: 1;
+    color: var(--avb-muted);
+  }
+
+  .avonent-bundle__price small {
+    margin-top: 4px;
+    font-size: 10px;
+    font-weight: 650;
+    color: var(--avb-muted);
+  }
+
+  .avonent-bundle__badge {
+    position: absolute;
+    top: -9px;
+    right: 12px;
+    z-index: 2;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 19px;
+    padding: 2px 10px;
+
+    border-radius: 999px;
+    background: var(--avb-accent);
+    color: #fff;
+
+    font-family: var(--font-body--family);
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .avonent-bundle__atc {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    width: 100%;
+    min-height: 52px;
+
+    margin-top: 12px;
+    padding: 13px 18px;
+
+    border: 1px solid var(--avb-button-bg);
+    border-radius: 12px;
+    background: var(--avb-button-bg);
+    color: var(--avb-button-text);
+
+    font-family: var(--font-body--family);
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1;
+
+    cursor: pointer;
+    transition:
+      transform 160ms ease,
+      opacity 160ms ease;
+  }
+
+  .avonent-bundle__atc:hover:not(:disabled) {
+    transform: translateY(-1px);
+  }
+
+  .avonent-bundle__atc:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+
+  .avonent-bundle__atc-price::before {
+    content: '—';
+    margin-right: 7px;
+    opacity: 0.55;
+  }
+
+  .avonent-bundle__atc-arrow {
+    margin-left: auto;
+    font-size: 19px;
+    font-weight: 400;
+  }
+
+  .avonent-bundle__trust {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+
+    margin-top: 8px;
+
+    color: var(--avb-muted);
+    font-family: var(--font-body--family);
+    font-size: 10px;
+    line-height: 1.25;
+    text-align: center;
+  }
+
+  .avonent-bundle__lock {
+    display: inline-flex;
+    width: 12px;
+    height: 12px;
+    color: var(--avb-accent);
+  }
+
+  .avonent-bundle__lock svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+  }
+
+  .avonent-bundle__editor-note {
+    margin-top: 10px;
+    padding: 10px 11px;
+
+    border: 1px dashed var(--avb-border);
+    border-radius: 10px;
+    background: #fff;
+
+    color: var(--avb-muted);
+    font-family: var(--font-body--family);
+    font-size: 10px;
+    line-height: 1.4;
+  }
+
+  @media screen and (max-width: 749px) {
+    .avonent-bundle__header {
+      align-items: center;
+      margin-bottom: 9px;
+    }
+
+    .avonent-bundle__heading {
+      font-size: 15px;
+    }
+
+    .avonent-bundle__subheading {
+      font-size: 10px;
+    }
+
+    .avonent-bundle__options {
+      gap: 9px;
+    }
+
+    .avonent-bundle__option {
+      grid-template-columns: 18px 46px minmax(0, 1fr) auto;
+      gap: 8px;
+
+      min-height: 70px;
+      padding: 10px 11px;
+      border-radius: 11px;
+    }
+
+    .avonent-bundle__image-wrap {
+      width: 46px;
+      height: 46px;
+      border-radius: 8px;
+    }
+
+    .avonent-bundle__title {
+      font-size: 13px;
+    }
+
+    .avonent-bundle__subtitle,
+    .avonent-bundle__savings {
+      font-size: 10px;
+    }
+
+    .avonent-bundle__price strong {
+      font-size: 13px;
+    }
+
+    .avonent-bundle__price s {
+      font-size: 10px;
+    }
+
+    .avonent-bundle__badge {
+      top: -8px;
+      right: 9px;
+      min-height: 18px;
+      padding-inline: 8px;
+      font-size: 9px;
+    }
+
+    .avonent-bundle__atc {
+      min-height: 54px;
+      margin-top: 11px;
+      border-radius: 11px;
+      font-size: 14px;
+    }
+  }
+
+  @media screen and (max-width: 370px) {
+    .avonent-bundle__option {
+      grid-template-columns: 18px 40px minmax(0, 1fr) auto;
+      padding-inline: 9px;
+    }
+
+    .avonent-bundle__image-wrap {
+      width: 40px;
+      height: 40px;
+    }
+
+    .avonent-bundle__subtitle {
+      display: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Avonent Bundle Selector",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Choose Your Bundle"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Small text",
+      "default": "More value with multi-packs"
+    },
+    {
+      "type": "select",
+      "id": "default_bundle",
+      "label": "Selected bundle by default",
+      "options": [
+        {"value":"1","label":"Bundle 1"},
+        {"value":"2","label":"Bundle 2"},
+        {"value":"3","label":"Bundle 3"},
+        {"value":"4","label":"Bundle 4"}
+      ],
+      "default": "2"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_images",
+      "label": "Show bundle images",
+      "default": true
+    },
+
+    {
+      "type": "header",
+      "content": "Bundle 1"
+    },
+    {
+      "type": "checkbox",
+      "id": "bundle_1_enabled",
+      "label": "Show bundle 1",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "bundle_1_title",
+      "label": "Title",
+      "default": "Buy 1"
+    },
+    {
+      "type": "text",
+      "id": "bundle_1_subtitle",
+      "label": "Subtitle",
+      "default": "Starter"
+    },
+    {
+      "type": "text",
+      "id": "bundle_1_variant",
+      "label": "Variant title or ID",
+      "info": "Leave blank to use the currently selected variant. Or enter any exact Shopify variant title or numeric variant ID."
+    },
+    {
+      "type": "range",
+      "id": "bundle_1_quantity",
+      "label": "Quantity added",
+      "min": 1,
+      "max": 12,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "text",
+      "id": "bundle_1_badge",
+      "label": "Badge"
+    },
+    {
+      "type": "text",
+      "id": "bundle_1_savings_text",
+      "label": "Savings text override"
+    },
+    {
+      "type": "image_picker",
+      "id": "bundle_1_image",
+      "label": "Custom image"
+    },
+
+    {
+      "type": "header",
+      "content": "Bundle 2"
+    },
+    {
+      "type": "checkbox",
+      "id": "bundle_2_enabled",
+      "label": "Show bundle 2",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "bundle_2_title",
+      "label": "Title",
+      "default": "Buy 2"
+    },
+    {
+      "type": "text",
+      "id": "bundle_2_subtitle",
+      "label": "Subtitle",
+      "default": "Best Seller"
+    },
+    {
+      "type": "text",
+      "id": "bundle_2_variant",
+      "label": "Variant title or ID",
+      "info": "Leave blank to use the currently selected variant. Or enter any exact Shopify variant title or numeric variant ID."
+    },
+    {
+      "type": "range",
+      "id": "bundle_2_quantity",
+      "label": "Quantity added",
+      "min": 1,
+      "max": 12,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "text",
+      "id": "bundle_2_badge",
+      "label": "Badge",
+      "default": "Most Popular"
+    },
+    {
+      "type": "text",
+      "id": "bundle_2_savings_text",
+      "label": "Savings text override"
+    },
+    {
+      "type": "image_picker",
+      "id": "bundle_2_image",
+      "label": "Custom image"
+    },
+
+    {
+      "type": "header",
+      "content": "Bundle 3"
+    },
+    {
+      "type": "checkbox",
+      "id": "bundle_3_enabled",
+      "label": "Show bundle 3",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "bundle_3_title",
+      "label": "Title",
+      "default": "Buy 3"
+    },
+    {
+      "type": "text",
+      "id": "bundle_3_subtitle",
+      "label": "Subtitle",
+      "default": "Best Value"
+    },
+    {
+      "type": "text",
+      "id": "bundle_3_variant",
+      "label": "Variant title or ID",
+      "info": "Leave blank to use the currently selected variant. Or enter any exact Shopify variant title or numeric variant ID."
+    },
+    {
+      "type": "range",
+      "id": "bundle_3_quantity",
+      "label": "Quantity added",
+      "min": 1,
+      "max": 12,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "text",
+      "id": "bundle_3_badge",
+      "label": "Badge",
+      "default": "Best Value"
+    },
+    {
+      "type": "text",
+      "id": "bundle_3_savings_text",
+      "label": "Savings text override"
+    },
+    {
+      "type": "image_picker",
+      "id": "bundle_3_image",
+      "label": "Custom image"
+    },
+
+    {
+      "type": "header",
+      "content": "Bundle 4"
+    },
+    {
+      "type": "checkbox",
+      "id": "bundle_4_enabled",
+      "label": "Show bundle 4",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "bundle_4_title",
+      "label": "Title",
+      "default": "Buy 4"
+    },
+    {
+      "type": "text",
+      "id": "bundle_4_subtitle",
+      "label": "Subtitle",
+      "default": "Stock Up"
+    },
+    {
+      "type": "text",
+      "id": "bundle_4_variant",
+      "label": "Variant title or ID",
+      "info": "Leave blank to use the currently selected variant. Or enter any exact Shopify variant title or numeric variant ID."
+    },
+    {
+      "type": "range",
+      "id": "bundle_4_quantity",
+      "label": "Quantity added",
+      "min": 1,
+      "max": 12,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "text",
+      "id": "bundle_4_badge",
+      "label": "Badge"
+    },
+    {
+      "type": "text",
+      "id": "bundle_4_savings_text",
+      "label": "Savings text override"
+    },
+    {
+      "type": "image_picker",
+      "id": "bundle_4_image",
+      "label": "Custom image"
+    },
+
+    {
+      "type": "header",
+      "content": "Buy button"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Add To Cart"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price_in_button",
+      "label": "Show selected bundle price in button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "trust_text",
+      "label": "Text under button",
+      "default": "Secure checkout • Ships within 48 hours"
+    },
+
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent",
+      "default": "#02C6EA"
+    },
+    {
+      "type": "color",
+      "id": "selected_background",
+      "label": "Selected card background",
+      "default": "#F2FBFD"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Card border",
+      "default": "#DDE8EB"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "muted_text_color",
+      "label": "Secondary text",
+      "default": "#6F7B80"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Button background",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#FFFFFF"
+    },
+
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card roundness",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "label": "Space between bundles",
+      "min": 4,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "spacing_top",
+      "label": "Top spacing",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "spacing_bottom",
+      "label": "Bottom spacing",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 2
+    }
+  ],
+  "presets": [
+    {
+      "name": "Avonent Bundle Selector"
+    }
+  ]
+}
+{% endschema %}
