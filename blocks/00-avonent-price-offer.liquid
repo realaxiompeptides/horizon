@@ -1,0 +1,651 @@
+{% doc %}
+  Avonent price / offer block.
+
+  Replaces Horizon's plain visual price row with a cleaner offer row while
+  leaving Shopify's native product form and selling-plan logic intact.
+
+  Automatically switches its label between:
+  - One-Time Purchase
+  - Subscribe & Save
+
+  Uses the currently selected Shopify variant and, when available, the
+  currently selected selling plan allocation for subscription pricing.
+{% enddoc %}
+
+{% liquid
+  assign av_product = closest.product | default: product
+  assign av_variant = av_product.selected_or_first_available_variant
+
+  if request.visual_preview_mode and av_product == blank
+    assign av_product = collections.all.products.first
+    assign av_variant = av_product.selected_or_first_available_variant
+  endif
+
+  assign current_price = av_variant.price
+  assign compare_price = av_variant.compare_at_price
+  assign default_is_subscription = false
+
+  if av_variant.selling_plan_allocations.size > 0 and block.settings.default_purchase_type == 'subscription'
+    assign default_is_subscription = true
+    assign first_allocation = av_variant.selling_plan_allocations.first
+    assign current_price = first_allocation.price
+
+    if first_allocation.compare_at_price > current_price
+      assign compare_price = first_allocation.compare_at_price
+    endif
+  endif
+
+  assign savings_amount = 0
+  assign savings_percent = 0
+
+  if compare_price != blank and compare_price > current_price
+    assign savings_amount = compare_price | minus: current_price
+    assign savings_percent = savings_amount | times: 100.0 | divided_by: compare_price | round
+  endif
+
+  assign root_id = 'AvonentPriceOffer-' | append: block.id
+%}
+
+{% if av_product != blank and av_variant != blank %}
+  <div
+    id="{{ root_id }}"
+    class="avonent-price-offer"
+    {{ block.shopify_attributes }}
+    data-avonent-price-offer
+    data-section-id="{{ section.id }}"
+    data-default-purchase-type="{{ block.settings.default_purchase_type }}"
+    style="
+      --avpo-accent: {{ block.settings.accent_color }};
+      --avpo-text: {{ block.settings.text_color }};
+      --avpo-muted: {{ block.settings.muted_text_color }};
+      --avpo-border: {{ block.settings.border_color }};
+      --avpo-sale-bg: {{ block.settings.sale_badge_background }};
+      --avpo-sale-text: {{ block.settings.sale_badge_text_color }};
+      --avpo-bg: {{ block.settings.background_color }};
+      --avpo-radius: {{ block.settings.corner_radius }}px;
+      --avpo-top: {{ block.settings.spacing_top }}px;
+      --avpo-bottom: {{ block.settings.spacing_bottom }}px;
+    "
+  >
+    <div class="avonent-price-offer__row">
+      <div class="avonent-price-offer__label-wrap">
+        <span
+          class="avonent-price-offer__label"
+          data-avpo-label
+        >
+          {% if default_is_subscription %}
+            {{ block.settings.subscription_label }}
+          {% else %}
+            {{ block.settings.one_time_label }}
+          {% endif %}
+        </span>
+
+        {% if block.settings.show_subscription_helper %}
+          <span
+            class="avonent-price-offer__helper{% unless default_is_subscription %} is-hidden{% endunless %}"
+            data-avpo-helper
+          >
+            {{ block.settings.subscription_helper }}
+          </span>
+        {% endif %}
+      </div>
+
+      <div class="avonent-price-offer__price-wrap">
+        <strong
+          class="avonent-price-offer__price"
+          data-avpo-price
+        >
+          {{ current_price | money }}
+        </strong>
+
+        <s
+          class="avonent-price-offer__compare{% unless compare_price > current_price %} is-hidden{% endunless %}"
+          data-avpo-compare
+        >
+          {% if compare_price > current_price %}
+            {{ compare_price | money }}
+          {% endif %}
+        </s>
+
+        {% if block.settings.show_sale_badge %}
+          <span
+            class="avonent-price-offer__sale{% if savings_amount <= 0 %} is-hidden{% endif %}"
+            data-avpo-sale
+          >
+            <span data-avpo-sale-name>{{ block.settings.sale_name }}</span>
+
+            {% if block.settings.show_savings_amount %}
+              <span class="avonent-price-offer__sale-separator">·</span>
+              <span data-avpo-save-amount>
+                Save {{ savings_amount | money }}
+              </span>
+            {% elsif block.settings.show_savings_percent %}
+              <span class="avonent-price-offer__sale-separator">·</span>
+              <span data-avpo-save-percent>
+                Save {{ savings_percent }}%
+              </span>
+            {% endif %}
+          </span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      const root = document.getElementById('{{ root_id }}');
+      if (!root || root.dataset.avpoInitialized === 'true') return;
+      root.dataset.avpoInitialized = 'true';
+
+      const productData = {{ av_product | json }};
+      const currencyCode = {{ cart.currency.iso_code | default: shop.currency | json }};
+
+      const label = root.querySelector('[data-avpo-label]');
+      const helper = root.querySelector('[data-avpo-helper]');
+      const priceEl = root.querySelector('[data-avpo-price]');
+      const compareEl = root.querySelector('[data-avpo-compare]');
+      const saleEl = root.querySelector('[data-avpo-sale]');
+      const saveAmountEl = root.querySelector('[data-avpo-save-amount]');
+      const savePercentEl = root.querySelector('[data-avpo-save-percent]');
+
+      const oneTimeLabel = {{ block.settings.one_time_label | json }};
+      const subscriptionLabel = {{ block.settings.subscription_label | json }};
+
+      function formatMoney(cents) {
+        const amount = Number(cents || 0) / 100;
+
+        try {
+          return new Intl.NumberFormat(undefined, {
+            style: 'currency',
+            currency: currencyCode,
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          }).format(amount);
+        } catch (error) {
+          return '$' + amount.toFixed(2);
+        }
+      }
+
+      function getSectionRoot() {
+        return (
+          root.closest('.shopify-section') ||
+          root.closest('[data-section-id]') ||
+          document
+        );
+      }
+
+      function getProductForm() {
+        const scope = getSectionRoot();
+
+        return (
+          scope.querySelector('product-form-component form[data-type="add-to-cart-form"]') ||
+          scope.querySelector('form[action*="/cart/add"]') ||
+          document.querySelector(
+            `product-form-component[data-section-id="${root.dataset.sectionId}"] form[data-type="add-to-cart-form"]`
+          )
+        );
+      }
+
+      function getCurrentVariant() {
+        const form = getProductForm();
+        const idInput = form?.querySelector('input[name="id"]');
+        const variantId = Number(idInput?.value);
+
+        if (!variantId || !Array.isArray(productData.variants)) {
+          return productData.variants?.[0] || null;
+        }
+
+        return productData.variants.find((variant) => Number(variant.id) === variantId) || null;
+      }
+
+      function getSellingPlanId() {
+        const scope = getSectionRoot();
+
+        const checkedRadio = scope.querySelector(
+          'input[name="selling_plan"]:checked'
+        );
+
+        if (checkedRadio?.value) return Number(checkedRadio.value);
+
+        const select = scope.querySelector('select[name="selling_plan"]');
+        if (select?.value) return Number(select.value);
+
+        const hidden = scope.querySelector(
+          'input[name="selling_plan"][type="hidden"]'
+        );
+
+        if (hidden?.value) return Number(hidden.value);
+
+        return null;
+      }
+
+      function findSellingPlanAllocation(variant, sellingPlanId) {
+        if (!variant || !sellingPlanId) return null;
+
+        const allocations =
+          variant.selling_plan_allocations ||
+          variant.sellingPlanAllocations ||
+          [];
+
+        return allocations.find((allocation) => {
+          const id =
+            allocation.selling_plan_id ||
+            allocation.sellingPlanId ||
+            allocation.selling_plan?.id;
+
+          return Number(id) === Number(sellingPlanId);
+        }) || null;
+      }
+
+      function updateUI() {
+        const variant = getCurrentVariant();
+        if (!variant) return;
+
+        const sellingPlanId = getSellingPlanId();
+        const allocation = findSellingPlanAllocation(variant, sellingPlanId);
+        const isSubscription = Boolean(sellingPlanId && allocation);
+
+        let currentPrice = Number(variant.price || 0);
+        let comparePrice = Number(variant.compare_at_price || 0);
+
+        if (isSubscription) {
+          currentPrice = Number(
+            allocation.price ??
+            allocation.price_adjustments?.[0]?.price ??
+            currentPrice
+          );
+
+          const allocationCompare = Number(
+            allocation.compare_at_price ??
+            allocation.compareAtPrice ??
+            0
+          );
+
+          if (allocationCompare > currentPrice) {
+            comparePrice = allocationCompare;
+          }
+        }
+
+        if (label) {
+          label.textContent = isSubscription ? subscriptionLabel : oneTimeLabel;
+        }
+
+        if (helper) {
+          helper.classList.toggle('is-hidden', !isSubscription);
+        }
+
+        if (priceEl) {
+          priceEl.textContent = formatMoney(currentPrice);
+        }
+
+        const hasDiscount = comparePrice > currentPrice;
+
+        if (compareEl) {
+          compareEl.textContent = hasDiscount ? formatMoney(comparePrice) : '';
+          compareEl.classList.toggle('is-hidden', !hasDiscount);
+        }
+
+        const savingsAmount = Math.max(0, comparePrice - currentPrice);
+        const savingsPercent =
+          comparePrice > 0
+            ? Math.round((savingsAmount / comparePrice) * 100)
+            : 0;
+
+        if (saleEl) {
+          saleEl.classList.toggle('is-hidden', !hasDiscount);
+        }
+
+        if (saveAmountEl) {
+          saveAmountEl.textContent = `Save ${formatMoney(savingsAmount)}`;
+        }
+
+        if (savePercentEl) {
+          savePercentEl.textContent = `Save ${savingsPercent}%`;
+        }
+      }
+
+      const scope = getSectionRoot();
+
+      scope.addEventListener('change', (event) => {
+        if (
+          event.target.matches(
+            'input[name="id"], select[name="id"], input[name="selling_plan"], select[name="selling_plan"]'
+          )
+        ) {
+          window.requestAnimationFrame(updateUI);
+        }
+      });
+
+      document.addEventListener('variant:change', updateUI);
+      document.addEventListener('selling-plan:change', updateUI);
+      document.addEventListener('shopify:section:load', updateUI);
+
+      updateUI();
+    })();
+  </script>
+{% endif %}
+
+{% stylesheet %}
+  .avonent-price-offer {
+    width: 100%;
+    box-sizing: border-box;
+    padding-top: var(--avpo-top);
+    padding-bottom: var(--avpo-bottom);
+    font-family: var(--font-body--family);
+  }
+
+  .avonent-price-offer__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 10px 0;
+
+    border-top: 1px solid var(--avpo-border);
+    border-bottom: 1px solid var(--avpo-border);
+
+    background: var(--avpo-bg);
+  }
+
+  .avonent-price-offer__label-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+  }
+
+  .avonent-price-offer__label {
+    color: var(--avpo-accent);
+    font-size: 16px;
+    font-weight: 750;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+  }
+
+  .avonent-price-offer__helper {
+    color: var(--avpo-muted);
+    font-size: 10px;
+    font-weight: 450;
+    line-height: 1.25;
+  }
+
+  .avonent-price-offer__price-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 9px;
+  }
+
+  .avonent-price-offer__price {
+    color: var(--avpo-text);
+    font-size: 17px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.025em;
+    white-space: nowrap;
+  }
+
+  .avonent-price-offer__compare {
+    color: var(--avpo-muted);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .avonent-price-offer__sale {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+
+    min-height: 26px;
+    padding: 5px 10px;
+
+    border-radius: 6px;
+
+    background: var(--avpo-sale-bg);
+    color: var(--avpo-sale-text);
+
+    font-size: 12px;
+    font-weight: 750;
+    line-height: 1;
+
+    white-space: nowrap;
+  }
+
+  .avonent-price-offer__sale-separator {
+    opacity: 0.72;
+  }
+
+  .avonent-price-offer .is-hidden {
+    display: none !important;
+  }
+
+  @media screen and (max-width: 749px) {
+    .avonent-price-offer__row {
+      align-items: flex-start;
+      gap: 9px;
+      padding: 9px 0;
+    }
+
+    .avonent-price-offer__label {
+      font-size: 13px;
+    }
+
+    .avonent-price-offer__helper {
+      max-width: 130px;
+      font-size: 9px;
+    }
+
+    .avonent-price-offer__price-wrap {
+      gap: 6px;
+    }
+
+    .avonent-price-offer__price {
+      font-size: 14px;
+    }
+
+    .avonent-price-offer__compare {
+      font-size: 11px;
+    }
+
+    .avonent-price-offer__sale {
+      min-height: 22px;
+      padding: 4px 7px;
+      border-radius: 5px;
+      font-size: 9px;
+    }
+  }
+
+  @media screen and (max-width: 390px) {
+    .avonent-price-offer__row {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .avonent-price-offer__price-wrap {
+      justify-content: flex-start;
+    }
+
+    .avonent-price-offer__helper {
+      max-width: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Avonent Price Offer",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Purchase labels"
+    },
+    {
+      "type": "text",
+      "id": "one_time_label",
+      "label": "One-time label",
+      "default": "One-Time Purchase"
+    },
+    {
+      "type": "text",
+      "id": "subscription_label",
+      "label": "Subscription label",
+      "default": "Subscribe & Save"
+    },
+    {
+      "type": "select",
+      "id": "default_purchase_type",
+      "label": "Preview/default purchase type",
+      "options": [
+        {
+          "value": "one_time",
+          "label": "One-Time Purchase"
+        },
+        {
+          "value": "subscription",
+          "label": "Subscribe & Save"
+        }
+      ],
+      "default": "one_time",
+      "info": "On the live product page this switches automatically when a Shopify subscription selling plan is selected."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_subscription_helper",
+      "label": "Show subscription helper text",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "subscription_helper",
+      "label": "Subscription helper text",
+      "default": "Recurring delivery · Cancel anytime"
+    },
+
+    {
+      "type": "header",
+      "content": "Sale"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sale_badge",
+      "label": "Show sale badge",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "sale_name",
+      "label": "Sale name",
+      "default": "SUMMER SALE"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_savings_amount",
+      "label": "Show dollar savings",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_savings_percent",
+      "label": "Show percentage savings instead",
+      "default": false,
+      "info": "If dollar savings is enabled, dollar savings takes priority."
+    },
+
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Purchase label",
+      "default": "#02C6EA"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Current price",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "muted_text_color",
+      "label": "Old price / helper text",
+      "default": "#667177"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Divider",
+      "default": "#DCE6E9"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "sale_badge_background",
+      "label": "Sale badge background",
+      "default": "#02C6EA"
+    },
+    {
+      "type": "color",
+      "id": "sale_badge_text_color",
+      "label": "Sale badge text",
+      "default": "#FFFFFF"
+    },
+
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "corner_radius",
+      "label": "Corner roundness",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "spacing_top",
+      "label": "Top spacing",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "spacing_bottom",
+      "label": "Bottom spacing",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 3
+    }
+  ],
+  "presets": [
+    {
+      "name": "Avonent Price Offer"
+    }
+  ]
+}
+{% endschema %}
