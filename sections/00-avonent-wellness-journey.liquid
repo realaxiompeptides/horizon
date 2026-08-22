@@ -151,14 +151,14 @@
     function animateProgress() {
       const difference = targetProgress - currentProgress;
 
-      if (Math.abs(difference) < 0.001) {
+      if (Math.abs(difference) < 0.0006) {
         currentProgress = targetProgress;
         fill.style.transform = `scaleY(${currentProgress})`;
         animationFrame = null;
         return;
       }
 
-      currentProgress += difference * 0.16;
+      currentProgress += difference * 0.075;
       fill.style.transform = `scaleY(${currentProgress})`;
 
       animationFrame = window.requestAnimationFrame(animateProgress);
@@ -300,10 +300,10 @@
     background: var(--avj-inactive);
     box-sizing: border-box;
     transition:
-      background-color 300ms cubic-bezier(0.22, 1, 0.36, 1),
-      border-color 300ms cubic-bezier(0.22, 1, 0.36, 1),
-      transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
-      box-shadow 300ms cubic-bezier(0.22, 1, 0.36, 1);
+      background-color 650ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 650ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 500ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 650ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .avonent-journey__step.is-passed .avonent-journey__marker {
@@ -335,9 +335,10 @@
     font-weight: 700;
     line-height: 1.15;
     transition:
-      background-color 320ms cubic-bezier(0.22, 1, 0.36, 1),
-      transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
-      box-shadow 320ms cubic-bezier(0.22, 1, 0.36, 1);
+      background-color 850ms cubic-bezier(0.22, 1, 0.36, 1),
+      color 650ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 500ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 700ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .avonent-journey__step.is-passed .avonent-journey__week {
@@ -390,6 +391,53 @@
     line-height: 1.45;
     text-align: center;
     opacity: 0.8;
+  }
+
+
+  /*
+   * Smooth cumulative journey animation:
+   * every milestone keeps animating independently. If the shopper scrolls
+   * quickly, several cards and markers can be transitioning at the same time.
+   */
+  .avonent-journey__step:nth-child(1) {
+    --avj-step-delay: 0ms;
+  }
+
+  .avonent-journey__step:nth-child(2) {
+    --avj-step-delay: 70ms;
+  }
+
+  .avonent-journey__step:nth-child(3) {
+    --avj-step-delay: 140ms;
+  }
+
+  .avonent-journey__step:nth-child(4) {
+    --avj-step-delay: 210ms;
+  }
+
+  .avonent-journey__step:nth-child(5) {
+    --avj-step-delay: 280ms;
+  }
+
+  .avonent-journey__step:nth-child(6) {
+    --avj-step-delay: 350ms;
+  }
+
+  .avonent-journey__step .avonent-journey__week {
+    transition-delay: var(--avj-step-delay, 0ms);
+  }
+
+  .avonent-journey__step .avonent-journey__marker {
+    transition-delay: var(--avj-step-delay, 0ms);
+  }
+
+  /*
+   * On the way back up, remove the color in reverse order naturally.
+   * CSS transitions keep the change soft rather than snapping to black.
+   */
+  .avonent-journey__step:not(.is-passed) .avonent-journey__week,
+  .avonent-journey__step:not(.is-passed) .avonent-journey__marker {
+    transition-delay: 0ms;
   }
 
   @media screen and (max-width: 749px) {
