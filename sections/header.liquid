@@ -95,70 +95,7 @@
   endcapture
 
   capture actions
-    <header-actions class="avonent-header-actions">
-      {% if shop.customer_accounts_enabled %}
-        <a
-          href="{{ routes.account_url }}"
-          class="header-actions__action avonent-header-actions__account"
-          aria-label="{{ 'content.account_title' | t | escape }}"
-        >
-          <span class="svg-wrapper" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" focusable="false">
-              <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.7"/>
-              <path d="M4.75 20c.55-4.1 3.25-6.5 7.25-6.5s6.7 2.4 7.25 6.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
-            </svg>
-          </span>
-        </a>
-      {% endif %}
-
-      {% if settings.cart_type == 'drawer' and template.name != 'cart' %}
-        <button
-          class="header-actions__action button-unstyled avonent-header-actions__cart"
-          on:click="#cart-drawer/toggle"
-          aria-haspopup="dialog"
-          aria-expanded="false"
-          aria-controls="cart-drawer"
-          aria-label="{{ 'accessibility.cart' | t | escape }}"
-          aria-describedby="cart-bubble-text"
-          data-testid="cart-drawer-trigger"
-        >
-          <cart-icon
-            class="header-actions__cart-icon{% unless cart == empty %} header-actions__cart-icon--has-cart{% endunless %}"
-            data-testid="cart-icon"
-          >
-            <span class="svg-wrapper" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" focusable="false">
-                <path d="M6.5 8.25h11l.75 12H5.75l.75-12Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
-                <path d="M9 8.25V6.5a3 3 0 0 1 6 0v1.75" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
-              </svg>
-            </span>
-            {% render 'cart-bubble', limit: 100 %}
-          </cart-icon>
-        </button>
-      {% else %}
-        <a
-          href="{{ routes.cart_url }}"
-          class="header-actions__action avonent-header-actions__cart"
-          aria-label="{{ 'accessibility.cart' | t | escape }}"
-          aria-describedby="cart-bubble-text"
-        >
-          <cart-icon
-            class="header-actions__cart-icon{% unless cart == empty %} header-actions__cart-icon--has-cart{% endunless %}"
-            data-testid="cart-icon"
-          >
-            <span class="svg-wrapper" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" focusable="false">
-                <path d="M6.5 8.25h11l.75 12H5.75l.75-12Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
-                <path d="M9 8.25V6.5a3 3 0 0 1 6 0v1.75" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
-              </svg>
-            </span>
-            {% render 'cart-bubble', limit: 100 %}
-          </cart-icon>
-        </a>
-      {% endif %}
-
-      <span class="visually-hidden" role="status"></span>
-    </header-actions>
+    render 'header-actions', customer_account_menu: section.settings.customer_account_menu, display_style: section.settings.actions_display_style, section: section
   endcapture
 
   if shop.customer_accounts_enabled
@@ -524,12 +461,6 @@
     </div>
   {% endif %}
 </header-component>
-
-<script
-  src="{{ 'cart-icon.js' | asset_url }}"
-  type="module"
-  fetchpriority="low"
-></script>
 
 <script
   src="{{ 'header.js' | asset_url }}"
