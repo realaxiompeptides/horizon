@@ -540,8 +540,8 @@
         "comparison_row_dke7Dg": {
           "type": "comparison_row",
           "settings": {
-            "icon": "flask",
-            "avonent_text": "Quality-Focused Formulas",
+            "icon": "shield",
+            "avonent_text": "Clinically-Studied Ingredients",
             "other_text": "Trend-Driven Formulas",
             "reason_title": "Quality-Focused",
             "reason_text": "Built around thoughtful formulation rather than short-lived trends."
@@ -550,8 +550,8 @@
         "comparison_row_y7Phnw": {
           "type": "comparison_row",
           "settings": {
-            "icon": "shield",
-            "avonent_text": "Transparent Product Information",
+            "icon": "flask",
+            "avonent_text": "3rd-Party Tested",
             "other_text": "Less Transparency",
             "reason_title": "Clear & Transparent",
             "reason_text": "Straightforward product information so you can make a more informed choice."
