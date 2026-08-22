@@ -223,8 +223,6 @@
           "type": "00-avonent-bundle-selector",
           "name": "Avonent Bundle Selector",
           "settings": {
-            "heading": "Choose Your Bundle",
-            "subheading": "More value with multi-packs",
             "default_bundle": "2",
             "show_images": true,
             "bundle_1_enabled": true,
@@ -279,8 +277,10 @@
         "title",
         "description",
         "demand_meter",
+        "price",
         "variant_picker",
         "bundle_selector",
+        "buy_buttons",
         "payment_icons"
       ],
       "settings": {
