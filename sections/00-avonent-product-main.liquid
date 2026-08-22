@@ -432,38 +432,18 @@
 {% schema %}
 {
   "name": "00 Avonent Product Main",
+  "tag": "section",
+  "class": "avonent-product-main-section",
   "blocks": [
-    { "type": "_avonent-demand-meter" },
     { "type": "@theme" },
     { "type": "@app" },
-    { "type": "product-title" },
-    { "type": "review" },
-    { "type": "price" },
-    { "type": "product-description" },
-    { "type": "variant-picker" },
-    { "type": "buy-buttons" },
-    { "type": "payment-icons" },
-    { "type": "product-inventory" },
-    { "type": "product-custom-property" },
-    { "type": "text" },
-    { "type": "button" },
-    { "type": "image" },
-    { "type": "video" },
-    { "type": "icon" },
-    { "type": "group" },
-    { "type": "spacer" },
-    { "type": "accordion" },
-    { "type": "product-recommendations" },
     { "type": "_divider" }
   ],
-  "disabled_on": {
-    "groups": ["header", "footer"]
+  "enabled_on": {
+    "templates": ["product"]
   },
   "settings": [
-    {
-      "type": "header",
-      "content": "Layout"
-    },
+    { "type": "header", "content": "Layout" },
     {
       "type": "select",
       "id": "content_width",
@@ -484,254 +464,26 @@
       ],
       "default": "left"
     },
-    {
-      "type": "checkbox",
-      "id": "equal_columns",
-      "label": "Equal desktop columns",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "limit_details_width",
-      "label": "Limit product details width",
-      "default": false,
-      "visible_if": "{{ section.settings.equal_columns }}"
-    },
-    {
-      "type": "range",
-      "id": "gap",
-      "label": "Media / details gap",
-      "min": 0,
-      "max": 48,
-      "step": 4,
-      "unit": "px",
-      "default": 32
-    },
-    {
-      "type": "checkbox",
-      "id": "sticky_details_desktop",
-      "label": "Make product details sticky on desktop",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_sticky_add_to_cart",
-      "label": "Enable Horizon sticky add to cart",
-      "default": true
-    },
-    {
-      "type": "header",
-      "content": "Product details card"
-    },
-    {
-      "type": "range",
-      "id": "details_gap",
-      "label": "Block spacing",
-      "min": 0,
-      "max": 40,
-      "step": 1,
-      "unit": "px",
-      "default": 14
-    },
-    {
-      "type": "color",
-      "id": "details_background_color",
-      "label": "Details background",
-      "default": "#FFFFFF"
-    },
-    {
-      "type": "color",
-      "id": "details_border_color",
-      "label": "Details border",
-      "default": "#E8EEF0"
-    },
-    {
-      "type": "range",
-      "id": "details_border_width",
-      "label": "Details border width",
-      "min": 0,
-      "max": 3,
-      "step": 1,
-      "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "range",
-      "id": "details_radius",
-      "label": "Details corner radius",
-      "min": 0,
-      "max": 32,
-      "step": 1,
-      "unit": "px",
-      "default": 18
-    },
-    {
-      "type": "range",
-      "id": "details_padding_desktop",
-      "label": "Details padding desktop",
-      "min": 0,
-      "max": 48,
-      "step": 1,
-      "unit": "px",
-      "default": 20
-    },
-    {
-      "type": "range",
-      "id": "details_padding_mobile",
-      "label": "Details padding mobile",
-      "min": 0,
-      "max": 32,
-      "step": 1,
-      "unit": "px",
-      "default": 18
-    },
-    {
-      "type": "header",
-      "content": "Section"
-    },
-    {
-      "type": "color",
-      "id": "background_color",
-      "label": "Background color",
-      "default": "#FFFFFF"
-    },
-    {
-      "type": "range",
-      "id": "padding-block-start",
-      "label": "Top spacing",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "range",
-      "id": "padding-block-end",
-      "label": "Bottom spacing",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 24
-    }
+    { "type": "checkbox", "id": "equal_columns", "label": "Equal desktop columns", "default": true },
+    { "type": "checkbox", "id": "limit_details_width", "label": "Limit product details width", "default": false, "visible_if": "{{ section.settings.equal_columns }}" },
+    { "type": "range", "id": "gap", "label": "Media / details gap", "min": 0, "max": 48, "step": 4, "unit": "px", "default": 32 },
+    { "type": "checkbox", "id": "sticky_details_desktop", "label": "Make product details sticky on desktop", "default": true },
+    { "type": "checkbox", "id": "enable_sticky_add_to_cart", "label": "Enable Horizon sticky add to cart", "default": true },
+    { "type": "header", "content": "Product details" },
+    { "type": "range", "id": "details_gap", "label": "Block spacing", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 14 },
+    { "type": "color", "id": "details_background_color", "label": "Details background", "default": "#FFFFFF" },
+    { "type": "color", "id": "details_border_color", "label": "Details border", "default": "#E8EEF0" },
+    { "type": "range", "id": "details_border_width", "label": "Details border width", "min": 0, "max": 3, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "details_radius", "label": "Details corner radius", "min": 0, "max": 32, "step": 1, "unit": "px", "default": 18 },
+    { "type": "range", "id": "details_padding_desktop", "label": "Details padding desktop", "min": 0, "max": 48, "step": 1, "unit": "px", "default": 20 },
+    { "type": "range", "id": "details_padding_mobile", "label": "Details padding mobile", "min": 0, "max": 32, "step": 1, "unit": "px", "default": 18 },
+    { "type": "header", "content": "Section" },
+    { "type": "color", "id": "background_color", "label": "Background color", "default": "#FFFFFF" },
+    { "type": "range", "id": "padding-block-start", "label": "Top spacing", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding-block-end", "label": "Bottom spacing", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 24 }
   ],
   "presets": [
-    {
-      "name": "00 Avonent Product Main",
-      "category": "Product",
-      "settings": {
-        "content_width": "content-center-aligned",
-        "desktop_media_position": "left",
-        "equal_columns": true,
-        "gap": 32,
-        "sticky_details_desktop": true,
-        "enable_sticky_add_to_cart": true,
-        "details_gap": 14,
-        "details_background_color": "#FFFFFF",
-        "details_border_color": "#E8EEF0",
-        "details_border_width": 0,
-        "details_radius": 18,
-        "details_padding_desktop": 20,
-        "details_padding_mobile": 18,
-        "background_color": "#FFFFFF",
-        "padding-block-start": 0,
-        "padding-block-end": 24
-      },
-      "blocks": {
-        "review": {
-          "type": "review",
-          "name": "Reviews"
-        },
-        "title": {
-          "type": "text",
-          "name": "Product title",
-          "settings": {
-            "text": "<h1>{{ closest.product.title }}</h1>",
-            "width": "100%",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "h2",
-            "wrap": "pretty",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          }
-        },
-        "price": {
-          "type": "price",
-          "name": "Price",
-          "settings": {
-            "show_sale_price_first": true,
-            "show_installments": false,
-            "show_tax_info": false,
-            "type_preset": "h4",
-            "width": "100%",
-            "alignment": "left",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          }
-        },
-        "description": {
-          "type": "product-description",
-          "name": "Product description"
-        },
-        "demand_meter": {
-          "type": "_avonent-demand-meter",
-          "name": "Avonent demand meter"
-        },
-        "variant_picker": {
-          "type": "variant-picker",
-          "name": "Variant picker"
-        },
-        "buy_buttons": {
-          "type": "buy-buttons",
-          "name": "Buy buttons",
-          "blocks": {
-            "quantity": {
-              "type": "quantity",
-              "static": true
-            },
-            "add-to-cart": {
-              "type": "add-to-cart",
-              "static": true,
-              "settings": {
-                "style_class": "button"
-              }
-            },
-            "accelerated-checkout": {
-              "type": "accelerated-checkout",
-              "static": true
-            }
-          }
-        },
-        "payment_icons": {
-          "type": "payment-icons",
-          "name": "Payment icons",
-          "settings": {
-            "horizontal_alignment": "center",
-            "gap": 6,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          }
-        }
-      },
-      "block_order": [
-        "review",
-        "title",
-        "price",
-        "description",
-        "demand_meter",
-        "variant_picker",
-        "buy_buttons",
-        "payment_icons"
-      ]
-    }
+    { "name": "00 Avonent Product Main", "category": "Product" }
   ]
 }
 {% endschema %}
