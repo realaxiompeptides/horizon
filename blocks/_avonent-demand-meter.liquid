@@ -1,31 +1,29 @@
 {% liquid
-  assign avonent_product = closest.product | default: product
-  assign avonent_variant = avonent_product.selected_or_first_available_variant
+  assign av_product = closest.product | default: product
+  assign av_variant = av_product.selected_or_first_available_variant
 
   assign starting_inventory = block.settings.starting_inventory | default: 100
   assign current_inventory = 0
   assign demand_percent = 0
-  assign inventory_is_tracked = false
+  assign inventory_tracked = false
 
-  if avonent_variant != blank
-    if avonent_variant.inventory_management != blank
-      assign inventory_is_tracked = true
-      assign current_inventory = avonent_variant.inventory_quantity | default: 0
-    endif
+  if av_variant != blank and av_variant.inventory_management != blank
+    assign inventory_tracked = true
+    assign current_inventory = av_variant.inventory_quantity | default: 0
   endif
 
   if starting_inventory <= 0
     assign starting_inventory = 100
   endif
 
-  if inventory_is_tracked
-    assign units_claimed = starting_inventory | minus: current_inventory
+  if inventory_tracked
+    assign claimed_units = starting_inventory | minus: current_inventory
 
-    if units_claimed < 0
-      assign units_claimed = 0
+    if claimed_units < 0
+      assign claimed_units = 0
     endif
 
-    assign demand_percent = units_claimed | times: 100.0 | divided_by: starting_inventory | round
+    assign demand_percent = claimed_units | times: 100.0 | divided_by: starting_inventory | round
 
     if demand_percent < block.settings.minimum_percent
       assign demand_percent = block.settings.minimum_percent
@@ -41,21 +39,21 @@
   class="avonent-demand-meter"
   {{ block.shopify_attributes }}
   style="
-    --avdm-background: {{ block.settings.background_color }};
+    --avdm-bg: {{ block.settings.background_color }};
     --avdm-track: {{ block.settings.track_color }};
     --avdm-fill: {{ block.settings.fill_color }};
     --avdm-text: {{ block.settings.text_color }};
-    --avdm-muted: {{ block.settings.muted_text_color }};
     --avdm-border: {{ block.settings.border_color }};
     --avdm-radius: {{ block.settings.corner_radius }}px;
-    --avdm-top-spacing: {{ block.settings.padding_top }}px;
-    --avdm-bottom-spacing: {{ block.settings.padding_bottom }}px;
-    --avdm-padding-y: {{ block.settings.inner_padding_y }}px;
-    --avdm-padding-x: {{ block.settings.inner_padding_x }}px;
+    --avdm-top: {{ block.settings.padding_top }}px;
+    --avdm-bottom: {{ block.settings.padding_bottom }}px;
+    --avdm-inner-y: {{ block.settings.inner_padding_y }}px;
+    --avdm-inner-x: {{ block.settings.inner_padding_x }}px;
     --avdm-bar-height: {{ block.settings.bar_height }}px;
   "
 >
-  {% if inventory_is_tracked or block.settings.show_when_untracked %}
+  {% if inventory_tracked %}
+
     <div class="avonent-demand-meter__card">
 
       {% if block.settings.heading != blank %}
@@ -64,7 +62,7 @@
         </div>
       {% endif %}
 
-      <div class="avonent-demand-meter__main">
+      <div class="avonent-demand-meter__row">
 
         <div
           class="avonent-demand-meter__track"
@@ -72,7 +70,6 @@
           aria-valuemin="0"
           aria-valuemax="100"
           aria-valuenow="{{ demand_percent }}"
-          aria-label="{{ demand_percent }} percent {{ block.settings.percent_text | escape }}"
         >
           <span
             class="avonent-demand-meter__fill"
@@ -97,35 +94,36 @@
       {% endif %}
 
     </div>
+
+  {% elsif request.design_mode %}
+
+    <div class="avonent-demand-meter__editor-message">
+      <strong>Avonent Demand Meter</strong>
+      <span>
+        This product is not currently tracking inventory.
+        Enable “Track quantity” on the product variant to calculate the meter.
+      </span>
+    </div>
+
   {% endif %}
 </div>
 
 {% stylesheet %}
 
-  /* ========================================
-     AVONENT DEMAND METER
-     ======================================== */
-
   .avonent-demand-meter {
     width: 100%;
-
-    padding-top:
-      var(--avdm-top-spacing);
-
-    padding-bottom:
-      var(--avdm-bottom-spacing);
+    padding-top: var(--avdm-top);
+    padding-bottom: var(--avdm-bottom);
   }
-
 
   .avonent-demand-meter__card {
     width: 100%;
 
     padding:
-      var(--avdm-padding-y)
-      var(--avdm-padding-x);
+      var(--avdm-inner-y)
+      var(--avdm-inner-x);
 
-    background:
-      var(--avdm-background);
+    background: var(--avdm-bg);
 
     border:
       1px solid
@@ -135,18 +133,12 @@
       var(--avdm-radius);
 
     box-shadow:
-      0 4px 16px
-      rgba(0, 0, 0, 0.025);
+      0 5px 18px
+      rgba(0, 0, 0, 0.035);
   }
 
-
-  /* HEADING */
-
   .avonent-demand-meter__heading {
-    margin:
-      0
-      0
-      8px;
+    margin: 0 0 8px;
 
     color:
       var(--avdm-text);
@@ -154,20 +146,13 @@
     font-family:
       var(--font-body--family);
 
-    font-size:
-      12px;
+    font-size: 12px;
+    font-weight: 650;
 
-    font-weight:
-      650;
-
-    line-height:
-      1.2;
+    line-height: 1.2;
   }
 
-
-  /* BAR + VALUE */
-
-  .avonent-demand-meter__main {
+  .avonent-demand-meter__row {
     display: grid;
 
     grid-template-columns:
@@ -176,56 +161,37 @@
 
     align-items: center;
 
-    gap:
-      12px;
+    gap: 12px;
 
-    width:
-      100%;
+    width: 100%;
   }
 
-
   .avonent-demand-meter__track {
-    position:
-      relative;
+    position: relative;
 
-    display:
-      block;
-
-    width:
-      100%;
-
+    width: 100%;
     height:
       var(--avdm-bar-height);
 
-    overflow:
-      hidden;
-
-    border-radius:
-      999px;
+    overflow: hidden;
 
     background:
       var(--avdm-track);
+
+    border-radius:
+      999px;
   }
 
-
   .avonent-demand-meter__fill {
-    position:
-      absolute;
+    position: absolute;
 
-    top:
-      0;
+    top: 0;
+    bottom: 0;
+    left: 0;
 
-    bottom:
-      0;
+    display: block;
 
-    left:
-      0;
-
-    display:
-      block;
-
-    height:
-      100%;
+    height: 100%;
 
     border-radius:
       inherit;
@@ -234,23 +200,15 @@
       var(--avdm-fill);
 
     transition:
-      width
-      250ms
-      ease;
+      width 250ms ease;
   }
 
-
-  /* PERCENT */
-
   .avonent-demand-meter__value {
-    display:
-      flex;
+    display: flex;
 
-    align-items:
-      baseline;
+    align-items: baseline;
 
-    gap:
-      4px;
+    gap: 4px;
 
     color:
       var(--avdm-fill);
@@ -258,136 +216,97 @@
     font-family:
       var(--font-body--family);
 
-    line-height:
-      1;
+    line-height: 1;
 
-    white-space:
-      nowrap;
+    white-space: nowrap;
   }
 
-
   .avonent-demand-meter__value strong {
-    font-size:
-      14px;
-
-    font-weight:
-      750;
+    font-size: 14px;
+    font-weight: 750;
 
     letter-spacing:
       -0.015em;
   }
 
-
   .avonent-demand-meter__value span {
-    font-size:
-      12px;
-
-    font-weight:
-      650;
+    font-size: 12px;
+    font-weight: 650;
   }
 
-
-  /* SUBTEXT */
-
   .avonent-demand-meter__subtext {
-    margin-top:
-      6px;
+    margin-top: 6px;
 
     color:
-      var(--avdm-muted);
+      var(--avdm-text);
+
+    opacity: 0.6;
 
     font-family:
       var(--font-body--family);
 
-    font-size:
-      10px;
+    font-size: 10px;
 
-    font-weight:
-      400;
-
-    line-height:
-      1.35;
+    line-height: 1.35;
   }
 
+  .avonent-demand-meter__editor-message {
+    display: flex;
+    flex-direction: column;
 
-  /* ========================================
-     MOBILE
-     ======================================== */
+    gap: 4px;
+
+    width: 100%;
+
+    padding: 12px 14px;
+
+    border:
+      1px dashed
+      #02c6ea;
+
+    border-radius:
+      12px;
+
+    background:
+      #f3fcfe;
+
+    color:
+      #111111;
+
+    font-family:
+      var(--font-body--family);
+
+    font-size: 11px;
+
+    line-height: 1.35;
+  }
+
+  .avonent-demand-meter__editor-message strong {
+    font-size: 12px;
+  }
 
   @media screen and (max-width: 749px) {
 
-    .avonent-demand-meter__card {
-      box-shadow:
-        0 3px 12px
-        rgba(0, 0, 0, 0.022);
-    }
-
-
     .avonent-demand-meter__heading {
-      margin-bottom:
-        7px;
-
-      font-size:
-        11px;
+      margin-bottom: 7px;
+      font-size: 11px;
     }
 
-
-    .avonent-demand-meter__main {
-      gap:
-        9px;
+    .avonent-demand-meter__row {
+      gap: 9px;
     }
-
-
-    .avonent-demand-meter__value {
-      gap:
-        3px;
-    }
-
 
     .avonent-demand-meter__value strong {
-      font-size:
-        13px;
+      font-size: 13px;
     }
-
 
     .avonent-demand-meter__value span {
-      font-size:
-        11px;
+      font-size: 11px;
     }
-
 
     .avonent-demand-meter__subtext {
-      margin-top:
-        5px;
-
-      font-size:
-        9px;
-    }
-
-  }
-
-
-  /* ========================================
-     VERY SMALL PHONES
-     ======================================== */
-
-  @media screen and (max-width: 360px) {
-
-    .avonent-demand-meter__main {
-      gap:
-        7px;
-    }
-
-
-    .avonent-demand-meter__value strong {
-      font-size:
-        12px;
-    }
-
-
-    .avonent-demand-meter__value span {
-      font-size:
-        10px;
+      margin-top: 5px;
+      font-size: 9px;
     }
 
   }
@@ -396,134 +315,100 @@
 
 {% schema %}
 {
-  "name": "00 Avonent Demand Meter",
-
+  "name": "Avonent Demand Meter",
+  "tag": null,
   "settings": [
-
     {
       "type": "header",
       "content": "Content"
     },
-
     {
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": ""
+      "default": "Offer availability"
     },
-
     {
       "type": "text",
       "id": "percent_text",
       "label": "Text after percentage",
-      "default": "Claimed"
+      "default": "claimed"
     },
-
     {
       "type": "text",
       "id": "subtext",
       "label": "Small text",
       "default": ""
     },
-
-
     {
       "type": "header",
-      "content": "Inventory"
+      "content": "Inventory calculation"
     },
-
     {
       "type": "number",
       "id": "starting_inventory",
       "label": "Starting inventory",
       "default": 100,
-      "info": "Use the actual inventory quantity at the beginning of the promotion."
+      "info": "Use the actual inventory quantity at the beginning of the offer."
     },
-
     {
       "type": "range",
       "id": "minimum_percent",
-      "label": "Minimum displayed percentage",
+      "label": "Minimum percentage",
       "min": 0,
       "max": 90,
       "step": 1,
       "unit": "%",
       "default": 0
     },
-
     {
       "type": "range",
       "id": "maximum_percent",
-      "label": "Maximum displayed percentage",
+      "label": "Maximum percentage",
       "min": 70,
       "max": 99,
       "step": 1,
       "unit": "%",
       "default": 96
     },
-
-    {
-      "type": "checkbox",
-      "id": "show_when_untracked",
-      "label": "Show when inventory is not tracked",
-      "default": false,
-      "info": "If inventory is not tracked, the meter will display 0% rather than a calculated sales percentage."
-    },
-
-
     {
       "type": "header",
       "content": "Colors"
     },
-
     {
       "type": "color",
       "id": "background_color",
       "label": "Background",
       "default": "#F7FCFD"
     },
-
     {
       "type": "color",
       "id": "track_color",
       "label": "Empty bar",
       "default": "#E4EFF2"
     },
-
     {
       "type": "color",
       "id": "fill_color",
-      "label": "Filled bar",
+      "label": "Progress",
       "default": "#02C6EA"
     },
-
     {
       "type": "color",
       "id": "text_color",
       "label": "Text",
       "default": "#111111"
     },
-
-    {
-      "type": "color",
-      "id": "muted_text_color",
-      "label": "Small text",
-      "default": "#737B80"
-    },
-
     {
       "type": "color",
       "id": "border_color",
       "label": "Border",
       "default": "#E5EEF1"
     },
-
-
     {
       "type": "header",
       "content": "Appearance"
     },
-
     {
       "type": "range",
       "id": "bar_height",
@@ -534,7 +419,6 @@
       "unit": "px",
       "default": 8
     },
-
     {
       "type": "range",
       "id": "corner_radius",
@@ -545,13 +429,10 @@
       "unit": "px",
       "default": 16
     },
-
-
     {
       "type": "header",
       "content": "Spacing"
     },
-
     {
       "type": "range",
       "id": "padding_top",
@@ -562,7 +443,6 @@
       "unit": "px",
       "default": 4
     },
-
     {
       "type": "range",
       "id": "padding_bottom",
@@ -573,7 +453,6 @@
       "unit": "px",
       "default": 4
     },
-
     {
       "type": "range",
       "id": "inner_padding_y",
@@ -584,7 +463,6 @@
       "unit": "px",
       "default": 13
     },
-
     {
       "type": "range",
       "id": "inner_padding_x",
@@ -595,12 +473,11 @@
       "unit": "px",
       "default": 16
     }
-
   ],
-
   "presets": [
     {
-      "name": "00 Avonent Demand Meter"
+      "name": "Avonent Demand Meter",
+      "category": "Product"
     }
   ]
 }
