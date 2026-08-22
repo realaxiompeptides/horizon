@@ -99,15 +99,15 @@
           "blocks": {}
         },
         "demand_meter": {
-          "type": "avonent-demand-meter",
-          "name": "Avonent Demand Meter",
+          "type": "00-avonent-stock-meter",
+          "name": "Avonent Stock Meter",
           "settings": {
             "heading": "Offer availability",
-            "percent_text": "claimed",
+            "sold_text": "Sold",
             "subtext": "",
+            "calculation_mode": "manual",
+            "manual_percent": 76,
             "starting_inventory": 100,
-            "minimum_percent": 0,
-            "maximum_percent": 96,
             "background_color": "#F7FCFD",
             "track_color": "#E4EFF2",
             "fill_color": "#02C6EA",
@@ -115,10 +115,10 @@
             "border_color": "#E5EEF1",
             "bar_height": 8,
             "corner_radius": 16,
-            "padding_top": 2,
-            "padding_bottom": 2,
-            "inner_padding_y": 12,
-            "inner_padding_x": 14
+            "spacing_top": 2,
+            "spacing_bottom": 2,
+            "padding_y": 12,
+            "padding_x": 14
           },
           "blocks": {}
         },
@@ -251,5 +251,7 @@
       }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }
