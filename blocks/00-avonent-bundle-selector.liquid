@@ -1,17 +1,12 @@
 {% doc %}
-  Avonent bundle selector.
+  Avonent bundle quantity selector.
 
-  Controls the quantity used by Horizon's NATIVE buy-buttons block.
-  It does not render its own Add to Cart button.
+  This block ONLY renders bundle/quantity cards.
+  It does NOT render an Add to Cart button.
+  It does NOT render free-gift controls or helper headings/text.
 
-  Each bundle can:
-  - Add a chosen quantity of the current product variant.
-  - Optionally map to any exact Shopify variant title or numeric variant ID.
-  - Show an optional free-gift dropdown.
-
-  The gift dropdown currently records the customer's selection as a line-item
-  property on the native product form. A later Avonent gift-cart block can use
-  the same selection to add an actual gift product automatically.
+  Selecting a card updates Horizon's native product form quantity.
+  Optionally, a card can map to an exact Shopify variant title or numeric variant ID.
 {% enddoc %}
 
 {% liquid
@@ -44,21 +39,11 @@
       --avb-bottom: {{ block.settings.spacing_bottom }}px;
     "
     data-section-id="{{ section.id }}"
-    data-default-bundle="{{ selected_bundle }}"
   >
-
-        {% if block.settings.subheading != blank %}
-          <div class="avonent-bundle__subheading">
-            {{ block.settings.subheading }}
-          </div>
-        {% endif %}
-      </div>
-    {% endif %}
-
     <div
       class="avonent-bundle__options"
       role="radiogroup"
-      aria-label="Choose bundle quantity"
+      aria-label="Bundle quantity"
     >
       {% for i in (1..4) %}
         {% liquid
@@ -93,131 +78,106 @@
           endif
 
           assign bundle_total = bundle_variant.price | times: bundle_quantity
-          assign compare_unit = bundle_variant.compare_at_price
 
+          assign compare_unit = bundle_variant.compare_at_price
           if compare_unit == blank or compare_unit <= bundle_variant.price
             assign compare_unit = bundle_variant.price
           endif
 
           assign bundle_compare_total = compare_unit | times: bundle_quantity
-          assign automatic_savings_percent = 0
 
+          assign automatic_savings_percent = 0
           if bundle_compare_total > bundle_total
             assign savings_amount = bundle_compare_total | minus: bundle_total
             assign automatic_savings_percent = savings_amount | times: 100.0 | divided_by: bundle_compare_total | round
           endif
 
           assign bundle_image = bundle_image_override
-
           if bundle_image == blank and bundle_variant.featured_media != blank
             assign bundle_image = bundle_variant.featured_media.preview_image
           endif
-
           if bundle_image == blank
             assign bundle_image = av_product.featured_image
           endif
 
           assign is_default = false
           assign i_string = i | append: ''
-
           if i_string == selected_bundle
             assign is_default = true
           endif
         %}
 
         {% if bundle_enabled %}
-          <div
-            class="avonent-bundle__option-shell{% if is_default %} is-selected{% endif %}"
-            data-av-bundle-shell
+          <button
+            type="button"
+            class="avonent-bundle__option{% if is_default %} is-selected{% endif %}"
+            role="radio"
+            aria-checked="{% if is_default %}true{% else %}false{% endif %}"
+            data-av-bundle-option
             data-bundle-number="{{ i }}"
+            data-variant-id="{{ bundle_variant.id }}"
+            data-quantity="{{ bundle_quantity }}"
+            data-available="{{ bundle_variant.available }}"
+            {% unless bundle_variant.available %}disabled{% endunless %}
           >
-            <button
-              type="button"
-              class="avonent-bundle__option"
-              role="radio"
-              aria-checked="{% if is_default %}true{% else %}false{% endif %}"
-              data-av-bundle-option
-              data-bundle-number="{{ i }}"
-              data-variant-id="{{ bundle_variant.id }}"
-              data-quantity="{{ bundle_quantity }}"
-              data-available="{{ bundle_variant.available }}"
-              {% unless bundle_variant.available %}disabled{% endunless %}
-            >
-              {% if bundle_badge != blank %}
-                <span class="avonent-bundle__badge">
-                  {{ bundle_badge }}
-                </span>
-              {% endif %}
-
-              <span class="avonent-bundle__radio" aria-hidden="true">
-                <span></span>
+            {% if bundle_badge != blank %}
+              <span class="avonent-bundle__badge">
+                {{ bundle_badge }}
               </span>
-
-              {% if block.settings.show_images and bundle_image != blank %}
-                <span class="avonent-bundle__image-wrap">
-                  {{
-                    bundle_image
-                    | image_url: width: 180
-                    | image_tag:
-                      loading: 'lazy',
-                      widths: '60, 90, 120, 180',
-                      class: 'avonent-bundle__image',
-                      alt: bundle_title
-                  }}
-                </span>
-              {% endif %}
-
-              <span class="avonent-bundle__copy">
-                <span class="avonent-bundle__title">
-                  {{ bundle_title }}
-                </span>
-
-                {% if bundle_subtitle != blank %}
-                  <span class="avonent-bundle__subtitle">
-                    {{ bundle_subtitle }}
-                  </span>
-                {% endif %}
-
-                {% if bundle_savings_override != blank %}
-                  <span class="avonent-bundle__savings">
-                    {{ bundle_savings_override }}
-                  </span>
-                {% elsif automatic_savings_percent > 0 %}
-                  <span class="avonent-bundle__savings">
-                    Save {{ automatic_savings_percent }}%
-                  </span>
-                {% endif %}
-              </span>
-
-              <span class="avonent-bundle__price">
-                <strong>{{ bundle_total | money }}</strong>
-
-                {% if bundle_compare_total > bundle_total %}
-                  <s>{{ bundle_compare_total | money }}</s>
-                {% endif %}
-
-                {% unless bundle_variant.available %}
-                  <small>Sold out</small>
-                {% endunless %}
-              </span>
-            </button>
-                    {% if gift_2 != blank %}
-                      <option value="{{ gift_2 | escape }}">{{ gift_2 }}</option>
-                    {% endif %}
-                    {% if gift_3 != blank %}
-                      <option value="{{ gift_3 | escape }}">{{ gift_3 }}</option>
-                    {% endif %}
-                  </select>
-
-                  <span class="avonent-bundle__select-chevron" aria-hidden="true">
-                    <svg viewBox="0 0 20 20">
-                      <path d="M5.5 7.5 10 12l4.5-4.5 1.4 1.4L10 14.8 4.1 8.9z"/>
-                    </svg>
-                  </span>
-                </div>
-              </div>
             {% endif %}
-          </div>
+
+            <span class="avonent-bundle__radio" aria-hidden="true">
+              <span></span>
+            </span>
+
+            {% if block.settings.show_images and bundle_image != blank %}
+              <span class="avonent-bundle__image-wrap">
+                {{
+                  bundle_image
+                  | image_url: width: 180
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '60, 90, 120, 180',
+                    class: 'avonent-bundle__image',
+                    alt: bundle_title
+                }}
+              </span>
+            {% endif %}
+
+            <span class="avonent-bundle__copy">
+              <span class="avonent-bundle__title">
+                {{ bundle_title }}
+              </span>
+
+              {% if bundle_subtitle != blank %}
+                <span class="avonent-bundle__subtitle">
+                  {{ bundle_subtitle }}
+                </span>
+              {% endif %}
+
+              {% if bundle_savings_override != blank %}
+                <span class="avonent-bundle__savings">
+                  {{ bundle_savings_override }}
+                </span>
+              {% elsif automatic_savings_percent > 0 %}
+                <span class="avonent-bundle__savings">
+                  Save {{ automatic_savings_percent }}%
+                </span>
+              {% endif %}
+            </span>
+
+            <span class="avonent-bundle__price">
+              <strong>{{ bundle_total | money }}</strong>
+
+              {% if bundle_compare_total > bundle_total %}
+                <s>{{ bundle_compare_total | money }}</s>
+              {% endif %}
+
+              {% unless bundle_variant.available %}
+                <small>Sold out</small>
+              {% endunless %}
+            </span>
+          </button>
         {% endif %}
       {% endfor %}
     </div>
@@ -226,12 +186,11 @@
   <script>
     (() => {
       const root = document.getElementById('{{ root_id }}');
-
       if (!root || root.dataset.avBundleInitialized === 'true') return;
+
       root.dataset.avBundleInitialized = 'true';
 
       const sectionId = root.dataset.sectionId;
-      const shells = Array.from(root.querySelectorAll('[data-av-bundle-shell]'));
       const options = Array.from(root.querySelectorAll('[data-av-bundle-option]'));
 
       function getNativeForm() {
@@ -256,9 +215,6 @@
         return form?.querySelector('input[name="id"][ref="variantId"], input[name="id"]');
       }
 
-        return input;
-      }
-
       function setNativeQuantity(quantity) {
         const form = getNativeForm();
         const input = getNativeQuantityInput(form);
@@ -272,7 +228,6 @@
 
         input.dispatchEvent(new Event('input', { bubbles: true }));
         input.dispatchEvent(new Event('change', { bubbles: true }));
-        input.dispatchEvent(new Event('blur', { bubbles: true }));
       }
 
       function setNativeVariant(variantId) {
@@ -291,17 +246,9 @@
       function selectBundle(option) {
         if (!option || option.disabled) return;
 
-        const number = option.dataset.bundleNumber;
-        const shell = root.querySelector(
-          `[data-av-bundle-shell][data-bundle-number="${number}"]`
-        );
-
-        shells.forEach((item) => {
-          item.classList.toggle('is-selected', item === shell);
-        });
-
         options.forEach((item) => {
           const selected = item === option;
+          item.classList.toggle('is-selected', selected);
           item.setAttribute('aria-checked', selected ? 'true' : 'false');
         });
 
@@ -312,24 +259,18 @@
       options.forEach((option) => {
         option.addEventListener('click', () => selectBundle(option));
       });
-      });
 
       let initial = root.querySelector(
-        '[data-av-bundle-option][aria-checked="true"]:not(:disabled)'
+        '[data-av-bundle-option].is-selected:not(:disabled)'
       );
 
       if (!initial) {
         initial = options.find((option) => !option.disabled);
       }
 
-      if (initial) selectBundle(initial);
-
-      document.addEventListener('shopify:section:load', () => {
-        const selected = root.querySelector(
-          '[data-av-bundle-option][aria-checked="true"]:not(:disabled)'
-        );
-        if (selected) selectBundle(selected);
-      });
+      if (initial) {
+        selectBundle(initial);
+      }
     })();
   </script>
 {% endif %}
@@ -343,58 +284,15 @@
     color: var(--avb-text);
   }
 
-  .avonent-bundle__header {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 10px;
-  }
-
-  .avonent-bundle__heading {
-    font-family: var(--font-heading--family);
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 1.15;
-    letter-spacing: -0.01em;
-  }
-
-  .avonent-bundle__subheading {
-    font-family: var(--font-body--family);
-    font-size: 11px;
-    line-height: 1.25;
-    color: var(--avb-muted);
-    text-align: right;
-  }
-
   .avonent-bundle__options {
     display: grid;
     gap: var(--avb-gap);
     width: 100%;
   }
 
-  .avonent-bundle__option-shell {
-    position: relative;
-    width: 100%;
-    border: 1px solid var(--avb-border);
-    border-radius: var(--avb-radius);
-    background: var(--avb-card-bg);
-    overflow: visible;
-
-    transition:
-      border-color 160ms ease,
-      background-color 160ms ease,
-      box-shadow 160ms ease;
-  }
-
-  .avonent-bundle__option-shell.is-selected {
-    border-color: var(--avb-accent);
-    background: var(--avb-accent-soft);
-    box-shadow: 0 0 0 1px var(--avb-accent);
-  }
-
   .avonent-bundle__option {
     position: relative;
+
     display: grid;
     grid-template-columns: 20px 52px minmax(0, 1fr) auto;
     align-items: center;
@@ -406,14 +304,30 @@
     padding: 12px 13px;
 
     appearance: none;
-    border: 0;
-    border-radius: inherit;
-    background: transparent;
+    border: 1px solid var(--avb-border);
+    border-radius: var(--avb-radius);
+    background: var(--avb-card-bg);
     color: var(--avb-text);
 
     font: inherit;
     text-align: left;
     cursor: pointer;
+
+    transition:
+      border-color 160ms ease,
+      background-color 160ms ease,
+      box-shadow 160ms ease,
+      transform 160ms ease;
+  }
+
+  .avonent-bundle__option:hover:not(:disabled) {
+    border-color: color-mix(in srgb, var(--avb-accent) 55%, var(--avb-border));
+  }
+
+  .avonent-bundle__option.is-selected {
+    border-color: var(--avb-accent);
+    background: var(--avb-accent-soft);
+    box-shadow: 0 0 0 1px var(--avb-accent);
   }
 
   .avonent-bundle__option:disabled {
@@ -424,11 +338,13 @@
   .avonent-bundle__radio {
     display: grid;
     place-items: center;
+
     width: 18px;
     height: 18px;
+
     border: 1.5px solid #AAB4B8;
     border-radius: 50%;
-    background: #fff;
+    background: #FFFFFF;
   }
 
   .avonent-bundle__radio span {
@@ -438,11 +354,11 @@
     background: transparent;
   }
 
-  .avonent-bundle__option-shell.is-selected .avonent-bundle__radio {
+  .avonent-bundle__option.is-selected .avonent-bundle__radio {
     border-color: var(--avb-accent);
   }
 
-  .avonent-bundle__option-shell.is-selected .avonent-bundle__radio span {
+  .avonent-bundle__option.is-selected .avonent-bundle__radio span {
     background: var(--avb-accent);
   }
 
@@ -450,11 +366,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
     width: 52px;
     height: 52px;
+
     overflow: hidden;
+
     border-radius: 9px;
-    background: #fff;
+    background: #FFFFFF;
   }
 
   .avonent-bundle__image {
@@ -478,18 +397,23 @@
 
   .avonent-bundle__subtitle {
     margin-top: 3px;
+
     font-family: var(--font-body--family);
     font-size: 11px;
+    font-weight: 400;
     line-height: 1.25;
+
     color: var(--avb-muted);
   }
 
   .avonent-bundle__savings {
     margin-top: 4px;
+
     font-family: var(--font-body--family);
     font-size: 11px;
     font-weight: 700;
     line-height: 1.2;
+
     color: var(--avb-accent);
   }
 
@@ -498,7 +422,9 @@
     flex-direction: column;
     align-items: flex-end;
     justify-content: center;
+
     min-width: max-content;
+
     font-family: var(--font-body--family);
   }
 
@@ -510,15 +436,19 @@
 
   .avonent-bundle__price s {
     margin-top: 3px;
+
     font-size: 11px;
     line-height: 1;
+
     color: var(--avb-muted);
   }
 
   .avonent-bundle__price small {
     margin-top: 4px;
+
     font-size: 10px;
     font-weight: 650;
+
     color: var(--avb-muted);
   }
 
@@ -528,27 +458,29 @@
     right: 12px;
     z-index: 3;
 
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
     min-height: 19px;
     padding: 2px 10px;
 
-    display: inline-flex;
-    align-items: center;
-
     border-radius: 999px;
+
     background: var(--avb-accent);
-    color: #fff;
+    color: #FFFFFF;
 
     font-family: var(--font-body--family);
     font-size: 10px;
     font-weight: 700;
     line-height: 1;
+
     white-space: nowrap;
   }
 
   /*
-   * The bundle cards ARE the quantity chooser.
-   * Keep Horizon's native Add to Cart button, but hide the redundant
-   * +/- quantity stepper when this Avonent selector is present.
+   * The Avonent bundle cards replace the +/- quantity selector only.
+   * Horizon's native Add to Cart button remains untouched.
    */
   .product-details:has(.avonent-bundle) .buy-buttons-block .quantity-selector-wrapper {
     display: none;
@@ -563,19 +495,6 @@
   }
 
   @media screen and (max-width: 749px) {
-    .avonent-bundle__header {
-      align-items: center;
-      margin-bottom: 9px;
-    }
-
-    .avonent-bundle__heading {
-      font-size: 15px;
-    }
-
-    .avonent-bundle__subheading {
-      font-size: 10px;
-    }
-
     .avonent-bundle__options {
       gap: 9px;
     }
@@ -583,8 +502,11 @@
     .avonent-bundle__option {
       grid-template-columns: 18px 44px minmax(0, 1fr) auto;
       gap: 8px;
+
       min-height: 68px;
       padding: 10px;
+
+      border-radius: 11px;
     }
 
     .avonent-bundle__image-wrap {
@@ -613,15 +535,13 @@
     .avonent-bundle__badge {
       top: -8px;
       right: 9px;
+
       min-height: 18px;
       padding-inline: 8px;
+
       font-size: 9px;
     }
 
-
-    /*
-     * Clean up the native Horizon buying area on mobile while preserving it.
-     */
     .product-details:has(.avonent-bundle) .buy-buttons-block {
       margin-top: 2px;
     }
@@ -687,6 +607,7 @@
       "label": "Show bundle images",
       "default": true
     },
+
     {
       "type": "header",
       "content": "Bundle 1"
@@ -713,7 +634,7 @@
       "type": "text",
       "id": "bundle_1_variant",
       "label": "Variant title or ID",
-      "info": "Optional. Leave blank to use the current variant, or enter an exact Shopify variant title / numeric variant ID."
+      "info": "Optional. Leave blank to use the current variant, or enter an exact Shopify variant title or numeric variant ID."
     },
     {
       "type": "range",
@@ -739,6 +660,7 @@
       "id": "bundle_1_image",
       "label": "Custom image"
     },
+
     {
       "type": "header",
       "content": "Bundle 2"
@@ -765,7 +687,7 @@
       "type": "text",
       "id": "bundle_2_variant",
       "label": "Variant title or ID",
-      "info": "Optional. Leave blank to use the current variant, or enter an exact Shopify variant title / numeric variant ID."
+      "info": "Optional. Leave blank to use the current variant, or enter an exact Shopify variant title or numeric variant ID."
     },
     {
       "type": "range",
@@ -792,6 +714,7 @@
       "id": "bundle_2_image",
       "label": "Custom image"
     },
+
     {
       "type": "header",
       "content": "Bundle 3"
@@ -818,7 +741,7 @@
       "type": "text",
       "id": "bundle_3_variant",
       "label": "Variant title or ID",
-      "info": "Optional. Leave blank to use the current variant, or enter an exact Shopify variant title / numeric variant ID."
+      "info": "Optional. Leave blank to use the current variant, or enter an exact Shopify variant title or numeric variant ID."
     },
     {
       "type": "range",
@@ -845,6 +768,7 @@
       "id": "bundle_3_image",
       "label": "Custom image"
     },
+
     {
       "type": "header",
       "content": "Bundle 4"
@@ -871,7 +795,7 @@
       "type": "text",
       "id": "bundle_4_variant",
       "label": "Variant title or ID",
-      "info": "Optional. Leave blank to use the current variant, or enter an exact Shopify variant title / numeric variant ID."
+      "info": "Optional. Leave blank to use the current variant, or enter an exact Shopify variant title or numeric variant ID."
     },
     {
       "type": "range",
@@ -897,6 +821,7 @@
       "id": "bundle_4_image",
       "label": "Custom image"
     },
+
     {
       "type": "header",
       "content": "Colors"
@@ -937,6 +862,7 @@
       "label": "Secondary text",
       "default": "#6F7B80"
     },
+
     {
       "type": "header",
       "content": "Layout"
@@ -969,7 +895,7 @@
       "max": 40,
       "step": 1,
       "unit": "px",
-      "default": 4
+      "default": 2
     },
     {
       "type": "range",
