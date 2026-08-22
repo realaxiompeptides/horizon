@@ -530,7 +530,7 @@
         "line_color": "#B8BEC2",
         "check_color": "#02C6EA",
         "content_width": 680,
-        "padding_top": 72,
+        "padding_top": 20,
         "padding_bottom": 72
       }
     }
