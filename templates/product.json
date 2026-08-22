@@ -379,6 +379,7 @@
               "blocks": {
                 "quantity": {
                   "type": "quantity",
+                  "disabled": true,
                   "static": true,
                   "settings": {
                     "input_style": "default",
@@ -403,25 +404,13 @@
                 },
                 "accelerated-checkout": {
                   "type": "accelerated-checkout",
+                  "disabled": true,
                   "static": true,
                   "settings": {},
                   "blocks": {}
                 }
               },
               "block_order": []
-            },
-            "payment_icons_8y3yUJ": {
-              "type": "payment-icons",
-              "name": "t:names.payment_icons",
-              "settings": {
-                "horizontal_alignment": "flex-start",
-                "gap": 10,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
             }
           },
           "block_order": [
@@ -434,8 +423,7 @@
             "variant_picker_R3rGDr",
             "00_avonent_bundle_selector_fCNCiE",
             "00_avonent_delivery_estimate_Yg7bah",
-            "buy_buttons_eYQEYi",
-            "payment_icons_8y3yUJ"
+            "buy_buttons_eYQEYi"
           ]
         }
       },
