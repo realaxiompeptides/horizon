@@ -19,7 +19,6 @@
   {% endif %}
 >
   {% capture children %}
-
     <div class="view-product-title">
       <a href="{{ closest.product.selected_or_first_available_variant.url }}">
         {{- closest.product.title -}}
@@ -27,7 +26,6 @@
     </div>
 
     {% content_for 'blocks' %}
-
   {% endcapture %}
 
   {% render 'group',
@@ -40,7 +38,6 @@
 </div>
 
 {% stylesheet %}
-
   /*
    * PRODUCT DETAILS
    */
@@ -53,34 +50,25 @@
     }
   }
 
-
   .view-product-title {
     display: none;
   }
 
-
   .product-details {
     display: flex;
-
     align-self: start;
-
     justify-content: center;
-
     width: 100%;
   }
-
 
   .product-details > .group-block {
     width: 100%;
   }
 
-
   @media screen and (min-width: 750px) {
-
     .product-details > .group-block {
       height: min-content;
     }
-
 
     .full-height--desktop {
       height: 100%;
@@ -95,15 +83,11 @@
       min-height: fit-content;
     }
 
-
-    .full-height--desktop
-    .group-block {
+    .full-height--desktop .group-block {
       align-self:
         var(--details-position, flex-start);
     }
-
   }
-
 {% endstylesheet %}
 
 {% schema %}
@@ -112,10 +96,10 @@
 
   "blocks": [
     {
-      "type": "@theme"
+      "type": "_avonent-demand-meter"
     },
     {
-      "type": "avonent-demand-meter"
+      "type": "@theme"
     },
     {
       "type": "@app"
@@ -546,6 +530,29 @@
           }
         },
 
+        "avonent_demand_meter": {
+          "type": "_avonent-demand-meter",
+          "settings": {
+            "heading": "Offer availability",
+            "percent_text": "claimed",
+            "subtext": "",
+            "starting_inventory": 100,
+            "minimum_percent": 0,
+            "maximum_percent": 96,
+            "background_color": "#F7FCFD",
+            "track_color": "#E4EFF2",
+            "fill_color": "#02C6EA",
+            "text_color": "#111111",
+            "border_color": "#E5EEF1",
+            "bar_height": 8,
+            "corner_radius": 16,
+            "padding_top": 4,
+            "padding_bottom": 4,
+            "inner_padding_y": 13,
+            "inner_padding_x": 16
+          }
+        },
+
         "variant_picker_R3rGDr": {
           "type": "variant-picker",
           "settings": {
@@ -559,6 +566,7 @@
 
         "buy_buttons_eYQEYi": {
           "type": "buy-buttons",
+
           "settings": {
             "padding-block-start": 0,
             "padding-block-end": 0,
@@ -570,6 +578,7 @@
             "add-to-cart": {
               "type": "add-to-cart",
               "static": true,
+
               "settings": {
                 "style_class": "button-secondary"
               }
@@ -634,6 +643,7 @@
               "blocks": {
                 "icon_bBpnME": {
                   "type": "icon",
+
                   "settings": {
                     "icon": "truck",
                     "width": 16
@@ -642,6 +652,7 @@
 
                 "text_83R7CQ": {
                   "type": "text",
+
                   "settings": {
                     "text": "t:html_defaults.free_shipping_over",
                     "alignment": "left",
@@ -685,6 +696,7 @@
               "blocks": {
                 "icon_FVd3C4": {
                   "type": "icon",
+
                   "settings": {
                     "icon": "return",
                     "width": 16
@@ -693,6 +705,7 @@
 
                 "text_EmGGUV": {
                   "type": "text",
+
                   "settings": {
                     "text": "t:html_defaults.free_returns",
                     "alignment": "left",
@@ -724,6 +737,7 @@
           "blocks": {
             "accordion-row-1": {
               "type": "_accordion-row",
+
               "settings": {
                 "heading": "t:text_defaults.materials"
               },
@@ -741,6 +755,7 @@
 
             "accordion-row-2": {
               "type": "_accordion-row",
+
               "settings": {
                 "heading": "t:text_defaults.care_instructions"
               },
@@ -758,6 +773,7 @@
 
             "accordion-row-3": {
               "type": "_accordion-row",
+
               "settings": {
                 "heading": "t:text_defaults.fit"
               },
@@ -810,6 +826,7 @@
         "heading_m7KmQQ",
         "text_GMQR8L",
         "price_a7krng",
+        "avonent_demand_meter",
         "variant_picker_R3rGDr",
         "buy_buttons_eYQEYi",
         "group_Q4eVWb",
