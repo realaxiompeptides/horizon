@@ -25,9 +25,29 @@
   "
 >
   <div class="avonent-compare__inner">
-    <div class="avonent-compare__grid">
 
-      <div class="avonent-compare__table-wrap">
+    <div class="avonent-compare__mobile-heading">
+      {% if section.settings.eyebrow != blank %}
+        <div class="avonent-compare__eyebrow">
+          {{ section.settings.eyebrow }}
+        </div>
+      {% endif %}
+
+      {% if section.settings.heading != blank %}
+        <h2 class="avonent-compare__heading">
+          {{ section.settings.heading }}
+        </h2>
+      {% endif %}
+
+      {% if section.settings.description != blank %}
+        <div class="avonent-compare__description">
+          {{ section.settings.description }}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="avonent-compare__grid">
+      <div class="avonent-compare__left">
         <div class="avonent-compare__columns">
           <div class="avonent-compare__brand avonent-compare__brand--avonent">
             <div class="avonent-compare__brand-head">
@@ -64,6 +84,16 @@
                       <svg viewBox="0 0 24 24"><path d="M20.8 3.2C14.1 3.5 8.6 5.8 5.4 9.7 2.8 12.9 3 16.6 5.3 19c2.4 2.3 6.1 2.5 9.3-.1 3.9-3.2 6.2-8.7 6.5-15.4l-.3-.3ZM7 17.5c2.6-4.1 5.8-7.1 10.2-9.6-2.6 4.4-5.5 7.6-9.6 10.2L7 17.5Z"/></svg>
                     {% when 'sparkle' %}
                       <svg viewBox="0 0 24 24"><path d="M12 2c.7 4.1 2.9 6.3 7 7-4.1.7-6.3 2.9-7 7-.7-4.1-2.9-6.3-7-7 4.1-.7 6.3-2.9 7-7Zm7 12c.3 1.8 1.2 2.7 3 3-1.8.3-2.7 1.2-3 3-.3-1.8-1.2-2.7-3-3 1.8-.3 2.7-1.2 3-3Z"/></svg>
+                    {% when 'microscope' %}
+                      <svg viewBox="0 0 24 24"><path d="M9 2h5v2h-1v5.1a5 5 0 0 1 3.7 4.8H19v2h-2.7A5 5 0 0 1 12 19H7v-2h5a3 3 0 0 0 0-6h-1V4H9V2Zm1 4h2v4h-2V6ZM5 20h14v2H5v-2Z"/></svg>
+                    {% when 'globe' %}
+                      <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm6.9 6h-3.1a15 15 0 0 0-1.6-3.4A8 8 0 0 1 18.9 8ZM12 4c.8 1 1.5 2.3 1.9 4h-3.8c.4-1.7 1.1-3 1.9-4ZM4.3 14A8.2 8.2 0 0 1 4 12c0-.7.1-1.4.3-2h3.4a18 18 0 0 0 0 4H4.3Zm.8 2h3.1a15 15 0 0 0 1.6 3.4A8 8 0 0 1 5.1 16Zm3.1-8H5.1a8 8 0 0 1 4.7-3.4A15 15 0 0 0 8.2 8ZM12 20c-.8-1-1.5-2.3-1.9-4h3.8c-.4 1.7-1.1 3-1.9 4Zm2.3-6H9.7a16 16 0 0 1 0-4h4.6a16 16 0 0 1 0 4Zm-.1 5.4a15 15 0 0 0 1.6-3.4h3.1a8 8 0 0 1-4.7 3.4ZM16.3 14a18 18 0 0 0 0-4h3.4a8.2 8.2 0 0 1 0 4h-3.4Z"/></svg>
+                    {% when 'heart' %}
+                      <svg viewBox="0 0 24 24"><path d="M12 21s-7-4.4-9.5-8.6C.4 8.9 2.1 5 5.8 4.2 8 3.7 10 4.7 12 6.8c2-2.1 4-3.1 6.2-2.6 3.7.8 5.4 4.7 3.3 8.2C19 16.6 12 21 12 21Z"/></svg>
+                    {% when 'capsule' %}
+                      <svg viewBox="0 0 24 24"><path d="M7.2 3.6a5 5 0 0 1 7.1 0l6.1 6.1a5 5 0 0 1-7.1 7.1l-6.1-6.1a5 5 0 0 1 0-7.1Zm1.4 1.4a3 3 0 0 0 0 4.3l2.4 2.4 4.3-4.3L12.9 5a3 3 0 0 0-4.3 0Zm4 8.3 2.1 2.1a3 3 0 1 0 4.3-4.3L16.7 8.8l-4.1 4.5Z"/></svg>
+                    {% when 'droplet' %}
+                      <svg viewBox="0 0 24 24"><path d="M12 2s7 7.3 7 12a7 7 0 1 1-14 0C5 9.3 12 2 12 2Zm0 3.1C10.1 7.3 7 11.2 7 14a5 5 0 0 0 10 0c0-2.8-3.1-6.7-5-8.9Z"/></svg>
                     {% else %}
                       <svg viewBox="0 0 24 24"><path d="m9.2 16.2-4-4 1.4-1.4 2.6 2.6 8.2-8.2 1.4 1.4-9.6 9.6Z"/></svg>
                   {% endcase %}
@@ -105,6 +135,27 @@
             {% endfor %}
           </div>
         </div>
+
+        {% if section.settings.button_text != blank %}
+          <div class="avonent-compare__cta-wrap">
+            <a
+              class="avonent-compare__button"
+              href="{{ section.settings.button_link | default: '#avonent-buy-section' }}"
+            >
+              <span>{{ section.settings.button_text }}</span>
+              <span class="avonent-compare__button-arrow" aria-hidden="true">→</span>
+            </a>
+
+            {% if section.settings.guarantee_text != blank %}
+              <div class="avonent-compare__guarantee">
+                <span class="avonent-compare__guarantee-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M12 2 4.5 5v5.5c0 5.2 3 9.9 7.5 11.5 4.5-1.6 7.5-6.3 7.5-11.5V5L12 2Zm0 2.2 5.5 2.2v4.1c0 4.1-2.2 7.9-5.5 9.4-3.3-1.5-5.5-5.3-5.5-9.4V6.4L12 4.2Zm-1 10.1-2.3-2.3 1.4-1.4.9.9 2.9-2.9 1.4 1.4-4.3 4.3Z"/></svg>
+                </span>
+                {{ section.settings.guarantee_text }}
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
       </div>
 
       <div class="avonent-compare__content">
@@ -146,25 +197,6 @@
             {% endif %}
           {% endfor %}
         </div>
-
-        {% if section.settings.button_text != blank %}
-          <a
-            class="avonent-compare__button"
-            href="{{ section.settings.button_link | default: '#avonent-buy-section' }}"
-          >
-            <span>{{ section.settings.button_text }}</span>
-            <span class="avonent-compare__button-arrow" aria-hidden="true">→</span>
-          </a>
-        {% endif %}
-
-        {% if section.settings.guarantee_text != blank %}
-          <div class="avonent-compare__guarantee">
-            <span class="avonent-compare__guarantee-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M12 2 4.5 5v5.5c0 5.2 3 9.9 7.5 11.5 4.5-1.6 7.5-6.3 7.5-11.5V5L12 2Zm0 2.2 5.5 2.2v4.1c0 4.1-2.2 7.9-5.5 9.4-3.3-1.5-5.5-5.3-5.5-9.4V6.4L12 4.2Zm-1 10.1-2.3-2.3 1.4-1.4.9.9 2.9-2.9 1.4 1.4-4.3 4.3Z"/></svg>
-            </span>
-            {{ section.settings.guarantee_text }}
-          </div>
-        {% endif %}
       </div>
     </div>
   </div>
@@ -188,6 +220,10 @@
     margin: 0 auto;
   }
 
+  .avonent-compare__mobile-heading {
+    display: none;
+  }
+
   .avonent-compare__grid {
     display: grid;
     grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
@@ -195,7 +231,8 @@
     gap: clamp(48px, 6vw, 92px);
   }
 
-  .avonent-compare__table-wrap {
+  .avonent-compare__left,
+  .avonent-compare__content {
     min-width: 0;
   }
 
@@ -294,10 +331,6 @@
     color: var(--avc-bad);
   }
 
-  .avonent-compare__content {
-    min-width: 0;
-  }
-
   .avonent-compare__eyebrow {
     margin-bottom: 8px;
     color: var(--avc-accent);
@@ -369,27 +402,26 @@
     fill: currentColor;
   }
 
+  .avonent-compare__cta-wrap {
+    margin-top: 24px;
+  }
+
   .avonent-compare__button {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
-
     width: 100%;
     min-height: 56px;
-    margin-top: 36px;
     padding: 14px 22px;
-
     border-radius: 999px;
     background: var(--avc-button-bg);
     color: var(--avc-button-text);
-
     font-family: var(--font-body--family);
     font-size: 15px;
     font-weight: 750;
     line-height: 1;
     text-decoration: none;
-
     transition:
       transform 180ms ease,
       opacity 180ms ease;
@@ -432,62 +464,52 @@
   }
 
   @media screen and (max-width: 899px) {
+    .avonent-compare__mobile-heading {
+      display: block;
+      margin-bottom: 28px;
+      text-align: center;
+    }
+
     .avonent-compare__grid {
       grid-template-columns: 1fr;
-      gap: 40px;
+      gap: 0;
     }
 
     .avonent-compare__content {
-      order: -1;
-      text-align: center;
+      display: none;
     }
 
     .avonent-compare__description {
       margin-inline: auto;
     }
-
-    .avonent-compare__reason {
-      text-align: left;
-    }
   }
 
   @media screen and (max-width: 749px) {
     .avonent-compare {
-      padding-top: max(48px, var(--avc-top));
-      padding-bottom: max(48px, var(--avc-bottom));
+      padding-top: max(44px, var(--avc-top));
+      padding-bottom: max(44px, var(--avc-bottom));
     }
 
     .avonent-compare__inner {
-      width: min(calc(100% - 24px), var(--avc-width));
+      width: min(calc(100% - 20px), var(--avc-width));
     }
 
-    .avonent-compare__grid {
-      gap: 30px;
+    .avonent-compare__mobile-heading {
+      margin-bottom: 22px;
+    }
+
+    .avonent-compare__eyebrow {
+      font-size: 11px;
     }
 
     .avonent-compare__heading {
-      font-size: 28px;
+      font-size: 27px;
     }
 
     .avonent-compare__description {
-      margin-top: 12px;
+      margin-top: 11px;
       font-size: 13px;
-    }
-
-    .avonent-compare__reasons {
-      gap: 14px;
-      margin-top: 22px;
-    }
-
-    .avonent-compare__reason {
-      grid-template-columns: 19px minmax(0, 1fr);
-      gap: 8px;
-      font-size: 12px;
-    }
-
-    .avonent-compare__reason-check {
-      width: 18px;
-      height: 18px;
+      line-height: 1.45;
     }
 
     .avonent-compare__columns {
@@ -495,42 +517,47 @@
     }
 
     .avonent-compare__brand-head {
-      min-height: 118px;
-      padding: 12px 8px 11px;
+      min-height: 112px;
+      padding: 11px 7px 10px;
     }
 
     .avonent-compare__brand-image {
-      height: 68px;
-      margin-bottom: 7px;
+      height: 64px;
+      margin-bottom: 6px;
     }
 
     .avonent-compare__brand-image img {
-      max-width: 95px;
+      max-width: 90px;
     }
 
     .avonent-compare__brand-name {
-      font-size: 13px;
+      font-size: 12px;
     }
 
     .avonent-compare__row {
-      min-height: 66px;
-      padding: 10px 7px;
+      min-height: 63px;
+      padding: 9px 6px;
       gap: 5px;
-      font-size: 10px;
+      font-size: 9.5px;
+      line-height: 1.25;
     }
 
     .avonent-compare__row-icon {
-      width: 17px;
-      height: 17px;
+      width: 16px;
+      height: 16px;
+    }
+
+    .avonent-compare__cta-wrap {
+      margin-top: 18px;
     }
 
     .avonent-compare__button {
       min-height: 52px;
-      margin-top: 26px;
       font-size: 14px;
     }
 
     .avonent-compare__guarantee {
+      margin-top: 9px;
       font-size: 10px;
     }
   }
@@ -571,7 +598,7 @@
 
     {
       "type": "header",
-      "content": "Right-side content"
+      "content": "Heading"
     },
     {
       "type": "text",
@@ -606,13 +633,13 @@
       "type": "url",
       "id": "button_link",
       "label": "Button link",
-      "info": "For a future on-page buy section, leave this blank. The default target is #avonent-buy-section."
+      "info": "Leave blank for the future #avonent-buy-section anchor."
     },
     {
       "type": "text",
       "id": "guarantee_text",
       "label": "Text under button",
-      "default": "30-day satisfaction guarantee"
+      "default": "30-day money-back guarantee"
     },
 
     {
@@ -751,7 +778,12 @@
             {"value": "shield", "label": "Shield"},
             {"value": "flask", "label": "Lab flask"},
             {"value": "leaf", "label": "Leaf"},
-            {"value": "sparkle", "label": "Sparkle"}
+            {"value": "sparkle", "label": "Sparkle"},
+            {"value": "microscope", "label": "Microscope"},
+            {"value": "globe", "label": "Globe"},
+            {"value": "heart", "label": "Heart"},
+            {"value": "capsule", "label": "Capsule"},
+            {"value": "droplet", "label": "Droplet"}
           ],
           "default": "check"
         },
@@ -770,13 +802,13 @@
         {
           "type": "text",
           "id": "reason_title",
-          "label": "Reason heading",
+          "label": "Desktop reason heading",
           "default": "Clear & Transparent"
         },
         {
           "type": "textarea",
           "id": "reason_text",
-          "label": "Reason description",
+          "label": "Desktop reason description",
           "default": "Straightforward product information designed to make choosing your routine easier."
         }
       ]
@@ -790,7 +822,7 @@
         {
           "type": "comparison_row",
           "settings": {
-            "icon": "flask",
+            "icon": "microscope",
             "avonent_text": "Quality-Focused Formulas",
             "other_text": "Trend-Driven Formulas",
             "reason_title": "Quality-Focused",
