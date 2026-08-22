@@ -153,16 +153,14 @@
         })();
 
         /**
-         * Sets the initial menu style (inline menu vs. drawer) on the header component.
-         * Mimics setHeaderMenuStyle() in utilities.js
+         * Avonent default: always initialize the header in drawer mode.
+         * This keeps the desktop header clean with a menu button and centered logo.
+         * assets/utilities.js mirrors this setting after hydration and on resize.
          */
         (function setHeaderMenuStyle() {
           const headerComponent = document.querySelector('#header-component');
           if (headerComponent) {
-            const isTouchDevice = 'ontouchstart' in window && navigator.maxTouchPoints > 0;
-            const overflowList = headerComponent.querySelector('overflow-list');
-            const hasReachedMinimum = overflowList && overflowList.hasAttribute('minimum-reached');
-            headerComponent.dataset.menuStyle = isTouchDevice || hasReachedMinimum ? 'drawer' : 'menu';
+            headerComponent.dataset.menuStyle = 'drawer';
           }
         })();
       </script>
