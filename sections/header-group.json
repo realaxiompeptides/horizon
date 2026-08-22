@@ -23,8 +23,8 @@
             "link": "",
             "show_countdown": true,
             "timer_minutes": 120,
-            "background_color": "#02C6EA",
-            "text_color": "#FFFFFF",
+            "background_color": "#02c6ea",
+            "text_color": "#ffffff",
             "bar_height": 52
           },
           "blocks": {}
@@ -75,7 +75,7 @@
             "navigation_bar": false,
             "background_color_navigation_bar": "{{ settings.color_palette.background }}",
             "text_color_navigation_bar": "",
-            "drawer_accordion": false,
+            "drawer_accordion": true,
             "drawer_accordion_expand_first": false,
             "drawer_dividers": false
           },
