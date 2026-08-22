@@ -1,0 +1,349 @@
+{% liquid
+  assign rating = block.settings.rating
+  assign review_text = block.settings.review_text
+%}
+
+<div
+  class="avonent-rating"
+  {{ block.shopify_attributes }}
+  style="
+    --av-rating-star: {{ block.settings.star_color }};
+    --av-rating-text: {{ block.settings.text_color }};
+    --av-rating-bg: {{ block.settings.background_color }};
+    --av-rating-border: {{ block.settings.border_color }};
+    --av-rating-radius: {{ block.settings.corner_radius }}px;
+    --av-rating-star-size: {{ block.settings.star_size }}px;
+    --av-rating-text-size: {{ block.settings.text_size }}px;
+    --av-rating-padding-y: {{ block.settings.padding_y }}px;
+    --av-rating-padding-x: {{ block.settings.padding_x }}px;
+    --av-rating-top: {{ block.settings.spacing_top }}px;
+    --av-rating-bottom: {{ block.settings.spacing_bottom }}px;
+  "
+>
+  {% if block.settings.link != blank %}
+    <a
+      href="{{ block.settings.link }}"
+      class="avonent-rating__link"
+      aria-label="Read customer reviews"
+    >
+  {% endif %}
+
+  <div class="avonent-rating__inner">
+
+    {% if block.settings.show_stars %}
+      <div
+        class="avonent-rating__stars"
+        aria-label="{{ rating }} out of 5 stars"
+      >
+        {% for i in (1..5) %}
+          <svg
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path
+              d="M12 2.6l2.85 5.78 6.38.93-4.62 4.5 1.09 6.36L12 17.17l-5.7 3 1.09-6.36-4.62-4.5 6.38-.93L12 2.6z"
+              fill="currentColor"
+            />
+          </svg>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <div class="avonent-rating__copy">
+      {% if block.settings.show_rating_number %}
+        <span class="avonent-rating__score">
+          Rated {{ rating }}
+        </span>
+      {% endif %}
+
+      {% if review_text != blank %}
+        {% if block.settings.show_rating_number %}
+          <span class="avonent-rating__separator">•</span>
+        {% endif %}
+
+        <span class="avonent-rating__text">
+          {{ review_text }}
+        </span>
+      {% endif %}
+    </div>
+
+  </div>
+
+  {% if block.settings.link != blank %}
+    </a>
+  {% endif %}
+</div>
+
+{% stylesheet %}
+  .avonent-rating {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+
+    padding-top: var(--av-rating-top);
+    padding-bottom: var(--av-rating-bottom);
+  }
+
+  .avonent-rating__link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .avonent-rating__inner {
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+    box-sizing: border-box;
+
+    gap: 10px;
+
+    padding:
+      var(--av-rating-padding-y)
+      var(--av-rating-padding-x);
+
+    background: var(--av-rating-bg);
+
+    border:
+      1px solid
+      var(--av-rating-border);
+
+    border-radius:
+      var(--av-rating-radius);
+
+    color:
+      var(--av-rating-text);
+  }
+
+  .avonent-rating__stars {
+    flex: 0 0 auto;
+
+    display: flex;
+    align-items: center;
+
+    gap: 1px;
+
+    color:
+      var(--av-rating-star);
+  }
+
+  .avonent-rating__stars svg {
+    display: block;
+
+    width:
+      var(--av-rating-star-size);
+
+    height:
+      var(--av-rating-star-size);
+  }
+
+  .avonent-rating__copy {
+    display: flex;
+    align-items: center;
+
+    min-width: 0;
+
+    gap: 5px;
+
+    font-family:
+      var(--font-body--family);
+
+    font-size:
+      var(--av-rating-text-size);
+
+    line-height:
+      1.25;
+
+    color:
+      var(--av-rating-text);
+  }
+
+  .avonent-rating__score {
+    flex: 0 0 auto;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+  }
+
+  .avonent-rating__separator {
+    flex: 0 0 auto;
+
+    opacity: 0.55;
+  }
+
+  .avonent-rating__text {
+    font-weight: 400;
+  }
+
+  .avonent-rating__link:hover
+    .avonent-rating__text {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .avonent-rating__inner {
+      gap: 8px;
+    }
+
+    .avonent-rating__copy {
+      gap: 4px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Avonent Rating",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Review content"
+    },
+    {
+      "type": "text",
+      "id": "rating",
+      "label": "Rating",
+      "default": "4.9"
+    },
+    {
+      "type": "text",
+      "id": "review_text",
+      "label": "Review text",
+      "default": "Thousands of 5-Star Reviews"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_stars",
+      "label": "Show stars",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating_number",
+      "label": "Show rating number",
+      "default": true
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Reviews link"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Stars",
+      "default": "#02C6EA"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border",
+      "default": "#EEF1F2"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "star_size",
+      "label": "Star size",
+      "min": 10,
+      "max": 26,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Text size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "corner_radius",
+      "label": "Corner roundness",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding_y",
+      "label": "Inside vertical padding",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 7
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "label": "Inside horizontal padding",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "spacing_top",
+      "label": "Top spacing",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "spacing_bottom",
+      "label": "Bottom spacing",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    }
+  ],
+  "presets": [
+    {
+      "name": "Avonent Rating"
+    }
+  ]
+}
+{% endschema %}
