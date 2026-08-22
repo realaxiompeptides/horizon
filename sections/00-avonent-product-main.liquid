@@ -435,22 +435,42 @@
   "tag": "section",
   "class": "avonent-product-main-section",
   "blocks": [
-    { "type": "@theme" },
-    { "type": "@app" },
-    { "type": "_divider" }
+    {
+      "type": "@theme"
+    },
+    {
+      "type": "_avonent-stock-meter"
+    },
+    {
+      "type": "@app"
+    },
+    {
+      "type": "_divider"
+    }
   ],
   "enabled_on": {
-    "templates": ["product"]
+    "templates": [
+      "product"
+    ]
   },
   "settings": [
-    { "type": "header", "content": "Layout" },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
     {
       "type": "select",
       "id": "content_width",
       "label": "Width",
       "options": [
-        { "value": "content-center-aligned", "label": "Page" },
-        { "value": "content-full-width", "label": "Full width" }
+        {
+          "value": "content-center-aligned",
+          "label": "Page"
+        },
+        {
+          "value": "content-full-width",
+          "label": "Full width"
+        }
       ],
       "default": "content-center-aligned"
     },
@@ -459,31 +479,154 @@
       "id": "desktop_media_position",
       "label": "Product media position",
       "options": [
-        { "value": "left", "label": "Left" },
-        { "value": "right", "label": "Right" }
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
       ],
       "default": "left"
     },
-    { "type": "checkbox", "id": "equal_columns", "label": "Equal desktop columns", "default": true },
-    { "type": "checkbox", "id": "limit_details_width", "label": "Limit product details width", "default": false, "visible_if": "{{ section.settings.equal_columns }}" },
-    { "type": "range", "id": "gap", "label": "Media / details gap", "min": 0, "max": 48, "step": 4, "unit": "px", "default": 32 },
-    { "type": "checkbox", "id": "sticky_details_desktop", "label": "Make product details sticky on desktop", "default": true },
-    { "type": "checkbox", "id": "enable_sticky_add_to_cart", "label": "Enable Horizon sticky add to cart", "default": true },
-    { "type": "header", "content": "Product details" },
-    { "type": "range", "id": "details_gap", "label": "Block spacing", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 14 },
-    { "type": "color", "id": "details_background_color", "label": "Details background", "default": "#FFFFFF" },
-    { "type": "color", "id": "details_border_color", "label": "Details border", "default": "#E8EEF0" },
-    { "type": "range", "id": "details_border_width", "label": "Details border width", "min": 0, "max": 3, "step": 1, "unit": "px", "default": 0 },
-    { "type": "range", "id": "details_radius", "label": "Details corner radius", "min": 0, "max": 32, "step": 1, "unit": "px", "default": 18 },
-    { "type": "range", "id": "details_padding_desktop", "label": "Details padding desktop", "min": 0, "max": 48, "step": 1, "unit": "px", "default": 20 },
-    { "type": "range", "id": "details_padding_mobile", "label": "Details padding mobile", "min": 0, "max": 32, "step": 1, "unit": "px", "default": 18 },
-    { "type": "header", "content": "Section" },
-    { "type": "color", "id": "background_color", "label": "Background color", "default": "#FFFFFF" },
-    { "type": "range", "id": "padding-block-start", "label": "Top spacing", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
-    { "type": "range", "id": "padding-block-end", "label": "Bottom spacing", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 24 }
+    {
+      "type": "checkbox",
+      "id": "equal_columns",
+      "label": "Equal desktop columns",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "limit_details_width",
+      "label": "Limit product details width",
+      "default": false,
+      "visible_if": "{{ section.settings.equal_columns }}"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Media / details gap",
+      "min": 0,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky_details_desktop",
+      "label": "Make product details sticky on desktop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sticky_add_to_cart",
+      "label": "Enable Horizon sticky add to cart",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Product details"
+    },
+    {
+      "type": "range",
+      "id": "details_gap",
+      "label": "Block spacing",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "details_background_color",
+      "label": "Details background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "details_border_color",
+      "label": "Details border",
+      "default": "#E8EEF0"
+    },
+    {
+      "type": "range",
+      "id": "details_border_width",
+      "label": "Details border width",
+      "min": 0,
+      "max": 3,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "details_radius",
+      "label": "Details corner radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "details_padding_desktop",
+      "label": "Details padding desktop",
+      "min": 0,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "details_padding_mobile",
+      "label": "Details padding mobile",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "header",
+      "content": "Section"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top spacing",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom spacing",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    }
   ],
   "presets": [
-    { "name": "00 Avonent Product Main", "category": "Product" }
+    {
+      "name": "00 Avonent Product Main",
+      "category": "Product"
+    }
   ]
 }
 {% endschema %}
