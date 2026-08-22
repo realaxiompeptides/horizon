@@ -1,23 +1,18 @@
 {% liquid
   assign rating = block.settings.rating
-  assign review_text = block.settings.review_text
 %}
 
 <div
   class="avonent-rating"
   {{ block.shopify_attributes }}
   style="
-    --av-rating-star: {{ block.settings.star_color }};
-    --av-rating-text: {{ block.settings.text_color }};
-    --av-rating-bg: {{ block.settings.background_color }};
-    --av-rating-border: {{ block.settings.border_color }};
-    --av-rating-radius: {{ block.settings.corner_radius }}px;
-    --av-rating-star-size: {{ block.settings.star_size }}px;
-    --av-rating-text-size: {{ block.settings.text_size }}px;
-    --av-rating-padding-y: {{ block.settings.padding_y }}px;
-    --av-rating-padding-x: {{ block.settings.padding_x }}px;
-    --av-rating-top: {{ block.settings.spacing_top }}px;
-    --av-rating-bottom: {{ block.settings.spacing_bottom }}px;
+    --avr-star: {{ block.settings.star_color }};
+    --avr-text: {{ block.settings.text_color }};
+    --avr-star-size: {{ block.settings.star_size }}px;
+    --avr-text-size: {{ block.settings.text_size }}px;
+    --avr-gap: {{ block.settings.gap }}px;
+    --avr-top: {{ block.settings.spacing_top }}px;
+    --avr-bottom: {{ block.settings.spacing_bottom }}px;
   "
 >
   {% if block.settings.link != blank %}
@@ -50,22 +45,28 @@
       </div>
     {% endif %}
 
-    <div class="avonent-rating__copy">
+    <div class="avonent-rating__content">
+
       {% if block.settings.show_rating_number %}
-        <span class="avonent-rating__score">
+        <strong class="avonent-rating__score">
           Rated {{ rating }}
-        </span>
+        </strong>
       {% endif %}
 
-      {% if review_text != blank %}
+      {% if block.settings.review_text != blank %}
+
         {% if block.settings.show_rating_number %}
-          <span class="avonent-rating__separator">•</span>
+          <span class="avonent-rating__separator">
+            ·
+          </span>
         {% endif %}
 
         <span class="avonent-rating__text">
-          {{ review_text }}
+          {{ block.settings.review_text }}
         </span>
+
       {% endif %}
+
     </div>
 
   </div>
@@ -76,13 +77,14 @@
 </div>
 
 {% stylesheet %}
+
   .avonent-rating {
     display: block;
     width: 100%;
     box-sizing: border-box;
 
-    padding-top: var(--av-rating-top);
-    padding-bottom: var(--av-rating-bottom);
+    padding-top: var(--avr-top);
+    padding-bottom: var(--avr-bottom);
   }
 
   .avonent-rating__link {
@@ -96,50 +98,34 @@
     align-items: center;
 
     width: 100%;
-    box-sizing: border-box;
 
-    gap: 10px;
+    gap: var(--avr-gap);
 
-    padding:
-      var(--av-rating-padding-y)
-      var(--av-rating-padding-x);
+    padding: 0;
 
-    background: var(--av-rating-bg);
-
-    border:
-      1px solid
-      var(--av-rating-border);
-
-    border-radius:
-      var(--av-rating-radius);
-
-    color:
-      var(--av-rating-text);
+    background: transparent;
+    border: 0;
+    border-radius: 0;
   }
 
   .avonent-rating__stars {
-    flex: 0 0 auto;
-
     display: flex;
     align-items: center;
+    flex: 0 0 auto;
 
     gap: 1px;
 
-    color:
-      var(--av-rating-star);
+    color: var(--avr-star);
   }
 
   .avonent-rating__stars svg {
     display: block;
 
-    width:
-      var(--av-rating-star-size);
-
-    height:
-      var(--av-rating-star-size);
+    width: var(--avr-star-size);
+    height: var(--avr-star-size);
   }
 
-  .avonent-rating__copy {
+  .avonent-rating__content {
     display: flex;
     align-items: center;
 
@@ -147,52 +133,47 @@
 
     gap: 5px;
 
-    font-family:
-      var(--font-body--family);
+    color: var(--avr-text);
 
-    font-size:
-      var(--av-rating-text-size);
+    font-family: var(--font-body--family);
+    font-size: var(--avr-text-size);
 
-    line-height:
-      1.25;
-
-    color:
-      var(--av-rating-text);
+    line-height: 1.25;
   }
 
   .avonent-rating__score {
     flex: 0 0 auto;
 
-    font-weight: 600;
-
+    font-weight: 650;
     white-space: nowrap;
   }
 
   .avonent-rating__separator {
     flex: 0 0 auto;
-
-    opacity: 0.55;
+    opacity: 0.45;
   }
 
   .avonent-rating__text {
     font-weight: 400;
   }
 
-  .avonent-rating__link:hover
-    .avonent-rating__text {
+  .avonent-rating__link:hover .avonent-rating__text {
     text-decoration: underline;
     text-underline-offset: 2px;
   }
 
   @media screen and (max-width: 749px) {
+
     .avonent-rating__inner {
-      gap: 8px;
+      gap: 7px;
     }
 
-    .avonent-rating__copy {
+    .avonent-rating__content {
       gap: 4px;
     }
+
   }
+
 {% endstylesheet %}
 
 {% schema %}
@@ -202,7 +183,7 @@
   "settings": [
     {
       "type": "header",
-      "content": "Review content"
+      "content": "Reviews"
     },
     {
       "type": "text",
@@ -250,27 +231,15 @@
       "default": "#111111"
     },
     {
-      "type": "color",
-      "id": "background_color",
-      "label": "Background",
-      "default": "#FFFFFF"
-    },
-    {
-      "type": "color",
-      "id": "border_color",
-      "label": "Border",
-      "default": "#EEF1F2"
-    },
-    {
       "type": "header",
-      "content": "Typography"
+      "content": "Sizing"
     },
     {
       "type": "range",
       "id": "star_size",
       "label": "Star size",
       "min": 10,
-      "max": 26,
+      "max": 24,
       "step": 1,
       "unit": "px",
       "default": 15
@@ -280,51 +249,31 @@
       "id": "text_size",
       "label": "Text size",
       "min": 10,
-      "max": 20,
+      "max": 18,
       "step": 1,
       "unit": "px",
       "default": 13
     },
     {
+      "type": "range",
+      "id": "gap",
+      "label": "Stars to text gap",
+      "min": 2,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
       "type": "header",
-      "content": "Layout"
-    },
-    {
-      "type": "range",
-      "id": "corner_radius",
-      "label": "Corner roundness",
-      "min": 0,
-      "max": 30,
-      "step": 1,
-      "unit": "px",
-      "default": 12
-    },
-    {
-      "type": "range",
-      "id": "padding_y",
-      "label": "Inside vertical padding",
-      "min": 0,
-      "max": 24,
-      "step": 1,
-      "unit": "px",
-      "default": 7
-    },
-    {
-      "type": "range",
-      "id": "padding_x",
-      "label": "Inside horizontal padding",
-      "min": 0,
-      "max": 30,
-      "step": 1,
-      "unit": "px",
-      "default": 10
+      "content": "Spacing"
     },
     {
       "type": "range",
       "id": "spacing_top",
       "label": "Top spacing",
       "min": 0,
-      "max": 50,
+      "max": 40,
       "step": 1,
       "unit": "px",
       "default": 0
@@ -334,7 +283,7 @@
       "id": "spacing_bottom",
       "label": "Bottom spacing",
       "min": 0,
-      "max": 50,
+      "max": 40,
       "step": 1,
       "unit": "px",
       "default": 4
