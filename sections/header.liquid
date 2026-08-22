@@ -95,7 +95,76 @@
   endcapture
 
   capture actions
-    render 'header-actions', customer_account_menu: section.settings.customer_account_menu, display_style: section.settings.actions_display_style, section: section
+    <header-actions class="avonent-header-actions">
+      {% if shop.customer_accounts_enabled %}
+        <a
+          href="{{ routes.account_url }}"
+          class="header-actions__action avonent-header-actions__account"
+          aria-label="{{ 'content.account_title' | t | escape }}"
+        >
+          <span class="svg-wrapper" aria-hidden="true">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 20 22"
+              fill="none"
+            >
+              <path
+                d="M14.0833 5.08333C14.0833 7.3385 12.2552 9.16667 10 9.16667C7.74484 9.16667 5.91667 7.3385 5.91667 5.08333C5.91667 2.82817 7.74484 1 10 1C12.2552 1 14.0833 2.82817 14.0833 5.08333Z"
+                stroke="currentColor"
+                stroke-width="1.5"
+              />
+              <path
+                d="M1.83333 20.1667C2.25858 15.5614 5.63174 12.25 10 12.25C14.3683 12.25 17.7414 15.5614 18.1667 20.1667H1.83333Z"
+                stroke="currentColor"
+                stroke-width="1.5"
+              />
+            </svg>
+          </span>
+        </a>
+      {% endif %}
+
+      {% if settings.cart_type == 'drawer' and template.name != 'cart' %}
+        <button
+          class="header-actions__action button-unstyled avonent-header-actions__cart"
+          on:click="#cart-drawer/toggle"
+          aria-haspopup="dialog"
+          aria-expanded="false"
+          aria-controls="cart-drawer"
+          aria-label="{{ 'accessibility.cart' | t | escape }}"
+          aria-describedby="cart-bubble-text"
+          data-testid="cart-drawer-trigger"
+        >
+          <cart-icon
+            class="header-actions__cart-icon{% unless cart == empty %} header-actions__cart-icon--has-cart{% endunless %}"
+            data-testid="cart-icon"
+          >
+            <span class="svg-wrapper" aria-hidden="true">
+              {{ 'icon-cart.svg' | inline_asset_content }}
+            </span>
+            {% render 'cart-bubble', limit: 100 %}
+          </cart-icon>
+        </button>
+      {% else %}
+        <a
+          href="{{ routes.cart_url }}"
+          class="header-actions__action avonent-header-actions__cart"
+          aria-label="{{ 'accessibility.cart' | t | escape }}"
+          aria-describedby="cart-bubble-text"
+        >
+          <cart-icon
+            class="header-actions__cart-icon{% unless cart == empty %} header-actions__cart-icon--has-cart{% endunless %}"
+            data-testid="cart-icon"
+          >
+            <span class="svg-wrapper" aria-hidden="true">
+              {{ 'icon-cart.svg' | inline_asset_content }}
+            </span>
+            {% render 'cart-bubble', limit: 100 %}
+          </cart-icon>
+        </a>
+      {% endif %}
+    </header-actions>
   endcapture
 
   if shop.customer_accounts_enabled
@@ -1277,6 +1346,79 @@
     hydrate('{{ section.id }}', url);
   </script>
 {% endunless %}
+
+
+{% stylesheet %}
+  /* AVONENT: self-contained header actions.
+     This intentionally does not depend on snippets/header-actions.liquid
+     or assets/header-actions.js. */
+  .avonent-header-actions {
+    display: flex;
+    align-items: center;
+    justify-self: flex-end;
+    gap: 14px;
+  }
+
+  .avonent-header-actions .header-actions__action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    color: var(--color-foreground);
+    text-decoration: none;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    transition: transform 180ms ease, opacity 180ms ease;
+  }
+
+  .avonent-header-actions .header-actions__action:hover {
+    transform: translateY(-1px);
+    opacity: 0.76;
+  }
+
+  .avonent-header-actions .svg-wrapper,
+  .avonent-header-actions svg {
+    width: 21px;
+    height: 21px;
+  }
+
+  .avonent-header-actions__cart {
+    position: relative;
+  }
+
+  .avonent-header-actions .header-actions__cart-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .avonent-header-actions .cart-bubble {
+    position: absolute;
+    top: -7px;
+    right: -9px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .avonent-header-actions {
+      gap: 10px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .avonent-header-actions {
+      gap: 2px;
+    }
+
+    .avonent-header-actions .header-actions__action {
+      width: 40px;
+      height: 40px;
+    }
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
