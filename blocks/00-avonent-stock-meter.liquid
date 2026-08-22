@@ -1,33 +1,50 @@
 {% doc %}
   Avonent stock meter.
 
-  Displays an editable percentage-sold progress bar inside product details.
-  Can use a manual percentage or calculate from Shopify variant inventory.
+  Displays an editable percentage-sold progress bar.
+  Supports either a manually entered percentage or
+  a percentage calculated from Shopify variant inventory.
 {% enddoc %}
 
 {% liquid
   assign av_product = closest.product | default: product
   assign av_variant = av_product.selected_or_first_available_variant
 
-  assign sold_percent = block.settings.manual_percent | default: 76
+  assign sold_percent = block.settings.manual_percent
   assign inventory_tracked = false
 
-  if block.settings.calculation_mode == 'inventory' and av_variant != blank and av_variant.inventory_management != blank
-    assign inventory_tracked = true
-    assign current_inventory = av_variant.inventory_quantity | default: 0
-    assign starting_inventory = block.settings.starting_inventory | default: 100
+  if sold_percent == blank
+    assign sold_percent = 76
+  endif
 
-    if starting_inventory < 1
-      assign starting_inventory = 1
+  if block.settings.calculation_mode == 'inventory'
+    if av_variant != blank and av_variant.inventory_management != blank
+
+      assign inventory_tracked = true
+
+      assign current_inventory = av_variant.inventory_quantity
+      assign starting_inventory = block.settings.starting_inventory
+
+      if current_inventory == blank
+        assign current_inventory = 0
+      endif
+
+      if starting_inventory == blank or starting_inventory < 1
+        assign starting_inventory = 100
+      endif
+
+      assign sold_units = starting_inventory | minus: current_inventory
+
+      if sold_units < 0
+        assign sold_units = 0
+      endif
+
+      assign sold_percent = sold_units
+        | times: 100.0
+        | divided_by: starting_inventory
+        | round
+
     endif
-
-    assign sold_units = starting_inventory | minus: current_inventory
-
-    if sold_units < 0
-      assign sold_units = 0
-    endif
-
-    assign sold_percent = sold_units | times: 100.0 | divided_by: starting_inventory | round
   endif
 
   if sold_percent < 0
@@ -57,6 +74,7 @@
   "
 >
   <div class="avonent-stock-meter__card">
+
     {% if block.settings.heading != blank %}
       <div class="avonent-stock-meter__heading">
         {{ block.settings.heading }}
@@ -64,6 +82,7 @@
     {% endif %}
 
     <div class="avonent-stock-meter__row">
+
       <div
         class="avonent-stock-meter__track"
         role="progressbar"
@@ -80,10 +99,14 @@
 
       <div class="avonent-stock-meter__value">
         <strong>{{ sold_percent }}%</strong>
+
         {% if block.settings.sold_text != blank %}
-          <span>{{ block.settings.sold_text }}</span>
+          <span>
+            {{ block.settings.sold_text }}
+          </span>
         {% endif %}
       </div>
+
     </div>
 
     {% if block.settings.subtext != blank %}
@@ -92,148 +115,340 @@
       </div>
     {% endif %}
 
-    {% if request.design_mode and block.settings.calculation_mode == 'inventory' and inventory_tracked == false %}
-      <div class="avonent-stock-meter__editor-note">
-        Inventory mode is selected, but this variant is not tracking inventory. Enable “Track quantity” for the variant or use Manual percentage.
-      </div>
+    {% if request.design_mode %}
+      {% if block.settings.calculation_mode == 'inventory' and inventory_tracked == false %}
+        <div class="avonent-stock-meter__editor-note">
+          Inventory calculation is enabled, but this product
+          variant is not currently tracking inventory.
+          Enable “Track quantity” on the variant or switch
+          this block to Manual percentage.
+        </div>
+      {% endif %}
     {% endif %}
+
   </div>
 </div>
 
 {% stylesheet %}
+
+  /*
+   * AVONENT STOCK METER
+   */
+
   .avonent-stock-meter {
+    display: block;
+
     width: 100%;
+
     box-sizing: border-box;
-    padding-top: var(--avsm-space-top);
-    padding-bottom: var(--avsm-space-bottom);
+
+    padding-top:
+      var(--avsm-space-top);
+
+    padding-bottom:
+      var(--avsm-space-bottom);
   }
+
+
+  /*
+   * CARD
+   */
 
   .avonent-stock-meter__card {
     width: 100%;
+
     box-sizing: border-box;
-    padding: var(--avsm-padding-y) var(--avsm-padding-x);
-    background: var(--avsm-background);
-    border: 1px solid var(--avsm-border);
-    border-radius: var(--avsm-radius);
+
+    padding:
+      var(--avsm-padding-y)
+      var(--avsm-padding-x);
+
+    background:
+      var(--avsm-background);
+
+    border:
+      1px solid
+      var(--avsm-border);
+
+    border-radius:
+      var(--avsm-radius);
   }
+
+
+  /*
+   * OPTIONAL HEADING
+   */
 
   .avonent-stock-meter__heading {
-    margin: 0 0 9px;
-    color: var(--avsm-text);
-    font-family: var(--font-body--family);
-    font-size: 12px;
-    font-weight: 600;
-    line-height: 1.2;
+    margin:
+      0
+      0
+      9px;
+
+    color:
+      var(--avsm-text);
+
+    font-family:
+      var(--font-body--family);
+
+    font-size:
+      12px;
+
+    font-weight:
+      600;
+
+    line-height:
+      1.2;
   }
+
+
+  /*
+   * PROGRESS ROW
+   */
 
   .avonent-stock-meter__row {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: center;
-    gap: 14px;
-    width: 100%;
+    display:
+      grid;
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      auto;
+
+    align-items:
+      center;
+
+    gap:
+      14px;
+
+    width:
+      100%;
   }
+
+
+  /*
+   * PROGRESS TRACK
+   */
 
   .avonent-stock-meter__track {
-    position: relative;
-    width: 100%;
-    height: var(--avsm-bar-height);
-    overflow: hidden;
-    background: var(--avsm-track);
-    border-radius: 999px;
+    position:
+      relative;
+
+    width:
+      100%;
+
+    height:
+      var(--avsm-bar-height);
+
+    overflow:
+      hidden;
+
+    background:
+      var(--avsm-track);
+
+    border-radius:
+      999px;
   }
+
+
+  /*
+   * PROGRESS FILL
+   */
 
   .avonent-stock-meter__fill {
-    position: absolute;
-    inset: 0 auto 0 0;
-    display: block;
-    height: 100%;
-    background: var(--avsm-fill);
-    border-radius: inherit;
+    position:
+      absolute;
+
+    inset:
+      0
+      auto
+      0
+      0;
+
+    display:
+      block;
+
+    height:
+      100%;
+
+    background:
+      var(--avsm-fill);
+
+    border-radius:
+      inherit;
+
+    transition:
+      width
+      300ms
+      ease;
   }
+
+
+  /*
+   * PERCENTAGE
+   */
 
   .avonent-stock-meter__value {
-    display: flex;
-    align-items: baseline;
-    gap: 4px;
-    color: var(--avsm-fill);
-    font-family: var(--font-body--family);
-    line-height: 1;
-    white-space: nowrap;
+    display:
+      flex;
+
+    align-items:
+      baseline;
+
+    gap:
+      4px;
+
+    color:
+      var(--avsm-fill);
+
+    font-family:
+      var(--font-body--family);
+
+    line-height:
+      1;
+
+    white-space:
+      nowrap;
   }
+
 
   .avonent-stock-meter__value strong {
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: -0.02em;
+    font-size:
+      14px;
+
+    font-weight:
+      700;
+
+    letter-spacing:
+      -0.02em;
   }
+
 
   .avonent-stock-meter__value span {
-    font-size: 12px;
-    font-weight: 600;
+    font-size:
+      12px;
+
+    font-weight:
+      600;
   }
 
-  .avonent-stock-meter__subtext,
-  .avonent-stock-meter__editor-note {
-    margin-top: 7px;
-    color: var(--avsm-text);
-    font-family: var(--font-body--family);
-    font-size: 10px;
-    line-height: 1.35;
-    opacity: 0.65;
+
+  /*
+   * SUPPORTING TEXT
+   */
+
+  .avonent-stock-meter__subtext {
+    margin-top:
+      7px;
+
+    color:
+      var(--avsm-text);
+
+    font-family:
+      var(--font-body--family);
+
+    font-size:
+      10px;
+
+    line-height:
+      1.35;
+
+    opacity:
+      0.68;
   }
 
+
+  /*
+   * THEME EDITOR MESSAGE
+   */
+
   .avonent-stock-meter__editor-note {
-    padding-top: 7px;
-    border-top: 1px dashed var(--avsm-border);
+    margin-top:
+      9px;
+
+    padding-top:
+      8px;
+
+    border-top:
+      1px dashed
+      var(--avsm-border);
+
+    color:
+      var(--avsm-text);
+
+    font-family:
+      var(--font-body--family);
+
+    font-size:
+      10px;
+
+    line-height:
+      1.4;
+
+    opacity:
+      0.62;
   }
+
+
+  /*
+   * MOBILE
+   */
 
   @media screen and (max-width: 749px) {
+
     .avonent-stock-meter__row {
-      gap: 10px;
+      gap:
+        10px;
     }
 
     .avonent-stock-meter__value strong {
-      font-size: 13px;
+      font-size:
+        13px;
     }
 
     .avonent-stock-meter__value span {
-      font-size: 11px;
+      font-size:
+        11px;
     }
+
   }
+
 {% endstylesheet %}
 
 {% schema %}
 {
   "name": "Avonent Stock Meter",
   "tag": null,
+
   "settings": [
     {
       "type": "header",
       "content": "Content"
     },
+
     {
       "type": "text",
       "id": "heading",
-      "label": "Heading",
-      "default": ""
+      "label": "Heading"
     },
+
     {
       "type": "text",
       "id": "sold_text",
       "label": "Text after percentage",
       "default": "Sold"
     },
+
     {
       "type": "text",
       "id": "subtext",
-      "label": "Small text underneath",
-      "default": ""
+      "label": "Small text underneath"
     },
+
     {
       "type": "header",
       "content": "Percentage"
     },
+
     {
       "type": "select",
       "id": "calculation_mode",
@@ -250,6 +465,7 @@
       ],
       "default": "manual"
     },
+
     {
       "type": "range",
       "id": "manual_percent",
@@ -261,52 +477,61 @@
       "default": 76,
       "visible_if": "{{ block.settings.calculation_mode == 'manual' }}"
     },
+
     {
       "type": "number",
       "id": "starting_inventory",
       "label": "Starting inventory",
       "default": 100,
-      "info": "Used only in inventory mode. Set this to the real quantity at the start of the promotion.",
+      "info": "Used only in inventory mode. Enter the real quantity available at the beginning of the promotion.",
       "visible_if": "{{ block.settings.calculation_mode == 'inventory' }}"
     },
+
     {
       "type": "header",
       "content": "Colors"
     },
+
     {
       "type": "color",
       "id": "background_color",
       "label": "Background",
       "default": "#F7FCFD"
     },
+
     {
       "type": "color",
       "id": "track_color",
       "label": "Empty bar",
       "default": "#DCEEF3"
     },
+
     {
       "type": "color",
       "id": "fill_color",
       "label": "Filled bar",
       "default": "#02C6EA"
     },
+
     {
       "type": "color",
       "id": "text_color",
       "label": "Text",
       "default": "#111111"
     },
+
     {
       "type": "color",
       "id": "border_color",
       "label": "Border",
       "default": "#E3EEF1"
     },
+
     {
       "type": "header",
       "content": "Appearance"
     },
+
     {
       "type": "range",
       "id": "bar_height",
@@ -317,6 +542,7 @@
       "unit": "px",
       "default": 8
     },
+
     {
       "type": "range",
       "id": "corner_radius",
@@ -327,10 +553,12 @@
       "unit": "px",
       "default": 14
     },
+
     {
       "type": "header",
       "content": "Spacing"
     },
+
     {
       "type": "range",
       "id": "spacing_top",
@@ -341,6 +569,7 @@
       "unit": "px",
       "default": 0
     },
+
     {
       "type": "range",
       "id": "spacing_bottom",
@@ -351,6 +580,7 @@
       "unit": "px",
       "default": 0
     },
+
     {
       "type": "range",
       "id": "padding_y",
@@ -361,6 +591,7 @@
       "unit": "px",
       "default": 12
     },
+
     {
       "type": "range",
       "id": "padding_x",
@@ -372,6 +603,7 @@
       "default": 15
     }
   ],
+
   "presets": [
     {
       "name": "Avonent Stock Meter",
