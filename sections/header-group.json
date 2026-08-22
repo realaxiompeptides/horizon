@@ -16,7 +16,6 @@
       "blocks": {
         "00_avonent_sale_announcement_QcfEEx": {
           "type": "00-avonent-sale-announcement",
-          "name": "Avonent Summer Sale",
           "settings": {
             "heading": "SUMMER SALE",
             "subheading": "Shop Now and Get Up To 50% Off",
