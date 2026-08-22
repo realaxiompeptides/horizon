@@ -253,35 +253,92 @@
             "bundle_4_quantity": 4,
             "bundle_4_badge": "",
             "bundle_4_savings_text": "",
-            "button_text": "Add To Cart",
-            "show_price_in_button": true,
-            "trust_text": "Secure checkout \u2022 Ships within 48 hours",
             "accent_color": "#02C6EA",
             "selected_background": "#F2FBFD",
             "card_background": "#FFFFFF",
             "border_color": "#DDE8EB",
             "text_color": "#111111",
             "muted_text_color": "#6F7B80",
-            "button_background": "#111111",
-            "button_text_color": "#FFFFFF",
             "card_radius": 12,
             "card_gap": 10,
             "spacing_top": 4,
             "spacing_bottom": 2
           },
           "blocks": {}
+        },
+        "delivery_estimate": {
+          "type": "00-avonent-delivery-estimate",
+          "name": "Avonent Delivery Estimate",
+          "settings": {
+            "prefix": "Order today for delivery by",
+            "delivery_days": 4,
+            "skip_weekends": true,
+            "fallback_date_text": "Soon",
+            "separator": "\u00b7",
+            "shipping_text": "Ships from USA",
+            "show_flag": true,
+            "show_status_dot": true,
+            "accent_color": "#02C6EA",
+            "text_color": "#111111",
+            "muted_text_color": "#748086",
+            "divider_color": "#D8E5E9",
+            "background_color": "#FFFFFF",
+            "text_size": 12,
+            "corner_radius": 0,
+            "padding_y": 10,
+            "padding_x": 4,
+            "spacing_top": 3,
+            "spacing_bottom": 3
+          },
+          "blocks": {}
+        },
+        "accordion": {
+          "type": "00-avonent-accordion",
+          "name": "Avonent Accordion",
+          "settings": {
+            "open_first": false,
+            "item_1_enabled": true,
+            "item_1_title": "Description",
+            "item_1_content": "<p>Add your product description here.</p>",
+            "item_2_enabled": true,
+            "item_2_title": "Benefits",
+            "item_2_content": "<p>Add the main benefits of this product here.</p>",
+            "item_3_enabled": true,
+            "item_3_title": "Recommended Use",
+            "item_3_content": "<p>Add the recommended use and serving instructions here.</p>",
+            "item_4_enabled": true,
+            "item_4_title": "Do You Offer a Guarantee?",
+            "item_4_content": "<p>Yes! All Avonent orders are backed by our 30-day satisfaction guarantee.</p><p>If you're not completely satisfied, contact our support team and we'll review your order and help make it right according to our refund policy.</p>",
+            "item_5_enabled": false,
+            "item_5_title": "Ingredients",
+            "item_5_content": "<p>Add ingredient information here.</p>",
+            "item_6_enabled": false,
+            "item_6_title": "Shipping",
+            "item_6_content": "<p>Add shipping information here.</p>",
+            "text_color": "#111111",
+            "muted_text_color": "#444444",
+            "border_color": "#E1E5E7",
+            "background_color": "#FFFFFF",
+            "accent_color": "#02C6EA",
+            "title_size": 14,
+            "body_size": 13,
+            "corner_radius": 6,
+            "spacing_top": 8,
+            "spacing_bottom": 8
+          },
+          "blocks": {}
         }
       },
       "block_order": [
-        "review",
-        "title",
         "description",
         "demand_meter",
         "price",
         "variant_picker",
         "bundle_selector",
+        "delivery_estimate",
         "buy_buttons",
-        "payment_icons"
+        "payment_icons",
+        "accordion"
       ],
       "settings": {
         "content_width": "content-center-aligned",
@@ -302,9 +359,156 @@
         "padding-block-start": 0,
         "padding-block-end": 24
       }
+    },
+    "avonent_wellness_journey": {
+      "type": "00-avonent-wellness-journey",
+      "blocks": {
+        "week_1": {
+          "type": "week",
+          "settings": {
+            "title": "Week 1: Build the Routine",
+            "points": "<ul><li>Your daily routine starts to feel more intentional</li><li>You learn when the product fits best into your day</li><li>Consistency becomes easier to maintain</li></ul>"
+          }
+        },
+        "week_2": {
+          "type": "week",
+          "settings": {
+            "title": "Week 2: Find Your Rhythm",
+            "points": "<ul><li>Your routine starts to feel more automatic</li><li>You can better judge how the product fits your lifestyle</li><li>Staying consistent takes less effort</li></ul>"
+          }
+        },
+        "week_3": {
+          "type": "week",
+          "settings": {
+            "title": "Week 3: Build Momentum",
+            "points": "<ul><li>Your daily habit feels established</li><li>You have more context for your own experience</li><li>Consistency becomes part of your normal routine</li></ul>"
+          }
+        },
+        "week_4": {
+          "type": "week",
+          "settings": {
+            "title": "Week 4+: Keep It Going",
+            "points": "<ul><li>Keep following the serving directions on the label</li><li>Support your routine with sleep, hydration, and nutrition</li><li>Adjust your routine based on your personal experience</li></ul>"
+          }
+        }
+      },
+      "block_order": [
+        "week_1",
+        "week_2",
+        "week_3",
+        "week_4"
+      ],
+      "settings": {
+        "eyebrow": "Your Wellness",
+        "heading": "Journey with Avonent",
+        "subheading": "Consistency matters. Here\u2019s an example of how a simple daily Avonent routine can become easier to maintain over the first few weeks.",
+        "disclaimer": "Individual experiences vary. Follow the directions on your product label and consult a qualified healthcare professional when appropriate.",
+        "activation_point": 58,
+        "background_color": "#FFFFFF",
+        "text_color": "#111111",
+        "muted_text_color": "#596269",
+        "accent_color": "#02C6EA",
+        "inactive_color": "#111111",
+        "card_text_color": "#FFFFFF",
+        "line_color": "#B8BEC2",
+        "check_color": "#02C6EA",
+        "content_width": 680,
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "avonent_vs_other_brands": {
+      "type": "00-avonent-vs-other-brands",
+      "blocks": {
+        "row_1": {
+          "type": "comparison_row",
+          "settings": {
+            "icon": "flask",
+            "avonent_text": "Quality-Focused Formulas",
+            "other_text": "Trend-Driven Formulas",
+            "reason_title": "Quality-Focused",
+            "reason_text": "Built around thoughtful formulation rather than short-lived trends."
+          }
+        },
+        "row_2": {
+          "type": "comparison_row",
+          "settings": {
+            "icon": "shield",
+            "avonent_text": "Transparent Product Information",
+            "other_text": "Less Transparency",
+            "reason_title": "Clear & Transparent",
+            "reason_text": "Straightforward product information so you can make a more informed choice."
+          }
+        },
+        "row_3": {
+          "type": "comparison_row",
+          "settings": {
+            "icon": "leaf",
+            "avonent_text": "Simple Daily Routine",
+            "other_text": "Complicated Protocols",
+            "reason_title": "Made for Consistency",
+            "reason_text": "Designed to fit naturally into a repeatable daily wellness routine."
+          }
+        },
+        "row_4": {
+          "type": "comparison_row",
+          "settings": {
+            "icon": "sparkle",
+            "avonent_text": "Premium Brand Experience",
+            "other_text": "Generic Experience",
+            "reason_title": "Premium by Design",
+            "reason_text": "A clean, modern experience from product discovery through delivery."
+          }
+        },
+        "row_5": {
+          "type": "comparison_row",
+          "settings": {
+            "icon": "check",
+            "avonent_text": "Customer-First Support",
+            "other_text": "Limited Support",
+            "reason_title": "Support That Stays With You",
+            "reason_text": "Helpful customer service and clear policies when you need assistance."
+          }
+        }
+      },
+      "block_order": [
+        "row_1",
+        "row_2",
+        "row_3",
+        "row_4",
+        "row_5"
+      ],
+      "settings": {
+        "avonent_label": "AVONENT",
+        "other_label": "Other Brands",
+        "eyebrow": "THE AVONENT DIFFERENCE",
+        "heading": "Avonent vs. Other Brands",
+        "description": "A premium routine should feel simple, transparent, and built around quality. Customize the comparison below with product claims your brand can substantiate.",
+        "button_text": "Shop Avonent",
+        "button_link": "",
+        "guarantee_text": "30 Day Money-Back Guarantee",
+        "background_color": "#F5FCFE",
+        "panel_color": "#DFF7FC",
+        "panel_soft_color": "#FFFFFF",
+        "text_color": "#111111",
+        "muted_text_color": "#515B60",
+        "accent_color": "#02C6EA",
+        "accent_dark_color": "#62B9D6",
+        "border_color": "#D7E4E8",
+        "good_icon_color": "#02C6EA",
+        "bad_icon_color": "#737A7D",
+        "button_background": "#111111",
+        "button_text_color": "#FFFFFF",
+        "content_width": 1240,
+        "corner_radius": 8,
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "avonent_wellness_journey",
+    "avonent_vs_other_brands"
   ]
 }
