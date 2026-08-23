@@ -183,7 +183,7 @@
     transition: transform 520ms cubic-bezier(.2,.7,.2,1);
   }
 
-  .avonent-journey__step.is-active .avonent-journey__rail::before {
+  .avonent-journey__step.is-complete .avonent-journey__rail::before {
     transform: translateX(-50%) scaleY(1);
   }
 
@@ -424,26 +424,36 @@
     const steps = Array.from(journey.querySelectorAll('.avonent-journey__step'));
     if (!steps.length) return;
 
-    if (!('IntersectionObserver' in window)) {
-      steps.forEach((step) => step.classList.add('is-active'));
-      return;
-    }
+    let ticking = false;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add('is-active');
-          observer.unobserve(entry.target);
-        });
-      },
-      {
-        threshold: 0.35,
-        rootMargin: '0px 0px -22% 0px'
-      }
-    );
+    const updateJourney = () => {
+      const triggerLine = window.innerHeight * 0.55;
+      let currentStep = 0;
 
-    steps.forEach((step) => observer.observe(step));
+      steps.forEach((step, index) => {
+        const dot = step.querySelector('.avonent-journey__dot');
+        if (dot && dot.getBoundingClientRect().top <= triggerLine) currentStep = index;
+      });
+
+      steps.forEach((step, index) => {
+        step.classList.toggle('is-active', index <= currentStep);
+        step.classList.toggle('is-complete', index < currentStep);
+        step.classList.toggle('is-current', index === currentStep);
+      });
+
+      ticking = false;
+    };
+
+    const requestJourneyUpdate = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(updateJourney);
+    };
+
+    steps[0].classList.add('is-active', 'is-current');
+    updateJourney();
+    window.addEventListener('scroll', requestJourneyUpdate, { passive: true });
+    window.addEventListener('resize', requestJourneyUpdate);
   })();
 </script>
 
