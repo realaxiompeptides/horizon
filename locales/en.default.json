@@ -357,6 +357,9 @@
     "checkout": {
       "alternative_payment_method_banner": {
         "or": "↓ OR CONTINUE BELOW ↓"
+      },
+      "contact": {
+        "contact_method_title": "Contact (Step 1/3)"
       }
     }
   }
