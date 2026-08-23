@@ -44,7 +44,7 @@
 {% render 'deferred-media-product-model-styles' %}
 {% render 'deferred-media-video-styles' %}
 
-{% if section.settings.enable_sticky_add_to_cart %}
+{% if section.settings.enable_sticky_add_to_cart_v2 %}
   {% render 'fly-to-cart-styles' %}
 
   {% liquid
@@ -522,9 +522,9 @@
     },
     {
       "type": "checkbox",
-      "id": "enable_sticky_add_to_cart",
-      "label": "Enable Horizon sticky add to cart",
-      "default": true
+      "id": "enable_sticky_add_to_cart_v2",
+      "label": "Show sticky add to cart",
+      "default": false
     },
     {
       "type": "header",
