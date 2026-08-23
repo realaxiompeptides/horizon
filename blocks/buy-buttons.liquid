@@ -269,9 +269,23 @@
         "
       >
         {% if block_settings.avonent_show_recurring_note %}
-          <p class="avonent-one-time-switch__note" data-subscription-note>
-            {{ block_settings.avonent_recurring_note }}
-          </p>
+          <div class="avonent-one-time-switch__note" data-subscription-note>
+            <span class="avonent-one-time-switch__note-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20 7v5h-5"></path>
+                <path d="M19.2 12a7.5 7.5 0 1 1-2.1-5.2L20 9"></path>
+              </svg>
+              <span>{{ block_settings.avonent_refill_text }}</span>
+            </span>
+            <span class="avonent-one-time-switch__divider" aria-hidden="true"></span>
+            <span class="avonent-one-time-switch__note-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="9"></circle>
+                <path d="M12 7v5l3 2"></path>
+              </svg>
+              <span>{{ block_settings.avonent_cancel_text }}</span>
+            </span>
+          </div>
         {% endif %}
 
         <button type="button" class="avonent-one-time-switch__link" data-one-time-toggle aria-pressed="false">
@@ -331,13 +345,19 @@
             );
           }
 
-          function render() {
+          function enforcePurchaseMode() {
             const oneTime = mode === 'one_time';
             neutralizeExternalPlans();
             input.disabled = oneTime;
             input.value = oneTime ? '' : planId;
-            if (!oneTime) input.setAttribute('value', planId);
-            else input.removeAttribute('value');
+
+            if (oneTime) input.removeAttribute('value');
+            else input.setAttribute('value', planId);
+          }
+
+          function render() {
+            const oneTime = mode === 'one_time';
+            enforcePurchaseMode();
 
             toggle.setAttribute('aria-pressed', oneTime ? 'true' : 'false');
             oneTimeText.hidden = oneTime;
@@ -351,6 +371,20 @@
             mode = mode === 'subscription' ? 'one_time' : 'subscription';
             render();
           });
+
+          // Horizon builds FormData at submit time. Re-assert the selected
+          // purchase mode immediately before that happens so Appstle cannot
+          // clear or replace the selling-plan value.
+          form.addEventListener('submit', enforcePurchaseMode, true);
+          form.addEventListener(
+            'click',
+            (event) => {
+              if (event.target.closest('button[type="submit"], [name="add"]')) {
+                enforcePurchaseMode();
+              }
+            },
+            true
+          );
 
           const observer = new MutationObserver(neutralizeExternalPlans);
           observer.observe(form, { childList: true, subtree: true });
@@ -517,12 +551,47 @@
     text-align: center;
   }
 
-  .avonent-one-time-switch__note,
+  .avonent-one-time-switch__note {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin: 0 0 9px;
+    color: #111111;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.35;
+  }
+
+  .avonent-one-time-switch__note-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .avonent-one-time-switch__note-item svg {
+    width: 16px;
+    height: 16px;
+    flex: 0 0 16px;
+    fill: none;
+    stroke: #111111;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .avonent-one-time-switch__divider {
+    width: 1px;
+    height: 14px;
+    background: #cbd5d9;
+  }
+
   .avonent-one-time-switch__status {
-    margin: 0 0 10px;
-    color: var(--avots-muted);
-    font-size: calc(var(--avots-size) - 1px);
-    line-height: 1.45;
+    margin: 9px 0 0;
+    color: var(--avots-text);
+    font-size: 13px;
+    line-height: 1.4;
   }
 
   .avonent-one-time-switch__link {
@@ -593,9 +662,15 @@
     },
     {
       "type": "text",
-      "id": "avonent_recurring_note",
-      "label": "Recurring-order note",
-      "default": "Refills ship every 30 days · Skip or cancel anytime"
+      "id": "avonent_refill_text",
+      "label": "Refill text",
+      "default": "Refills ship every 30 days"
+    },
+    {
+      "type": "text",
+      "id": "avonent_cancel_text",
+      "label": "Cancel text",
+      "default": "Skip or cancel anytime"
     },
     {
       "type": "textarea",
@@ -641,7 +716,7 @@
       "max": 22,
       "step": 1,
       "unit": "px",
-      "default": 16
+      "default": 14
     },
     {
       "type": "range",
