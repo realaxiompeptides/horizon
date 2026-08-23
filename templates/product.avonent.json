@@ -734,8 +734,8 @@
           "type": "comparison_row",
           "settings": {
             "icon": "sparkle",
-            "avonent_text": "Premium Quality Standards",
-            "other_text": "Low-Cost Shortcuts",
+            "avonent_text": "Transparent Formulas",
+            "other_text": "Hidden Ingredients",
             "reason_title": "Premium by Design",
             "reason_text": "A clean, modern experience from product discovery through delivery."
           }
@@ -744,8 +744,8 @@
           "type": "comparison_row",
           "settings": {
             "icon": "check",
-            "avonent_text": "Customer-First Support",
-            "other_text": "Limited Support",
+            "avonent_text": "Premium Quality Standards",
+            "other_text": "Low-Cost Shortcuts",
             "reason_title": "Support That Stays With You",
             "reason_text": "Helpful customer service and clear policies when you need assistance."
           }
