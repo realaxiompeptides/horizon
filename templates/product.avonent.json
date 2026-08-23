@@ -670,6 +670,19 @@
     "avonent_customer_reviews": {
       "type": "00-avonent-customer-reviews",
       "blocks": {
+        "review_Cx36Nk": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "One bottle replaced my complicated routine",
+            "review": "I used to take multiple digestive products depending on what I ate, which got expensive and confusing. This gives me enzymes, botanicals, and bile support together in one formula. I’ve been feeling better after meals, and it’s much easier to stay consistent when everything is in one bottle. Already ordered another one.",
+            "customer_name": "Kevin D.",
+            "verified": true,
+            "date": "August 19, 2026",
+            "tag_1": "Good Formula",
+            "tag_2": "Easy Routine"
+          }
+        },
         "review_8LK8CK": {
           "type": "review",
           "settings": {
@@ -724,6 +737,7 @@
         }
       },
       "block_order": [
+        "review_Cx36Nk",
         "review_8LK8CK",
         "review_XTXXjQ",
         "review_r4U3Cb",
