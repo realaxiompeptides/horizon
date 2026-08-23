@@ -41,7 +41,11 @@
         >
           <div class="avonent-journey__rail" aria-hidden="true">
             <span class="avonent-journey__dot">
-              <span>{{ forloop.index }}</span>
+              <span class="avonent-journey__dot-icon">
+                <svg viewBox="0 0 24 24" fill="none" focusable="false">
+                  <path d="M5.75 12.4 9.7 16.25 18.3 7.7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
             </span>
           </div>
 
@@ -155,46 +159,82 @@
     justify-content: center;
   }
 
-  .avonent-journey__rail::after {
+  .avonent-journey__rail::after,
+  .avonent-journey__rail::before {
     content: '';
     position: absolute;
     top: 46px;
     bottom: -26px;
     left: 50%;
     width: 3px;
-    background: linear-gradient(var(--avj-accent), color-mix(in srgb, var(--avj-accent) 25%, var(--avj-border)));
     border-radius: 999px;
     transform: translateX(-50%);
   }
 
-  .avonent-journey__step--last .avonent-journey__rail::after {
+  .avonent-journey__rail::after {
+    background: color-mix(in srgb, var(--avj-border) 78%, white);
+  }
+
+  .avonent-journey__rail::before {
+    z-index: 1;
+    background: var(--avj-accent);
+    transform: translateX(-50%) scaleY(0);
+    transform-origin: top;
+    transition: transform 520ms cubic-bezier(.2,.7,.2,1);
+  }
+
+  .avonent-journey__step.is-active .avonent-journey__rail::before {
+    transform: translateX(-50%) scaleY(1);
+  }
+
+  .avonent-journey__step--last .avonent-journey__rail::after,
+  .avonent-journey__step--last .avonent-journey__rail::before {
     display: none;
   }
 
   .avonent-journey__dot {
     position: relative;
-    z-index: 1;
+    z-index: 2;
     display: grid;
     width: 46px;
     height: 46px;
     place-items: center;
     flex: 0 0 46px;
-    background: color-mix(in srgb, var(--avj-accent) 13%, white);
-    border: 1px solid color-mix(in srgb, var(--avj-accent) 35%, white);
+    background: white;
+    border: 1px solid color-mix(in srgb, var(--avj-accent) 22%, var(--avj-border));
     border-radius: 50%;
-    box-shadow: 0 0 0 7px color-mix(in srgb, var(--avj-accent) 8%, transparent);
+    box-shadow: 0 0 0 7px color-mix(in srgb, var(--avj-accent) 5%, transparent);
+    transition: background 300ms ease, border-color 300ms ease, box-shadow 300ms ease, transform 300ms ease;
   }
 
-  .avonent-journey__dot span {
+  .avonent-journey__dot-icon {
     display: grid;
     width: 30px;
     height: 30px;
     place-items: center;
+    color: color-mix(in srgb, var(--avj-accent) 28%, white);
+    background: white;
+    border: 1px solid color-mix(in srgb, var(--avj-accent) 18%, var(--avj-border));
+    border-radius: 50%;
+    transition: color 300ms ease, background 300ms ease, border-color 300ms ease, transform 300ms ease;
+  }
+
+  .avonent-journey__dot-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .avonent-journey__step.is-active .avonent-journey__dot {
+    border-color: color-mix(in srgb, var(--avj-accent) 55%, white);
+    box-shadow: 0 0 0 7px color-mix(in srgb, var(--avj-accent) 12%, transparent), 0 8px 24px color-mix(in srgb, var(--avj-accent) 24%, transparent);
+    transform: scale(1.03);
+  }
+
+  .avonent-journey__step.is-active .avonent-journey__dot-icon {
     color: white;
     background: var(--avj-accent);
-    border-radius: 50%;
-    font-size: 13px;
-    font-weight: 850;
+    border-color: var(--avj-accent);
+    transform: scale(1.04);
   }
 
   .avonent-journey__card {
@@ -312,13 +352,18 @@
       box-shadow: 0 0 0 5px color-mix(in srgb, var(--avj-accent) 8%, transparent);
     }
 
-    .avonent-journey__dot span {
+    .avonent-journey__dot-icon {
       width: 24px;
       height: 24px;
-      font-size: 11px;
     }
 
-    .avonent-journey__rail::after {
+    .avonent-journey__dot-icon svg {
+      width: 15px;
+      height: 15px;
+    }
+
+    .avonent-journey__rail::after,
+    .avonent-journey__rail::before {
       top: 34px;
       bottom: -18px;
       width: 2px;
@@ -361,11 +406,46 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .avonent-journey__card {
+    .avonent-journey__card,
+    .avonent-journey__dot,
+    .avonent-journey__dot-icon,
+    .avonent-journey__rail::before {
       transition: none;
     }
   }
 {% endstylesheet %}
+
+<script>
+  (() => {
+    const journey = document.getElementById('{{ section_id }}');
+    if (!journey || journey.dataset.scrollChecksReady === 'true') return;
+
+    journey.dataset.scrollChecksReady = 'true';
+    const steps = Array.from(journey.querySelectorAll('.avonent-journey__step'));
+    if (!steps.length) return;
+
+    if (!('IntersectionObserver' in window)) {
+      steps.forEach((step) => step.classList.add('is-active'));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-active');
+          observer.unobserve(entry.target);
+        });
+      },
+      {
+        threshold: 0.35,
+        rootMargin: '0px 0px -22% 0px'
+      }
+    );
+
+    steps.forEach((step) => observer.observe(step));
+  })();
+</script>
 
 {% schema %}
 {
