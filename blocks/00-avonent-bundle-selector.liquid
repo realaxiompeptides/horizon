@@ -151,6 +151,11 @@
                     class: 'avonent-bundle__image',
                     alt: bundle_title
                 }}
+                {% if bundle_quantity > 1 %}
+                  <span class="avonent-bundle__quantity-badge" aria-label="{{ bundle_quantity }} bottles">
+                    ×{{ bundle_quantity }}
+                  </span>
+                {% endif %}
               </span>
             {% endif %}
 
@@ -438,7 +443,7 @@
 
   .avonent-bundle__option.is-selected {
     border-color: var(--avb-accent);
-    background: var(--avb-accent-soft);
+    background: color-mix(in srgb, var(--avb-accent) 10%, #ffffff);
     box-shadow: 0 0 0 1px var(--avb-accent);
   }
 
@@ -475,6 +480,7 @@
   }
 
   .avonent-bundle__image-wrap {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -482,7 +488,7 @@
     width: 52px;
     height: 52px;
 
-    overflow: hidden;
+    overflow: visible;
 
     border-radius: 9px;
     background: #FFFFFF;
@@ -492,6 +498,27 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
+    border-radius: inherit;
+  }
+
+  .avonent-bundle__quantity-badge {
+    position: absolute;
+    right: -5px;
+    bottom: -5px;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    min-width: 23px;
+    height: 23px;
+    padding-inline: 5px;
+    border: 2px solid #ffffff;
+    border-radius: 999px;
+    background: var(--avb-accent);
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 800;
+    line-height: 1;
+    box-shadow: 0 2px 7px rgb(0 0 0 / 12%);
   }
 
   .avonent-bundle__copy {
@@ -604,6 +631,9 @@
 
   .product-details:has(.avonent-bundle) .buy-buttons-block .add-to-cart-button {
     width: 100%;
+    color: #ffffff !important;
+    background: #02c6ea !important;
+    border-color: #02c6ea !important;
   }
 
   @media screen and (max-width: 749px) {
