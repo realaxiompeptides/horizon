@@ -519,7 +519,7 @@
             "name": "Artichoke Extract",
             "amount": "500 mg",
             "benefit_heading": "For meals that tend to sit heavy.",
-            "explanation": "<p>Artichoke extract supports healthy bile flow, helping your body handle dietary fats and supporting more comfortable digestion after rich meals.*</p>",
+            "explanation": "<p>Artichoke extract supports healthy bile flow, helping your body handle dietary fats and supporting more comfortable digestion after rich meals.</p>",
             "details_label": "Why it is included",
             "details": ""
           }
@@ -969,6 +969,110 @@
         "padding_top": 24,
         "padding_bottom": 24
       }
+    },
+    "avonent_faq_mCxfYk": {
+      "type": "avonent-faq",
+      "blocks": {
+        "faq_tcHqcn": {
+          "type": "faq",
+          "settings": {
+            "question": "What is Avonent Advanced Digestive Complex?",
+            "answer": "<p>Avonent combines digestive enzymes, carefully selected botanicals, and bile support in one complete daily formula. It is designed to support the breakdown of proteins, fats, carbohydrates, fiber, and lactose while supporting digestive comfort and regularity.*</p>"
+          }
+        },
+        "faq_BHckdg": {
+          "type": "faq",
+          "settings": {
+            "question": "What kinds of food does the formula help digest?",
+            "answer": "<p>The five-enzyme DigeZyme® complex includes amylase, protease, lipase, cellulase, and lactase. Together, these enzymes support the breakdown of carbohydrates, proteins, fats, plant fiber, and lactose—making the formula useful across everyday meals, high-protein foods, dairy, takeout, and richer restaurant meals.*</p>"
+          }
+        },
+        "faq_iRYHGm": {
+          "type": "faq",
+          "settings": {
+            "question": "When and how should I take Avonent?",
+            "answer": "<p>Take Avonent exactly as directed on the product label. Consistency matters, so choose a time that fits naturally into your daily routine. Do not exceed the recommended serving.</p>"
+          }
+        },
+        "faq_Bca8ym": {
+          "type": "faq",
+          "settings": {
+            "question": "Is every batch third-party tested?",
+            "answer": "<p>Yes. Every batch of Avonent is third-party tested for identity, purity, potency, and contaminants before it leaves the facility. We believe what is shown on the label should match what is inside the bottle, which is why we keep the formula and serving details visible and straightforward.</p>"
+          }
+        },
+        "faq_WCe6tR": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I take Avonent with other supplements or medications?",
+            "answer": "<p>Many people include digestive support as part of a broader wellness routine, but every routine is different. If you take prescription or over-the-counter medication, are pregnant or nursing, have a medical condition, or have a procedure planned, speak with a qualified healthcare professional before adding any new supplement.</p>"
+          }
+        },
+        "faq_L88rQi": {
+          "type": "faq",
+          "settings": {
+            "question": "Is Avonent vegan or vegetarian?",
+            "answer": "<p>No. Advanced Digestive Complex contains ox bile powder, so it is not vegan or vegetarian. We list this clearly because you deserve to know exactly what is included before you buy.</p>"
+          }
+        },
+        "faq_XLnfyJ": {
+          "type": "faq",
+          "settings": {
+            "question": "How quickly should I expect to notice a difference?",
+            "answer": "<p>Every body and routine is different. Some people may notice changes sooner than others, while some need more time and consistency. Follow the serving directions, pay attention to your own experience, and remember that individual results can vary.</p>"
+          }
+        },
+        "faq_YnLFVE": {
+          "type": "faq",
+          "settings": {
+            "question": "What is the 30-day money-back guarantee?",
+            "answer": "<p>Every order is covered by our 30-day money-back guarantee. Try Avonent as directed, and if it is not right for you, contact our support team within 30 days of delivery. We will help you with the next steps under our refund policy—clearly, quickly, and without unnecessary hassle.</p>"
+          }
+        },
+        "faq_irXchY": {
+          "type": "faq",
+          "settings": {
+            "question": "Where does Avonent ship from?",
+            "answer": "<p>Avonent orders ship from the United States. Available shipping options and the latest estimated delivery timing are shown during checkout before you place your order.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_tcHqcn",
+        "faq_BHckdg",
+        "faq_iRYHGm",
+        "faq_Bca8ym",
+        "faq_WCe6tR",
+        "faq_L88rQi",
+        "faq_XLnfyJ",
+        "faq_YnLFVE",
+        "faq_irXchY"
+      ],
+      "name": "00 Avonent FAQ",
+      "settings": {
+        "eyebrow": "Questions, answered",
+        "heading": "Frequently asked questions",
+        "subheading": "Clear answers about the formula, testing, shipping, and your 30-day guarantee.",
+        "open_first": false,
+        "show_trust_badges": false,
+        "trust_one": "Third-party tested",
+        "trust_two": "Ships from the USA",
+        "trust_three": "30-day guarantee",
+        "show_support_card": true,
+        "support_heading": "Still have a question?",
+        "support_text": "Our team is here to help you make an informed decision.",
+        "support_label": "Contact Avonent",
+        "support_link": "",
+        "show_disclaimer": true,
+        "accent_color": "#02C6EA",
+        "background_color": "#F3FCFE",
+        "card_color": "#FFFFFF",
+        "text_color": "#071114",
+        "muted_color": "#53636A",
+        "border_color": "#D5EDF3",
+        "padding_top": 88,
+        "padding_bottom": 88
+      }
     }
   },
   "order": [
@@ -979,6 +1083,7 @@
     "avonent_vs_other_brands",
     "avonent_money_back_guarantee",
     "00_avonent_bottom_offer_PrLf6d",
-    "avonent_customer_reviews"
+    "avonent_customer_reviews",
+    "avonent_faq_mCxfYk"
   ]
 }
