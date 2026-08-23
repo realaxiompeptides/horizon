@@ -4,8 +4,8 @@
   assign mobile_background_image = section.settings.mobile_background_image | default: background_image
   assign button_link = section.settings.button_link
 
-  if button_link == blank and product != blank
-    assign button_link = product.url
+  if button_link == blank
+    assign button_link = '#avonent-bottom-offer'
   endif
 %}
 
