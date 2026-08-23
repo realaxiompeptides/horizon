@@ -376,6 +376,18 @@
           // purchase mode immediately before that happens so Appstle cannot
           // clear or replace the selling-plan value.
           form.addEventListener('submit', enforcePurchaseMode, true);
+
+          // Horizon constructs its own FormData after the submit event. The
+          // formdata event is the last reliable point to put the selling plan
+          // onto the actual /cart/add request (rather than only the UI).
+          form.addEventListener('formdata', (event) => {
+            if (mode === 'subscription') {
+              event.formData.set('selling_plan', planId);
+            } else {
+              event.formData.delete('selling_plan');
+            }
+          });
+
           form.addEventListener(
             'click',
             (event) => {
