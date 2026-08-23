@@ -150,6 +150,7 @@
                 ref="cartItemRows[]"
                 data-parent-key="{{ item.parent_relationship.parent.key }}"
                 data-key="{{ item.key }}"
+                data-product-handle="{{ item.product.handle }}"
               >
                 <td
                   class="cart-items__media"
@@ -1023,6 +1024,10 @@
 {% if context == 'drawer' %}
   <!-- AVONENT CART LINE FORCE OVERRIDES -->
   <style>
+    #cart-drawer tr.cart-items__table-row[data-product-handle="shipping-protection"] {
+      display: none !important;
+    }
+
     #cart-drawer tr.cart-items__table-row--full-width-variants {
       position: relative !important;
       display: grid !important;
