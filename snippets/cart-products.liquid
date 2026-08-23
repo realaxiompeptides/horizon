@@ -324,6 +324,21 @@
                         {% endif %}
                       {% endif %}
                     </div>
+                    {%- if context == 'drawer' -%}
+                      {%- liquid
+                        assign avonent_reference_unit_price = item.variant.compare_at_price
+                        if avonent_reference_unit_price == blank or avonent_reference_unit_price <= item.final_price
+                          assign avonent_reference_unit_price = item.original_price
+                        endif
+                        assign avonent_reference_line_price = avonent_reference_unit_price | times: item.quantity
+                        assign avonent_line_savings = avonent_reference_line_price | minus: item.final_line_price
+                      -%}
+                      {%- if avonent_line_savings > 0 -%}
+                        <p class="avonent-cart-line__savings">
+                          You save {{ avonent_line_savings | money }}
+                        </p>
+                      {%- endif -%}
+                    {%- endif -%}
                   </div>
                 </td>
                 <td
