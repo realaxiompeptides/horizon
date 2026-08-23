@@ -482,7 +482,7 @@
         "eyebrow": "Your Wellness",
         "heading": "Journey with Avonent",
         "subheading": "Consistency matters. Here’s an example of how a simple daily Avonent routine can become easier to maintain over the first few weeks.",
-        "disclaimer": "Individual experiences vary. Follow the directions on your product label and consult a qualified healthcare professional when appropriate.",
+        "disclaimer": "",
         "activation_point": 58,
         "background_color": "#ffffff",
         "text_color": "#111111",
@@ -493,8 +493,8 @@
         "line_color": "#b8bec2",
         "check_color": "#02c6ea",
         "content_width": 680,
-        "padding_top": 72,
-        "padding_bottom": 72
+        "padding_top": 20,
+        "padding_bottom": 20
       }
     },
     "avonent_vs_other_brands": {
