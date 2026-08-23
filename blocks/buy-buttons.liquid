@@ -409,7 +409,12 @@
           );
 
           const observer = new MutationObserver(neutralizeExternalPlans);
-          observer.observe(form, { childList: true, subtree: true });
+          observer.observe(form, {
+            childList: true,
+            subtree: true,
+            attributes: true,
+            attributeFilter: ['value']
+          });
 
           render();
         })();
