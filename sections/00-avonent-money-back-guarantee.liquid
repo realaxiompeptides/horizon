@@ -5,7 +5,7 @@
 
 <section
   id="{{ section_id }}"
-  class="avonent-guarantee avonent-guarantee--{{ section.settings.desktop_layout }}"
+  class="avonent-guarantee avonent-guarantee--{{ section.settings.desktop_layout }}{% if section.settings.hero_image == blank %} avonent-guarantee--no-image{% else %} avonent-guarantee--has-image avonent-guarantee--image-{{ section.settings.image_fit }}{% endif %}"
   style="
     --avg-bg: {{ section.settings.background_color }};
     --avg-strip: {{ section.settings.strip_background }};
@@ -117,10 +117,6 @@
               <span>GUARANTEE</span>
             </div>
           {% endif %}
-        </div>
-      {% elsif request.design_mode %}
-        <div class="avonent-guarantee__media avonent-guarantee__media--placeholder">
-          <span>Add a lifestyle or customer image</span>
         </div>
       {% endif %}
     </div>
@@ -349,6 +345,57 @@
     font-weight: 900;
   }
 
+  .avonent-guarantee--no-image .avonent-guarantee__layout {
+    position: relative;
+    width: min(100%, 920px);
+    margin: 0 auto;
+    padding: clamp(38px, 6vw, 74px);
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 50% -15%, color-mix(in srgb, var(--avg-accent) 16%, transparent), transparent 48%),
+      linear-gradient(145deg, white, color-mix(in srgb, var(--avg-bg) 82%, white));
+    border: 1px solid color-mix(in srgb, var(--avg-accent) 24%, transparent);
+    border-radius: calc(var(--avg-radius) + 8px);
+    box-shadow: 0 24px 70px rgb(18 76 91 / 0.11);
+  }
+
+  .avonent-guarantee--no-image .avonent-guarantee__layout::before,
+  .avonent-guarantee--no-image .avonent-guarantee__layout::after {
+    position: absolute;
+    width: 210px;
+    height: 210px;
+    content: '';
+    border: 1px solid color-mix(in srgb, var(--avg-accent) 18%, transparent);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .avonent-guarantee--no-image .avonent-guarantee__layout::before {
+    top: -130px;
+    left: -95px;
+  }
+
+  .avonent-guarantee--no-image .avonent-guarantee__layout::after {
+    right: -105px;
+    bottom: -145px;
+  }
+
+  .avonent-guarantee--no-image .avonent-guarantee__content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .avonent-guarantee--no-image .avonent-guarantee__trust {
+    width: fit-content;
+    max-width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 12px 18px;
+    background: color-mix(in srgb, var(--avg-accent) 7%, white);
+    border: 1px solid color-mix(in srgb, var(--avg-accent) 16%, transparent);
+    border-radius: 999px;
+  }
+
   .avonent-guarantee__media {
     position: relative;
     width: min(100%, var(--avg-image-width));
@@ -366,6 +413,16 @@
     height: 100%;
     object-fit: cover;
     object-position: center;
+  }
+
+  .avonent-guarantee--image-contain .avonent-guarantee__media {
+    height: auto;
+    background: var(--avg-accent-dark);
+  }
+
+  .avonent-guarantee--image-contain .avonent-guarantee__image {
+    height: auto;
+    object-fit: contain;
   }
 
   .avonent-guarantee__image-badge {
@@ -488,11 +545,32 @@
     }
 
     .avonent-guarantee__media {
-      width: calc(100% + 28px);
+      width: 100%;
       height: min(var(--avg-image-height), 500px);
-      margin-right: -14px;
-      margin-left: -14px;
-      border-radius: var(--avg-radius) var(--avg-radius) 0 0;
+      margin: 0;
+      border-radius: var(--avg-radius);
+    }
+
+    .avonent-guarantee--image-contain .avonent-guarantee__media {
+      height: auto;
+    }
+
+    .avonent-guarantee--no-image .avonent-guarantee__layout {
+      padding: 34px 18px 30px;
+      border-radius: calc(var(--avg-radius) + 2px);
+    }
+
+    .avonent-guarantee--no-image .avonent-guarantee__seal {
+      margin-bottom: 22px;
+    }
+
+    .avonent-guarantee--no-image .avonent-guarantee__trust {
+      display: grid;
+      width: 100%;
+      gap: 8px;
+      padding: 13px 15px;
+      border-radius: 16px;
+      text-align: left;
     }
 
     .avonent-guarantee__image-badge {
@@ -525,7 +603,7 @@
   },
   "settings": [
     { "type": "header", "content": "Guarantee bar" },
-    { "type": "checkbox", "id": "show_top_strip", "label": "Show guarantee bar", "default": true },
+    { "type": "checkbox", "id": "show_top_strip", "label": "Show guarantee bar", "default": false },
     { "type": "text", "id": "strip_text", "label": "Guarantee bar text", "default": "30-Day Money-Back Guarantee" },
 
     { "type": "header", "content": "Main content" },
@@ -546,7 +624,17 @@
 
     { "type": "header", "content": "Image" },
     { "type": "image_picker", "id": "hero_image", "label": "Lifestyle or customer image" },
-    { "type": "checkbox", "id": "show_image_badge", "label": "Show guarantee badge over image", "default": true },
+    { "type": "checkbox", "id": "show_image_badge", "label": "Show guarantee badge over image", "default": false },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Image display",
+      "options": [
+        { "value": "contain", "label": "Show full image — recommended for designed banners" },
+        { "value": "cover", "label": "Crop image to fill" }
+      ],
+      "default": "contain"
+    },
     {
       "type": "select",
       "id": "desktop_layout",
