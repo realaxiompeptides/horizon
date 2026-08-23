@@ -1087,12 +1087,79 @@
         "padding_top": 88,
         "padding_bottom": 88
       }
+    },
+    "00_avonent_before_after_4chKWb": {
+      "type": "00-avonent-before-after",
+      "blocks": {
+        "process_step_9dTF8U": {
+          "type": "process_step",
+          "settings": {
+            "heading": "Take as directed",
+            "text": "<p>Use Avonent with your meal according to the directions on the label.</p>"
+          }
+        },
+        "process_step_gPm74L": {
+          "type": "process_step",
+          "settings": {
+            "heading": "Support all five digestive jobs",
+            "text": "<p>Protease, lipase, amylase, cellulase, and lactase help break down different parts of a mixed meal.</p>"
+          }
+        },
+        "process_step_bDcgye": {
+          "type": "process_step",
+          "settings": {
+            "heading": "Feel better supported after eating",
+            "text": "<p>Designed to support comfortable digestion and help with occasional bloating, gas, and post-meal heaviness.*</p>"
+          }
+        }
+      },
+      "block_order": [
+        "process_step_9dTF8U",
+        "process_step_gPm74L",
+        "process_step_bDcgye"
+      ],
+      "name": "00 Avonent Before/After",
+      "settings": {
+        "eyebrow": "FROM PLATE TO COMFORT",
+        "heading": "A heavy meal asks your digestion to do five jobs at once.",
+        "intro": "<p>Protein. Fats. Carbohydrates. Fiber. Lactose. One mixed meal can contain all five—and each one requires different digestive support.</p>",
+        "before_tab": "Before Support",
+        "before_label": "THE HEAVY-MEAL PROBLEM",
+        "before_image_alt": "Conceptual illustration of a complex mixed meal during digestion",
+        "before_heading": "One meal. A lot to break down.",
+        "before_text": "<p>Rich, complicated meals can sometimes leave you feeling bloated, gassy, overly full, or weighed down long after the last bite.</p>",
+        "before_points": "<ul><li>Protein, fats, carbs, fiber, and dairy all require different digestive work</li><li>Mixed meals can be harder to handle than a single type of food</li><li>Occasional pressure, gas, and uncomfortable fullness can follow</li></ul>",
+        "after_tab": "With Avonent",
+        "after_label": "WITH AVONENT SUPPORT",
+        "after_image_alt": "Conceptual illustration of Avonent supporting mixed-meal digestion",
+        "after_heading": "Support for the whole plate.",
+        "after_text": "<p>Avonent combines five digestive enzymes to help break down protein, fats, carbohydrates, fiber, and lactose—plus artichoke, ox bile, slippery elm, and targeted botanicals for more complete digestive support.</p>",
+        "after_points": "<ul><li>Broad enzyme support for every part of a mixed meal</li><li>Additional support for normal fat digestion and bile activity</li><li>Designed to support post-meal comfort and help with occasional bloating</li></ul>",
+        "process_heading": "How Avonent supports the process",
+        "closing_heading": "Made for real meals. Not perfect diets.",
+        "closing_text": "<p>Protein-heavy lunches. Restaurant dinners. Dairy. Takeout nights. Avonent provides broader digestive support for the food you actually eat.</p>",
+        "button_label": "SUPPORT YOUR NEXT MEAL",
+        "button_link": "",
+        "disclaimer": "Conceptual illustration showing intended digestive support—not guaranteed results. Individual experiences vary. Use only as directed.",
+        "accent_color": "#02C6EA",
+        "background_color": "#EAF9FC",
+        "card_color": "#FFFFFF",
+        "text_color": "#111111",
+        "muted_color": "#596269",
+        "before_color": "#E5A53A",
+        "border_color": "#CFEAF0",
+        "content_width": 1200,
+        "corner_radius": 24,
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
     }
   },
   "order": [
     "main",
     "avonent_proof_stats",
     "avonent_formula_breakdown",
+    "00_avonent_before_after_4chKWb",
     "avonent_wellness_journey",
     "avonent_vs_other_brands",
     "avonent_money_back_guarantee",
