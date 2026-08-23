@@ -539,6 +539,7 @@
         "ox_bile": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/8AD2BC79-7DA5-46FD-BF14-8717FB2E9B2B.png",
             "role": "Dietary fat digestion",
             "name": "Ox Bile Powder",
             "amount": "See Supplement Facts",
