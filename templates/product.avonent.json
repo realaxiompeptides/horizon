@@ -449,7 +449,7 @@
             "kicker": "INGREDIENT-LEVEL RESEARCH",
             "value": "Add total",
             "label": "Published studies on featured ingredients",
-            "detail": "Enter only a sourced total that matches the exact ingredients used."
+            "detail": ""
           }
         },
         "formula_amount": {
@@ -458,7 +458,7 @@
             "kicker": "PER SERVING",
             "value": "Add mg",
             "label": "Active formula per serving",
-            "detail": "Use the exact amount shown on the Supplement Facts panel."
+            "detail": ""
           }
         },
         "traditional_use": {
@@ -467,7 +467,7 @@
             "kicker": "BOTANICAL TRADITION",
             "value": "2,000+",
             "label": "Years of traditional botanical use",
-            "detail": "Connect this statement to one named ingredient and a reliable source."
+            "detail": ""
           }
         },
         "orders_shipped": {
