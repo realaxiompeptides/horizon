@@ -45,7 +45,7 @@
 
     {% if enabled and title != blank %}
       <details
-        class="avonent-accordion__item"
+        class="avonent-accordion__item{% if i == 2 %} avonent-accordion__item--benefits{% endif %}"
         data-av-accordion-item
         {% if block.settings.open_first and forloop.first %}
           open
@@ -228,6 +228,37 @@
   .avonent-accordion__content-inner strong {
     color: var(--ava-text);
     font-weight: 650;
+  }
+
+  .avonent-accordion__item--benefits .avonent-accordion__content-inner ul {
+    display: grid;
+    gap: 11px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .avonent-accordion__item--benefits .avonent-accordion__content-inner li {
+    position: relative;
+    margin: 0;
+    padding-left: 28px;
+  }
+
+  .avonent-accordion__item--benefits .avonent-accordion__content-inner li::before {
+    content: '✓';
+    position: absolute;
+    top: 0.08em;
+    left: 0;
+    display: grid;
+    width: 18px;
+    height: 18px;
+    place-items: center;
+    color: #fff;
+    background: #18a66b;
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 850;
+    line-height: 1;
   }
 
   .avonent-accordion__summary:hover {
