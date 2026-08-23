@@ -273,8 +273,8 @@
           <div class="avonent-one-time-switch__note" data-subscription-note>
             <span class="avonent-one-time-switch__note-item">
               <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M20 7v5h-5"></path>
-                <path d="M19.2 12a7.5 7.5 0 1 1-2.1-5.2L20 9"></path>
+                <path d="M20 11a8 8 0 1 0-2.34 5.66"></path>
+                <path d="M20 4v7h-7"></path>
               </svg>
               <span>{{ block_settings.avonent_refill_text }}</span>
             </span>
@@ -619,6 +619,13 @@
     display: none !important;
   }
 
+  .template-product--avonent .buy-buttons-block .add-to-cart-button,
+  .avonent-product-main-section .buy-buttons-block .add-to-cart-button {
+    color: #ffffff !important;
+    background: #02c6ea !important;
+    border-color: #02c6ea !important;
+  }
+
   .avonent-one-time-switch {
     width: 100%;
     padding-block: var(--avots-top) var(--avots-bottom);
@@ -679,8 +686,10 @@
     background: transparent;
     color: var(--avots-accent);
     font: inherit;
-    font-size: var(--avots-size);
-    line-height: 1.45;
+    max-width: 100%;
+    font-size: min(var(--avots-size), 12px);
+    font-weight: 650;
+    line-height: 1.35;
     text-align: center;
     cursor: pointer;
   }
