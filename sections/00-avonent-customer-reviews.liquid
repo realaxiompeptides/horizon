@@ -1,8 +1,15 @@
 {% liquid
   assign section_id = 'AvonentReviews-' | append: section.id
   assign has_reviews = false
+  assign review_count = 0
 
-  if section.blocks.size > 0
+  for block in section.blocks
+    if block.settings.title != blank or block.settings.review != blank or block.settings.customer_name != blank
+      assign review_count = review_count | plus: 1
+    endif
+  endfor
+
+  if review_count > 0
     assign has_reviews = true
   endif
 %}
@@ -70,7 +77,8 @@
 
         <div class="avonent-reviews__grid">
           {% for block in section.blocks %}
-            <article class="avonent-reviews__card" {{ block.shopify_attributes }}>
+            {% if block.settings.title != blank or block.settings.review != blank or block.settings.customer_name != blank %}
+              <article class="avonent-reviews__card" {{ block.shopify_attributes }}>
               <div class="avonent-reviews__card-top">
                 <div class="avonent-reviews__card-rating">
                   <div class="avonent-reviews__card-stars" aria-label="Rated {{ block.settings.rating }} out of 5">
@@ -136,7 +144,8 @@
                   </div>
                 </div>
               </footer>
-            </article>
+              </article>
+            {% endif %}
           {% endfor %}
         </div>
 
