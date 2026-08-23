@@ -706,6 +706,7 @@
         "button_link": "",
         "policy_text": "See refund policy for complete terms",
         "policy_link": "shopify://policies/refund-policy",
+        "hero_image": "shopify://shop_images/ChatGPT_Image_Aug_23_2026_01_26_56_AM.png",
         "show_image_badge": false,
         "desktop_layout": "stacked",
         "image_width": 900,
