@@ -7,6 +7,7 @@
   endif
 
   assign variant = closest.product.selected_or_first_available_variant
+  assign avonent_selling_plan_id = block_settings.avonent_selling_plan_id | default: '3327230118'
   assign inventory_quantity = variant.inventory_quantity
   assign inventory_policy = variant.inventory_policy
 
@@ -73,7 +74,7 @@
           <input
             type="hidden"
             name="selling_plan"
-            value="{{ block_settings.avonent_selling_plan_id | default: variant.selling_plan_allocations.first.selling_plan.id }}"
+            value="{{ avonent_selling_plan_id }}"
             data-avonent-selling-plan
           >
         {%- endif -%}
