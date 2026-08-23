@@ -474,9 +474,9 @@
           "type": "stat",
           "settings": {
             "kicker": "AVONENT COMMUNITY",
-            "value": "Add total",
+            "value": "100,000+",
             "label": "Orders shipped",
-            "detail": "Use a real fulfilled-order milestone rounded down."
+            "detail": ""
           }
         }
       },
