@@ -214,7 +214,6 @@
                           <span>{{ protection_variant.price | money }}</span>
                         </div>
                         <p>Protect your order from loss, damage, or theft in transit.</p>
-                        <small data-avonent-protection-status aria-live="polite"></small>
                       </div>
 
                       <button
@@ -1016,14 +1015,6 @@
     line-height: 1.4;
   }
 
-  #cart-drawer .avonent-shipping-protection__copy small {
-    display: block;
-    min-height: 0;
-    margin-top: 3px;
-    color: #b42318;
-    font-size: 11px;
-  }
-
   #cart-drawer .avonent-shipping-protection__toggle {
     position: relative;
     width: 46px;
@@ -1121,6 +1112,98 @@
         transparent;
     }
 
+  }
+
+
+  /*
+   * COMPACT CONVERSION FOOTER
+   */
+
+  #cart-drawer .cart-drawer__summary {
+    --cart-drawer-summary-padding: 14px;
+    gap: 8px;
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+  }
+
+  #cart-drawer .avonent-shipping-protection {
+    grid-template-columns: 42px minmax(0, 1fr) 44px;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 14px;
+  }
+
+  #cart-drawer .avonent-shipping-protection__icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+  }
+
+  #cart-drawer .avonent-shipping-protection__icon svg {
+    width: 33px;
+    height: 33px;
+  }
+
+  #cart-drawer .avonent-shipping-protection__heading {
+    font-size: 13px;
+  }
+
+  #cart-drawer .avonent-shipping-protection__copy p {
+    margin-top: 3px;
+    font-size: 11px;
+    line-height: 1.32;
+  }
+
+  #cart-drawer .avonent-shipping-protection__toggle[disabled] {
+    opacity: 1;
+    cursor: pointer;
+  }
+
+  #cart-drawer .cart-drawer__summary .cart-totals {
+    gap: 0;
+    margin: 0;
+    padding: 7px 0 0;
+    border-block-start: 1px solid #e7ebed;
+  }
+
+  #cart-drawer .cart-drawer__summary .cart-totals__container {
+    row-gap: 0;
+  }
+
+  #cart-drawer .cart-drawer__summary .cart-totals__total {
+    min-height: 30px;
+  }
+
+  #cart-drawer .cart-drawer__summary .cart-totals__total-label {
+    color: #111111;
+    font-size: 13px;
+    font-weight: 650;
+  }
+
+  #cart-drawer .cart-drawer__summary .cart-totals__total-value {
+    color: #111111;
+    font-size: 20px;
+    font-weight: 750;
+  }
+
+  #cart-drawer .cart-drawer__summary .avonent-cart-ctas {
+    gap: 7px;
+    margin-top: 0;
+  }
+
+  #cart-drawer .cart-drawer__summary .avonent-cart-checkout {
+    min-height: 52px;
+    padding-block: 12px;
+  }
+
+  @media screen and (max-width: 390px) {
+    #cart-drawer .cart-drawer__summary {
+      padding-inline: 12px;
+    }
+
+    #cart-drawer .avonent-shipping-protection {
+      grid-template-columns: 40px minmax(0, 1fr) 42px;
+      padding-inline: 10px;
+    }
   }
 
 {% endstylesheet %}
