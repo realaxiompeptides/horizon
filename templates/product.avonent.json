@@ -704,8 +704,8 @@
           "type": "comparison_row",
           "settings": {
             "icon": "flask",
-            "avonent_text": "Quality-Focused Formulas",
-            "other_text": "Trend-Driven Formulas",
+            "avonent_text": "Third-Party Tested",
+            "other_text": "No Test Proof",
             "reason_title": "Quality-Focused",
             "reason_text": "Built around thoughtful formulation rather than short-lived trends."
           }
@@ -714,8 +714,8 @@
           "type": "comparison_row",
           "settings": {
             "icon": "shield",
-            "avonent_text": "Transparent Product Information",
-            "other_text": "Less Transparency",
+            "avonent_text": "Made in the USA",
+            "other_text": "Overseas Manufacturing",
             "reason_title": "Clear & Transparent",
             "reason_text": "Straightforward product information so you can make a more informed choice."
           }
