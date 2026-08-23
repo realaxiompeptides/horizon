@@ -225,7 +225,6 @@ class CartDrawerComponent extends Component {
 
     const panel = this.querySelector('[data-avonent-protection]');
     const toggle = panel?.querySelector('[data-avonent-protection-toggle]');
-    const status = panel?.querySelector('[data-avonent-protection-status]');
     const lineKey = knownLineKey || panel?.dataset.lineKey || '';
 
     this.#protectionMutationPending = true;
@@ -233,7 +232,6 @@ class CartDrawerComponent extends Component {
       toggle.disabled = true;
       toggle.setAttribute('aria-checked', enabled ? 'true' : 'false');
     }
-    if (status) status.textContent = enabled ? 'Adding protection…' : 'Removing protection…';
 
     const root = window.Shopify?.routes?.root || '/';
     const isExistingLine = Boolean(lineKey);
@@ -254,7 +252,6 @@ class CartDrawerComponent extends Component {
     if (!enabled && !lineKey) {
       this.#protectionMutationPending = false;
       if (toggle instanceof HTMLButtonElement) toggle.disabled = false;
-      if (status) status.textContent = '';
       return;
     }
 
@@ -310,7 +307,6 @@ class CartDrawerComponent extends Component {
       if (toggle instanceof HTMLButtonElement) {
         toggle.setAttribute('aria-checked', enabled ? 'false' : 'true');
       }
-      if (status) status.textContent = automatic ? '' : 'Could not update. Please try again.';
       console.warn('[cart-drawer] Shipping protection update failed:', error);
     } finally {
       this.#protectionMutationPending = false;
