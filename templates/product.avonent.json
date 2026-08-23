@@ -446,46 +446,61 @@
         "artichoke_extract": {
           "type": "ingredient",
           "settings": {
+            "role": "Digestive comfort",
             "name": "Artichoke Extract",
             "amount": "See Supplement Facts",
-            "role": "Digestive comfort",
-            "explanation": "<p>A botanical traditionally used to support bile flow and comfortable digestion.</p>"
+            "benefit_heading": "Its role in the formula",
+            "explanation": "<p>A botanical traditionally used to support bile flow and comfortable digestion.</p>",
+            "details_label": "Why it is included",
+            "details": ""
           }
         },
         "triphala_blend": {
           "type": "ingredient",
           "settings": {
+            "role": "Daily gut balance",
             "name": "Triphala Blend",
             "amount": "See Supplement Facts",
-            "role": "Daily gut balance",
-            "explanation": "<p>A traditional three-fruit blend used to support regularity and digestive balance.</p>"
+            "benefit_heading": "Its role in the formula",
+            "explanation": "<p>A traditional three-fruit blend used to support regularity and digestive balance.</p>",
+            "details_label": "Why it is included",
+            "details": ""
           }
         },
         "ox_bile": {
           "type": "ingredient",
           "settings": {
+            "role": "Dietary fat digestion",
             "name": "Ox Bile Powder",
             "amount": "See Supplement Facts",
-            "role": "Dietary fat digestion",
-            "explanation": "<p>Provides bile acids that help the body break down and digest dietary fats.</p>"
+            "benefit_heading": "Its role in the formula",
+            "explanation": "<p>Provides bile acids that help the body break down and digest dietary fats.</p>",
+            "details_label": "Why it is included",
+            "details": ""
           }
         },
         "digezyme": {
           "type": "ingredient",
           "settings": {
+            "role": "Food breakdown support",
             "name": "DigeZyme®",
             "amount": "Multi-enzyme complex",
-            "role": "Food breakdown support",
-            "explanation": "<p>A digestive enzyme blend designed to help break down proteins, fats, and carbohydrates.</p>"
+            "benefit_heading": "Its role in the formula",
+            "explanation": "<p>A digestive enzyme blend designed to help break down proteins, fats, and carbohydrates.</p>",
+            "details_label": "Why it is included",
+            "details": ""
           }
         },
         "slippery_elm": {
           "type": "ingredient",
           "settings": {
+            "role": "Gentle digestive support",
             "name": "Slippery Elm",
             "amount": "See Supplement Facts",
-            "role": "Gentle digestive support",
-            "explanation": "<p>A soothing botanical traditionally used to support digestive comfort.</p>"
+            "benefit_heading": "Its role in the formula",
+            "explanation": "<p>A soothing botanical traditionally used to support digestive comfort.</p>",
+            "details_label": "Why it is included",
+            "details": ""
           }
         }
       },
@@ -500,11 +515,15 @@
         "eyebrow": "INSIDE THE FORMULA",
         "heading": "A complete digestive formula, explained simply.",
         "description": "<p>Five featured components of the 10-in-1 blend—each selected to play a clear role in daily digestive support.</p>",
-        "formula_badge": "10-in-1 Digestive Support",
-        "visual_caption": "Easy-to-use daily capsules",
-        "formula_note": "<p>Follow the directions on the product label. Individual experiences may vary.</p>",
         "content_heading": "What each featured ingredient does",
         "content_intro": "<p>No complicated science lesson—just a clear look at what is inside and why it was included.</p>",
+        "mobile_columns": "2",
+        "mobile_initial_count": 4,
+        "show_more_label": "View all ingredients",
+        "show_less_label": "Show fewer ingredients",
+        "facts_label": "View Supplement Facts",
+        "facts_link": "",
+        "formula_note": "<p>Follow the directions on the product label. Individual experiences may vary.</p>",
         "trust_1": "Third-party lab tested",
         "trust_2": "Ships from the USA",
         "trust_3": "Quality-focused formula",
@@ -515,7 +534,9 @@
         "muted_text_color": "#59676c",
         "accent_color": "#02c6ea",
         "border_color": "#d9e9ed",
+        "image_ratio": "4 / 3",
         "corner_radius": 18,
+        "card_gap": 20,
         "content_width": 1240,
         "padding_top": 72,
         "padding_bottom": 72
@@ -751,8 +772,6 @@
         "eyebrow": "VERIFIED CUSTOMER REVIEWS",
         "heading": "Real routines. Real Avonent customers.",
         "description": "<p>Read feedback from customers who made Avonent part of their daily wellness routine.</p>",
-        "layout_mode": "carousel",
-        "carousel_card_width": 390,
         "mobile_more_text": "Read more reviews",
         "button_text": "",
         "button_link": "",
