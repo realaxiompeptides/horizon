@@ -296,7 +296,7 @@ class CartDrawerComponent extends Component {
       const cart = await cartResponse.json();
 
       deferred.resolve({
-        cart,
+        cart: CartLinesUpdateEvent.createCartFromAjaxResponse(cart),
         detail: {
           sections: result.sections || {},
           items: cart.items,
