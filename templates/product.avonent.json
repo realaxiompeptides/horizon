@@ -644,10 +644,10 @@
           "type": "journey_step",
           "settings": {
             "week": "Week 2",
-            "title": "Early Relief",
-            "benefit_1": "Digestion feels lighter*",
-            "benefit_2": "Bloating starts to settle*",
-            "benefit_3": "Less heaviness after meals*",
+            "title": "Real Comfort",
+            "benefit_1": "Less gas and pressure*",
+            "benefit_2": "Mornings feel clearer*",
+            "benefit_3": "Energy starts to steady*",
             "benefit_4": ""
           }
         },
