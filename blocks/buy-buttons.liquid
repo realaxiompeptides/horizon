@@ -73,7 +73,7 @@
           <input
             type="hidden"
             name="selling_plan"
-            value="{{ variant.selling_plan_allocations.first.selling_plan.id }}"
+            value="{{ block_settings.avonent_selling_plan_id | default: variant.selling_plan_allocations.first.selling_plan.id }}"
             data-avonent-selling-plan
           >
         {%- endif -%}
@@ -680,6 +680,13 @@
       "id": "avonent_subscription_first",
       "label": "Default to Subscribe & Save",
       "default": true
+    },
+    {
+      "type": "text",
+      "id": "avonent_selling_plan_id",
+      "label": "Appstle selling plan ID",
+      "default": "3327230118",
+      "info": "The Shopify selling plan used for Subscribe & Save."
     },
     {
       "type": "checkbox",
