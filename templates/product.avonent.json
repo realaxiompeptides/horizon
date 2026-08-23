@@ -606,7 +606,7 @@
         "corner_radius": 18,
         "card_gap": 20,
         "content_width": 1240,
-        "padding_top": 72,
+        "padding_top": 36,
         "padding_bottom": 72
       }
     },
