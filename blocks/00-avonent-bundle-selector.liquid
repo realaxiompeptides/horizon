@@ -326,9 +326,36 @@
         setNativeVariant(option.dataset.variantId);
       }
 
+      function syncSelectedBundle() {
+        const selected =
+          root.querySelector('[data-av-bundle-option].is-selected:not(:disabled)') ||
+          options.find((option) => !option.disabled);
+
+        if (selected) selectBundle(selected);
+      }
+
       options.forEach((option) => {
         option.addEventListener('click', () => selectBundle(option));
       });
+
+      // The bundle selector can render before Horizon creates the product form.
+      // Synchronize the visually selected bundle immediately before Add to cart,
+      // including on the first click after a fresh page load.
+      document.addEventListener(
+        'click',
+        (event) => {
+          const addButton = event.target.closest(
+            'button[type="submit"][name="add"], button[type="submit"][data-add-to-cart]'
+          );
+          if (!addButton) return;
+
+          const form = getNativeForm();
+          if (!form || !form.contains(addButton)) return;
+
+          syncSelectedBundle();
+        },
+        true
+      );
 
       document.addEventListener('avonent:purchase-mode-change', (event) => {
         applyPurchaseMode(event.detail?.mode);
@@ -348,9 +375,14 @@
         selectBundle(initial);
       }
 
-      // Re-apply after subscription apps finish hydrating the product form.
-      window.setTimeout(() => applyPurchaseMode(purchaseMode), 250);
-      window.setTimeout(() => applyPurchaseMode(purchaseMode), 900);
+      // Re-apply both price mode and quantity after Horizon/Appstle finish
+      // hydrating or replacing product-form inputs.
+      [0, 250, 900, 1600].forEach((delay) => {
+        window.setTimeout(() => {
+          applyPurchaseMode(purchaseMode);
+          syncSelectedBundle();
+        }, delay);
+      });
     })();
   </script>
 {% endif %}
