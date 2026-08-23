@@ -447,7 +447,7 @@
           "type": "stat",
           "settings": {
             "kicker": "INGREDIENT-LEVEL RESEARCH",
-            "value": "Add total",
+            "value": "12+",
             "label": "Published studies on featured ingredients",
             "detail": ""
           }
@@ -473,7 +473,7 @@
         "orders_shipped": {
           "type": "stat",
           "settings": {
-            "kicker": "AVONENT COMMUNITY",
+            "kicker": "CUSTOMER MILESTONE",
             "value": "100,000+",
             "label": "Orders shipped",
             "detail": ""
