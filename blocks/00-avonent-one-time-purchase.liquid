@@ -1,0 +1,394 @@
+{% doc %}
+  Avonent subscription-first purchase switch.
+
+  Keeps Shopify/Appstle selling plans active while replacing the visible
+  purchase-options widget with a compact, editable one-time purchase link.
+  Subscription is selected by default. Clicking the one-time link removes the
+  selling plan from the native Shopify product form before add to cart.
+{% enddoc %}
+
+{% liquid
+  assign av_product = closest.product | default: product
+  assign av_variant = av_product.selected_or_first_available_variant
+
+  if request.visual_preview_mode and av_product == blank
+    assign av_product = collections.all.products.first
+    assign av_variant = av_product.selected_or_first_available_variant
+  endif
+
+  assign root_id = 'AvonentPurchaseSwitch-' | append: block.id
+%}
+
+{% if av_product != blank and av_variant.selling_plan_allocations.size > 0 %}
+  <div
+    id="{{ root_id }}"
+    class="avonent-purchase-switch"
+    data-section-id="{{ section.id }}"
+    data-default-mode="subscription"
+    {{ block.shopify_attributes }}
+    style="
+      --avps-accent: {{ block.settings.accent_color }};
+      --avps-text: {{ block.settings.text_color }};
+      --avps-muted: {{ block.settings.muted_color }};
+      --avps-font-size: {{ block.settings.font_size }}px;
+      --avps-top: {{ block.settings.spacing_top }}px;
+      --avps-bottom: {{ block.settings.spacing_bottom }}px;
+    "
+  >
+    {% if block.settings.show_subscription_disclosure %}
+      <p class="avonent-purchase-switch__disclosure" data-av-subscription-copy>
+        {{ block.settings.subscription_disclosure }}
+      </p>
+    {% endif %}
+
+    <button
+      type="button"
+      class="avonent-purchase-switch__link"
+      data-av-purchase-toggle
+      aria-pressed="false"
+    >
+      <span data-av-one-time-copy>{{ block.settings.one_time_link_text }}</span>
+      <span data-av-subscription-copy hidden>{{ block.settings.subscription_return_text }}</span>
+    </button>
+
+    <p class="avonent-purchase-switch__status" data-av-one-time-status hidden>
+      {{ block.settings.one_time_selected_text }}
+    </p>
+
+    <script type="application/json" data-av-selling-plan-map>
+      {
+        {% for variant in av_product.variants %}
+          "{{ variant.id }}": {% if variant.selling_plan_allocations.first != blank %}{{ variant.selling_plan_allocations.first.selling_plan.id | json }}{% else %}null{% endif %}{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+      }
+    </script>
+  </div>
+
+  <script>
+    (() => {
+      const root = document.getElementById('{{ root_id }}');
+      if (!root || root.dataset.avPurchaseSwitchInitialized === 'true') return;
+
+      root.dataset.avPurchaseSwitchInitialized = 'true';
+
+      const sectionId = root.dataset.sectionId;
+      const toggle = root.querySelector('[data-av-purchase-toggle]');
+      const oneTimeCopy = root.querySelector('[data-av-one-time-copy]');
+      const subscriptionCopy = root.querySelector('[data-av-subscription-copy][hidden]');
+      const status = root.querySelector('[data-av-one-time-status]');
+      const planMapElement = root.querySelector('[data-av-selling-plan-map]');
+      let planMap = {};
+      let mode = 'subscription';
+
+      try {
+        planMap = JSON.parse(planMapElement?.textContent || '{}');
+      } catch (error) {
+        planMap = {};
+      }
+
+      function getSectionRoot() {
+        return (
+          root.closest('.shopify-section') ||
+          root.closest('[data-section-id]') ||
+          document
+        );
+      }
+
+      function getProductForm() {
+        const scope = getSectionRoot();
+
+        return (
+          scope.querySelector('.buy-buttons-block product-form-component form[data-type="add-to-cart-form"]') ||
+          scope.querySelector('product-form-component form[data-type="add-to-cart-form"]') ||
+          scope.querySelector('form[action*="/cart/add"]') ||
+          document.querySelector(
+            'product-form-component[data-section-id="' + sectionId + '"] form[data-type="add-to-cart-form"]'
+          )
+        );
+      }
+
+      function getVariantId(form) {
+        return String(form?.querySelector('input[name="id"], select[name="id"]')?.value || '');
+      }
+
+      function getPlanId(form) {
+        return planMap[getVariantId(form)] || null;
+      }
+
+      function getControlledInput(form) {
+        if (!form) return null;
+
+        let input = form.querySelector('input[name="selling_plan"][data-avonent-selling-plan]');
+
+        if (!input) {
+          input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = 'selling_plan';
+          input.dataset.avonentSellingPlan = 'true';
+          form.appendChild(input);
+        }
+
+        return input;
+      }
+
+      function neutralizeAppstleControls(form) {
+        if (!form) return;
+
+        form
+          .querySelectorAll('[name="selling_plan"]:not([data-avonent-selling-plan])')
+          .forEach((control) => {
+            if (control.matches('[type="radio"], [type="checkbox"]')) {
+              control.checked = false;
+            }
+            control.disabled = true;
+          });
+      }
+
+      function updateCopy() {
+        const isOneTime = mode === 'one_time';
+
+        root.dataset.mode = mode;
+        toggle?.setAttribute('aria-pressed', isOneTime ? 'true' : 'false');
+        if (oneTimeCopy) oneTimeCopy.hidden = isOneTime;
+        if (subscriptionCopy) subscriptionCopy.hidden = !isOneTime;
+        if (status) status.hidden = !isOneTime;
+      }
+
+      function applyMode(nextMode, announce = true) {
+        const form = getProductForm();
+        if (!form) return;
+
+        const input = getControlledInput(form);
+        const planId = getPlanId(form);
+
+        mode = nextMode === 'one_time' ? 'one_time' : 'subscription';
+
+        neutralizeAppstleControls(form);
+
+        if (mode === 'subscription' && planId) {
+          input.disabled = false;
+          input.value = String(planId);
+          input.setAttribute('value', String(planId));
+        } else {
+          input.value = '';
+          input.removeAttribute('value');
+          input.disabled = true;
+          if (mode === 'subscription' && !planId) mode = 'one_time';
+        }
+
+        updateCopy();
+
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+        document.dispatchEvent(new Event('selling-plan:change'));
+
+        if (announce) {
+          document.dispatchEvent(
+            new CustomEvent('avonent:purchase-mode-change', {
+              detail: {
+                mode,
+                sellingPlanId: mode === 'subscription' ? planId : null
+              }
+            })
+          );
+        }
+      }
+
+      toggle?.addEventListener('click', () => {
+        applyMode(mode === 'subscription' ? 'one_time' : 'subscription');
+      });
+
+      getSectionRoot().addEventListener('change', (event) => {
+        if (event.target.matches('input[name="id"], select[name="id"]')) {
+          window.requestAnimationFrame(() => applyMode(mode));
+        }
+      });
+
+      document.addEventListener('variant:change', () => {
+        window.requestAnimationFrame(() => applyMode(mode));
+      });
+
+      const observer = new MutationObserver(() => {
+        const form = getProductForm();
+        if (!form) return;
+        neutralizeAppstleControls(form);
+      });
+
+      observer.observe(getSectionRoot(), { childList: true, subtree: true });
+
+      const initialize = () => applyMode('subscription');
+      initialize();
+      window.setTimeout(initialize, 250);
+      window.setTimeout(initialize, 900);
+    })();
+  </script>
+{% endif %}
+
+{% stylesheet %}
+  .avonent-product-main-section .appstle_sub_widget,
+  .avonent-product-main-section [data-appstle-subscription-widget],
+  .avonent-product-main-section .appstle_subscription_wrapper,
+  .avonent-product-main-section .appstle_widget_title {
+    display: none !important;
+  }
+
+  .avonent-purchase-switch {
+    width: 100%;
+    padding-block: var(--avps-top) var(--avps-bottom);
+    text-align: center;
+  }
+
+  .avonent-purchase-switch__disclosure,
+  .avonent-purchase-switch__status {
+    margin: 0 0 10px;
+    color: var(--avps-muted);
+    font-size: calc(var(--avps-font-size) - 1px);
+    line-height: 1.45;
+  }
+
+  .avonent-purchase-switch__link {
+    appearance: none;
+    display: inline;
+    margin: 0;
+    padding: 2px 0;
+    border: 0;
+    border-bottom: 1px solid currentColor;
+    border-radius: 0;
+    background: transparent;
+    color: var(--avps-accent);
+    font: inherit;
+    font-size: var(--avps-font-size);
+    line-height: 1.45;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .avonent-purchase-switch__link:hover {
+    opacity: 0.78;
+  }
+
+  .avonent-purchase-switch__link:focus-visible {
+    outline: 2px solid var(--avps-accent);
+    outline-offset: 4px;
+  }
+
+  .avonent-purchase-switch__status {
+    margin: 9px 0 0;
+    color: var(--avps-text);
+  }
+
+  .avonent-purchase-switch [hidden] {
+    display: none !important;
+  }
+
+  @media screen and (max-width: 749px) {
+    .avonent-purchase-switch {
+      padding-inline: 8px;
+    }
+
+    .avonent-purchase-switch__link {
+      max-width: 100%;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Avonent purchase switch",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Subscription default"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_subscription_disclosure",
+      "label": "Show recurring-order note",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "subscription_disclosure",
+      "label": "Recurring-order note",
+      "default": "Refills ship every 30 days · Skip or cancel anytime"
+    },
+    {
+      "type": "textarea",
+      "id": "one_time_link_text",
+      "label": "One-time purchase link",
+      "default": "One-Time Purchase $39.99 + $4.95 Shipping (No Free Gifts Included)."
+    },
+    {
+      "type": "text",
+      "id": "subscription_return_text",
+      "label": "Return-to-subscription link",
+      "default": "Switch back to Subscribe & Save — $29.99"
+    },
+    {
+      "type": "text",
+      "id": "one_time_selected_text",
+      "label": "One-time selected message",
+      "default": "One-time purchase selected · No recurring charges"
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Link color",
+      "default": "#02C6EA"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Selected message",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "muted_color",
+      "label": "Recurring note",
+      "default": "#596269"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Link font size",
+      "min": 12,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "spacing_top",
+      "label": "Top spacing",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "spacing_bottom",
+      "label": "Bottom spacing",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 2
+    }
+  ],
+  "presets": [
+    {
+      "name": "Avonent purchase switch",
+      "category": "Product"
+    }
+  ]
+}
+{% endschema %}
