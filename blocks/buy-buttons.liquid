@@ -324,12 +324,15 @@
           let mode = 'subscription';
 
           function neutralizeExternalPlans() {
+            const oneTime = mode === 'one_time';
+
             form
               .querySelectorAll('[name="selling_plan"]:not([data-avonent-selling-plan])')
               .forEach((control) => {
-                // Appstle hydrates its real selling-plan ID after the Liquid
-                // product form renders. Capture that value before hiding and
-                // disabling Appstle's duplicate purchase controls.
+                // Appstle hydrates one empty radio for one-time purchase and
+                // one populated radio for the subscription. Keep the widget
+                // visually hidden, but drive its real controls so Appstle's
+                // own submit handler preserves the selected selling plan.
                 const candidatePlanId = control.value || control.getAttribute('value');
                 if (!planId && candidatePlanId) {
                   planId = String(candidatePlanId);
@@ -337,10 +340,13 @@
                   input.setAttribute('value', planId);
                 }
 
+                const isSubscriptionControl = Boolean(candidatePlanId);
+                const shouldSelect = oneTime ? !isSubscriptionControl : isSubscriptionControl;
+
                 if (control.matches('[type="radio"], [type="checkbox"]')) {
-                  control.checked = false;
+                  control.checked = shouldSelect;
                 }
-                control.disabled = true;
+                control.disabled = !shouldSelect;
               });
           }
 
@@ -433,7 +439,7 @@
                 if (oneTime) event.formData.delete('selling_plan');
                 else event.formData.set('selling_plan', planId);
               },
-              true
+              false
             );
 
             window[listenerKey] = true;
