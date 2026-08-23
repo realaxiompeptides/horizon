@@ -8,6 +8,18 @@
 {% render 'text-component-shimmer-styles' %}
 {% render 'cart-typography-styles' %}
 
+{%- liquid
+  assign is_cart_drawer = false
+  if section_id == 'cart-drawer-section'
+    assign is_cart_drawer = true
+  endif
+
+  assign show_discount_code = show_discount_code
+  if is_cart_drawer
+    assign show_discount_code = false
+  endif
+-%}
+
 <div class="cart-totals">
   {% # We need to keep this node in place to allow morphing to work properly # %}
   <div class="cart-totals__original-container cart-primary-typography">
@@ -42,7 +54,7 @@
     {%- endif -%}
   </div>
 
-  {% if settings.show_cart_note or settings.show_add_discount_code %}
+  {% if settings.show_cart_note or show_discount_code %}
     <div class="cart-actions">
       {% if settings.show_cart_note %}
         <script
@@ -95,11 +107,11 @@
         </cart-note>
       {% endif %}
 
-      {% if settings.show_cart_note and settings.show_add_discount_code %}
+      {% if settings.show_cart_note and show_discount_code %}
         <div class="cart-actions__divider"></div>
       {% endif %}
 
-      {% if settings.show_add_discount_code %}
+      {% if show_discount_code %}
         {% liquid
           assign discount_codes = cart.cart_level_discount_applications | where: 'type', 'discount_code' | map: 'title'
           for item in cart.items
@@ -254,17 +266,19 @@
       </text-component>
     </span>
 
-    {% if settings.show_installments %}
-      <span class="cart-totals__item cart-totals__installments">
-        {% form 'cart', cart %}
-          {{ form | payment_terms }}
-        {% endform %}
-      </span>
-    {% endif %}
+    {%- unless is_cart_drawer -%}
+      {% if settings.show_installments %}
+        <span class="cart-totals__item cart-totals__installments">
+          {% form 'cart', cart %}
+            {{ form | payment_terms }}
+          {% endform %}
+        </span>
+      {% endif %}
 
-    <div class="cart-totals__item cart-totals__tax-note cart-primary-typography">
-      {% render 'tax-info', has_discounts_enabled: settings.show_add_discount_code %}
-    </div>
+      <div class="cart-totals__item cart-totals__tax-note cart-primary-typography">
+        {% render 'tax-info', has_discounts_enabled: show_discount_code %}
+      </div>
+    {%- endunless -%}
   </div>
 </div>
 
