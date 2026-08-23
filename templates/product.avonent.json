@@ -724,8 +724,8 @@
           "type": "comparison_row",
           "settings": {
             "icon": "leaf",
-            "avonent_text": "Simple Daily Routine",
-            "other_text": "Complicated Protocols",
+            "avonent_text": "No Fillers or Junk",
+            "other_text": "Cheap Additives",
             "reason_title": "Made for Consistency",
             "reason_text": "Designed to fit naturally into a repeatable daily wellness routine."
           }
@@ -734,8 +734,8 @@
           "type": "comparison_row",
           "settings": {
             "icon": "sparkle",
-            "avonent_text": "Premium Brand Experience",
-            "other_text": "Generic Experience",
+            "avonent_text": "Premium Quality Standards",
+            "other_text": "Low-Cost Shortcuts",
             "reason_title": "Premium by Design",
             "reason_text": "A clean, modern experience from product discovery through delivery."
           }
