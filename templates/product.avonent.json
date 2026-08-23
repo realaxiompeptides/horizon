@@ -541,11 +541,11 @@
           "type": "ingredient",
           "settings": {
             "image": "shopify://shop_images/A929BD16-DF1D-422F-A109-10F3AAF241DD.png",
-            "role": "Botanical digestive support",
+            "role": "POST-MEAL COMFORT",
             "name": "Sphaeranthus indicus Flower Extract",
             "amount": "Part of the 300 mg botanical blend",
-            "benefit_heading": "Its role in the formula",
-            "explanation": "<p>A complementary flower extract included as part of the formula’s digestive-support botanical blend.</p>",
+            "benefit_heading": "Traditional support for modern meals.",
+            "explanation": "<p>A distinctive botanical traditionally used to support digestive comfort and help your stomach feel more settled after eating.</p>",
             "details_label": "Why it is included",
             "details": ""
           }
