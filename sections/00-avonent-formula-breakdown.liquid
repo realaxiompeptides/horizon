@@ -124,23 +124,6 @@
       <div class="avonent-formula__empty">Add ingredient blocks in the theme editor to build the formula grid.</div>
     {% endif %}
 
-    {% if section.settings.facts_label != blank or section.settings.formula_note != blank %}
-      <div class="avonent-formula__facts">
-        {% if section.settings.facts_label != blank %}
-          {% if section.settings.facts_link != blank %}
-            <a class="avonent-formula__facts-link" href="{{ section.settings.facts_link }}">
-              {{ section.settings.facts_label }} <span aria-hidden="true">↗</span>
-            </a>
-          {% else %}
-            <span class="avonent-formula__facts-label">{{ section.settings.facts_label }}</span>
-          {% endif %}
-        {% endif %}
-        {% if section.settings.formula_note != blank %}
-          <div class="avonent-formula__note rte">{{ section.settings.formula_note }}</div>
-        {% endif %}
-      </div>
-    {% endif %}
-
     {% if section.settings.trust_1 != blank or section.settings.trust_2 != blank or section.settings.trust_3 != blank %}
       <div class="avonent-formula__trust" aria-label="Formula standards">
         {% for index in (1..3) %}
@@ -472,40 +455,6 @@
   .avonent-formula__toggle-icon { width: 18px; height: 18px; transition: transform 180ms ease; }
   .avonent-formula--expanded .avonent-formula__toggle-icon { transform: rotate(180deg); }
 
-  .avonent-formula__facts {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    margin-top: 30px;
-    padding: 17px 20px;
-    background: color-mix(in srgb, var(--avf-soft) 72%, white);
-    border: 1px solid var(--avf-border);
-    border-radius: var(--avf-radius);
-  }
-
-  .avonent-formula__facts-link,
-  .avonent-formula__facts-label {
-    flex: 0 0 auto;
-    color: var(--avf-text);
-    font-size: 13px;
-    font-weight: 820;
-  }
-
-  .avonent-formula__facts-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    text-underline-offset: 4px;
-  }
-
-  .avonent-formula__note {
-    color: var(--avf-muted);
-    font-size: 11px;
-    line-height: 1.5;
-    text-align: right;
-  }
-
   .avonent-formula__trust {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -603,15 +552,6 @@
     .avonent-formula--mobile-2 .avonent-formula__explanation { font-size: 11px; line-height: 1.43; }
     .avonent-formula--mobile-2 .avonent-formula__details summary { padding: 9px; font-size: 10px; }
 
-    .avonent-formula__facts {
-      align-items: flex-start;
-      flex-direction: column;
-      gap: 9px;
-      margin-top: 22px;
-      padding: 15px;
-    }
-
-    .avonent-formula__note { text-align: left; }
     .avonent-formula__trust { grid-template-columns: 1fr; margin-top: 16px; }
     .avonent-formula__trust-item { min-height: 54px; justify-content: flex-start; padding: 11px 14px; text-align: left; }
   }
@@ -654,11 +594,6 @@
     { "type": "text", "id": "show_more_label", "label": "Show more label", "default": "View all ingredients" },
     { "type": "text", "id": "show_less_label", "label": "Show less label", "default": "Show fewer ingredients" },
 
-    { "type": "header", "content": "Supplement facts" },
-    { "type": "text", "id": "facts_label", "label": "Supplement Facts label", "default": "View Supplement Facts" },
-    { "type": "url", "id": "facts_link", "label": "Supplement Facts link" },
-    { "type": "richtext", "id": "formula_note", "label": "Formula note", "default": "<p>Follow the directions on the product label. Individual experiences may vary.</p>" },
-
     { "type": "header", "content": "Trust points" },
     { "type": "text", "id": "trust_1", "label": "Trust point 1", "default": "Third-party lab tested" },
     { "type": "text", "id": "trust_2", "label": "Trust point 2", "default": "Made in the USA" },
@@ -697,7 +632,7 @@
         { "type": "image_picker", "id": "image", "label": "Detailed ingredient image" },
         { "type": "text", "id": "role", "label": "Category badge", "default": "Digestive support" },
         { "type": "text", "id": "name", "label": "Ingredient name", "default": "Ingredient name" },
-        { "type": "text", "id": "amount", "label": "Amount or label detail", "default": "See Supplement Facts" },
+        { "type": "text", "id": "amount", "label": "Amount or label detail", "info": "Optional. Leave blank to hide this line." },
         { "type": "text", "id": "benefit_heading", "label": "Short benefit heading", "default": "Its role in the formula" },
         { "type": "richtext", "id": "explanation", "label": "Main explanation", "default": "<p>Explain in two or three clear sentences what this ingredient contributes to the formula.</p>" },
         { "type": "text", "id": "details_label", "label": "Expandable label", "default": "Why it is included" },
