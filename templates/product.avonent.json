@@ -643,7 +643,7 @@
         "journey_step_WECQM9": {
           "type": "journey_step",
           "settings": {
-            "week": "Week 1",
+            "week": "Week 2",
             "title": "Early Relief",
             "benefit_1": "Digestion feels lighter*",
             "benefit_2": "Bloating starts to settle*",
@@ -654,7 +654,7 @@
         "journey_step_YwtLqb": {
           "type": "journey_step",
           "settings": {
-            "week": "Week 1",
+            "week": "Week 3",
             "title": "Early Relief",
             "benefit_1": "Digestion feels lighter*",
             "benefit_2": "Bloating starts to settle*",
@@ -665,7 +665,7 @@
         "journey_step_8xDAnR": {
           "type": "journey_step",
           "settings": {
-            "week": "Week 1",
+            "week": "Week 4",
             "title": "Early Relief",
             "benefit_1": "Digestion feels lighter*",
             "benefit_2": "Bloating starts to settle*",
