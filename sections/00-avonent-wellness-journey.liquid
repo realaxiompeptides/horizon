@@ -1,5 +1,5 @@
 {% liquid
-  assign section_id = 'avonent-journey-' | append: section.id
+  assign section_id = 'AvonentJourney-' | append: section.id
 %}
 
 <section
@@ -7,514 +7,361 @@
   class="avonent-journey"
   style="
     --avj-bg: {{ section.settings.background_color }};
+    --avj-card: {{ section.settings.card_color }};
+    --avj-soft: {{ section.settings.soft_color }};
     --avj-text: {{ section.settings.text_color }};
     --avj-muted: {{ section.settings.muted_text_color }};
     --avj-accent: {{ section.settings.accent_color }};
-    --avj-inactive: {{ section.settings.inactive_color }};
-    --avj-card-text: {{ section.settings.card_text_color }};
-    --avj-line: {{ section.settings.line_color }};
-    --avj-check: {{ section.settings.check_color }};
-    --avj-max-width: {{ section.settings.content_width }}px;
+    --avj-border: {{ section.settings.border_color }};
+    --avj-width: {{ section.settings.content_width }}px;
     --avj-top: {{ section.settings.padding_top }}px;
     --avj-bottom: {{ section.settings.padding_bottom }}px;
   "
-  data-avonent-journey
-  data-activation-point="{{ section.settings.activation_point }}"
 >
   <div class="avonent-journey__inner">
-
     <header class="avonent-journey__header">
       {% if section.settings.eyebrow != blank %}
-        <div class="avonent-journey__eyebrow">
-          {{ section.settings.eyebrow }}
-        </div>
+        <div class="avonent-journey__eyebrow">{{ section.settings.eyebrow }}</div>
       {% endif %}
 
       {% if section.settings.heading != blank %}
-        <h2 class="avonent-journey__heading">
-          {{ section.settings.heading }}
-        </h2>
+        <h2 class="avonent-journey__heading">{{ section.settings.heading }}</h2>
       {% endif %}
 
-      {% if section.settings.subheading != blank %}
-        <div class="avonent-journey__subheading">
-          {{ section.settings.subheading }}
-        </div>
+      {% if section.settings.description != blank %}
+        <div class="avonent-journey__description rte">{{ section.settings.description }}</div>
       {% endif %}
     </header>
 
-    <div class="avonent-journey__timeline" data-avj-timeline>
-      <div class="avonent-journey__track" aria-hidden="true">
-        <span class="avonent-journey__track-base"></span>
-        <span class="avonent-journey__track-fill" data-avj-fill></span>
-      </div>
+    <div class="avonent-journey__timeline">
+      {% for block in section.blocks %}
+        <article
+          class="avonent-journey__step{% if forloop.last %} avonent-journey__step--last{% endif %}"
+          {{ block.shopify_attributes }}
+        >
+          <div class="avonent-journey__rail" aria-hidden="true">
+            <span class="avonent-journey__dot">
+              <span>{{ forloop.index }}</span>
+            </span>
+          </div>
 
-      <div class="avonent-journey__steps">
-        {% for block in section.blocks %}
-          <article
-            class="avonent-journey__step"
-            data-avj-step
-            {{ block.shopify_attributes }}
-          >
-            <span class="avonent-journey__marker" data-avj-marker aria-hidden="true"></span>
-
-            <div class="avonent-journey__step-content">
-              <div class="avonent-journey__week">
-                {{ block.settings.title }}
-              </div>
-
-              {% if block.settings.points != blank %}
-                <div class="avonent-journey__points rte">
-                  {{ block.settings.points }}
-                </div>
+          <div class="avonent-journey__card">
+            <div class="avonent-journey__card-heading">
+              {% if block.settings.week != blank %}
+                <span class="avonent-journey__week">{{ block.settings.week }}</span>
+              {% endif %}
+              {% if block.settings.title != blank %}
+                <h3 class="avonent-journey__title">{{ block.settings.title }}</h3>
               {% endif %}
             </div>
-          </article>
-        {% endfor %}
-      </div>
+
+            <ul class="avonent-journey__benefits" role="list">
+              {% for index in (1..4) %}
+                {% assign benefit_key = 'benefit_' | append: index %}
+                {% assign benefit = block.settings[benefit_key] %}
+                {% if benefit != blank %}
+                  <li class="avonent-journey__benefit">
+                    <span class="avonent-journey__check" aria-hidden="true">
+                      <svg viewBox="0 0 20 20" fill="none" focusable="false">
+                        <path d="M5.25 10.35 8.45 13.5 14.9 6.85" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </span>
+                    <span>{{ benefit }}</span>
+                  </li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          </div>
+        </article>
+      {% endfor %}
     </div>
 
     {% if section.settings.disclaimer != blank %}
-      <div class="avonent-journey__disclaimer">
-        {{ section.settings.disclaimer }}
-      </div>
+      <div class="avonent-journey__disclaimer rte">{{ section.settings.disclaimer }}</div>
     {% endif %}
-
   </div>
 </section>
 
-<script>
-  (() => {
-    const section = document.getElementById('{{ section_id }}');
-
-    if (!section || section.dataset.avJourneyInitialized === 'true') return;
-    section.dataset.avJourneyInitialized = 'true';
-
-    const timeline = section.querySelector('[data-avj-timeline]');
-    const fill = section.querySelector('[data-avj-fill]');
-    const steps = Array.from(section.querySelectorAll('[data-avj-step]'));
-    const markers = Array.from(section.querySelectorAll('[data-avj-marker]'));
-
-    if (!timeline || !fill || !steps.length || !markers.length) return;
-
-    const activationPercent = Math.min(
-      85,
-      Math.max(20, Number(section.dataset.activationPoint || 58))
-    );
-
-    let targetProgress = 0;
-    let currentProgress = 0;
-    let scrollTicking = false;
-    let animationFrame = null;
-
-    function getMarkerCenters() {
-      return markers.map((marker) => {
-        const rect = marker.getBoundingClientRect();
-        return rect.top + rect.height / 2;
-      });
-    }
-
-    function updateTargetState() {
-      scrollTicking = false;
-
-      const triggerY = window.innerHeight * (activationPercent / 100);
-      const centers = getMarkerCenters();
-
-      if (!centers.length) return;
-
-      const firstCenter = centers[0];
-      const lastCenter = centers[centers.length - 1];
-      const trackDistance = Math.max(1, lastCenter - firstCenter);
-
-      targetProgress = (triggerY - firstCenter) / trackDistance;
-      targetProgress = Math.max(0, Math.min(1, targetProgress));
-
-      let lastPassedIndex = -1;
-
-      centers.forEach((center, index) => {
-        const passed = center <= triggerY;
-
-        steps[index].classList.toggle('is-passed', passed);
-
-        if (passed) {
-          lastPassedIndex = index;
-        }
-      });
-
-      steps.forEach((step, index) => {
-        step.classList.toggle('is-current', index === lastPassedIndex);
-      });
-
-      startProgressAnimation();
-    }
-
-    function animateProgress() {
-      const difference = targetProgress - currentProgress;
-
-      if (Math.abs(difference) < 0.0006) {
-        currentProgress = targetProgress;
-        fill.style.transform = `scaleY(${currentProgress})`;
-        animationFrame = null;
-        return;
-      }
-
-      currentProgress += difference * 0.075;
-      fill.style.transform = `scaleY(${currentProgress})`;
-
-      animationFrame = window.requestAnimationFrame(animateProgress);
-    }
-
-    function startProgressAnimation() {
-      if (animationFrame !== null) return;
-      animationFrame = window.requestAnimationFrame(animateProgress);
-    }
-
-    function requestScrollUpdate() {
-      if (scrollTicking) return;
-
-      scrollTicking = true;
-      window.requestAnimationFrame(updateTargetState);
-    }
-
-    updateTargetState();
-    currentProgress = targetProgress;
-    fill.style.transform = `scaleY(${currentProgress})`;
-
-    window.addEventListener('scroll', requestScrollUpdate, { passive: true });
-    window.addEventListener('resize', requestScrollUpdate, { passive: true });
-
-    document.addEventListener('shopify:section:load', requestScrollUpdate);
-  })();
-</script>
-
 {% stylesheet %}
   .avonent-journey {
-    width: 100%;
+    position: relative;
+    overflow: hidden;
     padding: var(--avj-top) 0 var(--avj-bottom);
-    background: var(--avj-bg);
+    background:
+      radial-gradient(circle at 8% 8%, rgb(2 198 234 / 0.10), transparent 25rem),
+      radial-gradient(circle at 96% 92%, rgb(2 198 234 / 0.08), transparent 24rem),
+      var(--avj-bg);
     color: var(--avj-text);
   }
 
   .avonent-journey__inner {
-    width: min(calc(100% - 40px), var(--avj-max-width));
+    width: min(calc(100% - 40px), var(--avj-width));
     margin: 0 auto;
   }
 
   .avonent-journey__header {
-    max-width: 680px;
-    margin: 0 auto 36px;
+    width: min(100%, 720px);
+    margin: 0 auto clamp(36px, 5vw, 64px);
     text-align: center;
   }
 
   .avonent-journey__eyebrow {
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     color: var(--avj-accent);
-    font-family: var(--font-heading--family);
-    font-size: clamp(20px, 2.2vw, 28px);
-    font-weight: 700;
-    line-height: 1.05;
-    letter-spacing: -0.025em;
+    font-size: 12px;
+    font-weight: 850;
+    letter-spacing: 0.15em;
+    line-height: 1.2;
+    text-transform: uppercase;
   }
 
   .avonent-journey__heading {
     margin: 0;
     color: var(--avj-text);
-    font-family: var(--font-heading--family);
-    font-size: clamp(28px, 3.3vw, 44px);
-    font-weight: 650;
-    line-height: 1.05;
-    letter-spacing: -0.035em;
+    font-size: clamp(32px, 5vw, 54px);
+    font-weight: 850;
+    letter-spacing: -0.05em;
+    line-height: 1;
   }
 
-  .avonent-journey__subheading {
-    max-width: 560px;
-    margin: 15px auto 0;
+  .avonent-journey__description {
+    margin: 16px auto 0;
     color: var(--avj-muted);
-    font-family: var(--font-body--family);
-    font-size: 15px;
-    font-weight: 400;
-    line-height: 1.5;
+    font-size: clamp(15px, 2vw, 18px);
+    line-height: 1.55;
+  }
+
+  .avonent-journey__description p,
+  .avonent-journey__disclaimer p {
+    margin: 0;
   }
 
   .avonent-journey__timeline {
-    position: relative;
-    max-width: 680px;
+    width: min(100%, 880px);
     margin: 0 auto;
-  }
-
-  .avonent-journey__track {
-    position: absolute;
-    top: 19px;
-    bottom: 19px;
-    left: 10px;
-    width: 2px;
-    pointer-events: none;
-  }
-
-  .avonent-journey__track-base,
-  .avonent-journey__track-fill {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    border-radius: 99px;
-  }
-
-  .avonent-journey__track-base {
-    height: 100%;
-    background: var(--avj-line);
-  }
-
-  .avonent-journey__track-fill {
-    height: 100%;
-    background: var(--avj-accent);
-    transform: scaleY(0);
-    transform-origin: top;
-    will-change: transform;
-  }
-
-  .avonent-journey__steps {
-    position: relative;
-    z-index: 1;
   }
 
   .avonent-journey__step {
     position: relative;
     display: grid;
-    grid-template-columns: 22px minmax(0, 1fr);
+    grid-template-columns: 54px minmax(0, 1fr);
     gap: 18px;
-    padding-bottom: 30px;
+    padding-bottom: 24px;
   }
 
-  .avonent-journey__step:last-child {
-    padding-bottom: 0;
+  .avonent-journey__rail {
+    position: relative;
+    display: flex;
+    justify-content: center;
   }
 
-  .avonent-journey__marker {
-    display: block;
-    width: 14px;
-    height: 14px;
-    margin: 12px 0 0 4px;
-    border: 2px solid var(--avj-inactive);
+  .avonent-journey__rail::after {
+    content: '';
+    position: absolute;
+    top: 46px;
+    bottom: -26px;
+    left: 50%;
+    width: 3px;
+    background: linear-gradient(var(--avj-accent), color-mix(in srgb, var(--avj-accent) 25%, var(--avj-border)));
+    border-radius: 999px;
+    transform: translateX(-50%);
+  }
+
+  .avonent-journey__step--last .avonent-journey__rail::after {
+    display: none;
+  }
+
+  .avonent-journey__dot {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    width: 46px;
+    height: 46px;
+    place-items: center;
+    flex: 0 0 46px;
+    background: color-mix(in srgb, var(--avj-accent) 13%, white);
+    border: 1px solid color-mix(in srgb, var(--avj-accent) 35%, white);
     border-radius: 50%;
-    background: var(--avj-inactive);
-    box-sizing: border-box;
-    transition:
-      background-color 650ms cubic-bezier(0.22, 1, 0.36, 1),
-      border-color 650ms cubic-bezier(0.22, 1, 0.36, 1),
-      transform 500ms cubic-bezier(0.22, 1, 0.36, 1),
-      box-shadow 650ms cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: 0 0 0 7px color-mix(in srgb, var(--avj-accent) 8%, transparent);
   }
 
-  .avonent-journey__step.is-passed .avonent-journey__marker {
-    border-color: var(--avj-accent);
+  .avonent-journey__dot span {
+    display: grid;
+    width: 30px;
+    height: 30px;
+    place-items: center;
+    color: white;
     background: var(--avj-accent);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--avj-accent) 10%, transparent);
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: 850;
   }
 
-  .avonent-journey__step.is-current .avonent-journey__marker {
-    transform: scale(1.08);
-    box-shadow: 0 0 0 4px color-mix(in srgb, var(--avj-accent) 14%, transparent);
+  .avonent-journey__card {
+    padding: clamp(22px, 3vw, 32px);
+    background: linear-gradient(145deg, var(--avj-card), color-mix(in srgb, var(--avj-soft) 35%, white));
+    border: 1px solid color-mix(in srgb, var(--avj-accent) 22%, var(--avj-border));
+    border-radius: 22px;
+    box-shadow: 0 18px 50px rgb(17 24 39 / 0.07);
+    transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
   }
 
-  .avonent-journey__step-content {
-    min-width: 0;
+  .avonent-journey__card:hover {
+    border-color: color-mix(in srgb, var(--avj-accent) 55%, var(--avj-border));
+    box-shadow: 0 22px 60px rgb(2 198 234 / 0.12);
+    transform: translateY(-2px);
+  }
+
+  .avonent-journey__card-heading {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid color-mix(in srgb, var(--avj-accent) 17%, var(--avj-border));
   }
 
   .avonent-journey__week {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    width: 100%;
-    min-height: 44px;
-    padding: 10px 18px;
-    border-radius: 5px;
-    background: var(--avj-inactive);
-    color: var(--avj-card-text);
-    font-family: var(--font-body--family);
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 1.15;
-    transition:
-      background-color 850ms cubic-bezier(0.22, 1, 0.36, 1),
-      color 650ms cubic-bezier(0.22, 1, 0.36, 1),
-      transform 500ms cubic-bezier(0.22, 1, 0.36, 1),
-      box-shadow 700ms cubic-bezier(0.22, 1, 0.36, 1);
+    min-height: 30px;
+    padding: 6px 11px;
+    color: #006d82;
+    background: color-mix(in srgb, var(--avj-accent) 14%, white);
+    border: 1px solid color-mix(in srgb, var(--avj-accent) 25%, white);
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 850;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    text-transform: uppercase;
+    white-space: nowrap;
   }
 
-  .avonent-journey__step.is-passed .avonent-journey__week {
-    background: var(--avj-accent);
-  }
-
-  .avonent-journey__step.is-current .avonent-journey__week {
-    background: var(--avj-accent);
-    transform: translateX(2px);
-    box-shadow: 0 6px 18px color-mix(in srgb, var(--avj-accent) 14%, transparent);
-  }
-
-  .avonent-journey__points {
-    padding: 12px 3px 0 2px;
-    color: var(--avj-muted);
-    font-family: var(--font-body--family);
-    font-size: 14px;
-    line-height: 1.45;
-  }
-
-  .avonent-journey__points ul {
-    display: grid;
-    gap: 10px;
+  .avonent-journey__title {
     margin: 0;
+    color: var(--avj-text);
+    font-size: clamp(20px, 2.6vw, 27px);
+    font-weight: 850;
+    letter-spacing: -0.035em;
+    line-height: 1.1;
+  }
+
+  .avonent-journey__benefits {
+    display: grid;
+    gap: 14px;
+    margin: 20px 0 0;
     padding: 0;
     list-style: none;
   }
 
-  .avonent-journey__points li {
-    position: relative;
-    margin: 0;
-    padding-left: 23px;
+  .avonent-journey__benefit {
+    display: grid;
+    grid-template-columns: 30px minmax(0, 1fr);
+    gap: 12px;
+    align-items: center;
+    color: var(--avj-muted);
+    font-size: clamp(15px, 2vw, 17px);
+    line-height: 1.4;
   }
 
-  .avonent-journey__points li::before {
-    content: '✓';
-    position: absolute;
-    top: 0;
-    left: 0;
-    color: var(--avj-check);
-    font-weight: 800;
+  .avonent-journey__check {
+    display: grid;
+    width: 30px;
+    height: 30px;
+    place-items: center;
+    color: white;
+    background: linear-gradient(145deg, #00d7f5, var(--avj-accent));
+    border: 1px solid rgb(255 255 255 / 0.65);
+    border-radius: 50%;
+    box-shadow: 0 6px 16px rgb(2 198 234 / 0.24);
+  }
+
+  .avonent-journey__check svg {
+    width: 18px;
+    height: 18px;
   }
 
   .avonent-journey__disclaimer {
-    max-width: 680px;
-    margin: 26px auto 0;
+    width: min(100%, 760px);
+    margin: 10px auto 0;
     color: var(--avj-muted);
-    font-family: var(--font-body--family);
     font-size: 11px;
-    line-height: 1.45;
+    line-height: 1.5;
     text-align: center;
-    opacity: 0.8;
-  }
-
-
-  /*
-   * Smooth cumulative journey animation:
-   * every milestone keeps animating independently. If the shopper scrolls
-   * quickly, several cards and markers can be transitioning at the same time.
-   */
-  .avonent-journey__step:nth-child(1) {
-    --avj-step-delay: 0ms;
-  }
-
-  .avonent-journey__step:nth-child(2) {
-    --avj-step-delay: 70ms;
-  }
-
-  .avonent-journey__step:nth-child(3) {
-    --avj-step-delay: 140ms;
-  }
-
-  .avonent-journey__step:nth-child(4) {
-    --avj-step-delay: 210ms;
-  }
-
-  .avonent-journey__step:nth-child(5) {
-    --avj-step-delay: 280ms;
-  }
-
-  .avonent-journey__step:nth-child(6) {
-    --avj-step-delay: 350ms;
-  }
-
-  .avonent-journey__step .avonent-journey__week {
-    transition-delay: var(--avj-step-delay, 0ms);
-  }
-
-  .avonent-journey__step .avonent-journey__marker {
-    transition-delay: var(--avj-step-delay, 0ms);
-  }
-
-  /*
-   * On the way back up, remove the color in reverse order naturally.
-   * CSS transitions keep the change soft rather than snapping to black.
-   */
-  .avonent-journey__step:not(.is-passed) .avonent-journey__week,
-  .avonent-journey__step:not(.is-passed) .avonent-journey__marker {
-    transition-delay: 0ms;
   }
 
   @media screen and (max-width: 749px) {
-    .avonent-journey {
-      padding-top: var(--avj-top);
-      padding-bottom: var(--avj-bottom);
-    }
-
     .avonent-journey__inner {
-      width: min(calc(100% - 28px), var(--avj-max-width));
+      width: min(calc(100% - 28px), var(--avj-width));
     }
 
     .avonent-journey__header {
-      margin-bottom: 25px;
-    }
-
-    .avonent-journey__eyebrow {
-      font-size: 20px;
-    }
-
-    .avonent-journey__heading {
-      font-size: 25px;
-    }
-
-    .avonent-journey__subheading {
-      margin-top: 10px;
-      font-size: 13px;
-      line-height: 1.45;
-    }
-
-    .avonent-journey__track {
-      left: 7px;
-      top: 18px;
-      bottom: 18px;
+      margin-bottom: 32px;
     }
 
     .avonent-journey__step {
-      grid-template-columns: 16px minmax(0, 1fr);
-      gap: 12px;
-      padding-bottom: 24px;
+      grid-template-columns: 34px minmax(0, 1fr);
+      gap: 10px;
+      padding-bottom: 16px;
     }
 
-    .avonent-journey__marker {
-      width: 14px;
-      height: 14px;
-      margin: 11px 0 0 0;
+    .avonent-journey__dot {
+      width: 34px;
+      height: 34px;
+      flex-basis: 34px;
+      box-shadow: 0 0 0 5px color-mix(in srgb, var(--avj-accent) 8%, transparent);
+    }
+
+    .avonent-journey__dot span {
+      width: 24px;
+      height: 24px;
+      font-size: 11px;
+    }
+
+    .avonent-journey__rail::after {
+      top: 34px;
+      bottom: -18px;
+      width: 2px;
+    }
+
+    .avonent-journey__card {
+      padding: 18px 16px;
+      border-radius: 18px;
+    }
+
+    .avonent-journey__card-heading {
+      display: block;
+      padding-bottom: 14px;
     }
 
     .avonent-journey__week {
-      min-height: 40px;
-      padding: 9px 13px;
-      font-size: 12px;
-      border-radius: 4px;
+      margin-bottom: 9px;
     }
 
-    .avonent-journey__points {
-      padding-top: 10px;
-      font-size: 12px;
+    .avonent-journey__benefits {
+      gap: 12px;
+      margin-top: 16px;
     }
 
-    .avonent-journey__points ul {
-      gap: 8px;
+    .avonent-journey__benefit {
+      grid-template-columns: 27px minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
     }
 
-    .avonent-journey__points li {
-      padding-left: 19px;
+    .avonent-journey__check {
+      width: 27px;
+      height: 27px;
     }
 
-    .avonent-journey__disclaimer {
-      margin-top: 20px;
-      font-size: 10px;
+    .avonent-journey__check svg {
+      width: 16px;
+      height: 16px;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .avonent-journey__marker,
-    .avonent-journey__week {
+    .avonent-journey__card {
       transition: none;
     }
   }
@@ -522,44 +369,33 @@
 
 {% schema %}
 {
-  "name": "Avonent Wellness Journey",
+  "name": "Avonent wellness journey",
   "tag": "section",
-  "class": "avonent-wellness-journey-section",
+  "class": "section-avonent-journey",
   "settings": [
     {
       "type": "text",
       "id": "eyebrow",
-      "label": "Blue heading",
-      "default": "Your Wellness"
+      "label": "Eyebrow",
+      "default": "YOUR DAILY JOURNEY"
     },
     {
       "type": "text",
       "id": "heading",
-      "label": "Main heading",
+      "label": "Heading",
       "default": "Journey with Avonent"
     },
     {
-      "type": "textarea",
-      "id": "subheading",
-      "label": "Intro text",
-      "default": "Consistency matters. Here’s an example of how a simple daily Avonent routine can become easier to maintain over the first few weeks."
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Built for daily use. Here’s how things may shift with consistent use. Individual experiences vary.</p>"
     },
     {
-      "type": "textarea",
+      "type": "richtext",
       "id": "disclaimer",
-      "label": "Small disclaimer",
-      "default": "Individual experiences vary. Follow the directions on your product label and consult a qualified healthcare professional when appropriate."
-    },
-    {
-      "type": "range",
-      "id": "activation_point",
-      "label": "Scroll activation point",
-      "min": 30,
-      "max": 75,
-      "step": 1,
-      "unit": "%",
-      "default": 58,
-      "info": "Controls how far down the viewport each step must travel before its Avonent color activates."
+      "label": "Disclaimer",
+      "default": "<p>*Individual results may vary. These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.</p>"
     },
     {
       "type": "header",
@@ -569,7 +405,19 @@
       "type": "color",
       "id": "background_color",
       "label": "Background",
+      "default": "#F7FCFD"
+    },
+    {
+      "type": "color",
+      "id": "card_color",
+      "label": "Cards",
       "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "soft_color",
+      "label": "Soft card tint",
+      "default": "#EAF9FC"
     },
     {
       "type": "color",
@@ -586,32 +434,14 @@
     {
       "type": "color",
       "id": "accent_color",
-      "label": "Avonent active color",
+      "label": "Avonent accent",
       "default": "#02C6EA"
     },
     {
       "type": "color",
-      "id": "inactive_color",
-      "label": "Inactive week color",
-      "default": "#111111"
-    },
-    {
-      "type": "color",
-      "id": "card_text_color",
-      "label": "Week label text",
-      "default": "#FFFFFF"
-    },
-    {
-      "type": "color",
-      "id": "line_color",
-      "label": "Inactive timeline",
-      "default": "#B8BEC2"
-    },
-    {
-      "type": "color",
-      "id": "check_color",
-      "label": "Checkmarks",
-      "default": "#02C6EA"
+      "id": "border_color",
+      "label": "Borders",
+      "default": "#D9E5E8"
     },
     {
       "type": "header",
@@ -621,84 +451,119 @@
       "type": "range",
       "id": "content_width",
       "label": "Content width",
-      "min": 480,
-      "max": 900,
+      "min": 600,
+      "max": 1200,
       "step": 20,
       "unit": "px",
-      "default": 680
+      "default": 960
     },
     {
       "type": "range",
       "id": "padding_top",
       "label": "Top spacing",
       "min": 0,
-      "max": 140,
+      "max": 160,
       "step": 4,
       "unit": "px",
-      "default": 72
+      "default": 64
     },
     {
       "type": "range",
       "id": "padding_bottom",
       "label": "Bottom spacing",
       "min": 0,
-      "max": 140,
+      "max": 160,
       "step": 4,
       "unit": "px",
-      "default": 72
+      "default": 64
     }
   ],
   "blocks": [
     {
-      "type": "week",
-      "name": "Journey Step",
+      "type": "journey_step",
+      "name": "Journey step",
+      "limit": 6,
       "settings": [
         {
           "type": "text",
-          "id": "title",
+          "id": "week",
           "label": "Week label",
-          "default": "Week 1: Build the Routine"
+          "default": "Week 1"
         },
         {
-          "type": "richtext",
-          "id": "points",
-          "label": "Bullet points",
-          "default": "<ul><li>Your daily routine starts to feel more intentional</li><li>You learn when the product fits best into your day</li><li>Consistency becomes easier to maintain</li></ul>"
+          "type": "text",
+          "id": "title",
+          "label": "Step title",
+          "default": "Early Relief"
+        },
+        {
+          "type": "text",
+          "id": "benefit_1",
+          "label": "Benefit 1",
+          "default": "Digestion feels lighter*"
+        },
+        {
+          "type": "text",
+          "id": "benefit_2",
+          "label": "Benefit 2",
+          "default": "Bloating starts to settle*"
+        },
+        {
+          "type": "text",
+          "id": "benefit_3",
+          "label": "Benefit 3",
+          "default": "Less heaviness after meals*"
+        },
+        {
+          "type": "text",
+          "id": "benefit_4",
+          "label": "Benefit 4"
         }
       ]
     }
   ],
-  "max_blocks": 6,
   "presets": [
     {
-      "name": "Avonent Wellness Journey",
+      "name": "Avonent wellness journey",
       "blocks": [
         {
-          "type": "week",
+          "type": "journey_step",
           "settings": {
-            "title": "Week 1: Build the Routine",
-            "points": "<ul><li>Your daily routine starts to feel more intentional</li><li>You learn when the product fits best into your day</li><li>Consistency becomes easier to maintain</li></ul>"
+            "week": "Week 1",
+            "title": "Early Relief",
+            "benefit_1": "Digestion feels lighter*",
+            "benefit_2": "Bloating starts to settle*",
+            "benefit_3": "Less heaviness after meals*"
           }
         },
         {
-          "type": "week",
+          "type": "journey_step",
           "settings": {
-            "title": "Week 2: Find Your Rhythm",
-            "points": "<ul><li>Your routine starts to feel more automatic</li><li>You can better judge how the product fits your lifestyle</li><li>Staying consistent takes less effort</li></ul>"
+            "week": "Week 2",
+            "title": "Real Comfort",
+            "benefit_1": "Less gas and pressure*",
+            "benefit_2": "Mornings feel clearer*",
+            "benefit_3": "Energy starts to steady*"
           }
         },
         {
-          "type": "week",
+          "type": "journey_step",
           "settings": {
-            "title": "Week 3: Build Momentum",
-            "points": "<ul><li>Your daily habit feels established</li><li>You have more context for your own experience</li><li>Consistency becomes part of your normal routine</li></ul>"
+            "week": "Week 3",
+            "title": "Gut Working Better",
+            "benefit_1": "More consistent comfort*",
+            "benefit_2": "Easier to enjoy meals*",
+            "benefit_3": "Regularity improves*"
           }
         },
         {
-          "type": "week",
+          "type": "journey_step",
           "settings": {
-            "title": "Week 4+: Keep It Going",
-            "points": "<ul><li>Keep following the serving directions on the label</li><li>Support your routine with sleep, hydration, and nutrition</li><li>Adjust your routine based on your personal experience</li></ul>"
+            "week": "Week 4+",
+            "title": "Lasting Balance",
+            "benefit_1": "Light and comfortable becomes normal*",
+            "benefit_2": "Steady energy all day*",
+            "benefit_3": "Your gut finally feels supported*"
           }
         }
       ]
