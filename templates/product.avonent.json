@@ -131,7 +131,7 @@
           "type": "00-avonent-stock-meter",
           "name": "Avonent Stock Meter",
           "settings": {
-            "sold_percent": 76,
+            "sold_percent": 93,
             "sold_text": "Sold",
             "fill_color": "#02c6ea",
             "track_color": "#e4eff2",
