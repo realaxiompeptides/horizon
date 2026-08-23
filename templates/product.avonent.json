@@ -540,6 +540,7 @@
         "sphaeranthus_indicus": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/A929BD16-DF1D-422F-A109-10F3AAF241DD.png",
             "role": "Botanical digestive support",
             "name": "Sphaeranthus indicus Flower Extract",
             "amount": "Part of the 300 mg botanical blend",
