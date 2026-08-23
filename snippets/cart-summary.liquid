@@ -14,7 +14,7 @@
     assign is_cart_drawer = true
   endif
 
-  assign show_discount_code = show_discount_code
+  assign show_discount_code = settings.show_add_discount_code
   if is_cart_drawer
     assign show_discount_code = false
   endif
