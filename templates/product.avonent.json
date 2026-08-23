@@ -842,14 +842,14 @@
         "muted_text_color": "#59676c",
         "accent_color": "#02c6ea",
         "accent_dark_color": "#087e9d",
+        "urgency_color": "#e53b3b",
         "border_color": "#d7e7eb",
         "button_color": "#111111",
         "button_text_color": "#ffffff",
         "content_width": 1240,
         "corner_radius": 14,
-        "padding_top": 64,
-        "padding_bottom": 28,
-        "urgency_color": "#e53b3b"
+        "padding_top": 28,
+        "padding_bottom": 28
       }
     },
     "avonent_customer_reviews": {
