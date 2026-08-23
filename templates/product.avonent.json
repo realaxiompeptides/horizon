@@ -456,8 +456,8 @@
           "type": "stat",
           "settings": {
             "kicker": "10-IN-1 FORMULA",
-            "value": "10-in",
-            "label": "Active formula per serving",
+            "value": "1,000+ mg",
+            "label": "Active ingredients per serving",
             "detail": ""
           }
         },
