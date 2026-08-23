@@ -363,6 +363,9 @@
       },
       "shipping": {
         "delivery_title": "Shipping Address (Step 2/3)"
+      },
+      "payment": {
+        "title": "Payment (Step 3/3)"
       }
     }
   }
