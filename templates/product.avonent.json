@@ -580,11 +580,11 @@
           "type": "ingredient",
           "settings": {
             "image": "shopify://shop_images/75E05387-DF21-4A17-94A1-2CDDC062CB5C.png",
-            "role": "Gentle digestive support",
+            "role": "SOOTHING DIGESTIVE SUPPORT",
             "name": "Slippery Elm Bark Extract",
             "amount": "40 mg",
-            "benefit_heading": "Its role in the formula",
-            "explanation": "<p>A soothing botanical traditionally used to support digestive comfort.</p>",
+            "benefit_heading": "Comfort for a sensitive stomach.",
+            "explanation": "<p>Slippery elm forms a naturally soothing texture when mixed with water, helping support the digestive lining and a more comfortable gut environment.*</p>",
             "details_label": "Why it is included",
             "details": ""
           }
