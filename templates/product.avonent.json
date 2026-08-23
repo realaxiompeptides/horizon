@@ -440,6 +440,74 @@
         "padding-block-end": 24
       }
     },
+    "avonent_proof_stats": {
+      "type": "00-avonent-proof-stats",
+      "blocks": {
+        "ingredient_research": {
+          "type": "stat",
+          "settings": {
+            "kicker": "INGREDIENT-LEVEL RESEARCH",
+            "value": "Add total",
+            "label": "Published studies on featured ingredients",
+            "detail": "Enter only a sourced total that matches the exact ingredients used."
+          }
+        },
+        "formula_amount": {
+          "type": "stat",
+          "settings": {
+            "kicker": "PER SERVING",
+            "value": "Add mg",
+            "label": "Active formula per serving",
+            "detail": "Use the exact amount shown on the Supplement Facts panel."
+          }
+        },
+        "traditional_use": {
+          "type": "stat",
+          "settings": {
+            "kicker": "BOTANICAL TRADITION",
+            "value": "2,000+",
+            "label": "Years of traditional botanical use",
+            "detail": "Connect this statement to one named ingredient and a reliable source."
+          }
+        },
+        "orders_shipped": {
+          "type": "stat",
+          "settings": {
+            "kicker": "AVONENT COMMUNITY",
+            "value": "Add total",
+            "label": "Orders shipped",
+            "detail": "Use a real fulfilled-order milestone rounded down."
+          }
+        }
+      },
+      "block_order": [
+        "ingredient_research",
+        "formula_amount",
+        "traditional_use",
+        "orders_shipped"
+      ],
+      "settings": {
+        "eyebrow": "TRADITION MEETS FORMULATION",
+        "heading": "Rooted in nature. Built for modern digestion.",
+        "description": "<p>A thoughtfully designed blend of botanicals, digestive enzymes, and bile support for a simple daily wellness routine.</p>",
+        "overlay_opacity": 75,
+        "button_text": "Try Avonent Risk-Free",
+        "button_link": "",
+        "guarantee_text": "30-day money-back guarantee",
+        "footnote": "<p>Traditional use does not establish effectiveness. Research references apply to individual ingredients unless otherwise stated.</p>",
+        "background_color": "#087e9d",
+        "text_color": "#ffffff",
+        "muted_text_color": "#d7f3f8",
+        "accent_color": "#8deeff",
+        "divider_color": "#53b9cf",
+        "button_color": "#02c6ea",
+        "button_text_color": "#07181d",
+        "content_width": 1240,
+        "corner_radius": 16,
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
     "avonent_formula_breakdown": {
       "type": "00-avonent-formula-breakdown",
       "blocks": {
@@ -707,6 +775,7 @@
         "policy_text": "",
         "policy_link": "shopify://policies/refund-policy",
         "show_image_badge": false,
+        "image_fit": "contain",
         "desktop_layout": "stacked",
         "image_width": 1100,
         "image_height": 560,
@@ -725,8 +794,7 @@
         "content_width": 1240,
         "corner_radius": 18,
         "padding_top": 64,
-        "padding_bottom": 0,
-        "image_fit": "contain"
+        "padding_bottom": 0
       }
     },
     "avonent_customer_reviews": {
@@ -828,75 +896,6 @@
         "content_width": 1240,
         "padding_top": 24,
         "padding_bottom": 24
-      }
-    },
-    "avonent_proof_stats": {
-      "type": "00-avonent-proof-stats",
-      "disabled": true,
-      "blocks": {
-        "ingredient_research": {
-          "type": "stat",
-          "settings": {
-            "kicker": "INGREDIENT-LEVEL RESEARCH",
-            "value": "Add total",
-            "label": "Published studies on featured ingredients",
-            "detail": "Enter only a sourced total that matches the exact ingredients used."
-          }
-        },
-        "formula_amount": {
-          "type": "stat",
-          "settings": {
-            "kicker": "PER SERVING",
-            "value": "Add mg",
-            "label": "Active formula per serving",
-            "detail": "Use the exact amount shown on the Supplement Facts panel."
-          }
-        },
-        "traditional_use": {
-          "type": "stat",
-          "settings": {
-            "kicker": "BOTANICAL TRADITION",
-            "value": "2,000+",
-            "label": "Years of traditional botanical use",
-            "detail": "Connect this statement to one named ingredient and a reliable source."
-          }
-        },
-        "orders_shipped": {
-          "type": "stat",
-          "settings": {
-            "kicker": "AVONENT COMMUNITY",
-            "value": "Add total",
-            "label": "Orders shipped",
-            "detail": "Use a real fulfilled-order milestone rounded down."
-          }
-        }
-      },
-      "block_order": [
-        "ingredient_research",
-        "formula_amount",
-        "traditional_use",
-        "orders_shipped"
-      ],
-      "settings": {
-        "eyebrow": "TRADITION MEETS FORMULATION",
-        "heading": "Rooted in nature. Built for modern digestion.",
-        "description": "<p>A thoughtfully designed blend of botanicals, digestive enzymes, and bile support for a simple daily wellness routine.</p>",
-        "overlay_opacity": 75,
-        "button_text": "Try Avonent Risk-Free",
-        "button_link": "",
-        "guarantee_text": "30-day money-back guarantee",
-        "footnote": "<p>Traditional use does not establish effectiveness. Research references apply to individual ingredients unless otherwise stated.</p>",
-        "background_color": "#087e9d",
-        "text_color": "#ffffff",
-        "muted_text_color": "#d7f3f8",
-        "accent_color": "#8deeff",
-        "divider_color": "#53b9cf",
-        "button_color": "#02c6ea",
-        "button_text_color": "#07181d",
-        "content_width": 1240,
-        "corner_radius": 16,
-        "padding_top": 72,
-        "padding_bottom": 72
       }
     }
   },
