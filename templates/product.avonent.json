@@ -455,8 +455,8 @@
         "formula_amount": {
           "type": "stat",
           "settings": {
-            "kicker": "PER SERVING",
-            "value": "Add mg",
+            "kicker": "10-IN-1 FORMULA",
+            "value": "10-in",
             "label": "Active formula per serving",
             "detail": ""
           }
