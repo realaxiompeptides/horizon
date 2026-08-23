@@ -714,7 +714,7 @@
     }
 
     .avonent-bottom-offer__inner { width: min(calc(100% - 28px), var(--abo-width)); }
-    .avonent-bottom-offer__header { margin-bottom: 25px; text-align: left; }
+    .avonent-bottom-offer__header { margin-bottom: 25px; text-align: center; }
     .avonent-bottom-offer__heading { font-size: 34px; }
     .avonent-bottom-offer__description { margin-top: 11px; font-size: 14px; }
     .avonent-bottom-offer__purchase { padding: 18px 14px; border-radius: var(--abo-radius); }
@@ -735,8 +735,8 @@
   }
 
   @media screen and (max-width: 390px) {
-    .avonent-bottom-offer__bundle-image { display: none; }
-    .avonent-bottom-offer__bundle { grid-template-columns: auto minmax(0, 1fr) auto; }
+    .avonent-bottom-offer__bundle-image { width: 40px; height: 40px; }
+    .avonent-bottom-offer__bundle { gap: 7px; padding-inline: 8px; }
     .avonent-bottom-offer__submit.add-to-cart-button { justify-content: center; padding-right: 16px; }
     .avonent-bottom-offer__submit-price { display: none; }
   }
