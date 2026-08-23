@@ -629,55 +629,69 @@
     "avonent_wellness_journey": {
       "type": "00-avonent-wellness-journey",
       "blocks": {
-        "week_1": {
-          "type": "week",
+        "journey_step_cBQCUz": {
+          "type": "journey_step",
           "settings": {
-            "title": "Week 1: Build the Routine",
-            "points": "<ul><li>Your daily routine starts to feel more intentional</li><li>You learn when the product fits best into your day</li><li>Consistency becomes easier to maintain</li></ul>"
+            "week": "Week 1",
+            "title": "Early Relief",
+            "benefit_1": "Digestion feels lighter*",
+            "benefit_2": "Bloating starts to settle*",
+            "benefit_3": "Less heaviness after meals*",
+            "benefit_4": ""
           }
         },
-        "week_2": {
-          "type": "week",
+        "journey_step_WECQM9": {
+          "type": "journey_step",
           "settings": {
-            "title": "Week 2: Find Your Rhythm",
-            "points": "<ul><li>Your routine starts to feel more automatic</li><li>You can better judge how the product fits your lifestyle</li><li>Staying consistent takes less effort</li></ul>"
+            "week": "Week 1",
+            "title": "Early Relief",
+            "benefit_1": "Digestion feels lighter*",
+            "benefit_2": "Bloating starts to settle*",
+            "benefit_3": "Less heaviness after meals*",
+            "benefit_4": ""
           }
         },
-        "week_3": {
-          "type": "week",
+        "journey_step_YwtLqb": {
+          "type": "journey_step",
           "settings": {
-            "title": "Week 3: Build Momentum",
-            "points": "<ul><li>Your daily habit feels established</li><li>You have more context for your own experience</li><li>Consistency becomes part of your normal routine</li></ul>"
+            "week": "Week 1",
+            "title": "Early Relief",
+            "benefit_1": "Digestion feels lighter*",
+            "benefit_2": "Bloating starts to settle*",
+            "benefit_3": "Less heaviness after meals*",
+            "benefit_4": ""
           }
         },
-        "week_4": {
-          "type": "week",
+        "journey_step_8xDAnR": {
+          "type": "journey_step",
           "settings": {
-            "title": "Week 4+: Keep It Going",
-            "points": "<ul><li>Keep following the serving directions on the label</li><li>Support your routine with sleep, hydration, and nutrition</li><li>Adjust your routine based on your personal experience</li></ul>"
+            "week": "Week 1",
+            "title": "Early Relief",
+            "benefit_1": "Digestion feels lighter*",
+            "benefit_2": "Bloating starts to settle*",
+            "benefit_3": "Less heaviness after meals*",
+            "benefit_4": ""
           }
         }
       },
       "block_order": [
-        "week_1",
-        "week_2",
-        "week_3",
-        "week_4"
+        "journey_step_cBQCUz",
+        "journey_step_WECQM9",
+        "journey_step_YwtLqb",
+        "journey_step_8xDAnR"
       ],
       "settings": {
         "eyebrow": "Your Wellness",
         "heading": "Journey with Avonent",
-        "subheading": "Consistency matters. Here’s an example of how a simple daily Avonent routine can become easier to maintain over the first few weeks.",
+        "description": "<p>Built for daily use. Here’s how things may shift with consistent use. Individual experiences vary.</p>",
         "disclaimer": "",
-        "activation_point": 58,
         "background_color": "#ffffff",
+        "card_color": "#ffffff",
+        "soft_color": "#eaf9fc",
         "text_color": "#111111",
         "muted_text_color": "#596269",
         "accent_color": "#02c6ea",
-        "inactive_color": "#111111",
-        "card_text_color": "#ffffff",
-        "line_color": "#b8bec2",
-        "check_color": "#02c6ea",
+        "border_color": "#d9e5e8",
         "content_width": 680,
         "padding_top": 24,
         "padding_bottom": 0
