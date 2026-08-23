@@ -365,8 +365,11 @@
         "delivery_title": "Shipping Address (Step 2/3)"
       },
       "payment": {
-        "title": "Payment (Step 3/3)"
-      }
+  "title": "Payment (Step 3/3)"
+},
+"order_summary": {
+  "recurring_subtotal_label": "30-Day Guarantee"
+}
     }
   }
 }
