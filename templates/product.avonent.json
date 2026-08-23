@@ -528,11 +528,11 @@
           "type": "ingredient",
           "settings": {
             "image": "shopify://shop_images/37646A5E-CD1D-45ED-9652-E39FF98543A7.png",
-            "role": "Digestive regularity",
+            "role": "DAILY REGULARITY",
             "name": "Terminalia chebula Fruit Extract",
             "amount": "Part of the 300 mg botanical blend",
-            "benefit_heading": "Its role in the formula",
-            "explanation": "<p>A traditional botanical fruit extract included to support digestive regularity and everyday gut balance.</p>",
+            "benefit_heading": "For a routine that feels more predictable.",
+            "explanation": "<p>A time-tested botanical that supports natural digestive movement, comfortable regularity, and everyday gut balance.</p>",
             "details_label": "Why it is included",
             "details": ""
           }
