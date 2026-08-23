@@ -670,6 +670,19 @@
     "avonent_customer_reviews": {
       "type": "00-avonent-customer-reviews",
       "blocks": {
+        "review_8LK8CK": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "",
+            "review": "",
+            "customer_name": "",
+            "verified": true,
+            "date": "",
+            "tag_1": "",
+            "tag_2": ""
+          }
+        },
         "review_r4U3Cb": {
           "type": "review",
           "settings": {
@@ -698,6 +711,7 @@
         }
       },
       "block_order": [
+        "review_8LK8CK",
         "review_r4U3Cb",
         "review_xR9fam"
       ],
