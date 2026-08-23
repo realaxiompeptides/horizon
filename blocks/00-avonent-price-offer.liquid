@@ -200,19 +200,6 @@
 
       function getSellingPlanId() {
         const scope = getSectionRoot();
-        const avonentControlledPlan = scope.querySelector(
-          'input[name="selling_plan"][data-avonent-selling-plan]'
-        );
-
-        // When the Avonent subscription-first switch is present, it is the
-        // source of truth. A disabled input intentionally means one-time.
-        if (avonentControlledPlan) {
-          if (avonentControlledPlan.disabled || !avonentControlledPlan.value) {
-            return null;
-          }
-
-          return Number(avonentControlledPlan.value);
-        }
 
         const checkedRadio = scope.querySelector(
           'input[name="selling_plan"]:checked'
