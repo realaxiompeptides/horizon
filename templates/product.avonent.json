@@ -524,6 +524,31 @@
             "details": ""
           }
         },
+        "terminalia_chebula": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/37646A5E-CD1D-45ED-9652-E39FF98543A7.png",
+            "role": "Digestive regularity",
+            "name": "Terminalia chebula Fruit Extract",
+            "amount": "Part of the 300 mg botanical blend",
+            "benefit_heading": "Its role in the formula",
+            "explanation": "<p>A traditional botanical fruit extract included to support digestive regularity and everyday gut balance.</p>",
+            "details_label": "Why it is included",
+            "details": ""
+          }
+        },
+        "sphaeranthus_indicus": {
+          "type": "ingredient",
+          "settings": {
+            "role": "Botanical digestive support",
+            "name": "Sphaeranthus indicus Flower Extract",
+            "amount": "Part of the 300 mg botanical blend",
+            "benefit_heading": "Its role in the formula",
+            "explanation": "<p>A complementary flower extract included as part of the formula’s digestive-support botanical blend.</p>",
+            "details_label": "Why it is included",
+            "details": ""
+          }
+        },
         "ox_bile": {
           "type": "ingredient",
           "settings": {
@@ -558,30 +583,6 @@
             "amount": "40 mg",
             "benefit_heading": "Its role in the formula",
             "explanation": "<p>A soothing botanical traditionally used to support digestive comfort.</p>",
-            "details_label": "Why it is included",
-            "details": ""
-          }
-        },
-        "terminalia_chebula": {
-          "type": "ingredient",
-          "settings": {
-            "role": "Digestive regularity",
-            "name": "Terminalia chebula Fruit Extract",
-            "amount": "Part of the 300 mg botanical blend",
-            "benefit_heading": "Its role in the formula",
-            "explanation": "<p>A traditional botanical fruit extract included to support digestive regularity and everyday gut balance.</p>",
-            "details_label": "Why it is included",
-            "details": ""
-          }
-        },
-        "sphaeranthus_indicus": {
-          "type": "ingredient",
-          "settings": {
-            "role": "Botanical digestive support",
-            "name": "Sphaeranthus indicus Flower Extract",
-            "amount": "Part of the 300 mg botanical blend",
-            "benefit_heading": "Its role in the formula",
-            "explanation": "<p>A complementary flower extract included as part of the formula’s digestive-support botanical blend.</p>",
             "details_label": "Why it is included",
             "details": ""
           }
