@@ -848,7 +848,8 @@
         "content_width": 1240,
         "corner_radius": 14,
         "padding_top": 64,
-        "padding_bottom": 28
+        "padding_bottom": 28,
+        "urgency_color": "#e53b3b"
       }
     },
     "avonent_customer_reviews": {
