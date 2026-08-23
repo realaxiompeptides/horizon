@@ -566,6 +566,7 @@
         "digezyme": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/B37E348E-57D9-4600-921E-5ABFE3FDFA35.png",
             "role": "Food breakdown support",
             "name": "DigeZyme®",
             "amount": "50 mg multi-enzyme complex",
