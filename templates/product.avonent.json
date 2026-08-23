@@ -505,7 +505,7 @@
         "content_width": 1240,
         "corner_radius": 16,
         "padding_top": 24,
-        "padding_bottom": 24
+        "padding_bottom": 0
       }
     },
     "avonent_formula_breakdown": {
