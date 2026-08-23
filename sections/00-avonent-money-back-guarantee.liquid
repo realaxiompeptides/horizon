@@ -1,13 +1,6 @@
 {% liquid
   assign section_id = 'AvonentGuarantee-' | append: section.id
   assign guarantee_product = closest.product | default: product
-  assign hero_image = section.settings.hero_image
-
-  if hero_image == blank and guarantee_product != blank
-    assign hero_image = guarantee_product.featured_image
-  endif
-
-  assign hero_alt = hero_image.alt | default: guarantee_product.title
 %}
 
 <section
@@ -43,7 +36,7 @@
   {% endif %}
 
   <div class="avonent-guarantee__inner">
-    <div class="avonent-guarantee__layout{% if hero_image == blank %} avonent-guarantee__layout--no-image{% endif %}">
+    <div class="avonent-guarantee__layout{% if section.settings.hero_image == blank %} avonent-guarantee__layout--no-image{% endif %}">
       <div class="avonent-guarantee__content">
         {% if section.settings.show_seal %}
           <div class="avonent-guarantee__seal" aria-label="{{ section.settings.days }} day guarantee">
@@ -103,17 +96,17 @@
         {% endif %}
       </div>
 
-      {% if hero_image != blank %}
+      {% if section.settings.hero_image != blank %}
         <div class="avonent-guarantee__media">
           {{
-            hero_image
+            section.settings.hero_image
             | image_url: width: 1800
             | image_tag:
               loading: 'lazy',
               widths: '480, 720, 960, 1200, 1500, 1800',
               sizes: '(min-width: 990px) 760px, 100vw',
               class: 'avonent-guarantee__image',
-              alt: hero_alt
+              alt: section.settings.hero_image.alt
           }}
 
           {% if section.settings.show_image_badge %}

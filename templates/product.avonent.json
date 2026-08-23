@@ -692,6 +692,42 @@
         "padding_bottom": 36
       }
     },
+    "avonent_money_back_guarantee": {
+      "type": "00-avonent-money-back-guarantee",
+      "settings": {
+        "show_top_strip": true,
+        "strip_text": "30-Day Money-Back Guarantee",
+        "days": 30,
+        "show_seal": true,
+        "eyebrow": "FEEL THE DIFFERENCE",
+        "heading": "30-Day Risk-Free Trial",
+        "description": "<p>Try Avonent for 30 days. If you are not satisfied, contact us within 30 days for help with a return under our refund policy.</p>",
+        "button_text": "Try Risk-Free Today",
+        "button_link": "",
+        "policy_text": "See refund policy for complete terms",
+        "policy_link": "shopify://policies/refund-policy",
+        "show_image_badge": true,
+        "desktop_layout": "stacked",
+        "image_width": 900,
+        "image_height": 560,
+        "trust_1": "Secure checkout",
+        "trust_2": "Simple support",
+        "trust_3": "30-day guarantee",
+        "background_color": "#f2fafc",
+        "strip_background": "#087e9d",
+        "strip_text_color": "#ffffff",
+        "text_color": "#111111",
+        "muted_text_color": "#465b62",
+        "accent_color": "#02c6ea",
+        "accent_dark_color": "#1996b5",
+        "button_color": "#02c6ea",
+        "button_text_color": "#ffffff",
+        "content_width": 1240,
+        "corner_radius": 18,
+        "padding_top": 64,
+        "padding_bottom": 0
+      }
+    },
     "avonent_customer_reviews": {
       "type": "00-avonent-customer-reviews",
       "blocks": {
@@ -789,44 +825,8 @@
         "border_color": "#d6e8ec",
         "corner_radius": 18,
         "content_width": 1240,
-        "padding_top": 16,
+        "padding_top": 36,
         "padding_bottom": 24
-      }
-    },
-    "avonent_money_back_guarantee": {
-      "type": "00-avonent-money-back-guarantee",
-      "settings": {
-        "show_top_strip": true,
-        "strip_text": "30-Day Money-Back Guarantee",
-        "days": 30,
-        "show_seal": true,
-        "eyebrow": "FEEL THE DIFFERENCE",
-        "heading": "30-Day Risk-Free Trial",
-        "description": "<p>Try Avonent for 30 days. If you are not satisfied, contact us within 30 days for help with a return under our refund policy.</p>",
-        "button_text": "Try Risk-Free Today",
-        "button_link": "",
-        "policy_text": "See refund policy for complete terms",
-        "policy_link": "shopify://policies/refund-policy",
-        "show_image_badge": true,
-        "desktop_layout": "stacked",
-        "image_width": 900,
-        "image_height": 560,
-        "trust_1": "Secure checkout",
-        "trust_2": "Simple support",
-        "trust_3": "30-day guarantee",
-        "background_color": "#f2fafc",
-        "strip_background": "#087e9d",
-        "strip_text_color": "#ffffff",
-        "text_color": "#111111",
-        "muted_text_color": "#465b62",
-        "accent_color": "#02c6ea",
-        "accent_dark_color": "#1996b5",
-        "button_color": "#02c6ea",
-        "button_text_color": "#ffffff",
-        "content_width": 1240,
-        "corner_radius": 18,
-        "padding_top": 64,
-        "padding_bottom": 0
       }
     }
   },
