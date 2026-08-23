@@ -564,6 +564,7 @@
         "slippery_elm": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/75E05387-DF21-4A17-94A1-2CDDC062CB5C.png",
             "role": "Gentle digestive support",
             "name": "Slippery Elm",
             "amount": "See Supplement Facts",
