@@ -738,8 +738,8 @@
         "border_color": "#d6e8ec",
         "corner_radius": 18,
         "content_width": 1240,
-        "padding_top": 72,
-        "padding_bottom": 72
+        "padding_top": 16,
+        "padding_bottom": 24
       }
     }
   },
