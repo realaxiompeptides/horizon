@@ -514,6 +514,7 @@
         "artichoke_extract": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/EE596049-5BD0-41D5-894B-76076508F580.png",
             "role": "Digestive comfort",
             "name": "Artichoke Extract",
             "amount": "See Supplement Facts",
