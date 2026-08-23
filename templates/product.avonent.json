@@ -706,7 +706,7 @@
         "button_link": "",
         "policy_text": "See refund policy for complete terms",
         "policy_link": "shopify://policies/refund-policy",
-        "show_image_badge": true,
+        "show_image_badge": false,
         "desktop_layout": "stacked",
         "image_width": 900,
         "image_height": 560,
