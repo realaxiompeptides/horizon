@@ -268,7 +268,7 @@
               {% if subscription_available %}
                 <div class="avonent-bottom-offer__subscription-details" data-abo-subscription-details>
                   <span>
-                    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M20 7v5h-5M4 17v-5h5M6.1 8.2A7 7 0 0 1 18.7 7M17.9 15.8A7 7 0 0 1 5.3 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M20 11a8 8 0 1 0-2.34 5.66M20 4v7h-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     {{ section.settings.refill_text }}
                   </span>
                   <i aria-hidden="true"></i>
@@ -284,6 +284,8 @@
                   data-abo-purchase-toggle
                   data-subscription-label="{{ section.settings.subscription_label | escape }}"
                   data-one-time-label="{{ section.settings.purchase_label | escape }}"
+                  data-one-time-copy="{{ section.settings.one_time_link_text | escape }} {{ selected_variant.price | money }}{% if section.settings.one_time_link_suffix != blank %} {{ section.settings.one_time_link_suffix | escape }}{% endif %}"
+                  data-subscription-copy="{{ section.settings.subscription_return_text | escape }} {{ subscription_allocation.price | money }}"
                   aria-pressed="false"
                 >
                   <span data-abo-purchase-toggle-text>
@@ -409,8 +411,8 @@
         if (purchaseToggle) purchaseToggle.setAttribute('aria-pressed', String(!isSubscription));
         if (purchaseToggleText) {
           purchaseToggleText.textContent = isSubscription
-            ? '{{ section.settings.one_time_link_text | escape }} {{ selected_variant.price | money }}{% if section.settings.one_time_link_suffix != blank %} {{ section.settings.one_time_link_suffix | escape }}{% endif %}'
-            : '{{ section.settings.subscription_return_text | escape }} {{ subscription_allocation.price | money }}';
+            ? purchaseToggle.dataset.oneTimeCopy
+            : purchaseToggle.dataset.subscriptionCopy;
         }
 
         selectBundle(bundleInputs.find((input) => input.checked) || bundleInputs[0]);
@@ -777,9 +779,9 @@
     min-height: 58px;
     justify-content: flex-start;
     padding: 14px 154px 14px 22px;
-    color: var(--abo-button-text);
-    background: var(--abo-button);
-    border: 1px solid var(--abo-button);
+    color: #ffffff !important;
+    background: #02c6ea !important;
+    border: 1px solid #02c6ea !important;
     border-radius: var(--abo-radius);
     font-size: 15px;
     font-weight: 800;
