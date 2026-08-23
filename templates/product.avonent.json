@@ -440,6 +440,87 @@
         "padding-block-end": 24
       }
     },
+    "avonent_formula_breakdown": {
+      "type": "00-avonent-formula-breakdown",
+      "blocks": {
+        "artichoke_extract": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Artichoke Extract",
+            "amount": "See Supplement Facts",
+            "role": "Digestive comfort",
+            "explanation": "<p>A botanical traditionally used to support bile flow and comfortable digestion.</p>"
+          }
+        },
+        "triphala_blend": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Triphala Blend",
+            "amount": "See Supplement Facts",
+            "role": "Daily gut balance",
+            "explanation": "<p>A traditional three-fruit blend used to support regularity and digestive balance.</p>"
+          }
+        },
+        "ox_bile": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Ox Bile Powder",
+            "amount": "See Supplement Facts",
+            "role": "Dietary fat digestion",
+            "explanation": "<p>Provides bile acids that help the body break down and digest dietary fats.</p>"
+          }
+        },
+        "digezyme": {
+          "type": "ingredient",
+          "settings": {
+            "name": "DigeZyme®",
+            "amount": "Multi-enzyme complex",
+            "role": "Food breakdown support",
+            "explanation": "<p>A digestive enzyme blend designed to help break down proteins, fats, and carbohydrates.</p>"
+          }
+        },
+        "slippery_elm": {
+          "type": "ingredient",
+          "settings": {
+            "name": "Slippery Elm",
+            "amount": "See Supplement Facts",
+            "role": "Gentle digestive support",
+            "explanation": "<p>A soothing botanical traditionally used to support digestive comfort.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "artichoke_extract",
+        "triphala_blend",
+        "ox_bile",
+        "digezyme",
+        "slippery_elm"
+      ],
+      "settings": {
+        "eyebrow": "INSIDE THE FORMULA",
+        "heading": "A complete digestive formula, explained simply.",
+        "description": "<p>Five featured components of the 10-in-1 blend—each selected to play a clear role in daily digestive support.</p>",
+        "formula_badge": "10-in-1 Digestive Support",
+        "visual_caption": "Easy-to-use daily capsules",
+        "formula_note": "<p>Follow the directions on the product label. Individual experiences may vary.</p>",
+        "content_heading": "What each featured ingredient does",
+        "content_intro": "<p>No complicated science lesson—just a clear look at what is inside and why it was included.</p>",
+        "trust_1": "Third-party lab tested",
+        "trust_2": "Ships from the USA",
+        "trust_3": "Quality-focused formula",
+        "background_color": "#f7fcfd",
+        "card_color": "#ffffff",
+        "soft_color": "#eaf9fc",
+        "text_color": "#111111",
+        "muted_text_color": "#59676c",
+        "accent_color": "#02c6ea",
+        "border_color": "#d9e9ed",
+        "corner_radius": 18,
+        "content_width": 1240,
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
     "avonent_wellness_journey": {
       "type": "00-avonent-wellness-journey",
       "blocks": {
@@ -585,98 +666,48 @@
         "padding_bottom": 36
       }
     },
-    "avonent_formula_breakdown": {
-      "type": "00-avonent-formula-breakdown",
+    "avonent_customer_reviews": {
+      "type": "00-avonent-customer-reviews",
       "blocks": {
-        "artichoke_extract": {
-          "type": "ingredient",
+        "review_r4U3Cb": {
+          "type": "review",
           "settings": {
-            "name": "Artichoke Extract",
-            "amount": "See Supplement Facts",
-            "role": "Digestive comfort",
-            "explanation": "<p>A botanical traditionally used to support bile flow and comfortable digestion.</p>"
+            "rating": 5,
+            "title": "",
+            "review": "",
+            "customer_name": "",
+            "verified": true,
+            "date": "",
+            "tag_1": "",
+            "tag_2": ""
           }
         },
-        "triphala_blend": {
-          "type": "ingredient",
+        "review_xR9fam": {
+          "type": "review",
           "settings": {
-            "name": "Triphala Blend",
-            "amount": "See Supplement Facts",
-            "role": "Daily gut balance",
-            "explanation": "<p>A traditional three-fruit blend used to support regularity and digestive balance.</p>"
-          }
-        },
-        "ox_bile": {
-          "type": "ingredient",
-          "settings": {
-            "name": "Ox Bile Powder",
-            "amount": "See Supplement Facts",
-            "role": "Dietary fat digestion",
-            "explanation": "<p>Provides bile acids that help the body break down and digest dietary fats.</p>"
-          }
-        },
-        "digezyme": {
-          "type": "ingredient",
-          "settings": {
-            "name": "DigeZyme®",
-            "amount": "Multi-enzyme complex",
-            "role": "Food breakdown support",
-            "explanation": "<p>A digestive enzyme blend designed to help break down proteins, fats, and carbohydrates.</p>"
-          }
-        },
-        "slippery_elm": {
-          "type": "ingredient",
-          "settings": {
-            "name": "Slippery Elm",
-            "amount": "See Supplement Facts",
-            "role": "Gentle digestive support",
-            "explanation": "<p>A soothing botanical traditionally used to support digestive comfort.</p>"
+            "rating": 5,
+            "title": "trggf",
+            "review": "fgffgfgfgfgffg",
+            "customer_name": "fggffg",
+            "verified": true,
+            "date": "fggfgf",
+            "tag_1": "fgfgfg",
+            "tag_2": "fgfgfg"
           }
         }
       },
       "block_order": [
-        "artichoke_extract",
-        "triphala_blend",
-        "ox_bile",
-        "digezyme",
-        "slippery_elm"
+        "review_r4U3Cb",
+        "review_xR9fam"
       ],
-      "settings": {
-        "eyebrow": "INSIDE THE FORMULA",
-        "heading": "A complete digestive formula, explained simply.",
-        "description": "<p>Five featured components of the 10-in-1 blend—each selected to play a clear role in daily digestive support.</p>",
-        "formula_badge": "10-in-1 Digestive Support",
-        "visual_caption": "Easy-to-use daily capsules",
-        "formula_note": "<p>Follow the directions on the product label. Individual experiences may vary.</p>",
-        "content_heading": "What each featured ingredient does",
-        "content_intro": "<p>No complicated science lesson—just a clear look at what is inside and why it was included.</p>",
-        "trust_1": "Third-party lab tested",
-        "trust_2": "Ships from the USA",
-        "trust_3": "Quality-focused formula",
-        "background_color": "#f7fcfd",
-        "card_color": "#ffffff",
-        "soft_color": "#eaf9fc",
-        "text_color": "#111111",
-        "muted_text_color": "#59676c",
-        "accent_color": "#02c6ea",
-        "border_color": "#d9e9ed",
-        "corner_radius": 18,
-        "content_width": 1240,
-        "padding_top": 72,
-        "padding_bottom": 72
-      }
-    },
-    "avonent_customer_reviews": {
-      "type": "00-avonent-customer-reviews",
-      "blocks": {},
-      "block_order": [],
       "settings": {
         "eyebrow": "VERIFIED CUSTOMER REVIEWS",
         "heading": "Real routines. Real Avonent customers.",
         "description": "<p>Read feedback from customers who made Avonent part of their daily wellness routine.</p>",
-        "summary_rating": 5,
+        "summary_rating": 1,
         "summary_text": "Real feedback from Avonent customers",
         "button_text": "",
+        "button_link": "",
         "cta_note": "30-day customer satisfaction guarantee",
         "background_color": "#f1fbfd",
         "card_color": "#ffffff",
