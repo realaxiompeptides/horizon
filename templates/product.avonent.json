@@ -674,13 +674,26 @@
           "type": "review",
           "settings": {
             "rating": 5,
-            "title": "",
-            "review": "",
+            "title": "I don’t feel so heavy after meals anymore",
+            "review": "I’ve tried a few digestive supplements, but most of them either did nothing or were annoying to keep up with. After taking this consistently, I noticed I wasn’t feeling nearly as heavy and uncomfortable after dinner. My stomach just feels calmer overall. It’s become one of those supplements I actually remember to take every day.",
             "customer_name": "Jordan M.",
             "verified": true,
             "date": "",
-            "tag_1": "",
-            "tag_2": ""
+            "tag_1": "Less Bloating",
+            "tag_2": "Digestive Comfort"
+          }
+        },
+        "review_XTXXjQ": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "Finally feeling more regular",
+            "review": "Not to overshare, but regularity has always been a struggle for me. About two weeks into using Avonent, things started feeling much more consistent and predictable. I also like that it combines several ingredients instead of making me buy a bunch of separate supplements. Definitely keeping this in my routine.",
+            "customer_name": "Brian T.",
+            "verified": true,
+            "date": "August 7, 2026",
+            "tag_1": "Daily Regularity",
+            "tag_2": "Gut Balance"
           }
         },
         "review_r4U3Cb": {
@@ -712,6 +725,7 @@
       },
       "block_order": [
         "review_8LK8CK",
+        "review_XTXXjQ",
         "review_r4U3Cb",
         "review_xR9fam"
       ],
