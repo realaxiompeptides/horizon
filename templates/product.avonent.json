@@ -631,6 +631,7 @@
       "blocks": {
         "process_step_9dTF8U": {
           "type": "process_step",
+          "disabled": true,
           "settings": {
             "heading": "Take as directed",
             "text": "<p>Use Avonent with your meal according to the directions on the label.</p>"
@@ -638,6 +639,7 @@
         },
         "process_step_gPm74L": {
           "type": "process_step",
+          "disabled": true,
           "settings": {
             "heading": "Support all five digestive jobs",
             "text": "<p>Protease, lipase, amylase, cellulase, and lactase help break down different parts of a mixed meal.</p>"
@@ -645,6 +647,7 @@
         },
         "process_step_bDcgye": {
           "type": "process_step",
+          "disabled": true,
           "settings": {
             "heading": "Feel better supported after eating",
             "text": "<p>Designed to support comfortable digestion and help with occasional bloating, gas, and post-meal heaviness.*</p>"
