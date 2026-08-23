@@ -196,32 +196,34 @@
   .avonent-reviews__description { margin: 14px auto 0; color: var(--avr-muted); font-size: 15px; line-height: 1.55; }
   .avonent-reviews__description p { margin: 0; }
 
-  .avonent-reviews__toolbar { display: flex; min-height: 42px; align-items: center; justify-content: flex-end; margin-bottom: 12px; }
+  .avonent-reviews__toolbar { display: flex; min-height: 42px; align-items: center; justify-content: center; margin-bottom: 12px; }
   .avonent-reviews__swipe-label { display: none; color: var(--avr-muted); font-size: 10px; font-weight: 750; letter-spacing: .04em; text-transform: uppercase; }
   .avonent-reviews__arrows { display: flex; gap: 8px; }
   .avonent-reviews__arrows button { display: grid; width: 40px; height: 40px; place-items: center; color: var(--avr-text); background: var(--avr-card); border: 1px solid var(--avr-border); border-radius: 50%; cursor: pointer; font-size: 18px; transition: color 160ms ease, background 160ms ease, border-color 160ms ease, transform 160ms ease; }
   .avonent-reviews__arrows button:hover { color: white; background: var(--avr-accent); border-color: var(--avr-accent); transform: translateY(-2px); }
 
-  .avonent-reviews[data-layout='carousel'] .avonent-reviews__grid { display: grid; grid-auto-columns: min(var(--avr-card-width), calc(100vw - 80px)); grid-auto-flow: column; gap: 16px; padding: 2px 2px 18px; overflow-x: auto; overscroll-behavior-inline: contain; scroll-behavior: smooth; scroll-snap-type: x mandatory; scrollbar-color: var(--avr-accent) color-mix(in srgb, var(--avr-accent) 13%, white); scrollbar-width: thin; }
+  .avonent-reviews[data-layout='carousel'] .avonent-reviews__grid { display: flex; justify-content: center; gap: 16px; padding: 2px 2px 18px; overflow-x: auto; overscroll-behavior-inline: contain; scroll-behavior: smooth; scroll-snap-type: x mandatory; scrollbar-color: var(--avr-accent) color-mix(in srgb, var(--avr-accent) 13%, white); scrollbar-width: thin; }
+  .avonent-reviews[data-layout='carousel'] .avonent-reviews__grid.is-overflowing { justify-content: flex-start; }
   .avonent-reviews[data-layout='stack'] .avonent-reviews__toolbar { display: none; }
-  .avonent-reviews[data-layout='stack'] .avonent-reviews__grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+  .avonent-reviews[data-layout='stack'] .avonent-reviews__grid { display: grid; width: min(100%, 920px); grid-template-columns: 1fr; gap: 14px; margin: 0 auto; }
 
-  .avonent-reviews__card { position: relative; display: flex; min-width: 0; min-height: 340px; flex-direction: column; padding: 24px; overflow: hidden; background: var(--avr-card); border: 1px solid var(--avr-border); border-radius: var(--avr-radius); box-shadow: 0 14px 42px rgb(18 63 76 / .07); scroll-snap-align: start; transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease; }
+  .avonent-reviews__card { position: relative; display: flex; min-width: 0; min-height: 340px; align-items: center; flex-direction: column; padding: 24px; overflow: hidden; background: var(--avr-card); border: 1px solid var(--avr-border); border-radius: var(--avr-radius); box-shadow: 0 14px 42px rgb(18 63 76 / .07); scroll-snap-align: center; text-align: center; transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease; }
+  .avonent-reviews[data-layout='carousel'] .avonent-reviews__card { flex: 0 0 min(var(--avr-card-width), calc(100vw - 80px)); }
   .avonent-reviews[data-layout='stack'] .avonent-reviews__card { min-height: 0; }
   .avonent-reviews__card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: linear-gradient(90deg, var(--avr-accent), color-mix(in srgb, var(--avr-accent) 30%, white)); }
   @media (hover: hover) { .avonent-reviews__card:hover { border-color: color-mix(in srgb, var(--avr-accent) 48%, var(--avr-border)); box-shadow: 0 20px 50px rgb(2 198 234 / .13); transform: translateY(-4px); } }
 
-  .avonent-reviews__card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
-  .avonent-reviews__card-rating { display: flex; align-items: center; gap: 8px; color: var(--avr-muted); font-size: 11px; font-weight: 750; }
+  .avonent-reviews__card-top { position: relative; display: flex; width: 100%; min-height: 31px; align-items: flex-start; justify-content: center; gap: 12px; }
+  .avonent-reviews__card-rating { display: flex; align-items: center; justify-content: center; gap: 8px; color: var(--avr-muted); font-size: 11px; font-weight: 750; }
   .avonent-reviews__card-stars { display: flex; gap: 1px; color: var(--avr-accent); font-size: 15px; letter-spacing: -.04em; line-height: 1; }
   .avonent-reviews__card-stars .is-empty { color: color-mix(in srgb, var(--avr-muted) 20%, transparent); }
-  .avonent-reviews__quote { height: 31px; color: color-mix(in srgb, var(--avr-accent) 28%, white); font-family: Georgia, serif; font-size: 48px; font-weight: 900; line-height: .8; }
+  .avonent-reviews__quote { position: absolute; top: 0; right: 0; height: 31px; color: color-mix(in srgb, var(--avr-accent) 28%, white); font-family: Georgia, serif; font-size: 48px; font-weight: 900; line-height: .8; }
   .avonent-reviews__card-title { margin: 20px 0 0; color: var(--avr-text); font-size: 19px; font-weight: 850; letter-spacing: -.025em; line-height: 1.22; }
   .avonent-reviews__card-copy { margin: 12px 0 0; color: var(--avr-muted); font-size: 14px; font-style: normal; line-height: 1.58; }
-  .avonent-reviews__tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 17px; }
+  .avonent-reviews__tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 7px; margin-top: 17px; }
   .avonent-reviews__tags span { display: inline-flex; padding: 6px 9px; color: var(--avr-accent-dark); background: color-mix(in srgb, var(--avr-accent) 9%, white); border: 1px solid color-mix(in srgb, var(--avr-accent) 22%, transparent); border-radius: 999px; font-size: 10px; font-weight: 750; line-height: 1.2; }
 
-  .avonent-reviews__customer { display: flex; align-items: center; gap: 11px; margin-top: auto; padding-top: 21px; }
+  .avonent-reviews__customer { display: flex; align-items: center; justify-content: center; gap: 11px; margin-top: auto; padding-top: 21px; text-align: left; }
   .avonent-reviews__avatar { width: 46px; height: 46px; flex: 0 0 auto; object-fit: cover; background: color-mix(in srgb, var(--avr-accent) 11%, white); border: 2px solid white; border-radius: 50%; box-shadow: 0 0 0 1px color-mix(in srgb, var(--avr-accent) 28%, var(--avr-border)); }
   .avonent-reviews__avatar--initial { display: grid; place-items: center; color: var(--avr-accent-dark); font-size: 16px; font-weight: 900; }
   .avonent-reviews__customer-info { min-width: 0; }
@@ -245,17 +247,18 @@
 
   @media screen and (max-width: 749px) {
     .avonent-reviews__inner { width: 100%; }
-    .avonent-reviews__header { width: calc(100% - 28px); margin-bottom: 24px; text-align: left; }
-    .avonent-reviews__trust-line { justify-content: flex-start; gap: 6px; margin: 0 0 18px; font-size: 12px; white-space: nowrap; }
+    .avonent-reviews__header { width: calc(100% - 28px); margin-bottom: 24px; text-align: center; }
+    .avonent-reviews__trust-line { justify-content: center; flex-wrap: wrap; gap: 6px; margin: 0 auto 18px; font-size: 12px; text-align: center; }
     .avonent-reviews__trust-stars-image { max-width: 82px; height: 16px; }
     .avonent-reviews__trust-stars-fallback { font-size: 15px; }
     .avonent-reviews__heading { font-size: 32px; }
     .avonent-reviews__description { margin-top: 10px; font-size: 14px; }
 
-    .avonent-reviews__toolbar { min-height: 22px; justify-content: space-between; width: calc(100% - 28px); margin: 0 auto 10px; }
-    .avonent-reviews[data-layout='carousel'] .avonent-reviews__swipe-label { display: block; }
+    .avonent-reviews__toolbar { min-height: 22px; justify-content: center; width: calc(100% - 28px); margin: 0 auto 10px; text-align: center; }
+    .avonent-reviews[data-layout='carousel'] .avonent-reviews__swipe-label { display: block; width: 100%; text-align: center; }
     .avonent-reviews__arrows { display: none; }
-    .avonent-reviews[data-layout='carousel'] .avonent-reviews__grid { grid-auto-columns: min(86vw, 350px); gap: 10px; width: 100%; padding: 0 14px 14px; scroll-padding-left: 14px; scrollbar-width: none; }
+    .avonent-reviews[data-layout='carousel'] .avonent-reviews__grid { gap: 10px; width: 100%; padding: 0 7vw 14px; scroll-padding-inline: 7vw; scrollbar-width: none; }
+    .avonent-reviews[data-layout='carousel'] .avonent-reviews__card { flex-basis: min(86vw, 350px); }
     .avonent-reviews[data-layout='carousel'] .avonent-reviews__grid::-webkit-scrollbar { display: none; }
     .avonent-reviews[data-layout='stack'] .avonent-reviews__grid { width: calc(100% - 28px); margin: 0 auto; gap: 10px; }
     .avonent-reviews__card { min-height: 0; padding: 20px; border-radius: max(14px, calc(var(--avr-radius) - 2px)); }
@@ -280,6 +283,22 @@
 {% javascript %}
   if (!window.__avonentReviewsBound) {
     window.__avonentReviewsBound = true;
+
+    function updateAvonentReviewAlignment(root) {
+      var scope = root || document;
+      scope.querySelectorAll('[data-avonent-reviews][data-layout="carousel"] [data-avr-grid]').forEach(function (grid) {
+        grid.classList.remove('is-overflowing');
+        window.requestAnimationFrame(function () {
+          grid.classList.toggle('is-overflowing', grid.scrollWidth > grid.clientWidth + 2);
+        });
+      });
+    }
+
+    updateAvonentReviewAlignment(document);
+    window.addEventListener('load', function () { updateAvonentReviewAlignment(document); });
+    window.addEventListener('resize', function () { updateAvonentReviewAlignment(document); });
+    document.addEventListener('shopify:section:load', function (event) { updateAvonentReviewAlignment(event.target); });
+
     document.addEventListener('click', function (event) {
       var moreButton = event.target.closest('[data-avr-show-more]');
       if (moreButton) {
@@ -287,6 +306,7 @@
         if (section) {
           section.setAttribute('data-mobile-expanded', 'true');
           moreButton.setAttribute('aria-expanded', 'true');
+          updateAvonentReviewAlignment(section);
         }
         return;
       }
