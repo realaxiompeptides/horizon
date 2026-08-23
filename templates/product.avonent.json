@@ -810,7 +810,7 @@
         "button_text_color": "#ffffff",
         "content_width": 1240,
         "corner_radius": 18,
-        "padding_top": 64,
+        "padding_top": 36,
         "padding_bottom": 0
       }
     },
