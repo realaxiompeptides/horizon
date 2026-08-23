@@ -442,8 +442,8 @@
 
   @media screen and (max-width: 749px) {
     .avonent-journey {
-      padding-top: max(48px, var(--avj-top));
-      padding-bottom: max(48px, var(--avj-bottom));
+      padding-top: var(--avj-top);
+      padding-bottom: var(--avj-bottom);
     }
 
     .avonent-journey__inner {
@@ -631,7 +631,7 @@
       "type": "range",
       "id": "padding_top",
       "label": "Top spacing",
-      "min": 20,
+      "min": 0,
       "max": 140,
       "step": 4,
       "unit": "px",
@@ -641,7 +641,7 @@
       "type": "range",
       "id": "padding_bottom",
       "label": "Bottom spacing",
-      "min": 20,
+      "min": 0,
       "max": 140,
       "step": 4,
       "unit": "px",

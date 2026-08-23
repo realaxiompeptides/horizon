@@ -520,8 +520,8 @@
 
   @media screen and (max-width: 749px) {
     .avonent-compare {
-      padding-top: max(44px, var(--avc-top));
-      padding-bottom: max(44px, var(--avc-bottom));
+      padding-top: var(--avc-top);
+      padding-bottom: var(--avc-bottom);
     }
 
     .avonent-compare__inner {
@@ -781,7 +781,7 @@
       "type": "range",
       "id": "padding_top",
       "label": "Top spacing",
-      "min": 20,
+      "min": 0,
       "max": 140,
       "step": 4,
       "unit": "px",
@@ -791,7 +791,7 @@
       "type": "range",
       "id": "padding_bottom",
       "label": "Bottom spacing",
-      "min": 20,
+      "min": 0,
       "max": 140,
       "step": 4,
       "unit": "px",
