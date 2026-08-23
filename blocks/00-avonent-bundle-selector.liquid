@@ -17,7 +17,7 @@
   endif
 
   assign default_variant = av_product.selected_or_first_available_variant
-  assign selected_bundle = block.settings.default_bundle | default: '1'
+  assign selected_bundle = block.settings.default_bundle | default: '2'
   assign root_id = 'AvonentBundle-' | append: block.id
 %}
 
@@ -77,22 +77,14 @@
             endfor
           endif
 
-          assign one_time_unit = bundle_variant.price
-          assign one_time_compare_unit = bundle_variant.compare_at_price
-          if one_time_compare_unit == blank or one_time_compare_unit <= one_time_unit
-            assign one_time_compare_unit = one_time_unit
+          assign bundle_total = bundle_variant.price | times: bundle_quantity
+
+          assign compare_unit = bundle_variant.compare_at_price
+          if compare_unit == blank or compare_unit <= bundle_variant.price
+            assign compare_unit = bundle_variant.price
           endif
 
-          assign subscription_allocation = bundle_variant.selling_plan_allocations.first
-          assign subscription_unit = one_time_unit
-          if subscription_allocation != blank
-            assign subscription_unit = subscription_allocation.price
-          endif
-
-          # Subscription pricing is the default storefront mode.
-          # Its comparison price is the regular one-time price.
-          assign bundle_total = subscription_unit | times: bundle_quantity
-          assign bundle_compare_total = one_time_unit | times: bundle_quantity
+          assign bundle_compare_total = compare_unit | times: bundle_quantity
 
           assign automatic_savings_percent = 0
           if bundle_compare_total > bundle_total
@@ -126,10 +118,6 @@
             data-variant-id="{{ bundle_variant.id }}"
             data-quantity="{{ bundle_quantity }}"
             data-available="{{ bundle_variant.available }}"
-            data-subscription-unit="{{ subscription_unit }}"
-            data-subscription-compare-unit="{{ one_time_unit }}"
-            data-one-time-unit="{{ one_time_unit }}"
-            data-one-time-compare-unit="{{ one_time_compare_unit }}"
             {% unless bundle_variant.available %}disabled{% endunless %}
           >
             {% if bundle_badge != blank %}
@@ -168,21 +156,21 @@
               {% endif %}
 
               {% if bundle_savings_override != blank %}
-                <span class="avonent-bundle__savings" data-av-bundle-savings data-custom-text="true">
+                <span class="avonent-bundle__savings">
                   {{ bundle_savings_override }}
                 </span>
               {% elsif automatic_savings_percent > 0 %}
-                <span class="avonent-bundle__savings" data-av-bundle-savings>
+                <span class="avonent-bundle__savings">
                   Save {{ automatic_savings_percent }}%
                 </span>
               {% endif %}
             </span>
 
             <span class="avonent-bundle__price">
-              <strong data-av-bundle-price>{{ bundle_total | money }}</strong>
+              <strong>{{ bundle_total | money }}</strong>
 
               {% if bundle_compare_total > bundle_total %}
-                <s data-av-bundle-compare>{{ bundle_compare_total | money }}</s>
+                <s>{{ bundle_compare_total | money }}</s>
               {% endif %}
 
               {% unless bundle_variant.available %}
@@ -204,66 +192,6 @@
 
       const sectionId = root.dataset.sectionId;
       const options = Array.from(root.querySelectorAll('[data-av-bundle-option]'));
-      const currencyCode = {{ cart.currency.iso_code | default: shop.currency | json }};
-      let purchaseMode = 'subscription';
-
-      function formatMoney(cents) {
-        const amount = Number(cents || 0) / 100;
-
-        try {
-          return new Intl.NumberFormat(undefined, {
-            style: 'currency',
-            currency: currencyCode,
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-          }).format(amount);
-        } catch (error) {
-          return '$' + amount.toFixed(2);
-        }
-      }
-
-      function applyPurchaseMode(mode) {
-        purchaseMode = mode === 'one_time' ? 'one_time' : 'subscription';
-
-        options.forEach((option) => {
-          const quantity = Math.max(1, Number(option.dataset.quantity || 1));
-          const unitPrice = Number(
-            purchaseMode === 'subscription'
-              ? option.dataset.subscriptionUnit
-              : option.dataset.oneTimeUnit
-          );
-          const compareUnit = Number(
-            purchaseMode === 'subscription'
-              ? option.dataset.subscriptionCompareUnit
-              : option.dataset.oneTimeCompareUnit
-          );
-
-          const total = unitPrice * quantity;
-          const compareTotal = compareUnit * quantity;
-          const price = option.querySelector('[data-av-bundle-price]');
-          const compare = option.querySelector('[data-av-bundle-compare]');
-          const savings = option.querySelector('[data-av-bundle-savings]');
-
-          if (price) price.textContent = formatMoney(total);
-
-          if (compare) {
-            const showCompare = compareTotal > total;
-            compare.textContent = showCompare ? formatMoney(compareTotal) : '';
-            compare.hidden = !showCompare;
-          }
-
-          if (savings && !savings.dataset.customText) {
-            const percent =
-              compareTotal > total
-                ? Math.round(((compareTotal - total) / compareTotal) * 100)
-                : 0;
-            savings.textContent = percent > 0 ? `Save ${percent}%` : '';
-            savings.hidden = percent <= 0;
-          }
-        });
-
-        root.dataset.purchaseMode = purchaseMode;
-      }
 
       function getNativeForm() {
         const section =
@@ -332,10 +260,6 @@
         option.addEventListener('click', () => selectBundle(option));
       });
 
-      document.addEventListener('avonent:purchase-mode-change', (event) => {
-        applyPurchaseMode(event.detail?.mode);
-      });
-
       let initial = root.querySelector(
         '[data-av-bundle-option].is-selected:not(:disabled)'
       );
@@ -343,8 +267,6 @@
       if (!initial) {
         initial = options.find((option) => !option.disabled);
       }
-
-      applyPurchaseMode('subscription');
 
       if (initial) {
         selectBundle(initial);
@@ -677,7 +599,7 @@
           "label": "Bundle 4"
         }
       ],
-      "default": "1"
+      "default": "2"
     },
     {
       "type": "checkbox",
