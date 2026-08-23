@@ -17,8 +17,7 @@
     id="{{ section_id }}"
     class="avonent-reviews"
     data-avonent-reviews
-    data-layout="{{ section.settings.layout_mode }}"
-    data-mobile-expanded="false"
+    data-expanded="false"
     style="
       --avr-bg: {{ section.settings.background_color }};
       --avr-card: {{ section.settings.card_color }};
@@ -29,7 +28,6 @@
       --avr-border: {{ section.settings.border_color }};
       --avr-radius: {{ section.settings.corner_radius }}px;
       --avr-width: {{ section.settings.content_width }}px;
-      --avr-card-width: {{ section.settings.carousel_card_width }}px;
       --avr-top: {{ section.settings.padding_top }}px;
       --avr-bottom: {{ section.settings.padding_bottom }}px;
     "
@@ -71,22 +69,12 @@
       </header>
 
       {% if has_reviews %}
-        <div class="avonent-reviews__toolbar">
-          {% if section.settings.layout_mode == 'carousel' and review_count > 1 %}
-            <span class="avonent-reviews__swipe-label">Swipe to read reviews</span>
-            <div class="avonent-reviews__arrows" aria-label="Review carousel controls">
-              <button type="button" data-avr-scroll="previous" aria-label="Previous reviews">←</button>
-              <button type="button" data-avr-scroll="next" aria-label="Next reviews">→</button>
-            </div>
-          {% endif %}
-        </div>
-
         <div class="avonent-reviews__grid" data-avr-grid>
           {% assign rendered_reviews = 0 %}
           {% for block in section.blocks %}
             {% if block.settings.title != blank or block.settings.review != blank or block.settings.customer_name != blank %}
               {% assign rendered_reviews = rendered_reviews | plus: 1 %}
-              <article class="avonent-reviews__card" {% if rendered_reviews > 2 %}data-mobile-overflow="true"{% endif %} {{ block.shopify_attributes }}>
+              <article class="avonent-reviews__card" {% if rendered_reviews > 2 %}data-review-overflow="true"{% endif %} {{ block.shopify_attributes }}>
                 <div class="avonent-reviews__card-top">
                   <div class="avonent-reviews__card-rating">
                     <div class="avonent-reviews__card-stars" aria-label="Rated {{ block.settings.rating }} out of 5">
@@ -196,20 +184,11 @@
   .avonent-reviews__description { margin: 14px auto 0; color: var(--avr-muted); font-size: 15px; line-height: 1.55; }
   .avonent-reviews__description p { margin: 0; }
 
-  .avonent-reviews__toolbar { display: flex; min-height: 42px; align-items: center; justify-content: center; margin-bottom: 12px; }
-  .avonent-reviews__swipe-label { display: none; color: var(--avr-muted); font-size: 10px; font-weight: 750; letter-spacing: .04em; text-transform: uppercase; }
-  .avonent-reviews__arrows { display: flex; gap: 8px; }
-  .avonent-reviews__arrows button { display: grid; width: 40px; height: 40px; place-items: center; color: var(--avr-text); background: var(--avr-card); border: 1px solid var(--avr-border); border-radius: 50%; cursor: pointer; font-size: 18px; transition: color 160ms ease, background 160ms ease, border-color 160ms ease, transform 160ms ease; }
-  .avonent-reviews__arrows button:hover { color: white; background: var(--avr-accent); border-color: var(--avr-accent); transform: translateY(-2px); }
+  .avonent-reviews__grid { display: grid; width: min(100%, 920px); grid-template-columns: minmax(0, 1fr); gap: 14px; margin: 0 auto; }
 
-  .avonent-reviews[data-layout='carousel'] .avonent-reviews__grid { display: flex; justify-content: center; gap: 16px; padding: 2px 2px 18px; overflow-x: auto; overscroll-behavior-inline: contain; scroll-behavior: smooth; scroll-snap-type: x mandatory; scrollbar-color: var(--avr-accent) color-mix(in srgb, var(--avr-accent) 13%, white); scrollbar-width: thin; }
-  .avonent-reviews[data-layout='carousel'] .avonent-reviews__grid.is-overflowing { justify-content: flex-start; }
-  .avonent-reviews[data-layout='stack'] .avonent-reviews__toolbar { display: none; }
-  .avonent-reviews[data-layout='stack'] .avonent-reviews__grid { display: grid; width: min(100%, 920px); grid-template-columns: 1fr; gap: 14px; margin: 0 auto; }
-
-  .avonent-reviews__card { position: relative; display: flex; min-width: 0; min-height: 340px; align-items: center; flex-direction: column; padding: 24px; overflow: hidden; background: var(--avr-card); border: 1px solid var(--avr-border); border-radius: var(--avr-radius); box-shadow: 0 14px 42px rgb(18 63 76 / .07); scroll-snap-align: center; text-align: center; transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease; }
-  .avonent-reviews[data-layout='carousel'] .avonent-reviews__card { flex: 0 0 min(var(--avr-card-width), calc(100vw - 80px)); }
-  .avonent-reviews[data-layout='stack'] .avonent-reviews__card { min-height: 0; }
+  .avonent-reviews__card { position: relative; display: flex; min-width: 0; min-height: 0; align-items: center; flex-direction: column; padding: 26px; overflow: hidden; background: var(--avr-card); border: 1px solid var(--avr-border); border-radius: var(--avr-radius); box-shadow: 0 14px 42px rgb(18 63 76 / .07); text-align: center; transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease; }
+  .avonent-reviews__card[data-review-overflow='true'] { display: none; }
+  .avonent-reviews[data-expanded='true'] .avonent-reviews__card[data-review-overflow='true'] { display: flex; }
   .avonent-reviews__card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: linear-gradient(90deg, var(--avr-accent), color-mix(in srgb, var(--avr-accent) 30%, white)); }
   @media (hover: hover) { .avonent-reviews__card:hover { border-color: color-mix(in srgb, var(--avr-accent) 48%, var(--avr-border)); box-shadow: 0 20px 50px rgb(2 198 234 / .13); transform: translateY(-4px); } }
 
@@ -231,7 +210,10 @@
   .avonent-reviews__verified { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; margin-top: 4px; color: var(--avr-accent-dark); font-size: 10px; font-weight: 750; line-height: 1.2; }
   .avonent-reviews__verified svg { width: 15px; height: 15px; flex: 0 0 auto; }
   .avonent-reviews__date { color: var(--avr-muted); font-weight: 600; }
-  .avonent-reviews__more { display: none; }
+  .avonent-reviews__more { display: flex; width: min(100%, 920px); min-height: 52px; align-items: center; justify-content: center; gap: 8px; margin: 18px auto 0; padding: 12px 20px; color: var(--avr-accent-dark); background: color-mix(in srgb, var(--avr-accent) 10%, white); border: 1px solid color-mix(in srgb, var(--avr-accent) 42%, var(--avr-border)); border-radius: 999px; cursor: pointer; font: inherit; font-size: 13px; font-weight: 850; letter-spacing: .01em; transition: background 160ms ease, border-color 160ms ease, transform 160ms ease; }
+  .avonent-reviews__more:hover { background: color-mix(in srgb, var(--avr-accent) 16%, white); border-color: var(--avr-accent); transform: translateY(-1px); }
+  .avonent-reviews__more svg { width: 18px; height: 18px; }
+  .avonent-reviews[data-expanded='true'] .avonent-reviews__more { display: none; }
 
   .avonent-reviews__cta-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 34px; }
   .avonent-reviews__cta { display: inline-flex; min-height: 52px; align-items: center; justify-content: center; gap: 12px; padding: 13px 24px; color: white; background: var(--avr-text); border-radius: 13px; box-shadow: 0 10px 26px rgb(17 17 17 / .14); font-size: 13px; font-weight: 850; line-height: 1.2; text-decoration: none; transition: transform 160ms ease, background 160ms ease; }
@@ -254,22 +236,12 @@
     .avonent-reviews__heading { font-size: 32px; }
     .avonent-reviews__description { margin-top: 10px; font-size: 14px; }
 
-    .avonent-reviews__toolbar { min-height: 22px; justify-content: center; width: calc(100% - 28px); margin: 0 auto 10px; text-align: center; }
-    .avonent-reviews[data-layout='carousel'] .avonent-reviews__swipe-label { display: block; width: 100%; text-align: center; }
-    .avonent-reviews__arrows { display: none; }
-    .avonent-reviews[data-layout='carousel'] .avonent-reviews__grid { gap: 10px; width: 100%; padding: 0 7vw 14px; scroll-padding-inline: 7vw; scrollbar-width: none; }
-    .avonent-reviews[data-layout='carousel'] .avonent-reviews__card { flex-basis: min(86vw, 350px); }
-    .avonent-reviews[data-layout='carousel'] .avonent-reviews__grid::-webkit-scrollbar { display: none; }
-    .avonent-reviews[data-layout='stack'] .avonent-reviews__grid { width: calc(100% - 28px); margin: 0 auto; gap: 10px; }
+    .avonent-reviews__grid { width: calc(100% - 28px); margin: 0 auto; gap: 10px; }
     .avonent-reviews__card { min-height: 0; padding: 20px; border-radius: max(14px, calc(var(--avr-radius) - 2px)); }
-    .avonent-reviews__card[data-mobile-overflow='true'] { display: none; }
-    .avonent-reviews[data-mobile-expanded='true'] .avonent-reviews__card[data-mobile-overflow='true'] { display: flex; }
     .avonent-reviews__card-title { margin-top: 17px; font-size: 18px; }
     .avonent-reviews__card-copy { font-size: 13px; line-height: 1.55; }
 
-    .avonent-reviews__more { display: flex; width: calc(100% - 28px); min-height: 50px; align-items: center; justify-content: center; gap: 8px; margin: 18px auto 0; padding: 12px 20px; color: var(--avr-accent-dark); background: color-mix(in srgb, var(--avr-accent) 10%, white); border: 1px solid color-mix(in srgb, var(--avr-accent) 42%, var(--avr-border)); border-radius: 999px; cursor: pointer; font: inherit; font-size: 13px; font-weight: 850; letter-spacing: .01em; }
-    .avonent-reviews__more svg { width: 18px; height: 18px; }
-    .avonent-reviews[data-mobile-expanded='true'] .avonent-reviews__more { display: none; }
+    .avonent-reviews__more { width: calc(100% - 28px); min-height: 50px; }
     .avonent-reviews__cta-wrap, .avonent-reviews__empty { width: calc(100% - 28px); margin-inline: auto; }
     .avonent-reviews__cta { width: 100%; max-width: 360px; }
   }
@@ -283,43 +255,13 @@
 {% javascript %}
   if (!window.__avonentReviewsBound) {
     window.__avonentReviewsBound = true;
-
-    function updateAvonentReviewAlignment(root) {
-      var scope = root || document;
-      scope.querySelectorAll('[data-avonent-reviews][data-layout="carousel"] [data-avr-grid]').forEach(function (grid) {
-        grid.classList.remove('is-overflowing');
-        window.requestAnimationFrame(function () {
-          grid.classList.toggle('is-overflowing', grid.scrollWidth > grid.clientWidth + 2);
-        });
-      });
-    }
-
-    updateAvonentReviewAlignment(document);
-    window.addEventListener('load', function () { updateAvonentReviewAlignment(document); });
-    window.addEventListener('resize', function () { updateAvonentReviewAlignment(document); });
-    document.addEventListener('shopify:section:load', function (event) { updateAvonentReviewAlignment(event.target); });
-
     document.addEventListener('click', function (event) {
       var moreButton = event.target.closest('[data-avr-show-more]');
-      if (moreButton) {
-        var section = moreButton.closest('[data-avonent-reviews]');
-        if (section) {
-          section.setAttribute('data-mobile-expanded', 'true');
-          moreButton.setAttribute('aria-expanded', 'true');
-          updateAvonentReviewAlignment(section);
-        }
-        return;
-      }
-
-      var arrowButton = event.target.closest('[data-avr-scroll]');
-      if (!arrowButton) return;
-      var carouselSection = arrowButton.closest('[data-avonent-reviews]');
-      var grid = carouselSection && carouselSection.querySelector('[data-avr-grid]');
-      var firstCard = grid && grid.querySelector('.avonent-reviews__card');
-      if (!grid || !firstCard) return;
-      var direction = arrowButton.getAttribute('data-avr-scroll') === 'previous' ? -1 : 1;
-      var gap = parseFloat(window.getComputedStyle(grid).columnGap || 0);
-      grid.scrollBy({ left: direction * (firstCard.getBoundingClientRect().width + gap), behavior: 'smooth' });
+      if (!moreButton) return;
+      var section = moreButton.closest('[data-avonent-reviews]');
+      if (!section) return;
+      section.setAttribute('data-expanded', 'true');
+      moreButton.setAttribute('aria-expanded', 'true');
     });
   }
 {% endjavascript %}
@@ -343,19 +285,8 @@
     { "type": "text", "id": "heading", "label": "Heading", "default": "Real routines. Real Avonent customers." },
     { "type": "richtext", "id": "description", "label": "Description", "default": "<p>Read feedback from customers who made Avonent part of their daily wellness routine.</p>" },
 
-    { "type": "header", "content": "Review layout" },
-    {
-      "type": "select",
-      "id": "layout_mode",
-      "label": "Desktop layout",
-      "options": [
-        { "value": "carousel", "label": "Side-by-side scrolling" },
-        { "value": "stack", "label": "Reviews going downward" }
-      ],
-      "default": "carousel"
-    },
-    { "type": "range", "id": "carousel_card_width", "label": "Scrolling card width", "min": 300, "max": 520, "step": 10, "unit": "px", "default": 390 },
-    { "type": "text", "id": "mobile_more_text", "label": "Mobile read-more button", "default": "Read more reviews" },
+    { "type": "header", "content": "Review display" },
+    { "type": "text", "id": "mobile_more_text", "label": "Read-more button text", "default": "Read more reviews" },
 
     { "type": "header", "content": "Optional button" },
     { "type": "text", "id": "button_text", "label": "Button text" },
