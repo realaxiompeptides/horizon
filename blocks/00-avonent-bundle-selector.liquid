@@ -83,14 +83,12 @@
             assign one_time_compare_unit = one_time_unit
           endif
 
-          assign subscription_allocation = bundle_variant.selling_plan_allocations.first
+          assign subscription_allocation = bundle_variant.selling_plan_allocations | first
           assign subscription_unit = one_time_unit
           if subscription_allocation != blank
             assign subscription_unit = subscription_allocation.price
           endif
 
-          # Subscription pricing is the default storefront mode.
-          # Its comparison price is the regular one-time price.
           assign bundle_total = subscription_unit | times: bundle_quantity
           assign bundle_compare_total = one_time_unit | times: bundle_quantity
 
@@ -349,6 +347,10 @@
       if (initial) {
         selectBundle(initial);
       }
+
+      // Re-apply after subscription apps finish hydrating the product form.
+      window.setTimeout(() => applyPurchaseMode(purchaseMode), 250);
+      window.setTimeout(() => applyPurchaseMode(purchaseMode), 900);
     })();
   </script>
 {% endif %}
