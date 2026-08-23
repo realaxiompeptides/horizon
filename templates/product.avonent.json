@@ -515,11 +515,11 @@
           "type": "ingredient",
           "settings": {
             "image": "shopify://shop_images/EE596049-5BD0-41D5-894B-76076508F580.png",
-            "role": "Digestive comfort",
+            "role": "FAT + BILE SUPPORT",
             "name": "Artichoke Extract",
             "amount": "500 mg",
-            "benefit_heading": "Its role in the formula",
-            "explanation": "<p>A botanical traditionally used to support bile flow and comfortable digestion.</p>",
+            "benefit_heading": "For meals that tend to sit heavy.",
+            "explanation": "<p>Artichoke extract supports healthy bile flow, helping your body handle dietary fats and supporting more comfortable digestion after rich meals.*</p>",
             "details_label": "Why it is included",
             "details": ""
           }
@@ -601,9 +601,9 @@
       "settings": {
         "eyebrow": "INSIDE THE FORMULA",
         "heading": "More than enzymes. A complete plan for what happens after you eat.",
-        "description": "<p>Six featured components of the 10-in-1 formula—each selected to play a clear role in daily digestive support.</p>",
-        "content_heading": "What each featured ingredient does",
-        "content_intro": "<p>No complicated science lesson—just a clear look at what is inside and why it was included.</p>",
+        "description": "<p>Ten targeted ingredients work across food breakdown, fat digestion, digestive comfort, and regularity—so one simple routine can replace the guesswork.*</p>",
+        "content_heading": "Every ingredient has a job.",
+        "content_intro": "<p>No mystery blend. No complicated science lesson. Just a clear look at why each ingredient earned its place.</p>",
         "mobile_columns": "2",
         "mobile_initial_count": 6,
         "show_more_label": "View all ingredients",
