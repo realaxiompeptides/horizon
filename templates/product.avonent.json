@@ -695,7 +695,7 @@
     "avonent_money_back_guarantee": {
       "type": "00-avonent-money-back-guarantee",
       "settings": {
-        "show_top_strip": true,
+        "show_top_strip": false,
         "strip_text": "30-Day Money-Back Guarantee",
         "days": 30,
         "show_seal": true,
@@ -708,7 +708,7 @@
         "policy_link": "shopify://policies/refund-policy",
         "show_image_badge": false,
         "desktop_layout": "stacked",
-        "image_width": 900,
+        "image_width": 1100,
         "image_height": 560,
         "trust_1": "Secure checkout",
         "trust_2": "Simple support",
@@ -725,7 +725,8 @@
         "content_width": 1240,
         "corner_radius": 18,
         "padding_top": 64,
-        "padding_bottom": 24
+        "padding_bottom": 0,
+        "image_fit": "contain"
       }
     },
     "avonent_customer_reviews": {
@@ -825,7 +826,7 @@
         "border_color": "#d6e8ec",
         "corner_radius": 18,
         "content_width": 1240,
-        "padding_top": 36,
+        "padding_top": 24,
         "padding_bottom": 24
       }
     }
