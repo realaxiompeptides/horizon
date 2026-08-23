@@ -567,11 +567,11 @@
           "type": "ingredient",
           "settings": {
             "image": "shopify://shop_images/B37E348E-57D9-4600-921E-5ABFE3FDFA35.png",
-            "role": "Food breakdown support",
+            "role": "5-ENZYME FOOD BREAKDOWN",
             "name": "DigeZyme®",
             "amount": "50 mg multi-enzyme complex",
-            "benefit_heading": "Its role in the formula",
-            "explanation": "<p>A digestive enzyme blend designed to help break down proteins, fats, and carbohydrates.</p>",
+            "benefit_heading": "Helps break down the entire meal.",
+            "explanation": "<p>Five targeted enzymes help break down proteins, fats, carbohydrates, fiber, and lactose—supporting easier digestion and helping your body get more from the foods you eat.*</p>",
             "details_label": "Why it is included",
             "details": ""
           }
