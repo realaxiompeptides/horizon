@@ -319,13 +319,23 @@
           const status = root.querySelector('[data-one-time-status]');
           if (!form || !input || !toggle) return;
 
-          const planId = input.value;
+          let planId = input.value;
           let mode = 'subscription';
 
           function neutralizeExternalPlans() {
             form
               .querySelectorAll('[name="selling_plan"]:not([data-avonent-selling-plan])')
               .forEach((control) => {
+                // Appstle hydrates its real selling-plan ID after the Liquid
+                // product form renders. Capture that value before hiding and
+                // disabling Appstle's duplicate purchase controls.
+                const candidatePlanId = control.value || control.getAttribute('value');
+                if (!planId && candidatePlanId) {
+                  planId = String(candidatePlanId);
+                  input.value = planId;
+                  input.setAttribute('value', planId);
+                }
+
                 if (control.matches('[type="radio"], [type="checkbox"]')) {
                   control.checked = false;
                 }
