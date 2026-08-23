@@ -320,7 +320,7 @@
           const status = root.querySelector('[data-one-time-status]');
           if (!form || !input || !toggle) return;
 
-          let planId = input.value;
+          let planId = input.value || '{{ avonent_selling_plan_id }}';
           let mode = 'subscription';
 
           function neutralizeExternalPlans() {
@@ -383,21 +383,61 @@
             render();
           });
 
-          // Horizon builds FormData at submit time. Re-assert the selected
-          // purchase mode immediately before that happens so Appstle cannot
-          // clear or replace the selling-plan value.
-          form.addEventListener('submit', enforcePurchaseMode, true);
+          // Horizon can morph and replace the original product form. Use
+          // delegated listeners so the selling plan is applied to the live
+          // replacement form and to the final FormData cart payload.
+          const managedFormSelector =
+            '.buy-buttons-block--{{ block.id }} form[data-type="add-to-cart-form"]';
+          const listenerKey = 'avonent-selling-plan-{{ block.id }}';
 
-          // Horizon constructs its own FormData after the submit event. The
-          // formdata event is the last reliable point to put the selling plan
-          // onto the actual /cart/add request (rather than only the UI).
-          form.addEventListener('formdata', (event) => {
-            if (mode === 'subscription') {
-              event.formData.set('selling_plan', planId);
-            } else {
-              event.formData.delete('selling_plan');
-            }
-          });
+          if (!window[listenerKey]) {
+            document.addEventListener(
+              'submit',
+              (event) => {
+                const submittedForm = event.target;
+                if (!(submittedForm instanceof HTMLFormElement)) return;
+                if (!submittedForm.matches(managedFormSelector)) return;
+
+                const liveRoot = document.getElementById('AvonentOneTimeSwitch-{{ block.id }}');
+                const oneTime =
+                  liveRoot?.querySelector('[data-one-time-toggle]')?.getAttribute('aria-pressed') === 'true';
+                let liveInput = submittedForm.querySelector('[data-avonent-selling-plan]');
+
+                if (!liveInput) {
+                  liveInput = document.createElement('input');
+                  liveInput.type = 'hidden';
+                  liveInput.name = 'selling_plan';
+                  liveInput.setAttribute('data-avonent-selling-plan', '');
+                  submittedForm.appendChild(liveInput);
+                }
+
+                liveInput.disabled = oneTime;
+                liveInput.value = oneTime ? '' : planId;
+                if (oneTime) liveInput.removeAttribute('value');
+                else liveInput.setAttribute('value', planId);
+              },
+              true
+            );
+
+            document.addEventListener(
+              'formdata',
+              (event) => {
+                const submittedForm = event.target;
+                if (!(submittedForm instanceof HTMLFormElement)) return;
+                if (!submittedForm.matches(managedFormSelector)) return;
+
+                const liveRoot = document.getElementById('AvonentOneTimeSwitch-{{ block.id }}');
+                const oneTime =
+                  liveRoot?.querySelector('[data-one-time-toggle]')?.getAttribute('aria-pressed') === 'true';
+
+                if (oneTime) event.formData.delete('selling_plan');
+                else event.formData.set('selling_plan', planId);
+              },
+              true
+            );
+
+            window[listenerKey] = true;
+          }
 
           form.addEventListener(
             'click',
