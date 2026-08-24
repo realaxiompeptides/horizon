@@ -1,0 +1,43 @@
+{% comment %}
+  Avonent header cleanup
+  The Horizon drawer can render featured product/collection cards independently
+  of the visible navigation links. Avonent intentionally uses a navigation-only
+  drawer, so these cards are disabled here across every page.
+{% endcomment %}
+
+<style>
+  #header-component .menu-drawer__featured-content,
+  #header-component .menu-drawer__featured-content--childlist,
+  #header-component .menu-drawer__featured-content-list,
+  #header-component .menu-drawer__featured-content-list-item {
+    display: none !important;
+  }
+</style>
+
+<script>
+  (() => {
+    const removeFeaturedDrawerContent = () => {
+      document
+        .querySelectorAll('#header-component .menu-drawer__featured-content')
+        .forEach((element) => element.remove());
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', removeFeaturedDrawerContent, { once: true });
+    } else {
+      removeFeaturedDrawerContent();
+    }
+
+    document.addEventListener('shopify:section:load', removeFeaturedDrawerContent);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Avonent Header Cleanup",
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": []
+}
+{% endschema %}
