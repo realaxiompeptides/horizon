@@ -35,7 +35,7 @@
 {% # theme-check-disable-next-line UnknownFilter %}
 <collection-component view-event-payload="{{ collection | standard_event_data: 'view' | escape }}">
   <results-list
-    class="section product-grid-container{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
+    class="section product-grid-container avonent-catalog{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
     style="--padding-block-start: {{ section.settings.padding-block-start }}px; --padding-block-end: {{ section.settings.padding-block-end }}px;"
     section-id="{{ section.id }}"
     infinite-scroll="{{ section.settings.enable_infinite_scroll }}"
@@ -61,20 +61,34 @@
       {% paginate collection.products by products_per_page %}
         {% capture children %}
           {% for product in collection.products %}
-            <li
-              id="{{ section.id }}-{{ product.id }}"
-              class="product-grid__item product-grid__item--{{ forloop.index0 }}"
-              data-page="{{ paginate.current_page }}"
-              data-product-id="{{ product.id }}"
-              ref="cards[]"
-            >
-              {% content_for 'block',
-                type: '_product-card',
-                id: 'product-card',
-                closest.product: product,
-                product_view_context: 'collection'
-              %}
-            </li>
+            {% liquid
+              assign avonent_product_title = product.title | strip | downcase
+              assign avonent_product_handle = product.handle | strip | downcase
+              assign hide_from_avonent_catalog = false
+
+              if avonent_product_title == 'shipping protection'
+                assign hide_from_avonent_catalog = true
+              elsif avonent_product_handle == 'shipping-protection' or avonent_product_handle contains 'shipping-protection'
+                assign hide_from_avonent_catalog = true
+              endif
+            %}
+
+            {% unless hide_from_avonent_catalog %}
+              <li
+                id="{{ section.id }}-{{ product.id }}"
+                class="product-grid__item product-grid__item--{{ forloop.index0 }}"
+                data-page="{{ paginate.current_page }}"
+                data-product-id="{{ product.id }}"
+                ref="cards[]"
+              >
+                {% content_for 'block',
+                  type: '_product-card',
+                  id: 'product-card',
+                  closest.product: product,
+                  product_view_context: 'collection'
+                %}
+              </li>
+            {% endunless %}
           {% endfor %}
         {% endcapture %}
 
@@ -90,6 +104,74 @@
   </results-list>
 </collection-component>
 
+<style>
+  #shopify-section-{{ section.id }} .avonent-catalog {
+    background:
+      radial-gradient(circle at 10% 0%, rgba(2, 198, 234, .08), transparent 26rem),
+      #f8fdfe;
+  }
+
+  #shopify-section-{{ section.id }} .avonent-catalog .collection-wrapper {
+    padding-top: 22px;
+  }
+
+  #shopify-section-{{ section.id }} .avonent-catalog .product-grid__item {
+    overflow: hidden;
+    padding: 10px;
+    border: 1px solid #d9edf2;
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0 10px 32px rgba(7, 55, 65, .055);
+    transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+  }
+
+  #shopify-section-{{ section.id }} .avonent-catalog .product-grid__item:hover {
+    transform: translateY(-3px);
+    border-color: rgba(2, 198, 234, .55);
+    box-shadow: 0 18px 42px rgba(2, 137, 164, .10);
+  }
+
+  #shopify-section-{{ section.id }} .avonent-catalog .product-grid__item img {
+    border-radius: 14px;
+  }
+
+  #shopify-section-{{ section.id }} .avonent-catalog .product-grid__item a {
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+
+  #shopify-section-{{ section.id }} .avonent-catalog .product-grid__item :is(h2, h3, h4, [class*='product-title']) {
+    font-family: var(--font-heading--family, var(--font-body--family));
+    font-weight: 750;
+    letter-spacing: -.02em;
+  }
+
+  #shopify-section-{{ section.id }} .avonent-catalog :is(.facets, .facets__wrapper, [class*='facets']) button,
+  #shopify-section-{{ section.id }} .avonent-catalog :is(.facets, .facets__wrapper, [class*='facets']) select {
+    font-family: var(--font-body--family);
+  }
+
+  @media screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }} .avonent-catalog .collection-wrapper {
+      padding-top: 12px;
+    }
+
+    #shopify-section-{{ section.id }} .avonent-catalog .product-grid__item {
+      padding: 7px;
+      border-radius: 15px;
+      box-shadow: 0 7px 22px rgba(7, 55, 65, .045);
+    }
+
+    #shopify-section-{{ section.id }} .avonent-catalog .product-grid__item img {
+      border-radius: 11px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #shopify-section-{{ section.id }} .avonent-catalog .product-grid__item { transition: none; }
+  }
+</style>
+
 {% schema %}
 {
   "name": "t:names.collection_container",
@@ -102,14 +184,8 @@
       "id": "layout_type",
       "label": "t:settings.type",
       "options": [
-        {
-          "value": "grid",
-          "label": "t:options.grid"
-        },
-        {
-          "value": "organic",
-          "label": "t:options.editorial"
-        }
+        { "value": "grid", "label": "t:options.grid" },
+        { "value": "organic", "label": "t:options.editorial" }
       ],
       "default": "grid"
     },
@@ -118,22 +194,10 @@
       "id": "product_card_size",
       "label": "t:settings.card_size",
       "options": [
-        {
-          "value": "small",
-          "label": "t:options.small"
-        },
-        {
-          "value": "medium",
-          "label": "t:options.medium"
-        },
-        {
-          "value": "large",
-          "label": "t:options.large"
-        },
-        {
-          "value": "extra-large",
-          "label": "t:options.extra_large"
-        }
+        { "value": "small", "label": "t:options.small" },
+        { "value": "medium", "label": "t:options.medium" },
+        { "value": "large", "label": "t:options.large" },
+        { "value": "extra-large", "label": "t:options.extra_large" }
       ],
       "default": "medium",
       "visible_if": "{{ section.settings.layout_type == 'grid' }}"
@@ -143,14 +207,8 @@
       "id": "mobile_product_card_size",
       "label": "t:settings.mobile_card_size",
       "options": [
-        {
-          "value": "small",
-          "label": "t:options.small"
-        },
-        {
-          "value": "large",
-          "label": "t:options.large"
-        }
+        { "value": "small", "label": "t:options.small" },
+        { "value": "large", "label": "t:options.large" }
       ],
       "default": "small"
     },
@@ -170,23 +228,14 @@
       "default": 24,
       "visible_if": "{{ section.settings.enable_infinite_scroll == false }}"
     },
-    {
-      "type": "header",
-      "content": "t:content.layout"
-    },
+    { "type": "header", "content": "t:content.layout" },
     {
       "type": "select",
       "id": "product_grid_width",
       "label": "t:settings.width",
       "options": [
-        {
-          "value": "centered",
-          "label": "t:options.page"
-        },
-        {
-          "value": "full-width",
-          "label": "t:options.full"
-        }
+        { "value": "centered", "label": "t:options.page" },
+        { "value": "full-width", "label": "t:options.full" }
       ],
       "default": "centered"
     },
@@ -197,76 +246,14 @@
       "default": true,
       "visible_if": "{{ section.settings.product_grid_width != 'full-width' }}"
     },
-    {
-      "type": "range",
-      "id": "columns_gap_horizontal",
-      "label": "t:settings.horizontal_gap",
-      "min": 0,
-      "max": 50,
-      "step": 1,
-      "unit": "px",
-      "default": 16
-    },
-    {
-      "type": "range",
-      "id": "columns_gap_vertical",
-      "label": "t:settings.vertical_gap",
-      "min": 0,
-      "max": 50,
-      "step": 1,
-      "unit": "px",
-      "default": 16
-    },
-    {
-      "type": "range",
-      "id": "padding-inline-start",
-      "label": "t:settings.left_padding",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "range",
-      "id": "padding-inline-end",
-      "label": "t:settings.right_padding",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "header",
-      "content": "t:content.section_layout"
-    },
-    {
-      "type": "color",
-      "id": "background_color",
-      "label": "t:settings.background_color",
-      "placeholder": "t:settings.default"
-    },
-    {
-      "type": "range",
-      "id": "padding-block-start",
-      "label": "t:settings.top_padding",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 8
-    },
-    {
-      "type": "range",
-      "id": "padding-block-end",
-      "label": "t:settings.bottom_padding",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 8
-    }
+    { "type": "range", "id": "columns_gap_horizontal", "label": "t:settings.horizontal_gap", "min": 0, "max": 50, "step": 1, "unit": "px", "default": 16 },
+    { "type": "range", "id": "columns_gap_vertical", "label": "t:settings.vertical_gap", "min": 0, "max": 50, "step": 1, "unit": "px", "default": 16 },
+    { "type": "range", "id": "padding-inline-start", "label": "t:settings.left_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding-inline-end", "label": "t:settings.right_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "header", "content": "t:content.section_layout" },
+    { "type": "color", "id": "background_color", "label": "t:settings.background_color", "placeholder": "t:settings.default" },
+    { "type": "range", "id": "padding-block-start", "label": "t:settings.top_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 8 },
+    { "type": "range", "id": "padding-block-end", "label": "t:settings.bottom_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 8 }
   ],
   "presets": []
 }
