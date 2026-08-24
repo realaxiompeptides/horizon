@@ -19,13 +19,20 @@
     {% if section.settings.collection != blank and shop.products_count != 0 %}
       {% assign visible_count = 0 %}
       {% for product in section.settings.collection.products %}
-        {% if product.handle != 'shipping-protection' and visible_count < max_items %}
-          {% assign visible_count = visible_count | plus: 1 %}
-          {% if visible_count > 1 %}<!--@list/split-->{% endif %}
-          <div class="resource-list__item">
-            {% content_for 'block', type: '_product-card', id: 'static-product-card', closest.product: product, product_view_context: 'collection' %}
-          </div>
+        {% assign hidden_utility_product = false %}
+        {% if product.handle contains 'shipping-protection' or product.title == 'Shipping Protection' %}
+          {% assign hidden_utility_product = true %}
         {% endif %}
+
+        {% unless hidden_utility_product %}
+          {% if visible_count < max_items %}
+            {% assign visible_count = visible_count | plus: 1 %}
+            {% if visible_count > 1 %}<!--@list/split-->{% endif %}
+            <div class="resource-list__item" data-avonent-product-handle="{{ product.handle }}">
+              {% content_for 'block', type: '_product-card', id: 'static-product-card', closest.product: product, product_view_context: 'collection' %}
+            </div>
+          {% endif %}
+        {% endunless %}
       {% endfor %}
     {% else %}
       {% for i in (1..max_items) %}
@@ -52,6 +59,13 @@
     {%- content_for 'blocks' -%}
   </div>
 </div>
+
+<style>
+  .resource-list__item[data-avonent-product-handle*='shipping-protection'],
+  .resource-list__item:has(a[href*='/products/shipping-protection']) {
+    display: none !important;
+  }
+</style>
 
 {% schema %}
 {
