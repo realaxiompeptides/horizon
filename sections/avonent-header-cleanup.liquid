@@ -1,8 +1,7 @@
 {% comment %}
-  Avonent header cleanup
-  The Horizon drawer can render featured product/collection cards independently
-  of the visible navigation links. Avonent intentionally uses a navigation-only
-  drawer, so these cards are disabled here across every page.
+  Avonent storefront cleanup
+  Keep the navigation drawer product-free and keep Shipping Protection as a
+  cart-only add-on rather than a shopper-facing product/line item.
 {% endcomment %}
 
 <style>
@@ -12,23 +11,34 @@
   #header-component .menu-drawer__featured-content-list-item {
     display: none !important;
   }
+
+  /* Shipping Protection stays in the cart data so totals/checkout remain
+     correct, but shoppers manage it only through the dedicated add-on toggle. */
+  .cart-items__table-row[data-product-handle='shipping-protection'] {
+    display: none !important;
+  }
 </style>
 
 <script>
   (() => {
-    const removeFeaturedDrawerContent = () => {
+    const cleanupAvonentStorefront = () => {
       document
         .querySelectorAll('#header-component .menu-drawer__featured-content')
         .forEach((element) => element.remove());
+
+      document
+        .querySelectorAll(".cart-items__table-row[data-product-handle='shipping-protection']")
+        .forEach((element) => element.setAttribute('aria-hidden', 'true'));
     };
 
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', removeFeaturedDrawerContent, { once: true });
+      document.addEventListener('DOMContentLoaded', cleanupAvonentStorefront, { once: true });
     } else {
-      removeFeaturedDrawerContent();
+      cleanupAvonentStorefront();
     }
 
-    document.addEventListener('shopify:section:load', removeFeaturedDrawerContent);
+    document.addEventListener('shopify:section:load', cleanupAvonentStorefront);
+    document.addEventListener('cart:update', cleanupAvonentStorefront);
   })();
 </script>
 
