@@ -4,19 +4,24 @@
 {% endcomment %}
 
 <style>
-  /* Tighten total -> checkout spacing. */
-  .cart-page__summary .cart-totals {
-    margin-top: 8px !important;
-    padding-top: 10px !important;
+  /* Make Shipping Protection -> total -> checkout feel like one compact checkout block. */
+  .cart-page__summary .avonent-cart-page-protection {
+    margin-bottom: 0 !important;
   }
 
-  .cart-page__summary .avonent-cart-ctas {
-    margin-top: 8px !important;
-    gap: 8px !important;
+  .cart-page__summary .cart-totals {
+    margin-top: 4px !important;
+    padding-top: 8px !important;
   }
 
   .cart-page__summary .cart-totals__total {
-    min-height: 38px !important;
+    min-height: 34px !important;
+    margin-bottom: 0 !important;
+  }
+
+  .cart-page__summary .avonent-cart-ctas {
+    margin-top: 4px !important;
+    gap: 8px !important;
   }
 
   /* Full cart product row. */
@@ -62,7 +67,6 @@
       background: #eefaff !important;
     }
 
-    /* Critical fix: show the FULL bottle instead of zoom/crop. */
     .cart-page__items .cart-items__media-image {
       width: 100% !important;
       height: 100% !important;
@@ -150,7 +154,16 @@
     }
 
     .cart-page__summary {
-      padding: 12px 20px 16px !important;
+      padding: 8px 20px 14px !important;
+    }
+
+    .cart-page__summary .avonent-cart-page-protection {
+      margin-bottom: 0 !important;
+    }
+
+    .cart-page__summary .cart-totals {
+      margin-top: 2px !important;
+      padding-top: 7px !important;
     }
 
     .cart-page__summary .cart-totals__total-label {
@@ -159,6 +172,10 @@
 
     .cart-page__summary .cart-totals__total-value {
       font-size: 22px !important;
+    }
+
+    .cart-page__summary .avonent-cart-ctas {
+      margin-top: 2px !important;
     }
   }
 
