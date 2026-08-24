@@ -1,0 +1,202 @@
+<section
+  id="avonent-collection-hero-{{ section.id }}"
+  class="avonent-collection-hero"
+  style="
+    --av-accent: {{ section.settings.accent_color }};
+    --av-bg: {{ section.settings.background_color }};
+    --av-text: {{ section.settings.text_color }};
+    --av-muted: {{ section.settings.muted_color }};
+    --av-border: {{ section.settings.border_color }};
+  "
+>
+  <div class="avonent-collection-hero__glow avonent-collection-hero__glow--one" aria-hidden="true"></div>
+  <div class="avonent-collection-hero__glow avonent-collection-hero__glow--two" aria-hidden="true"></div>
+
+  <div class="avonent-collection-hero__inner">
+    {% if section.settings.eyebrow != blank %}
+      <div class="avonent-collection-hero__eyebrow">
+        <span aria-hidden="true"></span>
+        {{ section.settings.eyebrow | escape }}
+      </div>
+    {% endif %}
+
+    <h1 class="avonent-collection-hero__heading">
+      {% if section.settings.custom_heading != blank %}
+        {{ section.settings.custom_heading | escape }}
+      {% else %}
+        {{ collection.title | escape }}
+      {% endif %}
+    </h1>
+
+    <div class="avonent-collection-hero__copy rte">
+      {% if section.settings.custom_description != blank %}
+        {{ section.settings.custom_description }}
+      {% elsif collection.description != blank %}
+        {{ collection.description }}
+      {% else %}
+        <p>Premium wellness formulas made to fit real routines—simple to understand, easy to shop, and backed by Avonent quality standards.</p>
+      {% endif %}
+    </div>
+
+    {% if section.settings.show_trust_row %}
+      <div class="avonent-collection-hero__trust" aria-label="Avonent shopping benefits">
+        <div class="avonent-collection-hero__trust-item">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 3h6M10 3v5l-4.6 8.2A3.2 3.2 0 0 0 8.2 21h7.6a3.2 3.2 0 0 0 2.8-4.8L14 8V3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.8 14h8.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <span>{{ section.settings.trust_one | escape }}</span>
+        </div>
+        <div class="avonent-collection-hero__trust-item">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7.5 12 3l8 4.5v9L12 21l-8-4.5v-9Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m4.5 7.8 7.5 4.3 7.5-4.3M12 12v8.4" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+          <span>{{ section.settings.trust_two | escape }}</span>
+        </div>
+        <div class="avonent-collection-hero__trust-item">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 5 6v5c0 4.8 2.9 8.2 7 10 4.1-1.8 7-5.2 7-10V6l-7-3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m8.7 12 2.1 2.1 4.7-4.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>{{ section.settings.trust_three | escape }}</span>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  #avonent-collection-hero-{{ section.id }} {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: 62px 20px 46px;
+    background: linear-gradient(180deg, var(--av-bg) 0%, #f8fdfe 100%);
+    color: var(--av-text);
+    border-bottom: 1px solid var(--av-border);
+  }
+
+  #avonent-collection-hero-{{ section.id }} * { box-sizing: border-box; }
+
+  #avonent-collection-hero-{{ section.id }} .avonent-collection-hero__inner {
+    width: 100%;
+    max-width: 1040px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  #avonent-collection-hero-{{ section.id }} .avonent-collection-hero__glow {
+    position: absolute;
+    z-index: -1;
+    width: 440px;
+    height: 440px;
+    border-radius: 50%;
+    background: rgba(2, 198, 234, .12);
+    filter: blur(8px);
+    pointer-events: none;
+  }
+
+  #avonent-collection-hero-{{ section.id }} .avonent-collection-hero__glow--one { top: -315px; left: -185px; }
+  #avonent-collection-hero-{{ section.id }} .avonent-collection-hero__glow--two { right: -230px; bottom: -350px; }
+
+  #avonent-collection-hero-{{ section.id }} .avonent-collection-hero__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 16px;
+    padding: 8px 13px;
+    border: 1px solid rgba(2, 198, 234, .32);
+    border-radius: 999px;
+    background: rgba(255,255,255,.8);
+    color: #078aa5;
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+  }
+
+  #avonent-collection-hero-{{ section.id }} .avonent-collection-hero__eyebrow span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--av-accent);
+    box-shadow: 0 0 0 5px rgba(2,198,234,.12);
+  }
+
+  #avonent-collection-hero-{{ section.id }} .avonent-collection-hero__heading {
+    max-width: 820px;
+    margin: 0 auto;
+    font-family: var(--font-heading--family, var(--font-body--family));
+    font-size: clamp(44px, 6vw, 76px);
+    font-weight: 800;
+    line-height: .98;
+    letter-spacing: -.05em;
+  }
+
+  #avonent-collection-hero-{{ section.id }} .avonent-collection-hero__copy {
+    max-width: 660px;
+    margin: 20px auto 0;
+    color: var(--av-muted);
+    font-size: 17px;
+    line-height: 1.65;
+  }
+
+  #avonent-collection-hero-{{ section.id }} .avonent-collection-hero__copy p { margin: 0; }
+
+  #avonent-collection-hero-{{ section.id }} .avonent-collection-hero__trust {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 26px;
+  }
+
+  #avonent-collection-hero-{{ section.id }} .avonent-collection-hero__trust-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 10px 14px;
+    border: 1px solid var(--av-border);
+    border-radius: 999px;
+    background: rgba(255,255,255,.9);
+    color: var(--av-text);
+    font-size: 12px;
+    font-weight: 750;
+    box-shadow: 0 8px 24px rgba(4,77,91,.04);
+  }
+
+  #avonent-collection-hero-{{ section.id }} .avonent-collection-hero__trust-item svg {
+    width: 19px;
+    height: 19px;
+    flex: 0 0 auto;
+    color: var(--av-accent);
+  }
+
+  @media (max-width: 749px) {
+    #avonent-collection-hero-{{ section.id }} { padding: 42px 16px 32px; }
+    #avonent-collection-hero-{{ section.id }} .avonent-collection-hero__eyebrow { font-size: 10px; }
+    #avonent-collection-hero-{{ section.id }} .avonent-collection-hero__heading { font-size: clamp(38px, 12vw, 54px); }
+    #avonent-collection-hero-{{ section.id }} .avonent-collection-hero__copy { margin-top: 16px; font-size: 14px; line-height: 1.55; }
+    #avonent-collection-hero-{{ section.id }} .avonent-collection-hero__trust { display: grid; grid-template-columns: 1fr; gap: 7px; margin-top: 21px; }
+    #avonent-collection-hero-{{ section.id }} .avonent-collection-hero__trust-item { justify-content: flex-start; border-radius: 13px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "00 Avonent Collection Hero",
+  "tag": "section",
+  "class": "section-avonent-collection-hero",
+  "enabled_on": { "templates": ["collection"] },
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "AVONENT WELLNESS" },
+    { "type": "text", "id": "custom_heading", "label": "Custom heading", "default": "Shop Avonent" },
+    { "type": "richtext", "id": "custom_description", "label": "Custom description", "default": "<p>Premium wellness formulas made for better daily routines—clear, quality-focused, and easy to make your own.</p>" },
+    { "type": "checkbox", "id": "show_trust_row", "label": "Show trust row", "default": true },
+    { "type": "text", "id": "trust_one", "label": "Trust item 1", "default": "Third-party lab tested" },
+    { "type": "text", "id": "trust_two", "label": "Trust item 2", "default": "Ships from the USA" },
+    { "type": "text", "id": "trust_three", "label": "Trust item 3", "default": "30-day guarantee" },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "accent_color", "label": "Accent", "default": "#02C6EA" },
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#EAF9FC" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#071114" },
+    { "type": "color", "id": "muted_color", "label": "Muted text", "default": "#52656C" },
+    { "type": "color", "id": "border_color", "label": "Border", "default": "#D5EDF3" }
+  ],
+  "presets": [{ "name": "00 Avonent Collection Hero" }]
+}
+{% endschema %}
