@@ -4,23 +4,56 @@
 {% endcomment %}
 
 <style>
-  /* Make Shipping Protection -> total -> checkout feel like one compact checkout block. */
+  /*
+   * CRITICAL CART SUMMARY SPACING FIX
+   * Horizon's _cart-summary block uses gap: var(--gap-2xl) on .cart-summary__inner.
+   * That wrapper gap was the large blank space between Estimated total and checkout.
+   */
+  .cart-page__summary {
+    gap: 4px !important;
+  }
+
+  .cart-page__summary > .section-background {
+    display: none !important;
+  }
+
+  .cart-page__summary .cart-summary,
+  .cart-page__summary .cart-summary--extend {
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .cart-page__summary .cart-summary__inner {
+    gap: 8px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    position: static !important;
+    top: auto !important;
+  }
+
   .cart-page__summary .avonent-cart-page-protection {
-    margin-bottom: 0 !important;
+    margin: 0 0 2px !important;
   }
 
   .cart-page__summary .cart-totals {
-    margin-top: 4px !important;
-    padding-top: 8px !important;
+    margin: 0 !important;
+    padding: 7px 0 0 !important;
+  }
+
+  .cart-page__summary .cart-totals__container,
+  .cart-page__summary .cart-totals__total {
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   .cart-page__summary .cart-totals__total {
     min-height: 34px !important;
-    margin-bottom: 0 !important;
   }
 
   .cart-page__summary .avonent-cart-ctas {
-    margin-top: 4px !important;
+    margin: 0 !important;
     gap: 8px !important;
   }
 
@@ -154,16 +187,21 @@
     }
 
     .cart-page__summary {
-      padding: 8px 20px 14px !important;
+      gap: 2px !important;
+      padding: 4px 20px 12px !important;
     }
 
     .cart-page__summary .avonent-cart-page-protection {
       margin-bottom: 0 !important;
     }
 
+    .cart-page__summary .cart-summary__inner {
+      gap: 6px !important;
+    }
+
     .cart-page__summary .cart-totals {
-      margin-top: 2px !important;
-      padding-top: 7px !important;
+      margin: 0 !important;
+      padding-top: 6px !important;
     }
 
     .cart-page__summary .cart-totals__total-label {
@@ -175,7 +213,7 @@
     }
 
     .cart-page__summary .avonent-cart-ctas {
-      margin-top: 2px !important;
+      margin: 0 !important;
     }
   }
 
