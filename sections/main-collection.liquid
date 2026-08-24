@@ -1,28 +1,4 @@
-<script
-  src="{{ 'results-list.js' | asset_url }}"
-  type="module"
-  fetchpriority="low"
-></script>
-
-{% javascript %}
-  const url = new URL(window.location.href);
-  if (url.hash) {
-    document.addEventListener(
-      'DOMContentLoaded',
-      () => {
-        const card = document.getElementById(url.hash.slice(1));
-        if (card) card.scrollIntoView({ behavior: 'instant' });
-      },
-      { once: true }
-    );
-  }
-{% endjavascript %}
-
 {% liquid
-  if section.settings.background_color != blank
-    render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
-  endif
-
   assign visible_products_count = 0
   for catalog_product in collection.products
     assign catalog_title = catalog_product.title | strip | downcase
@@ -33,540 +9,377 @@
   endfor
 %}
 
-{% render 'collection-wrapper-styles' %}
-
-<div class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"></div>
-
-<section class="avonent-catalog-shell">
-  <div class="avonent-catalog-hero">
-    <div class="avonent-catalog-hero__glow avonent-catalog-hero__glow--left" aria-hidden="true"></div>
-    <div class="avonent-catalog-hero__glow avonent-catalog-hero__glow--right" aria-hidden="true"></div>
-
-    <div class="avonent-catalog-hero__inner">
-      <div class="avonent-catalog-hero__eyebrow">
-        <span aria-hidden="true"></span>
-        AVONENT WELLNESS
+<section id="avonent-catalog-{{ section.id }}" class="avonent-catalog">
+  <div class="avonent-catalog__inner">
+    <header class="avonent-catalog__header">
+      <div>
+        <span class="avonent-catalog__eyebrow">THE COLLECTION</span>
+        <h1>Find your daily routine.</h1>
+        <p>Premium Avonent wellness formulas made simple.</p>
       </div>
 
-      <h1 class="avonent-catalog-hero__title">Shop Avonent</h1>
-      <p class="avonent-catalog-hero__copy">
-        Premium wellness formulas built around clear ingredients, quality-focused manufacturing, and routines that are easy to stay consistent with.
-      </p>
+      <span class="avonent-catalog__count">
+        {{ visible_products_count }}
+        {% if visible_products_count == 1 %}product{% else %}products{% endif %}
+      </span>
+    </header>
 
-      <div class="avonent-catalog-hero__trust" aria-label="Why shop Avonent">
-        <div class="avonent-catalog-hero__trust-item">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 3h6M10 3v5l-4.6 8.2A3.2 3.2 0 0 0 8.2 21h7.6a3.2 3.2 0 0 0 2.8-4.8L14 8V3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.8 14h8.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <span>Third-party lab tested</span>
-        </div>
-        <div class="avonent-catalog-hero__trust-item">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7.5 12 3l8 4.5v9L12 21l-8-4.5v-9Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m4.5 7.8 7.5 4.3 7.5-4.3M12 12v8.4" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
-          <span>Ships from the USA</span>
-        </div>
-        <div class="avonent-catalog-hero__trust-item">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 5 6v5c0 4.8 2.9 8.2 7 10 4.1-1.8 7-5.2 7-10V6l-7-3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m8.7 12 2.1 2.1 4.7-4.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span>30-day guarantee</span>
-        </div>
-      </div>
-    </div>
-  </div>
+    {% paginate collection.products by 24 %}
+      <ul class="avonent-catalog__grid" role="list">
+        {% for product in collection.products %}
+          {% liquid
+            assign product_title_downcase = product.title | strip | downcase
+            assign product_handle_downcase = product.handle | strip | downcase
+            assign hide_product = false
 
-  {% # theme-check-disable-next-line UnknownFilter %}
-  <collection-component view-event-payload="{{ collection | standard_event_data: 'view' | escape }}">
-    <results-list
-      class="section product-grid-container avonent-catalog{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
-      style="--padding-block-start: {{ section.settings.padding-block-start }}px; --padding-block-end: {{ section.settings.padding-block-end }}px;"
-      section-id="{{ section.id }}"
-      infinite-scroll="{{ section.settings.enable_infinite_scroll }}"
-    >
-      {% render 'skip-to-content-link', href: '#ResultsList', text: 'accessibility.skip_to_results_list' %}
-
-      <div class="avonent-catalog__heading-row">
-        <div>
-          <span class="avonent-catalog__kicker">THE COLLECTION</span>
-          <h2>Find your daily routine.</h2>
-        </div>
-        <p>
-          {{ visible_products_count }}
-          {% if visible_products_count == 1 %}product{% else %}products{% endif %}
-        </p>
-      </div>
-
-      <div class="collection-wrapper grid gap-style{% if section.settings.product_grid_width == 'full-width' %} collection-wrapper--grid-full-width{% endif %}">
-        {% content_for 'block',
-          type: 'filters',
-          id: 'filters',
-          results: collection,
-          results_size: visible_products_count
-        %}
-
-        {% assign products_per_page = 24 %}
-        {% if section.settings.enable_infinite_scroll == false %}
-          {% assign products_per_page = section.settings.products_per_page %}
-        {% endif %}
-
-        {% paginate collection.products by products_per_page %}
-          {% capture children %}
-            {% for product in collection.products %}
-              {% liquid
-                assign avonent_product_title = product.title | strip | downcase
-                assign avonent_product_handle = product.handle | strip | downcase
-                assign hide_from_avonent_catalog = false
-
-                if avonent_product_title == 'shipping protection'
-                  assign hide_from_avonent_catalog = true
-                elsif avonent_product_handle == 'shipping-protection' or avonent_product_handle contains 'shipping-protection'
-                  assign hide_from_avonent_catalog = true
-                endif
-              %}
-
-              {% unless hide_from_avonent_catalog %}
-                <li
-                  id="{{ section.id }}-{{ product.id }}"
-                  class="product-grid__item avonent-product-grid__item"
-                  data-page="{{ paginate.current_page }}"
-                  data-product-id="{{ product.id }}"
-                  ref="cards[]"
-                >
-                  <article class="avonent-product-card">
-                    <a href="{{ product.url }}" class="avonent-product-card__media" aria-label="View {{ product.title | escape }}">
-                      {% if product.featured_image != blank %}
-                        {{
-                          product.featured_image
-                          | image_url: width: 900
-                          | image_tag:
-                            loading: 'lazy',
-                            widths: '360, 540, 720, 900',
-                            sizes: '(min-width: 1100px) 360px, (min-width: 750px) 32vw, 92vw',
-                            class: 'avonent-product-card__image',
-                            alt: product.featured_image.alt | default: product.title
-                        }}
-                      {% else %}
-                        <div class="avonent-product-card__placeholder">{{ 'product-1' | placeholder_svg_tag }}</div>
-                      {% endif %}
-
-                      <div class="avonent-product-card__badges">
-                        {% if product.compare_at_price_max > product.price %}
-                          <span class="avonent-product-card__badge avonent-product-card__badge--sale">Sale</span>
-                        {% endif %}
-                        {% unless product.available %}
-                          <span class="avonent-product-card__badge avonent-product-card__badge--dark">Sold out</span>
-                        {% endunless %}
-                      </div>
-                    </a>
-
-                    <div class="avonent-product-card__body">
-                      <div class="avonent-product-card__meta">
-                        <span>AVONENT</span>
-                        <span class="avonent-product-card__tested">
-                          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5.5 10.2 2.8 2.8 6.2-6.3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                          Quality tested
-                        </span>
-                      </div>
-
-                      <h3 class="avonent-product-card__title">
-                        <a href="{{ product.url }}">{{ product.title }}</a>
-                      </h3>
-
-                      {% if product.description != blank %}
-                        <p class="avonent-product-card__description">
-                          {{ product.description | strip_html | strip | truncate: 112 }}
-                        </p>
-                      {% endif %}
-
-                      <div class="avonent-product-card__bottom">
-                        <div class="avonent-product-card__price">
-                          <span class="avonent-product-card__current-price">{{ product.price | money }}</span>
-                          {% if product.compare_at_price_max > product.price %}
-                            <s>{{ product.compare_at_price_max | money }}</s>
-                          {% endif %}
-                        </div>
-
-                        <a href="{{ product.url }}" class="avonent-product-card__button">
-                          View product
-                          <span aria-hidden="true">→</span>
-                        </a>
-                      </div>
-                    </div>
-                  </article>
-                </li>
-              {% endunless %}
-            {% endfor %}
-          {% endcapture %}
-
-          {% render 'product-grid',
-            section: section,
-            children: children,
-            products: collection.products,
-            paginate: paginate,
-            enable_infinite_scroll: section.settings.enable_infinite_scroll
+            if product_title_downcase == 'shipping protection'
+              assign hide_product = true
+            elsif product_handle_downcase == 'shipping-protection' or product_handle_downcase contains 'shipping-protection'
+              assign hide_product = true
+            endif
           %}
-        {% endpaginate %}
-      </div>
-    </results-list>
-  </collection-component>
+
+          {% unless hide_product %}
+            <li class="avonent-card-wrap">
+              <article class="avonent-card">
+                <a
+                  class="avonent-card__media"
+                  href="{{ product.url }}"
+                  aria-label="View {{ product.title | escape }}"
+                >
+                  {% if product.featured_image != blank %}
+                    {{
+                      product.featured_image
+                      | image_url: width: 900
+                      | image_tag:
+                        loading: 'lazy',
+                        widths: '360, 540, 720, 900',
+                        sizes: '(min-width: 990px) 340px, (min-width: 750px) 42vw, 92vw',
+                        class: 'avonent-card__image',
+                        alt: product.title
+                    }}
+                  {% else %}
+                    <div class="avonent-card__placeholder">
+                      {{ 'product-1' | placeholder_svg_tag }}
+                    </div>
+                  {% endif %}
+
+                  {% if product.compare_at_price_max > product.price %}
+                    <span class="avonent-card__sale">SALE</span>
+                  {% endif %}
+                </a>
+
+                <div class="avonent-card__body">
+                  <div class="avonent-card__micro-row">
+                    <span>AVONENT</span>
+                    <span class="avonent-card__quality">
+                      <svg viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                        <path d="m4.5 9.2 2.6 2.6 6-6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                      Quality tested
+                    </span>
+                  </div>
+
+                  <h2 class="avonent-card__title">
+                    <a href="{{ product.url }}">{{ product.title }}</a>
+                  </h2>
+
+                  <div class="avonent-card__purchase">
+                    <div class="avonent-card__price">
+                      <span class="avonent-card__price-current">{{ product.price | money }}</span>
+                      {% if product.compare_at_price_max > product.price %}
+                        <s>{{ product.compare_at_price_max | money }}</s>
+                      {% endif %}
+                    </div>
+
+                    {% if product.available %}
+                      <span class="avonent-card__stock"><span></span> In stock</span>
+                    {% else %}
+                      <span class="avonent-card__stock avonent-card__stock--out">Sold out</span>
+                    {% endif %}
+                  </div>
+
+                  <a href="{{ product.url }}" class="avonent-card__button">
+                    View product
+                    <span aria-hidden="true">→</span>
+                  </a>
+
+                  <div class="avonent-card__assurance">
+                    <span>30-day guarantee</span>
+                    <span aria-hidden="true">•</span>
+                    <span>Ships from USA</span>
+                  </div>
+                </div>
+              </article>
+            </li>
+          {% endunless %}
+        {% endfor %}
+      </ul>
+
+      {% if paginate.pages > 1 %}
+        <div class="avonent-catalog__pagination">
+          {{ paginate | default_pagination }}
+        </div>
+      {% endif %}
+    {% endpaginate %}
+  </div>
 </section>
 
 <style>
-  /* Fallback: if an older collection template still has Horizon's generic title
-     section directly before main-collection, remove it. */
-  #MainContent > .shopify-section:has(+ #shopify-section-{{ section.id }}) {
-    display: none !important;
-  }
-
-  #shopify-section-{{ section.id }} {
-    background: #f7fcfd;
-  }
-
-  #shopify-section-{{ section.id }} .avonent-catalog-shell {
+  #avonent-catalog-{{ section.id }} {
     --av-blue: #02c6ea;
     --av-blue-dark: #1996b5;
     --av-ink: #071114;
-    --av-muted: #5b6b71;
-    --av-border: #d8ebef;
-    background: #f7fcfd;
+    --av-muted: #65757b;
+    --av-border: #d8eaee;
+    position: relative;
+    min-height: 55vh;
+    padding: 52px 20px 72px;
+    background:
+      radial-gradient(circle at 8% 0%, rgba(2, 198, 234, .08), transparent 24rem),
+      #f7fcfd;
     color: var(--av-ink);
   }
 
-  #shopify-section-{{ section.id }} .avonent-catalog-hero {
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
-    padding: 58px 22px 52px;
-    border-bottom: 1px solid var(--av-border);
-    background:
-      linear-gradient(180deg, #eefbfe 0%, #f7fcfd 100%);
+  #avonent-catalog-{{ section.id }} * {
+    box-sizing: border-box;
   }
 
-  #shopify-section-{{ section.id }} .avonent-catalog-hero__glow {
-    position: absolute;
-    z-index: -1;
-    width: 460px;
-    height: 460px;
-    border-radius: 50%;
-    background: rgba(2, 198, 234, .12);
-    filter: blur(8px);
-    pointer-events: none;
-  }
-
-  #shopify-section-{{ section.id }} .avonent-catalog-hero__glow--left { top: -320px; left: -180px; }
-  #shopify-section-{{ section.id }} .avonent-catalog-hero__glow--right { right: -230px; bottom: -360px; }
-
-  #shopify-section-{{ section.id }} .avonent-catalog-hero__inner {
-    width: min(1040px, 100%);
+  #avonent-catalog-{{ section.id }} .avonent-catalog__inner {
+    width: min(1180px, 100%);
     margin: 0 auto;
-    text-align: center;
   }
 
-  #shopify-section-{{ section.id }} .avonent-catalog-hero__eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 9px;
-    margin-bottom: 16px;
-    padding: 8px 13px;
-    border: 1px solid rgba(2, 198, 234, .3);
-    border-radius: 999px;
-    background: rgba(255,255,255,.86);
-    color: #087f99;
+  #avonent-catalog-{{ section.id }} .avonent-catalog__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 28px;
+    margin-bottom: 30px;
+  }
+
+  #avonent-catalog-{{ section.id }} .avonent-catalog__eyebrow {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--av-blue-dark);
     font-family: var(--font-body--family);
     font-size: 11px;
     font-weight: 800;
     line-height: 1;
-    letter-spacing: .14em;
+    letter-spacing: .15em;
   }
 
-  #shopify-section-{{ section.id }} .avonent-catalog-hero__eyebrow span {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--av-blue);
-    box-shadow: 0 0 0 5px rgba(2,198,234,.13);
-  }
-
-  #shopify-section-{{ section.id }} .avonent-catalog-hero__title {
+  #avonent-catalog-{{ section.id }} .avonent-catalog__header h1 {
     margin: 0;
-    font-family: var(--font-heading--family, var(--font-body--family));
-    font-size: clamp(46px, 6vw, 74px);
-    font-weight: 800;
-    line-height: .98;
-    letter-spacing: -.055em;
     color: var(--av-ink);
+    font-family: var(--font-heading--family, var(--font-body--family));
+    font-size: clamp(34px, 4vw, 52px);
+    font-weight: 800;
+    line-height: 1.02;
+    letter-spacing: -.045em;
   }
 
-  #shopify-section-{{ section.id }} .avonent-catalog-hero__copy {
-    max-width: 690px;
-    margin: 18px auto 0;
+  #avonent-catalog-{{ section.id }} .avonent-catalog__header p {
+    margin: 10px 0 0;
     color: var(--av-muted);
     font-family: var(--font-body--family);
-    font-size: 16px;
-    line-height: 1.65;
+    font-size: 14px;
+    line-height: 1.5;
   }
 
-  #shopify-section-{{ section.id }} .avonent-catalog-hero__trust {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 25px;
-  }
-
-  #shopify-section-{{ section.id }} .avonent-catalog-hero__trust-item {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    min-height: 43px;
-    padding: 9px 14px;
-    border: 1px solid var(--av-border);
-    border-radius: 999px;
-    background: rgba(255,255,255,.92);
-    box-shadow: 0 8px 24px rgba(5,76,90,.04);
+  #avonent-catalog-{{ section.id }} .avonent-catalog__count {
+    flex: 0 0 auto;
+    margin-bottom: 5px;
+    color: #829096;
     font-family: var(--font-body--family);
     font-size: 12px;
-    font-weight: 720;
+    font-weight: 650;
   }
 
-  #shopify-section-{{ section.id }} .avonent-catalog-hero__trust-item svg {
-    width: 19px;
-    height: 19px;
-    color: var(--av-blue-dark);
-  }
-
-  #shopify-section-{{ section.id }} .avonent-catalog {
-    padding-top: 0;
-    background:
-      radial-gradient(circle at 8% 0%, rgba(2,198,234,.06), transparent 25rem),
-      #f7fcfd;
-  }
-
-  #shopify-section-{{ section.id }} .avonent-catalog__heading-row {
-    display: flex;
-    align-items: end;
-    justify-content: space-between;
+  #avonent-catalog-{{ section.id }} .avonent-catalog__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 340px));
+    justify-content: start;
     gap: 24px;
-    width: min(1180px, calc(100% - 40px));
-    margin: 0 auto;
-    padding: 42px 0 20px;
-  }
-
-  #shopify-section-{{ section.id }} .avonent-catalog__kicker {
-    display: block;
-    margin-bottom: 7px;
-    color: var(--av-blue-dark);
-    font-family: var(--font-body--family);
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: .14em;
-  }
-
-  #shopify-section-{{ section.id }} .avonent-catalog__heading-row h2 {
     margin: 0;
-    font-family: var(--font-heading--family, var(--font-body--family));
-    font-size: clamp(30px, 3vw, 42px);
-    font-weight: 800;
-    line-height: 1.05;
-    letter-spacing: -.04em;
+    padding: 0;
+    list-style: none;
   }
 
-  #shopify-section-{{ section.id }} .avonent-catalog__heading-row > p {
-    margin: 0 0 5px;
-    color: #75848a;
-    font-family: var(--font-body--family);
-    font-size: 13px;
-    font-weight: 650;
+  #avonent-catalog-{{ section.id }} .avonent-card-wrap {
+    min-width: 0;
   }
 
-  #shopify-section-{{ section.id }} .avonent-catalog .collection-wrapper {
-    width: min(1180px, calc(100% - 40px));
-    margin: 0 auto;
-    padding-top: 0;
-  }
-
-  #shopify-section-{{ section.id }} .avonent-catalog :is(.facets, .facets__wrapper, [class*='facets']) {
-    font-family: var(--font-body--family);
-  }
-
-  #shopify-section-{{ section.id }} .avonent-catalog :is(.facets, .facets__wrapper, [class*='facets']) button,
-  #shopify-section-{{ section.id }} .avonent-catalog :is(.facets, .facets__wrapper, [class*='facets']) select,
-  #shopify-section-{{ section.id }} .avonent-catalog :is(.facets, .facets__wrapper, [class*='facets']) summary {
-    font-size: 13px;
-    font-weight: 650;
-  }
-
-  #shopify-section-{{ section.id }} .avonent-catalog .product-grid {
-    grid-template-columns: repeat(auto-fit, minmax(285px, 360px)) !important;
-    justify-content: center;
-    gap: 22px !important;
-    margin-top: 4px;
-  }
-
-  #shopify-section-{{ section.id }} .avonent-product-grid__item {
-    width: 100%;
-    padding: 0 !important;
-    border: 0 !important;
-    background: transparent;
-  }
-
-  #shopify-section-{{ section.id }} .avonent-product-card {
-    height: 100%;
+  #avonent-catalog-{{ section.id }} .avonent-card {
     overflow: hidden;
     border: 1px solid var(--av-border);
     border-radius: 22px;
-    background: #fff;
-    box-shadow: 0 12px 38px rgba(8,57,68,.07);
-    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    background: #ffffff;
+    box-shadow: 0 12px 34px rgba(7, 58, 69, .065);
+    transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
   }
 
-  #shopify-section-{{ section.id }} .avonent-product-card:hover {
-    transform: translateY(-4px);
-    border-color: rgba(2,198,234,.58);
-    box-shadow: 0 20px 48px rgba(6,111,132,.12);
+  #avonent-catalog-{{ section.id }} .avonent-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(2, 198, 234, .58);
+    box-shadow: 0 18px 42px rgba(7, 95, 113, .11);
   }
 
-  #shopify-section-{{ section.id }} .avonent-product-card__media {
+  #avonent-catalog-{{ section.id }} .avonent-card__media {
     position: relative;
     display: block;
     aspect-ratio: 1 / 1;
     overflow: hidden;
-    background: #ecf9fc;
+    background: #eaf8fc;
+    text-decoration: none;
   }
 
-  #shopify-section-{{ section.id }} .avonent-product-card__image {
+  #avonent-catalog-{{ section.id }} .avonent-card__image {
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform .28s ease;
   }
 
-  #shopify-section-{{ section.id }} .avonent-product-card:hover .avonent-product-card__image {
-    transform: scale(1.025);
+  #avonent-catalog-{{ section.id }} .avonent-card:hover .avonent-card__image {
+    transform: scale(1.02);
   }
 
-  #shopify-section-{{ section.id }} .avonent-product-card__placeholder,
-  #shopify-section-{{ section.id }} .avonent-product-card__placeholder svg {
+  #avonent-catalog-{{ section.id }} .avonent-card__placeholder,
+  #avonent-catalog-{{ section.id }} .avonent-card__placeholder svg {
     width: 100%;
     height: 100%;
   }
 
-  #shopify-section-{{ section.id }} .avonent-product-card__badges {
+  #avonent-catalog-{{ section.id }} .avonent-card__sale {
     position: absolute;
-    top: 14px;
-    right: 14px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 7px;
-  }
-
-  #shopify-section-{{ section.id }} .avonent-product-card__badge {
+    top: 13px;
+    right: 13px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 30px;
+    min-height: 29px;
     padding: 6px 11px;
     border-radius: 999px;
+    background: var(--av-blue);
+    color: #00313a;
     font-family: var(--font-body--family);
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: .03em;
-    text-transform: uppercase;
+    font-size: 10px;
+    font-weight: 850;
+    letter-spacing: .06em;
   }
 
-  #shopify-section-{{ section.id }} .avonent-product-card__badge--sale { background: var(--av-blue); color: #00252c; }
-  #shopify-section-{{ section.id }} .avonent-product-card__badge--dark { background: #071114; color: #fff; }
-
-  #shopify-section-{{ section.id }} .avonent-product-card__body {
-    display: flex;
-    flex-direction: column;
-    min-height: 245px;
-    padding: 20px;
+  #avonent-catalog-{{ section.id }} .avonent-card__body {
+    padding: 17px 18px 16px;
   }
 
-  #shopify-section-{{ section.id }} .avonent-product-card__meta {
+  #avonent-catalog-{{ section.id }} .avonent-card__micro-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 10px;
-    color: #7c8a8f;
+    gap: 8px;
+    margin-bottom: 7px;
+    color: #849196;
     font-family: var(--font-body--family);
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 800;
-    letter-spacing: .13em;
+    letter-spacing: .12em;
   }
 
-  #shopify-section-{{ section.id }} .avonent-product-card__tested {
+  #avonent-catalog-{{ section.id }} .avonent-card__quality {
     display: inline-flex;
     align-items: center;
-    gap: 3px;
-    color: #328a9d;
+    gap: 2px;
+    color: #27849a;
     letter-spacing: 0;
     text-transform: none;
   }
 
-  #shopify-section-{{ section.id }} .avonent-product-card__tested svg { width: 16px; height: 16px; }
-
-  #shopify-section-{{ section.id }} .avonent-product-card__title {
-    margin: 0;
-    font-family: var(--font-heading--family, var(--font-body--family));
-    font-size: 21px;
-    font-weight: 780;
-    line-height: 1.18;
-    letter-spacing: -.03em;
+  #avonent-catalog-{{ section.id }} .avonent-card__quality svg {
+    width: 14px;
+    height: 14px;
   }
 
-  #shopify-section-{{ section.id }} .avonent-product-card__title a {
+  #avonent-catalog-{{ section.id }} .avonent-card__title {
+    margin: 0;
+    font-family: var(--font-heading--family, var(--font-body--family));
+    font-size: 20px;
+    font-weight: 780;
+    line-height: 1.18;
+    letter-spacing: -.028em;
+  }
+
+  #avonent-catalog-{{ section.id }} .avonent-card__title a {
     color: var(--av-ink);
     text-decoration: none;
   }
 
-  #shopify-section-{{ section.id }} .avonent-product-card__description {
-    margin: 10px 0 18px;
-    color: var(--av-muted);
-    font-family: var(--font-body--family);
-    font-size: 13px;
-    line-height: 1.55;
-  }
-
-  #shopify-section-{{ section.id }} .avonent-product-card__bottom {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    align-items: center;
-    gap: 14px;
-    margin-top: auto;
-    padding-top: 16px;
-    border-top: 1px solid #e6f0f2;
-  }
-
-  #shopify-section-{{ section.id }} .avonent-product-card__price {
+  #avonent-catalog-{{ section.id }} .avonent-card__purchase {
     display: flex;
-    flex-direction: column;
-    gap: 2px;
-    white-space: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 10px;
   }
 
-  #shopify-section-{{ section.id }} .avonent-product-card__current-price {
+  #avonent-catalog-{{ section.id }} .avonent-card__price {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+
+  #avonent-catalog-{{ section.id }} .avonent-card__price-current {
     color: var(--av-ink);
     font-family: var(--font-heading--family, var(--font-body--family));
     font-size: 19px;
     font-weight: 800;
-    letter-spacing: -.02em;
+    line-height: 1;
+    letter-spacing: -.025em;
   }
 
-  #shopify-section-{{ section.id }} .avonent-product-card__price s {
-    color: #89979c;
+  #avonent-catalog-{{ section.id }} .avonent-card__price s {
+    color: #8b989d;
     font-family: var(--font-body--family);
     font-size: 12px;
   }
 
-  #shopify-section-{{ section.id }} .avonent-product-card__button {
+  #avonent-catalog-{{ section.id }} .avonent-card__stock {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    gap: 8px;
-    min-height: 46px;
+    gap: 5px;
+    color: #4c757f;
+    font-family: var(--font-body--family);
+    font-size: 10px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  #avonent-catalog-{{ section.id }} .avonent-card__stock > span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--av-blue);
+    box-shadow: 0 0 0 3px rgba(2, 198, 234, .12);
+  }
+
+  #avonent-catalog-{{ section.id }} .avonent-card__stock--out {
+    color: #8b989d;
+  }
+
+  #avonent-catalog-{{ section.id }} .avonent-card__button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    min-height: 45px;
+    margin-top: 12px;
     padding: 12px 15px;
     border-radius: 12px;
     background: var(--av-ink);
-    color: #fff;
+    color: #ffffff;
     font-family: var(--font-body--family);
     font-size: 13px;
     font-weight: 780;
@@ -575,96 +388,107 @@
     transition: background .18s ease, transform .18s ease;
   }
 
-  #shopify-section-{{ section.id }} .avonent-product-card__button:hover {
+  #avonent-catalog-{{ section.id }} .avonent-card__button:hover {
     background: var(--av-blue-dark);
     transform: translateY(-1px);
   }
 
-  #shopify-section-{{ section.id }} .avonent-product-card__button span { font-size: 17px; }
+  #avonent-catalog-{{ section.id }} .avonent-card__button span {
+    font-size: 17px;
+  }
 
-  @media (max-width: 749px) {
-    #shopify-section-{{ section.id }} .avonent-catalog-hero { padding: 42px 16px 35px; }
-    #shopify-section-{{ section.id }} .avonent-catalog-hero__title { font-size: clamp(40px, 12vw, 54px); }
-    #shopify-section-{{ section.id }} .avonent-catalog-hero__copy { margin-top: 15px; font-size: 14px; line-height: 1.55; }
-    #shopify-section-{{ section.id }} .avonent-catalog-hero__trust { display: grid; grid-template-columns: 1fr; gap: 7px; margin-top: 21px; }
-    #shopify-section-{{ section.id }} .avonent-catalog-hero__trust-item { justify-content: flex-start; border-radius: 13px; }
-    #shopify-section-{{ section.id }} .avonent-catalog__heading-row { width: calc(100% - 28px); padding: 30px 0 16px; }
-    #shopify-section-{{ section.id }} .avonent-catalog__heading-row > p { display: none; }
-    #shopify-section-{{ section.id }} .avonent-catalog .collection-wrapper { width: calc(100% - 28px); }
-    #shopify-section-{{ section.id }} .avonent-catalog .product-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
-    #shopify-section-{{ section.id }} .avonent-product-card { border-radius: 18px; }
-    #shopify-section-{{ section.id }} .avonent-product-card__body { min-height: 0; padding: 17px; }
-    #shopify-section-{{ section.id }} .avonent-product-card__title { font-size: 19px; }
+  #avonent-catalog-{{ section.id }} .avonent-card__assurance {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 10px;
+    color: #849196;
+    font-family: var(--font-body--family);
+    font-size: 9.5px;
+    font-weight: 650;
+  }
+
+  #avonent-catalog-{{ section.id }} .avonent-catalog__pagination {
+    margin-top: 34px;
+    font-family: var(--font-body--family);
+    text-align: center;
+  }
+
+  @media screen and (max-width: 749px) {
+    #avonent-catalog-{{ section.id }} {
+      padding: 34px 14px 54px;
+    }
+
+    #avonent-catalog-{{ section.id }} .avonent-catalog__header {
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    #avonent-catalog-{{ section.id }} .avonent-catalog__eyebrow {
+      margin-bottom: 7px;
+      font-size: 10px;
+    }
+
+    #avonent-catalog-{{ section.id }} .avonent-catalog__header h1 {
+      font-size: clamp(31px, 9.8vw, 42px);
+    }
+
+    #avonent-catalog-{{ section.id }} .avonent-catalog__header p {
+      margin-top: 8px;
+      font-size: 13px;
+    }
+
+    #avonent-catalog-{{ section.id }} .avonent-catalog__count {
+      display: none;
+    }
+
+    #avonent-catalog-{{ section.id }} .avonent-catalog__grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    #avonent-catalog-{{ section.id }} .avonent-card {
+      border-radius: 18px;
+    }
+
+    #avonent-catalog-{{ section.id }} .avonent-card__body {
+      padding: 15px 16px 14px;
+    }
+
+    #avonent-catalog-{{ section.id }} .avonent-card__title {
+      font-size: 18px;
+    }
+
+    #avonent-catalog-{{ section.id }} .avonent-card__purchase {
+      margin-top: 8px;
+    }
+
+    #avonent-catalog-{{ section.id }} .avonent-card__button {
+      margin-top: 10px;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    #shopify-section-{{ section.id }} .avonent-product-card,
-    #shopify-section-{{ section.id }} .avonent-product-card__image,
-    #shopify-section-{{ section.id }} .avonent-product-card__button { transition: none; }
+    #avonent-catalog-{{ section.id }} .avonent-card,
+    #avonent-catalog-{{ section.id }} .avonent-card__image,
+    #avonent-catalog-{{ section.id }} .avonent-card__button {
+      transition: none;
+    }
   }
 </style>
 
 {% schema %}
 {
-  "name": "t:names.collection_container",
-  "enabled_on": { "templates": ["collection"] },
-  "settings": [
+  "name": "Avonent Catalog",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "settings": [],
+  "presets": [
     {
-      "type": "select",
-      "id": "layout_type",
-      "label": "t:settings.type",
-      "options": [
-        { "value": "grid", "label": "t:options.grid" },
-        { "value": "organic", "label": "t:options.editorial" }
-      ],
-      "default": "grid"
-    },
-    {
-      "type": "select",
-      "id": "product_card_size",
-      "label": "t:settings.card_size",
-      "options": [
-        { "value": "small", "label": "t:options.small" },
-        { "value": "medium", "label": "t:options.medium" },
-        { "value": "large", "label": "t:options.large" },
-        { "value": "extra-large", "label": "t:options.extra_large" }
-      ],
-      "default": "medium",
-      "visible_if": "{{ section.settings.layout_type == 'grid' }}"
-    },
-    {
-      "type": "select",
-      "id": "mobile_product_card_size",
-      "label": "t:settings.mobile_card_size",
-      "options": [
-        { "value": "small", "label": "t:options.small" },
-        { "value": "large", "label": "t:options.large" }
-      ],
-      "default": "small"
-    },
-    { "type": "checkbox", "id": "enable_infinite_scroll", "label": "t:settings.auto_load_products", "default": true },
-    { "type": "range", "id": "products_per_page", "label": "t:settings.products_per_page", "min": 8, "max": 36, "step": 4, "default": 24, "visible_if": "{{ section.settings.enable_infinite_scroll == false }}" },
-    { "type": "header", "content": "t:content.layout" },
-    {
-      "type": "select",
-      "id": "product_grid_width",
-      "label": "t:settings.width",
-      "options": [
-        { "value": "centered", "label": "t:options.page" },
-        { "value": "full-width", "label": "t:options.full" }
-      ],
-      "default": "centered"
-    },
-    { "type": "checkbox", "id": "full_width_on_mobile", "label": "t:settings.full_width_on_mobile", "default": false, "visible_if": "{{ section.settings.product_grid_width != 'full-width' }}" },
-    { "type": "range", "id": "columns_gap_horizontal", "label": "t:settings.horizontal_gap", "min": 0, "max": 50, "step": 1, "unit": "px", "default": 22 },
-    { "type": "range", "id": "columns_gap_vertical", "label": "t:settings.vertical_gap", "min": 0, "max": 50, "step": 1, "unit": "px", "default": 22 },
-    { "type": "range", "id": "padding-inline-start", "label": "t:settings.left_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
-    { "type": "range", "id": "padding-inline-end", "label": "t:settings.right_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
-    { "type": "header", "content": "t:content.section_layout" },
-    { "type": "color", "id": "background_color", "label": "t:settings.background_color", "default": "#F7FCFD" },
-    { "type": "range", "id": "padding-block-start", "label": "t:settings.top_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
-    { "type": "range", "id": "padding-block-end", "label": "t:settings.bottom_padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 56 }
-  ],
-  "presets": []
+      "name": "Avonent Catalog"
+    }
+  ]
 }
 {% endschema %}
