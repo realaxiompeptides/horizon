@@ -125,10 +125,15 @@
         "collection_inverse_logo": false,
         "text_color_transparent_collection": ""
       }
+    },
+    "avonent_header_cleanup": {
+      "type": "avonent-header-cleanup",
+      "settings": {}
     }
   },
   "order": [
     "header_announcements_9jGBFp",
-    "header_section"
+    "header_section",
+    "avonent_header_cleanup"
   ]
 }
