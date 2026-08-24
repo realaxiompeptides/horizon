@@ -4,53 +4,80 @@
     assign custom_color = true
     render 'contrast-override', background_color: section.settings.background_color, text_color: section.settings.text_color, section_id: section.id
   endif
+
+  assign protection_product = all_products['shipping-protection']
+  assign protection_variant = protection_product.selected_or_first_available_variant
+  assign protection_line_key = ''
+  assign protection_quantity = 0
+  for item in cart.items
+    if item.product.handle == 'shipping-protection'
+      assign protection_line_key = item.key
+      assign protection_quantity = item.quantity
+      break
+    endif
+  endfor
+  assign regular_item_count = cart.item_count | minus: protection_quantity
 %}
 
 {% capture cart_page_more_blocks_content %}
-  <div class="cart-page__more-blocks">
-    {%- content_for 'blocks' -%}
-  </div>
+  <div class="cart-page__more-blocks">{%- content_for 'blocks' -%}</div>
+{% endcapture %}
+
+{% capture protection_addon %}
+  {% if protection_variant != blank and regular_item_count > 0 %}
+    <div
+      class="avonent-cart-page-protection"
+      data-avonent-cart-page-protection
+      data-variant-id="{{ protection_variant.id }}"
+      data-line-key="{{ protection_line_key }}"
+    >
+      <span class="avonent-cart-page-protection__icon" aria-hidden="true">
+        <svg viewBox="0 0 48 48" fill="none">
+          <path d="M10 17.5 24 10l14 7.5v10.2c0 7.2-5.8 12.6-14 15.3-8.2-2.7-14-8.1-14-15.3V17.5Z" fill="currentColor" opacity=".12"/>
+          <path d="M10 17.5 24 10l14 7.5v10.2c0 7.2-5.8 12.6-14 15.3-8.2-2.7-14-8.1-14-15.3V17.5Z" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/>
+          <path d="m18.5 26.2 3.7 3.7 7.8-8.1" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <div class="avonent-cart-page-protection__copy">
+        <div class="avonent-cart-page-protection__heading">
+          <strong>Shipping Protection</strong>
+          <span>{{ protection_variant.price | money }}</span>
+        </div>
+        <p>Protect your order from loss, damage, or theft in transit.</p>
+      </div>
+      <button
+        type="button"
+        class="avonent-cart-page-protection__toggle"
+        role="switch"
+        aria-label="Toggle shipping protection"
+        aria-checked="{% if protection_line_key != blank %}true{% else %}false{% endif %}"
+        data-avonent-cart-page-protection-toggle
+      ><span></span></button>
+    </div>
+  {% endif %}
 {% endcapture %}
 
 {% capture cart_items_children %}
   <template id="empty-cart-template">
     <div class="section-background{% if custom_color %} color-custom-{{ section.id }}{% endif %}"></div>
-    <div
-      class="section{% if custom_color %} color-custom-{{ section.id }}{% endif %} section--{{ section.settings.section_width }}"
-    >
-      <div
-        class="cart-page spacing-style{% if cart.empty? %} cart-page--empty{% endif %}"
-        style="{% render 'spacing-style', settings: section.settings %}"
-      >
-        <div class="cart-page__title">
-          {%- content_for 'block', id: 'cart-page-title', type: '_cart-title', force_empty: true %}
-        </div>
-        <div class="cart-page__items">
-          {%- content_for 'block', id: 'cart-page-items', type: '_cart-products', force_empty: true %}
-        </div>
+    <div class="section{% if custom_color %} color-custom-{{ section.id }}{% endif %} section--{{ section.settings.section_width }}">
+      <div class="cart-page spacing-style cart-page--empty" style="{% render 'spacing-style', settings: section.settings %}">
+        <div class="cart-page__title">{%- content_for 'block', id: 'cart-page-title', type: '_cart-title', force_empty: true %}</div>
+        <div class="cart-page__items">{%- content_for 'block', id: 'cart-page-items', type: '_cart-products', force_empty: true %}</div>
         {{ cart_page_more_blocks_content }}
       </div>
     </div>
   </template>
 
   <div class="section-background{% if custom_color %} color-custom-{{ section.id }}{% endif %}"></div>
-  <div
-    class="section{% if custom_color %} color-custom-{{ section.id }}{% endif %} section--{{ section.settings.section_width }}"
-  >
-    <div
-      class="cart-page spacing-style{% if cart.empty? %} cart-page--empty{% endif %}"
-      style="{% render 'spacing-style', settings: section.settings %}"
-    >
-      <div class="cart-page__title">
-        {%- content_for 'block', id: 'cart-page-title', type: '_cart-title' %}
-      </div>
-
-      <div class="cart-page__items">
-        {%- content_for 'block', id: 'cart-page-items', type: '_cart-products' %}
-      </div>
+  <div class="section{% if custom_color %} color-custom-{{ section.id }}{% endif %} section--{{ section.settings.section_width }} avonent-cart-page-shell">
+    <div class="cart-page spacing-style{% if cart.empty? %} cart-page--empty{% endif %}" style="{% render 'spacing-style', settings: section.settings %}">
+      <div class="cart-page__title">{%- content_for 'block', id: 'cart-page-title', type: '_cart-title' %}</div>
+      <div class="cart-page__items">{%- content_for 'block', id: 'cart-page-items', type: '_cart-products' %}</div>
 
       {%- unless cart.empty? -%}
         <div class="cart-page__summary">
+          {{ protection_addon }}
           {%- content_for 'block', id: 'cart-page-summary', type: '_cart-summary' -%}
         </div>
       {%- endunless -%}
@@ -61,11 +88,58 @@
 {% endcapture %}
 {% render 'cart-items-component', children: cart_items_children, section_id: section.id %}
 
+<script>
+  (() => {
+    if (window.__avonentCartPageProtectionReady) return;
+    window.__avonentCartPageProtectionReady = true;
+
+    document.addEventListener('click', async (event) => {
+      const button = event.target.closest('[data-avonent-cart-page-protection-toggle]');
+      if (!button) return;
+      const root = button.closest('[data-avonent-cart-page-protection]');
+      if (!root || button.disabled) return;
+
+      const enabled = button.getAttribute('aria-checked') === 'true';
+      const variantId = Number(root.dataset.variantId || 0);
+      const lineKey = root.dataset.lineKey || '';
+      button.disabled = true;
+      root.classList.add('is-loading');
+
+      try {
+        if (enabled && lineKey) {
+          await fetch('/cart/change.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({ id: lineKey, quantity: 0 })
+          });
+        } else if (!enabled && variantId) {
+          await fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({ items: [{ id: variantId, quantity: 1 }] })
+          });
+        }
+        window.location.reload();
+      } catch (error) {
+        console.error('Avonent shipping protection update failed', error);
+        button.disabled = false;
+        root.classList.remove('is-loading');
+      }
+    });
+  })();
+</script>
+
 {% stylesheet %}
+  .avonent-cart-page-shell {
+    max-width: 1180px;
+    padding-inline: 20px;
+  }
+
   .cart-page {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 0 var(--padding-5xl);
+    gap: 0 36px;
+    color: #111;
   }
 
   .cart-page--empty {
@@ -76,153 +150,184 @@
   }
 
   .cart-page--empty .cart-page__title,
-  .cart-page--empty .cart-page__more-blocks {
-    margin-top: var(--margin-6xl);
+  .cart-page--empty .cart-page__more-blocks { margin-top: var(--margin-6xl); }
+  .cart-page__more-blocks { width: 100%; }
+  .cart-page--empty .cart-title { text-align: center; }
+  .cart-page__main { grid-column: 1; }
+
+  .cart-page__title {
+    padding: 24px 0 10px;
+    border-bottom: 1px solid #e8edef;
   }
 
-  .cart-page__more-blocks {
-    width: 100%;
+  .cart-page__title :is(h1,h2,h3,h4) {
+    font-family: var(--font-heading--family);
+    font-weight: 750;
+    letter-spacing: -.035em;
   }
 
-  .cart-page--empty .cart-title {
-    text-align: center;
+  .cart-page__title + .cart-page__items { margin-block-start: 18px; }
+
+  .cart-page__items {
+    padding: 0 0 26px;
   }
 
-  .cart-page__main {
-    grid-column: 1;
+  .cart-page__items .cart-items__table-row {
+    padding-block: 18px;
+    border-bottom: 1px solid #e7ebed;
+  }
+
+  .cart-page__items img {
+    border-radius: 14px;
+    background: #eefaff;
+  }
+
+  .cart-page__items :is(.cart-items__product-title, .cart-items__title, a) {
+    font-family: var(--font-heading--family);
   }
 
   .cart-page__summary {
-    padding-top: var(--padding-xl);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding-top: 18px;
   }
 
-  .cart-page__title + .cart-page__items {
-    margin-block-start: var(--margin-lg);
+  .cart-page__summary > * {
+    width: 100%;
   }
 
-  @media screen and (min-width: 750px) {
+  .cart-page__summary .cart-summary {
+    border: 1px solid #e2e9eb !important;
+    border-radius: 20px !important;
+    background: #fff;
+    box-shadow: 0 12px 36px rgba(7,55,65,.055);
+    overflow: hidden;
+  }
+
+  .cart-page__summary :is(button[type='submit'], .cart__checkout-button, [name='checkout']) {
+    min-height: 58px;
+    border-radius: 16px !important;
+    background: #050505 !important;
+    color: #fff !important;
+    font-family: var(--font-heading--family);
+    font-weight: 760;
+    letter-spacing: .02em;
+  }
+
+  .avonent-cart-page-protection {
+    display: grid;
+    grid-template-columns: 46px minmax(0,1fr) auto;
+    align-items: center;
+    gap: 13px;
+    padding: 15px;
+    border: 1px solid #cfeef5;
+    border-radius: 18px;
+    background: linear-gradient(135deg,#f4fdff 0%,#fff 100%);
+    box-shadow: 0 8px 24px rgba(2,137,164,.06);
+  }
+
+  .avonent-cart-page-protection.is-loading { opacity: .65; }
+
+  .avonent-cart-page-protection__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    background: #dff8fd;
+    color: #0798b8;
+  }
+  .avonent-cart-page-protection__icon svg { width: 31px; height: 31px; }
+
+  .avonent-cart-page-protection__heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    font-family: var(--font-heading--family);
+    font-size: 14px;
+    line-height: 1.2;
+  }
+  .avonent-cart-page-protection__heading strong { font-weight: 780; }
+  .avonent-cart-page-protection__heading span { font-weight: 740; }
+  .avonent-cart-page-protection__copy p {
+    margin: 4px 0 0;
+    color: #69777c;
+    font-size: 11px;
+    line-height: 1.4;
+  }
+
+  .avonent-cart-page-protection__toggle {
+    position: relative;
+    width: 46px;
+    height: 27px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: #d7dfe2;
+    cursor: pointer;
+    transition: background .18s ease;
+  }
+  .avonent-cart-page-protection__toggle span {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 21px;
+    height: 21px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,.16);
+    transition: transform .18s ease;
+  }
+  .avonent-cart-page-protection__toggle[aria-checked='true'] { background: #02c6ea; }
+  .avonent-cart-page-protection__toggle[aria-checked='true'] span { transform: translateX(19px); }
+
+  @media screen and (min-width: 900px) {
     .cart-page {
-      grid-template-columns: 1fr min(50vw, var(--sidebar-width));
-      grid-template-rows: min-content min-content 1fr;
+      grid-template-columns: minmax(0,1.35fr) minmax(340px,.65fr);
+      grid-template-rows: min-content 1fr;
+      align-items: start;
+      padding-top: 24px;
     }
-
+    .cart-page__title { grid-column: 1; padding-top: 0; }
+    .cart-page__items { grid-column: 1; }
     .cart-page__summary {
-      display: grid;
-      height: 100%;
+      position: sticky;
+      top: calc(var(--header-height, 80px) + 20px);
       grid-column: 2;
-      grid-row: 1 / -1;
-      align-self: stretch;
-      grid-template-rows: subgrid;
+      grid-row: 1 / span 2;
       padding-top: 0;
-
-      /* needed to support blurred effect from hero section */
-      position: relative;
-    }
-
-    .section--page-width .cart-page:has(.cart-summary--extend) {
-      grid-column: 2 / 4;
-      grid-template-columns: 1fr minmax(
-          var(--sidebar-width),
-          calc((100vw - var(--page-width)) / 2 + var(--sidebar-width))
-        );
     }
   }
 
-  @media screen and (min-width: 1400px) {
-    .cart-page {
-      grid-template-columns: 1fr var(--sidebar-width);
-    }
+  @media screen and (max-width: 749px) {
+    .avonent-cart-page-shell { padding-inline: 14px; }
+    .cart-page__title { padding-top: 18px; }
+    .cart-page__title + .cart-page__items { margin-block-start: 8px; }
+    .cart-page__items .cart-items__table-row { padding-block: 16px; }
+    .cart-page__summary { padding-top: 12px; padding-bottom: 24px; }
+    .avonent-cart-page-protection { grid-template-columns: 42px minmax(0,1fr) auto; gap: 10px; padding: 13px; border-radius: 16px; }
+    .avonent-cart-page-protection__icon { width: 42px; height: 42px; }
+    .avonent-cart-page-protection__heading { font-size: 13px; }
+    .avonent-cart-page-protection__copy p { font-size: 10.5px; }
   }
 {% endstylesheet %}
 
 {% schema %}
 {
   "name": "t:names.cart",
-  "disabled_on": {
-    "groups": ["header", "footer"]
-  },
+  "disabled_on": { "groups": ["header", "footer"] },
   "blocks": [
-    {
-      "type": "@theme"
-    },
-    {
-      "type": "@app"
-    },
-    {
-      "type": "text"
-    },
-    {
-      "type": "icon"
-    },
-    {
-      "type": "image"
-    },
-    {
-      "type": "button"
-    },
-    {
-      "type": "video"
-    },
-    {
-      "type": "group"
-    },
-    {
-      "type": "spacer"
-    }
+    { "type": "@theme" }, { "type": "@app" }, { "type": "text" }, { "type": "icon" }, { "type": "image" }, { "type": "button" }, { "type": "video" }, { "type": "group" }, { "type": "spacer" }
   ],
   "settings": [
-    {
-      "type": "select",
-      "id": "section_width",
-      "label": "t:settings.width",
-      "options": [
-        {
-          "value": "page-width",
-          "label": "t:options.page"
-        },
-        {
-          "value": "full-width",
-          "label": "t:options.full"
-        }
-      ],
-      "default": "page-width"
-    },
-    {
-      "type": "color",
-      "id": "background_color",
-      "label": "t:settings.background_color",
-      "placeholder": "t:settings.default"
-    },
-    {
-      "type": "color",
-      "id": "text_color",
-      "label": "t:settings.text_color",
-      "placeholder": "t:settings.default"
-    },
-    {
-      "type": "header",
-      "content": "t:content.padding"
-    },
-    {
-      "type": "range",
-      "id": "padding-block-start",
-      "label": "t:settings.top",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "range",
-      "id": "padding-block-end",
-      "label": "t:settings.bottom",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 0
-    }
+    { "type": "select", "id": "section_width", "label": "t:settings.width", "options": [{"value":"page-width","label":"t:options.page"},{"value":"full-width","label":"t:options.full"}], "default": "page-width" },
+    { "type": "color", "id": "background_color", "label": "t:settings.background_color", "placeholder": "t:settings.default" },
+    { "type": "color", "id": "text_color", "label": "t:settings.text_color", "placeholder": "t:settings.default" },
+    { "type": "header", "content": "t:content.padding" },
+    { "type": "range", "id": "padding-block-start", "label": "t:settings.top", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding-block-end", "label": "t:settings.bottom", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 }
   ]
 }
 {% endschema %}
