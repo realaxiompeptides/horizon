@@ -4,65 +4,74 @@
 {% endcomment %}
 
 <style>
-  /* Tighten the total -> checkout flow. */
+  /* Tighten total -> checkout spacing. */
   .cart-page__summary .cart-totals {
-    margin-top: 10px !important;
-    padding-top: 12px !important;
+    margin-top: 8px !important;
+    padding-top: 10px !important;
   }
 
   .cart-page__summary .avonent-cart-ctas {
-    margin-top: 10px !important;
-    gap: 9px !important;
+    margin-top: 8px !important;
+    gap: 8px !important;
   }
 
   .cart-page__summary .cart-totals__total {
-    min-height: 44px;
+    min-height: 38px !important;
   }
 
-  /* Full cart product row: keep image, copy, price and controls in clean columns. */
+  /* Full cart product row. */
   @media screen and (max-width: 749px) {
     .cart-page__items {
-      padding: 18px 22px 20px !important;
+      padding: 16px 20px 18px !important;
     }
 
     .cart-page__items .cart-items__table-row {
       display: grid !important;
-      grid-template-columns: 112px minmax(0, 1fr) auto !important;
+      grid-template-columns: 104px minmax(0, 1fr) auto !important;
       grid-template-rows: auto auto auto auto !important;
       grid-template-areas:
         'media details price'
         'media variants variants'
         'media unitprice unitprice'
         'media quantity quantity' !important;
-      column-gap: 16px !important;
-      row-gap: 7px !important;
+      column-gap: 14px !important;
+      row-gap: 6px !important;
       align-items: start !important;
-      padding: 8px 0 22px !important;
+      padding: 6px 0 20px !important;
       margin: 0 !important;
     }
 
     .cart-page__items .cart-items__media {
       grid-area: media !important;
-      width: 112px !important;
+      width: 104px !important;
+      min-width: 104px !important;
       align-self: start !important;
     }
 
     .cart-page__items .cart-items__media-container {
-      display: block !important;
-      width: 112px !important;
-      max-width: 112px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      width: 104px !important;
+      min-width: 104px !important;
+      max-width: 104px !important;
+      height: 104px !important;
       aspect-ratio: 1 / 1 !important;
       overflow: hidden !important;
-      border-radius: 16px !important;
+      border-radius: 15px !important;
       background: #eefaff !important;
     }
 
+    /* Critical fix: show the FULL bottle instead of zoom/crop. */
     .cart-page__items .cart-items__media-image {
       width: 100% !important;
       height: 100% !important;
-      object-fit: cover !important;
-      object-position: center !important;
-      border-radius: 16px !important;
+      object-fit: contain !important;
+      object-position: center center !important;
+      padding: 0 !important;
+      border: 0 !important;
+      border-radius: 15px !important;
+      transform: none !important;
     }
 
     .cart-page__items .cart-items__details {
@@ -73,22 +82,24 @@
     .cart-page__items .cart-items__product-info {
       grid-area: details !important;
       min-width: 0 !important;
-      padding-top: 1px !important;
+      padding: 0 !important;
     }
 
     .cart-page__items .cart-items__variants-wrapper {
       grid-area: variants !important;
       min-width: 0 !important;
+      margin-top: 2px !important;
     }
 
     .cart-page__items .cart-items__unit-price-wrapper {
       grid-area: unitprice !important;
       min-width: 0 !important;
+      margin-top: 1px !important;
     }
 
     .cart-page__items .cart-items__quantity {
       grid-area: quantity !important;
-      margin-top: 3px !important;
+      margin-top: 7px !important;
     }
 
     .cart-page__items .cart-items__price {
@@ -96,34 +107,50 @@
       width: max-content !important;
       min-width: 0 !important;
       justify-self: end !important;
-      padding-left: 8px !important;
+      align-self: start !important;
+      padding: 0 0 0 6px !important;
       color: #111 !important;
-      font-size: 16px !important;
+      font-size: 15px !important;
       font-weight: 800 !important;
+      line-height: 1.1 !important;
     }
 
     .cart-page__items .cart-items__title {
       display: block !important;
       max-width: 100% !important;
-      font-size: 18px !important;
+      margin: 0 0 6px !important;
+      font-size: 17px !important;
       line-height: 1.12 !important;
       letter-spacing: -.025em !important;
+    }
+
+    .cart-page__items .cart-items__variants-wrapper,
+    .cart-page__items .cart-items__variants,
+    .cart-page__items .cart-items__variants dd {
+      font-size: 14px !important;
+      line-height: 1.25 !important;
+    }
+
+    .cart-page__items .cart-items__unit-price-wrapper > div {
+      font-size: 15px !important;
+      line-height: 1.2 !important;
     }
 
     .cart-page__items .cart-items__quantity-controls {
       display: flex !important;
       align-items: center !important;
-      gap: 12px !important;
+      justify-content: flex-start !important;
+      gap: 11px !important;
     }
 
     .cart-page__items quantity-selector,
     .cart-page__items .quantity-selector {
-      min-width: 138px !important;
-      min-height: 48px !important;
+      min-width: 132px !important;
+      min-height: 46px !important;
     }
 
     .cart-page__summary {
-      padding: 14px 22px 20px !important;
+      padding: 12px 20px 16px !important;
     }
 
     .cart-page__summary .cart-totals__total-label {
@@ -135,14 +162,14 @@
     }
   }
 
-  /* You may also like: make it feel like an Avonent recommendation block, not default Shopify. */
+  /* You may also like */
   .ui-test-product-list {
-    padding-top: 34px !important;
-    padding-bottom: 42px !important;
+    padding-top: 26px !important;
+    padding-bottom: 34px !important;
   }
 
   .ui-test-product-list .section-resource-list__header {
-    margin-bottom: 18px !important;
+    margin-bottom: 14px !important;
   }
 
   .ui-test-product-list .section-resource-list__header h2,
@@ -150,7 +177,7 @@
     margin: 0 !important;
     color: #071114 !important;
     font-family: var(--font-heading--family) !important;
-    font-size: clamp(28px, 7vw, 38px) !important;
+    font-size: clamp(27px, 7vw, 36px) !important;
     font-weight: 820 !important;
     line-height: 1.02 !important;
     letter-spacing: -.04em !important;
@@ -162,7 +189,7 @@
 
   .ui-test-product-list .resource-list__item {
     overflow: hidden !important;
-    padding: 10px 10px 14px !important;
+    padding: 9px 9px 13px !important;
     border: 1px solid #d5edf3 !important;
     border-radius: 18px !important;
     background: #fff !important;
@@ -171,6 +198,7 @@
 
   .ui-test-product-list .resource-list__item img {
     border-radius: 14px !important;
+    background: #eefaff !important;
   }
 
   .ui-test-product-list .resource-list__item :is(h1,h2,h3,h4,h5,h6,p,a) {
@@ -179,8 +207,9 @@
 
   .ui-test-product-list .resource-list__item a:not(:has(img)) {
     color: #071114 !important;
+    font-size: 16px !important;
     font-weight: 760 !important;
-    line-height: 1.2 !important;
+    line-height: 1.18 !important;
     letter-spacing: -.018em !important;
     text-decoration: none !important;
   }
@@ -190,15 +219,25 @@
     font-weight: 500 !important;
   }
 
+  .ui-test-product-list .resource-list__item :is(.price, [class*='price']) {
+    font-size: 15px !important;
+    font-weight: 760 !important;
+  }
+
+  body.template-cart .resource-list__item:has(a[href*='/products/shipping-protection']),
+  body.template-cart .product-grid__item:has(a[href*='/products/shipping-protection']) {
+    display: none !important;
+  }
+
   @media screen and (max-width: 749px) {
     .ui-test-product-list {
-      padding-inline: 18px !important;
-      padding-top: 30px !important;
-      padding-bottom: 36px !important;
+      padding-inline: 20px !important;
+      padding-top: 24px !important;
+      padding-bottom: 32px !important;
     }
 
     .ui-test-product-list .section-resource-list__header {
-      margin-bottom: 15px !important;
+      margin-bottom: 13px !important;
     }
 
     .ui-test-product-list .resource-list__item {
