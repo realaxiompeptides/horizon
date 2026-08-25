@@ -12,7 +12,7 @@
         type="image/png"
         href="{{ settings.favicon | image_url: width: 32, height: 32 }}"
       >
-    {%- endif -%}
+    {%- endif %}
 
     {% comment %}
       Opt into cross-document (MPA) view transitions and hold first paint until #MainContent
@@ -67,7 +67,7 @@
          * A few CSS rules position content relative to the header at first paint — a hero sized to
          * the remaining viewport, a transparent header's negative margin. Without a measured value
          * those rules use the `60px` fallback from `sections/header.liquid`, and the content visibly
-         * jumps once `header.js` corrects the values after load.
+         * jumps once header.js corrects the values after load.
          *
          * Measuring forces layout mid-parse, so it only runs where a consuming rule exists.
          * Callers opt in: the transparent-header branch below, or `snippets/measure-header-heights.liquid`,
@@ -126,12 +126,12 @@
          * Mimics the `--top-row-height` write in updateHeaderHeights() in utilities.js
          */
         (function setTopRowHeight() {
-          const header = document.querySelector('#header-component');
-          const headerTopRow = header?.querySelector('.header__row--top');
+          const headerComponent = document.querySelector('#header-component');
+          const headerTopRow = headerComponent?.querySelector('.header__row--top');
           if (!headerTopRow) return;
 
           window.requestAnimationFrame(function () {
-            header.style.setProperty('--top-row-height', `${headerTopRow.offsetHeight}px`);
+            headerComponent.style.setProperty('--top-row-height', `${headerTopRow.offsetHeight}px`);
           });
         })();
 
@@ -191,6 +191,8 @@
     {% if settings.quick_add or settings.mobile_quick_add %}
       {% render 'quick-add-modal' %}
     {% endif %}
+
+    <script src="{{ 'avonent-footer-disclaimers.js' | asset_url }}" defer></script>
 
     {% if template.suffix == 'moringa' %}
       <script src="{{ 'avonent-moringa-overrides.js' | asset_url }}" defer></script>
