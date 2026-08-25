@@ -71,49 +71,19 @@
       `);
     }
 
-    // Top benefit grid.
-    const benefitTexts = [
-      'Daily Vitality Support†',
-      'Healthy Aging Support†',
-      'Heart Wellness Support†',
-      'Healthy Glucose Metabolism†',
-      'Joint & Active Lifestyle†',
-      'Antioxidant Defense†'
-    ];
-    const benefitGrid = main.querySelector('.avonent-benefits');
-    if (benefitGrid) {
-      const labels = benefitGrid.querySelectorAll('.avonent-benefits__text');
-      labels.forEach((el, i) => {
-        if (benefitTexts[i]) el.textContent = benefitTexts[i];
-      });
-    }
+    // Keep the original benefit points the user selected for the Moringa product.
+    // We intentionally do NOT change the existing cards here.
 
-    // Blue research / proof section.
+    // Blue research / proof section: change only the copy ABOVE the proof points.
+    // Do not alter the existing study count, traditional-use years, formula amount, or customer milestone.
     const proof = main.querySelector('.avonent-proof-stats');
     if (proof) {
       const eyebrow = proof.querySelector('.avonent-proof-stats__eyebrow');
       const heading = proof.querySelector('.avonent-proof-stats__heading');
       const desc = proof.querySelector('.avonent-proof-stats__description');
-      if (eyebrow) eyebrow.textContent = 'ONE PLANT. A WIDER WELLNESS STORY.';
-      if (heading) heading.textContent = 'Pure moringa. Simple formula. Serious daily potential.';
-      if (desc) desc.innerHTML = '<p>Each serving delivers 800 mg of Moringa oleifera leaf. Human research has explored moringa across antioxidant and cardiometabolic health, while the evidence continues to evolve.</p>';
-
-      const stats = proof.querySelectorAll('.avonent-proof-stats__stat');
-      const data = [
-        ['HUMAN RESEARCH', '20', 'Clinical studies included in a recent systematic review'],
-        ['PURE LEAF', '800 mg', 'Moringa oleifera leaf per serving'],
-        ['SIMPLE FORMULA', '1', 'Featured botanical ingredient'],
-        ['DAILY ROUTINE', '30', 'Servings in every bottle']
-      ];
-      stats.forEach((stat, i) => {
-        if (!data[i]) return;
-        const kicker = stat.querySelector('.avonent-proof-stats__kicker');
-        const value = stat.querySelector('.avonent-proof-stats__value');
-        const label = stat.querySelector('.avonent-proof-stats__label');
-        if (kicker) kicker.textContent = data[i][0];
-        if (value) value.textContent = data[i][1];
-        if (label) label.textContent = data[i][2];
-      });
+      if (eyebrow) eyebrow.textContent = 'TRADITION MEETS MODERN WELLNESS';
+      if (heading) heading.textContent = 'Rooted in nature. Made for everyday wellness.';
+      if (desc) desc.innerHTML = '<p>Pure Moringa brings one of the world’s most studied traditional botanicals into a simple daily routine—plant-based support for vitality, antioxidant defense, healthy aging, and whole-body wellness.</p>';
     }
 
     // Week-by-week section: a credible routine roadmap rather than promised medical outcomes.
@@ -148,11 +118,27 @@
       });
     }
 
+    // Bottom offer: remove the last remaining digestive-product wording.
+    const bottomOffer = main.querySelector('.avonent-bottom-offer');
+    if (bottomOffer) {
+      const desc = bottomOffer.querySelector('.avonent-bottom-offer__description');
+      if (desc) desc.innerHTML = '<p>Choose the supply that fits your routine and keep your daily Moringa wellness support within reach.</p>';
+    }
+
     // The Moringa template still contains the old digestive ingredient breakdown
     // and digestive before/after story. Hide them until dedicated Moringa sections replace them.
     main.querySelectorAll('.avonent-formula, .av-ba').forEach(section => {
       const wrapper = section.closest('.shopify-section') || section;
       wrapper.style.display = 'none';
     });
+
+    // The current review cards are legacy digestive-product testimonials marked as verified.
+    // Do not silently rewrite them into invented Moringa testimonials under the same customer names/dates.
+    // Hide the legacy cards on the Moringa template until genuine Moringa review copy is available.
+    const reviews = main.querySelector('.avonent-customer-reviews');
+    if (reviews) {
+      const wrapper = reviews.closest('.shopify-section') || reviews;
+      wrapper.style.display = 'none';
+    }
   });
 })();
