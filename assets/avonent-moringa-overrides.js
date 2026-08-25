@@ -8,6 +8,10 @@
     const main = document.querySelector('main[data-template*="product.moringa"]');
     if (!main) return;
 
+    // Remove the previous JS-injected journey media block. The real editable
+    // marquee + image controls now live inside the Wellness Journey section.
+    main.querySelectorAll('.av-moringa-journey-leadin').forEach((el) => el.remove());
+
     const claimMarker = (symbol) => `<sup class="avonent-claim-marker" aria-hidden="true">${symbol}</sup>`;
 
     const appendSingleMarker = (el, symbol) => {
@@ -33,118 +37,18 @@
         }
         main[data-template*="product.moringa"] .avonent-claim-marker {
           color:inherit !important;
+          margin-left:0 !important;
+          padding-left:0 !important;
+          position:relative;
+          left:-1px;
+          font-size:.67em;
+          font-weight:800;
+          line-height:0;
+          vertical-align:super;
           text-decoration:none !important;
           pointer-events:none;
           cursor:default;
           opacity:.92;
-        }
-
-        /* Journey lead-in: moving benefit strip + image */
-        .av-moringa-journey-leadin {
-          width:100%;
-          background:#fff;
-          overflow:hidden;
-        }
-        .av-moringa-benefit-marquee {
-          width:100%;
-          overflow:hidden;
-          border-top:1px solid #d9e9ed;
-          border-bottom:1px solid #d9e9ed;
-          background:#fff;
-        }
-        .av-moringa-benefit-track {
-          display:flex;
-          width:max-content;
-          min-width:200%;
-          animation:avMoringaMarquee 24s linear infinite;
-          will-change:transform;
-        }
-        .av-moringa-benefit-set {
-          display:flex;
-          align-items:center;
-          flex:none;
-          gap:30px;
-          padding:13px 15px;
-        }
-        .av-moringa-benefit-chip {
-          display:inline-flex;
-          align-items:center;
-          gap:8px;
-          white-space:nowrap;
-          color:#111;
-          font-family:var(--font-body--family);
-          font-size:14px;
-          font-weight:650;
-          line-height:1;
-        }
-        .av-moringa-benefit-chip__icon {
-          display:grid;
-          place-items:center;
-          width:22px;
-          height:22px;
-          border-radius:50%;
-          color:#078aa5;
-          background:#eaf9fc;
-          font-size:13px;
-          font-weight:800;
-        }
-        .av-moringa-journey-image {
-          width:min(calc(100% - 48px), 1180px);
-          margin:34px auto 28px;
-          position:relative;
-          overflow:hidden;
-          border-radius:24px;
-          background:linear-gradient(135deg,#eaf9fc,#c9eef5);
-          min-height:280px;
-        }
-        .av-moringa-journey-image img {
-          display:block;
-          width:100%;
-          height:100%;
-          min-height:280px;
-          max-height:480px;
-          object-fit:cover;
-          object-position:center;
-        }
-        .av-moringa-journey-image::after {
-          content:'';
-          position:absolute;
-          inset:0;
-          background:linear-gradient(180deg,rgba(6,64,77,0) 38%,rgba(6,64,77,.46) 100%);
-          pointer-events:none;
-        }
-        .av-moringa-journey-image__caption {
-          position:absolute;
-          z-index:2;
-          left:24px;
-          right:24px;
-          bottom:22px;
-          color:#fff;
-          font-family:var(--font-heading--family);
-          font-size:clamp(24px,4vw,42px);
-          font-weight:700;
-          line-height:1.02;
-          letter-spacing:-.03em;
-          text-shadow:0 2px 18px rgba(0,0,0,.22);
-        }
-        @keyframes avMoringaMarquee {
-          from { transform:translateX(0); }
-          to { transform:translateX(-50%); }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .av-moringa-benefit-track { animation:none; }
-        }
-        @media screen and (max-width:749px) {
-          .av-moringa-benefit-set { gap:22px; padding:12px 12px; }
-          .av-moringa-benefit-chip { font-size:13px; }
-          .av-moringa-journey-image {
-            width:calc(100% - 30px);
-            margin:24px auto 22px;
-            min-height:220px;
-            border-radius:16px;
-          }
-          .av-moringa-journey-image img { min-height:220px; max-height:320px; }
-          .av-moringa-journey-image__caption { left:18px; right:18px; bottom:17px; font-size:27px; }
         }
       `;
       document.head.appendChild(style);
@@ -212,43 +116,6 @@
 
     const journey = main.querySelector('.avonent-journey');
     if (journey) {
-      const journeyWrapper = journey.closest('.shopify-section') || journey;
-
-      // Add Resilia-inspired moving benefit strip and an editable-looking example image area above the journey.
-      if (!main.querySelector('.av-moringa-journey-leadin')) {
-        const leadin = document.createElement('section');
-        leadin.className = 'av-moringa-journey-leadin';
-        const chips = [
-          ['⚡','Daily Vitality','†'],
-          ['✦','Antioxidant Defense','†'],
-          ['◒','Healthy Aging','†'],
-          ['♥','Heart Wellness','‡'],
-          ['↻','Metabolic Support','‡'],
-          ['✓','Joint & Active Support','†']
-        ];
-        const chipHTML = chips.map(([icon,label,mark]) => `<span class="av-moringa-benefit-chip"><span class="av-moringa-benefit-chip__icon">${icon}</span>${label}${claimMarker(mark)}</span>`).join('');
-
-        // For now use an existing Moringa/product image as the example image so this renders immediately.
-        // It can be replaced with a dedicated lifestyle image in Shopify later.
-        const sourceImage = main.querySelector('.product-media img, .product__media img, [data-product-media] img, img[src*="moringa"], img');
-        const imageSrc = sourceImage?.currentSrc || sourceImage?.src || '';
-        const imageAlt = sourceImage?.alt || 'Avonent Pure Moringa wellness lifestyle';
-
-        leadin.innerHTML = `
-          <div class="av-moringa-benefit-marquee" aria-label="Pure Moringa wellness benefits">
-            <div class="av-moringa-benefit-track">
-              <div class="av-moringa-benefit-set">${chipHTML}</div>
-              <div class="av-moringa-benefit-set" aria-hidden="true">${chipHTML}</div>
-            </div>
-          </div>
-          <div class="av-moringa-journey-image">
-            ${imageSrc ? `<img src="${imageSrc}" alt="${imageAlt.replace(/"/g,'&quot;')}" loading="lazy">` : ''}
-            <div class="av-moringa-journey-image__caption">Wellness built around consistency.</div>
-          </div>
-        `;
-        journeyWrapper.parentNode.insertBefore(leadin, journeyWrapper);
-      }
-
       const eyebrow = journey.querySelector('.avonent-journey__eyebrow');
       const heading = journey.querySelector('.avonent-journey__heading');
       const desc = journey.querySelector('.avonent-journey__description');
