@@ -16,67 +16,18 @@
     --avj-width: {{ section.settings.content_width }}px;
     --avj-top: {{ section.settings.padding_top }}px;
     --avj-bottom: {{ section.settings.padding_bottom }}px;
-    --avj-marquee-bg: {{ section.settings.marquee_background }};
-    --avj-marquee-text: {{ section.settings.marquee_text_color }};
-    --avj-marquee-icon: {{ section.settings.marquee_icon_color }};
-    --avj-marquee-icon-bg: {{ section.settings.marquee_icon_background }};
-    --avj-marquee-border: {{ section.settings.marquee_border_color }};
-    --avj-marquee-speed: {{ section.settings.marquee_speed }}s;
-    --avj-marquee-gap: {{ section.settings.marquee_gap }}px;
     --avj-image-radius: {{ section.settings.image_radius }}px;
     --avj-image-height-desktop: {{ section.settings.image_height_desktop }}px;
     --avj-image-height-mobile: {{ section.settings.image_height_mobile }}px;
   "
 >
-  {% if section.settings.show_marquee %}
-    <div class="avonent-journey__marquee" aria-label="Wellness benefits">
-      <div class="avonent-journey__marquee-track{% if section.settings.marquee_reverse %} is-reverse{% endif %}">
-        {% for copy_index in (1..2) %}
-          <div class="avonent-journey__marquee-set"{% if copy_index == 2 %} aria-hidden="true"{% endif %}>
-            {% for index in (1..8) %}
-              {% assign text_key = 'marquee_' | append: index | append: '_text' %}
-              {% assign icon_key = 'marquee_' | append: index | append: '_icon' %}
-              {% assign marker_key = 'marquee_' | append: index | append: '_marker' %}
-              {% assign item_text = section.settings[text_key] %}
-              {% assign item_icon = section.settings[icon_key] %}
-              {% assign item_marker = section.settings[marker_key] %}
-              {% if item_text != blank %}
-                <span class="avonent-journey__marquee-item">
-                  {% if item_icon != 'none' %}
-                    <span class="avonent-journey__marquee-icon{% unless section.settings.marquee_icon_circle %} is-plain{% endunless %}" aria-hidden="true">
-                      {% case item_icon %}
-                        {% when 'bolt' %}⚡
-                        {% when 'sparkle' %}✦
-                        {% when 'leaf' %}❧
-                        {% when 'heart' %}♥
-                        {% when 'shield' %}⬡
-                        {% when 'activity' %}⌁
-                        {% when 'sun' %}☀
-                        {% when 'moon' %}☾
-                        {% when 'brain' %}◉
-                        {% when 'droplet' %}◒
-                        {% when 'flame' %}♨
-                        {% when 'check' %}✓
-                        {% when 'plus' %}+
-                        {% when 'circle' %}●
-                      {% endcase %}
-                    </span>
-                  {% endif %}
-                  <span class="avonent-journey__marquee-label">{{ item_text }}{% if item_marker != 'none' %}<sup class="avonent-journey__marquee-marker">{{ item_marker }}</sup>{% endif %}</span>
-                </span>
-              {% endif %}
-            {% endfor %}
-          </div>
-        {% endfor %}
-      </div>
-    </div>
-  {% endif %}
-
   {% if section.settings.show_image and section.settings.journey_image != blank %}
     <div class="avonent-journey__media-wrap">
       <div class="avonent-journey__media">
         {{ section.settings.journey_image | image_url: width: 1800 | image_tag: loading: 'lazy', class: 'avonent-journey__media-image', alt: section.settings.image_alt }}
-        {% if section.settings.image_overlay_strength > 0 %}<span class="avonent-journey__media-overlay" aria-hidden="true"></span>{% endif %}
+        {% if section.settings.image_overlay_strength > 0 %}
+          <span class="avonent-journey__media-overlay" aria-hidden="true"></span>
+        {% endif %}
         {% if section.settings.image_caption != blank %}
           <div class="avonent-journey__media-caption">{{ section.settings.image_caption }}</div>
         {% endif %}
@@ -86,103 +37,339 @@
 
   <div class="avonent-journey__inner">
     <header class="avonent-journey__header">
-      {% if section.settings.eyebrow != blank %}<div class="avonent-journey__eyebrow">{{ section.settings.eyebrow }}</div>{% endif %}
-      {% if section.settings.heading != blank %}<h2 class="avonent-journey__heading">{{ section.settings.heading }}</h2>{% endif %}
-      {% if section.settings.description != blank %}<div class="avonent-journey__description rte">{{ section.settings.description }}</div>{% endif %}
+      {% if section.settings.eyebrow != blank %}
+        <div class="avonent-journey__eyebrow">{{ section.settings.eyebrow }}</div>
+      {% endif %}
+      {% if section.settings.heading != blank %}
+        <h2 class="avonent-journey__heading">{{ section.settings.heading }}</h2>
+      {% endif %}
+      {% if section.settings.description != blank %}
+        <div class="avonent-journey__description rte">{{ section.settings.description }}</div>
+      {% endif %}
     </header>
 
     <div class="avonent-journey__timeline">
       {% for block in section.blocks %}
         <article class="avonent-journey__step{% if forloop.last %} avonent-journey__step--last{% endif %}" {{ block.shopify_attributes }}>
-          <div class="avonent-journey__rail" aria-hidden="true"><span class="avonent-journey__dot"><span class="avonent-journey__dot-icon">✓</span></span></div>
+          <div class="avonent-journey__rail" aria-hidden="true">
+            <span class="avonent-journey__dot">
+              <span class="avonent-journey__dot-icon">
+                <svg viewBox="0 0 20 20" fill="none"><path d="M5.25 10.35 8.45 13.5 14.9 6.85" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </span>
+          </div>
+
           <div class="avonent-journey__card">
             <div class="avonent-journey__card-heading">
               {% if block.settings.week != blank %}<span class="avonent-journey__week">{{ block.settings.week }}</span>{% endif %}
               {% if block.settings.title != blank %}<h3 class="avonent-journey__title">{{ block.settings.title }}</h3>{% endif %}
             </div>
+
             <ul class="avonent-journey__benefits" role="list">
               {% for index in (1..4) %}
                 {% assign benefit_key = 'benefit_' | append: index %}
                 {% assign benefit = block.settings[benefit_key] %}
-                {% if benefit != blank %}<li class="avonent-journey__benefit"><span class="avonent-journey__check" aria-hidden="true">✓</span><span>{{ benefit }}</span></li>{% endif %}
+                {% if benefit != blank %}
+                  <li class="avonent-journey__benefit">
+                    <span class="avonent-journey__check" aria-hidden="true">
+                      <svg viewBox="0 0 20 20" fill="none"><path d="M5.25 10.35 8.45 13.5 14.9 6.85" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>
+                    <span>{{ benefit }}</span>
+                  </li>
+                {% endif %}
               {% endfor %}
             </ul>
           </div>
         </article>
       {% endfor %}
     </div>
-    {% if section.settings.disclaimer != blank %}<div class="avonent-journey__disclaimer rte">{{ section.settings.disclaimer }}</div>{% endif %}
+
+    {% if section.settings.disclaimer != blank %}
+      <div class="avonent-journey__disclaimer rte">{{ section.settings.disclaimer }}</div>
+    {% endif %}
   </div>
 </section>
 
 {% stylesheet %}
-  .avonent-journey{position:relative;overflow:hidden;padding:var(--avj-top) 0 var(--avj-bottom);background:radial-gradient(circle at 8% 8%,rgb(2 198 234/.10),transparent 25rem),radial-gradient(circle at 96% 92%,rgb(2 198 234/.08),transparent 24rem),var(--avj-bg);color:var(--avj-text)}
-  .avonent-journey__inner{width:min(calc(100% - 40px),var(--avj-width));margin:0 auto}
-  .avonent-journey__header{width:min(100%,720px);margin:0 auto clamp(36px,5vw,64px);text-align:center}
-  .avonent-journey__eyebrow{margin-bottom:10px;color:var(--avj-accent);font-size:12px;font-weight:850;letter-spacing:.15em;line-height:1.2;text-transform:uppercase}
-  .avonent-journey__heading{margin:0;color:var(--avj-text);font-size:clamp(32px,5vw,54px);font-weight:850;letter-spacing:-.05em;line-height:1}
-  .avonent-journey__description{margin:16px auto 0;color:var(--avj-muted);font-size:clamp(15px,2vw,18px);line-height:1.55}
-  .avonent-journey__description p,.avonent-journey__disclaimer p{margin:0}
-
-  .avonent-journey__marquee{width:100%;overflow:hidden;border-top:1px solid var(--avj-marquee-border);border-bottom:1px solid var(--avj-marquee-border);background:var(--avj-marquee-bg)}
-  .avonent-journey__marquee-track{display:flex;width:max-content;min-width:200%;animation:avjMarquee var(--avj-marquee-speed) linear infinite;will-change:transform}
-  .avonent-journey__marquee-track.is-reverse{animation-direction:reverse}
-  .avonent-journey__marquee-set{display:flex;align-items:center;flex:none;gap:var(--avj-marquee-gap);padding:13px 16px}
-  .avonent-journey__marquee-item{display:inline-flex;align-items:center;gap:7px;white-space:nowrap;color:var(--avj-marquee-text);font-family:var(--font-body--family);font-size:{{ section.settings.marquee_text_size }}px;font-weight:{{ section.settings.marquee_font_weight }};line-height:1}
-  .avonent-journey__marquee-icon{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;color:var(--avj-marquee-icon);background:var(--avj-marquee-icon-bg);font-size:14px;font-weight:800;line-height:1}
-  .avonent-journey__marquee-icon.is-plain{width:auto;height:auto;background:transparent;border-radius:0}
-  .avonent-journey__marquee-marker{margin-left:0;position:relative;left:-1px;color:inherit;font-size:.68em;font-weight:800;line-height:0;vertical-align:super}
-  @keyframes avjMarquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-
-  .avonent-journey__media-wrap{width:min(calc(100% - 48px),{{ section.settings.image_width }}px);margin:{{ section.settings.image_spacing_top }}px auto {{ section.settings.image_spacing_bottom }}px}
-  .avonent-journey__media{position:relative;height:var(--avj-image-height-desktop);overflow:hidden;border-radius:var(--avj-image-radius);background:var(--avj-soft)}
-  .avonent-journey__media-image{display:block;width:100%;height:100%;object-fit:cover;object-position:{{ section.settings.image_position }}}
-  .avonent-journey__media-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,42,52,0) 28%,rgba(4,42,52,{{ section.settings.image_overlay_strength | divided_by: 100.0 }}) 100%);pointer-events:none}
-  .avonent-journey__media-caption{position:absolute;z-index:2;left:clamp(18px,4vw,42px);right:clamp(18px,4vw,42px);bottom:clamp(18px,4vw,36px);color:{{ section.settings.image_caption_color }};font-family:var(--font-heading--family);font-size:clamp(26px,4vw,48px);font-weight:750;line-height:1.02;letter-spacing:-.035em;text-shadow:0 2px 18px rgb(0 0 0/.22)}
-
-  .avonent-journey__timeline{width:min(100%,880px);margin:0 auto}
-  .avonent-journey__step{position:relative;display:grid;grid-template-columns:54px minmax(0,1fr);gap:18px;padding-bottom:24px}
-  .avonent-journey__rail{position:relative;display:flex;justify-content:center}
-  .avonent-journey__rail::after,.avonent-journey__rail::before{content:'';position:absolute;top:46px;bottom:-26px;left:50%;width:3px;border-radius:999px;transform:translateX(-50%)}
-  .avonent-journey__rail::after{background:color-mix(in srgb,var(--avj-border) 78%,white)}
-  .avonent-journey__rail::before{z-index:1;background:var(--avj-accent);transform:translateX(-50%) scaleY(0);transform-origin:top;transition:transform 520ms cubic-bezier(.2,.7,.2,1)}
-  .avonent-journey__step.is-complete .avonent-journey__rail::before{transform:translateX(-50%) scaleY(1)}
-  .avonent-journey__step--last .avonent-journey__rail::after,.avonent-journey__step--last .avonent-journey__rail::before{display:none}
-  .avonent-journey__dot{position:relative;z-index:2;display:grid;width:46px;height:46px;place-items:center;flex:0 0 46px;background:white;border:1px solid color-mix(in srgb,var(--avj-accent) 22%,var(--avj-border));border-radius:50%;box-shadow:0 0 0 7px color-mix(in srgb,var(--avj-accent) 5%,transparent);transition:.3s}
-  .avonent-journey__dot-icon{display:grid;width:30px;height:30px;place-items:center;color:color-mix(in srgb,var(--avj-accent) 28%,white);background:white;border:1px solid color-mix(in srgb,var(--avj-accent) 18%,var(--avj-border));border-radius:50%;font-size:16px;font-weight:800}
-  .avonent-journey__step.is-active .avonent-journey__dot{border-color:color-mix(in srgb,var(--avj-accent) 55%,white);box-shadow:0 0 0 7px color-mix(in srgb,var(--avj-accent) 12%,transparent),0 8px 24px color-mix(in srgb,var(--avj-accent) 24%,transparent);transform:scale(1.03)}
-  .avonent-journey__step.is-active .avonent-journey__dot-icon{color:white;background:var(--avj-accent);border-color:var(--avj-accent)}
-  .avonent-journey__card{padding:clamp(22px,3vw,32px);background:linear-gradient(145deg,var(--avj-card),color-mix(in srgb,var(--avj-soft) 35%,white));border:1px solid color-mix(in srgb,var(--avj-accent) 22%,var(--avj-border));border-radius:22px;box-shadow:0 18px 50px rgb(17 24 39/.07)}
-  .avonent-journey__card-heading{display:flex;align-items:center;gap:12px;padding-bottom:18px;border-bottom:1px solid color-mix(in srgb,var(--avj-accent) 17%,var(--avj-border))}
-  .avonent-journey__week{display:inline-flex;align-items:center;min-height:30px;padding:6px 11px;color:#006d82;background:color-mix(in srgb,var(--avj-accent) 14%,white);border:1px solid color-mix(in srgb,var(--avj-accent) 25%,white);border-radius:999px;font-size:12px;font-weight:850;letter-spacing:.04em;line-height:1;text-transform:uppercase;white-space:nowrap}
-  .avonent-journey__title{margin:0;color:var(--avj-text);font-size:clamp(20px,2.6vw,27px);font-weight:850;letter-spacing:-.035em;line-height:1.1}
-  .avonent-journey__benefits{display:grid;gap:14px;margin:20px 0 0;padding:0;list-style:none}
-  .avonent-journey__benefit{display:grid;grid-template-columns:30px minmax(0,1fr);gap:12px;align-items:center;color:var(--avj-muted);font-size:clamp(15px,2vw,17px);line-height:1.4}
-  .avonent-journey__check{display:grid;width:30px;height:30px;place-items:center;color:white;background:linear-gradient(145deg,#00d7f5,var(--avj-accent));border:1px solid rgb(255 255 255/.65);border-radius:50%;box-shadow:0 6px 16px rgb(2 198 234/.24);font-size:16px;font-weight:800}
-  .avonent-journey__disclaimer{width:min(100%,760px);margin:10px auto 0;color:var(--avj-muted);font-size:11px;line-height:1.5;text-align:center}
-
-  @media screen and (max-width:749px){
-    .avonent-journey__inner{width:min(calc(100% - 28px),var(--avj-width))}
-    .avonent-journey__header{margin-bottom:32px}
-    .avonent-journey__marquee-set{padding:12px 12px}
-    .avonent-journey__media-wrap{width:calc(100% - 30px);margin-top:{{ section.settings.image_spacing_top_mobile }}px;margin-bottom:{{ section.settings.image_spacing_bottom_mobile }}px}
-    .avonent-journey__media{height:var(--avj-image-height-mobile)}
-    .avonent-journey__step{grid-template-columns:34px minmax(0,1fr);gap:10px;padding-bottom:16px}
-    .avonent-journey__dot{width:34px;height:34px;flex-basis:34px;box-shadow:0 0 0 5px color-mix(in srgb,var(--avj-accent) 8%,transparent)}
-    .avonent-journey__dot-icon{width:24px;height:24px;font-size:13px}
-    .avonent-journey__rail::after,.avonent-journey__rail::before{top:34px;bottom:-18px;width:2px}
-    .avonent-journey__card{padding:18px 16px;border-radius:18px}
-    .avonent-journey__card-heading{display:block;padding-bottom:14px}
-    .avonent-journey__week{margin-bottom:9px}
-    .avonent-journey__benefits{gap:12px;margin-top:16px}
-    .avonent-journey__benefit{grid-template-columns:27px minmax(0,1fr);gap:10px;align-items:start}
-    .avonent-journey__check{width:27px;height:27px;font-size:14px}
+  .avonent-journey {
+    position: relative;
+    overflow: hidden;
+    padding: var(--avj-top) 0 var(--avj-bottom);
+    color: var(--avj-text);
+    background:
+      radial-gradient(circle at 8% 8%, rgb(2 198 234 / 0.10), transparent 25rem),
+      radial-gradient(circle at 96% 92%, rgb(2 198 234 / 0.08), transparent 24rem),
+      var(--avj-bg);
   }
-  @media (prefers-reduced-motion:reduce){.avonent-journey__marquee-track{animation:none}.avonent-journey__rail::before{transition:none}}
+  .avonent-journey__inner { width: min(calc(100% - 40px), var(--avj-width)); margin: 0 auto; }
+
+  .avonent-journey__media-wrap {
+    width: min(calc(100% - 48px), {{ section.settings.image_width }}px);
+    margin: {{ section.settings.image_spacing_top }}px auto {{ section.settings.image_spacing_bottom }}px;
+  }
+  .avonent-journey__media {
+    position: relative;
+    height: var(--avj-image-height-desktop);
+    overflow: hidden;
+    background: var(--avj-soft);
+    border-radius: var(--avj-image-radius);
+  }
+  .avonent-journey__media-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: {{ section.settings.image_position }};
+  }
+  .avonent-journey__media-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(4,42,52,0) 36%, rgba(4,42,52,{{ section.settings.image_overlay_strength | divided_by: 100.0 }}) 100%);
+    pointer-events: none;
+  }
+  .avonent-journey__media-caption {
+    position: absolute;
+    z-index: 2;
+    right: clamp(18px,4vw,42px);
+    bottom: clamp(18px,4vw,36px);
+    left: clamp(18px,4vw,42px);
+    color: {{ section.settings.image_caption_color }};
+    font-family: var(--font-heading--family);
+    font-size: clamp(26px,4vw,48px);
+    font-weight: 750;
+    line-height: 1.02;
+    letter-spacing: -.035em;
+    text-shadow: 0 2px 18px rgb(0 0 0 / .22);
+  }
+
+  .avonent-journey__header {
+    width: min(100%, 720px);
+    margin: 0 auto clamp(30px,4vw,50px);
+    text-align: center;
+  }
+  .avonent-journey__eyebrow {
+    margin-bottom: 9px;
+    color: var(--avj-accent);
+    font-size: 12px;
+    font-weight: 850;
+    letter-spacing: .15em;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+  .avonent-journey__heading {
+    margin: 0;
+    color: var(--avj-text);
+    font-size: clamp(32px,5vw,54px);
+    font-weight: 850;
+    letter-spacing: -.05em;
+    line-height: 1;
+  }
+  .avonent-journey__description {
+    margin: 14px auto 0;
+    color: var(--avj-muted);
+    font-size: clamp(15px,2vw,18px);
+    line-height: 1.5;
+  }
+  .avonent-journey__description p,
+  .avonent-journey__disclaimer p { margin: 0; }
+
+  .avonent-journey__timeline { width: min(100%, 880px); margin: 0 auto; }
+  .avonent-journey__step {
+    position: relative;
+    display: grid;
+    grid-template-columns: 54px minmax(0,1fr);
+    gap: 18px;
+    padding-bottom: 22px;
+  }
+  .avonent-journey__rail { position: relative; display: flex; justify-content: center; }
+  .avonent-journey__rail::after,
+  .avonent-journey__rail::before {
+    content: '';
+    position: absolute;
+    top: 46px;
+    bottom: -24px;
+    left: 50%;
+    width: 3px;
+    border-radius: 999px;
+    transform: translateX(-50%);
+  }
+  .avonent-journey__rail::after { background: color-mix(in srgb,var(--avj-border) 78%,white); }
+  .avonent-journey__rail::before {
+    z-index: 1;
+    background: var(--avj-accent);
+    transform: translateX(-50%) scaleY(0);
+    transform-origin: top;
+    transition: transform 520ms cubic-bezier(.2,.7,.2,1);
+  }
+  .avonent-journey__step.is-complete .avonent-journey__rail::before { transform: translateX(-50%) scaleY(1); }
+  .avonent-journey__step--last .avonent-journey__rail::after,
+  .avonent-journey__step--last .avonent-journey__rail::before { display: none; }
+
+  .avonent-journey__dot {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    width: 46px;
+    height: 46px;
+    place-items: center;
+    flex: 0 0 46px;
+    background: white;
+    border: 1px solid color-mix(in srgb,var(--avj-accent) 22%,var(--avj-border));
+    border-radius: 50%;
+    box-shadow: 0 0 0 7px color-mix(in srgb,var(--avj-accent) 5%,transparent);
+    transition: .3s;
+  }
+  .avonent-journey__dot-icon {
+    display: grid;
+    width: 30px;
+    height: 30px;
+    place-items: center;
+    color: color-mix(in srgb,var(--avj-accent) 28%,white);
+    background: white;
+    border: 1px solid color-mix(in srgb,var(--avj-accent) 18%,var(--avj-border));
+    border-radius: 50%;
+  }
+  .avonent-journey__dot-icon svg { width: 17px; height: 17px; }
+  .avonent-journey__step.is-active .avonent-journey__dot {
+    border-color: color-mix(in srgb,var(--avj-accent) 55%,white);
+    box-shadow: 0 0 0 7px color-mix(in srgb,var(--avj-accent) 12%,transparent), 0 8px 24px color-mix(in srgb,var(--avj-accent) 24%,transparent);
+    transform: scale(1.03);
+  }
+  .avonent-journey__step.is-active .avonent-journey__dot-icon {
+    color: white;
+    background: var(--avj-accent);
+    border-color: var(--avj-accent);
+  }
+
+  .avonent-journey__card {
+    padding: clamp(22px,3vw,32px);
+    background: linear-gradient(145deg,var(--avj-card),color-mix(in srgb,var(--avj-soft) 35%,white));
+    border: 1px solid color-mix(in srgb,var(--avj-accent) 22%,var(--avj-border));
+    border-radius: 22px;
+    box-shadow: 0 18px 50px rgb(17 24 39 / .07);
+  }
+  .avonent-journey__card-heading {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 17px;
+    border-bottom: 1px solid color-mix(in srgb,var(--avj-accent) 17%,var(--avj-border));
+  }
+  .avonent-journey__week {
+    display: inline-flex;
+    align-items: center;
+    min-height: 30px;
+    padding: 6px 11px;
+    color: #006d82;
+    background: color-mix(in srgb,var(--avj-accent) 14%,white);
+    border: 1px solid color-mix(in srgb,var(--avj-accent) 25%,white);
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 850;
+    letter-spacing: .04em;
+    line-height: 1;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .avonent-journey__title {
+    margin: 0;
+    color: var(--avj-text);
+    font-size: clamp(20px,2.6vw,27px);
+    font-weight: 850;
+    letter-spacing: -.035em;
+    line-height: 1.1;
+  }
+  .avonent-journey__benefits { display: grid; gap: 13px; margin: 18px 0 0; padding: 0; list-style: none; }
+  .avonent-journey__benefit {
+    display: grid;
+    grid-template-columns: 30px minmax(0,1fr);
+    gap: 10px;
+    align-items: center;
+    color: var(--avj-muted);
+    font-size: clamp(15px,2vw,17px);
+    line-height: 1.4;
+  }
+  .avonent-journey__check {
+    display: grid;
+    width: 30px;
+    height: 30px;
+    place-items: center;
+    color: white;
+    background: linear-gradient(145deg,#00d7f5,var(--avj-accent));
+    border: 1px solid rgb(255 255 255 / .65);
+    border-radius: 50%;
+    box-shadow: 0 6px 16px rgb(2 198 234 / .24);
+  }
+  .avonent-journey__check svg { width: 17px; height: 17px; }
+  .avonent-journey__disclaimer {
+    width: min(100%,760px);
+    margin: 8px auto 0;
+    color: var(--avj-muted);
+    font-size: 11px;
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  @media screen and (max-width:749px) {
+    .avonent-journey__inner { width: min(calc(100% - 28px),var(--avj-width)); }
+    .avonent-journey__media-wrap {
+      width: calc(100% - 30px);
+      margin-top: {{ section.settings.image_spacing_top_mobile }}px;
+      margin-bottom: {{ section.settings.image_spacing_bottom_mobile }}px;
+    }
+    .avonent-journey__media { height: var(--avj-image-height-mobile); }
+    .avonent-journey__header { margin-bottom: 28px; }
+    .avonent-journey__eyebrow { margin-bottom: 8px; }
+    .avonent-journey__description { margin-top: 12px; }
+    .avonent-journey__step { grid-template-columns: 34px minmax(0,1fr); gap: 9px; padding-bottom: 15px; }
+    .avonent-journey__dot { width: 34px; height: 34px; flex-basis: 34px; box-shadow: 0 0 0 5px color-mix(in srgb,var(--avj-accent) 8%,transparent); }
+    .avonent-journey__dot-icon { width: 24px; height: 24px; }
+    .avonent-journey__dot-icon svg { width: 14px; height: 14px; }
+    .avonent-journey__rail::after,
+    .avonent-journey__rail::before { top: 34px; bottom: -17px; width: 2px; }
+    .avonent-journey__card { padding: 18px 16px; border-radius: 18px; }
+    .avonent-journey__card-heading { display: block; padding-bottom: 13px; }
+    .avonent-journey__week { margin-bottom: 8px; }
+    .avonent-journey__benefits { gap: 11px; margin-top: 15px; }
+    .avonent-journey__benefit { grid-template-columns: 27px minmax(0,1fr); gap: 9px; align-items: start; }
+    .avonent-journey__check { width: 27px; height: 27px; }
+    .avonent-journey__check svg { width: 15px; height: 15px; }
+  }
+  @media (prefers-reduced-motion:reduce) { .avonent-journey__rail::before { transition: none; } }
 {% endstylesheet %}
 
 <script>
-  (()=>{const journey=document.getElementById('{{ section_id }}');if(!journey||journey.dataset.scrollChecksReady==='true')return;journey.dataset.scrollChecksReady='true';const steps=Array.from(journey.querySelectorAll('.avonent-journey__step'));if(!steps.length)return;let ticking=false;const update=()=>{const line=window.innerHeight*.55;let current=0;steps.forEach((step,index)=>{const dot=step.querySelector('.avonent-journey__dot');if(dot&&dot.getBoundingClientRect().top<=line)current=index});steps.forEach((step,index)=>{step.classList.toggle('is-active',index<=current);step.classList.toggle('is-complete',index<current);step.classList.toggle('is-current',index===current)});ticking=false};const request=()=>{if(ticking)return;ticking=true;requestAnimationFrame(update)};steps[0].classList.add('is-active','is-current');update();addEventListener('scroll',request,{passive:true});addEventListener('resize',request)})();
+  (() => {
+    const journey = document.getElementById('{{ section_id }}');
+    if (!journey || journey.dataset.scrollChecksReady === 'true') return;
+    journey.dataset.scrollChecksReady = 'true';
+    const steps = Array.from(journey.querySelectorAll('.avonent-journey__step'));
+    if (!steps.length) return;
+    let ticking = false;
+    const update = () => {
+      const line = window.innerHeight * .55;
+      let current = 0;
+      steps.forEach((step,index) => {
+        const dot = step.querySelector('.avonent-journey__dot');
+        if (dot && dot.getBoundingClientRect().top <= line) current = index;
+      });
+      steps.forEach((step,index) => {
+        step.classList.toggle('is-active', index <= current);
+        step.classList.toggle('is-complete', index < current);
+        step.classList.toggle('is-current', index === current);
+      });
+      ticking = false;
+    };
+    const request = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    };
+    steps[0].classList.add('is-active','is-current');
+    update();
+    addEventListener('scroll', request, { passive:true });
+    addEventListener('resize', request);
+  })();
 </script>
 
 {% schema %}
@@ -191,51 +378,29 @@
   "tag":"section",
   "class":"section-avonent-journey",
   "settings":[
-    {"type":"header","content":"Moving benefit bar"},
-    {"type":"checkbox","id":"show_marquee","label":"Show moving benefit bar","default":true},
-    {"type":"color","id":"marquee_background","label":"Bar background","default":"#FFFFFF"},
-    {"type":"color","id":"marquee_text_color","label":"Text color","default":"#111111"},
-    {"type":"color","id":"marquee_icon_color","label":"Icon color","default":"#078AA5"},
-    {"type":"color","id":"marquee_icon_background","label":"Icon background","default":"#EAF9FC"},
-    {"type":"color","id":"marquee_border_color","label":"Border color","default":"#D9E9ED"},
-    {"type":"checkbox","id":"marquee_icon_circle","label":"Show icon circles","default":true},
-    {"type":"checkbox","id":"marquee_reverse","label":"Reverse direction","default":false},
-    {"type":"range","id":"marquee_speed","label":"Scroll speed","min":8,"max":60,"step":1,"unit":"s","default":24},
-    {"type":"range","id":"marquee_gap","label":"Item spacing","min":12,"max":60,"step":2,"unit":"px","default":28},
-    {"type":"range","id":"marquee_text_size","label":"Text size","min":11,"max":22,"step":1,"unit":"px","default":14},
-    {"type":"select","id":"marquee_font_weight","label":"Text weight","default":"700","options":[{"value":"400","label":"Regular"},{"value":"500","label":"Medium"},{"value":"600","label":"Semi bold"},{"value":"700","label":"Bold"},{"value":"800","label":"Extra bold"}]},
-
-    {"type":"text","id":"marquee_1_text","label":"Item 1 text","default":"Daily Vitality"},{"type":"select","id":"marquee_1_icon","label":"Item 1 icon","default":"bolt","options":[{"value":"none","label":"None"},{"value":"bolt","label":"Bolt"},{"value":"sparkle","label":"Sparkle"},{"value":"leaf","label":"Leaf"},{"value":"heart","label":"Heart"},{"value":"shield","label":"Shield"},{"value":"activity","label":"Activity"},{"value":"sun","label":"Sun"},{"value":"moon","label":"Moon"},{"value":"brain","label":"Brain"},{"value":"droplet","label":"Droplet"},{"value":"flame","label":"Flame"},{"value":"check","label":"Check"},{"value":"plus","label":"Plus"},{"value":"circle","label":"Circle"}]},{"type":"select","id":"marquee_1_marker","label":"Item 1 disclaimer marker","default":"†","options":[{"value":"none","label":"None"},{"value":"†","label":"†"},{"value":"*","label":"*"},{"value":"‡","label":"‡"}]},
-    {"type":"text","id":"marquee_2_text","label":"Item 2 text","default":"Antioxidant Defense"},{"type":"select","id":"marquee_2_icon","label":"Item 2 icon","default":"sparkle","options":[{"value":"none","label":"None"},{"value":"bolt","label":"Bolt"},{"value":"sparkle","label":"Sparkle"},{"value":"leaf","label":"Leaf"},{"value":"heart","label":"Heart"},{"value":"shield","label":"Shield"},{"value":"activity","label":"Activity"},{"value":"sun","label":"Sun"},{"value":"moon","label":"Moon"},{"value":"brain","label":"Brain"},{"value":"droplet","label":"Droplet"},{"value":"flame","label":"Flame"},{"value":"check","label":"Check"},{"value":"plus","label":"Plus"},{"value":"circle","label":"Circle"}]},{"type":"select","id":"marquee_2_marker","label":"Item 2 disclaimer marker","default":"†","options":[{"value":"none","label":"None"},{"value":"†","label":"†"},{"value":"*","label":"*"},{"value":"‡","label":"‡"}]},
-    {"type":"text","id":"marquee_3_text","label":"Item 3 text","default":"Healthy Aging"},{"type":"select","id":"marquee_3_icon","label":"Item 3 icon","default":"sun","options":[{"value":"none","label":"None"},{"value":"bolt","label":"Bolt"},{"value":"sparkle","label":"Sparkle"},{"value":"leaf","label":"Leaf"},{"value":"heart","label":"Heart"},{"value":"shield","label":"Shield"},{"value":"activity","label":"Activity"},{"value":"sun","label":"Sun"},{"value":"moon","label":"Moon"},{"value":"brain","label":"Brain"},{"value":"droplet","label":"Droplet"},{"value":"flame","label":"Flame"},{"value":"check","label":"Check"},{"value":"plus","label":"Plus"},{"value":"circle","label":"Circle"}]},{"type":"select","id":"marquee_3_marker","label":"Item 3 disclaimer marker","default":"†","options":[{"value":"none","label":"None"},{"value":"†","label":"†"},{"value":"*","label":"*"},{"value":"‡","label":"‡"}]},
-    {"type":"text","id":"marquee_4_text","label":"Item 4 text","default":"Heart Wellness"},{"type":"select","id":"marquee_4_icon","label":"Item 4 icon","default":"heart","options":[{"value":"none","label":"None"},{"value":"bolt","label":"Bolt"},{"value":"sparkle","label":"Sparkle"},{"value":"leaf","label":"Leaf"},{"value":"heart","label":"Heart"},{"value":"shield","label":"Shield"},{"value":"activity","label":"Activity"},{"value":"sun","label":"Sun"},{"value":"moon","label":"Moon"},{"value":"brain","label":"Brain"},{"value":"droplet","label":"Droplet"},{"value":"flame","label":"Flame"},{"value":"check","label":"Check"},{"value":"plus","label":"Plus"},{"value":"circle","label":"Circle"}]},{"type":"select","id":"marquee_4_marker","label":"Item 4 disclaimer marker","default":"‡","options":[{"value":"none","label":"None"},{"value":"†","label":"†"},{"value":"*","label":"*"},{"value":"‡","label":"‡"}]},
-    {"type":"text","id":"marquee_5_text","label":"Item 5 text","default":"Metabolic Support"},{"type":"select","id":"marquee_5_icon","label":"Item 5 icon","default":"activity","options":[{"value":"none","label":"None"},{"value":"bolt","label":"Bolt"},{"value":"sparkle","label":"Sparkle"},{"value":"leaf","label":"Leaf"},{"value":"heart","label":"Heart"},{"value":"shield","label":"Shield"},{"value":"activity","label":"Activity"},{"value":"sun","label":"Sun"},{"value":"moon","label":"Moon"},{"value":"brain","label":"Brain"},{"value":"droplet","label":"Droplet"},{"value":"flame","label":"Flame"},{"value":"check","label":"Check"},{"value":"plus","label":"Plus"},{"value":"circle","label":"Circle"}]},{"type":"select","id":"marquee_5_marker","label":"Item 5 disclaimer marker","default":"‡","options":[{"value":"none","label":"None"},{"value":"†","label":"†"},{"value":"*","label":"*"},{"value":"‡","label":"‡"}]},
-    {"type":"text","id":"marquee_6_text","label":"Item 6 text","default":"Joint & Active Support"},{"type":"select","id":"marquee_6_icon","label":"Item 6 icon","default":"check","options":[{"value":"none","label":"None"},{"value":"bolt","label":"Bolt"},{"value":"sparkle","label":"Sparkle"},{"value":"leaf","label":"Leaf"},{"value":"heart","label":"Heart"},{"value":"shield","label":"Shield"},{"value":"activity","label":"Activity"},{"value":"sun","label":"Sun"},{"value":"moon","label":"Moon"},{"value":"brain","label":"Brain"},{"value":"droplet","label":"Droplet"},{"value":"flame","label":"Flame"},{"value":"check","label":"Check"},{"value":"plus","label":"Plus"},{"value":"circle","label":"Circle"}]},{"type":"select","id":"marquee_6_marker","label":"Item 6 disclaimer marker","default":"†","options":[{"value":"none","label":"None"},{"value":"†","label":"†"},{"value":"*","label":"*"},{"value":"‡","label":"‡"}]},
-    {"type":"text","id":"marquee_7_text","label":"Item 7 text"},{"type":"select","id":"marquee_7_icon","label":"Item 7 icon","default":"leaf","options":[{"value":"none","label":"None"},{"value":"bolt","label":"Bolt"},{"value":"sparkle","label":"Sparkle"},{"value":"leaf","label":"Leaf"},{"value":"heart","label":"Heart"},{"value":"shield","label":"Shield"},{"value":"activity","label":"Activity"},{"value":"sun","label":"Sun"},{"value":"moon","label":"Moon"},{"value":"brain","label":"Brain"},{"value":"droplet","label":"Droplet"},{"value":"flame","label":"Flame"},{"value":"check","label":"Check"},{"value":"plus","label":"Plus"},{"value":"circle","label":"Circle"}]},{"type":"select","id":"marquee_7_marker","label":"Item 7 disclaimer marker","default":"none","options":[{"value":"none","label":"None"},{"value":"†","label":"†"},{"value":"*","label":"*"},{"value":"‡","label":"‡"}]},
-    {"type":"text","id":"marquee_8_text","label":"Item 8 text"},{"type":"select","id":"marquee_8_icon","label":"Item 8 icon","default":"shield","options":[{"value":"none","label":"None"},{"value":"bolt","label":"Bolt"},{"value":"sparkle","label":"Sparkle"},{"value":"leaf","label":"Leaf"},{"value":"heart","label":"Heart"},{"value":"shield","label":"Shield"},{"value":"activity","label":"Activity"},{"value":"sun","label":"Sun"},{"value":"moon","label":"Moon"},{"value":"brain","label":"Brain"},{"value":"droplet","label":"Droplet"},{"value":"flame","label":"Flame"},{"value":"check","label":"Check"},{"value":"plus","label":"Plus"},{"value":"circle","label":"Circle"}]},{"type":"select","id":"marquee_8_marker","label":"Item 8 disclaimer marker","default":"none","options":[{"value":"none","label":"None"},{"value":"†","label":"†"},{"value":"*","label":"*"},{"value":"‡","label":"‡"}]},
-
     {"type":"header","content":"Journey image"},
     {"type":"checkbox","id":"show_image","label":"Show image above journey","default":false},
     {"type":"image_picker","id":"journey_image","label":"Journey image"},
     {"type":"text","id":"image_alt","label":"Image alt text","default":"Avonent wellness lifestyle"},
     {"type":"text","id":"image_caption","label":"Image overlay text"},
     {"type":"color","id":"image_caption_color","label":"Overlay text color","default":"#FFFFFF"},
-    {"type":"range","id":"image_overlay_strength","label":"Bottom overlay darkness","min":0,"max":80,"step":5,"unit":"%","default":35},
+    {"type":"range","id":"image_overlay_strength","label":"Bottom overlay darkness","min":0,"max":80,"step":5,"unit":"%","default":20},
     {"type":"select","id":"image_position","label":"Image position","default":"center center","options":[{"value":"center center","label":"Center"},{"value":"center top","label":"Top"},{"value":"center bottom","label":"Bottom"},{"value":"left center","label":"Left"},{"value":"right center","label":"Right"}]},
     {"type":"range","id":"image_width","label":"Image max width","min":600,"max":1400,"step":20,"unit":"px","default":1180},
     {"type":"range","id":"image_height_desktop","label":"Desktop image height","min":220,"max":700,"step":20,"unit":"px","default":420},
     {"type":"range","id":"image_height_mobile","label":"Mobile image height","min":180,"max":500,"step":20,"unit":"px","default":260},
     {"type":"range","id":"image_radius","label":"Image corner radius","min":0,"max":40,"step":2,"unit":"px","default":20},
-    {"type":"range","id":"image_spacing_top","label":"Desktop spacing above image","min":0,"max":80,"step":4,"unit":"px","default":28},
-    {"type":"range","id":"image_spacing_bottom","label":"Desktop spacing below image","min":0,"max":80,"step":4,"unit":"px","default":28},
-    {"type":"range","id":"image_spacing_top_mobile","label":"Mobile spacing above image","min":0,"max":60,"step":2,"unit":"px","default":22},
-    {"type":"range","id":"image_spacing_bottom_mobile","label":"Mobile spacing below image","min":0,"max":60,"step":2,"unit":"px","default":22},
+    {"type":"range","id":"image_spacing_top","label":"Desktop spacing above image","min":0,"max":80,"step":4,"unit":"px","default":18},
+    {"type":"range","id":"image_spacing_bottom","label":"Desktop spacing below image","min":0,"max":80,"step":4,"unit":"px","default":26},
+    {"type":"range","id":"image_spacing_top_mobile","label":"Mobile spacing above image","min":0,"max":60,"step":2,"unit":"px","default":16},
+    {"type":"range","id":"image_spacing_bottom_mobile","label":"Mobile spacing below image","min":0,"max":60,"step":2,"unit":"px","default":24},
 
     {"type":"header","content":"Journey content"},
     {"type":"text","id":"eyebrow","label":"Eyebrow","default":"YOUR DAILY JOURNEY"},
     {"type":"text","id":"heading","label":"Heading","default":"Journey with Avonent"},
     {"type":"richtext","id":"description","label":"Description","default":"<p>Built for daily use. Here’s how things may shift with consistent use. Individual experiences vary.</p>"},
     {"type":"richtext","id":"disclaimer","label":"Disclaimer"},
+
     {"type":"header","content":"Colors"},
     {"type":"color","id":"background_color","label":"Background","default":"#F7FCFD"},
     {"type":"color","id":"card_color","label":"Cards","default":"#FFFFFF"},
@@ -244,12 +409,27 @@
     {"type":"color","id":"muted_text_color","label":"Body text","default":"#596269"},
     {"type":"color","id":"accent_color","label":"Avonent accent","default":"#02C6EA"},
     {"type":"color","id":"border_color","label":"Borders","default":"#D9E5E8"},
+
     {"type":"header","content":"Layout"},
     {"type":"range","id":"content_width","label":"Content width","min":600,"max":1200,"step":20,"unit":"px","default":960},
-    {"type":"range","id":"padding_top","label":"Top spacing","min":0,"max":160,"step":4,"unit":"px","default":64},
-    {"type":"range","id":"padding_bottom","label":"Bottom spacing","min":0,"max":160,"step":4,"unit":"px","default":64}
+    {"type":"range","id":"padding_top","label":"Top spacing","min":0,"max":160,"step":4,"unit":"px","default":20},
+    {"type":"range","id":"padding_bottom","label":"Bottom spacing","min":0,"max":160,"step":4,"unit":"px","default":48}
   ],
-  "blocks":[{"type":"journey_step","name":"Journey step","limit":6,"settings":[{"type":"text","id":"week","label":"Week label","default":"Week 1"},{"type":"text","id":"title","label":"Step title","default":"Early Relief"},{"type":"text","id":"benefit_1","label":"Benefit 1","default":"Digestion feels lighter*"},{"type":"text","id":"benefit_2","label":"Benefit 2","default":"Bloating starts to settle*"},{"type":"text","id":"benefit_3","label":"Benefit 3","default":"Less heaviness after meals*"},{"type":"text","id":"benefit_4","label":"Benefit 4"}]}],
+  "blocks":[
+    {
+      "type":"journey_step",
+      "name":"Journey step",
+      "limit":6,
+      "settings":[
+        {"type":"text","id":"week","label":"Week label","default":"Week 1"},
+        {"type":"text","id":"title","label":"Step title","default":"Early Relief"},
+        {"type":"text","id":"benefit_1","label":"Benefit 1","default":"Digestion feels lighter*"},
+        {"type":"text","id":"benefit_2","label":"Benefit 2","default":"Bloating starts to settle*"},
+        {"type":"text","id":"benefit_3","label":"Benefit 3","default":"Less heaviness after meals*"},
+        {"type":"text","id":"benefit_4","label":"Benefit 4"}
+      ]
+    }
+  ],
   "presets":[{"name":"Avonent wellness journey","blocks":[{"type":"journey_step"},{"type":"journey_step"},{"type":"journey_step"},{"type":"journey_step"}]}]
 }
 {% endschema %}
