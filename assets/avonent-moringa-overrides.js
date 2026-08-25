@@ -8,6 +8,14 @@
     const main = document.querySelector('main[data-template*="product.moringa"]');
     if (!main) return;
 
+    const claimMarker = (symbol, target, label) =>
+      `<sup class="avonent-claim-marker"><a href="#${target}" aria-label="${label}">${symbol}</a></sup>`;
+
+    const appendMarker = (el, symbol, target, label) => {
+      if (!el || el.querySelector(`a[href="#${target}"]`)) return;
+      el.insertAdjacentHTML('beforeend', claimMarker(symbol, target, label));
+    };
+
     if (!document.getElementById('avonent-moringa-copy-styles')) {
       const style = document.createElement('style');
       style.id = 'avonent-moringa-copy-styles';
@@ -20,17 +28,18 @@
           border-radius:12px; background:#f2fbfd; color:#26343a; line-height:1.5;
         }
         main[data-template*="product.moringa"] .av-moringa-proof strong { color:#078aa5; }
-        main[data-template*="product.moringa"] .av-moringa-note {
-          margin-top:12px!important; font-size:.9em; color:#68757a;
-        }
         main[data-template*="product.moringa"] .avonent-accordion__item--benefits .avonent-accordion__content-inner li::before {
           background:#02c6ea;
+        }
+        main[data-template*="product.moringa"] .avonent-claim-marker a {
+          color:#078aa5;
+          text-decoration:none;
         }
       `;
       document.head.appendChild(style);
     }
 
-    // Product accordion: replace legacy digestive-complex copy.
+    // Product accordion: Moringa copy with compact linked claim symbols instead of bulky notes.
     const accordion = main.querySelector('.avonent-accordion');
     if (accordion) {
       const items = accordion.querySelectorAll('.avonent-accordion__item');
@@ -52,27 +61,33 @@
 
       replaceItem(1, 'Benefits', `
         <ul>
-          <li><strong>Daily vitality:</strong> plant-based nutritional support for everyday energy, resilience, and an active routine.</li>
-          <li><strong>Antioxidant defense:</strong> moringa contains naturally occurring polyphenols and other antioxidant plant compounds that support the body’s defenses against oxidative stress.</li>
-          <li><strong>Healthy aging support:</strong> antioxidant and plant-compound support designed to fit a long-term wellness routine.</li>
-          <li><strong>Heart wellness:</strong> moringa has been studied for cardiometabolic markers including blood pressure and lipid-related measures; human evidence is still developing.</li>
-          <li><strong>Healthy glucose metabolism:</strong> human research has explored moringa’s relationship with fasting glucose and HbA1c. Findings are promising in some studies but remain preliminary and inconsistent.</li>
-          <li><strong>Joint & active-lifestyle support:</strong> moringa’s antioxidant plant compounds can complement a routine built around normal inflammatory balance, movement, and recovery.</li>
-          <li><strong>Whole-body wellness:</strong> a simple single-botanical addition for people who want broad plant-based support without another complicated stack.</li>
+          <li><strong>Daily vitality:</strong> plant-based nutritional support for everyday energy, resilience, and an active routine.${claimMarker('†','avonent-disclaimer-fda','See supplement disclaimer')}</li>
+          <li><strong>Antioxidant defense:</strong> moringa contains naturally occurring polyphenols and other antioxidant plant compounds that support the body’s defenses against oxidative stress.${claimMarker('†','avonent-disclaimer-fda','See supplement disclaimer')}</li>
+          <li><strong>Healthy aging support:</strong> antioxidant and plant-compound support designed to fit a long-term wellness routine.${claimMarker('†','avonent-disclaimer-fda','See supplement disclaimer')}</li>
+          <li><strong>Heart wellness:</strong> moringa has been studied for cardiometabolic markers including blood pressure and lipid-related measures; human evidence is still developing.${claimMarker('†','avonent-disclaimer-fda','See supplement disclaimer')}${claimMarker('‡','avonent-disclaimer-medical','See healthcare professional disclaimer')}</li>
+          <li><strong>Healthy glucose metabolism:</strong> human research has explored moringa’s relationship with fasting glucose and HbA1c. Findings are promising in some studies but remain preliminary and inconsistent.${claimMarker('†','avonent-disclaimer-fda','See supplement disclaimer')}${claimMarker('‡','avonent-disclaimer-medical','See healthcare professional disclaimer')}</li>
+          <li><strong>Joint & active-lifestyle support:</strong> moringa’s antioxidant plant compounds can complement a routine built around normal inflammatory balance, movement, and recovery.${claimMarker('†','avonent-disclaimer-fda','See supplement disclaimer')}</li>
+          <li><strong>Whole-body wellness:</strong> a simple single-botanical addition for people who want broad plant-based support without another complicated stack.${claimMarker('†','avonent-disclaimer-fda','See supplement disclaimer')}</li>
         </ul>
-        <p class="av-moringa-note"><strong>Research note:</strong> Avonent Pure Moringa is a dietary supplement, not a treatment for diabetes, high blood pressure, arthritis, or any other disease. Research into glucose, blood-pressure, and other metabolic outcomes is still emerging.</p>
-        <p class="av-moringa-note">†These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.</p>
       `);
 
       replaceItem(2, 'Recommended Use', `
         <p><strong>Take 2 capsules once daily</strong> with an 8 oz (237 mL) glass of water.</p>
         <p>For best results, the product label recommends taking your serving <strong>20–30 minutes before a meal</strong>, or using it as directed by your healthcare professional. Consistency matters more than chasing a perfect time of day, so pair it with a routine you can actually keep.</p>
-        <p><strong>Important:</strong> Do not exceed the recommended dose. Consult a physician before use if you are pregnant, nursing, under 18, taking medication, or have a medical condition. Because moringa has been studied for glucose and blood-pressure effects, people using medications for either should speak with a healthcare professional before adding it to their routine.</p>
+        <p><strong>Important:</strong> Do not exceed the recommended dose. Consult a physician before use if you are pregnant, nursing, under 18, taking medication, or have a medical condition. Because moringa has been studied for glucose and blood-pressure effects, people using medications for either should speak with a healthcare professional before adding it to their routine.${claimMarker('‡','avonent-disclaimer-medical','See healthcare professional disclaimer')}</p>
       `);
     }
 
-    // Keep the original benefit points the user selected for the Moringa product.
-    // We intentionally do NOT change the existing cards here.
+    // Keep the exact original benefit wording. Only add linked claim symbols.
+    const benefitGrid = main.querySelector('.avonent-benefits');
+    if (benefitGrid) {
+      benefitGrid.querySelectorAll('.avonent-benefits__text').forEach((el) => {
+        appendMarker(el, '†', 'avonent-disclaimer-fda', 'See supplement disclaimer');
+        if (/heart|metabolic|glucose|blood pressure/i.test(el.textContent)) {
+          appendMarker(el, '‡', 'avonent-disclaimer-medical', 'See healthcare professional disclaimer');
+        }
+      });
+    }
 
     // Blue research / proof section: change only the copy ABOVE the proof points.
     // Do not alter the existing study count, traditional-use years, formula amount, or customer milestone.
@@ -83,10 +98,13 @@
       const desc = proof.querySelector('.avonent-proof-stats__description');
       if (eyebrow) eyebrow.textContent = 'TRADITION MEETS MODERN WELLNESS';
       if (heading) heading.textContent = 'Rooted in nature. Made for everyday wellness.';
-      if (desc) desc.innerHTML = '<p>Pure Moringa brings one of the world’s most studied traditional botanicals into a simple daily routine—plant-based support for vitality, antioxidant defense, healthy aging, and whole-body wellness.</p>';
+      if (desc) {
+        desc.innerHTML = '<p>Pure Moringa brings one of the world’s most studied traditional botanicals into a simple daily routine—plant-based support for vitality, antioxidant defense, healthy aging, and whole-body wellness.</p>';
+        appendMarker(desc.querySelector('p'), '†', 'avonent-disclaimer-fda', 'See supplement disclaimer');
+      }
     }
 
-    // Week-by-week section: a credible routine roadmap rather than promised medical outcomes.
+    // Week-by-week section. Preserve the approved copy and attach * to routine/outcome language.
     const journey = main.querySelector('.avonent-journey');
     if (journey) {
       const eyebrow = journey.querySelector('.avonent-journey__eyebrow');
@@ -113,7 +131,10 @@
         if (week) week.textContent = step[0];
         if (title) title.textContent = step[1];
         benefits.forEach((el, idx) => {
-          if (step[2][idx]) el.textContent = step[2][idx];
+          if (step[2][idx]) {
+            el.textContent = step[2][idx];
+            appendMarker(el, '*', 'avonent-disclaimer-results', 'See individual results disclaimer');
+          }
         });
       });
     }
@@ -125,16 +146,13 @@
       if (desc) desc.innerHTML = '<p>Choose the supply that fits your routine and keep your daily Moringa wellness support within reach.</p>';
     }
 
-    // The Moringa template still contains the old digestive ingredient breakdown
-    // and digestive before/after story. Hide them until dedicated Moringa sections replace them.
+    // Hide legacy digestive-only content until dedicated Moringa versions replace it.
     main.querySelectorAll('.avonent-formula, .av-ba').forEach(section => {
       const wrapper = section.closest('.shopify-section') || section;
       wrapper.style.display = 'none';
     });
 
-    // The current review cards are legacy digestive-product testimonials marked as verified.
-    // Do not silently rewrite them into invented Moringa testimonials under the same customer names/dates.
-    // Hide the legacy cards on the Moringa template until genuine Moringa review copy is available.
+    // Hide legacy digestive-product testimonials marked as verified on the Moringa template.
     const reviews = main.querySelector('.avonent-customer-reviews');
     if (reviews) {
       const wrapper = reviews.closest('.shopify-section') || reviews;
