@@ -469,9 +469,9 @@
         "formula_amount": {
           "type": "stat",
           "settings": {
-            "kicker": "10-IN-1 FORMULA",
-            "value": "1,000+ mg",
-            "label": "Active ingredients per serving",
+            "kicker": "Nutrient Dense",
+            "value": "92+",
+            "label": "Out of 102 nutrients the body needs.",
             "detail": ""
           }
         },
