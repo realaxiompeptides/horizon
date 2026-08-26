@@ -1,15 +1,12 @@
 {% doc %}
   Avonent purchase-mode / price offer.
-  Moringa uses a fixed $49.99 one-time display price and Shopify's real
-  selling-plan allocation for Subscribe & Save when available.
+  On the Moringa template this block shows one Subscribe & Save row above
+  the bundle selector. One-Time Purchase is rendered beneath the native
+  Add to Cart button and switches the live product form to one-time mode.
 {% enddoc %}
 
 {% liquid
-  assign av_product = product
-  if av_product == blank
-    assign av_product = closest.product
-  endif
-
+  assign av_product = product | default: closest.product
   if request.visual_preview_mode and av_product == blank
     assign av_product = collections.all.products.first
   endif
@@ -20,40 +17,17 @@
     assign is_moringa = true
   endif
 
-  assign first_allocation = av_variant.selling_plan_allocations.first
-  assign has_subscription = false
+  assign subscription_allocation = av_variant.selling_plan_allocations.first
   assign selling_plan_id = blank
   assign subscription_price = av_variant.price
-
-  if first_allocation != blank
-    assign has_subscription = true
-    assign subscription_price = first_allocation.price
-    assign selling_plan_id = first_allocation.selling_plan.id
+  if subscription_allocation != blank
+    assign selling_plan_id = subscription_allocation.selling_plan.id
+    assign subscription_price = subscription_allocation.price
   endif
 
   assign one_time_price = av_variant.price
   if is_moringa
     assign one_time_price = 4999
-  endif
-
-  assign subscription_savings = 0
-  assign subscription_savings_percent = 0
-  if has_subscription and one_time_price > subscription_price
-    assign subscription_savings = one_time_price | minus: subscription_price
-    assign subscription_savings_percent = subscription_savings | times: 100.0 | divided_by: one_time_price | round
-  endif
-
-  assign default_is_subscription = false
-  if has_subscription and block.settings.default_purchase_type == 'subscription'
-    assign default_is_subscription = true
-  endif
-  if is_moringa and has_subscription
-    assign default_is_subscription = true
-  endif
-
-  assign current_price = one_time_price
-  if default_is_subscription
-    assign current_price = subscription_price
   endif
 
   assign root_id = 'AvonentPriceOffer-' | append: block.id
@@ -65,11 +39,8 @@
     class="avonent-price-offer{% if is_moringa %} avonent-price-offer--moringa{% endif %}"
     {{ block.shopify_attributes }}
     data-avonent-price-offer
-    data-section-id="{{ section.id }}"
     data-plan-id="{{ selling_plan_id }}"
-    data-one-time-price="{{ one_time_price }}"
-    data-subscription-price="{{ subscription_price }}"
-    data-default-mode="{% if default_is_subscription %}subscription{% else %}one_time{% endif %}"
+    data-section-id="{{ section.id }}"
     style="
       --avpo-accent: {{ block.settings.accent_color }};
       --avpo-text: {{ block.settings.text_color }};
@@ -80,59 +51,34 @@
       --avpo-bottom: {{ block.settings.spacing_bottom }}px;
     "
   >
-    {% if is_moringa and has_subscription %}
-      <div class="avonent-purchase-choice" role="radiogroup" aria-label="Purchase option">
-        <button
-          type="button"
-          class="avonent-purchase-choice__option{% if default_is_subscription %} is-selected{% endif %}"
-          data-avpo-mode="subscription"
-          role="radio"
-          aria-checked="{% if default_is_subscription %}true{% else %}false{% endif %}"
-        >
-          <span class="avonent-purchase-choice__radio" aria-hidden="true"><span></span></span>
-          <span class="avonent-purchase-choice__copy">
-            <strong>{{ block.settings.subscription_label }}</strong>
-            <small>{{ block.settings.subscription_helper }}</small>
-          </span>
-          <span class="avonent-purchase-choice__price">
-            <strong>{{ subscription_price | money }}</strong>
-            <s>$49.99</s>
-            {% if subscription_savings_percent > 0 %}<em>Save {{ subscription_savings_percent }}%</em>{% endif %}
-          </span>
-          <span class="avonent-purchase-choice__badge">BEST VALUE</span>
-        </button>
+    {% if is_moringa %}
+      <button
+        type="button"
+        class="avonent-price-offer__row avonent-price-offer__row--selectable is-selected"
+        data-moringa-subscribe
+        aria-pressed="true"
+      >
+        <span class="avonent-price-offer__label-wrap">
+          <strong class="avonent-price-offer__label">{{ block.settings.subscription_label }}</strong>
+          {% if block.settings.show_subscription_helper %}
+            <small class="avonent-price-offer__helper">{{ block.settings.subscription_helper }}</small>
+          {% endif %}
+        </span>
 
-        <button
-          type="button"
-          class="avonent-purchase-choice__option{% unless default_is_subscription %} is-selected{% endunless %}"
-          data-avpo-mode="one_time"
-          role="radio"
-          aria-checked="{% unless default_is_subscription %}true{% else %}false{% endunless %}"
-        >
-          <span class="avonent-purchase-choice__radio" aria-hidden="true"><span></span></span>
-          <span class="avonent-purchase-choice__copy">
-            <strong>{{ block.settings.one_time_label }}</strong>
-            <small>No recurring charges</small>
-          </span>
-          <span class="avonent-purchase-choice__price"><strong>$49.99</strong></span>
-        </button>
-      </div>
+        <span class="avonent-price-offer__price-wrap">
+          <strong class="avonent-price-offer__price">$34.99</strong>
+          <s class="avonent-price-offer__compare">$49.99</s>
+          <em class="avonent-price-offer__save">Save 30%</em>
+        </span>
+      </button>
     {% else %}
       <div class="avonent-price-offer__row">
-        <div class="avonent-price-offer__label-wrap">
-          <span class="avonent-price-offer__label">
-            {% if is_moringa %}{{ block.settings.subscription_label }}{% elsif default_is_subscription %}{{ block.settings.subscription_label }}{% else %}{{ block.settings.one_time_label }}{% endif %}
-          </span>
-          {% if is_moringa %}
-            <span class="avonent-price-offer__helper">Delivered every 30 days · Skip or cancel anytime</span>
-          {% elsif block.settings.show_subscription_helper and default_is_subscription %}
-            <span class="avonent-price-offer__helper">{{ block.settings.subscription_helper }}</span>
-          {% endif %}
-        </div>
-        <div class="avonent-price-offer__price-wrap">
-          <strong class="avonent-price-offer__price">{% if is_moringa %}$34.99{% else %}{{ current_price | money }}{% endif %}</strong>
-          {% if is_moringa %}<s class="avonent-price-offer__compare">$49.99</s>{% endif %}
-        </div>
+        <span class="avonent-price-offer__label-wrap">
+          <strong class="avonent-price-offer__label">{{ block.settings.one_time_label }}</strong>
+        </span>
+        <span class="avonent-price-offer__price-wrap">
+          <strong class="avonent-price-offer__price">{{ av_variant.price | money }}</strong>
+        </span>
       </div>
     {% endif %}
   </div>
@@ -145,14 +91,14 @@
         root.dataset.avpoInitialized = 'true';
 
         const planId = String(root.dataset.planId || '');
+        const subscribeRow = root.querySelector('[data-moringa-subscribe]');
         let mode = planId ? 'subscription' : 'one_time';
-        const modeButtons = Array.from(root.querySelectorAll('[data-avpo-mode]'));
 
         function getScope() {
           return root.closest('.shopify-section') || document;
         }
 
-        function getForm() {
+        function getMainForm() {
           const scope = getScope();
           return (
             scope.querySelector('.buy-buttons-block product-form-component form[data-type="add-to-cart-form"]') ||
@@ -161,24 +107,26 @@
           );
         }
 
-        function ensurePlanInput() {
-          const form = getForm();
+        function ensurePlanInput(form) {
           if (!form || !planId) return null;
-          let input = form.querySelector('[data-avonent-moringa-plan]');
+          let input = form.querySelector('[data-avonent-moringa-selling-plan]');
           if (!input) {
             input = document.createElement('input');
             input.type = 'hidden';
             input.name = 'selling_plan';
-            input.setAttribute('data-avonent-moringa-plan', '');
+            input.setAttribute('data-avonent-moringa-selling-plan', '');
             form.appendChild(input);
           }
           return input;
         }
 
-        function syncPlan() {
-          const input = ensurePlanInput();
+        function enforceMainFormMode() {
+          const form = getMainForm();
+          if (!form) return;
+          const input = ensurePlanInput(form);
           if (!input) return;
-          if (mode === 'subscription') {
+
+          if (mode === 'subscription' && planId) {
             input.disabled = false;
             input.value = planId;
             input.setAttribute('value', planId);
@@ -189,93 +137,147 @@
           }
         }
 
-        function ensureOneTimeText() {
-          const form = getForm();
+        function ensureOneTimeLink() {
+          const form = getMainForm();
           if (!form) return;
           const buttons = form.querySelector('.product-form-buttons');
           if (!buttons) return;
 
-          let note = form.querySelector('[data-moringa-one-time-note]');
-          if (!note) {
-            note = document.createElement('button');
-            note.type = 'button';
-            note.className = 'moringa-one-time-note';
-            note.setAttribute('data-moringa-one-time-note', '');
-            note.textContent = 'One-Time Purchase — $49.99';
-            buttons.insertAdjacentElement('afterend', note);
-            note.addEventListener('click', () => applyMode('one_time'));
+          let link = form.querySelector('[data-moringa-one-time-link]');
+          if (!link) {
+            link = document.createElement('button');
+            link.type = 'button';
+            link.className = 'moringa-one-time-link';
+            link.setAttribute('data-moringa-one-time-link', '');
+            link.textContent = 'One-Time Purchase — $49.99';
+            buttons.insertAdjacentElement('afterend', link);
+            link.addEventListener('click', () => setMode('one_time'));
           }
-          note.textContent = 'One-Time Purchase — $49.99';
+
+          link.classList.toggle('is-selected', mode === 'one_time');
+          link.setAttribute('aria-pressed', mode === 'one_time' ? 'true' : 'false');
         }
 
-        function forceBottomOfferPrice() {
-          document.querySelectorAll('.avonent-bottom-offer').forEach((offer) => {
-            const toggle = offer.querySelector('[data-abo-purchase-toggle]');
-            const toggleText = offer.querySelector('[data-abo-purchase-toggle-text]');
-
-            if (toggle) {
-              toggle.dataset.oneTimeCopy = 'One-Time Purchase $49.99';
-            }
-            if (toggleText && toggle?.getAttribute('aria-pressed') !== 'true') {
-              toggleText.textContent = 'One-Time Purchase $49.99';
-            }
-
-            offer.querySelectorAll('[data-abo-bundle]').forEach((input) => {
-              const qty = Number(input.dataset.quantity || input.value || 1);
-              const total = (49.99 * qty).toFixed(2);
-              input.dataset.oneTimePrice = `$${total}`;
-              input.dataset.oneTimeComparePrice = '';
-              input.dataset.oneTimeSavingsPrice = '';
-            });
-          });
-        }
-
-        function applyMode(nextMode) {
-          mode = nextMode === 'subscription' && planId ? 'subscription' : 'one_time';
-          syncPlan();
-          modeButtons.forEach((button) => {
-            const selected = button.dataset.avpoMode === mode;
-            button.classList.toggle('is-selected', selected);
-            button.setAttribute('aria-checked', selected ? 'true' : 'false');
-          });
-          ensureOneTimeText();
-          forceBottomOfferPrice();
+        function announceMode() {
           document.dispatchEvent(new Event('selling-plan:change'));
           document.dispatchEvent(new CustomEvent('avonent:purchase-mode-change', {
-            detail: { mode, sellingPlanId: mode === 'subscription' ? planId : null }
+            detail: {
+              mode,
+              sellingPlanId: mode === 'subscription' ? planId : null
+            }
           }));
         }
 
-        modeButtons.forEach((button) => button.addEventListener('click', () => applyMode(button.dataset.avpoMode)));
+        function renderMode() {
+          if (subscribeRow) {
+            const selected = mode === 'subscription';
+            subscribeRow.classList.toggle('is-selected', selected);
+            subscribeRow.setAttribute('aria-pressed', selected ? 'true' : 'false');
+          }
+          ensureOneTimeLink();
+          enforceMainFormMode();
+        }
+
+        function setMode(nextMode) {
+          mode = nextMode === 'subscription' && planId ? 'subscription' : 'one_time';
+          renderMode();
+          announceMode();
+        }
+
+        subscribeRow?.addEventListener('click', () => setMode('subscription'));
+
+        document.addEventListener('click', (event) => {
+          const form = getMainForm();
+          const addButton = event.target.closest('button[type="submit"][name="add"], button[type="submit"][data-add-to-cart]');
+          if (!form || !addButton || !form.contains(addButton)) return;
+          enforceMainFormMode();
+        }, true);
 
         document.addEventListener('submit', (event) => {
-          const form = getForm();
+          const form = getMainForm();
           if (!form || event.target !== form) return;
-          syncPlan();
+          enforceMainFormMode();
         }, true);
 
         document.addEventListener('formdata', (event) => {
-          const form = getForm();
+          const form = getMainForm();
           if (!form || event.target !== form) return;
           if (mode === 'subscription' && planId) event.formData.set('selling_plan', planId);
           else event.formData.delete('selling_plan');
         });
 
-        [0, 150, 500, 1200, 2500, 4500].forEach((delay) => {
-          setTimeout(() => {
-            ensureOneTimeText();
-            forceBottomOfferPrice();
-            syncPlan();
+        function wireBottomOffer(offer) {
+          if (!offer || offer.dataset.moringaPlanGuard === 'true') return;
+          const form = offer.querySelector('form[data-type="add-to-cart-form"], form[action*="/cart/add"]');
+          const input = offer.querySelector('[data-abo-selling-plan-input]');
+          const toggle = offer.querySelector('[data-abo-purchase-toggle]');
+          if (!form || !input) return;
+
+          const bottomPlanId = String(input.dataset.planId || input.value || planId || '');
+          if (!bottomPlanId) return;
+          offer.dataset.moringaPlanGuard = 'true';
+
+          const isSubscription = () => {
+            if (!toggle) return !input.disabled;
+            return toggle.getAttribute('aria-pressed') !== 'true';
+          };
+
+          const enforceBottomMode = () => {
+            if (isSubscription()) {
+              input.disabled = false;
+              input.value = bottomPlanId;
+              input.setAttribute('value', bottomPlanId);
+            } else {
+              input.disabled = true;
+              input.value = '';
+              input.removeAttribute('value');
+            }
+          };
+
+          form.addEventListener('click', (event) => {
+            if (event.target.closest('button[type="submit"], [name="add"]')) enforceBottomMode();
+          }, true);
+
+          form.addEventListener('submit', enforceBottomMode, true);
+
+          document.addEventListener('formdata', (event) => {
+            if (event.target !== form) return;
+            if (isSubscription()) event.formData.set('selling_plan', bottomPlanId);
+            else event.formData.delete('selling_plan');
+          });
+
+          toggle?.addEventListener('click', () => {
+            window.setTimeout(enforceBottomMode, 0);
+          });
+
+          enforceBottomMode();
+        }
+
+        function wireBottomOffers() {
+          document.querySelectorAll('[data-avonent-bottom-offer]').forEach(wireBottomOffer);
+        }
+
+        const observer = new MutationObserver(() => {
+          ensureOneTimeLink();
+          enforceMainFormMode();
+          wireBottomOffers();
+        });
+        observer.observe(getScope(), { childList: true, subtree: true });
+
+        document.addEventListener('shopify:section:load', () => {
+          ensureOneTimeLink();
+          enforceMainFormMode();
+          wireBottomOffers();
+        });
+
+        [0, 100, 350, 900, 1800, 3500].forEach((delay) => {
+          window.setTimeout(() => {
+            renderMode();
+            wireBottomOffers();
           }, delay);
         });
 
-        document.addEventListener('shopify:section:load', () => {
-          ensureOneTimeText();
-          forceBottomOfferPrice();
-          syncPlan();
-        });
-
-        applyMode(mode);
+        setMode(mode);
       })();
     </script>
   {% endif %}
@@ -290,49 +292,111 @@
     font-family: var(--font-body--family);
   }
 
-  .avonent-purchase-choice { display:grid; gap:10px; width:100%; margin-block:2px 4px; }
-  .avonent-purchase-choice__option {
-    position:relative; display:grid; grid-template-columns:22px minmax(0,1fr) auto; align-items:center;
-    gap:11px; width:100%; min-height:68px; padding:13px 14px; border:1px solid var(--avpo-border);
-    border-radius:12px; background:#fff; color:var(--avpo-text); font:inherit; text-align:left; cursor:pointer;
-  }
-  .avonent-purchase-choice__option.is-selected { border-color:var(--avpo-accent); background:color-mix(in srgb,var(--avpo-accent) 8%,#fff); box-shadow:0 0 0 1px var(--avpo-accent); }
-  .avonent-purchase-choice__radio { display:grid; place-items:center; width:20px; height:20px; border:1.5px solid #aab4b8; border-radius:50%; background:#fff; }
-  .avonent-purchase-choice__radio span { width:9px; height:9px; border-radius:50%; background:transparent; }
-  .avonent-purchase-choice__option.is-selected .avonent-purchase-choice__radio { border-color:var(--avpo-accent); }
-  .avonent-purchase-choice__option.is-selected .avonent-purchase-choice__radio span { background:var(--avpo-accent); }
-  .avonent-purchase-choice__copy { display:flex; flex-direction:column; gap:3px; min-width:0; }
-  .avonent-purchase-choice__copy strong { font-size:15px; font-weight:800; line-height:1.1; }
-  .avonent-purchase-choice__copy small { color:var(--avpo-muted); font-size:10px; line-height:1.25; }
-  .avonent-purchase-choice__price { display:flex; flex-direction:column; align-items:flex-end; gap:2px; white-space:nowrap; }
-  .avonent-purchase-choice__price strong { font-size:16px; font-weight:850; }
-  .avonent-purchase-choice__price s { color:var(--avpo-muted); font-size:11px; }
-  .avonent-purchase-choice__price em { color:var(--avpo-accent); font-size:10px; font-style:normal; font-weight:800; }
-  .avonent-purchase-choice__badge { position:absolute; top:-9px; right:12px; padding:4px 9px; border-radius:999px; background:var(--avpo-accent); color:#fff; font-size:9px; font-weight:850; }
-
-  .avonent-price-offer__row { display:flex; align-items:center; justify-content:space-between; gap:18px; width:100%; padding:10px 0; border-top:1px solid var(--avpo-border); border-bottom:1px solid var(--avpo-border); background:var(--avpo-bg); }
-  .avonent-price-offer__label-wrap { display:flex; flex-direction:column; gap:3px; }
-  .avonent-price-offer__label { color:var(--avpo-accent); font-size:16px; font-weight:750; }
-  .avonent-price-offer__helper { color:var(--avpo-muted); font-size:10px; }
-  .avonent-price-offer__price-wrap { display:flex; align-items:center; gap:8px; }
-  .avonent-price-offer__price { color:var(--avpo-text); font-size:17px; font-weight:800; }
-  .avonent-price-offer__compare { color:var(--avpo-muted); font-size:12px; }
-
-  .moringa-one-time-note {
-    appearance:none; display:block; width:max-content; max-width:100%; margin:8px auto 0; padding:3px 0;
-    border:0; border-bottom:1px solid currentColor; background:transparent; color:#02c6ea;
-    font:inherit; font-size:12px; font-weight:750; line-height:1.35; cursor:pointer; text-align:center;
+  .avonent-price-offer__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    width: 100%;
+    margin: 0;
+    padding: 11px 0;
+    border: 0;
+    border-top: 1px solid var(--avpo-border);
+    border-bottom: 1px solid var(--avpo-border);
+    background: var(--avpo-bg);
+    color: var(--avpo-text);
+    font: inherit;
+    text-align: left;
   }
 
-  @media screen and (min-width:990px) {
-    body:has(.avonent-price-offer--moringa) .avonent-purchase-choice { grid-template-columns:1fr 1fr; }
-    body:has(.avonent-price-offer--moringa) .avonent-purchase-choice__option { min-height:82px; }
+  .avonent-price-offer__row--selectable {
+    cursor: pointer;
   }
 
-  @media screen and (max-width:749px) {
-    .avonent-purchase-choice__copy strong { font-size:13px; }
-    .avonent-purchase-choice__price strong { font-size:14px; }
-    .avonent-purchase-choice__option { min-height:64px; padding:11px 12px; }
+  .avonent-price-offer__row--selectable.is-selected .avonent-price-offer__label {
+    color: var(--avpo-accent);
+  }
+
+  .avonent-price-offer__label-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+  }
+
+  .avonent-price-offer__label {
+    color: var(--avpo-accent);
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.2;
+  }
+
+  .avonent-price-offer__helper {
+    color: var(--avpo-muted);
+    font-size: 10px;
+    line-height: 1.25;
+  }
+
+  .avonent-price-offer__price-wrap {
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-end;
+    gap: 8px;
+    white-space: nowrap;
+  }
+
+  .avonent-price-offer__price {
+    color: var(--avpo-text);
+    font-size: 18px;
+    font-weight: 850;
+    line-height: 1;
+  }
+
+  .avonent-price-offer__compare {
+    color: var(--avpo-muted);
+    font-size: 12px;
+  }
+
+  .avonent-price-offer__save {
+    padding: 4px 7px;
+    border-radius: 6px;
+    background: var(--avpo-accent);
+    color: #fff;
+    font-size: 9px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .moringa-one-time-link {
+    appearance: none;
+    display: block;
+    width: max-content;
+    max-width: 100%;
+    margin: 8px auto 0;
+    padding: 2px 0;
+    border: 0;
+    border-bottom: 1px solid currentColor;
+    background: transparent;
+    color: #02c6ea;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 750;
+    line-height: 1.35;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .moringa-one-time-link.is-selected {
+    color: var(--avpo-text, #111111);
+    border-bottom-color: transparent;
+  }
+
+  @media screen and (max-width: 749px) {
+    .avonent-price-offer__row { gap: 10px; }
+    .avonent-price-offer__label { font-size: 14px; }
+    .avonent-price-offer__price { font-size: 16px; }
+    .avonent-price-offer__save { display: none; }
   }
 {% endstylesheet %}
 
@@ -352,10 +416,10 @@
         { "value": "one_time", "label": "One-Time Purchase" },
         { "value": "subscription", "label": "Subscribe & Save" }
       ],
-      "default": "one_time"
+      "default": "subscription"
     },
     { "type": "checkbox", "id": "show_subscription_helper", "label": "Show subscription helper text", "default": true },
-    { "type": "text", "id": "subscription_helper", "label": "Subscription helper text", "default": "Delivered every 30 days · Skip or cancel anytime" },
+    { "type": "text", "id": "subscription_helper", "label": "Subscription helper text", "default": "Recurring delivery · Cancel anytime" },
     { "type": "header", "content": "Sale" },
     { "type": "checkbox", "id": "show_sale_badge", "label": "Show sale badge", "default": true },
     { "type": "text", "id": "sale_name", "label": "Sale name", "default": "SUMMER SALE" },
@@ -374,6 +438,8 @@
     { "type": "range", "id": "spacing_top", "label": "Top spacing", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 2 },
     { "type": "range", "id": "spacing_bottom", "label": "Bottom spacing", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 3 }
   ],
-  "presets": [{ "name": "Avonent Price Offer" }]
+  "presets": [
+    { "name": "Avonent Price Offer" }
+  ]
 }
 {% endschema %}
