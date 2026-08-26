@@ -9,6 +9,7 @@
 <section
   id="{{ section_id }}"
   class="avonent-journey"
+  data-moringa="{{ is_moringa }}"
   style="
     --avj-bg: {{ section.settings.background_color }};
     --avj-card: {{ section.settings.card_color }};
@@ -42,7 +43,7 @@
       {% if is_moringa %}
         <div class="avonent-journey__eyebrow">BUILD YOUR ROUTINE</div>
         <h2 class="avonent-journey__heading">Your first month with Pure Moringa</h2>
-        <div class="avonent-journey__description rte"><p>The nutrients are the reason. These are the reasons people stay. Here’s what consistent Moringa support is designed to help with over your first month. Individual experiences vary.</p></div>
+        <div class="avonent-journey__description rte"><p>Different benefits can show up on different timelines. Here’s what to watch for as Pure Moringa becomes part of your everyday routine.</p></div>
       {% else %}
         {% if section.settings.eyebrow != blank %}<div class="avonent-journey__eyebrow">{{ section.settings.eyebrow }}</div>{% endif %}
         {% if section.settings.heading != blank %}<h2 class="avonent-journey__heading">{{ section.settings.heading }}</h2>{% endif %}
@@ -62,28 +63,28 @@
           if is_moringa
             case forloop.index
               when 1
-                assign display_title = 'Start the Fuel'
-                assign display_benefit_1 = 'Start supporting steadier daytime energy — without adding another stimulant.*'
-                assign display_benefit_2 = 'Build daily antioxidant support for skin, healthy aging, and cellular defense.†'
-                assign display_benefit_3 = 'Give your body an easier greens habit when real-life meals are not always perfect.*'
+                assign display_title = 'Fuel the Day'
+                assign display_benefit_1 = 'Watch how your normal daytime energy feels without adding another stimulant to the routine.*'
+                assign display_benefit_2 = 'Start building consistent antioxidant support for skin and healthy aging.†'
+                assign display_benefit_3 = 'Make getting something green into imperfect-food days as easy as two capsules.*'
                 assign display_benefit_4 = ''
               when 2
-                assign display_title = 'Energy + Recovery'
-                assign display_benefit_1 = 'Steadier-feeling energy may become easier to notice through mornings and afternoon slumps.*'
-                assign display_benefit_2 = 'Support everyday joint comfort, movement, and active days.†'
-                assign display_benefit_3 = 'Give recovery extra nutritional support after training, work, and long days on your feet.*'
+                assign display_title = 'Energy + Movement'
+                assign display_benefit_1 = 'Use the afternoon as your checkpoint for how your normal energy baseline feels.*'
+                assign display_benefit_2 = 'Support everyday joint comfort and movement through training days, workdays, and long days on your feet.†'
+                assign display_benefit_3 = 'Give recovery and active-lifestyle nutrition a consistent place in your routine.*'
                 assign display_benefit_4 = ''
               when 3
-                assign display_title = 'Whole-Body Support'
-                assign display_benefit_1 = 'Keep building antioxidant support for skin, hair, and healthy aging.†'
-                assign display_benefit_2 = 'Support normal immune function when sleep, stress, and diet are not always ideal.*'
+                assign display_title = 'Think Whole-Body'
+                assign display_benefit_1 = 'Keep supporting antioxidant defense for skin, hair, and healthy aging.†'
+                assign display_benefit_2 = 'Support normal immune function when stress, sleep, and diet are not always perfect.*'
                 assign display_benefit_3 = 'Support heart and metabolic wellness as part of an overall healthy lifestyle.‡'
                 assign display_benefit_4 = ''
               when 4
                 assign display_title = 'Make It Your Baseline'
-                assign display_benefit_1 = 'Energy, movement, antioxidant defense, immune nutrition, and recovery support now live in one simple habit.*'
-                assign display_benefit_2 = 'Two capsules make getting something green into your day easier than powders, shakes, or another complicated stack.*'
-                assign display_benefit_3 = 'Keep it consistent and let the routine support the version of you that wants to feel better day after day.*'
+                assign display_benefit_1 = 'Energy, joints, antioxidant defense, immune nutrition, and recovery now fit inside one simple routine.*'
+                assign display_benefit_2 = 'Keep the plant-based nutrition without powders, shakes, or another complicated supplement stack.*'
+                assign display_benefit_3 = 'The goal is not an overnight miracle — it is a daily habit you can actually keep.*'
                 assign display_benefit_4 = ''
             endcase
           endif
@@ -108,7 +109,7 @@
     </div>
 
     {% if is_moringa %}
-      <div class="avonent-journey__disclaimer rte"><p>Everyone’s baseline is different. Consistency matters more than a dramatic day-3 story.</p></div>
+      <div class="avonent-journey__disclaimer rte"><p>Everyone’s baseline is different. Individual experiences vary, and consistency matters more than an overnight promise.</p></div>
     {% elsif section.settings.disclaimer != blank %}
       <div class="avonent-journey__disclaimer rte">{{ section.settings.disclaimer }}</div>
     {% endif %}
@@ -176,25 +177,87 @@
 <script>
   (()=>{
     const journey=document.getElementById('{{ section_id }}');
-    if(!journey||journey.dataset.scrollChecksReady==='true')return;
+    if(!journey)return;
+
+    const isMoringa = journey.dataset.moringa === 'true' || /moringa/i.test(window.location.pathname) || /moringa/i.test(document.title);
+
+    const moringaCopy = [
+      {
+        title: 'Fuel the Day',
+        benefits: [
+          'Watch how your normal daytime energy feels without adding another stimulant to the routine.*',
+          'Start building consistent antioxidant support for skin and healthy aging.†',
+          'Make getting something green into imperfect-food days as easy as two capsules.*'
+        ]
+      },
+      {
+        title: 'Energy + Movement',
+        benefits: [
+          'Use the afternoon as your checkpoint for how your normal energy baseline feels.*',
+          'Support everyday joint comfort and movement through training days, workdays, and long days on your feet.†',
+          'Give recovery and active-lifestyle nutrition a consistent place in your routine.*'
+        ]
+      },
+      {
+        title: 'Think Whole-Body',
+        benefits: [
+          'Keep supporting antioxidant defense for skin, hair, and healthy aging.†',
+          'Support normal immune function when stress, sleep, and diet are not always perfect.*',
+          'Support heart and metabolic wellness as part of an overall healthy lifestyle.‡'
+        ]
+      },
+      {
+        title: 'Make It Your Baseline',
+        benefits: [
+          'Energy, joints, antioxidant defense, immune nutrition, and recovery now fit inside one simple routine.*',
+          'Keep the plant-based nutrition without powders, shakes, or another complicated supplement stack.*',
+          'The goal is not an overnight miracle — it is a daily habit you can actually keep.*'
+        ]
+      }
+    ];
+
+    const forceMoringaCopy = () => {
+      if(!isMoringa) return;
+
+      const eyebrow = journey.querySelector('.avonent-journey__eyebrow');
+      const heading = journey.querySelector('.avonent-journey__heading');
+      const description = journey.querySelector('.avonent-journey__description');
+      const steps = Array.from(journey.querySelectorAll('.avonent-journey__step'));
+
+      if(eyebrow) eyebrow.textContent = 'BUILD YOUR ROUTINE';
+      if(heading) heading.textContent = 'Your first month with Pure Moringa';
+      if(description) description.innerHTML = '<p>Different benefits can show up on different timelines. Here’s what to watch for as Pure Moringa becomes part of your everyday routine.</p>';
+
+      steps.slice(0, 4).forEach((step, index) => {
+        const copy = moringaCopy[index];
+        if(!copy) return;
+        const title = step.querySelector('.avonent-journey__title');
+        const benefitText = Array.from(step.querySelectorAll('.avonent-journey__benefit > span:last-child'));
+        if(title) title.textContent = copy.title;
+        benefitText.forEach((el, benefitIndex) => {
+          if(copy.benefits[benefitIndex]) el.textContent = copy.benefits[benefitIndex];
+        });
+      });
+
+      document.querySelectorAll('.avonent-compare__description').forEach((el)=>{
+        el.textContent='Most Moringa bottles look the same from the outside. Avonent is built around what matters: clean-label simplicity, transparent quality standards, and a daily routine you can actually stick with.';
+      });
+    };
+
+    forceMoringaCopy();
+    requestAnimationFrame(forceMoringaCopy);
+    document.addEventListener('DOMContentLoaded', forceMoringaCopy, { once: true });
+    setTimeout(forceMoringaCopy, 200);
+    setTimeout(forceMoringaCopy, 800);
+
+    if(journey.dataset.scrollChecksReady==='true')return;
     journey.dataset.scrollChecksReady='true';
     const steps=Array.from(journey.querySelectorAll('.avonent-journey__step'));
-    if(steps.length){
-      let ticking=false;
-      const update=()=>{const line=window.innerHeight*.55;let current=0;steps.forEach((step,index)=>{const dot=step.querySelector('.avonent-journey__dot');if(dot&&dot.getBoundingClientRect().top<=line)current=index});steps.forEach((step,index)=>{step.classList.toggle('is-active',index<=current);step.classList.toggle('is-complete',index<current);step.classList.toggle('is-current',index===current)});ticking=false};
-      const request=()=>{if(ticking)return;ticking=true;requestAnimationFrame(update)};
-      steps[0].classList.add('is-active','is-current');update();addEventListener('scroll',request,{passive:true});addEventListener('resize',request);
-    }
-    {% if is_moringa %}
-      const fixComparisonCopy=()=>{
-        document.querySelectorAll('.avonent-compare__description').forEach((el)=>{
-          el.textContent='Most Moringa bottles look the same from the outside. Avonent is built around what matters: clean-label simplicity, transparent quality standards, and a daily routine you can actually stick with.';
-        });
-      };
-      fixComparisonCopy();
-      document.addEventListener('DOMContentLoaded',fixComparisonCopy,{once:true});
-      setTimeout(fixComparisonCopy,250);
-    {% endif %}
+    if(!steps.length)return;
+    let ticking=false;
+    const update=()=>{const line=window.innerHeight*.55;let current=0;steps.forEach((step,index)=>{const dot=step.querySelector('.avonent-journey__dot');if(dot&&dot.getBoundingClientRect().top<=line)current=index});steps.forEach((step,index)=>{step.classList.toggle('is-active',index<=current);step.classList.toggle('is-complete',index<current);step.classList.toggle('is-current',index===current)});ticking=false};
+    const request=()=>{if(ticking)return;ticking=true;requestAnimationFrame(update)};
+    steps[0].classList.add('is-active','is-current');update();addEventListener('scroll',request,{passive:true});addEventListener('resize',request);
   })();
 </script>
 
