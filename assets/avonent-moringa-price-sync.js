@@ -11,6 +11,12 @@
     const main = document.querySelector('main[data-template*="product.moringa"]');
     if (!main) return;
 
+    // The benefit ticker now lives directly under the header, Resilia-style.
+    // Hide the older mid-page copy so the same marquee is not shown twice.
+    main.querySelectorAll('.section-avonent-benefit-marquee').forEach((section) => {
+      section.style.display = 'none';
+    });
+
     const formatMoney = (cents) => {
       const amount = Number(cents || 0) / 100;
       const currency = window.Shopify?.currency?.active || 'USD';
@@ -45,7 +51,9 @@
 
       const quantity = Math.max(1, Number(option.dataset.quantity || 1));
       const subscriptionUnit = Number(option.dataset.subscriptionUnit || 0);
-      const subscriptionCompareUnit = Number(option.dataset.subscriptionCompareUnit || option.dataset.oneTimeUnit || 0);
+      const subscriptionCompareUnit = Number(
+        option.dataset.subscriptionCompareUnit || option.dataset.oneTimeUnit || 0
+      );
       const oneTimeUnit = Number(option.dataset.oneTimeUnit || 0);
 
       const subscriptionTotal = subscriptionUnit * quantity;
