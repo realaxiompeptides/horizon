@@ -766,6 +766,56 @@
         "journey_step_8xDAnR"
       ],
       "settings": {
+        "show_marquee": true,
+        "marquee_background": "#ffffff",
+        "marquee_text_color": "#111111",
+        "marquee_icon_color": "#078aa5",
+        "marquee_icon_background": "#eaf9fc",
+        "marquee_border_color": "#d9e9ed",
+        "marquee_icon_circle": true,
+        "marquee_reverse": false,
+        "marquee_speed": 24,
+        "marquee_gap": 28,
+        "marquee_text_size": 14,
+        "marquee_font_weight": "700",
+        "marquee_1_text": "Daily Vitality",
+        "marquee_1_icon": "bolt",
+        "marquee_1_marker": "†",
+        "marquee_2_text": "Antioxidant Defense",
+        "marquee_2_icon": "sparkle",
+        "marquee_2_marker": "†",
+        "marquee_3_text": "Healthy Aging",
+        "marquee_3_icon": "sun",
+        "marquee_3_marker": "†",
+        "marquee_4_text": "Heart Wellness",
+        "marquee_4_icon": "heart",
+        "marquee_4_marker": "‡",
+        "marquee_5_text": "Metabolic Support",
+        "marquee_5_icon": "activity",
+        "marquee_5_marker": "‡",
+        "marquee_6_text": "Joint & Active Support",
+        "marquee_6_icon": "check",
+        "marquee_6_marker": "†",
+        "marquee_7_text": "",
+        "marquee_7_icon": "leaf",
+        "marquee_7_marker": "none",
+        "marquee_8_text": "",
+        "marquee_8_icon": "shield",
+        "marquee_8_marker": "none",
+        "show_image": false,
+        "image_alt": "Avonent wellness lifestyle",
+        "image_caption": "",
+        "image_caption_color": "#ffffff",
+        "image_overlay_strength": 35,
+        "image_position": "center center",
+        "image_width": 1180,
+        "image_height_desktop": 420,
+        "image_height_mobile": 260,
+        "image_radius": 20,
+        "image_spacing_top": 28,
+        "image_spacing_bottom": 28,
+        "image_spacing_top_mobile": 22,
+        "image_spacing_bottom_mobile": 22,
         "eyebrow": "Your Wellness",
         "heading": "Journey with Avonent",
         "description": "<p>Built for daily use. Here’s how things may shift with consistent use. Individual experiences vary.</p>",
@@ -1178,6 +1228,84 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
+    },
+    "00_avonent_benefit_marquee_dFCEaN": {
+      "type": "00-avonent-benefit-marquee",
+      "blocks": {
+        "benefit_qkt63r": {
+          "type": "benefit",
+          "settings": {
+            "text": "Daily Vitality",
+            "icon": "bolt",
+            "marker": "†"
+          }
+        },
+        "benefit_4wFj6f": {
+          "type": "benefit",
+          "settings": {
+            "text": "Antioxidant Defense",
+            "icon": "sparkle",
+            "marker": "†"
+          }
+        },
+        "benefit_K7TbTg": {
+          "type": "benefit",
+          "settings": {
+            "text": "Healthy Aging",
+            "icon": "sun",
+            "marker": "†"
+          }
+        },
+        "benefit_WjMhQD": {
+          "type": "benefit",
+          "settings": {
+            "text": "Heart Wellness",
+            "icon": "heart_pulse",
+            "marker": "‡"
+          }
+        },
+        "benefit_npVDhx": {
+          "type": "benefit",
+          "settings": {
+            "text": "Metabolic Support",
+            "icon": "arrows",
+            "marker": "‡"
+          }
+        },
+        "benefit_pWwEFC": {
+          "type": "benefit",
+          "settings": {
+            "text": "Joint & Active Support",
+            "icon": "activity",
+            "marker": "†"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_qkt63r",
+        "benefit_4wFj6f",
+        "benefit_K7TbTg",
+        "benefit_WjMhQD",
+        "benefit_npVDhx",
+        "benefit_pWwEFC"
+      ],
+      "name": "Avonent moving benefits",
+      "settings": {
+        "background_color": "#FFFFFF",
+        "text_color": "#111111",
+        "icon_color": "#078AA5",
+        "icon_background": "#EAF9FC",
+        "border_color": "#D9E9ED",
+        "show_icon_background": true,
+        "reverse_direction": false,
+        "speed": 24,
+        "item_gap": 28,
+        "icon_size": 18,
+        "text_size": 14,
+        "padding_y": 11,
+        "spacing_top": 0,
+        "spacing_bottom": 18
+      }
     }
   },
   "order": [
@@ -1185,6 +1313,7 @@
     "avonent_proof_stats",
     "avonent_formula_breakdown",
     "00_avonent_before_after_4chKWb",
+    "00_avonent_benefit_marquee_dFCEaN",
     "avonent_wellness_journey",
     "avonent_vs_other_brands",
     "avonent_money_back_guarantee",
