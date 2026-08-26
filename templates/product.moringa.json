@@ -522,6 +522,66 @@
         "padding_bottom": 0
       }
     },
+    "section_U7KVTG": {
+      "type": "section",
+      "blocks": {
+        "image_KTyDXM": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/39215CD8-F01A-487F-9107-028EA0B9B4BE.png",
+            "link": "",
+            "image_ratio": "adapt",
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "image_KTyDXM"
+      ],
+      "name": "t:names.image_with_text",
+      "settings": {
+        "content_direction": "row",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 32,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "background_media": "none",
+        "background_color": "",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_color": "",
+        "border_radius": 0,
+        "padding-block-start": 40,
+        "padding-block-end": 40
+      }
+    },
     "avonent_formula_breakdown": {
       "type": "00-avonent-formula-breakdown",
       "blocks": {
@@ -1276,6 +1336,7 @@
   "order": [
     "main",
     "avonent_proof_stats",
+    "section_U7KVTG",
     "avonent_formula_breakdown",
     "00_avonent_before_after_4chKWb",
     "00_avonent_benefit_marquee_dFCEaN",
