@@ -8,8 +8,6 @@
     const main = document.querySelector('main[data-template*="product.moringa"]');
     if (!main) return;
 
-    // Remove the previous JS-injected journey media block. The real editable
-    // marquee + image controls now live inside the Wellness Journey section.
     main.querySelectorAll('.av-moringa-journey-leadin').forEach((el) => el.remove());
 
     const claimMarker = (symbol) => `<sup class="avonent-claim-marker" aria-hidden="true">${symbol}</sup>`;
@@ -114,39 +112,8 @@
       }
     }
 
-    const journey = main.querySelector('.avonent-journey');
-    if (journey) {
-      const eyebrow = journey.querySelector('.avonent-journey__eyebrow');
-      const heading = journey.querySelector('.avonent-journey__heading');
-      const desc = journey.querySelector('.avonent-journey__description');
-      if (eyebrow) eyebrow.textContent = 'BUILD YOUR ROUTINE';
-      if (heading) heading.textContent = 'Your first month with Pure Moringa';
-      if (desc) desc.innerHTML = '<p>Consistency first. Here’s a simple way to think about your first month—without pretending everyone feels the same change on the same timeline.</p>';
-
-      const steps = [
-        ['Week 1', 'Start the Ritual', ['Make 2 capsules part of your daily routine', 'Begin consistent plant-based wellness support', 'Give antioxidant support a regular place in your day']],
-        ['Week 2', 'Build Momentum', ['Keep your routine simple and consistent', 'Support everyday vitality and an active lifestyle', 'Pay attention to your normal energy and recovery baseline']],
-        ['Week 3', 'Think Whole-Body', ['Continue antioxidant and healthy-aging support', 'Support heart and metabolic wellness as part of a healthy lifestyle', 'Look for consistency—not overnight promises']],
-        ['Week 4', 'Make It Your Baseline', ['Decide how Pure Moringa fits your long-term routine', 'Keep wellness simple with one featured botanical', 'Pair it with sleep, movement, hydration, and balanced nutrition']]
-      ];
-
-      const cards = journey.querySelectorAll('.avonent-journey__step');
-      cards.forEach((card, i) => {
-        const step = steps[i];
-        if (!step) return;
-        const week = card.querySelector('.avonent-journey__week');
-        const title = card.querySelector('.avonent-journey__title');
-        const benefits = card.querySelectorAll('.avonent-journey__benefit > span:last-child');
-        if (week) week.textContent = step[0];
-        if (title) title.textContent = step[1];
-        benefits.forEach((el, idx) => {
-          if (step[2][idx]) {
-            el.textContent = step[2][idx];
-            appendSingleMarker(el, '*');
-          }
-        });
-      });
-    }
+    // The Wellness Journey copy is intentionally NOT overwritten here.
+    // Its text stays editable in the Shopify Theme Editor.
 
     const bottomOffer = main.querySelector('.avonent-bottom-offer');
     if (bottomOffer) {
@@ -154,7 +121,7 @@
       if (desc) desc.innerHTML = '<p>Choose the supply that fits your routine and keep your daily Moringa wellness support within reach.</p>';
     }
 
-    main.querySelectorAll('.avonent-formula, .av-ba').forEach(section => {
+    main.querySelectorAll('.avonent-formula, .av-ba').forEach((section) => {
       const wrapper = section.closest('.shopify-section') || section;
       wrapper.style.display = 'none';
     });
@@ -163,6 +130,189 @@
     if (reviews) {
       const wrapper = reviews.closest('.shopify-section') || reviews;
       wrapper.style.display = 'none';
+    }
+
+    // ---------------------------------------------------------------------
+    // Moringa subscription cart guard
+    // Horizon creates a fresh FormData(form) inside product-form.js. Appstle
+    // and section morphing can remove/disable selling_plan before that happens.
+    // This guard patches the FINAL /cart/add request Shopify actually receives.
+    // It only changes requests containing the Pure Moringa variant.
+    // ---------------------------------------------------------------------
+    const purchaseState = {
+      source: 'main',
+      mainMode: 'subscription',
+      variantId: '',
+      planId: ''
+    };
+
+    const refreshIds = () => {
+      const priceOffer = main.querySelector('[data-avonent-price-offer]');
+      const mainForm = main.querySelector(
+        '.buy-buttons-block form[data-type="add-to-cart-form"], product-form-component form[data-type="add-to-cart-form"]'
+      );
+
+      const variantInput = mainForm?.querySelector('input[name="id"]');
+      if (variantInput?.value) purchaseState.variantId = String(variantInput.value);
+
+      if (priceOffer?.dataset.planId) purchaseState.planId = String(priceOffer.dataset.planId);
+
+      const subscribeRow = priceOffer?.querySelector('[data-moringa-subscribe]');
+      if (subscribeRow) {
+        purchaseState.mainMode = subscribeRow.getAttribute('aria-pressed') === 'false' ? 'one_time' : 'subscription';
+      }
+    };
+
+    refreshIds();
+
+    document.addEventListener('avonent:purchase-mode-change', (event) => {
+      const nextMode = event.detail?.mode;
+      if (nextMode === 'subscription' || nextMode === 'one_time' || nextMode === 'one-time') {
+        purchaseState.mainMode = nextMode === 'subscription' ? 'subscription' : 'one_time';
+      }
+      if (event.detail?.sellingPlanId) purchaseState.planId = String(event.detail.sellingPlanId);
+    });
+
+    document.addEventListener(
+      'click',
+      (event) => {
+        const addButton = event.target.closest(
+          'button[type="submit"][name="add"], button[type="submit"][data-add-to-cart], [data-testid="add-to-cart"], [data-testid="avonent-bottom-offer-add-to-cart"]'
+        );
+
+        if (!addButton) {
+          if (event.target.closest('[data-moringa-subscribe], [data-moringa-one-time]')) {
+            window.setTimeout(refreshIds, 0);
+          }
+          return;
+        }
+
+        refreshIds();
+        const bottom = addButton.closest('[data-avonent-bottom-offer]');
+
+        if (bottom) {
+          purchaseState.source = 'bottom';
+          const bottomPlan = bottom.querySelector('[data-abo-selling-plan-input]');
+          if (bottomPlan?.dataset.planId || bottomPlan?.value) {
+            purchaseState.planId = String(bottomPlan?.dataset.planId || bottomPlan?.value);
+          }
+
+          const bottomVariant = bottom.querySelector('input[name="id"]');
+          if (bottomVariant?.value) purchaseState.variantId = String(bottomVariant.value);
+        } else {
+          purchaseState.source = 'main';
+          const form = addButton.closest('form');
+          const formVariant = form?.querySelector('input[name="id"]');
+          if (formVariant?.value) purchaseState.variantId = String(formVariant.value);
+        }
+      },
+      true
+    );
+
+    const getDesiredMode = () => {
+      if (purchaseState.source === 'bottom') {
+        const bottom = main.querySelector('[data-avonent-bottom-offer]');
+        const toggle = bottom?.querySelector('[data-abo-purchase-toggle]');
+        if (toggle) return toggle.getAttribute('aria-pressed') === 'true' ? 'one_time' : 'subscription';
+      }
+      return purchaseState.mainMode;
+    };
+
+    const getDesiredPlan = () => {
+      if (purchaseState.source === 'bottom') {
+        const bottom = main.querySelector('[data-avonent-bottom-offer]');
+        const input = bottom?.querySelector('[data-abo-selling-plan-input]');
+        const id = input?.dataset.planId || input?.value;
+        if (id) return String(id);
+      }
+      return String(purchaseState.planId || '');
+    };
+
+    const isMoringaVariant = (id) => {
+      if (!id || !purchaseState.variantId) return false;
+      return String(id) === String(purchaseState.variantId);
+    };
+
+    const patchFormData = (body) => {
+      const id = body.get('id');
+      if (!isMoringaVariant(id)) return body;
+
+      body.delete('selling_plan');
+      const planId = getDesiredPlan();
+      if (getDesiredMode() === 'subscription' && planId) body.set('selling_plan', planId);
+      return body;
+    };
+
+    const patchSearchParams = (body) => {
+      const id = body.get('id');
+      if (!isMoringaVariant(id)) return body;
+
+      body.delete('selling_plan');
+      const planId = getDesiredPlan();
+      if (getDesiredMode() === 'subscription' && planId) body.set('selling_plan', planId);
+      return body;
+    };
+
+    const patchJsonObject = (payload) => {
+      if (!payload || typeof payload !== 'object') return payload;
+
+      const planId = getDesiredPlan();
+      const subscribe = getDesiredMode() === 'subscription' && Boolean(planId);
+
+      if (Array.isArray(payload.items)) {
+        payload.items.forEach((item) => {
+          if (!isMoringaVariant(item?.id || item?.variant_id)) return;
+          delete item.selling_plan;
+          if (subscribe) item.selling_plan = planId;
+        });
+        return payload;
+      }
+
+      if (isMoringaVariant(payload.id || payload.variant_id)) {
+        delete payload.selling_plan;
+        if (subscribe) payload.selling_plan = planId;
+      }
+      return payload;
+    };
+
+    if (!window.__avonentMoringaCartGuardInstalled) {
+      window.__avonentMoringaCartGuardInstalled = true;
+      const nativeFetch = window.fetch.bind(window);
+
+      window.fetch = function avonentMoringaFetch(input, init) {
+        try {
+          const rawUrl = typeof input === 'string' ? input : input?.url;
+          const url = new URL(rawUrl || '', window.location.origin);
+          const isCartAdd = /\/cart\/add(?:\.js)?$/.test(url.pathname);
+
+          if (!isCartAdd || !init?.body) return nativeFetch(input, init);
+
+          const nextInit = { ...init };
+          const body = init.body;
+
+          if (body instanceof FormData) {
+            nextInit.body = patchFormData(body);
+          } else if (body instanceof URLSearchParams) {
+            nextInit.body = patchSearchParams(body);
+          } else if (typeof body === 'string') {
+            const trimmed = body.trim();
+            if (trimmed.startsWith('{') || trimmed.startsWith('[')) {
+              try {
+                nextInit.body = JSON.stringify(patchJsonObject(JSON.parse(body)));
+              } catch (error) {
+                // Leave malformed/unexpected payloads untouched.
+              }
+            } else {
+              const params = new URLSearchParams(body);
+              nextInit.body = patchSearchParams(params).toString();
+            }
+          }
+
+          return nativeFetch(input, nextInit);
+        } catch (error) {
+          return nativeFetch(input, init);
+        }
+      };
     }
   });
 })();
