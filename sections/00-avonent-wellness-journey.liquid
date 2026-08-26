@@ -1,5 +1,9 @@
 {% liquid
   assign section_id = 'AvonentJourney-' | append: section.id
+  assign is_moringa = false
+  if product.template_suffix == 'moringa' or product.handle contains 'moringa' or product.title contains 'Moringa'
+    assign is_moringa = true
+  endif
 %}
 
 <section
@@ -35,9 +39,15 @@
 
   <div class="avonent-journey__inner{% if section.settings.journey_image != blank %} has-journey-image{% endif %}">
     <header class="avonent-journey__header">
-      {% if section.settings.eyebrow != blank %}<div class="avonent-journey__eyebrow">{{ section.settings.eyebrow }}</div>{% endif %}
-      {% if section.settings.heading != blank %}<h2 class="avonent-journey__heading">{{ section.settings.heading }}</h2>{% endif %}
-      {% if section.settings.description != blank %}<div class="avonent-journey__description rte">{{ section.settings.description }}</div>{% endif %}
+      {% if is_moringa %}
+        <div class="avonent-journey__eyebrow">BUILD YOUR ROUTINE</div>
+        <h2 class="avonent-journey__heading">Your first month with Pure Moringa</h2>
+        <div class="avonent-journey__description rte"><p>The nutrients are the reason. These are the reasons people stay. Here’s what consistent Moringa support is designed to help with over your first month. Individual experiences vary.</p></div>
+      {% else %}
+        {% if section.settings.eyebrow != blank %}<div class="avonent-journey__eyebrow">{{ section.settings.eyebrow }}</div>{% endif %}
+        {% if section.settings.heading != blank %}<h2 class="avonent-journey__heading">{{ section.settings.heading }}</h2>{% endif %}
+        {% if section.settings.description != blank %}<div class="avonent-journey__description rte">{{ section.settings.description }}</div>{% endif %}
+      {% endif %}
     </header>
 
     <div class="avonent-journey__timeline">
@@ -49,31 +59,31 @@
           assign display_benefit_3 = block.settings.benefit_3
           assign display_benefit_4 = block.settings.benefit_4
 
-          if product.handle contains 'moringa' or product.title contains 'Moringa'
+          if is_moringa
             case forloop.index
               when 1
                 assign display_title = 'Start the Fuel'
                 assign display_benefit_1 = 'Start supporting steadier daytime energy — without adding another stimulant.*'
-                assign display_benefit_2 = 'Give your body a daily source of plant compounds and antioxidant support.†'
-                assign display_benefit_3 = 'Pay attention to the small shifts: how you feel through the morning, busy afternoons, and long days.*'
+                assign display_benefit_2 = 'Build daily antioxidant support for skin, healthy aging, and cellular defense.†'
+                assign display_benefit_3 = 'Give your body an easier greens habit when real-life meals are not always perfect.*'
                 assign display_benefit_4 = ''
               when 2
-                assign display_title = 'Energy + Movement'
-                assign display_benefit_1 = 'Steadier-feeling energy may become easier to notice as the routine becomes consistent.*'
+                assign display_title = 'Energy + Recovery'
+                assign display_benefit_1 = 'Steadier-feeling energy may become easier to notice through mornings and afternoon slumps.*'
                 assign display_benefit_2 = 'Support everyday joint comfort, movement, and active days.†'
                 assign display_benefit_3 = 'Give recovery extra nutritional support after training, work, and long days on your feet.*'
                 assign display_benefit_4 = ''
               when 3
                 assign display_title = 'Whole-Body Support'
-                assign display_benefit_1 = 'Keep building antioxidant support for skin, healthy aging, and everyday cellular defense.†'
-                assign display_benefit_2 = 'Support normal immune function with a simple plant-based addition to your routine.*'
+                assign display_benefit_1 = 'Keep building antioxidant support for skin, hair, and healthy aging.†'
+                assign display_benefit_2 = 'Support normal immune function when sleep, stress, and diet are not always ideal.*'
                 assign display_benefit_3 = 'Support heart and metabolic wellness as part of an overall healthy lifestyle.‡'
                 assign display_benefit_4 = ''
               when 4
                 assign display_title = 'Make It Your Baseline'
-                assign display_benefit_1 = 'Energy, movement, antioxidant defense, and recovery support now live in one simple daily habit.*'
+                assign display_benefit_1 = 'Energy, movement, antioxidant defense, immune nutrition, and recovery support now live in one simple habit.*'
                 assign display_benefit_2 = 'Two capsules make getting something green into your day easier than powders, shakes, or another complicated stack.*'
-                assign display_benefit_3 = 'Keep the routine going and let consistency — not a dramatic overnight promise — do the work.*'
+                assign display_benefit_3 = 'Keep it consistent and let the routine support the version of you that wants to feel better day after day.*'
                 assign display_benefit_4 = ''
             endcase
           endif
@@ -97,7 +107,11 @@
       {% endfor %}
     </div>
 
-    {% if section.settings.disclaimer != blank %}<div class="avonent-journey__disclaimer rte">{{ section.settings.disclaimer }}</div>{% endif %}
+    {% if is_moringa %}
+      <div class="avonent-journey__disclaimer rte"><p>Everyone’s baseline is different. Consistency matters more than a dramatic day-3 story.</p></div>
+    {% elsif section.settings.disclaimer != blank %}
+      <div class="avonent-journey__disclaimer rte">{{ section.settings.disclaimer }}</div>
+    {% endif %}
   </div>
 </section>
 
