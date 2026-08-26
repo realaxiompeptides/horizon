@@ -1,0 +1,16 @@
+{% if template.suffix == 'moringa' %}
+  <script src="{{ 'avonent-moringa-price-sync.js' | asset_url }}" defer></script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Moringa price sync",
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [],
+  "presets": [
+    {"name":"Moringa price sync"}
+  ]
+}
+{% endschema %}
