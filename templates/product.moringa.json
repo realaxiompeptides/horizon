@@ -612,6 +612,7 @@
         "digezyme",
         "slippery_elm"
       ],
+      "disabled": true,
       "settings": {
         "eyebrow": "INSIDE THE FORMULA",
         "heading": "More than enzymes. A complete plan for what happens after you eat.",
