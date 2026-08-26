@@ -174,7 +174,28 @@
 {% endstylesheet %}
 
 <script>
-  (()=>{const journey=document.getElementById('{{ section_id }}');if(!journey||journey.dataset.scrollChecksReady==='true')return;journey.dataset.scrollChecksReady='true';const steps=Array.from(journey.querySelectorAll('.avonent-journey__step'));if(!steps.length)return;let ticking=false;const update=()=>{const line=window.innerHeight*.55;let current=0;steps.forEach((step,index)=>{const dot=step.querySelector('.avonent-journey__dot');if(dot&&dot.getBoundingClientRect().top<=line)current=index});steps.forEach((step,index)=>{step.classList.toggle('is-active',index<=current);step.classList.toggle('is-complete',index<current);step.classList.toggle('is-current',index===current)});ticking=false};const request=()=>{if(ticking)return;ticking=true;requestAnimationFrame(update)};steps[0].classList.add('is-active','is-current');update();addEventListener('scroll',request,{passive:true});addEventListener('resize',request)})();
+  (()=>{
+    const journey=document.getElementById('{{ section_id }}');
+    if(!journey||journey.dataset.scrollChecksReady==='true')return;
+    journey.dataset.scrollChecksReady='true';
+    const steps=Array.from(journey.querySelectorAll('.avonent-journey__step'));
+    if(steps.length){
+      let ticking=false;
+      const update=()=>{const line=window.innerHeight*.55;let current=0;steps.forEach((step,index)=>{const dot=step.querySelector('.avonent-journey__dot');if(dot&&dot.getBoundingClientRect().top<=line)current=index});steps.forEach((step,index)=>{step.classList.toggle('is-active',index<=current);step.classList.toggle('is-complete',index<current);step.classList.toggle('is-current',index===current)});ticking=false};
+      const request=()=>{if(ticking)return;ticking=true;requestAnimationFrame(update)};
+      steps[0].classList.add('is-active','is-current');update();addEventListener('scroll',request,{passive:true});addEventListener('resize',request);
+    }
+    {% if is_moringa %}
+      const fixComparisonCopy=()=>{
+        document.querySelectorAll('.avonent-compare__description').forEach((el)=>{
+          el.textContent='Most Moringa bottles look the same from the outside. Avonent is built around what matters: clean-label simplicity, transparent quality standards, and a daily routine you can actually stick with.';
+        });
+      };
+      fixComparisonCopy();
+      document.addEventListener('DOMContentLoaded',fixComparisonCopy,{once:true});
+      setTimeout(fixComparisonCopy,250);
+    {% endif %}
+  })();
 </script>
 
 {% schema %}
