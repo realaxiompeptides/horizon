@@ -18,7 +18,7 @@
           "type": "00-avonent-sale-announcement",
           "settings": {
             "heading": "SUMMER SALE",
-            "subheading": "Shop Now and Get Up To 50% Off",
+            "subheading": "Shop Now and Get Up To 70% Off",
             "link": "",
             "show_countdown": true,
             "timer_minutes": 120,
@@ -126,6 +126,35 @@
         "text_color_transparent_collection": ""
       }
     },
+    "avonent_moringa_header_benefits": {
+      "type": "00-avonent-moringa-header-benefits",
+      "settings": {
+        "benefit_1": "Daily Energy & Vitality†",
+        "icon_1": "energy",
+        "benefit_2": "Joint Comfort & Mobility†",
+        "icon_2": "joint",
+        "benefit_3": "Healthy Blood Sugar Support‡",
+        "icon_3": "glucose",
+        "benefit_4": "Heart & Cardiovascular Wellness‡",
+        "icon_4": "heart",
+        "benefit_5": "Healthy Inflammatory Response†",
+        "icon_5": "inflammation",
+        "benefit_6": "Metabolic Support‡",
+        "icon_6": "metabolic",
+        "benefit_7": "Antioxidant Defense†",
+        "icon_7": "sparkle",
+        "benefit_8": "Immune Wellness†",
+        "icon_8": "shield",
+        "background_color": "#ffffff",
+        "text_color": "#078aa5",
+        "border_color": "#d7ebf0",
+        "speed": 30
+      }
+    },
+    "avonent_moringa_price_sync": {
+      "type": "00-avonent-moringa-price-sync-loader",
+      "settings": {}
+    },
     "avonent_header_cleanup": {
       "type": "avonent-header-cleanup",
       "settings": {}
@@ -134,6 +163,8 @@
   "order": [
     "header_announcements_9jGBFp",
     "header_section",
+    "avonent_moringa_header_benefits",
+    "avonent_moringa_price_sync",
     "avonent_header_cleanup"
   ]
 }
