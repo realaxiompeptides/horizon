@@ -711,6 +711,84 @@
         "padding_bottom": 36
       }
     },
+    "00_avonent_benefit_marquee_dFCEaN": {
+      "type": "00-avonent-benefit-marquee",
+      "blocks": {
+        "benefit_qkt63r": {
+          "type": "benefit",
+          "settings": {
+            "text": "Daily Vitality",
+            "icon": "bolt",
+            "marker": "†"
+          }
+        },
+        "benefit_4wFj6f": {
+          "type": "benefit",
+          "settings": {
+            "text": "Antioxidant Defense",
+            "icon": "sparkle",
+            "marker": "†"
+          }
+        },
+        "benefit_K7TbTg": {
+          "type": "benefit",
+          "settings": {
+            "text": "Healthy Aging",
+            "icon": "sun",
+            "marker": "†"
+          }
+        },
+        "benefit_WjMhQD": {
+          "type": "benefit",
+          "settings": {
+            "text": "Heart Wellness",
+            "icon": "heart_pulse",
+            "marker": "‡"
+          }
+        },
+        "benefit_npVDhx": {
+          "type": "benefit",
+          "settings": {
+            "text": "Metabolic Support",
+            "icon": "arrows",
+            "marker": "‡"
+          }
+        },
+        "benefit_pWwEFC": {
+          "type": "benefit",
+          "settings": {
+            "text": "Joint & Active Support",
+            "icon": "activity",
+            "marker": "†"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_qkt63r",
+        "benefit_4wFj6f",
+        "benefit_K7TbTg",
+        "benefit_WjMhQD",
+        "benefit_npVDhx",
+        "benefit_pWwEFC"
+      ],
+      "name": "Avonent moving benefits",
+      "settings": {
+        "background_color": "#FFFFFF",
+        "text_color": "#111111",
+        "icon_color": "#078AA5",
+        "icon_background": "#EAF9FC",
+        "border_color": "#D9E9ED",
+        "show_icon_background": true,
+        "reverse_direction": false,
+        "speed": 24,
+        "item_gap": 28,
+        "icon_size": 18,
+        "text_size": 14,
+        "padding_y": 11,
+        "spacing_top": 0,
+        "spacing_bottom": 0
+      }
+    },
     "avonent_wellness_journey": {
       "type": "00-avonent-wellness-journey",
       "blocks": {
@@ -766,7 +844,7 @@
         "journey_step_8xDAnR"
       ],
       "settings": {
-        "show_marquee": true,
+        "show_marquee": false,
         "marquee_background": "#ffffff",
         "marquee_text_color": "#111111",
         "marquee_icon_color": "#078aa5",
@@ -1227,84 +1305,6 @@
         "border_color": "#d5edf3",
         "padding_top": 36,
         "padding_bottom": 36
-      }
-    },
-    "00_avonent_benefit_marquee_dFCEaN": {
-      "type": "00-avonent-benefit-marquee",
-      "blocks": {
-        "benefit_qkt63r": {
-          "type": "benefit",
-          "settings": {
-            "text": "Daily Vitality",
-            "icon": "bolt",
-            "marker": "†"
-          }
-        },
-        "benefit_4wFj6f": {
-          "type": "benefit",
-          "settings": {
-            "text": "Antioxidant Defense",
-            "icon": "sparkle",
-            "marker": "†"
-          }
-        },
-        "benefit_K7TbTg": {
-          "type": "benefit",
-          "settings": {
-            "text": "Healthy Aging",
-            "icon": "sun",
-            "marker": "†"
-          }
-        },
-        "benefit_WjMhQD": {
-          "type": "benefit",
-          "settings": {
-            "text": "Heart Wellness",
-            "icon": "heart_pulse",
-            "marker": "‡"
-          }
-        },
-        "benefit_npVDhx": {
-          "type": "benefit",
-          "settings": {
-            "text": "Metabolic Support",
-            "icon": "arrows",
-            "marker": "‡"
-          }
-        },
-        "benefit_pWwEFC": {
-          "type": "benefit",
-          "settings": {
-            "text": "Joint & Active Support",
-            "icon": "activity",
-            "marker": "†"
-          }
-        }
-      },
-      "block_order": [
-        "benefit_qkt63r",
-        "benefit_4wFj6f",
-        "benefit_K7TbTg",
-        "benefit_WjMhQD",
-        "benefit_npVDhx",
-        "benefit_pWwEFC"
-      ],
-      "name": "Avonent moving benefits",
-      "settings": {
-        "background_color": "#FFFFFF",
-        "text_color": "#111111",
-        "icon_color": "#078AA5",
-        "icon_background": "#EAF9FC",
-        "border_color": "#D9E9ED",
-        "show_icon_background": true,
-        "reverse_direction": false,
-        "speed": 24,
-        "item_gap": 28,
-        "icon_size": 18,
-        "text_size": 14,
-        "padding_y": 11,
-        "spacing_top": 0,
-        "spacing_bottom": 18
       }
     }
   },
