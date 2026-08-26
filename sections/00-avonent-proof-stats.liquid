@@ -78,7 +78,11 @@
             {% endif %}
 
             {% if block.settings.value != blank %}
-              <p class="avonent-proof-stats__value">{{ block.settings.value }}</p>
+              <p
+                class="avonent-proof-stats__value"
+                data-count-value="{{ block.settings.value | escape }}"
+                aria-label="{{ block.settings.value | escape }}"
+              >{{ block.settings.value }}</p>
             {% endif %}
 
             {% if block.settings.label != blank %}
@@ -245,8 +249,13 @@
     color: var(--aps-text);
     font-size: clamp(38px, 4.5vw, 66px);
     font-weight: 760;
+    font-variant-numeric: tabular-nums;
     letter-spacing: -0.055em;
     line-height: 0.95;
+  }
+
+  .avonent-proof-stats__value.is-counting {
+    will-change: contents;
   }
 
   .avonent-proof-stats__label {
@@ -414,6 +423,88 @@
     }
   }
 {% endstylesheet %}
+
+<script>
+  (() => {
+    const section = document.getElementById('{{ section_id }}');
+    if (!section || section.dataset.countUpReady === 'true') return;
+    section.dataset.countUpReady = 'true';
+
+    const values = Array.from(section.querySelectorAll('.avonent-proof-stats__value[data-count-value]'));
+    if (!values.length) return;
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const parsed = values.map((el) => {
+      const raw = (el.dataset.countValue || el.textContent || '').trim();
+      const match = raw.match(/^([^0-9]*)([0-9][0-9,]*)(.*)$/);
+      if (!match) return null;
+      return {
+        el,
+        raw,
+        prefix: match[1] || '',
+        target: Number(match[2].replace(/,/g, '')),
+        suffix: match[3] || ''
+      };
+    }).filter(Boolean);
+
+    if (!parsed.length) return;
+
+    const format = (item, value) => `${item.prefix}${Math.max(0, Math.round(value)).toLocaleString('en-US')}${item.suffix}`;
+
+    if (reduceMotion) {
+      parsed.forEach((item) => { item.el.textContent = item.raw; });
+      return;
+    }
+
+    parsed.forEach((item) => {
+      item.el.textContent = format(item, 0);
+    });
+
+    let hasAnimated = false;
+    const run = () => {
+      if (hasAnimated) return;
+      hasAnimated = true;
+
+      parsed.forEach((item, index) => {
+        const duration = 1450 + Math.min(650, Math.log10(Math.max(item.target, 10)) * 180);
+        const delay = index * 90;
+
+        window.setTimeout(() => {
+          const start = performance.now();
+          item.el.classList.add('is-counting');
+
+          const tick = (now) => {
+            const progress = Math.min(1, (now - start) / duration);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            item.el.textContent = format(item, item.target * eased);
+
+            if (progress < 1) {
+              requestAnimationFrame(tick);
+            } else {
+              item.el.textContent = item.raw;
+              item.el.classList.remove('is-counting');
+            }
+          };
+
+          requestAnimationFrame(tick);
+        }, delay);
+      });
+    };
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          observer.disconnect();
+          run();
+        }
+      }, { threshold: 0.22, rootMargin: '0px 0px -8% 0px' });
+
+      observer.observe(section);
+    } else {
+      run();
+    }
+  })();
+</script>
 
 {% schema %}
 {
