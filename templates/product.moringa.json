@@ -522,6 +522,42 @@
         "padding_bottom": 0
       }
     },
+    "00_avonent_real_stories_carousel_xQjNcg": {
+      "type": "00-avonent-real-stories-carousel",
+      "name": "Avonent Real Stories",
+      "settings": {
+        "heading": "Real Stories, Real Results",
+        "subheading": "See what Avonent customers are saying.",
+        "accent_color": "#02c6ea",
+        "background_color": "#f7fbfc",
+        "card_color": "#ffffff",
+        "text_color": "#111111",
+        "muted_color": "#6f777b",
+        "border_color": "#d8e2e5",
+        "marquee_speed": 28,
+        "review_1_name": "Hailey A.",
+        "review_1_rating": 5,
+        "review_1_title": "Finally found a routine I actually stick with",
+        "review_1_body": "I wanted something simple I could take every day without turning my routine into a whole project. Avonent has been easy to stay consistent with and that is what I like most.",
+        "review_1_verified": true,
+        "review_1_tag_1": "Daily Routine",
+        "review_1_tag_2": "Easy to Take",
+        "review_2_name": "Marcus T.",
+        "review_2_rating": 5,
+        "review_2_title": "This fits my mornings perfectly",
+        "review_2_body": "Two capsules, water, and I am done. No powder and no mixing anything. It has been one of the easiest wellness habits for me to keep consistent.",
+        "review_2_verified": true,
+        "review_2_tag_1": "Simple Habit",
+        "review_2_tag_2": "Morning Routine",
+        "review_3_name": "Lauren M.",
+        "review_3_rating": 5,
+        "review_3_title": "Exactly the kind of supplement I wanted",
+        "review_3_body": "I like that it feels straightforward. The bottle looks clean, the routine is simple, and it is easy for me to remember every day.",
+        "review_3_verified": true,
+        "review_3_tag_1": "Clean Routine",
+        "review_3_tag_2": "Consistent Use"
+      }
+    },
     "00_avonent_research_benefits_WGiEnm": {
       "type": "00-avonent-research-benefits",
       "blocks": {
@@ -670,125 +706,6 @@
         "border_radius": 0,
         "padding-block-start": 25,
         "padding-block-end": 25
-      }
-    },
-    "avonent_formula_breakdown": {
-      "type": "00-avonent-formula-breakdown",
-      "blocks": {
-        "artichoke_extract": {
-          "type": "ingredient",
-          "settings": {
-            "image": "shopify://shop_images/EE596049-5BD0-41D5-894B-76076508F580.png",
-            "role": "FAT + BILE SUPPORT",
-            "name": "Artichoke Extract",
-            "amount": "500 mg",
-            "benefit_heading": "For meals that tend to sit heavy.",
-            "explanation": "<p>Artichoke extract supports healthy bile flow, helping your body handle dietary fats and supporting more comfortable digestion after rich meals.</p>",
-            "details_label": "Why it is included",
-            "details": ""
-          }
-        },
-        "terminalia_chebula": {
-          "type": "ingredient",
-          "settings": {
-            "image": "shopify://shop_images/37646A5E-CD1D-45ED-9652-E39FF98543A7.png",
-            "role": "DAILY REGULARITY",
-            "name": "Terminalia chebula Fruit Extract",
-            "amount": "Part of the 300 mg botanical blend",
-            "benefit_heading": "For a routine that feels more predictable.",
-            "explanation": "<p>A time-tested botanical that supports natural digestive movement, comfortable regularity, and everyday gut balance.</p>",
-            "details_label": "Why it is included",
-            "details": ""
-          }
-        },
-        "sphaeranthus_indicus": {
-          "type": "ingredient",
-          "settings": {
-            "image": "shopify://shop_images/A929BD16-DF1D-422F-A109-10F3AAF241DD.png",
-            "role": "POST-MEAL COMFORT",
-            "name": "Sphaeranthus indicus Flower Extract",
-            "amount": "Part of the 300 mg botanical blend",
-            "benefit_heading": "Traditional support for modern meals.",
-            "explanation": "<p>A distinctive botanical traditionally used to support digestive comfort and help your stomach feel more settled after eating.</p>",
-            "details_label": "Why it is included",
-            "details": ""
-          }
-        },
-        "ox_bile": {
-          "type": "ingredient",
-          "settings": {
-            "image": "shopify://shop_images/8AD2BC79-7DA5-46FD-BF14-8717FB2E9B2B.png",
-            "role": "TARGETED FAT DIGESTION",
-            "name": "Ox Bile Powder",
-            "amount": "125 mg",
-            "benefit_heading": "Extra support for heavier meals.",
-            "explanation": "<p>Provides concentrated bile acids that support the breakdown and absorption of dietary fats—especially when rich foods leave you feeling weighed down.</p>",
-            "details_label": "Why it is included",
-            "details": ""
-          }
-        },
-        "digezyme": {
-          "type": "ingredient",
-          "settings": {
-            "image": "shopify://shop_images/B37E348E-57D9-4600-921E-5ABFE3FDFA35.png",
-            "role": "5-ENZYME FOOD BREAKDOWN",
-            "name": "DigeZyme®",
-            "amount": "50 mg multi-enzyme complex",
-            "benefit_heading": "Helps break down the entire meal.",
-            "explanation": "<p>Five targeted enzymes help break down proteins, fats, carbohydrates, fiber, and lactose—supporting easier digestion and helping your body get more from the foods you eat.*</p>",
-            "details_label": "Why it is included",
-            "details": ""
-          }
-        },
-        "slippery_elm": {
-          "type": "ingredient",
-          "settings": {
-            "image": "shopify://shop_images/75E05387-DF21-4A17-94A1-2CDDC062CB5C.png",
-            "role": "SOOTHING DIGESTIVE SUPPORT",
-            "name": "Slippery Elm Bark Extract",
-            "amount": "40 mg",
-            "benefit_heading": "Comfort for a sensitive stomach.",
-            "explanation": "<p>Slippery elm forms a naturally soothing texture when mixed with water, helping support the digestive lining and a more comfortable gut environment.</p>",
-            "details_label": "Why it is included",
-            "details": ""
-          }
-        }
-      },
-      "block_order": [
-        "artichoke_extract",
-        "terminalia_chebula",
-        "sphaeranthus_indicus",
-        "ox_bile",
-        "digezyme",
-        "slippery_elm"
-      ],
-      "disabled": true,
-      "settings": {
-        "eyebrow": "INSIDE THE FORMULA",
-        "heading": "More than enzymes. A complete plan for what happens after you eat.",
-        "description": "<p>Ten targeted ingredients work across food breakdown, fat digestion, digestive comfort, and regularity—so one simple routine can replace the guesswork.</p>",
-        "content_heading": "Every ingredient has a job.",
-        "content_intro": "<p>No mystery blend. No complicated science lesson. Just a clear look at why each ingredient earned its place.</p>",
-        "mobile_columns": "2",
-        "mobile_initial_count": 6,
-        "show_more_label": "View all ingredients",
-        "show_less_label": "Show fewer ingredients",
-        "trust_1": "Third-party lab tested",
-        "trust_2": "Ships from the USA",
-        "trust_3": "Quality-focused formula",
-        "background_color": "#f7fcfd",
-        "card_color": "#ffffff",
-        "soft_color": "#eaf9fc",
-        "text_color": "#111111",
-        "muted_text_color": "#59676c",
-        "accent_color": "#02c6ea",
-        "border_color": "#d9e9ed",
-        "image_ratio": "4 / 3",
-        "corner_radius": 18,
-        "card_gap": 20,
-        "content_width": 1240,
-        "padding_top": 36,
-        "padding_bottom": 36
       }
     },
     "00_avonent_before_after_4chKWb": {
@@ -1445,9 +1362,9 @@
   "order": [
     "main",
     "avonent_proof_stats",
+    "00_avonent_real_stories_carousel_xQjNcg",
     "00_avonent_research_benefits_WGiEnm",
     "section_U7KVTG",
-    "avonent_formula_breakdown",
     "00_avonent_before_after_4chKWb",
     "00_avonent_benefit_marquee_dFCEaN",
     "avonent_wellness_journey",
