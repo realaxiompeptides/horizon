@@ -566,75 +566,31 @@
     },
     "00_avonent_research_benefits_WGiEnm": {
       "type": "00-avonent-research-benefits",
-      "blocks": {
-        "benefit_reYccF": {
-          "type": "benefit",
-          "settings": {
-            "icon": "auto",
-            "title": "Daily Energy",
-            "front_line": "Wake up with real energy. Stay steady all day.",
-            "back_copy": "Moringa leaf is packed with plant nutrients your body uses for everyday energy — so you feel fueled without relying on another coffee."
-          }
-        },
-        "benefit_FqXVE3": {
-          "type": "benefit",
-          "settings": {
-            "icon": "auto",
-            "title": "Joint Comfort",
-            "front_line": "Move easier. Recover like you used to.",
-            "back_copy": "Used for generations as a daily botanical for movement. Modern interest focuses on joint comfort and everyday mobility support.†"
-          }
-        },
-        "benefit_arhNap": {
-          "type": "benefit",
-          "settings": {
-            "icon": "auto",
-            "title": "Metabolic Wellness",
-            "front_line": "Support the way your body handles energy.",
-            "back_copy": "Human studies have explored moringa and markers like fasting glucose and HbA1c. The research is promising and still growing.†"
-          }
-        },
-        "benefit_JUqB4i": {
-          "type": "benefit",
-          "settings": {
-            "icon": "auto",
-            "title": "Heart Wellness",
-            "front_line": "Daily support for a healthier heart routine.",
-            "back_copy": "Moringa’s nutrient and antioxidant profile is studied for cardiometabolic wellness — a simple daily add-on for heart-healthy habits.†"
-          }
-        },
-        "benefit_RcNkwt": {
-          "type": "benefit",
-          "settings": {
-            "icon": "auto",
-            "title": "Healthy Aging",
-            "front_line": "Feel stronger as the years add up.",
-            "back_copy": "Antioxidant plant compounds help support the body against everyday oxidative stress — the kind that adds up over time.†"
-          }
-        },
-        "benefit_rzwLjF": {
-          "type": "benefit",
-          "settings": {
-            "icon": "auto",
-            "title": "Immune Defense",
-            "front_line": "Nutritional backup for everyday immune function.",
-            "back_copy": "Vitamins, minerals, and phytonutrients in moringa leaf help support normal immune function as part of a daily wellness routine.†"
-          }
-        }
-      },
-      "block_order": [
-        "benefit_reYccF",
-        "benefit_FqXVE3",
-        "benefit_arhNap",
-        "benefit_JUqB4i",
-        "benefit_RcNkwt",
-        "benefit_rzwLjF"
-      ],
       "name": "Avonent benefit flips",
       "settings": {
         "heading_accent": "Real Benefits.",
         "heading_rest": "Backed by Research.",
         "subheading": "<p>One plant. Multiple reasons people take it every day.</p>",
+        "card_1_image": "shopify://shop_images/54BA8953-968C-4EC2-87D2-80955CC9C583.png",
+        "card_1_icon": "energy",
+        "card_1_title": "Energy",
+        "card_1_front": "Support steady everyday energy without another coffee.",
+        "card_1_back": "Moringa leaf brings a broad mix of micronutrients and plant compounds into one simple routine. Those nutrients support normal energy metabolism, making it an easy daily way to support steady energy without adding another stimulant.†",
+        "card_2_image": "shopify://shop_images/E7AF9E64-8AA3-4DD0-9FD8-316F0DB0604E.png",
+        "card_2_icon": "aging",
+        "card_2_title": "Aging",
+        "card_2_front": "Support strength, mobility, and resilience as the years add up.†",
+        "card_2_back": "Healthy aging is about giving your body consistent nutritional support over time. Moringa provides micronutrients and antioxidant phytonutrients that support cellular defense, everyday resilience, and an active lifestyle as the years add up.†",
+        "card_3_image": "shopify://shop_images/0D358947-7BFD-484E-ADCE-4E7D5BB64395.png",
+        "card_3_icon": "metabolic",
+        "card_3_title": "Metabolism",
+        "card_3_front": "Support healthy glucose metabolism and everyday energy use.†",
+        "card_3_back": "Human studies have explored moringa leaf and markers involved in glucose and metabolic health. The research is still developing, but its nutrient and polyphenol profile makes it a compelling addition to a balanced metabolic-wellness routine.†",
+        "card_4_image": "shopify://shop_images/0DE44C5F-B261-44E0-9E4A-DBFB50BF3743.png",
+        "card_4_icon": "antioxidants",
+        "card_4_title": "Antioxidants",
+        "card_4_front": "Powerful plant compounds help defend against everyday oxidative stress.†",
+        "card_4_back": "Moringa leaf naturally contains antioxidant polyphenols and flavonoids, including compounds such as quercetin and kaempferol. These plant compounds help support the body’s antioxidant defenses against the oxidative stress that builds up in everyday life.†",
         "content_width": 1200,
         "card_gap": 14,
         "card_height_desktop": 150,
