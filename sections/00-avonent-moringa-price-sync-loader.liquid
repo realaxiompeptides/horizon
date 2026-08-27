@@ -1,6 +1,8 @@
-{% if template.suffix == 'moringa' %}
-  <script src="{{ 'avonent-moringa-price-sync.js' | asset_url }}" defer></script>
-{% endif %}
+{% comment %}
+  Retained as an empty compatibility section because older header-group data can
+  still reference it. Bundle price updates now live in 00-avonent-price-offer,
+  so loading a second timer-based synchronizer only adds duplicate client work.
+{% endcomment %}
 
 {% schema %}
 {
