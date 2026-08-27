@@ -919,6 +919,25 @@
         "image_spacing_bottom": 28,
         "image_spacing_top_mobile": 22,
         "image_spacing_bottom_mobile": 0,
+        "moringa_eyebrow": "BUILD YOUR ROUTINE",
+        "moringa_heading": "Your first month with Pure Moringa",
+        "moringa_description": "<p>Most people don’t need 12 supplements. They need one green habit they actually keep. Here’s what that month is for.</p>",
+        "moringa_week1_title": "Start the fuel",
+        "moringa_week1_benefit_1": "Take 2 capsules with breakfast. Same time every day.",
+        "moringa_week1_benefit_2": "This week is about getting minerals and antioxidants in, not chasing a miracle morning.",
+        "moringa_week1_benefit_3": "Notice the small stuff: less “empty” by late morning, an easier time sticking to the bottle.",
+        "moringa_week2_title": "Energy + recovery show up",
+        "moringa_week2_benefit_1": "Steady energy is the first thing people watch for — not a caffeine spike, just less of a crash.",
+        "moringa_week2_benefit_2": "Joints and training days start to feel more supported.",
+        "moringa_week2_benefit_3": "You stop forgetting it because it already has a slot in the day.",
+        "moringa_week3_title": "The body-wide stuff",
+        "moringa_week3_benefit_1": "Skin, immunity, and “I feel less inflamed” are slower — this is when that support has had time to stack.",
+        "moringa_week3_benefit_2": "Meals sit better. You feel less wrecked after average food and average sleep.",
+        "moringa_week3_benefit_3": "This is the week it stops feeling like a new supplement and starts feeling like baseline.",
+        "moringa_week4_title": "Make it the one you don’t drop",
+        "moringa_week4_benefit_1": "One bottle, two capsules, the greens habit you didn’t have before.",
+        "moringa_week4_benefit_2": "Keep it next to whatever you already do: coffee, keys, vitamins.",
+        "moringa_week4_benefit_3": "Pair it with sleep, water, and walking. The leaf works better when the rest of the day isn’t chaos.",
         "eyebrow": "Your Wellness",
         "heading": "Journey with Avonent",
         "description": "<p>Built for daily use. Here’s how things may shift with consistent use. Individual experiences vary.</p>",
@@ -1331,12 +1350,104 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
+    },
+    "00_avonent_research_benefits_WGiEnm": {
+      "type": "00-avonent-research-benefits",
+      "blocks": {
+        "benefit_reYccF": {
+          "type": "benefit",
+          "settings": {
+            "fallback_icon": "⚡",
+            "title": "Daily Energy",
+            "front_line": "Wake up with real energy. Stay steady all day.",
+            "back_copy": "Moringa leaf is packed with plant nutrients your body uses for everyday energy — so you feel fueled without relying on another coffee."
+          }
+        },
+        "benefit_FqXVE3": {
+          "type": "benefit",
+          "settings": {
+            "fallback_icon": "↗",
+            "title": "Joint Comfort",
+            "front_line": "Move easier. Recover like you used to.",
+            "back_copy": "Used for generations as a daily botanical for movement. Modern interest focuses on joint comfort and everyday mobility support.†"
+          }
+        },
+        "benefit_arhNap": {
+          "type": "benefit",
+          "settings": {
+            "fallback_icon": "⇄",
+            "title": "Metabolic Wellness",
+            "front_line": "Support the way your body handles energy.",
+            "back_copy": "Human studies have explored moringa and markers like fasting glucose and HbA1c. The research is promising and still growing.†"
+          }
+        },
+        "benefit_JUqB4i": {
+          "type": "benefit",
+          "settings": {
+            "fallback_icon": "♥",
+            "title": "Heart Wellness",
+            "front_line": "Daily support for a healthier heart routine.",
+            "back_copy": "Moringa’s nutrient and antioxidant profile is studied for cardiometabolic wellness — a simple daily add-on for heart-healthy habits.†"
+          }
+        },
+        "benefit_RcNkwt": {
+          "type": "benefit",
+          "settings": {
+            "fallback_icon": "✦",
+            "title": "Healthy Aging",
+            "front_line": "Feel stronger as the years add up.",
+            "back_copy": "Antioxidant plant compounds help support the body against everyday oxidative stress — the kind that adds up over time.†"
+          }
+        },
+        "benefit_rzwLjF": {
+          "type": "benefit",
+          "settings": {
+            "fallback_icon": "◇",
+            "title": "Immune Defense",
+            "front_line": "Nutritional backup for everyday immune function.",
+            "back_copy": "Vitamins, minerals, and phytonutrients in moringa leaf help support normal immune function as part of a daily wellness routine.†"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_reYccF",
+        "benefit_FqXVE3",
+        "benefit_arhNap",
+        "benefit_JUqB4i",
+        "benefit_RcNkwt",
+        "benefit_rzwLjF"
+      ],
+      "name": "Avonent benefit flips",
+      "settings": {
+        "heading_accent": "Real Benefits.",
+        "heading_rest": "Backed by Research.",
+        "subheading": "<p>One plant. Multiple reasons people take it every day.</p>",
+        "footnote": "<p>† These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.</p>",
+        "content_width": 1200,
+        "card_gap": 14,
+        "card_height_desktop": 150,
+        "card_height_mobile": 150,
+        "padding_top_desktop": 52,
+        "padding_bottom_desktop": 52,
+        "padding_top_mobile": 36,
+        "padding_bottom_mobile": 36,
+        "background_color": "#F7F8F2",
+        "card_background": "#FFFFFF",
+        "text_color": "#111111",
+        "muted_text_color": "#4F5965",
+        "accent_color": "#02C6EA",
+        "border_color": "#D8DEE2"
+      }
     }
   },
   "order": [
     "main",
     "avonent_proof_stats",
+    "00_avonent_research_benefits_WGiEnm",
     "section_U7KVTG",
+    "avonent_formula_breakdown",
+    "00_avonent_before_after_4chKWb",
+    "00_avonent_benefit_marquee_dFCEaN",
     "avonent_wellness_journey",
     "avonent_vs_other_brands",
     "avonent_money_back_guarantee",
