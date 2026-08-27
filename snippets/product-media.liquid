@@ -17,7 +17,19 @@
 {%- enddoc -%}
 
 {% liquid
+  assign media_product = selected_product | default: closest.product | default: product
   assign widths = widths | default: '240, 352, 832, 1200, 1600, 1920, 2560, 3840'
+  assign requested_image_width = 3840
+
+  if media_product.handle contains 'moringa'
+    assign widths = '240, 352, 640, 832, 960, 1200'
+    assign requested_image_width = 1200
+
+    if is_main_product_media
+      assign loading = 'eager'
+    endif
+  endif
+
   assign ref_image_to_transition = ''
   if settings.transition_to_main_product
     assign ref_image_to_transition = 'imagesToTransition[]'
@@ -30,7 +42,7 @@
   data-media-id="{{ media.id }}"
 >
   {% liquid
-    assign high_res_url = media.preview_image | image_url: width: 3840
+    assign high_res_url = media.preview_image | image_url: width: requested_image_width
     assign fetch_priority = 'auto'
     if is_main_product_media
       assign fetch_priority = 'high'
@@ -39,7 +51,7 @@
   %}
   {{
     media.preview_image
-    | image_url: width: 3840
+    | image_url: width: requested_image_width
     | image_tag:
       widths: widths,
       alt: media.alt,
