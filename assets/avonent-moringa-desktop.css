@@ -221,35 +221,80 @@
     margin-inline: auto;
   }
 
-  /* Journey desktop correction: keep the copy below the image and close to it.
-     The previous separate sticky positions could let the header overlap the photo
-     near the bottom of the section. These more-specific rules override that behavior. */
-  main[data-template*='product.moringa'] .avonent-journey .avonent-journey__media-wrap {
+  /* Desktop Journey: image and intro are now a single left-side unit.
+     This removes the grid-row stretch that was creating the giant gap. */
+  main[data-template*='product.moringa'] .avonent-journey {
+    grid-template-columns: minmax(430px, 560px) minmax(560px, 700px) !important;
+    grid-template-rows: auto !important;
+    row-gap: 0 !important;
+    align-items: start !important;
+  }
+
+  main[data-template*='product.moringa'] .avonent-journey .avonent-journey__left {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 14px !important;
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    width: 100% !important;
+    max-width: 560px !important;
+    position: sticky !important;
+    top: calc(var(--header-group-height, 72px) + 20px) !important;
+    align-self: start !important;
+    justify-self: center !important;
+    z-index: 2 !important;
+  }
+
+  main[data-template*='product.moringa'] .avonent-journey .avonent-journey__left .avonent-journey__media-wrap {
+    grid-column: auto !important;
+    grid-row: auto !important;
     position: static !important;
     top: auto !important;
-    align-self: start !important;
+    left: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: 560px !important;
     margin: 0 !important;
   }
 
-  main[data-template*='product.moringa'] .avonent-journey .avonent-journey__header {
+  main[data-template*='product.moringa'] .avonent-journey .avonent-journey__left .avonent-journey__header {
+    grid-column: auto !important;
+    grid-row: auto !important;
     position: static !important;
     top: auto !important;
-    align-self: start !important;
-    margin: 14px 0 0 !important;
+    width: 100% !important;
+    max-width: 560px !important;
+    margin: 0 !important;
     padding: 0 12px !important;
+    align-self: auto !important;
+    justify-self: auto !important;
   }
 
-  main[data-template*='product.moringa'] .avonent-journey {
-    row-gap: 0 !important;
-  }
-
-  main[data-template*='product.moringa'] .avonent-journey .avonent-journey__eyebrow {
+  main[data-template*='product.moringa'] .avonent-journey .avonent-journey__left .avonent-journey__eyebrow {
     margin-top: 0 !important;
     margin-bottom: 5px !important;
   }
 
-  main[data-template*='product.moringa'] .avonent-journey .avonent-journey__description {
+  main[data-template*='product.moringa'] .avonent-journey .avonent-journey__left .avonent-journey__description {
     margin-top: 9px !important;
+  }
+
+  main[data-template*='product.moringa'] .avonent-journey .avonent-journey__inner,
+  main[data-template*='product.moringa'] .avonent-journey .avonent-journey__inner.has-journey-image {
+    display: contents !important;
+    width: auto !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  main[data-template*='product.moringa'] .avonent-journey .avonent-journey__timeline {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    align-self: start !important;
+    width: 100% !important;
+    max-width: 700px !important;
+    margin: 0 !important;
   }
 }
 
