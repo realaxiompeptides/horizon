@@ -637,7 +637,7 @@
         "visual_size_mobile": 76,
         "padding_top_desktop": 52,
         "padding_bottom_desktop": 52,
-        "padding_top_mobile": 36,
+        "padding_top_mobile": 12,
         "padding_bottom_mobile": 36,
         "background_color": "#f7f8f2",
         "card_background": "#ffffff",
