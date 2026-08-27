@@ -53,6 +53,9 @@
     {% endif %}
 
     {%- render 'stylesheets' -%}
+    {% if template.suffix == 'moringa' %}
+      {{ 'avonent-moringa-desktop.css' | asset_url | stylesheet_tag }}
+    {% endif %}
     {%- render 'card-hover-effect-styles' -%}
     {%- render 'fonts' -%}
     {%- render 'scripts' -%}
