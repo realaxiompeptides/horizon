@@ -522,6 +522,96 @@
         "padding_bottom": 0
       }
     },
+    "00_avonent_research_benefits_WGiEnm": {
+      "type": "00-avonent-research-benefits",
+      "blocks": {
+        "benefit_reYccF": {
+          "type": "benefit",
+          "settings": {
+            "icon": "auto",
+            "title": "Daily Energy",
+            "front_line": "Wake up with real energy. Stay steady all day.",
+            "back_copy": "Moringa leaf is packed with plant nutrients your body uses for everyday energy — so you feel fueled without relying on another coffee."
+          }
+        },
+        "benefit_FqXVE3": {
+          "type": "benefit",
+          "settings": {
+            "icon": "auto",
+            "title": "Joint Comfort",
+            "front_line": "Move easier. Recover like you used to.",
+            "back_copy": "Used for generations as a daily botanical for movement. Modern interest focuses on joint comfort and everyday mobility support.†"
+          }
+        },
+        "benefit_arhNap": {
+          "type": "benefit",
+          "settings": {
+            "icon": "auto",
+            "title": "Metabolic Wellness",
+            "front_line": "Support the way your body handles energy.",
+            "back_copy": "Human studies have explored moringa and markers like fasting glucose and HbA1c. The research is promising and still growing.†"
+          }
+        },
+        "benefit_JUqB4i": {
+          "type": "benefit",
+          "settings": {
+            "icon": "auto",
+            "title": "Heart Wellness",
+            "front_line": "Daily support for a healthier heart routine.",
+            "back_copy": "Moringa’s nutrient and antioxidant profile is studied for cardiometabolic wellness — a simple daily add-on for heart-healthy habits.†"
+          }
+        },
+        "benefit_RcNkwt": {
+          "type": "benefit",
+          "settings": {
+            "icon": "auto",
+            "title": "Healthy Aging",
+            "front_line": "Feel stronger as the years add up.",
+            "back_copy": "Antioxidant plant compounds help support the body against everyday oxidative stress — the kind that adds up over time.†"
+          }
+        },
+        "benefit_rzwLjF": {
+          "type": "benefit",
+          "settings": {
+            "icon": "auto",
+            "title": "Immune Defense",
+            "front_line": "Nutritional backup for everyday immune function.",
+            "back_copy": "Vitamins, minerals, and phytonutrients in moringa leaf help support normal immune function as part of a daily wellness routine.†"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_reYccF",
+        "benefit_FqXVE3",
+        "benefit_arhNap",
+        "benefit_JUqB4i",
+        "benefit_RcNkwt",
+        "benefit_rzwLjF"
+      ],
+      "name": "Avonent benefit flips",
+      "settings": {
+        "heading_accent": "Real Benefits.",
+        "heading_rest": "Backed by Research.",
+        "subheading": "<p>One plant. Multiple reasons people take it every day.</p>",
+        "content_width": 1200,
+        "card_gap": 14,
+        "card_height_desktop": 150,
+        "card_height_mobile": 150,
+        "visual_size_desktop": 104,
+        "visual_size_mobile": 76,
+        "padding_top_desktop": 52,
+        "padding_bottom_desktop": 52,
+        "padding_top_mobile": 36,
+        "padding_bottom_mobile": 36,
+        "background_color": "#f7f8f2",
+        "card_background": "#ffffff",
+        "visual_background": "#e8f8fc",
+        "text_color": "#111111",
+        "muted_text_color": "#4f5965",
+        "accent_color": "#02c6ea",
+        "border_color": "#d8dee2"
+      }
+    },
     "section_U7KVTG": {
       "type": "section",
       "blocks": {
@@ -917,7 +1007,7 @@
         "image_radius": 20,
         "image_spacing_top": 28,
         "image_spacing_bottom": 28,
-        "image_spacing_top_mobile": 22,
+        "image_spacing_top_mobile": 0,
         "image_spacing_bottom_mobile": 0,
         "moringa_eyebrow": "BUILD YOUR ROUTINE",
         "moringa_heading": "Your first month with Pure Moringa",
@@ -1349,94 +1439,6 @@
         "border_color": "#d5edf3",
         "padding_top": 36,
         "padding_bottom": 36
-      }
-    },
-    "00_avonent_research_benefits_WGiEnm": {
-      "type": "00-avonent-research-benefits",
-      "blocks": {
-        "benefit_reYccF": {
-          "type": "benefit",
-          "settings": {
-            "fallback_icon": "⚡",
-            "title": "Daily Energy",
-            "front_line": "Wake up with real energy. Stay steady all day.",
-            "back_copy": "Moringa leaf is packed with plant nutrients your body uses for everyday energy — so you feel fueled without relying on another coffee."
-          }
-        },
-        "benefit_FqXVE3": {
-          "type": "benefit",
-          "settings": {
-            "fallback_icon": "↗",
-            "title": "Joint Comfort",
-            "front_line": "Move easier. Recover like you used to.",
-            "back_copy": "Used for generations as a daily botanical for movement. Modern interest focuses on joint comfort and everyday mobility support.†"
-          }
-        },
-        "benefit_arhNap": {
-          "type": "benefit",
-          "settings": {
-            "fallback_icon": "⇄",
-            "title": "Metabolic Wellness",
-            "front_line": "Support the way your body handles energy.",
-            "back_copy": "Human studies have explored moringa and markers like fasting glucose and HbA1c. The research is promising and still growing.†"
-          }
-        },
-        "benefit_JUqB4i": {
-          "type": "benefit",
-          "settings": {
-            "fallback_icon": "♥",
-            "title": "Heart Wellness",
-            "front_line": "Daily support for a healthier heart routine.",
-            "back_copy": "Moringa’s nutrient and antioxidant profile is studied for cardiometabolic wellness — a simple daily add-on for heart-healthy habits.†"
-          }
-        },
-        "benefit_RcNkwt": {
-          "type": "benefit",
-          "settings": {
-            "fallback_icon": "✦",
-            "title": "Healthy Aging",
-            "front_line": "Feel stronger as the years add up.",
-            "back_copy": "Antioxidant plant compounds help support the body against everyday oxidative stress — the kind that adds up over time.†"
-          }
-        },
-        "benefit_rzwLjF": {
-          "type": "benefit",
-          "settings": {
-            "fallback_icon": "◇",
-            "title": "Immune Defense",
-            "front_line": "Nutritional backup for everyday immune function.",
-            "back_copy": "Vitamins, minerals, and phytonutrients in moringa leaf help support normal immune function as part of a daily wellness routine.†"
-          }
-        }
-      },
-      "block_order": [
-        "benefit_reYccF",
-        "benefit_FqXVE3",
-        "benefit_arhNap",
-        "benefit_JUqB4i",
-        "benefit_RcNkwt",
-        "benefit_rzwLjF"
-      ],
-      "name": "Avonent benefit flips",
-      "settings": {
-        "heading_accent": "Real Benefits.",
-        "heading_rest": "Backed by Research.",
-        "subheading": "<p>One plant. Multiple reasons people take it every day.</p>",
-        "footnote": "<p>† These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.</p>",
-        "content_width": 1200,
-        "card_gap": 14,
-        "card_height_desktop": 150,
-        "card_height_mobile": 150,
-        "padding_top_desktop": 52,
-        "padding_bottom_desktop": 52,
-        "padding_top_mobile": 36,
-        "padding_bottom_mobile": 36,
-        "background_color": "#F7F8F2",
-        "card_background": "#FFFFFF",
-        "text_color": "#111111",
-        "muted_text_color": "#4F5965",
-        "accent_color": "#02C6EA",
-        "border_color": "#D8DEE2"
       }
     }
   },
