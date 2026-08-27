@@ -1,8 +1,12 @@
 {% comment %}
-  Retained as an empty compatibility section because older header-group data can
-  still reference it. Bundle price updates now live in 00-avonent-price-offer,
-  so loading a second timer-based synchronizer only adds duplicate client work.
+  Moringa-only compatibility loader.
+  The old price-sync JS is no longer needed here, but this header-group section
+  is a reliable Moringa-aware place to load the desktop PDP overrides.
 {% endcomment %}
+
+{% if template.suffix == 'moringa' %}
+  {{ 'avonent-moringa-desktop.css' | asset_url | stylesheet_tag }}
+{% endif %}
 
 {% schema %}
 {
