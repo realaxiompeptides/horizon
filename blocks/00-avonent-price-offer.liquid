@@ -268,7 +268,10 @@
             oneTime.setAttribute('aria-pressed', mode === 'one_time' ? 'true' : 'false');
             const oneTimeAmount = oneTime.querySelector('strong');
             if (oneTimeAmount && selectedOneTimeTotal > 0) {
-              oneTimeAmount.textContent = formatMoney(selectedOneTimeTotal);
+              const nextOneTimePrice = formatMoney(selectedOneTimeTotal);
+              if (oneTimeAmount.textContent !== nextOneTimePrice) {
+                oneTimeAmount.textContent = nextOneTimePrice;
+              }
             }
           }
         }
@@ -383,13 +386,6 @@
         function wireBottomOffers() {
           document.querySelectorAll('[data-avonent-bottom-offer]').forEach(wireBottomOffer);
         }
-
-        const observer = new MutationObserver(() => {
-          buildMetaBlock();
-          enforceMainFormMode();
-          wireBottomOffers();
-        });
-        observer.observe(getScope(), { childList: true, subtree: true });
 
         document.addEventListener('shopify:section:load', () => {
           buildMetaBlock();
