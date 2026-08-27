@@ -36,6 +36,22 @@
     {% endif %}
 
     {%- render 'meta-tags' -%}
+
+    {% if template.suffix == 'moringa' and product.featured_image != blank %}
+      {% liquid
+        assign moringa_preload_832 = product.featured_image | image_url: width: 832
+        assign moringa_preload_1200 = product.featured_image | image_url: width: 1200
+      %}
+      <link
+        rel="preload"
+        as="image"
+        href="{{ moringa_preload_832 }}"
+        imagesrcset="{{ moringa_preload_832 }} 832w, {{ moringa_preload_1200 }} 1200w"
+        imagesizes="(min-width: 1100px) 52vw, 100vw"
+        fetchpriority="high"
+      >
+    {% endif %}
+
     {%- render 'stylesheets' -%}
     {%- render 'card-hover-effect-styles' -%}
     {%- render 'fonts' -%}
