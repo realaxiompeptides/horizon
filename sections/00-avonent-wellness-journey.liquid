@@ -185,7 +185,25 @@
     let ticking=false;
     const update=()=>{const line=window.innerHeight*.58;let current=-1;steps.forEach((step,index)=>{const dot=step.querySelector('.avonent-journey__dot');if(dot&&dot.getBoundingClientRect().top<=line)current=index});current=Math.max(0,current);steps.forEach((step,index)=>{step.classList.toggle('is-active',index<=current);step.classList.toggle('is-complete',index<current);step.classList.toggle('is-current',index===current)});ticking=false};
     const request=()=>{if(ticking)return;ticking=true;requestAnimationFrame(update)};
-    steps[0].classList.add('is-active','is-current');update();requestAnimationFrame(update);addEventListener('scroll',request,{passive:true});addEventListener('resize',request);addEventListener('load',request,{once:true});document.fonts?.ready?.then(request);
+    steps[0].classList.add('is-active','is-current');
+
+    window.addEventListener('scroll',request,{passive:true});
+    document.addEventListener('scroll',request,{passive:true,capture:true});
+    window.addEventListener('resize',request);
+    window.addEventListener('load',request,{once:true});
+    window.visualViewport?.addEventListener('scroll',request,{passive:true});
+    window.visualViewport?.addEventListener('resize',request);
+    document.fonts?.ready?.then(request);
+
+    if('IntersectionObserver' in window){
+      const observer=new IntersectionObserver(request,{root:null,threshold:[0,.01,.25,.5,.75,1]});
+      steps.forEach(step=>observer.observe(step.querySelector('.avonent-journey__dot')||step));
+    }
+
+    update();
+    requestAnimationFrame(request);
+    window.setTimeout(request,150);
+    window.setTimeout(request,600);
   })();
 </script>
 
