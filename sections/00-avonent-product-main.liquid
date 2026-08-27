@@ -423,19 +423,26 @@
 
   /* Moringa desktop PDP: balanced Resilia-style media/details split. */
   @media screen and (min-width: 1100px) {
+    main[data-template*='product.moringa'] .avonent-product-main-section {
+      padding-top: clamp(24px, 2.2vw, 38px);
+      padding-bottom: clamp(36px, 4vw, 64px);
+    }
+
     main[data-template*='product.moringa'] .avonent-product-main-section .product-information__grid--half {
       grid-column: 2;
-      grid-template-columns: minmax(0, 1.04fr) minmax(500px, 0.96fr);
-      column-gap: 40px;
+      grid-template-columns: minmax(0, 0.92fr) minmax(500px, 1.08fr);
+      column-gap: clamp(44px, 4vw, 68px);
       width: 100%;
-      max-width: 1440px;
+      max-width: 1320px;
       margin-inline: auto;
+      align-items: start;
     }
 
     main[data-template*='product.moringa'] .avonent-product-main-section .product-information__media {
       grid-column: 1;
       min-width: 0;
       padding: 0;
+      justify-self: end;
     }
 
     main[data-template*='product.moringa'] .avonent-product-main-section .product-details {
@@ -447,11 +454,13 @@
     main[data-template*='product.moringa'] .avonent-product-main-section .product-media-gallery__media,
     main[data-template*='product.moringa'] .avonent-product-main-section .product-media-container {
       width: 100%;
-      max-width: none;
+      max-width: 600px;
+      margin-inline: auto;
     }
 
     main[data-template*='product.moringa'] .avonent-product-main-section .product-media img {
       width: 100%;
+      max-height: 620px;
       height: auto;
       object-fit: contain;
       image-rendering: auto;
