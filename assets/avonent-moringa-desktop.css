@@ -220,6 +220,37 @@
     max-width: min(1240px, calc(100vw - 80px));
     margin-inline: auto;
   }
+
+  /* Journey desktop correction: keep the copy below the image and close to it.
+     The previous separate sticky positions could let the header overlap the photo
+     near the bottom of the section. These more-specific rules override that behavior. */
+  main[data-template*='product.moringa'] .avonent-journey .avonent-journey__media-wrap {
+    position: static !important;
+    top: auto !important;
+    align-self: start !important;
+    margin: 0 !important;
+  }
+
+  main[data-template*='product.moringa'] .avonent-journey .avonent-journey__header {
+    position: static !important;
+    top: auto !important;
+    align-self: start !important;
+    margin: 14px 0 0 !important;
+    padding: 0 12px !important;
+  }
+
+  main[data-template*='product.moringa'] .avonent-journey {
+    row-gap: 0 !important;
+  }
+
+  main[data-template*='product.moringa'] .avonent-journey .avonent-journey__eyebrow {
+    margin-top: 0 !important;
+    margin-bottom: 5px !important;
+  }
+
+  main[data-template*='product.moringa'] .avonent-journey .avonent-journey__description {
+    margin-top: 9px !important;
+  }
 }
 
 @media screen and (min-width: 1500px) {
