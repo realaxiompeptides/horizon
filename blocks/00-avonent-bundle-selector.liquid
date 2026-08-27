@@ -329,6 +329,30 @@
 
         setNativeQuantity(option.dataset.quantity);
         setNativeVariant(option.dataset.variantId);
+
+        const quantity = Math.max(1, Number(option.dataset.quantity || 1));
+        const subscriptionUnit = Number(option.dataset.subscriptionUnit || 0);
+        const subscriptionCompareUnit = Number(
+          option.dataset.subscriptionCompareUnit || option.dataset.oneTimeUnit || 0
+        );
+        const oneTimeUnit = Number(option.dataset.oneTimeUnit || 0);
+        const oneTimeCompareUnit = Number(
+          option.dataset.oneTimeCompareUnit || option.dataset.oneTimeUnit || 0
+        );
+
+        document.dispatchEvent(new CustomEvent('avonent:bundle-change', {
+          detail: {
+            bundleNumber: Number(option.dataset.bundleNumber || 1),
+            quantity,
+            variantId: String(option.dataset.variantId || ''),
+            subscriptionUnit,
+            subscriptionTotal: subscriptionUnit * quantity,
+            subscriptionCompareTotal: subscriptionCompareUnit * quantity,
+            oneTimeUnit,
+            oneTimeTotal: oneTimeUnit * quantity,
+            oneTimeCompareTotal: oneTimeCompareUnit * quantity
+          }
+        }));
       }
 
       function syncSelectedBundle() {
