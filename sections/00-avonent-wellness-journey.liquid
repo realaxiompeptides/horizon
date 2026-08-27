@@ -27,19 +27,19 @@
     --avj-image-height-mobile: {{ section.settings.image_height_mobile }}px;
   "
 >
-  {% if section.settings.journey_image != blank %}
-    <div class="avonent-journey__media-wrap">
-      <div class="avonent-journey__media">
-        {{ section.settings.journey_image | image_url: width: 1800 | image_tag: loading: 'lazy', class: 'avonent-journey__media-image', alt: section.settings.image_alt }}
-        {% if section.settings.image_overlay_strength > 0 %}<span class="avonent-journey__media-overlay" aria-hidden="true"></span>{% endif %}
-        {% if section.settings.image_caption != blank %}
-          <div class="avonent-journey__media-caption">{{ section.settings.image_caption }}</div>
-        {% endif %}
+  <div class="avonent-journey__left">
+    {% if section.settings.journey_image != blank %}
+      <div class="avonent-journey__media-wrap">
+        <div class="avonent-journey__media">
+          {{ section.settings.journey_image | image_url: width: 1800 | image_tag: loading: 'lazy', class: 'avonent-journey__media-image', alt: section.settings.image_alt }}
+          {% if section.settings.image_overlay_strength > 0 %}<span class="avonent-journey__media-overlay" aria-hidden="true"></span>{% endif %}
+          {% if section.settings.image_caption != blank %}
+            <div class="avonent-journey__media-caption">{{ section.settings.image_caption }}</div>
+          {% endif %}
+        </div>
       </div>
-    </div>
-  {% endif %}
+    {% endif %}
 
-  <div class="avonent-journey__inner{% if section.settings.journey_image != blank %} has-journey-image{% endif %}">
     <header class="avonent-journey__header">
       {% if is_moringa %}
         {% if section.settings.moringa_eyebrow != blank %}<div class="avonent-journey__eyebrow">{{ section.settings.moringa_eyebrow }}</div>{% endif %}
@@ -51,7 +51,9 @@
         {% if section.settings.description != blank %}<div class="avonent-journey__description rte">{{ section.settings.description }}</div>{% endif %}
       {% endif %}
     </header>
+  </div>
 
+  <div class="avonent-journey__inner{% if section.settings.journey_image != blank %} has-journey-image{% endif %}">
     <div class="avonent-journey__timeline">
       {% for block in section.blocks %}
         {% liquid
@@ -119,6 +121,7 @@
 
 {% stylesheet %}
   .avonent-journey{position:relative;overflow:hidden;padding:var(--avj-top) 0 var(--avj-bottom);background:radial-gradient(circle at 8% 8%,rgb(2 198 234/.10),transparent 25rem),radial-gradient(circle at 96% 92%,rgb(2 198 234/.08),transparent 24rem),var(--avj-bg);color:var(--avj-text)}
+  .avonent-journey__left{display:contents}
   .avonent-journey__inner{width:min(calc(100% - 40px),var(--avj-width));margin:0 auto}
   .avonent-journey__inner.has-journey-image{padding-top:12px}
   .avonent-journey__header{width:min(100%,720px);margin:0 auto clamp(28px,4vw,48px);text-align:center}
@@ -156,8 +159,8 @@
 
   @media screen and (max-width:749px){
     .avonent-journey__inner{width:min(calc(100% - 28px),var(--avj-width))}
-    .avonent-journey__inner.has-journey-image{padding-top:14px}
-    .avonent-journey__header{margin-bottom:26px}
+    .avonent-journey__inner.has-journey-image{padding-top:0}
+    .avonent-journey__header{margin-top:14px;margin-bottom:26px}
     .avonent-journey__media-wrap{position:relative;left:50%;transform:translateX(-50%);display:flex;justify-content:center;width:min(calc(100vw - 40px),640px);max-width:none;margin:{{ section.settings.image_spacing_top_mobile }}px 0 44px!important}
     .avonent-journey__media{width:100%;height:var(--avj-image-height-mobile)}
     .avonent-journey__media-image{object-position:center center}
