@@ -139,20 +139,23 @@
          ----------------------------- */
       .avonent-journey {
         display: grid !important;
-        grid-template-columns: minmax(420px, 560px) minmax(500px, 640px) !important;
+        grid-template-columns: minmax(430px, 560px) minmax(560px, 700px) !important;
         grid-template-rows: auto auto !important;
         justify-content: center !important;
         align-items: start !important;
-        column-gap: clamp(58px, 6vw, 100px) !important;
-        row-gap: 30px !important;
-        padding: 44px 40px 50px !important;
+        column-gap: clamp(62px, 6vw, 104px) !important;
+        row-gap: 12px !important;
+        padding: 38px 40px 54px !important;
         overflow: visible !important;
       }
 
+      /* The left image and copy track down the section as the customer scrolls
+         through the longer Week 1-4 timeline, like the reference layout. */
       .avonent-journey__media-wrap {
         grid-column: 1 !important;
         grid-row: 1 !important;
-        position: static !important;
+        position: sticky !important;
+        top: calc(var(--header-group-height, 72px) + 20px) !important;
         left: auto !important;
         transform: none !important;
         width: 100% !important;
@@ -160,11 +163,12 @@
         margin: 0 !important;
         align-self: start !important;
         justify-self: center !important;
+        z-index: 2 !important;
       }
 
       .avonent-journey__media {
         width: 100% !important;
-        height: clamp(230px, 17vw, 270px) !important;
+        height: clamp(238px, 17vw, 270px) !important;
         border-radius: 0 !important;
       }
 
@@ -186,17 +190,20 @@
       .avonent-journey__header {
         grid-column: 1 !important;
         grid-row: 2 !important;
+        position: sticky !important;
+        top: calc(var(--header-group-height, 72px) + clamp(238px, 17vw, 270px) + 32px) !important;
         width: 100% !important;
         max-width: 560px !important;
         margin: 0 !important;
-        padding: 2px 16px 0 !important;
+        padding: 0 14px !important;
         text-align: center !important;
         align-self: start !important;
         justify-self: center !important;
+        z-index: 2 !important;
       }
 
       .avonent-journey__eyebrow {
-        margin-bottom: 8px !important;
+        margin-bottom: 6px !important;
         font-size: 12px !important;
         letter-spacing: .12em !important;
       }
@@ -204,32 +211,32 @@
       .avonent-journey__heading {
         max-width: 520px !important;
         margin-inline: auto !important;
-        font-size: clamp(32px, 2.5vw, 40px) !important;
-        line-height: 1.06 !important;
+        font-size: clamp(33px, 2.55vw, 41px) !important;
+        line-height: 1.04 !important;
         letter-spacing: -.035em !important;
       }
 
       .avonent-journey__description {
         max-width: 500px !important;
-        margin: 16px auto 0 !important;
-        font-size: 15.5px !important;
-        line-height: 1.5 !important;
+        margin: 11px auto 0 !important;
+        font-size: 16px !important;
+        line-height: 1.46 !important;
       }
 
       .avonent-journey__timeline {
         grid-column: 2 !important;
         grid-row: 1 / span 2 !important;
         width: 100% !important;
-        max-width: 640px !important;
+        max-width: 700px !important;
         margin: 0 !important;
         align-self: start !important;
       }
 
       .avonent-journey__step {
         display: grid !important;
-        grid-template-columns: 22px minmax(0, 1fr) !important;
-        gap: 12px !important;
-        padding-bottom: 18px !important;
+        grid-template-columns: 24px minmax(0, 1fr) !important;
+        gap: 14px !important;
+        padding-bottom: 24px !important;
       }
 
       .avonent-journey__rail {
@@ -238,23 +245,24 @@
 
       .avonent-journey__rail::after,
       .avonent-journey__rail::before {
-        top: 15px !important;
-        bottom: -22px !important;
+        top: 17px !important;
+        bottom: -28px !important;
         width: 2px !important;
       }
 
       .avonent-journey__dot {
-        width: 14px !important;
-        height: 14px !important;
-        flex: 0 0 14px !important;
-        margin-top: 5px !important;
-        background: var(--avj-accent) !important;
+        width: 15px !important;
+        height: 15px !important;
+        flex: 0 0 15px !important;
+        margin-top: 7px !important;
+        background: #111 !important;
         border: 0 !important;
         box-shadow: none !important;
       }
 
-      .avonent-journey__step:nth-child(n + 3) .avonent-journey__dot {
-        background: #111 !important;
+      .avonent-journey__step.is-active .avonent-journey__dot,
+      .avonent-journey__step.is-complete .avonent-journey__dot {
+        background: var(--avj-accent) !important;
       }
 
       .avonent-journey__dot-icon {
@@ -262,7 +270,7 @@
       }
 
       .avonent-journey__card {
-        padding: 0 0 14px !important;
+        padding: 0 0 16px !important;
         background: transparent !important;
         border: 0 !important;
         border-radius: 0 !important;
@@ -272,16 +280,18 @@
       .avonent-journey__card-heading {
         display: flex !important;
         align-items: center !important;
-        gap: 4px !important;
-        min-height: 42px !important;
-        padding: 10px 16px !important;
-        background: var(--avj-accent) !important;
+        gap: 5px !important;
+        min-height: 48px !important;
+        padding: 12px 18px !important;
+        background: #111 !important;
         border: 0 !important;
         border-radius: 5px !important;
+        transition: background-color 220ms ease !important;
       }
 
-      .avonent-journey__step:nth-child(n + 3) .avonent-journey__card-heading {
-        background: #111 !important;
+      .avonent-journey__step.is-active .avonent-journey__card-heading,
+      .avonent-journey__step.is-complete .avonent-journey__card-heading {
+        background: var(--avj-accent) !important;
       }
 
       .avonent-journey__week {
@@ -291,8 +301,8 @@
         background: transparent !important;
         border: 0 !important;
         border-radius: 0 !important;
-        font-size: 15px !important;
-        font-weight: 700 !important;
+        font-size: 17px !important;
+        font-weight: 720 !important;
         letter-spacing: 0 !important;
         text-transform: none !important;
       }
@@ -303,26 +313,26 @@
 
       .avonent-journey__title {
         color: #fff !important;
-        font-size: 15px !important;
-        font-weight: 700 !important;
+        font-size: 17px !important;
+        font-weight: 720 !important;
         letter-spacing: 0 !important;
         line-height: 1.2 !important;
       }
 
       .avonent-journey__benefits {
-        gap: 13px !important;
-        margin: 16px 0 0 !important;
-        padding: 0 4px 0 2px !important;
+        gap: 15px !important;
+        margin: 18px 0 0 !important;
+        padding: 0 6px 0 3px !important;
       }
 
       .avonent-journey__benefit {
         display: grid !important;
-        grid-template-columns: 18px minmax(0, 1fr) !important;
-        gap: 6px !important;
+        grid-template-columns: 20px minmax(0, 1fr) !important;
+        gap: 7px !important;
         align-items: start !important;
         color: #4f5965 !important;
-        font-size: 15px !important;
-        line-height: 1.45 !important;
+        font-size: 16.5px !important;
+        line-height: 1.48 !important;
       }
 
       .avonent-journey__check {
@@ -335,8 +345,8 @@
         border: 0 !important;
         border-radius: 0 !important;
         box-shadow: none !important;
-        font-size: 17px !important;
-        line-height: 1.2 !important;
+        font-size: 18px !important;
+        line-height: 1.25 !important;
       }
     }
   </style>
