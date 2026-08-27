@@ -1,4 +1,9 @@
 {% liquid
+  assign is_moringa_comparison_image = false
+  if template.suffix == 'moringa' and section.id contains 'section_U7KVTG'
+    assign is_moringa_comparison_image = true
+  endif
+
   assign block_settings = block.settings
   assign ratio = 1
 
@@ -17,7 +22,7 @@
 %}
 
 {% capture class %}
-  image-block image-block--{{ block.id }} image-block--height-{{ block_settings.height }} spacing-style size-style
+  image-block image-block--{{ block.id }} image-block--height-{{ block_settings.height }} spacing-style size-style{% if is_moringa_comparison_image %} moringa-nutrition-comparison{% endif %}
 {% endcapture %}
 
 {% capture style %}
@@ -36,20 +41,30 @@
   assign media_width_mobile = '100vw'
   assign sizes = 'auto, (min-width: 750px) ' | append: media_width_desktop | append: ', ' | append: media_width_mobile
   assign widths = '240, 352, 832, 1200, 1600, 1920, 2560, 3840'
+  assign image_render_width = 3840
+  assign image_loading = blank
+
+  if is_moringa_comparison_image
+    assign sizes = 'auto, (min-width: 990px) 860px, (min-width: 750px) 78vw, 100vw'
+    assign widths = '240, 352, 640, 832, 960, 1200'
+    assign image_render_width = 1200
+    assign image_loading = 'lazy'
+  endif
 %}
 
 {% capture image %}
   {%- if block_settings.image -%}
     {{
       block_settings.image
-      | image_url: width: 3840
+      | image_url: width: image_render_width
       | image_tag:
         width: block_settings.image.width,
         widths: widths,
         height: block_settings.image.height,
         class: 'image-block__image border-style',
         style: image_border_style,
-        sizes: sizes
+        sizes: sizes,
+        loading: image_loading
     }}
   {%- else -%}
     <div class="placeholder-image border-style size-style" style="{{ image_border_style }}">
@@ -107,6 +122,19 @@
   .image-block__image {
     object-fit: cover;
     aspect-ratio: var(--ratio);
+  }
+
+  @media screen and (min-width: 990px) {
+    .moringa-nutrition-comparison {
+      width: min(100%, 860px) !important;
+      margin: 32px auto 56px;
+    }
+
+    .moringa-nutrition-comparison .image-block__image {
+      width: 100%;
+      border-radius: 24px;
+      box-shadow: 0 24px 70px rgb(4 42 52 / 0.12);
+    }
   }
 {% endstylesheet %}
 
