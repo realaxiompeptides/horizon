@@ -168,7 +168,7 @@
       var tags=card.querySelectorAll('.avonent-reviews__tags span');
       if(tags[0]) tags[0].textContent=review.tag1;
       if(tags[1]) tags[1].textContent=review.tag2;
-      var verified=card.querySelector('.avonent-reviews__verified span:first-child');
+      var verified=card.querySelector('.avonent-reviews__verified span:not(.avonent-reviews__date)');
       if(verified) verified.textContent='Example Review';
     });
   }
