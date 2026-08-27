@@ -1,12 +1,136 @@
 {% comment %}
   Moringa-only compatibility loader.
-  The old price-sync JS is no longer needed here, but this header-group section
-  is a reliable Moringa-aware place to load the desktop PDP overrides.
+  Loads the desktop PDP overrides and forces the desktop proof/stat section
+  into the split layout used by the reference design. Mobile is untouched.
 {% endcomment %}
 
 {% if template.suffix == 'moringa' %}
   {{ 'avonent-moringa-desktop.css' | asset_url | stylesheet_tag }}
-  {{ 'avonent-moringa-proof-desktop.css' | asset_url | stylesheet_tag }}
+
+  <style>
+    @media screen and (min-width: 990px) {
+      .avonent-proof-stats {
+        padding-top: 58px !important;
+        padding-bottom: 42px !important;
+      }
+
+      .avonent-proof-stats__inner {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1.04fr) minmax(430px, 0.96fr) !important;
+        grid-template-areas:
+          'stats header'
+          'stats footer' !important;
+        column-gap: clamp(64px, 6vw, 112px) !important;
+        row-gap: 22px !important;
+        align-items: center !important;
+        width: min(calc(100% - 96px), 1240px) !important;
+        max-width: 1240px !important;
+        margin-inline: auto !important;
+      }
+
+      .avonent-proof-stats__header {
+        grid-area: header !important;
+        width: 100% !important;
+        max-width: 560px !important;
+        margin: 0 auto !important;
+        text-align: center !important;
+        align-self: end !important;
+      }
+
+      .avonent-proof-stats__eyebrow {
+        display: none !important;
+      }
+
+      .avonent-proof-stats__heading {
+        max-width: 560px !important;
+        margin: 0 auto !important;
+        font-size: clamp(31px, 2.35vw, 42px) !important;
+        line-height: 1.08 !important;
+        letter-spacing: -0.035em !important;
+        text-wrap: balance !important;
+      }
+
+      .avonent-proof-stats__description {
+        max-width: 520px !important;
+        margin: 17px auto 0 !important;
+        font-size: 15px !important;
+        line-height: 1.48 !important;
+        text-align: center !important;
+      }
+
+      .avonent-proof-stats__grid {
+        grid-area: stats !important;
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        width: 100% !important;
+        align-self: center !important;
+        border-top: 0 !important;
+        border-bottom: 0 !important;
+      }
+
+      .avonent-proof-stats__stat {
+        min-height: 116px !important;
+        padding: 22px 26px 22px 0 !important;
+        border-left: 0 !important;
+        border-top: 0 !important;
+      }
+
+      .avonent-proof-stats__stat:nth-child(even) {
+        padding-left: 36px !important;
+        padding-right: 0 !important;
+      }
+
+      .avonent-proof-stats__stat:nth-child(n + 3) {
+        border-top: 1px solid var(--aps-line) !important;
+      }
+
+      .avonent-proof-stats__kicker {
+        display: none !important;
+      }
+
+      .avonent-proof-stats__value {
+        margin: 0 !important;
+        font-size: clamp(42px, 3.1vw, 56px) !important;
+        line-height: .95 !important;
+        letter-spacing: -0.045em !important;
+        white-space: nowrap !important;
+      }
+
+      .avonent-proof-stats__label {
+        max-width: 235px !important;
+        margin-top: 8px !important;
+        font-size: 14px !important;
+        line-height: 1.28 !important;
+        font-weight: 650 !important;
+      }
+
+      .avonent-proof-stats__footer {
+        grid-area: footer !important;
+        width: 100% !important;
+        max-width: 570px !important;
+        margin: 0 auto !important;
+        align-self: start !important;
+        text-align: center !important;
+      }
+
+      .avonent-proof-stats__button {
+        min-height: 58px !important;
+        border-radius: 999px !important;
+        font-size: 16px !important;
+        box-shadow: none !important;
+      }
+
+      .avonent-proof-stats__guarantee {
+        margin-top: 11px !important;
+        margin-bottom: 22px !important;
+        font-size: 12px !important;
+      }
+
+      .avonent-proof-stats__footnote {
+        margin-top: 8px !important;
+      }
+    }
+  </style>
 {% endif %}
 
 {% schema %}
