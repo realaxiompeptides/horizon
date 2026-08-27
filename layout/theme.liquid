@@ -195,6 +195,9 @@
         data-template="{{ template }}"
       >
         {{ content_for_layout }}
+        {% if template.suffix == 'moringa' %}
+          {% section '00-avonent-real-stories-carousel' %}
+        {% endif %}
       </main>
 
       <footer>
