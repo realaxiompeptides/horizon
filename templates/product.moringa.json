@@ -151,7 +151,7 @@
             "subscription_label": "Subscribe & Save",
             "default_purchase_type": "one_time",
             "show_subscription_helper": true,
-            "subscription_helper": "Recurring delivery · Cancel anytime",
+            "subscription_helper": "",
             "show_sale_badge": true,
             "sale_name": "SUMMER SALE",
             "show_savings_amount": true,
