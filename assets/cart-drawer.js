@@ -49,7 +49,6 @@ class CartDrawerComponent extends Component {
 
     this.#protectionVariantId = Number(this.dataset.protectionVariantId || 0);
     this.#startReservationTimer();
-    queueMicrotask(() => this.#syncShippingProtection());
 
     // The restore path sets [open] before this module loads, so the
     // theme-drawer:open event will have already fired. Use the attribute
@@ -110,10 +109,11 @@ class CartDrawerComponent extends Component {
     event.promise
       ?.then(({ detail }) => {
         const settle = () => requestAnimationFrame(() => this.#updateStickyState());
+        const isProtectionUpdate = detail?.source === 'avonent-shipping-protection';
 
-        if (!shouldAutoOpen || detail?.didError) {
+        if (!shouldAutoOpen || detail?.didError || isProtectionUpdate) {
           settle();
-          this.#syncShippingProtection();
+          if (!isProtectionUpdate && !detail?.didError) this.#syncShippingProtection();
           return;
         }
 
