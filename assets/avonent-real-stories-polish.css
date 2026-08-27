@@ -113,9 +113,14 @@
 
 @media (max-width:749px){
   .avrs__story-tile{
-    width:36vw !important;
-    max-width:150px !important;
-    height:145px !important;
+    width:29vw !important;
+    max-width:118px !important;
+    height:126px !important;
+  }
+
+  .avrs__marquee-group{
+    gap:7px !important;
+    padding-right:7px !important;
   }
 
   .avrs__marquee{
