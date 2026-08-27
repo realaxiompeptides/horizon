@@ -1008,7 +1008,7 @@
         "image_spacing_top": 28,
         "image_spacing_bottom": 28,
         "image_spacing_top_mobile": 0,
-        "image_spacing_bottom_mobile": 0,
+        "image_spacing_bottom_mobile": 22,
         "moringa_eyebrow": "BUILD YOUR ROUTINE",
         "moringa_heading": "Your first month with Pure Moringa",
         "moringa_description": "<p>Most people don’t need 12 supplements. They need one green habit they actually keep. Here’s what that month is for.</p>",
