@@ -153,6 +153,26 @@
   .avonent-journey__check{display:grid;width:30px;height:30px;place-items:center;color:white;background:linear-gradient(145deg,#00d7f5,var(--avj-accent));border:1px solid rgb(255 255 255/.65);border-radius:50%;box-shadow:0 6px 16px rgb(2 198 234/.24);font-size:16px;font-weight:800}
   .avonent-journey__disclaimer{width:min(100%,760px);margin:10px auto 0;color:var(--avj-muted);font-size:11px;line-height:1.5;text-align:center}
 
+  /* A true four-stage journey on desktop; the vertical treatment remains on mobile/tablet. */
+  @media screen and (min-width:990px){
+    .avonent-journey__inner{width:min(calc(100% - 64px),1320px)}
+    .avonent-journey__header{width:min(100%,800px);margin-bottom:44px}
+    .avonent-journey__timeline{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;width:100%;max-width:none}
+    .avonent-journey__step{display:grid;grid-template-rows:48px 1fr;gap:12px;min-width:0;padding:0}
+    .avonent-journey__rail{align-items:center;justify-content:flex-start;padding-left:18px}
+    .avonent-journey__rail::after{top:50%;right:-18px;bottom:auto;left:58px;width:auto;height:3px;background:color-mix(in srgb,var(--avj-accent) 55%,var(--avj-border));transform:translateY(-50%)}
+    .avonent-journey__rail::before{display:none}
+    .avonent-journey__dot{width:44px;height:44px;flex-basis:44px;border-color:color-mix(in srgb,var(--avj-accent) 55%,white);box-shadow:0 0 0 7px color-mix(in srgb,var(--avj-accent) 10%,transparent),0 8px 24px color-mix(in srgb,var(--avj-accent) 18%,transparent)}
+    .avonent-journey__dot-icon{color:white;background:var(--avj-accent);border-color:var(--avj-accent)}
+    .avonent-journey__card{height:100%;min-height:360px;padding:24px 20px;border-radius:22px;box-shadow:0 18px 46px rgb(17 24 39/.075)}
+    .avonent-journey__card-heading{display:block;min-height:112px;padding-bottom:17px}
+    .avonent-journey__week{margin-bottom:12px}
+    .avonent-journey__title{font-size:clamp(21px,1.7vw,25px)}
+    .avonent-journey__benefits{gap:15px;margin-top:20px}
+    .avonent-journey__benefit{grid-template-columns:28px minmax(0,1fr);gap:10px;align-items:start;font-size:15px;line-height:1.45}
+    .avonent-journey__check{width:28px;height:28px;font-size:14px}
+  }
+
   @media screen and (max-width:749px){
     .avonent-journey__inner{width:min(calc(100% - 28px),var(--avj-width))}
     .avonent-journey__inner.has-journey-image{padding-top:14px}
