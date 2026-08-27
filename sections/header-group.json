@@ -151,10 +151,6 @@
         "speed": 30
       }
     },
-    "avonent_moringa_price_sync": {
-      "type": "00-avonent-moringa-price-sync-loader",
-      "settings": {}
-    },
     "avonent_header_cleanup": {
       "type": "avonent-header-cleanup",
       "settings": {}
@@ -164,7 +160,6 @@
     "header_announcements_9jGBFp",
     "header_section",
     "avonent_moringa_header_benefits",
-    "avonent_moringa_price_sync",
     "avonent_header_cleanup"
   ]
 }
