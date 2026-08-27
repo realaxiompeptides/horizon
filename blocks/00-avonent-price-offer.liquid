@@ -105,6 +105,65 @@
         const subscriptionPriceText = {{ subscription_price | money | json }};
         const oneTimePriceText = {{ one_time_price | money | json }};
         let mode = 'subscription';
+        let selectedQuantity = 1;
+        let selectedSubscriptionTotal = Number(root.dataset.subscriptionPrice || 0);
+        let selectedSubscriptionCompareTotal = Number(root.dataset.oneTimePrice || 0);
+        let selectedOneTimeTotal = Number(root.dataset.oneTimePrice || 0);
+
+        function formatMoney(cents) {
+          const amount = Number(cents || 0) / 100;
+          const currency = window.Shopify?.currency?.active || {{ cart.currency.iso_code | default: shop.currency | json }};
+
+          try {
+            return new Intl.NumberFormat(undefined, {
+              style: 'currency',
+              currency,
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+            }).format(amount);
+          } catch (error) {
+            return '$' + amount.toFixed(2);
+          }
+        }
+
+        function renderSelectedBundlePrice() {
+          const price = root.querySelector('.avonent-price-offer__price');
+          const compare = root.querySelector('.avonent-price-offer__compare');
+          const save = root.querySelector('.avonent-price-offer__save');
+
+          if (price && selectedSubscriptionTotal > 0) {
+            price.textContent = formatMoney(selectedSubscriptionTotal);
+          }
+
+          if (compare) {
+            const showCompare = selectedSubscriptionCompareTotal > selectedSubscriptionTotal;
+            compare.textContent = showCompare ? formatMoney(selectedSubscriptionCompareTotal) : '';
+            compare.hidden = !showCompare;
+          }
+
+          if (save) {
+            const percent = selectedSubscriptionCompareTotal > selectedSubscriptionTotal
+              ? Math.round(
+                  ((selectedSubscriptionCompareTotal - selectedSubscriptionTotal) /
+                    selectedSubscriptionCompareTotal) * 100
+                )
+              : 0;
+            save.textContent = percent > 0 ? `Save ${percent}%` : '';
+            save.hidden = percent <= 0;
+          }
+
+          const oneTimePrice = getScope().querySelector(
+            '[data-moringa-purchase-meta] [data-moringa-one-time] strong'
+          );
+          if (oneTimePrice && selectedOneTimeTotal > 0) {
+            oneTimePrice.textContent = formatMoney(selectedOneTimeTotal);
+          }
+
+          root.dataset.selectedQuantity = String(selectedQuantity);
+          root.dataset.subscriptionTotal = String(selectedSubscriptionTotal);
+          root.dataset.subscriptionCompareTotal = String(selectedSubscriptionCompareTotal);
+          root.dataset.oneTimeTotal = String(selectedOneTimeTotal);
+        }
 
         function getScope() {
           return root.closest('.shopify-section') || document;
@@ -207,6 +266,10 @@
           if (oneTime) {
             oneTime.classList.toggle('is-selected', mode === 'one_time');
             oneTime.setAttribute('aria-pressed', mode === 'one_time' ? 'true' : 'false');
+            const oneTimeAmount = oneTime.querySelector('strong');
+            if (oneTimeAmount && selectedOneTimeTotal > 0) {
+              oneTimeAmount.textContent = formatMoney(selectedOneTimeTotal);
+            }
           }
         }
 
@@ -228,6 +291,7 @@
           }
           enforceMainFormMode();
           buildMetaBlock();
+          renderSelectedBundlePrice();
         }
 
         function setMode(nextMode) {
@@ -237,6 +301,15 @@
         }
 
         subscribeRow?.addEventListener('click', () => setMode('subscription'));
+
+        document.addEventListener('avonent:bundle-change', (event) => {
+          const detail = event.detail || {};
+          selectedQuantity = Math.max(1, Number(detail.quantity || 1));
+          selectedSubscriptionTotal = Number(detail.subscriptionTotal || 0);
+          selectedSubscriptionCompareTotal = Number(detail.subscriptionCompareTotal || 0);
+          selectedOneTimeTotal = Number(detail.oneTimeTotal || 0);
+          renderSelectedBundlePrice();
+        });
 
         function guardMainSubmission(event) {
           const form = getMainForm();
