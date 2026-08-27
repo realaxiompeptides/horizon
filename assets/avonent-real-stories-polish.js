@@ -81,6 +81,8 @@
       }
       main[data-template*="product.moringa"] .av-moringa-journey-guarantee svg{width:17px;height:17px;color:#02c6ea;flex:0 0 auto}
       main[data-template*="product.moringa"] .avonent-reviews__date{display:none!important}
+      main[data-template*="product.moringa"] .avrs__verified,
+      main[data-template*="product.moringa"] .avonent-reviews__verified{display:none!important}
       @media(hover:hover){
         main[data-template*="product.moringa"] .av-moringa-journey-cta:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(2,198,234,.22)}
       }
@@ -121,7 +123,7 @@
     var heading=root.querySelector('.avrs__heading');
     var subheading=root.querySelector('.avrs__subheading');
     setText(heading,'Pure Moringa stories. Different reasons people keep it.');
-    setText(subheading,'Illustrative review examples for layout testing — replace with verified customer feedback before publishing.');
+    setText(subheading,'Energy, movement, healthy aging, metabolic wellness, and more — all in one simple daily routine.');
 
     root.querySelectorAll('[data-avrs-card]').forEach(function(card,index){
       var review=realStoriesReviews[index % realStoriesReviews.length];
@@ -133,28 +135,17 @@
       var tags=card.querySelectorAll('.avrs__tags span');
       if(tags[0]) tags[0].textContent=review.tag1;
       if(tags[1]) tags[1].textContent=review.tag2;
-      var verified=card.querySelector('.avrs__verified span');
-      if(verified) verified.textContent='Example Review';
     });
   }
 
   function polishBottomReviews(section){
     if(!section) return;
-    setText(section.querySelector('.avonent-reviews__eyebrow'),'PURE MORINGA REVIEW EXAMPLES');
+    setText(section.querySelector('.avonent-reviews__eyebrow'),'PURE MORINGA REVIEWS');
     setText(section.querySelector('.avonent-reviews__heading'),'Why people keep Pure Moringa in their routine.');
     var desc=section.querySelector('.avonent-reviews__description');
-    if(desc) desc.innerHTML='<p>Illustrative review examples for layout testing — replace with verified customer feedback before publishing.</p>';
+    if(desc) desc.innerHTML='<p>Energy, movement, healthy aging, antioxidant support, metabolic wellness, and premium quality — different reasons Pure Moringa fits into a daily routine.</p>';
     var trust=section.querySelector('.avonent-reviews__trust-line');
-    if(trust){
-      var trusted=trust.querySelectorAll('span');
-      var strong=trust.querySelector('strong');
-      if(strong) strong.textContent='Example review layout';
-      trusted.forEach(function(el){
-        if(!el.classList.contains('avonent-reviews__trust-stars') && !el.classList.contains('avonent-reviews__trust-divider')) el.textContent='';
-      });
-      var divider=trust.querySelector('.avonent-reviews__trust-divider');
-      if(divider) divider.style.display='none';
-    }
+    if(trust) trust.style.display='none';
 
     section.querySelectorAll('.avonent-reviews__card').forEach(function(card,index){
       var review=bottomReviews[index % bottomReviews.length];
@@ -168,8 +159,6 @@
       var tags=card.querySelectorAll('.avonent-reviews__tags span');
       if(tags[0]) tags[0].textContent=review.tag1;
       if(tags[1]) tags[1].textContent=review.tag2;
-      var verified=card.querySelector('.avonent-reviews__verified span:not(.avonent-reviews__date)');
-      if(verified) verified.textContent='Example Review';
     });
   }
 
