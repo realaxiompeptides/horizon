@@ -50,9 +50,6 @@ class CartDrawerComponent extends Component {
     this.#protectionVariantId = Number(this.dataset.protectionVariantId || 0);
     this.#startReservationTimer();
 
-    // The restore path sets [open] before this module loads, so the
-    // theme-drawer:open event will have already fired. Use the attribute
-    // check so this works even before <theme-drawer> upgrades.
     if (this.#themeDrawer?.hasAttribute('open')) {
       this.#handleDrawerOpen();
     }
@@ -70,17 +67,11 @@ class CartDrawerComponent extends Component {
     }
   }
 
-  /**
-   * Handles the theme-drawer opening — updates sticky state and wires up the installments CTA.
-   */
   #handleDrawerOpen = () => {
     this.#updateStickyState();
     this.#startReservationTimer();
     this.#syncShippingProtection();
 
-    // Close cart drawer when installments CTA is clicked to avoid overlapping dialogs.
-    // Re-queried on every open so it survives cart content re-renders that
-    // replace the shopify-payment-terms shadow root.
     customElements.whenDefined('shopify-payment-terms').then(() => {
       const cta = this.querySelector('shopify-payment-terms')?.shadowRoot?.querySelector('#shopify-installments-cta');
       cta?.addEventListener('click', () => this.#themeDrawer?.close(), { once: true });
@@ -93,11 +84,6 @@ class CartDrawerComponent extends Component {
   #handleCartLinesUpdate = (event) => {
     const shouldAutoOpen = this.hasAttribute('auto-open') && event.action === 'add' && !this.#themeDrawer?.isOpen;
 
-    // When the event originates inside an open MODAL <dialog> (e.g. quick-add),
-    // defer the auto-open until that dialog's native `close` fires so its focus
-    // restoration runs first — otherwise we'd capture the wrong
-    // `#previouslyFocused`. Non-modal dialogs (e.g. the hotspot preview) don't
-    // close on add and don't move focus, so `:modal` excludes them.
     const sourceModal = /** @type {HTMLDialogElement | null} */ (
       event.target instanceof Element ? event.target.closest('dialog:modal') : null
     );
@@ -110,6 +96,14 @@ class CartDrawerComponent extends Component {
       ?.then(({ detail }) => {
         const settle = () => requestAnimationFrame(() => this.#updateStickyState());
         const isProtectionUpdate = detail?.source === 'avonent-shipping-protection';
+
+        if (!detail?.didError && !isProtectionUpdate && event.action === 'add') {
+          this.#resetReservationTimer();
+        }
+
+        if (!detail?.didError && !isProtectionUpdate && event.action === 'remove' && Number(detail?.itemCount || 0) === 0) {
+          sessionStorage.removeItem(CartDrawerComponent.#reservationStorageKey);
+        }
 
         if (!shouldAutoOpen || detail?.didError || isProtectionUpdate) {
           settle();
@@ -134,7 +128,6 @@ class CartDrawerComponent extends Component {
       });
   };
 
-
   #handleEnhancementClick = (event) => {
     if (!(event.target instanceof Element)) return;
 
@@ -146,24 +139,27 @@ class CartDrawerComponent extends Component {
     this.#setShippingProtection(enabled);
   };
 
+  #resetReservationTimer() {
+    const endsAt = Date.now() + CartDrawerComponent.#reservationDuration;
+    sessionStorage.setItem(CartDrawerComponent.#reservationStorageKey, String(endsAt));
+    this.#startReservationTimer();
+  }
+
   #startReservationTimer() {
     if (this.#reservationTimer !== null) window.clearInterval(this.#reservationTimer);
 
-    let endsAt = Number(sessionStorage.getItem(CartDrawerComponent.#reservationStorageKey));
-    if (!Number.isFinite(endsAt) || endsAt <= Date.now()) {
-      endsAt = Date.now() + CartDrawerComponent.#reservationDuration;
-      sessionStorage.setItem(CartDrawerComponent.#reservationStorageKey, String(endsAt));
-    }
-
-    const render = () => {
-      let remaining = endsAt - Date.now();
-
-      if (remaining <= 0) {
+    const ensureEndsAt = () => {
+      let endsAt = Number(sessionStorage.getItem(CartDrawerComponent.#reservationStorageKey));
+      if (!Number.isFinite(endsAt) || endsAt <= Date.now()) {
         endsAt = Date.now() + CartDrawerComponent.#reservationDuration;
         sessionStorage.setItem(CartDrawerComponent.#reservationStorageKey, String(endsAt));
-        remaining = CartDrawerComponent.#reservationDuration;
       }
+      return endsAt;
+    };
 
+    const render = () => {
+      const endsAt = ensureEndsAt();
+      const remaining = Math.max(0, endsAt - Date.now());
       const totalSeconds = Math.max(0, Math.ceil(remaining / 1000));
       const minutes = Math.floor(totalSeconds / 60);
       const seconds = totalSeconds % 60;
@@ -315,7 +311,6 @@ class CartDrawerComponent extends Component {
     }
   }
 
-
   #isCartEmpty() {
     return Boolean(this.querySelector('.cart-drawer--empty'));
   }
@@ -324,12 +319,10 @@ class CartDrawerComponent extends Component {
     const dialog = this.#dialog;
     if (!dialog) return;
 
-    // Refs do not cross nested `*-component` boundaries (e.g., `cart-items-component`), so we query within the dialog.
     const content = dialog.querySelector('.cart-drawer__content');
     const summary = dialog.querySelector('.cart-drawer__summary');
 
     if (!content || !summary) {
-      // Ensure the dialog doesn't get stuck in "unsticky" mode when summary disappears (e.g., empty cart).
       dialog.setAttribute('cart-summary-sticky', 'false');
       return;
     }
