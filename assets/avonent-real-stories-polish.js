@@ -81,13 +81,101 @@
       }
       main[data-template*="product.moringa"] .av-moringa-journey-guarantee svg{width:17px;height:17px;color:#02c6ea;flex:0 0 auto}
       main[data-template*="product.moringa"] .avonent-reviews__date{display:none!important}
+
+      /* Alevia-style Moringa product media: no pagination dots, natural horizontal browsing. */
+      main[data-template*="product.moringa"] .avonent-product-main-section media-gallery slideshow-controls,
+      main[data-template*="product.moringa"] .avonent-product-main-section media-gallery slideshow-arrows,
+      main[data-template*="product.moringa"] .avonent-product-main-section media-gallery [class*="slideshow-control"],
+      main[data-template*="product.moringa"] .avonent-product-main-section media-gallery [class*="pagination"]{
+        display:none!important;
+      }
+      main[data-template*="product.moringa"] .avonent-product-main-section media-gallery slideshow-container{
+        overflow:visible!important;
+      }
+      main[data-template*="product.moringa"] .avonent-product-main-section media-gallery .product-media-container{
+        overflow:hidden!important;
+        border-radius:16px!important;
+        background:#f4f9fc!important;
+      }
+
       @media(hover:hover){
         main[data-template*="product.moringa"] .av-moringa-journey-cta:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(2,198,234,.22)}
       }
+
       @media(max-width:749px){
         main[data-template*="product.moringa"] .av-moringa-journey-cta-wrap{width:100%;margin:24px auto 4px;gap:9px}
         main[data-template*="product.moringa"] .av-moringa-journey-cta{min-height:52px;border-radius:13px;font-size:15px}
         main[data-template*="product.moringa"] .av-moringa-journey-guarantee{font-size:11.5px}
+
+        main[data-template*="product.moringa"] .avonent-product-main-section .product-information__media{
+          overflow:hidden!important;
+        }
+        main[data-template*="product.moringa"] .avonent-product-main-section media-gallery{
+          display:block!important;
+          width:100%!important;
+          overflow:visible!important;
+          padding:0!important;
+        }
+        main[data-template*="product.moringa"] .avonent-product-main-section media-gallery slideshow-component,
+        main[data-template*="product.moringa"] .avonent-product-main-section media-gallery slideshow-container{
+          display:block!important;
+          width:100%!important;
+          overflow:visible!important;
+        }
+        main[data-template*="product.moringa"] .avonent-product-main-section media-gallery slideshow-slides{
+          display:flex!important;
+          align-items:stretch!important;
+          gap:12px!important;
+          width:100%!important;
+          padding:0 34px 0 18px!important;
+          margin:0!important;
+          overflow-x:auto!important;
+          overflow-y:hidden!important;
+          scroll-snap-type:x mandatory!important;
+          scroll-padding-left:18px!important;
+          overscroll-behavior-inline:contain!important;
+          -webkit-overflow-scrolling:touch!important;
+          scrollbar-width:none!important;
+        }
+        main[data-template*="product.moringa"] .avonent-product-main-section media-gallery slideshow-slides::-webkit-scrollbar{display:none!important}
+        main[data-template*="product.moringa"] .avonent-product-main-section media-gallery slideshow-slide{
+          flex:0 0 82vw!important;
+          width:82vw!important;
+          min-width:82vw!important;
+          max-width:560px!important;
+          scroll-snap-align:start!important;
+          scroll-snap-stop:normal!important;
+          opacity:1!important;
+          transform:none!important;
+        }
+        main[data-template*="product.moringa"] .avonent-product-main-section media-gallery slideshow-slide[aria-hidden="true"]{
+          visibility:visible!important;
+          pointer-events:auto!important;
+        }
+        main[data-template*="product.moringa"] .avonent-product-main-section media-gallery .product-media-container,
+        main[data-template*="product.moringa"] .avonent-product-main-section media-gallery .product-media{
+          width:100%!important;
+          height:100%!important;
+          min-height:0!important;
+          border-radius:16px!important;
+        }
+        main[data-template*="product.moringa"] .avonent-product-main-section media-gallery .product-media :is(img,.deferred-media__poster-image){
+          display:block!important;
+          width:100%!important;
+          height:auto!important;
+          min-height:0!important;
+          object-fit:cover!important;
+          border-radius:16px!important;
+        }
+      }
+
+      @media(min-width:750px){
+        main[data-template*="product.moringa"] .avonent-product-main-section media-gallery slideshow-slides{
+          gap:16px!important;
+        }
+        main[data-template*="product.moringa"] .avonent-product-main-section media-gallery .product-media-container{
+          border-radius:18px!important;
+        }
       }
     `;
     document.head.appendChild(style);
