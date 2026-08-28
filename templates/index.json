@@ -80,6 +80,22 @@
     "00_avonent_featured_products_VTU4KW": {
       "type": "00-avonent-featured-products",
       "blocks": {
+        "product_m3tCFa": {
+          "type": "product",
+          "settings": {
+            "product": "pure-moringa-capsules",
+            "badge_text": "POPULAR",
+            "show_sale_badge": true,
+            "category_text": "DAILY SUPPORT",
+            "benefit": "An easy addition to your everyday routine.",
+            "benefit_2": "Easy daily use",
+            "show_rating": true,
+            "rating": 5,
+            "rating_text": "5.0",
+            "price_note": "One-time purchase",
+            "button_text": "SHOP NOW"
+          }
+        },
         "product_RkNjry": {
           "type": "product",
           "settings": {
@@ -95,61 +111,11 @@
             "price_note": "One-time purchase",
             "button_text": "SHOP NOW"
           }
-        },
-        "product_m3tCFa": {
-          "type": "product",
-          "settings": {
-            "product": "example-supplement-1",
-            "badge_text": "POPULAR",
-            "show_sale_badge": true,
-            "category_text": "DAILY SUPPORT",
-            "benefit": "An easy addition to your everyday routine.",
-            "benefit_2": "Easy daily use",
-            "show_rating": true,
-            "rating": 5,
-            "rating_text": "5.0",
-            "price_note": "One-time purchase",
-            "button_text": "SHOP NOW"
-          }
-        },
-        "product_iXCyMz": {
-          "type": "product",
-          "settings": {
-            "product": "example-supplement-1",
-            "badge_text": "CUSTOMER FAVORITE",
-            "show_sale_badge": true,
-            "category_text": "WELLNESS",
-            "benefit": "Carefully selected ingredients in every serving.",
-            "benefit_2": "Quality ingredients",
-            "show_rating": true,
-            "rating": 5,
-            "rating_text": "5.0",
-            "price_note": "One-time purchase",
-            "button_text": "SHOP NOW"
-          }
-        },
-        "product_eqUx3c": {
-          "type": "product",
-          "settings": {
-            "product": "example-supplement-1",
-            "badge_text": "TRENDING",
-            "show_sale_badge": true,
-            "category_text": "DAILY ROUTINE",
-            "benefit": "Simple support made for everyday consistency.",
-            "benefit_2": "Made for your routine",
-            "show_rating": true,
-            "rating": 5,
-            "rating_text": "5.0",
-            "price_note": "One-time purchase",
-            "button_text": "SHOP NOW"
-          }
         }
       },
       "block_order": [
-        "product_RkNjry",
         "product_m3tCFa",
-        "product_iXCyMz",
-        "product_eqUx3c"
+        "product_RkNjry"
       ],
       "name": "00 Avonent Featured",
       "settings": {
