@@ -82,6 +82,32 @@
       main[data-template*="product.moringa"] .av-moringa-journey-guarantee svg{width:17px;height:17px;color:#02c6ea;flex:0 0 auto}
       main[data-template*="product.moringa"] .avonent-reviews__date{display:none!important}
 
+      /* Real Stories: Resilia-style pagination lives inside the card, arrows stay outside. */
+      main[data-template*="product.moringa"] .avrs__viewport{
+        position:relative!important;
+      }
+      main[data-template*="product.moringa"] .avrs__card{
+        padding-bottom:64px!important;
+      }
+      main[data-template*="product.moringa"] .avrs__viewport > .avrs__dots{
+        position:absolute!important;
+        left:0!important;
+        right:0!important;
+        bottom:18px!important;
+        z-index:5!important;
+        margin:0!important;
+        display:flex!important;
+        justify-content:center!important;
+        gap:10px!important;
+        pointer-events:auto!important;
+      }
+      main[data-template*="product.moringa"] .avrs__controls{
+        margin-top:14px!important;
+        display:flex!important;
+        justify-content:center!important;
+        gap:10px!important;
+      }
+
       /* Alevia-style Moringa product media: no pagination dots, natural horizontal browsing. */
       main[data-template*="product.moringa"] .avonent-product-main-section media-gallery slideshow-controls,
       main[data-template*="product.moringa"] .avonent-product-main-section media-gallery slideshow-arrows,
@@ -107,8 +133,20 @@
         main[data-template*="product.moringa"] .av-moringa-journey-cta{min-height:52px;border-radius:13px;font-size:15px}
         main[data-template*="product.moringa"] .av-moringa-journey-guarantee{font-size:11.5px}
 
+        main[data-template*="product.moringa"] .avrs__card{
+          padding-bottom:58px!important;
+        }
+        main[data-template*="product.moringa"] .avrs__viewport > .avrs__dots{
+          bottom:15px!important;
+        }
+        main[data-template*="product.moringa"] .avrs__controls{
+          margin-top:12px!important;
+        }
+
+        /* Small breathing room between the moving benefit bar and the product cards. */
         main[data-template*="product.moringa"] .avonent-product-main-section .product-information__media{
           overflow:hidden!important;
+          padding-top:11px!important;
         }
         main[data-template*="product.moringa"] .avonent-product-main-section media-gallery{
           display:block!important;
@@ -225,10 +263,18 @@
 
   function setText(el,text){if(el) el.textContent=text;}
 
+  function placeRealStoriesDots(root){
+    if(!root) return;
+    var viewport=root.querySelector('[data-avrs-viewport]');
+    var dots=root.querySelector('.avrs__dots');
+    if(viewport && dots && dots.parentNode!==viewport) viewport.appendChild(dots);
+  }
+
   function polishRealStories(root){
     if(!root) return;
     setText(root.querySelector('.avrs__heading'),'Real Stories, Real Results');
     setText(root.querySelector('.avrs__subheading'),'See what Avonent customers are saying.');
+    placeRealStoriesDots(root);
 
     root.querySelectorAll('[data-avrs-card]').forEach(function(card,index){
       var review=realStoriesReviews[index % realStoriesReviews.length];
@@ -291,7 +337,10 @@
   var resizeTimer;
   window.addEventListener('resize',function(){
     window.clearTimeout(resizeTimer);
-    resizeTimer=window.setTimeout(addJourneyCTA,120);
+    resizeTimer=window.setTimeout(function(){
+      addJourneyCTA();
+      document.querySelectorAll('[data-avrs]').forEach(placeRealStoriesDots);
+    },120);
   });
 
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init);
