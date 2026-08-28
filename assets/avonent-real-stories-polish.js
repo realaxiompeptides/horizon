@@ -85,7 +85,7 @@
         main[data-template*="product.moringa"] .av-moringa-journey-cta:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(2,198,234,.22)}
       }
       @media(max-width:749px){
-        main[data-template*="product.moringa"] .av-moringa-journey-cta-wrap{width:100%;margin-top:18px;gap:9px}
+        main[data-template*="product.moringa"] .av-moringa-journey-cta-wrap{width:100%;margin:24px auto 4px;gap:9px}
         main[data-template*="product.moringa"] .av-moringa-journey-cta{min-height:52px;border-radius:13px;font-size:15px}
         main[data-template*="product.moringa"] .av-moringa-journey-guarantee{font-size:11.5px}
       }
@@ -93,25 +93,46 @@
     document.head.appendChild(style);
   }
 
+  function buildJourneyCTA(){
+    var wrap=document.createElement('div');
+    wrap.className='av-moringa-journey-cta-wrap';
+    wrap.innerHTML=`
+      <a class="av-moringa-journey-cta" href="#avonent-bottom-offer">
+        <span>Start My Journey</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <div class="av-moringa-journey-guarantee">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19 6v5c0 4.8-2.9 8-7 10-4.1-2-7-5.2-7-10V6l7-3Z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m9 12 2 2 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>30-day money-back guarantee</span>
+      </div>`;
+    return wrap;
+  }
+
+  function positionJourneyCTA(section){
+    if(!section) return;
+    var header=section.querySelector('.avonent-journey__header');
+    var timeline=section.querySelector('.avonent-journey__timeline');
+    var inner=section.querySelector('.avonent-journey__inner');
+    if(!header || !inner) return;
+
+    var wrap=section.querySelector('.av-moringa-journey-cta-wrap');
+    if(!wrap) wrap=buildJourneyCTA();
+
+    if(window.matchMedia('(max-width:749px)').matches){
+      if(timeline && timeline.parentNode){
+        timeline.insertAdjacentElement('afterend',wrap);
+      }else{
+        inner.appendChild(wrap);
+      }
+    }else{
+      header.appendChild(wrap);
+    }
+  }
+
   function addJourneyCTA(){
     var main=document.querySelector('main[data-template*="product.moringa"]');
     if(!main) return;
-    main.querySelectorAll('.avonent-journey').forEach(function(section){
-      var header=section.querySelector('.avonent-journey__header');
-      if(!header || header.querySelector('.av-moringa-journey-cta-wrap')) return;
-      var wrap=document.createElement('div');
-      wrap.className='av-moringa-journey-cta-wrap';
-      wrap.innerHTML=`
-        <a class="av-moringa-journey-cta" href="#avonent-bottom-offer">
-          <span>Start My Journey</span>
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-        <div class="av-moringa-journey-guarantee">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19 6v5c0 4.8-2.9 8-7 10-4.1-2-7-5.2-7-10V6l7-3Z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m9 12 2 2 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span>30-day money-back guarantee</span>
-        </div>`;
-      header.appendChild(wrap);
-    });
+    main.querySelectorAll('.avonent-journey').forEach(positionJourneyCTA);
   }
 
   function setText(el,text){if(el) el.textContent=text;}
@@ -178,6 +199,12 @@
     document.querySelectorAll('[data-avrs]').forEach(polishRealStories);
     document.querySelectorAll('.avonent-reviews').forEach(polishBottomReviews);
   }
+
+  var resizeTimer;
+  window.addEventListener('resize',function(){
+    window.clearTimeout(resizeTimer);
+    resizeTimer=window.setTimeout(addJourneyCTA,120);
+  });
 
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init);
   else init();
