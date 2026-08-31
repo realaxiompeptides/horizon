@@ -36,10 +36,11 @@
       main.querySelector('form[action*="/cart/add"]');
 
     const values = (option) => {
+      const root = offer();
       const quantity = Math.max(1, Number(option?.dataset.quantity || 1));
-      const subscriptionUnit = Number(option?.dataset.subscriptionUnit || offer()?.dataset.subscriptionPrice || 0);
-      const subscriptionCompareUnit = Number(option?.dataset.subscriptionCompareUnit || option?.dataset.oneTimeUnit || 0);
-      const oneTimeUnit = Number(option?.dataset.oneTimeUnit || offer()?.dataset.oneTimePrice || 0);
+      const subscriptionUnit = Number(option?.dataset.subscriptionUnit || root?.dataset.subscriptionPrice || 0);
+      const subscriptionCompareUnit = Number(option?.dataset.subscriptionCompareUnit || option?.dataset.oneTimeUnit || root?.dataset.oneTimePrice || 0);
+      const oneTimeUnit = Number(option?.dataset.oneTimeUnit || root?.dataset.oneTimePrice || 0);
       const oneTimeCompareUnit = Number(option?.dataset.oneTimeCompareUnit || oneTimeUnit);
       return {
         quantity,
@@ -101,13 +102,11 @@
         const savings = option.querySelector('[data-av-bundle-savings]');
 
         setText(price, money(total));
-
         if (compare) {
           const show = compareTotal > total;
           setText(compare, show ? money(compareTotal) : '');
           compare.hidden = !show;
         }
-
         if (savings) {
           if (mode === 'one_time') {
             savings.hidden = true;
@@ -120,9 +119,27 @@
       });
     };
 
-    const ensureStatus = (meta) => {
-      let status = meta?.querySelector('[data-moringa-one-time-status]');
-      if (!meta) return null;
+    const ensureMeta = () => {
+      const targetForm = form();
+      if (!targetForm) return null;
+      let meta = targetForm.querySelector('[data-moringa-purchase-meta]');
+      if (!meta) {
+        const buttons = targetForm.querySelector('.product-form-buttons');
+        if (!buttons) return null;
+        meta = document.createElement('div');
+        meta.className = 'moringa-purchase-meta';
+        meta.setAttribute('data-moringa-purchase-meta', '');
+        meta.innerHTML = `
+          <div class="moringa-purchase-meta__recurring" data-moringa-recurring>
+            <span class="moringa-purchase-meta__item">↻ <span>Refills ship every 30 days</span></span>
+            <i aria-hidden="true"></i>
+            <span class="moringa-purchase-meta__item">◷ <span>Skip or cancel anytime</span></span>
+          </div>
+          <button type="button" class="moringa-purchase-meta__one-time" data-moringa-one-time></button>
+          <p class="moringa-purchase-meta__status" data-moringa-one-time-status>One-time purchase selected · No recurring charges</p>`;
+        buttons.insertAdjacentElement('afterend', meta);
+      }
+      let status = meta.querySelector('[data-moringa-one-time-status]');
       if (!status) {
         status = document.createElement('p');
         status.className = 'moringa-purchase-meta__status';
@@ -130,7 +147,7 @@
         status.textContent = 'One-time purchase selected · No recurring charges';
         meta.appendChild(status);
       }
-      return status;
+      return meta;
     };
 
     const renderOffer = () => {
@@ -138,7 +155,6 @@
       const option = selected();
       if (!root || !option) return;
       const v = values(option);
-
       const label = root.querySelector('.avonent-price-offer__label');
       const price = root.querySelector('.avonent-price-offer__price');
       const compare = root.querySelector('.avonent-price-offer__compare');
@@ -146,51 +162,50 @@
       const helper = root.querySelector('.avonent-price-offer__helper');
       const subscribe = root.querySelector('[data-moringa-subscribe]');
 
-      // Match the digestive PDP: the heading shows the PER-BOTTLE price,
-      // while Buy 1 / Buy 2 / Buy 3 cards show their bundle totals.
+      // The top row always mirrors the SELECTED bundle total.
       setText(label, mode === 'subscription' ? 'Subscribe & Save' : 'One-Time Purchase');
-      setText(price, money(mode === 'subscription' ? v.subscriptionUnit : v.oneTimeUnit));
+      setText(price, money(mode === 'subscription' ? v.subscriptionTotal : v.oneTimeTotal));
 
       if (compare) {
-        const show = mode === 'subscription' && v.subscriptionCompareUnit > v.subscriptionUnit;
-        setText(compare, show ? money(v.subscriptionCompareUnit) : '');
+        const show = mode === 'subscription' && v.subscriptionCompareTotal > v.subscriptionTotal;
+        setText(compare, show ? money(v.subscriptionCompareTotal) : '');
         compare.hidden = !show;
       }
-
       if (save) {
-        const percent = v.subscriptionCompareUnit > v.subscriptionUnit
-          ? Math.round(((v.subscriptionCompareUnit - v.subscriptionUnit) / v.subscriptionCompareUnit) * 100)
+        const percent = v.subscriptionCompareTotal > v.subscriptionTotal
+          ? Math.round(((v.subscriptionCompareTotal - v.subscriptionTotal) / v.subscriptionCompareTotal) * 100)
           : 0;
         setText(save, mode === 'subscription' && percent ? `Save ${percent}%` : '');
         save.hidden = mode !== 'subscription' || percent <= 0;
       }
-
       if (helper) helper.hidden = mode === 'one_time';
       if (subscribe) {
         subscribe.classList.toggle('is-selected', mode === 'subscription');
         subscribe.setAttribute('aria-pressed', mode === 'subscription' ? 'true' : 'false');
       }
 
-      const meta = form()?.querySelector('[data-moringa-purchase-meta]');
+      const meta = ensureMeta();
       const recurring = meta?.querySelector('[data-moringa-recurring]');
       const switcher = meta?.querySelector('[data-moringa-one-time]');
-      const status = ensureStatus(meta);
-
+      const status = meta?.querySelector('[data-moringa-one-time-status]');
       if (recurring) recurring.hidden = mode !== 'subscription';
       if (status) status.hidden = mode !== 'one_time';
 
       if (switcher) {
         switcher.type = 'button';
+        switcher.disabled = false;
+        switcher.classList.remove('is-selected');
+        switcher.setAttribute('aria-pressed', 'false');
         switcher.dataset.purchaseSwitch = mode === 'subscription' ? 'one_time' : 'subscription';
-        switcher.classList.toggle('is-selected', mode === 'one_time');
-        switcher.setAttribute('aria-pressed', mode === 'one_time' ? 'true' : 'false');
         switcher.innerHTML = mode === 'subscription'
-          ? `One-Time Purchase <strong>${money(v.oneTimeUnit)}</strong> + $4.95 Shipping <span>(No Free Gifts Included).</span>`
-          : `Switch back to Subscribe & Save — <strong>${money(v.subscriptionUnit)}</strong>`;
+          ? `One-Time Purchase <strong>${money(v.oneTimeTotal)}</strong> + $4.95 Shipping <span>(No Free Gifts Included).</span>`
+          : `Switch back to Subscribe & Save — <strong>${money(v.subscriptionTotal)}</strong>`;
       }
 
       root.dataset.purchaseMode = mode;
       root.dataset.selectedQuantity = String(v.quantity);
+      root.dataset.subscriptionTotal = String(v.subscriptionTotal);
+      root.dataset.oneTimeTotal = String(v.oneTimeTotal);
     };
 
     const render = () => {
@@ -216,12 +231,11 @@
       mode = nextMode === 'one_time' || nextMode === 'one-time' ? 'one_time' : 'subscription';
       render();
       announce();
-
-      // Older inline Shopify block code can repaint after its delayed initialization.
-      // Re-assert the chosen state after those timers without changing the user's mode.
-      [0, 60, 180, 500, 1000, 2000, 4000].forEach((delay) => window.setTimeout(render, delay));
+      [0, 30, 100, 250, 600, 1200, 2500].forEach((delay) => window.setTimeout(render, delay));
     };
 
+    // Capture phase is intentional: it prevents the older inline block listener from
+    // forcing the button back into one-time mode when it is being used as "switch back".
     document.addEventListener('click', (event) => {
       const switcher = event.target.closest('[data-moringa-one-time]');
       if (switcher && main.contains(switcher)) {
@@ -240,7 +254,7 @@
       }
 
       if (event.target.closest('[data-av-bundle-option]')) {
-        [0, 40, 120].forEach((delay) => window.setTimeout(render, delay));
+        [0, 30, 100, 220].forEach((delay) => window.setTimeout(render, delay));
       }
 
       const add = event.target.closest('button[type="submit"][name="add"], button[type="submit"][data-add-to-cart], [data-testid="add-to-cart"]');
@@ -248,7 +262,7 @@
     }, true);
 
     document.addEventListener('avonent:bundle-change', () => {
-      [0, 40, 120].forEach((delay) => window.setTimeout(render, delay));
+      [0, 30, 100, 220].forEach((delay) => window.setTimeout(render, delay));
     });
 
     document.addEventListener('avonent:purchase-mode-change', (event) => {
@@ -273,26 +287,19 @@
       style.id = 'avonent-moringa-purchase-controller-style';
       style.textContent = `
         main[data-template*="product.moringa"] [data-moringa-one-time] {
-          cursor:pointer !important;
-          pointer-events:auto !important;
-          color:#00a9cc !important;
-          border-bottom:1px solid currentColor !important;
-          font-weight:750 !important;
-          opacity:1 !important;
+          cursor:pointer !important; pointer-events:auto !important; color:#00a9cc !important;
+          border-bottom:1px solid currentColor !important; font-weight:750 !important;
+          opacity:1 !important; background:transparent !important;
         }
+        main[data-template*="product.moringa"] [data-moringa-one-time]:disabled { pointer-events:auto !important; opacity:1 !important; }
         main[data-template*="product.moringa"] .moringa-purchase-meta__status {
-          margin:10px 0 0 !important;
-          color:#181818 !important;
-          font-size:14px !important;
-          line-height:1.3 !important;
-          text-align:center !important;
-          font-weight:400 !important;
-        }
-      `;
+          margin:10px 0 0 !important; color:#181818 !important; font-size:14px !important;
+          line-height:1.3 !important; text-align:center !important; font-weight:400 !important;
+        }`;
       document.head.appendChild(style);
     }
 
     mode = 'subscription';
-    [0, 100, 350, 900, 1800, 3600].forEach((delay) => window.setTimeout(render, delay));
+    [0, 80, 250, 700, 1400, 3000].forEach((delay) => window.setTimeout(render, delay));
   });
 })();
