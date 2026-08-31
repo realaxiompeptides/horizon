@@ -15,6 +15,26 @@
       section.style.display = 'none';
     });
 
+    if (!document.getElementById('avonent-purchase-mode-hotfix')) {
+      const style = document.createElement('style');
+      style.id = 'avonent-purchase-mode-hotfix';
+      style.textContent = `
+        main[data-template*="product.moringa"] .moringa-purchase-meta__one-time,
+        main[data-template*="product.moringa"] .moringa-purchase-meta__one-time.is-selected {
+          color: #008eae !important;
+          border-bottom: 1px solid currentColor !important;
+          cursor: pointer !important;
+          pointer-events: auto !important;
+          opacity: 1 !important;
+        }
+        main[data-template*="product.moringa"] [data-moringa-subscribe] {
+          cursor: pointer !important;
+          pointer-events: auto !important;
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
     const formatMoney = (cents) => {
       const amount = Number(cents || 0) / 100;
       const currency = window.Shopify?.currency?.active || 'USD';
@@ -148,13 +168,23 @@
 
       const meta = main.querySelector('[data-moringa-purchase-meta]');
       const recurring = meta?.querySelector('[data-moringa-recurring]');
-      const oneTimeButton = meta?.querySelector('[data-moringa-one-time]');
+      const switchButton = meta?.querySelector('[data-moringa-one-time]');
+
       if (recurring) recurring.hidden = currentMode !== 'subscription';
-      if (oneTimeButton) {
-        oneTimeButton.classList.toggle('is-selected', currentMode === 'one_time');
-        oneTimeButton.setAttribute('aria-pressed', currentMode === 'one_time' ? 'true' : 'false');
-        const amount = oneTimeButton.querySelector('strong');
-        if (amount && oneTimeTotal > 0) amount.textContent = formatMoney(oneTimeTotal);
+
+      if (switchButton) {
+        switchButton.classList.toggle('is-selected', currentMode === 'one_time');
+        switchButton.setAttribute('aria-pressed', currentMode === 'one_time' ? 'true' : 'false');
+        switchButton.dataset.purchaseSwitch = currentMode === 'one_time' ? 'subscription' : 'one_time';
+
+        if (currentMode === 'subscription') {
+          switchButton.innerHTML = `One-Time Purchase <strong>${formatMoney(oneTimeTotal)}</strong> + $4.95 Shipping <span>(No Free Gifts Included).</span>`;
+        } else {
+          const percent = subscriptionCompareTotal > subscriptionTotal
+            ? Math.round(((subscriptionCompareTotal - subscriptionTotal) / subscriptionCompareTotal) * 100)
+            : 0;
+          switchButton.innerHTML = `Switch to Subscribe & Save <strong>${formatMoney(subscriptionTotal)}</strong>${percent > 0 ? ` · Save ${percent}%` : ''}`;
+        }
       }
 
       offer.dataset.purchaseMode = currentMode;
@@ -184,8 +214,24 @@
     };
 
     document.addEventListener('click', (event) => {
-      const oneTime = event.target.closest('[data-moringa-one-time]');
-      if (oneTime && main.contains(oneTime)) {
+      const switchButton = event.target.closest('[data-moringa-one-time]');
+      if (switchButton && main.contains(switchButton)) {
+        const nextMode = switchButton.dataset.purchaseSwitch ||
+          (switchButton.getAttribute('aria-pressed') === 'true' ? 'subscription' : 'one_time');
+
+        if (nextMode === 'subscription') {
+          event.preventDefault();
+          event.stopImmediatePropagation();
+
+          const subscribeRow = getOffer()?.querySelector('[data-moringa-subscribe]');
+          if (subscribeRow) {
+            subscribeRow.click();
+          } else {
+            setMode('subscription');
+          }
+          return;
+        }
+
         setMode('one_time');
         return;
       }
