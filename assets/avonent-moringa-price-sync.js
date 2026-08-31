@@ -11,8 +11,6 @@
     const main = document.querySelector('main[data-template*="product.moringa"]');
     if (!main) return;
 
-    // The benefit ticker now lives directly under the header, Resilia-style.
-    // Hide the older mid-page copy so the same marquee is not shown twice.
     main.querySelectorAll('.section-avonent-benefit-marquee').forEach((section) => {
       section.style.display = 'none';
     });
@@ -20,7 +18,6 @@
     const formatMoney = (cents) => {
       const amount = Number(cents || 0) / 100;
       const currency = window.Shopify?.currency?.active || 'USD';
-
       try {
         return new Intl.NumberFormat(undefined, {
           style: 'currency',
@@ -33,6 +30,10 @@
       }
     };
 
+    let currentMode = 'subscription';
+    let internalModeChange = false;
+
+    const getOffer = () => main.querySelector('[data-avonent-price-offer]');
     const getBundleRoot = () => main.querySelector('.avonent-bundle');
     const getSelectedBundle = () => {
       const root = getBundleRoot();
@@ -44,78 +45,206 @@
       );
     };
 
+    const getMainForm = () =>
+      main.querySelector('.buy-buttons-block form[data-type="add-to-cart-form"]') ||
+      main.querySelector('product-form-component form[data-type="add-to-cart-form"]') ||
+      main.querySelector('form[action*="/cart/add"]');
+
+    const enforceSellingPlan = () => {
+      const offer = getOffer();
+      const form = getMainForm();
+      if (!offer || !form) return;
+
+      const planId = String(offer.dataset.planId || '');
+      let authoritative = form.querySelector('[data-avonent-moringa-selling-plan-global]');
+
+      form.querySelectorAll('[name="selling_plan"]').forEach((control) => {
+        if (control === authoritative) return;
+        control.disabled = true;
+        if (control.matches('[type="radio"], [type="checkbox"]')) control.checked = false;
+      });
+
+      if (currentMode === 'subscription' && planId) {
+        if (!authoritative) {
+          authoritative = document.createElement('input');
+          authoritative.type = 'hidden';
+          authoritative.name = 'selling_plan';
+          authoritative.setAttribute('data-avonent-moringa-selling-plan-global', '');
+          form.appendChild(authoritative);
+        }
+        authoritative.disabled = false;
+        authoritative.name = 'selling_plan';
+        authoritative.value = planId;
+        authoritative.setAttribute('value', planId);
+      } else if (authoritative) {
+        authoritative.disabled = true;
+        authoritative.value = '';
+        authoritative.removeAttribute('value');
+      }
+    };
+
     const syncHeadlinePrice = () => {
       const option = getSelectedBundle();
-      const offer = main.querySelector('[data-avonent-price-offer]');
+      const offer = getOffer();
       if (!option || !offer) return;
 
       const quantity = Math.max(1, Number(option.dataset.quantity || 1));
       const subscriptionUnit = Number(option.dataset.subscriptionUnit || 0);
-      const subscriptionCompareUnit = Number(
-        option.dataset.subscriptionCompareUnit || option.dataset.oneTimeUnit || 0
-      );
+      const subscriptionCompareUnit = Number(option.dataset.subscriptionCompareUnit || option.dataset.oneTimeUnit || 0);
       const oneTimeUnit = Number(option.dataset.oneTimeUnit || 0);
+      const oneTimeCompareUnit = Number(option.dataset.oneTimeCompareUnit || option.dataset.oneTimeUnit || 0);
 
       const subscriptionTotal = subscriptionUnit * quantity;
       const subscriptionCompareTotal = subscriptionCompareUnit * quantity;
       const oneTimeTotal = oneTimeUnit * quantity;
+      const oneTimeCompareTotal = oneTimeCompareUnit * quantity;
 
       const price = offer.querySelector('.avonent-price-offer__price');
       const compare = offer.querySelector('.avonent-price-offer__compare');
       const save = offer.querySelector('.avonent-price-offer__save');
+      const label = offer.querySelector('.avonent-price-offer__label');
+      const helper = offer.querySelector('.avonent-price-offer__helper');
+      const subscribeRow = offer.querySelector('[data-moringa-subscribe]');
 
-      if (price && subscriptionTotal > 0) {
-        price.textContent = formatMoney(subscriptionTotal);
+      if (label && !label.dataset.subscriptionLabel) label.dataset.subscriptionLabel = label.textContent.trim();
+      if (helper && !helper.dataset.subscriptionHelper) helper.dataset.subscriptionHelper = helper.textContent.trim();
+
+      const activeTotal = currentMode === 'subscription' ? subscriptionTotal : oneTimeTotal;
+      const activeCompareTotal = currentMode === 'subscription' ? subscriptionCompareTotal : oneTimeCompareTotal;
+
+      if (price && activeTotal > 0) price.textContent = formatMoney(activeTotal);
+
+      if (label) {
+        label.textContent = currentMode === 'subscription'
+          ? (label.dataset.subscriptionLabel || 'Subscribe & Save')
+          : 'One-Time Purchase';
+      }
+
+      if (helper) {
+        helper.textContent = currentMode === 'subscription'
+          ? (helper.dataset.subscriptionHelper || 'Recurring delivery · Cancel anytime')
+          : 'Pay once · No recurring delivery';
       }
 
       if (compare) {
-        if (subscriptionCompareTotal > subscriptionTotal && subscriptionTotal > 0) {
-          compare.textContent = formatMoney(subscriptionCompareTotal);
-          compare.hidden = false;
-        } else {
-          compare.textContent = '';
-          compare.hidden = true;
-        }
+        const showCompare = currentMode === 'subscription' && activeCompareTotal > activeTotal && activeTotal > 0;
+        compare.textContent = showCompare ? formatMoney(activeCompareTotal) : '';
+        compare.hidden = !showCompare;
       }
 
-      if (save && subscriptionCompareTotal > subscriptionTotal && subscriptionCompareTotal > 0) {
-        const percent = Math.round(
-          ((subscriptionCompareTotal - subscriptionTotal) / subscriptionCompareTotal) * 100
-        );
-        save.textContent = `Save ${percent}%`;
+      if (save) {
+        const percent = currentMode === 'subscription' && activeCompareTotal > activeTotal
+          ? Math.round(((activeCompareTotal - activeTotal) / activeCompareTotal) * 100)
+          : 0;
+        save.textContent = percent > 0 ? `Save ${percent}%` : '';
         save.hidden = percent <= 0;
       }
 
+      if (subscribeRow) {
+        const selected = currentMode === 'subscription';
+        subscribeRow.classList.toggle('is-selected', selected);
+        subscribeRow.setAttribute('aria-pressed', selected ? 'true' : 'false');
+      }
+
+      const meta = main.querySelector('[data-moringa-purchase-meta]');
+      const recurring = meta?.querySelector('[data-moringa-recurring]');
+      const oneTimeButton = meta?.querySelector('[data-moringa-one-time]');
+      if (recurring) recurring.hidden = currentMode !== 'subscription';
+      if (oneTimeButton) {
+        oneTimeButton.classList.toggle('is-selected', currentMode === 'one_time');
+        oneTimeButton.setAttribute('aria-pressed', currentMode === 'one_time' ? 'true' : 'false');
+        const amount = oneTimeButton.querySelector('strong');
+        if (amount && oneTimeTotal > 0) amount.textContent = formatMoney(oneTimeTotal);
+      }
+
+      offer.dataset.purchaseMode = currentMode;
       offer.dataset.selectedQuantity = String(quantity);
       offer.dataset.subscriptionTotal = String(subscriptionTotal);
       offer.dataset.subscriptionCompareTotal = String(subscriptionCompareTotal);
       offer.dataset.oneTimeTotal = String(oneTimeTotal);
 
-      // Keep the one-time purchase text below Add to Cart truthful for Buy 2 / Buy 3 too.
-      const oneTimePrice = main.querySelector(
-        '[data-moringa-purchase-meta] [data-moringa-one-time] strong'
-      );
-      if (oneTimePrice && oneTimeTotal > 0) {
-        oneTimePrice.textContent = formatMoney(oneTimeTotal);
+      enforceSellingPlan();
+    };
+
+    const setMode = (nextMode, announce = true) => {
+      currentMode = nextMode === 'one_time' || nextMode === 'one-time' ? 'one_time' : 'subscription';
+      syncHeadlinePrice();
+
+      if (announce && !internalModeChange) {
+        const offer = getOffer();
+        internalModeChange = true;
+        document.dispatchEvent(new CustomEvent('avonent:purchase-mode-change', {
+          detail: {
+            mode: currentMode,
+            sellingPlanId: currentMode === 'subscription' ? String(offer?.dataset.planId || '') : null
+          }
+        }));
+        internalModeChange = false;
       }
     };
 
     document.addEventListener('click', (event) => {
-      if (!event.target.closest('[data-av-bundle-option]')) return;
+      const oneTime = event.target.closest('[data-moringa-one-time]');
+      if (oneTime && main.contains(oneTime)) {
+        setMode('one_time');
+        return;
+      }
+
+      const subscribe = event.target.closest('[data-moringa-subscribe]');
+      if (subscribe && main.contains(subscribe)) {
+        setMode('subscription');
+        return;
+      }
+
+      if (event.target.closest('[data-av-bundle-option]')) {
+        window.setTimeout(syncHeadlinePrice, 0);
+      }
+
+      const addButton = event.target.closest('button[type="submit"][name="add"], button[type="submit"][data-add-to-cart], [data-testid="add-to-cart"]');
+      if (addButton && main.contains(addButton)) enforceSellingPlan();
+    }, true);
+
+    document.addEventListener('avonent:purchase-mode-change', (event) => {
+      if (internalModeChange) return;
+      const mode = event.detail?.mode;
+      if (mode === 'subscription' || mode === 'one_time' || mode === 'one-time') {
+        currentMode = mode === 'subscription' ? 'subscription' : 'one_time';
+      }
       window.setTimeout(syncHeadlinePrice, 0);
     });
 
-    document.addEventListener('avonent:purchase-mode-change', () => {
+    document.addEventListener('avonent:bundle-change', () => {
       window.setTimeout(syncHeadlinePrice, 0);
     });
 
     document.addEventListener('shopify:section:load', () => {
-      window.setTimeout(syncHeadlinePrice, 0);
+      window.setTimeout(() => {
+        const offer = getOffer();
+        const subscribe = offer?.querySelector('[data-moringa-subscribe]');
+        if (subscribe) {
+          currentMode = subscribe.getAttribute('aria-pressed') === 'false' ? 'one_time' : 'subscription';
+        }
+        syncHeadlinePrice();
+      }, 0);
     });
 
-    // Horizon/Appstle can hydrate and replace product markup after first paint.
+    document.addEventListener('formdata', (event) => {
+      const form = getMainForm();
+      if (!form || event.target !== form) return;
+      const planId = String(getOffer()?.dataset.planId || '');
+      event.formData.delete('selling_plan');
+      if (currentMode === 'subscription' && planId) event.formData.set('selling_plan', planId);
+    });
+
     [0, 80, 250, 700, 1400, 2600].forEach((delay) => {
-      window.setTimeout(syncHeadlinePrice, delay);
+      window.setTimeout(() => {
+        const offer = getOffer();
+        if (delay === 0 && offer) {
+          const subscribe = offer.querySelector('[data-moringa-subscribe]');
+          currentMode = subscribe?.getAttribute('aria-pressed') === 'false' ? 'one_time' : 'subscription';
+        }
+        syncHeadlinePrice();
+      }, delay);
     });
   });
 })();
