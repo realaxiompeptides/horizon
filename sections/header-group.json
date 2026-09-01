@@ -17,8 +17,8 @@
         "00_avonent_sale_announcement_QcfEEx": {
           "type": "00-avonent-sale-announcement",
           "settings": {
-            "heading": "SUMMER SALE — UP TO 70% OFF",
-            "subheading": "Limited-Time Savings · Shop Now",
+            "heading": "SUMMER SALE",
+            "subheading": "Shop Now and Get Up To 70% Off",
             "link": "",
             "show_countdown": true,
             "timer_minutes": 120,
