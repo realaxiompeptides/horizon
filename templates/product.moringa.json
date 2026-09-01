@@ -56,6 +56,21 @@
           },
           "blocks": {}
         },
+        "00_avonent_moringa_intro_Ye3NPW": {
+          "type": "00-avonent-moringa-intro",
+          "name": "Moringa Intro Copy",
+          "settings": {
+            "eyebrow": "",
+            "heading": "",
+            "description": "<p>Daily plant nutrition for better energy, easier movement, stronger everyday wellness, and more support as you age.†</p>",
+            "label_color": "#111111",
+            "heading_color": "#111111",
+            "text_color": "#222222",
+            "spacing_top": 4,
+            "spacing_bottom": 12
+          },
+          "blocks": {}
+        },
         "00_avonent_benefits_grid_AcNT8i": {
           "type": "00-avonent-benefits-grid",
           "name": "Avonent Benefits Grid",
@@ -423,6 +438,7 @@
       "block_order": [
         "00_avonent_rating_QYdjda",
         "product_title_F8y7BN",
+        "00_avonent_moringa_intro_Ye3NPW",
         "00_avonent_benefits_grid_AcNT8i",
         "description",
         "demand_meter",
