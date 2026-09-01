@@ -39,9 +39,18 @@
       const root = offer();
       const quantity = Math.max(1, Number(option?.dataset.quantity || 1));
       const subscriptionUnit = Number(option?.dataset.subscriptionUnit || root?.dataset.subscriptionPrice || 0);
-      const subscriptionCompareUnit = Number(option?.dataset.subscriptionCompareUnit || option?.dataset.oneTimeUnit || root?.dataset.oneTimePrice || 0);
       const oneTimeUnit = Number(option?.dataset.oneTimeUnit || root?.dataset.oneTimePrice || 0);
       const oneTimeCompareUnit = Number(option?.dataset.oneTimeCompareUnit || oneTimeUnit);
+
+      // For Subscribe & Save only, use Shopify's editable Compare-at price when one exists.
+      // This lets the merchant control the crossed-out anchor price without changing the
+      // actual selling-plan price or the one-time purchase display.
+      const subscriptionCompareUnit = Number(
+        option?.dataset.oneTimeCompareUnit ||
+        option?.dataset.subscriptionCompareUnit ||
+        oneTimeUnit
+      );
+
       return {
         quantity,
         subscriptionUnit,
@@ -51,7 +60,7 @@
         subscriptionTotal: subscriptionUnit * quantity,
         subscriptionCompareTotal: subscriptionCompareUnit * quantity,
         oneTimeTotal: oneTimeUnit * quantity,
-        oneTimeCompareTotal: oneTimeCompareUnit * quantity
+        oneTimeCompareTotal: oneTimeUnit * quantity
       };
     };
 
@@ -96,24 +105,27 @@
       options().forEach((option) => {
         const v = values(option);
         const total = mode === 'subscription' ? v.subscriptionTotal : v.oneTimeTotal;
-        const compareTotal = mode === 'subscription' ? v.subscriptionCompareTotal : v.oneTimeCompareTotal;
+        const compareTotal = mode === 'subscription' ? v.subscriptionCompareTotal : v.oneTimeTotal;
         const price = option.querySelector('[data-av-bundle-price]');
         const compare = option.querySelector('[data-av-bundle-compare]');
         const savings = option.querySelector('[data-av-bundle-savings]');
 
         setText(price, money(total));
         if (compare) {
-          const show = compareTotal > total;
+          const show = mode === 'subscription' && compareTotal > total;
           setText(compare, show ? money(compareTotal) : '');
           compare.hidden = !show;
         }
         if (savings) {
           if (mode === 'one_time') {
             savings.hidden = true;
+          } else if (savings.dataset.customText === 'true') {
+            // Merchant-entered "Savings text" in the Theme Editor always wins.
+            savings.hidden = false;
           } else {
-            const percent = compareTotal > total ? Math.round(((compareTotal - total) / compareTotal) * 100) : 0;
-            if (savings.dataset.customText !== 'true') setText(savings, percent ? `Save ${percent}%` : '');
-            savings.hidden = percent <= 0 && savings.dataset.customText !== 'true';
+            const saved = Math.max(0, compareTotal - total);
+            setText(savings, saved > 0 ? `Save ${money(saved)}` : '');
+            savings.hidden = saved <= 0;
           }
         }
       });
@@ -162,7 +174,6 @@
       const helper = root.querySelector('.avonent-price-offer__helper');
       const subscribe = root.querySelector('[data-moringa-subscribe]');
 
-      // The top row always mirrors the SELECTED bundle total.
       setText(label, mode === 'subscription' ? 'Subscribe & Save' : 'One-Time Purchase');
       setText(price, money(mode === 'subscription' ? v.subscriptionTotal : v.oneTimeTotal));
 
@@ -172,11 +183,9 @@
         compare.hidden = !show;
       }
       if (save) {
-        const percent = v.subscriptionCompareTotal > v.subscriptionTotal
-          ? Math.round(((v.subscriptionCompareTotal - v.subscriptionTotal) / v.subscriptionCompareTotal) * 100)
-          : 0;
-        setText(save, mode === 'subscription' && percent ? `Save ${percent}%` : '');
-        save.hidden = mode !== 'subscription' || percent <= 0;
+        const saved = Math.max(0, v.subscriptionCompareTotal - v.subscriptionTotal);
+        setText(save, mode === 'subscription' && saved > 0 ? `Save ${money(saved)}` : '');
+        save.hidden = mode !== 'subscription' || saved <= 0;
       }
       if (helper) helper.hidden = mode === 'one_time';
       if (subscribe) {
@@ -234,8 +243,6 @@
       [0, 30, 100, 250, 600, 1200, 2500].forEach((delay) => window.setTimeout(render, delay));
     };
 
-    // Capture phase is intentional: it prevents the older inline block listener from
-    // forcing the button back into one-time mode when it is being used as "switch back".
     document.addEventListener('click', (event) => {
       const switcher = event.target.closest('[data-moringa-one-time]');
       if (switcher && main.contains(switcher)) {
