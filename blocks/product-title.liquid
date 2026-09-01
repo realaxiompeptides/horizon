@@ -11,7 +11,45 @@
   >
     {% render 'text', fallback_text: product_title, block: block %}
   </a>
+
+  {% liquid
+    assign is_moringa_title = false
+    if closest.product.template_suffix == 'moringa' or closest.product.handle contains 'moringa' or closest.product.title contains 'Moringa'
+      assign is_moringa_title = true
+    endif
+  %}
+
+  {% if is_moringa_title %}
+    <div class="avonent-moringa-title-intro">
+      <p>Daily plant nutrition for better energy, easier movement, stronger everyday wellness, and more support as you age.†</p>
+    </div>
+  {% endif %}
 {% endif %}
+
+{% stylesheet %}
+  .avonent-moringa-title-intro {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 2px;
+    color: #222222;
+    font-family: var(--font-body--family);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.45;
+  }
+
+  .avonent-moringa-title-intro p {
+    margin: 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    .avonent-moringa-title-intro {
+      margin-top: 8px;
+      font-size: 15px;
+      line-height: 1.42;
+    }
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
@@ -148,76 +186,25 @@
       "id": "font_size",
       "label": "t:settings.size",
       "options": [
-        {
-          "value": "",
-          "label": "t:options.default"
-        },
-        {
-          "value": "0.625rem",
-          "label": "10px"
-        },
-        {
-          "value": "0.75rem",
-          "label": "12px"
-        },
-        {
-          "value": "0.875rem",
-          "label": "14px"
-        },
-        {
-          "value": "1rem",
-          "label": "16px"
-        },
-        {
-          "value": "1.125rem",
-          "label": "18px"
-        },
-        {
-          "value": "1.25rem",
-          "label": "20px"
-        },
-        {
-          "value": "1.5rem",
-          "label": "24px"
-        },
-        {
-          "value": "2rem",
-          "label": "32px"
-        },
-        {
-          "value": "2.5rem",
-          "label": "40px"
-        },
-        {
-          "value": "3rem",
-          "label": "48px"
-        },
-        {
-          "value": "3.5rem",
-          "label": "56px"
-        },
-        {
-          "value": "4.5rem",
-          "label": "72px"
-        },
-        {
-          "value": "5.5rem",
-          "label": "88px"
-        },
-        {
-          "value": "7.5rem",
-          "label": "120px"
-        },
-        {
-          "value": "9.5rem",
-          "label": "152px"
-        },
-        {
-          "value": "11.5rem",
-          "label": "184px"
-        }
+        { "value": "", "label": "t:options.default" },
+        { "value": "0.625rem", "label": "10px" },
+        { "value": "0.75rem", "label": "12px" },
+        { "value": "0.875rem", "label": "14px" },
+        { "value": "1rem", "label": "16px" },
+        { "value": "1.125rem", "label": "18px" },
+        { "value": "1.25rem", "label": "20px" },
+        { "value": "1.5rem", "label": "24px" },
+        { "value": "2rem", "label": "32px" },
+        { "value": "2.5rem", "label": "40px" },
+        { "value": "3rem", "label": "48px" },
+        { "value": "3.5rem", "label": "56px" },
+        { "value": "4.5rem", "label": "72px" },
+        { "value": "5.5rem", "label": "88px" },
+        { "value": "7.5rem", "label": "120px" },
+        { "value": "9.5rem", "label": "152px" },
+        { "value": "11.5rem", "label": "184px" }
       ],
-      "default": "1rem",
+      "default": "",
       "visible_if": "{{ block.settings.type_preset == 'custom' }}"
     },
     {
@@ -225,18 +212,9 @@
       "id": "line_height",
       "label": "t:settings.line_height",
       "options": [
-        {
-          "value": "tight",
-          "label": "t:options.tight"
-        },
-        {
-          "value": "normal",
-          "label": "t:options.normal"
-        },
-        {
-          "value": "loose",
-          "label": "t:options.loose"
-        }
+        { "value": "tight", "label": "t:options.tight" },
+        { "value": "normal", "label": "t:options.normal" },
+        { "value": "loose", "label": "t:options.loose" }
       ],
       "default": "normal",
       "visible_if": "{{ block.settings.type_preset == 'custom' }}"
@@ -246,18 +224,9 @@
       "id": "letter_spacing",
       "label": "t:settings.letter_spacing",
       "options": [
-        {
-          "value": "tight",
-          "label": "t:options.tight"
-        },
-        {
-          "value": "normal",
-          "label": "t:options.normal"
-        },
-        {
-          "value": "loose",
-          "label": "t:options.loose"
-        }
+        { "value": "tight", "label": "t:options.tight" },
+        { "value": "normal", "label": "t:options.normal" },
+        { "value": "loose", "label": "t:options.loose" }
       ],
       "default": "normal",
       "visible_if": "{{ block.settings.type_preset == 'custom' }}"
@@ -267,14 +236,8 @@
       "id": "case",
       "label": "t:settings.case",
       "options": [
-        {
-          "value": "none",
-          "label": "t:options.default"
-        },
-        {
-          "value": "uppercase",
-          "label": "t:options.uppercase"
-        }
+        { "value": "none", "label": "t:options.none" },
+        { "value": "uppercase", "label": "t:options.uppercase" }
       ],
       "default": "none",
       "visible_if": "{{ block.settings.type_preset == 'custom' }}"
@@ -284,54 +247,19 @@
       "id": "wrap",
       "label": "t:settings.wrap",
       "options": [
-        {
-          "value": "pretty",
-          "label": "t:options.pretty"
-        },
-        {
-          "value": "balance",
-          "label": "t:options.balance"
-        },
-        {
-          "value": "nowrap",
-          "label": "t:options.none"
-        }
+        { "value": "pretty", "label": "t:options.pretty" },
+        { "value": "balance", "label": "t:options.balance" },
+        { "value": "nowrap", "label": "t:options.none" }
       ],
+      "default": "pretty",
       "visible_if": "{{ block.settings.type_preset == 'custom' }}"
     },
     {
-      "type": "header",
-      "content": "t:content.appearance"
-    },
-    {
       "type": "color",
-      "id": "text_color",
-      "label": "t:settings.text_color",
-      "placeholder": "t:settings.default"
-    },
-    {
-      "type": "checkbox",
-      "id": "background",
-      "label": "t:settings.background",
-      "default": false
-    },
-    {
-      "type": "color",
-      "id": "background_color",
-      "label": "t:settings.background_color",
+      "id": "color",
+      "label": "t:settings.color",
       "alpha": true,
-      "default": "#00000026",
-      "visible_if": "{{ block.settings.background }}"
-    },
-    {
-      "type": "range",
-      "id": "corner_radius",
-      "label": "t:settings.corner_radius",
-      "default": 0,
-      "min": 0,
-      "max": 50,
-      "step": 1,
-      "visible_if": "{{ block.settings.background }}"
+      "default": "#000000"
     },
     {
       "type": "header",
@@ -380,8 +308,7 @@
   ],
   "presets": [
     {
-      "name": "t:names.title",
-      "category": "t:categories.product"
+      "name": "t:names.product_title"
     }
   ]
 }
