@@ -1,0 +1,163 @@
+{% liquid
+  assign is_moringa = false
+  if closest.product.template_suffix == 'moringa' or closest.product.handle contains 'moringa' or closest.product.title contains 'Moringa'
+    assign is_moringa = true
+  endif
+%}
+
+{% if is_moringa %}
+  <div
+    class="avonent-moringa-intro"
+    {{ block.shopify_attributes }}
+    style="
+      --ami-label-color: {{ block.settings.label_color }};
+      --ami-heading-color: {{ block.settings.heading_color }};
+      --ami-text-color: {{ block.settings.text_color }};
+      --ami-top: {{ block.settings.spacing_top }}px;
+      --ami-bottom: {{ block.settings.spacing_bottom }}px;
+    "
+  >
+    {% if block.settings.eyebrow != blank %}
+      <div class="avonent-moringa-intro__eyebrow">{{ block.settings.eyebrow }}</div>
+    {% endif %}
+
+    {% if block.settings.heading != blank %}
+      <div class="avonent-moringa-intro__heading">{{ block.settings.heading }}</div>
+    {% endif %}
+
+    {% if block.settings.description != blank %}
+      <div class="avonent-moringa-intro__description">{{ block.settings.description }}</div>
+    {% endif %}
+  </div>
+{% endif %}
+
+{% stylesheet %}
+  .avonent-moringa-intro {
+    width: 100%;
+    margin: var(--ami-top) 0 var(--ami-bottom);
+  }
+
+  .avonent-moringa-intro__eyebrow {
+    margin: 0 0 5px;
+    color: var(--ami-label-color);
+    font-family: var(--font-body--family);
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.25;
+  }
+
+  .avonent-moringa-intro__heading {
+    margin: 0;
+    color: var(--ami-heading-color);
+    font-family: var(--font-heading--family);
+    font-size: 27px;
+    font-weight: 750;
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+  }
+
+  .avonent-moringa-intro__description {
+    margin: 11px 0 0;
+    max-width: 650px;
+    color: var(--ami-text-color);
+    font-family: var(--font-body--family);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.45;
+  }
+
+  .avonent-moringa-intro__description p {
+    margin: 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    .avonent-moringa-intro__eyebrow {
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+
+    .avonent-moringa-intro__heading {
+      font-size: 25px;
+    }
+
+    .avonent-moringa-intro__description {
+      margin-top: 9px;
+      font-size: 15px;
+      line-height: 1.42;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Moringa Intro Copy",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Small text above heading",
+      "default": "Daily Whole Body Support"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Feel Better From the Inside Out"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Benefit sentence",
+      "default": "<p>Daily plant nutrition for better energy, easier movement, stronger everyday wellness, and more support as you age.†</p>"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Small text",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Sentence",
+      "default": "#222222"
+    },
+    {
+      "type": "range",
+      "id": "spacing_top",
+      "label": "Top spacing",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "spacing_bottom",
+      "label": "Bottom spacing",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    }
+  ],
+  "presets": [
+    {
+      "name": "Moringa Intro Copy"
+    }
+  ]
+}
+{% endschema %}
