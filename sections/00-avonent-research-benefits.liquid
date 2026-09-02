@@ -96,6 +96,10 @@
         </div>
       {% endfor %}
     </div>
+
+    <div class="avonent-research-benefits__cta-wrap">
+      <a class="avonent-research-benefits__cta" href="#avonent-bottom-offer">Try Avonent Risk-Free</a>
+    </div>
   </div>
 </section>
 
@@ -124,9 +128,13 @@
 .avonent-research-benefits__line{margin-top:5px;color:var(--arb-muted);font-size:16px;line-height:1.35}
 .avonent-research-benefits__back-text{margin-top:8px;color:var(--arb-muted);font-size:15px;line-height:1.46}
 .avonent-research-benefits__toggle{display:grid;width:34px;height:34px;place-items:center;justify-self:end;color:var(--arb-muted);border:1px solid var(--arb-border);border-radius:50%;background:#fff;font-size:22px;font-weight:400;line-height:1}
-@media(max-width:749px){.avonent-research-benefits{padding:var(--arb-top-mobile) 0 var(--arb-bottom-mobile)}.avonent-research-benefits__inner{width:min(calc(100% - 24px),var(--arb-width))}.avonent-research-benefits__header{width:min(100%,420px);margin-bottom:20px;padding-inline:4px}.avonent-research-benefits__heading{font-size:clamp(27px,8.2vw,34px);line-height:1.03;text-wrap:balance}.avonent-research-benefits__subheading{margin-top:10px;font-size:14.5px;line-height:1.4}.avonent-research-benefits__grid{grid-template-columns:1fr;gap:max(10px,var(--arb-gap))}.avonent-research-benefits__card{height:var(--arb-height-mobile)}.avonent-research-benefits__face{border-radius:13px}.avonent-research-benefits__face--front{grid-template-columns:var(--arb-visual-mobile) minmax(0,1fr) 32px;gap:11px;padding:10px 11px 10px 10px}.avonent-research-benefits__visual{width:var(--arb-visual-mobile);height:var(--arb-visual-mobile);border-radius:9px}.avonent-research-benefits__icon{width:40px;height:40px}.avonent-research-benefits__icon svg{width:31px;height:31px}.avonent-research-benefits__face--back{grid-template-columns:minmax(0,1fr) 32px;gap:9px;padding:15px 12px 15px 16px}.avonent-research-benefits__title,.avonent-research-benefits__back-title{font-size:17px;line-height:1.15}.avonent-research-benefits__line{margin-top:4px;font-size:13.5px;line-height:1.3}.avonent-research-benefits__back-text{margin-top:6px;font-size:13px;line-height:1.36}.avonent-research-benefits__toggle{width:30px;height:30px;font-size:19px}}
+.avonent-research-benefits__cta-wrap{margin-top:28px}
+.avonent-research-benefits__cta{display:flex;width:100%;min-height:58px;align-items:center;justify-content:center;border-radius:12px;background:var(--arb-accent);color:#06151a;text-decoration:none;font-size:18px;font-weight:800;line-height:1.2;transition:transform .18s ease,filter .18s ease}
+.avonent-research-benefits__cta:hover{filter:brightness(.97);transform:translateY(-1px)}
+.avonent-research-benefits__cta:focus-visible{outline:3px solid color-mix(in srgb,var(--arb-accent) 50%,#000);outline-offset:3px}
+@media(max-width:749px){.avonent-research-benefits{padding:var(--arb-top-mobile) 0 var(--arb-bottom-mobile)}.avonent-research-benefits__inner{width:min(calc(100% - 24px),var(--arb-width))}.avonent-research-benefits__header{width:min(100%,420px);margin-bottom:20px;padding-inline:4px}.avonent-research-benefits__heading{font-size:clamp(27px,8.2vw,34px);line-height:1.03;text-wrap:balance}.avonent-research-benefits__subheading{margin-top:10px;font-size:14.5px;line-height:1.4}.avonent-research-benefits__grid{grid-template-columns:1fr;gap:max(10px,var(--arb-gap))}.avonent-research-benefits__card{height:var(--arb-height-mobile)}.avonent-research-benefits__face{border-radius:13px}.avonent-research-benefits__face--front{grid-template-columns:var(--arb-visual-mobile) minmax(0,1fr) 32px;gap:11px;padding:10px 11px 10px 10px}.avonent-research-benefits__visual{width:var(--arb-visual-mobile);height:var(--arb-visual-mobile);border-radius:9px}.avonent-research-benefits__icon{width:40px;height:40px}.avonent-research-benefits__icon svg{width:31px;height:31px}.avonent-research-benefits__face--back{grid-template-columns:minmax(0,1fr) 32px;gap:9px;padding:15px 12px 15px 16px}.avonent-research-benefits__title,.avonent-research-benefits__back-title{font-size:17px;line-height:1.15}.avonent-research-benefits__line{margin-top:4px;font-size:13.5px;line-height:1.3}.avonent-research-benefits__back-text{margin-top:6px;font-size:13px;line-height:1.36}.avonent-research-benefits__toggle{width:30px;height:30px;font-size:19px}.avonent-research-benefits__cta-wrap{margin-top:18px}.avonent-research-benefits__cta{min-height:54px;border-radius:10px;font-size:17px}}
 @media(max-width:390px){.avonent-research-benefits__face--front{grid-template-columns:var(--arb-visual-mobile) minmax(0,1fr) 28px;gap:9px;padding-right:8px}.avonent-research-benefits__toggle{width:28px;height:28px}}
-@media(prefers-reduced-motion:reduce){.avonent-research-benefits__flipper{transition:none}}
+@media(prefers-reduced-motion:reduce){.avonent-research-benefits__flipper{transition:none}.avonent-research-benefits__cta{transition:none}}
 {% endstylesheet %}
 
 <script>
