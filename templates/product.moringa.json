@@ -60,14 +60,7 @@
           "type": "00-avonent-moringa-intro",
           "name": "Moringa Intro Copy",
           "settings": {
-            "eyebrow": "",
-            "heading": "",
-            "description": "<p>Daily plant nutrition for better energy, easier movement, stronger everyday wellness, and more support as you age.†</p>",
-            "label_color": "#111111",
-            "heading_color": "#111111",
-            "text_color": "#222222",
-            "spacing_top": 4,
-            "spacing_bottom": 12
+            "description": "<p>Daily plant nutrition for better energy, easier movement, stronger everyday wellness, and more support as you age.†</p>"
           },
           "blocks": {}
         },
@@ -1007,7 +1000,7 @@
         "other_label": "Other Brands",
         "eyebrow": "THE AVONENT DIFFERENCE",
         "heading": "Avonent vs. Other Brands",
-        "description": "A premium routine should feel simple, transparent, and built around quality. Customize the comparison below with product claims your brand can substantiate.",
+        "description": "Know what goes into your daily routine. Compare ingredients, serving details, and quality information—and choose Avonent Moringa with confidence.",
         "button_text": "Shop Avonent",
         "button_link": "",
         "guarantee_text": "30 Day Money-Back Guarantee",
