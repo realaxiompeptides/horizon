@@ -247,15 +247,7 @@
               {% endif %}
 
               <div class="avonent-bottom-offer__submit-wrap">
-                {% render 'add-to-cart-button',
-                  id: 'AvonentBottomOfferSubmit-' | append: section.id,
-                  class: 'avonent-bottom-offer__submit add-to-cart-button',
-                  can_add_to_cart: can_add_to_cart,
-                  show_icon: true,
-                  product: av_product,
-                  add_to_cart_text: add_to_cart_text,
-                  data_testid: 'avonent-bottom-offer-add-to-cart'
-                %}
+                {% render 'add-to-cart-button', id: 'AvonentBottomOfferSubmit-', append: section.id, class: 'avonent-bottom-offer__submit add-to-cart-button', can_add_to_cart: can_add_to_cart, show_icon: true, product: av_product, add_to_cart_text: add_to_cart_text, data_testid: 'avonent-bottom-offer-add-to-cart' %}
 
                 <span class="avonent-bottom-offer__submit-price" aria-hidden="true">
                   <span data-abo-button-price>{{ default_total | money }}</span>
@@ -1005,3 +997,25 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% render 'add-to-cart-button',
+                      id: 'AvonentBottomOfferSubmit-' | append: section.id,
+                      class: 'avonent-bottom-offer__submit add-to-cart-button',
+                      can_add_to_cart: can_add_to_cart,
+                      show_icon: true,
+                      product: av_product,
+                      add_to_cart_text: add_to_cart_text,
+                      data_testid: 'avonent-bottom-offer-add-to-cart'
+                    %}
+  to: "{% render 'add-to-cart-button', id: 'AvonentBottomOfferSubmit-', append: section.id,
+    class: 'avonent-bottom-offer__submit add-to-cart-button', can_add_to_cart: can_add_to_cart,
+    show_icon: true, product: av_product, add_to_cart_text: add_to_cart_text, data_testid:
+    'avonent-bottom-offer-add-to-cart' %}"
+  position: 12926..13227
+{% endcomment %}
