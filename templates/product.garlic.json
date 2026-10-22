@@ -279,7 +279,22 @@
         "card": "#ffffff",
         "text": "#071a52",
         "muted": "#526078",
-        "accent": "#02c6ea"
+        "accent": "#02c6ea",
+        "crafted_heading": "Carefully Crafted. Thoughtfully Aged.",
+        "crafted_intro": "<p>Avonent Aged Garlic Extract is built around a simple daily formula designed for consistent everyday use.</p>",
+        "crafted_1_title": "Heart-Conscious Living",
+        "crafted_1_subtitle": "A simple addition to a wellness-focused lifestyle.",
+        "crafted_1_body": "<p>A thoughtful addition for people who want to be more intentional about their everyday wellness routine.</p>",
+        "crafted_2_title": "Daily Resilience",
+        "crafted_2_subtitle": "Small habits can make a big difference.",
+        "crafted_2_body": "<p>Designed to make daily wellness feel simple, steady, and easier to maintain over time.</p>",
+        "crafted_3_title": "Comfortable Every Day",
+        "crafted_3_subtitle": "Odorless and easy to enjoy.",
+        "crafted_3_body": "<p>Aged garlic made without the strong smell or lingering aftertaste commonly associated with traditional garlic.</p>",
+        "crafted_4_title": "Wellness for the Long Run",
+        "crafted_4_subtitle": "Consistency, not complexity.",
+        "crafted_4_body": "<p>Made for people who prefer simple, practical routines they can continue as part of everyday life.</p>",
+        "crafted_footer": "Non-GMO · Gluten-Free · No unnecessary additives"
       }
     },
     "softgel": {
