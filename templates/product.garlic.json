@@ -83,7 +83,8 @@
         "gold": "#ffb400",
         "text": "#071a52",
         "muted": "#5f6878",
-        "line": "#dcecf5"
+        "line": "#dcecf5",
+        "details_button_text": "SEE PRODUCT DETAILS"
       }
     },
     "accordions": {
