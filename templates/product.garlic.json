@@ -69,7 +69,6 @@
         "shipping_business_days": 1,
         "shipping_suffix": "from US warehouse",
         "button_text": "ADD TO CART",
-        "guarantee_text": "30-day money-back guarantee",
         "show_payments": true,
         "show_trusted": true,
         "avatar_1": "shopify://shop_images/avonent_customer_1.png",
