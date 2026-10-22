@@ -92,7 +92,8 @@
         "cancel_text": "Skip or cancel anytime",
         "one_time_label": "One-Time Purchase",
         "one_time_suffix": "+ $4.95 Shipping",
-        "subscription_return_label": "Switch back to Subscribe & Save —"
+        "subscription_return_label": "Switch back to Subscribe & Save —",
+        "subscription_plan_id": "3633709222"
       }
     },
     "accordions": {
