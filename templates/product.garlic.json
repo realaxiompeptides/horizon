@@ -5,7 +5,6 @@
  * This file may be updated by the Shopify admin theme editor
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
- * SYNC REVISION 2 - force Shopify GitHub sync
  * ------------------------------------------------------------
  */
 {
@@ -47,7 +46,7 @@
       "settings": {
         "show_rating": true,
         "rating_text": "Excellent",
-        "proof_text": "Over 100,000 Orders",
+        "proof_text": "100K+ Customers",
         "heading": "Aged Garlic Extract – 7500mg Odorless Softgels",
         "subheading": "<p>Aged Garlic + CoQ10</p>",
         "sale_badge": "BLACK FRIDAY SALE - SAVE 54%",
@@ -73,8 +72,8 @@
         "guarantee_text": "30-day money-back guarantee",
         "show_payments": true,
         "show_trusted": true,
-        "trusted_heading": "Trusted across 100,000+ orders",
-        "trusted_text": "Chosen by Avonent customers for simple daily wellness routines.",
+        "trusted_heading": "Trusted by 100K+ customers",
+        "trusted_text": "who choose Avonent for simple, consistent daily wellness support.",
         "show_sticky": true,
         "sticky_label": "AVONENT AGED GARLIC",
         "sticky_button": "ADD TO CART",
@@ -88,7 +87,7 @@
       }
     },
     "accordions": {
-      "type": "00-aged-garlic-details-v3",
+      "type": "00-aged-garlic-accordions-v2",
       "blocks": {
         "a1": {
           "type": "item",
