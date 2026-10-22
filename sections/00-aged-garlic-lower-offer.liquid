@@ -1,0 +1,204 @@
+{% liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign variants = product.variants
+%}
+
+<section
+  id="avonent-garlic-buy"
+  class="ag-lower-offer"
+  style="--bg:{{ section.settings.background }};--card:{{ section.settings.card_background }};--t:{{ section.settings.text }};--m:{{ section.settings.muted }};--a:{{ section.settings.accent }};--ad:{{ section.settings.accent_dark }};--line:{{ section.settings.line }};"
+>
+  <div class="ag-lower-offer__in">
+    <div class="ag-lower-offer__eyebrow">{{ section.settings.eyebrow }}</div>
+    <h2>{{ section.settings.heading }}</h2>
+    <div class="ag-lower-offer__intro rte">{{ section.settings.intro }}</div>
+
+    {% if section.settings.show_stock_meter %}
+      <div class="ag-lower-offer__meter">
+        <span><i style="width:{{ section.settings.sold_percent }}%"></i></span>
+        <strong>{{ section.settings.sold_percent }}% Sold</strong>
+      </div>
+    {% endif %}
+
+    <div class="ag-lower-offer__topline">
+      <div>
+        <span>{{ section.settings.offer_label }}</span>
+        {% if section.settings.offer_subtext != blank %}<small>{{ section.settings.offer_subtext }}</small>{% endif %}
+      </div>
+      <div class="ag-lower-offer__price" data-lower-total>
+        <strong>{{ current_variant.price | money }}</strong>
+        {% if current_variant.compare_at_price > current_variant.price %}
+          <s>{{ current_variant.compare_at_price | money }}</s>
+        {% endif %}
+      </div>
+    </div>
+
+    {% form 'product', product, id: 'AGLowerOfferForm-' | append: section.id %}
+      <input type="hidden" name="id" value="{{ current_variant.id }}" data-lower-variant-input>
+
+      <div class="ag-lower-offer__bundles">
+        {% for variant in variants limit: 3 %}
+          {% assign idx = forloop.index %}
+          {% assign title_key = 'bundle_' | append: idx | append: '_title' %}
+          {% assign supply_key = 'bundle_' | append: idx | append: '_supply' %}
+          {% assign helper_key = 'bundle_' | append: idx | append: '_helper' %}
+          {% assign badge_key = 'bundle_' | append: idx | append: '_badge' %}
+          {% assign title = section.settings[title_key] %}
+          {% assign supply = section.settings[supply_key] %}
+          {% assign helper = section.settings[helper_key] %}
+          {% assign badge = section.settings[badge_key] %}
+          <button
+            type="button"
+            class="ag-lower-offer__bundle{% if variant.id == current_variant.id %} is-active{% endif %}"
+            data-lower-bundle
+            data-id="{{ variant.id }}"
+            data-price="{{ variant.price }}"
+            data-compare="{{ variant.compare_at_price | default: 0 }}"
+            {% unless variant.available %}disabled{% endunless %}
+          >
+            {% if badge != blank %}<span class="ag-lower-offer__badge">{{ badge }}</span>{% endif %}
+            <span class="ag-lower-offer__radio"><i></i></span>
+            <span class="ag-lower-offer__thumb">
+              {% if section.settings.product_image != blank %}
+                {{ section.settings.product_image | image_url: width: 220 | image_tag: widths: '90,140,180,220', loading: 'lazy', alt: product.title }}
+              {% elsif product.featured_image != blank %}
+                {{ product.featured_image | image_url: width: 220 | image_tag: widths: '90,140,180,220', loading: 'lazy', alt: product.title }}
+              {% endif %}
+              {% if idx > 1 %}<b>×{{ idx }}</b>{% endif %}
+            </span>
+            <span class="ag-lower-offer__copy">
+              <strong>{{ title }}</strong>
+              {% if supply != blank %}<small>{{ supply }}</small>{% endif %}
+              {% if helper != blank %}<em>{{ helper }}</em>{% endif %}
+            </span>
+            <span class="ag-lower-offer__bundle-price">
+              <strong>{{ variant.price | money }}</strong>
+              {% if variant.compare_at_price > variant.price %}<s>{{ variant.compare_at_price | money }}</s>{% endif %}
+            </span>
+          </button>
+        {% endfor %}
+      </div>
+
+      <div class="ag-lower-offer__delivery">
+        <span class="ag-lower-offer__delivery-dot"></span>
+        <span>{{ section.settings.delivery_prefix }} <b>{{ section.settings.delivery_highlight }}</b></span>
+      </div>
+
+      <button type="submit" name="add" class="ag-lower-offer__atc">
+        <span class="ag-lower-offer__bag" aria-hidden="true">
+          <svg viewBox="0 0 32 32"><path d="M7 10h18l-1 17H8z"></path><path d="M12 10V7a4 4 0 0 1 8 0v3"></path><path d="M22 21h7M25.5 17.5v7"></path></svg>
+        </span>
+        <span>{{ section.settings.button_text }}</span>
+        <strong data-lower-button-price>{{ current_variant.price | money }}</strong>
+      </button>
+    {% endform %}
+
+    <div class="ag-lower-offer__perks">
+      <span>↻ {{ section.settings.perk_1 }}</span>
+      <i></i>
+      <span>◷ {{ section.settings.perk_2 }}</span>
+    </div>
+
+    {% if section.settings.one_time_note != blank %}
+      <div class="ag-lower-offer__note">{{ section.settings.one_time_note }}</div>
+    {% endif %}
+
+    <div class="ag-lower-offer__payments">
+      {% for type in shop.enabled_payment_types %}
+        {{ type | payment_type_svg_tag }}
+      {% endfor %}
+    </div>
+
+    <div class="ag-lower-offer__guarantee">
+      <span>
+        <svg viewBox="0 0 32 32"><path d="M16 3 27 7v8c0 7-4.5 11.8-11 14-6.5-2.2-11-7-11-14V7z"></path><path d="m11 16 3 3 7-8"></path></svg>
+      </span>
+      {{ section.settings.guarantee_text }}
+    </div>
+  </div>
+</section>
+
+<script>
+(() => {
+  const root = document.getElementById('avonent-garlic-buy');
+  if (!root || root.dataset.ready === 'true') return;
+  root.dataset.ready = 'true';
+
+  const buttons = [...root.querySelectorAll('[data-lower-bundle]')];
+  const input = root.querySelector('[data-lower-variant-input]');
+  const total = root.querySelector('[data-lower-total]');
+  const buttonPrice = root.querySelector('[data-lower-button-price]');
+  const currency = {{ cart.currency.iso_code | default: shop.currency | json }};
+
+  const money = (cents) => {
+    try {
+      return new Intl.NumberFormat(undefined,{style:'currency',currency}).format(Number(cents)/100);
+    } catch(e) {
+      return '$' + (Number(cents)/100).toFixed(2);
+    }
+  };
+
+  const setBundle = (button) => {
+    if (!button || button.disabled) return;
+    buttons.forEach((b) => b.classList.toggle('is-active', b === button));
+    if (input) input.value = button.dataset.id;
+    const price = money(button.dataset.price || 0);
+    const compare = Number(button.dataset.compare || 0);
+    if (buttonPrice) buttonPrice.textContent = price;
+    if (total) {
+      total.innerHTML = '<strong>'+price+'</strong>' + (compare > Number(button.dataset.price || 0) ? '<s>'+money(compare)+'</s>' : '');
+    }
+  };
+
+  buttons.forEach((button) => button.addEventListener('click', () => setBundle(button)));
+})();
+</script>
+
+{% stylesheet %}
+.ag-lower-offer{scroll-margin-top:110px;background:var(--bg);color:var(--t);padding:58px 0 66px;border-top:6px solid var(--a)}.ag-lower-offer *{box-sizing:border-box}.ag-lower-offer__in{width:min(calc(100% - 30px),860px);margin:auto}.ag-lower-offer__eyebrow{text-align:center;color:var(--ad);font-size:12px;font-weight:900;letter-spacing:.18em}.ag-lower-offer h2{margin:8px auto 0;max-width:760px;text-align:center;color:#111;font-size:clamp(42px,5.6vw,64px);font-weight:900;line-height:1;letter-spacing:-.045em}.ag-lower-offer__intro{max-width:720px;margin:18px auto 0;text-align:center;color:var(--m);font-size:16px;line-height:1.55}.ag-lower-offer__intro p{margin:0}.ag-lower-offer__meter{display:grid;grid-template-columns:1fr auto;align-items:center;gap:18px;margin-top:34px;padding:22px 28px;border-radius:18px;background:var(--card)}.ag-lower-offer__meter>span{height:10px;border-radius:999px;background:#e1edf2;overflow:hidden}.ag-lower-offer__meter>span i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#02C6EA,#28d7e8)}.ag-lower-offer__meter strong{color:#ef4c4c;font-size:18px}.ag-lower-offer__topline{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;padding:24px 0 20px;border-bottom:1px solid var(--line)}.ag-lower-offer__topline>div:first-child span{display:block;color:var(--ad);font-size:18px;font-weight:850}.ag-lower-offer__topline small{display:block;margin-top:4px;color:var(--m);font-size:11px}.ag-lower-offer__price{text-align:right}.ag-lower-offer__price strong{display:block;color:var(--ad);font-size:28px}.ag-lower-offer__price s{display:block;margin-top:3px;color:#718087;font-size:13px}.ag-lower-offer__bundles{display:grid;gap:12px;margin-top:22px}.ag-lower-offer__bundle{position:relative;display:grid;grid-template-columns:34px 76px minmax(0,1fr) auto;align-items:center;gap:14px;width:100%;min-height:126px;padding:16px 18px;border:2px solid #d4e5eb;border-radius:18px;background:#fff;color:var(--t);text-align:left;cursor:pointer}.ag-lower-offer__bundle.is-active{border-color:var(--a);background:color-mix(in srgb,var(--a) 7%,#fff)}.ag-lower-offer__badge{position:absolute;right:18px;top:-15px;padding:6px 14px;border-radius:999px;background:var(--ad);color:#fff;font-size:11px;font-weight:900}.ag-lower-offer__radio{display:grid;place-items:center;width:28px;height:28px;border:2px solid #adc2ca;border-radius:50%}.ag-lower-offer__radio i{width:14px;height:14px;border-radius:50%;background:transparent}.ag-lower-offer__bundle.is-active .ag-lower-offer__radio{border-color:var(--a)}.ag-lower-offer__bundle.is-active .ag-lower-offer__radio i{background:var(--a)}.ag-lower-offer__thumb{position:relative;display:grid;place-items:center;width:72px;height:72px;border-radius:10px;background:#f4fbfd}.ag-lower-offer__thumb img{display:block;max-width:100%;max-height:100%;object-fit:contain}.ag-lower-offer__thumb b{position:absolute;right:-9px;bottom:-7px;display:grid;place-items:center;min-width:30px;height:30px;padding:0 7px;border:2px solid #fff;border-radius:999px;background:var(--ad);color:#fff;font-size:11px}.ag-lower-offer__copy strong{display:block;color:#111;font-size:18px}.ag-lower-offer__copy small{display:block;margin-top:2px;color:#5e6d74;font-size:14px}.ag-lower-offer__copy em{display:block;margin-top:5px;color:var(--ad);font-size:11px;font-style:normal;font-weight:800}.ag-lower-offer__bundle-price{text-align:right}.ag-lower-offer__bundle-price strong{display:block;color:#111;font-size:18px}.ag-lower-offer__bundle-price s{display:block;margin-top:5px;color:#6a757a;font-size:12px}.ag-lower-offer__delivery{display:flex;align-items:center;gap:10px;margin:22px 0;padding:17px 0;border-top:1px dashed var(--line);border-bottom:1px dashed var(--line);color:#617078;font-size:13px}.ag-lower-offer__delivery b{color:var(--ad)}.ag-lower-offer__delivery-dot{display:block;width:18px;height:18px;border:4px solid color-mix(in srgb,var(--a) 28%,#fff);border-radius:50%;box-shadow:inset 0 0 0 3px #fff;background:var(--a)}.ag-lower-offer__atc{display:grid;grid-template-columns:30px 1fr auto;align-items:center;gap:10px;width:100%;min-height:70px;padding:0 24px;border:0;border-radius:16px;background:var(--a);color:#fff;cursor:pointer}.ag-lower-offer__atc>span:nth-child(2){justify-self:start;font-size:18px;font-weight:850}.ag-lower-offer__atc strong{font-size:20px}.ag-lower-offer__bag svg{display:block;width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.ag-lower-offer__perks{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:14px;color:#111;font-size:12px;font-weight:750}.ag-lower-offer__perks i{width:1px;height:24px;background:#c9dce3}.ag-lower-offer__note{margin-top:12px;padding-bottom:8px;border-bottom:1px solid var(--ad);color:var(--ad);text-align:center;font-size:12px;font-weight:800}.ag-lower-offer__payments{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;margin-top:18px}.ag-lower-offer__payments svg{width:auto;height:31px}.ag-lower-offer__guarantee{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:20px;color:#5b6870;font-size:13px;font-weight:750}.ag-lower-offer__guarantee span{display:grid;place-items:center;color:var(--a)}.ag-lower-offer__guarantee svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}@media(max-width:749px){.ag-lower-offer{padding:44px 0 52px}.ag-lower-offer h2{font-size:43px}.ag-lower-offer__intro{font-size:14px}.ag-lower-offer__meter{grid-template-columns:1fr auto;padding:18px}.ag-lower-offer__meter strong{font-size:16px}.ag-lower-offer__topline{padding-top:20px}.ag-lower-offer__bundle{grid-template-columns:28px 70px minmax(0,1fr) auto;gap:10px;min-height:116px;padding:14px 12px}.ag-lower-offer__thumb{width:66px;height:66px}.ag-lower-offer__copy strong{font-size:17px}.ag-lower-offer__copy small{font-size:13px}.ag-lower-offer__copy em{font-size:10px}.ag-lower-offer__bundle-price strong{font-size:17px}.ag-lower-offer__badge{right:12px}.ag-lower-offer__atc{min-height:66px;padding:0 18px}.ag-lower-offer__atc>span:nth-child(2){font-size:17px}.ag-lower-offer__atc strong{font-size:18px}.ag-lower-offer__perks{gap:10px;font-size:11px}}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name":"Garlic Lower Offer",
+  "tag":"section",
+  "enabled_on":{"templates":["product"]},
+  "settings":[
+    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"CHOOSE YOUR ROUTINE"},
+    {"type":"text","id":"heading","label":"Heading","default":"Stay consistent. Stock up. Save more."},
+    {"type":"richtext","id":"intro","label":"Intro","default":"<p>Choose the supply that fits your routine and keep Avonent Aged Garlic within reach.</p>"},
+    {"type":"image_picker","id":"product_image","label":"Bundle product image"},
+    {"type":"checkbox","id":"show_stock_meter","label":"Show stock meter","default":true},
+    {"type":"range","id":"sold_percent","label":"Sold percent","min":1,"max":99,"step":1,"default":93},
+    {"type":"text","id":"offer_label","label":"Offer label","default":"Choose your supply"},
+    {"type":"text","id":"offer_subtext","label":"Offer subtext","default":"One-time purchase"},
+    {"type":"text","id":"bundle_1_title","label":"Bundle 1 title","default":"Buy 1"},
+    {"type":"text","id":"bundle_1_supply","label":"Bundle 1 supply","default":"30-Day Supply"},
+    {"type":"text","id":"bundle_1_helper","label":"Bundle 1 helper","default":"Perfect for getting started"},
+    {"type":"text","id":"bundle_1_badge","label":"Bundle 1 badge","default":""},
+    {"type":"text","id":"bundle_2_title","label":"Bundle 2 title","default":"Buy 2"},
+    {"type":"text","id":"bundle_2_supply","label":"Bundle 2 supply","default":"60-Day Supply"},
+    {"type":"text","id":"bundle_2_helper","label":"Bundle 2 helper","default":"Build a consistent routine"},
+    {"type":"text","id":"bundle_2_badge","label":"Bundle 2 badge","default":"Most Popular"},
+    {"type":"text","id":"bundle_3_title","label":"Bundle 3 title","default":"Buy 3"},
+    {"type":"text","id":"bundle_3_supply","label":"Bundle 3 supply","default":"90-Day Supply"},
+    {"type":"text","id":"bundle_3_helper","label":"Bundle 3 helper","default":"Stock up and stay prepared"},
+    {"type":"text","id":"bundle_3_badge","label":"Bundle 3 badge","default":"Best Value"},
+    {"type":"text","id":"delivery_prefix","label":"Delivery prefix","default":"Order today for estimated delivery soon ·"},
+    {"type":"text","id":"delivery_highlight","label":"Delivery highlight","default":"Ships from USA 🇺🇸"},
+    {"type":"text","id":"button_text","label":"Button text","default":"Add to cart"},
+    {"type":"text","id":"perk_1","label":"Perk 1","default":"Simple one-time purchase"},
+    {"type":"text","id":"perk_2","label":"Perk 2","default":"No subscription required"},
+    {"type":"text","id":"one_time_note","label":"Purchase note","default":"Choose the quantity that fits your routine."},
+    {"type":"text","id":"guarantee_text","label":"Guarantee text","default":"30-day money-back guarantee"},
+    {"type":"color","id":"background","label":"Background","default":"#EAF9FC"},
+    {"type":"color","id":"card_background","label":"Card background","default":"#FFFFFF"},
+    {"type":"color","id":"text","label":"Text","default":"#111111"},
+    {"type":"color","id":"muted","label":"Muted text","default":"#667177"},
+    {"type":"color","id":"accent","label":"Avonent blue","default":"#02C6EA"},
+    {"type":"color","id":"accent_dark","label":"Deep blue","default":"#087E9D"},
+    {"type":"color","id":"line","label":"Borders","default":"#D8E8ED"}
+  ],
+  "presets":[{"name":"Garlic Lower Offer"}]
+}
+{% endschema %}
