@@ -84,7 +84,7 @@
         "text": "#071a52",
         "muted": "#5f6878",
         "line": "#dcecf5",
-        "details_button_text": "SEE PRODUCT DETAILS"
+        "details_button_text": "CHOOSE YOUR SUPPLY"
       }
     },
     "accordions": {
@@ -295,7 +295,19 @@
         "crafted_4_title": "Wellness for the Long Run",
         "crafted_4_subtitle": "Consistency, not complexity.",
         "crafted_4_body": "<p>Made for people who prefer simple, practical routines they can continue as part of everyday life.</p>",
-        "crafted_footer": "Non-GMO · Gluten-Free · No unnecessary additives"
+        "crafted_footer": "Non-GMO · Gluten-Free · No unnecessary additives",
+        "stage_eyebrow": "YOUR DAILY ROUTINE",
+        "stage_heading": "Build the Habit. Keep It Simple.",
+        "stage_intro": "<p>A simple four-stage routine designed to make consistency feel natural.</p>",
+        "stage_1_title": "Start Simple",
+        "stage_1_text": "<ul><li>Take two softgels daily</li><li>Add it to an existing routine</li><li>Keep the schedule uncomplicated</li></ul>",
+        "stage_2_title": "Build the Habit",
+        "stage_2_text": "<ul><li>Keep your routine consistent</li><li>Use it around the same time each day</li><li>Make it easy to remember</li></ul>",
+        "stage_3_title": "Stay Consistent",
+        "stage_3_text": "<ul><li>Continue your daily routine</li><li>Keep wellness habits simple</li><li>Focus on long-term consistency</li></ul>",
+        "stage_4_title": "Make It Last",
+        "stage_4_text": "<ul><li>Build around daily consistency</li><li>Keep the routine practical</li><li>Make it part of everyday life</li></ul>",
+        "stage_button_text": "CHOOSE YOUR SUPPLY"
       }
     },
     "softgel": {
@@ -414,6 +426,44 @@
         "light_text": "#ffffff",
         "line": "#dcecf5"
       }
+    },
+    "lower_offer": {
+      "type": "00-aged-garlic-lower-offer",
+      "settings": {
+        "eyebrow": "CHOOSE YOUR ROUTINE",
+        "heading": "Stay consistent. Stock up. Save more.",
+        "intro": "<p>Choose the supply that fits your routine and keep Avonent Aged Garlic within reach.</p>",
+        "show_stock_meter": true,
+        "sold_percent": 93,
+        "offer_label": "Choose your supply",
+        "offer_subtext": "One-time purchase",
+        "bundle_1_title": "Buy 1",
+        "bundle_1_supply": "30-Day Supply",
+        "bundle_1_helper": "Perfect for getting started",
+        "bundle_1_badge": "",
+        "bundle_2_title": "Buy 2",
+        "bundle_2_supply": "60-Day Supply",
+        "bundle_2_helper": "Build a consistent routine",
+        "bundle_2_badge": "Most Popular",
+        "bundle_3_title": "Buy 3",
+        "bundle_3_supply": "90-Day Supply",
+        "bundle_3_helper": "Stock up and stay prepared",
+        "bundle_3_badge": "Best Value",
+        "delivery_prefix": "Order today for estimated delivery soon ·",
+        "delivery_highlight": "Ships from USA 🇺🇸",
+        "button_text": "Add to cart",
+        "perk_1": "Simple one-time purchase",
+        "perk_2": "No subscription required",
+        "one_time_note": "Choose the quantity that fits your routine.",
+        "guarantee_text": "30-day money-back guarantee",
+        "background": "#eaf9fc",
+        "card_background": "#ffffff",
+        "text": "#111111",
+        "muted": "#667177",
+        "accent": "#02c6ea",
+        "accent_dark": "#087e9d",
+        "line": "#d8e8ed"
+      }
     }
   },
   "order": [
@@ -423,6 +473,7 @@
     "benefits_slider",
     "softgel",
     "story",
-    "comparison"
+    "comparison",
+    "lower_offer"
   ]
 }
