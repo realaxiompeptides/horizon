@@ -106,32 +106,30 @@
         <article>
           <span class="aged-garlic-story__ingredient-number">01</span>
           <h3>Aged Garlic</h3>
-          <p>The foundation of the formula. Final potency, garlic equivalent, aging time and serving amount should match the verified Supplement Facts before launch.</p>
+          <p>The foundation of the formula: garlic that has gone through an aging or maturation process for a more convenient daily supplement format.</p>
         </article>
         <article>
           <span class="aged-garlic-story__ingredient-number">02</span>
           <h3>CoQ10</h3>
-          <p>Coenzyme Q10 is a naturally occurring compound involved in normal cellular energy processes. Final amount should be displayed only after the supplier label is verified.</p>
+          <p>Coenzyme Q10 is a naturally occurring compound involved in normal cellular energy processes and is commonly included in daily wellness formulas.</p>
         </article>
         <article>
           <span class="aged-garlic-story__ingredient-number">03</span>
           <h3>Ubiquinol</h3>
-          <p>Ubiquinol is a form of CoQ10. The page can show the exact quantity once the final product documentation confirms it.</p>
+          <p>Ubiquinol is a form of CoQ10 included to make the formula more differentiated than a basic garlic-only supplement.</p>
         </article>
       </div>
 
-      <div class="aged-garlic-story__facts">
-        <div>
-          <span>SUPPLEMENT FACTS</span>
-          <h3>Full transparency belongs on the page.</h3>
-          <p>Upload the verified back-label image here before paid traffic starts. Serving size, ingredient quantities, other ingredients and allergen information should be readable without leaving the product page.</p>
-        </div>
-        {% if section.settings.facts_image != blank %}
+      {% if section.settings.facts_image != blank %}
+        <div class="aged-garlic-story__facts">
+          <div>
+            <span>SUPPLEMENT FACTS</span>
+            <h3>See exactly what is in your routine.</h3>
+            <p>Review the serving size, ingredient quantities, other ingredients, and label directions before adding any supplement to your routine.</p>
+          </div>
           {{ section.settings.facts_image | image_url: width: 900 | image_tag: loading:'lazy', widths:'360,540,720,900', class:'aged-garlic-story__facts-image', alt:'Supplement Facts for Avonent Aged Garlic + CoQ10' }}
-        {% else %}
-          <div class="aged-garlic-story__facts-placeholder">SUPPLEMENT FACTS<br><small>Upload verified label before launch</small></div>
-        {% endif %}
-      </div>
+        </div>
+      {% endif %}
     </div>
   </div>
 
@@ -211,10 +209,10 @@
       <div class="aged-garlic-story__faq-list">
         <details><summary>What is aged garlic?<span>+</span></summary><p>Aged garlic is garlic that has gone through a maturation process before being used in a supplement. The exact Avonent aging process and duration should match the final supplier documentation.</p></details>
         <details><summary>Does it smell like normal garlic?<span>+</span></summary><p>This product is positioned as an odorless aged-garlic softgel. Individual experience can vary, and the final product label should be the source of truth.</p></details>
-        <details><summary>How many softgels should I take?<span>+</span></summary><p>Follow the directions printed on the final verified product label. We will publish the exact serving directions here once the Supplement Facts are confirmed.</p></details>
-        <details><summary>How long does one bag last?<span>+</span></summary><p>That depends on the verified serving size. Each candidate bag contains 60 softgels, but we will not market a 30-day supply until the serving directions are confirmed.</p></details>
-        <details><summary>Does this contain CoQ10 and ubiquinol?<span>+</span></summary><p>The planned Avonent formula includes CoQ10 + ubiquinol. Exact quantities should be confirmed against the final Supplement Facts before launch.</p></details>
-        <details><summary>Where can I see the Supplement Facts?<span>+</span></summary><p>The verified Supplement Facts panel will appear in the ingredient section above as soon as the final back-label documentation is available.</p></details>
+        <details><summary>How many softgels should I take?<span>+</span></summary><p>Follow the serving directions printed on the product label and do not exceed the suggested use.</p></details>
+        <details><summary>How long does one bag last?<span>+</span></summary><p>How long one bag lasts depends on the serving directions shown on the product label.</p></details>
+        <details><summary>Does this contain CoQ10 and ubiquinol?<span>+</span></summary><p>Yes. This formula is positioned around aged garlic with CoQ10 + ubiquinol. Refer to the product label for the exact amounts.</p></details>
+        <details><summary>Where can I see the Supplement Facts?<span>+</span></summary><p>The Supplement Facts panel is shown on this page when available and is also printed on the product packaging.</p></details>
         <details><summary>Can I take it with medications?<span>+</span></summary><p>If you take medication, have a health condition, are pregnant or nursing, have a procedure planned, or have questions about supplementation, speak with a qualified healthcare professional before use.</p></details>
         <details><summary>What is the return policy?<span>+</span></summary><p>Avonent offers a 30-day satisfaction guarantee. Returns and refunds are handled according to the refund policy linked on the store.</p></details>
       </div>
@@ -223,7 +221,7 @@
 
   <div class="aged-garlic-story__disclaimer">
     <div class="aged-garlic-story__wrap">
-      <p>* Product information on this page should be finalized against the verified Supplement Facts and supplier documentation before launch. Dietary supplements are not intended to diagnose, treat, cure, or prevent disease.</p>
+      <p>* Dietary supplements are not intended to diagnose, treat, cure, or prevent disease. Read the product label and speak with a qualified healthcare professional if you have questions about adding a supplement to your routine.</p>
     </div>
   </div>
 
