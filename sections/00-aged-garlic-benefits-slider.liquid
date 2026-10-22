@@ -44,6 +44,128 @@
       </div>
     </div>
   </div>
+
+  <div class="ag-benefits__post">
+    <div class="ag-benefits__choose" style="--choose-bg:{{ section.settings.choose_background }};--choose-overlay:{{ section.settings.choose_overlay }};">
+      {% if section.settings.choose_background_image != blank %}
+        {{ section.settings.choose_background_image | image_url: width: 1800 | image_tag: widths: '600,900,1200,1600,1800', sizes: '100vw', loading: 'lazy', class: 'ag-benefits__choose-bg', alt: section.settings.choose_heading }}
+      {% endif %}
+      <div class="ag-benefits__choose-wash"></div>
+      <div class="ag-benefits__choose-in">
+        <h2>{{ section.settings.choose_heading }}</h2>
+        <div class="ag-benefits__choose-intro rte">{{ section.settings.choose_intro }}</div>
+
+        <div class="ag-benefits__choose-rows">
+          <div class="ag-benefits__choose-row">
+            <h3>{{ section.settings.reason_1_heading }}</h3>
+            <div class="rte">{{ section.settings.reason_1_text }}</div>
+          </div>
+          <div class="ag-benefits__choose-row">
+            <h3>{{ section.settings.reason_2_heading }}</h3>
+            <div class="rte">{{ section.settings.reason_2_text }}</div>
+          </div>
+          <div class="ag-benefits__choose-row">
+            <h3>{{ section.settings.reason_3_heading }}</h3>
+            <div class="rte">{{ section.settings.reason_3_text }}</div>
+          </div>
+          <div class="ag-benefits__choose-row">
+            <h3>{{ section.settings.reason_4_heading }}</h3>
+            <div class="rte">{{ section.settings.reason_4_text }}</div>
+          </div>
+        </div>
+
+        {% if section.settings.choose_button_text != blank %}
+          <a class="ag-benefits__choose-btn" href="{{ section.settings.choose_button_link | default: '#avonent-garlic-buy' }}">{{ section.settings.choose_button_text }}</a>
+        {% endif %}
+        <div class="ag-benefits__choose-guarantee">
+          <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3 27 7v8c0 7-4.5 11.8-11 14-6.5-2.2-11-7-11-14V7z"></path><path d="m11 16 3 3 7-8"></path></svg>
+          <span>{{ section.settings.choose_guarantee }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ag-benefits__daily">
+      <div class="ag-benefits__daily-card">
+        <h2>{{ section.settings.daily_heading }}</h2>
+        <div class="ag-benefits__daily-intro rte">{{ section.settings.daily_intro }}</div>
+        <div class="ag-benefits__daily-grid">
+          <div class="ag-benefits__daily-points">
+            <div class="ag-benefits__daily-point">
+              <i></i>
+              <h3>{{ section.settings.daily_point_1_heading }}</h3>
+              <div class="rte">{{ section.settings.daily_point_1_text }}</div>
+            </div>
+            <div class="ag-benefits__daily-point">
+              <i></i>
+              <h3>{{ section.settings.daily_point_2_heading }}</h3>
+              <div class="rte">{{ section.settings.daily_point_2_text }}</div>
+            </div>
+          </div>
+          <div class="ag-benefits__daily-visual">
+            {% if section.settings.daily_visual != blank %}
+              {{ section.settings.daily_visual | image_url: width: 900 | image_tag: widths: '320,480,640,900', loading: 'lazy', class: 'ag-benefits__daily-img', alt: section.settings.daily_visual_alt }}
+            {% else %}
+              <div class="ag-benefits__daily-capsule" aria-hidden="true"></div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ag-benefits__image-break">
+      {% if section.settings.break_image != blank %}
+        {{ section.settings.break_image | image_url: width: 1800 | image_tag: widths: '600,900,1200,1600,1800', sizes: '(min-width:1000px) 960px,calc(100vw - 28px)', loading: 'lazy', class: 'ag-benefits__break-img', alt: section.settings.break_alt }}
+      {% else %}
+        <div class="ag-benefits__break-placeholder">
+          <strong>Add your image in the theme editor</strong>
+          <span>This image sits directly below the daily-use section.</span>
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="ag-benefits__wellness" style="--wellness-bg:{{ section.settings.wellness_background }};--wellness-ring:{{ section.settings.wellness_ring }};">
+      <div class="ag-benefits__wellness-in">
+        <h2>{{ section.settings.wellness_heading }}</h2>
+        <div class="ag-benefits__wellness-sub rte">{{ section.settings.wellness_subheading }}</div>
+
+        <div class="ag-benefits__wellness-grid">
+          <div class="ag-benefits__wellness-item">
+            <span class="ag-benefits__wellness-icon">{% render 'icon', icon: 'heart' %}</span>
+            <strong>{{ section.settings.wellness_1 }}</strong>
+          </div>
+          <div class="ag-benefits__wellness-item">
+            <span class="ag-benefits__wellness-icon ag-benefits__wellness-icon--shield">
+              <svg viewBox="0 0 48 48"><path d="M24 4 40 10v12c0 11-7 18-16 22C15 40 8 33 8 22V10z"></path><path d="M18 24h12M24 18v12"></path></svg>
+            </span>
+            <strong>{{ section.settings.wellness_2 }}</strong>
+          </div>
+          <div class="ag-benefits__wellness-item">
+            <span class="ag-benefits__wellness-icon">
+              <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="17"></circle><path d="M24 14v11l8 5"></path></svg>
+            </span>
+            <strong>{{ section.settings.wellness_3 }}</strong>
+          </div>
+          <div class="ag-benefits__wellness-item">
+            <span class="ag-benefits__wellness-icon">
+              <svg viewBox="0 0 48 48"><path d="M13 15c6 0 8 4 11 9 3-5 5-9 11-9"></path><path d="M10 9c8 2 11 8 14 15C27 17 30 11 38 9"></path><path d="M24 24v16"></path></svg>
+            </span>
+            <strong>{{ section.settings.wellness_4 }}</strong>
+          </div>
+        </div>
+
+        <div class="ag-benefits__wellness-product">
+          <span class="ag-benefits__ring ag-benefits__ring--1"></span>
+          <span class="ag-benefits__ring ag-benefits__ring--2"></span>
+          <span class="ag-benefits__ring ag-benefits__ring--3"></span>
+          {% if section.settings.wellness_product_image != blank %}
+            {{ section.settings.wellness_product_image | image_url: width: 1000 | image_tag: widths: '360,540,720,1000', loading: 'lazy', class: 'ag-benefits__wellness-img', alt: product.title }}
+          {% elsif product.featured_image != blank %}
+            {{ product.featured_image | image_url: width: 1000 | image_tag: widths: '360,540,720,1000', loading: 'lazy', class: 'ag-benefits__wellness-img', alt: product.title }}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <script>
@@ -79,7 +201,7 @@
 })();
 </script>
 {% stylesheet %}
-.ag-benefits{background:var(--bg);color:var(--t);padding:44px 0 50px}.ag-benefits *{box-sizing:border-box}.ag-benefits__in{width:min(calc(100% - 28px),940px);margin:auto}.ag-benefits h2{margin:0 0 28px;text-align:center;color:var(--t);font-size:clamp(34px,4.4vw,48px);font-weight:820;line-height:1.05;letter-spacing:-.035em}.ag-benefits h2 span{color:var(--a)}.ag-benefits__slider{position:relative}.ag-benefits__track{position:relative}.ag-benefits__slide{display:none;overflow:hidden;border-radius:18px;background:var(--card);box-shadow:0 10px 32px rgb(0 65 120 / 5%)}.ag-benefits__slide.is-active{display:block}.ag-benefits__media{height:560px;padding:14px 14px 0}.ag-benefits__img,.ag-benefits__placeholder{display:block;width:100%;height:100%;border-radius:14px;object-fit:cover;background:#eef8fd}.ag-benefits__img--contain{object-fit:contain;padding:28px;background:linear-gradient(145deg,#fff,#eef9ff)}.ag-benefits__placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;color:#7a889a}.ag-benefits__placeholder span{font-size:13px;font-weight:900;letter-spacing:.12em}.ag-benefits__placeholder small{margin-top:7px;font-size:11px}.ag-benefits__copy{padding:23px 26px 28px;text-align:center}.ag-benefits__copy h3{margin:0;color:var(--t);font-size:24px;font-weight:820;line-height:1.15}.ag-benefits__copy .rte{max-width:720px;margin:14px auto 0;color:var(--m);font-size:15px;line-height:1.65}.ag-benefits__copy .rte p{margin:0}.ag-benefits__controls{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;gap:14px;max-width:300px;margin:20px auto 0}.ag-benefits__arrow{display:grid;place-items:center;width:44px;height:44px;border:0;background:transparent;color:#69727c;font-size:42px;line-height:1;cursor:pointer}.ag-benefits__dots{display:flex;justify-content:center;align-items:center;gap:10px}.ag-benefits__dot{width:9px;height:9px;padding:0;border:0;border-radius:50%;background:color-mix(in srgb,var(--a) 35%,#d9e4eb);cursor:pointer}.ag-benefits__dot.is-active{width:12px;height:12px;background:var(--a)}@media(max-width:749px){.ag-benefits{padding:34px 0 38px}.ag-benefits h2{margin-bottom:22px;font-size:35px}.ag-benefits__media{height:420px;padding:12px 12px 0}.ag-benefits__copy{padding:20px 18px 22px}.ag-benefits__copy h3{font-size:21px}.ag-benefits__copy .rte{font-size:13.5px}.ag-benefits__controls{margin-top:14px}}
+.ag-benefits{background:var(--bg);color:var(--t);padding:44px 0 50px}.ag-benefits *{box-sizing:border-box}.ag-benefits__in{width:min(calc(100% - 28px),940px);margin:auto}.ag-benefits h2{margin:0 0 28px;text-align:center;color:var(--t);font-size:clamp(34px,4.4vw,48px);font-weight:820;line-height:1.05;letter-spacing:-.035em}.ag-benefits h2 span{color:var(--a)}.ag-benefits__slider{position:relative}.ag-benefits__track{position:relative}.ag-benefits__slide{display:none;overflow:hidden;border-radius:18px;background:var(--card);box-shadow:0 10px 32px rgb(0 65 120 / 5%)}.ag-benefits__slide.is-active{display:block}.ag-benefits__media{height:560px;padding:14px 14px 0}.ag-benefits__img,.ag-benefits__placeholder{display:block;width:100%;height:100%;border-radius:14px;object-fit:cover;background:#eef8fd}.ag-benefits__img--contain{object-fit:contain;padding:28px;background:linear-gradient(145deg,#fff,#eef9ff)}.ag-benefits__placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;color:#7a889a}.ag-benefits__placeholder span{font-size:13px;font-weight:900;letter-spacing:.12em}.ag-benefits__placeholder small{margin-top:7px;font-size:11px}.ag-benefits__copy{padding:23px 26px 28px;text-align:center}.ag-benefits__copy h3{margin:0;color:var(--t);font-size:24px;font-weight:820;line-height:1.15}.ag-benefits__copy .rte{max-width:720px;margin:14px auto 0;color:var(--m);font-size:15px;line-height:1.65}.ag-benefits__copy .rte p{margin:0}.ag-benefits__controls{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;gap:14px;max-width:300px;margin:20px auto 0}.ag-benefits__arrow{display:grid;place-items:center;width:44px;height:44px;border:0;background:transparent;color:#69727c;font-size:42px;line-height:1;cursor:pointer}.ag-benefits__dots{display:flex;justify-content:center;align-items:center;gap:10px}.ag-benefits__dot{width:9px;height:9px;padding:0;border:0;border-radius:50%;background:color-mix(in srgb,var(--a) 35%,#d9e4eb);cursor:pointer}.ag-benefits__dot.is-active{width:12px;height:12px;background:var(--a)}.ag-benefits__post{margin-top:46px}.ag-benefits__choose{position:relative;overflow:hidden;background:var(--choose-bg);color:#fff;isolation:isolate}.ag-benefits__choose-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-3}.ag-benefits__choose-wash{position:absolute;inset:0;z-index:-2;background:linear-gradient(180deg,color-mix(in srgb,var(--choose-overlay) 87%,transparent),color-mix(in srgb,var(--choose-overlay) 94%,transparent))}.ag-benefits__choose-in{width:min(calc(100% - 34px),940px);margin:auto;padding:62px 0}.ag-benefits__choose h2{margin:0;max-width:760px;color:#fff;text-align:left;font-size:clamp(40px,5vw,60px)}.ag-benefits__choose-intro{max-width:800px;margin-top:20px;font-size:17px;line-height:1.6}.ag-benefits__choose-intro p,.ag-benefits__choose-row .rte p{margin:0}.ag-benefits__choose-rows{margin-top:32px;border-top:1px solid rgb(255 255 255 / 38%)}.ag-benefits__choose-row{padding:22px 0;border-bottom:1px solid rgb(255 255 255 / 38%)}.ag-benefits__choose-row h3{margin:0;color:#fff;font-size:20px}.ag-benefits__choose-row .rte{margin-top:6px;font-size:15px;line-height:1.5}.ag-benefits__choose-btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:58px;margin-top:32px;border-radius:10px;background:#fff;color:#071A52;font-size:17px;font-weight:850;text-decoration:none}.ag-benefits__choose-guarantee{display:flex;align-items:center;justify-content:center;gap:9px;margin-top:18px;font-size:14px}.ag-benefits__choose-guarantee svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}.ag-benefits__daily{background:#F7FCFF;padding:50px 14px}.ag-benefits__daily-card{width:min(100%,940px);margin:auto;padding:34px;border-radius:24px;background:#fff;box-shadow:0 12px 38px rgb(0 75 130 / 5%)}.ag-benefits__daily-card>h2{margin:0;text-align:left;color:#071A52;font-size:clamp(34px,4.6vw,52px)}.ag-benefits__daily-intro{max-width:760px;margin-top:14px;color:#5F6878;font-size:16px;line-height:1.6}.ag-benefits__daily-intro p,.ag-benefits__daily-point .rte p{margin:0}.ag-benefits__daily-grid{display:grid;grid-template-columns:1.1fr .9fr;align-items:end;gap:28px;margin-top:34px}.ag-benefits__daily-points{display:grid;gap:30px}.ag-benefits__daily-point{position:relative;padding-top:18px}.ag-benefits__daily-point>i{position:absolute;left:0;top:0;width:100%;height:1px;background:#9EDFEA}.ag-benefits__daily-point>i::after{content:"";position:absolute;right:0;top:50%;width:7px;height:7px;border-radius:50%;background:#02C6EA;transform:translateY(-50%)}.ag-benefits__daily-point h3{margin:0;color:#071A52;font-size:18px}.ag-benefits__daily-point .rte{margin-top:6px;color:#5F6878;font-size:14px;line-height:1.55}.ag-benefits__daily-visual{display:grid;place-items:end center;min-height:300px}.ag-benefits__daily-img{display:block;max-width:100%;max-height:300px;width:auto;height:auto;object-fit:contain}.ag-benefits__daily-capsule{position:relative;width:100px;height:230px;border-radius:55px;background:linear-gradient(90deg,#b8640e,#f6b31f 20%,#ffd45f 52%,#de840e 82%,#9e4d03);box-shadow:inset 12px 0 18px rgb(255 255 255 / 24%),0 18px 24px rgb(110 65 11 / 16%)}.ag-benefits__image-break{background:#fff;padding:16px 14px}.ag-benefits__break-img,.ag-benefits__break-placeholder{display:block;width:min(100%,940px);margin:auto;border-radius:18px}.ag-benefits__break-img{height:auto;max-height:820px;object-fit:cover}.ag-benefits__break-placeholder{display:grid;place-items:center;min-height:360px;padding:40px;border:1px dashed #b9d9e8;background:linear-gradient(145deg,#f8fdff,#edf9fe);color:#5e7484;text-align:center}.ag-benefits__break-placeholder strong{font-size:20px}.ag-benefits__break-placeholder span{margin-top:8px;font-size:13px}.ag-benefits__wellness{overflow:hidden;background:var(--wellness-bg);color:#fff}.ag-benefits__wellness-in{width:min(calc(100% - 30px),940px);margin:auto;padding:56px 0 0}.ag-benefits__wellness h2{margin:0;color:#fff;font-size:clamp(38px,5vw,56px)}.ag-benefits__wellness-sub{max-width:720px;margin:14px auto 0;color:#E8FBFF;text-align:center;font-size:16px;line-height:1.55}.ag-benefits__wellness-sub p{margin:0}.ag-benefits__wellness-grid{display:grid;grid-template-columns:1fr 1fr;gap:38px 30px;max-width:720px;margin:44px auto 20px}.ag-benefits__wellness-item{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}.ag-benefits__wellness-icon{display:grid;place-items:center;width:62px;height:62px;color:#fff}.ag-benefits__wellness-icon svg{width:54px;height:54px;fill:none;stroke:currentColor;stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round}.ag-benefits__wellness-item strong{max-width:250px;font-size:18px;line-height:1.25}.ag-benefits__wellness-product{position:relative;display:grid;place-items:end center;min-height:500px;margin-top:20px}.ag-benefits__wellness-img{position:relative;z-index:3;display:block;max-width:min(62%,430px);max-height:460px;width:auto;height:auto;object-fit:contain;filter:drop-shadow(0 24px 24px rgb(0 60 130 / 18%))}.ag-benefits__ring{position:absolute;left:50%;bottom:0;transform:translateX(-50%);border:1.5px dashed var(--wellness-ring);border-radius:50% 50% 0 0}.ag-benefits__ring--1{width:76%;height:300px}.ag-benefits__ring--2{width:59%;height:235px}.ag-benefits__ring--3{width:43%;height:170px}@media(max-width:749px){.ag-benefits{padding:34px 0 38px}.ag-benefits h2{margin-bottom:22px;font-size:35px}.ag-benefits__media{height:420px;padding:12px 12px 0}.ag-benefits__copy{padding:20px 18px 22px}.ag-benefits__copy h3{font-size:21px}.ag-benefits__copy .rte{font-size:13.5px}.ag-benefits__controls{margin-top:14px}.ag-benefits__post{margin-top:34px}.ag-benefits__choose-in{padding:46px 0}.ag-benefits__choose h2{font-size:40px}.ag-benefits__choose-intro{font-size:15px}.ag-benefits__choose-row{padding:19px 0}.ag-benefits__daily{padding:34px 14px}.ag-benefits__daily-card{padding:24px 18px}.ag-benefits__daily-card>h2{font-size:35px}.ag-benefits__daily-intro{font-size:14px}.ag-benefits__daily-grid{grid-template-columns:1fr .46fr;gap:13px;margin-top:28px}.ag-benefits__daily-point h3{font-size:16px}.ag-benefits__daily-point .rte{font-size:12.5px}.ag-benefits__daily-visual{min-height:230px}.ag-benefits__daily-img{max-height:230px}.ag-benefits__daily-capsule{width:72px;height:175px}.ag-benefits__break-placeholder{min-height:280px}.ag-benefits__wellness-in{padding-top:46px}.ag-benefits__wellness h2{font-size:37px}.ag-benefits__wellness-sub{font-size:14px}.ag-benefits__wellness-grid{gap:32px 16px;margin-top:36px}.ag-benefits__wellness-icon{width:54px;height:54px}.ag-benefits__wellness-icon svg{width:48px;height:48px}.ag-benefits__wellness-item strong{font-size:15px}.ag-benefits__wellness-product{min-height:390px}.ag-benefits__wellness-img{max-width:min(72%,320px);max-height:360px}.ag-benefits__ring--1{width:92%;height:250px}.ag-benefits__ring--2{width:72%;height:195px}.ag-benefits__ring--3{width:52%;height:140px}}
 {% endstylesheet %}
 
 {% schema %}
@@ -90,6 +212,49 @@
   "settings":[
     {"type":"text","id":"heading_before","label":"Heading beginning","default":"4 Benefits of"},
     {"type":"text","id":"heading_accent","label":"Highlighted heading text","default":"Aged Garlic"},
+    {"type":"header","content":"Why Customers Choose Avonent"},
+    {"type":"image_picker","id":"choose_background_image","label":"Choose section background image"},
+    {"type":"text","id":"choose_heading","label":"Choose section heading","default":"Why Customers Choose Avonent"},
+    {"type":"richtext","id":"choose_intro","label":"Choose section intro","default":"<p>Avonent Aged Garlic is designed to be a simple addition to your daily wellness routine.</p>"},
+    {"type":"text","id":"reason_1_heading","label":"Reason 1 title","default":"Two Daily Softgels"},
+    {"type":"richtext","id":"reason_1_text","label":"Reason 1 text","default":"<p>A straightforward serving that fits into a consistent daily routine.</p>"},
+    {"type":"text","id":"reason_2_heading","label":"Reason 2 title","default":"Odorless Experience"},
+    {"type":"richtext","id":"reason_2_text","label":"Reason 2 text","default":"<p>Designed for people who want aged garlic without strong garlic odor becoming part of the day.</p>"},
+    {"type":"text","id":"reason_3_heading","label":"Reason 3 title","default":"Fits Your Routine"},
+    {"type":"richtext","id":"reason_3_text","label":"Reason 3 text","default":"<p>Simple to take at home, at work, or wherever your routine happens.</p>"},
+    {"type":"text","id":"reason_4_heading","label":"Reason 4 title","default":"Built for the Long Run"},
+    {"type":"richtext","id":"reason_4_text","label":"Reason 4 text","default":"<p>Made for people who prefer simple, repeatable wellness habits.</p>"},
+    {"type":"text","id":"choose_button_text","label":"Choose section button","default":"Try Risk-Free Today"},
+    {"type":"url","id":"choose_button_link","label":"Choose section button link"},
+    {"type":"text","id":"choose_guarantee","label":"Guarantee text","default":"30-day money-back guarantee"},
+    {"type":"color","id":"choose_background","label":"Choose fallback background","default":"#02C6EA"},
+    {"type":"color","id":"choose_overlay","label":"Choose image overlay","default":"#0068E8"},
+
+    {"type":"header","content":"Daily Use Section"},
+    {"type":"text","id":"daily_heading","label":"Daily-use heading","default":"Unlike Regular Garlic Pills, Aged Garlic Is Made for Daily Use"},
+    {"type":"richtext","id":"daily_intro","label":"Daily-use intro","default":"<p>Avonent Aged Garlic is built around a simple, odorless softgel routine that is easy to keep consistent.</p>"},
+    {"type":"text","id":"daily_point_1_heading","label":"Daily point 1 title","default":"Fits Into Your Routine"},
+    {"type":"richtext","id":"daily_point_1_text","label":"Daily point 1 text","default":"<p>Two easy-to-take softgels designed for simple daily use.</p>"},
+    {"type":"text","id":"daily_point_2_heading","label":"Daily point 2 title","default":"No Strong Garlic Aftertaste"},
+    {"type":"richtext","id":"daily_point_2_text","label":"Daily point 2 text","default":"<p>An odorless softgel format made to keep the routine convenient.</p>"},
+    {"type":"image_picker","id":"daily_visual","label":"Daily-use softgel/image"},
+    {"type":"text","id":"daily_visual_alt","label":"Daily visual alt text","default":"Avonent aged garlic softgel"},
+
+    {"type":"header","content":"Image Below Daily Use"},
+    {"type":"image_picker","id":"break_image","label":"Full-width image"},
+    {"type":"text","id":"break_alt","label":"Image alt text","default":"Avonent Aged Garlic"},
+
+    {"type":"header","content":"Designed for Everyday Wellness"},
+    {"type":"text","id":"wellness_heading","label":"Wellness heading","default":"Designed for Everyday Wellness"},
+    {"type":"richtext","id":"wellness_subheading","label":"Wellness subheading","default":"<p>From a simple softgel format to an easy daily routine, here’s what makes Avonent Aged Garlic different.</p>"},
+    {"type":"text","id":"wellness_1","label":"Wellness feature 1","default":"Daily Wellness Routine"},
+    {"type":"text","id":"wellness_2","label":"Wellness feature 2","default":"CoQ10 + Ubiquinol Formula"},
+    {"type":"text","id":"wellness_3","label":"Wellness feature 3","default":"Two-Softgel Daily Routine"},
+    {"type":"text","id":"wellness_4","label":"Wellness feature 4","default":"Odorless Aged Garlic"},
+    {"type":"image_picker","id":"wellness_product_image","label":"Wellness product image"},
+    {"type":"color","id":"wellness_background","label":"Wellness background","default":"#02C6EA"},
+    {"type":"color","id":"wellness_ring","label":"Decorative rings","default":"#B9F4FF"},
+
     {"type":"color","id":"background","label":"Section background","default":"#F7FCFF"},
     {"type":"color","id":"card","label":"Card background","default":"#FFFFFF"},
     {"type":"color","id":"text","label":"Text","default":"#071A52"},
