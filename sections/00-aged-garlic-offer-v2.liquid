@@ -187,7 +187,7 @@
                   {% if section.settings.shipping_reward_active %}
                     <span class="ag2__bundle-perk">
                       <b class="ag2__bundle-check">✓</b>
-                      <span>{{ section.settings.bundle_shipping_perk }}</span>
+                      <span>{{ section.settings.gift_shipping_title }}</span>
                     </span>
                   {% elsif n == 2 %}
                     <span class="ag2__bundle-perk ag2__bundle-perk--pending">
@@ -198,7 +198,7 @@
                   {% if n == 3 %}
                     <span class="ag2__bundle-perk">
                       <b class="ag2__bundle-check">✓</b>
-                      <span><strong>{{ section.settings.bundle_ebook_perk }}</strong><small>{{ section.settings.bundle_ebook_description }}</small></span>
+                      <span><strong>FREE eBook ($24.99 Value)</strong><small>Explore the aging process, the history of garlic, and how aged garlic fits into everyday wellness.</small></span>
                     </span>
                   {% endif %}
                 </span>
@@ -1050,24 +1050,6 @@
       "id": "shipping_reward_active",
       "label": "Enable shipping reward (after checkout is configured)",
       "default": false
-    },
-    {
-      "type": "text",
-      "id": "bundle_shipping_perk",
-      "label": "Buy 2 / Buy 3 shipping perk",
-      "default": "FREE Standard Shipping"
-    },
-    {
-      "type": "text",
-      "id": "bundle_ebook_perk",
-      "label": "Buy 3 ebook perk",
-      "default": "FREE eBook ($24.99 Value)"
-    },
-    {
-      "type": "textarea",
-      "id": "bundle_ebook_description",
-      "label": "Buy 3 ebook description",
-      "default": "Explore the aging process, the history of garlic, and ways to incorporate aged garlic into a daily wellness routine."
     },
     {
       "type": "text",
