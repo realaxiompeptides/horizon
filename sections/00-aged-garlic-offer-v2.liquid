@@ -433,36 +433,64 @@
       if (submitButton) submitButton.disabled = true;
       if (submitLabel) submitLabel.textContent = 'ADDING...';
 
-      const line = {
-        id: Number(values.variantId),
-        quantity: Number(values.quantity) || 1
-      };
-
-      if (mode === 'subscription' && values.planId) {
-        line.selling_plan = Number(values.planId);
-      }
-
       try {
         const rootPath = window.Shopify?.routes?.root || '/';
-        const response = await fetch(rootPath + 'cart/add.js', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          credentials: 'same-origin',
-          body: JSON.stringify({ items: [line] })
-        });
 
-        const payload = await response.json().catch(() => ({}));
+        // Match Shopify's normal product-form flow (same style used by the working Moringa page).
+        setPlanInput();
+        if (variantInput) variantInput.value = String(values.variantId);
+        if (quantityInput) quantityInput.value = String(values.quantity);
 
-        if (!response.ok || payload?.status) {
+        const delays = [0, 700, 1500, 3000, 5000];
+        let payload = null;
+        let response = null;
+        let lastRequestId = '';
+
+        for (let attempt = 0; attempt < delays.length; attempt += 1) {
+          if (delays[attempt]) {
+            await new Promise((resolve) => setTimeout(resolve, delays[attempt]));
+          }
+
+          const formData = new FormData(form);
+
+          response = await fetch(rootPath + 'cart/add.js', {
+            method: 'POST',
+            headers: { 'Accept': 'application/json' },
+            credentials: 'same-origin',
+            body: formData
+          });
+
+          lastRequestId =
+            response.headers.get('x-request-id') ||
+            response.headers.get('x-shopify-request-id') ||
+            lastRequestId;
+
+          payload = await response.json().catch(() => ({}));
+
+          if (response.ok && !payload?.status) break;
+
+          const description = String(
+            payload?.description ||
+            payload?.message ||
+            payload?.errors ||
+            ''
+          ).toLowerCase();
+
+          const isFalseSoldOut =
+            response.status === 422 &&
+            description.includes('sold out');
+
+          if (!isFalseSoldOut || attempt === delays.length - 1) break;
+        }
+
+        if (!response?.ok || payload?.status) {
           const message =
             payload?.description ||
             payload?.message ||
             payload?.errors ||
             'Unable to add this item to the cart.';
-          throw new Error(typeof message === 'string' ? message : JSON.stringify(message));
+          const requestSuffix = lastRequestId ? ' (Shopify request ' + lastRequestId + ')' : '';
+          throw new Error((typeof message === 'string' ? message : JSON.stringify(message)) + requestSuffix);
         }
 
         document.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true }));
