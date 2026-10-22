@@ -1,0 +1,69 @@
+{
+  "sections": {
+    "main": {
+      "type": "00-aged-garlic-product-main",
+      "settings": {
+        "eyebrow": "ODORLESS DAILY GARLIC SUPPORT",
+        "headline": "Aged Garlic. Without the Garlic Breath.",
+        "subhead": "<p>A convenient aged garlic softgel formula with CoQ10 + ubiquinol, made for a simple daily wellness routine.</p>",
+        "badge_1": "Odorless",
+        "badge_2": "Aged Garlic",
+        "badge_3": "CoQ10 + Ubiquinol",
+        "badge_4": "Easy Daily Softgels",
+        "offer_heading": "Choose your quantity",
+        "bundle_1_note": "Try it",
+        "bundle_2_note": "Save more",
+        "bundle_3_note": "Lowest cost per bag",
+        "popular_badge": "Most Popular",
+        "value_badge": "Best Value",
+        "button_text": "ADD TO CART",
+        "trust_1": "30-Day Guarantee",
+        "trust_2": "Secure Checkout",
+        "trust_3": "U.S. Fulfillment",
+        "shipping_text": "Fast U.S. fulfillment · Shipping calculated at checkout",
+        "microcopy": "Review the product label before use. If you take medication, have a health condition, are pregnant or nursing, or have questions about supplementation, speak with a qualified healthcare professional.",
+        "ivory": "#FFF9F2",
+        "cream": "#F8EEE5",
+        "burgundy": "#6D172B",
+        "burgundy_dark": "#3C0D19",
+        "gold": "#B58A45",
+        "ink": "#1B1718",
+        "muted": "#675D60",
+        "line": "#E7DAD2"
+      }
+    },
+    "story": {
+      "type": "00-aged-garlic-sales-story",
+      "settings": {
+        "why_eyebrow": "WHY PEOPLE CHOOSE AGED GARLIC",
+        "why_heading": "Garlic made easier to live with.",
+        "why_text": "<p>A familiar ingredient, reworked into a cleaner and more convenient daily softgel routine.</p>",
+        "education_eyebrow": "AGED WITH PURPOSE",
+        "education_heading": "Why age garlic in the first place?",
+        "education_text": "<p>Fresh garlic is useful in the kitchen, but it is not always convenient as a daily supplement. Aged garlic is built for a more practical routine without turning your morning into food prep.</p>",
+        "education_image_alt": "Avonent aged garlic softgels with garlic",
+        "formula_eyebrow": "A SIMPLE FORMULA STORY",
+        "formula_heading": "More than a basic garlic capsule.",
+        "formula_text": "<p>Aged garlic is the foundation. CoQ10 + ubiquinol give the formula a more differentiated daily-wellness profile while keeping the routine simple.</p>",
+        "routine_eyebrow": "ONE SIMPLE ADDITION",
+        "routine_heading": "Built to become the easy part of your day.",
+        "routine_text": "No blending. No garlic prep. Just a straightforward softgel routine that fits beside the habits you already have.",
+        "compare_eyebrow": "A MORE CONSIDERED FORMAT",
+        "compare_heading": "Avonent vs. ordinary garlic supplements",
+        "guarantee_eyebrow": "TRY AVONENT FOR 30 DAYS",
+        "guarantee_heading": "A simple guarantee. No fake urgency.",
+        "guarantee_text": "<p>If Avonent is not right for you, contact us within 30 days and we will help with the next steps under our refund policy.</p>",
+        "ivory": "#FFF9F2",
+        "cream": "#F8EEE5",
+        "burgundy": "#6D172B",
+        "burgundy_dark": "#3C0D19",
+        "gold": "#B58A45",
+        "ink": "#1B1718",
+        "muted": "#675D60",
+        "line": "#E7DAD2",
+        "content_width": 1180
+      }
+    }
+  },
+  "order": ["main", "story"]
+}
