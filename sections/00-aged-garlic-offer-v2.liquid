@@ -6,26 +6,30 @@
   endif
   assign form_id = 'AGOffer-' | append: section.id
   assign hero = section.settings.image_1
-  if hero == blank
-    assign hero = p.featured_image
-  endif
 %}
 
 <section id="AGOffer-{{ section.id }}" class="ag2" style="--a:{{ section.settings.accent }};--ad:{{ section.settings.accent_dark }};--g:{{ section.settings.gold }};--t:{{ section.settings.text }};--m:{{ section.settings.muted }};--l:{{ section.settings.line }};--bg:{{ section.settings.background }};">
+  <span id="avonent-garlic-buy" class="ag2__anchor" aria-hidden="true"></span>
   <div class="ag2__wrap">
     <div class="ag2__media">
       <div class="ag2__hero" data-ag2-hero>
         {% if hero != blank %}
           {{ hero | image_url: width: 1400 | image_tag: widths: '480,720,960,1200,1400', sizes: '(min-width:900px) 50vw,100vw', loading: 'eager', fetchpriority: 'high', class: 'ag2__heroimg', alt: p.title }}
         {% else %}
-          <div class="ag2__mock"><span>AVONENT</span><strong>AGED GARLIC</strong><b>+ CoQ10</b></div>
+          <div class="ag2__mock">
+            <span>AVONENT HEALTH</span>
+            <em>ODORLESS DAILY GARLIC SUPPORT</em>
+            <strong>AGED GARLIC</strong>
+            <b>+ CoQ10</b>
+            <small>with ubiquinol</small>
+            <i>PREMIUM SOFTGEL FORMULA</i>
+          </div>
         {% endif %}
       </div>
       <div class="ag2__thumbs">
         {% for i in (1..4) %}
           {% assign k = 'image_' | append: i %}
           {% assign im = section.settings[k] %}
-          {% if i == 1 and im == blank %}{% assign im = p.featured_image %}{% endif %}
           {% if im != blank %}
             <button type="button" class="ag2__thumb{% if forloop.first %} is-on{% endif %}" data-ag2-thumb data-src="{{ im | image_url: width: 1400 }}">
               {{ im | image_url: width: 180 | image_tag: loading: 'lazy', alt: p.title }}
@@ -41,6 +45,9 @@
       {% endif %}
 
       <h1>{{ section.settings.heading | default: p.title }}</h1>
+      {% if section.settings.subheading != blank %}
+        <div class="ag2__subheading rte">{{ section.settings.subheading }}</div>
+      {% endif %}
 
       <div class="ag2__benefits">
         {% for block in section.blocks %}
@@ -96,6 +103,7 @@
         <div class="ag2__payments">{% for type in shop.enabled_payment_types %}{{ type | payment_type_svg_tag }}{% endfor %}</div>
       {% endif %}
 
+      {% if section.settings.show_trusted %}
       <div class="ag2__trusted">
         <div class="ag2__avatars">
           {% for i in (1..3) %}
@@ -106,6 +114,7 @@
         </div>
         <div><strong>{{ section.settings.trusted_heading }}</strong><p>{{ section.settings.trusted_text }}</p></div>
       </div>
+      {% endif %}
     </div>
   </div>
 
@@ -119,7 +128,7 @@
 </script>
 
 {% stylesheet %}
-.ag2{background:var(--bg);color:var(--t);padding:14px 0 38px}.ag2 *{box-sizing:border-box}.ag2__wrap{width:min(calc(100% - 28px),1220px);margin:auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(430px,.9fr);gap:42px}.ag2__media{position:sticky;top:calc(var(--header-group-height,0px) + 12px)}.ag2__hero{min-height:580px;border:1px solid var(--l);border-radius:20px;background:#fff;overflow:hidden;display:grid;place-items:center}.ag2__heroimg{width:100%;height:auto;max-height:640px;object-fit:contain}.ag2__mock{width:58%;aspect-ratio:.72;background:linear-gradient(160deg,#fff,#f3e9e3);border-radius:18px;box-shadow:0 30px 55px rgb(86 20 36 / 16%);padding:44px 28px;display:flex;flex-direction:column;justify-content:center}.ag2__mock span{color:var(--a);font-size:12px;font-weight:900;letter-spacing:.18em}.ag2__mock strong{font-size:39px;line-height:.9;margin-top:34px;color:var(--ad)}.ag2__mock b{font-size:21px;color:var(--g);margin-top:8px}.ag2__thumbs{display:flex;gap:7px;margin-top:9px;overflow:auto}.ag2__thumb{width:70px;height:58px;flex:0 0 70px;border:1px solid var(--l);border-radius:8px;background:#fff;padding:3px}.ag2__thumb.is-on{border-color:var(--a);box-shadow:0 0 0 1px var(--a)}.ag2__thumb img{width:100%;height:100%;object-fit:cover;border-radius:5px}.ag2__info{padding-top:5px}.ag2__rating{display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-size:13px}.ag2__rating span{color:#f2b700;font-size:18px}.ag2__rating em{font-style:normal;color:var(--m)}.ag2 h1{margin:13px 0 0;font-size:clamp(39px,4vw,57px);line-height:.98;letter-spacing:-.045em}.ag2__benefits{display:grid;gap:9px;margin-top:21px}.ag2__benefit{display:flex;align-items:center;gap:10px;font-size:14px}.ag2__benefit i{display:grid;place-items:center;width:21px;height:21px;border-radius:50%;background:#7ea48a;color:#fff;font-style:normal;font-size:12px;font-weight:900}.ag2__sale{display:inline-flex;margin-top:22px;background:var(--a);color:#fff;border-radius:7px;padding:7px 12px;font-size:11px;font-weight:900;letter-spacing:.08em}.ag2__rule{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:9px;margin:24px 0 13px;color:var(--a);font-size:12px}.ag2__rule span{height:1px;background:color-mix(in srgb,var(--a) 30%,transparent)}.ag2__bundles{display:grid;gap:10px}.ag2__bundle{position:relative;width:100%;min-height:82px;display:grid;grid-template-columns:20px 1fr auto;align-items:center;gap:12px;padding:14px;border:1px solid color-mix(in srgb,var(--a) 25%,var(--l));border-radius:13px;background:#fff;color:var(--t);text-align:left;font:inherit}.ag2__bundle.is-on{border:2px solid var(--a);background:color-mix(in srgb,var(--a) 7%,#fff)}.ag2__badge{position:absolute;right:12px;top:-10px;background:var(--a);color:#fff;padding:5px 10px;border-radius:999px;font-size:9px;font-weight:900}.ag2__radio{width:20px;height:20px;border:2px solid #d9cdcf;border-radius:50%;display:grid;place-items:center}.ag2__radio i{width:10px;height:10px;border-radius:50%}.ag2__bundle.is-on .ag2__radio{border-color:var(--a)}.ag2__bundle.is-on .ag2__radio i{background:var(--a)}.ag2__copy,.ag2__price{display:flex;flex-direction:column}.ag2__copy strong{font-size:18px}.ag2__copy small{margin-top:3px;color:var(--a);font-size:12px}.ag2__price{align-items:flex-end}.ag2__price strong{color:var(--a);font-size:17px}.ag2__price small,.ag2__price s{margin-top:3px;color:#777;font-size:10px}.ag2__refill{display:flex;gap:11px;align-items:center;margin-top:12px;padding:13px;border:2px dashed var(--a);border-radius:12px;text-decoration:none;color:var(--t)}.ag2__refill>span{display:grid;place-items:center;width:32px;height:32px;border:2px solid var(--a);border-radius:7px;color:var(--a);font-size:18px}.ag2__refill div{display:flex;flex-direction:column}.ag2__refill strong{color:var(--a);font-size:13px}.ag2__refill small{margin-top:3px;color:var(--m);font-size:10px}.ag2__ship{display:flex;align-items:center;gap:9px;margin:18px 4px 0;font-size:13px}.ag2__ship i{width:12px;height:12px;border-radius:50%;background:#29c96a;box-shadow:0 0 0 2px #c9f2d8}.ag2__atc{width:100%;min-height:62px;margin-top:17px;border:0;border-radius:10px;background:linear-gradient(90deg,var(--ad),var(--a));color:#fff;display:flex;align-items:center;justify-content:center;gap:13px;font:inherit;font-size:15px;font-weight:900}.ag2__atc b{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#fff;color:var(--a);font-size:18px}.ag2__atc em{font-style:normal;padding-left:11px;border-left:1px solid rgb(255 255 255 / 28%)}.ag2__guarantee{text-align:center;margin-top:14px;color:#5e7164;font-size:13px}.ag2__payments{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-top:13px}.ag2__payments svg{height:30px;width:auto;max-width:47px}.ag2__trusted{display:flex;align-items:center;gap:11px;margin-top:20px;padding:12px 14px;border-radius:999px;background:#f1f0ee}.ag2__avatars{display:flex}.ag2__avatars img{width:42px;height:42px;object-fit:cover;border-radius:50%;border:2px solid #fff;margin-left:-9px}.ag2__avatars img:first-child{margin-left:0}.ag2__trusted strong{font-size:12px}.ag2__trusted p{margin:2px 0 0;color:var(--m);font-size:10px}.ag2__sticky{display:none}@media(max-width:899px){.ag2__wrap{grid-template-columns:1fr;gap:20px;width:min(calc(100% - 22px),680px)}.ag2__media{position:static}.ag2__hero{min-height:420px}}@media(max-width:749px){.ag2 h1{font-size:37px}.ag2__hero{min-height:370px;border-radius:14px}.ag2__bundle{min-height:78px;padding:12px 11px}.ag2__copy strong{font-size:16px}.ag2__price strong{font-size:15px}.ag2__trusted{border-radius:18px}.ag2__sticky{position:fixed;z-index:60;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:space-between;gap:9px;padding:9px 12px calc(9px + env(safe-area-inset-bottom));background:#fff;border-top:1px solid var(--l);box-shadow:0 -8px 28px rgb(30 15 20 / 10%)}.ag2__sticky[hidden]{display:none}.ag2__sticky div{display:flex;flex-direction:column}.ag2__sticky small{font-size:8px;color:var(--m)}.ag2__sticky a{padding:13px 16px;min-width:165px;border-radius:9px;background:var(--a);color:#fff;text-decoration:none;text-align:center;font-size:12px;font-weight:900}}
+.ag2{position:relative;background:var(--bg);color:var(--t);padding:18px 0 44px}.ag2__anchor{position:absolute;top:-110px}.ag2 *{box-sizing:border-box}.ag2__wrap{width:min(calc(100% - 28px),1220px);margin:auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(430px,.9fr);gap:42px}.ag2__media{position:sticky;top:calc(var(--header-group-height,0px) + 12px)}.ag2__hero{min-height:580px;border:1px solid var(--l);border-radius:20px;background:#fff;overflow:hidden;display:grid;place-items:center}.ag2__heroimg{width:100%;height:auto;max-height:640px;object-fit:contain}.ag2__mock{width:58%;aspect-ratio:.72;background:linear-gradient(160deg,#fff,#f3e9e3);border-radius:18px;box-shadow:0 30px 55px rgb(86 20 36 / 16%);padding:44px 28px;display:flex;flex-direction:column;justify-content:center}.ag2__mock span{color:var(--a);font-size:12px;font-weight:900;letter-spacing:.18em}.ag2__mock em{margin-top:28px;color:#8b7c80;font-size:9px;font-style:normal;font-weight:800;letter-spacing:.13em}.ag2__mock strong{font-size:39px;line-height:.9;margin-top:12px;color:var(--ad)}.ag2__mock b{font-size:21px;color:var(--g);margin-top:8px}.ag2__mock small{margin-top:2px;color:var(--a);font-size:12px;font-weight:700}.ag2__mock i{margin-top:34px;padding-top:14px;border-top:1px solid #eadbd2;color:#8a7b7f;font-size:8px;font-style:normal;font-weight:800;letter-spacing:.12em}.ag2__thumbs{display:flex;gap:7px;margin-top:9px;overflow:auto}.ag2__thumb{width:70px;height:58px;flex:0 0 70px;border:1px solid var(--l);border-radius:8px;background:#fff;padding:3px}.ag2__thumb.is-on{border-color:var(--a);box-shadow:0 0 0 1px var(--a)}.ag2__thumb img{width:100%;height:100%;object-fit:cover;border-radius:5px}.ag2__info{padding-top:5px}.ag2__rating{display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-size:13px}.ag2__rating span{color:#f2b700;font-size:18px}.ag2__rating em{font-style:normal;color:var(--m)}.ag2 h1{margin:13px 0 0;font-size:clamp(39px,4vw,57px);line-height:.98;letter-spacing:-.045em}.ag2__subheading{margin-top:13px;max-width:560px;color:var(--m);font-size:14px;line-height:1.55}.ag2__subheading p{margin:0}.ag2__benefits{display:grid;gap:9px;margin-top:21px}.ag2__benefit{display:flex;align-items:center;gap:10px;font-size:14px}.ag2__benefit i{display:grid;place-items:center;width:21px;height:21px;border-radius:50%;background:#7ea48a;color:#fff;font-style:normal;font-size:12px;font-weight:900}.ag2__sale{display:inline-flex;margin-top:22px;background:var(--a);color:#fff;border-radius:7px;padding:7px 12px;font-size:11px;font-weight:900;letter-spacing:.08em}.ag2__rule{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:9px;margin:24px 0 13px;color:var(--a);font-size:12px}.ag2__rule span{height:1px;background:color-mix(in srgb,var(--a) 30%,transparent)}.ag2__bundles{display:grid;gap:10px}.ag2__bundle{position:relative;width:100%;min-height:82px;display:grid;grid-template-columns:20px 1fr auto;align-items:center;gap:12px;padding:14px;border:1px solid color-mix(in srgb,var(--a) 25%,var(--l));border-radius:13px;background:#fff;color:var(--t);text-align:left;font:inherit}.ag2__bundle.is-on{border:2px solid var(--a);background:color-mix(in srgb,var(--a) 7%,#fff)}.ag2__badge{position:absolute;right:12px;top:-10px;background:var(--a);color:#fff;padding:5px 10px;border-radius:999px;font-size:9px;font-weight:900}.ag2__radio{width:20px;height:20px;border:2px solid #d9cdcf;border-radius:50%;display:grid;place-items:center}.ag2__radio i{width:10px;height:10px;border-radius:50%}.ag2__bundle.is-on .ag2__radio{border-color:var(--a)}.ag2__bundle.is-on .ag2__radio i{background:var(--a)}.ag2__copy,.ag2__price{display:flex;flex-direction:column}.ag2__copy strong{font-size:18px}.ag2__copy small{margin-top:3px;color:var(--a);font-size:12px}.ag2__price{align-items:flex-end}.ag2__price strong{color:var(--a);font-size:17px}.ag2__price small,.ag2__price s{margin-top:3px;color:#777;font-size:10px}.ag2__refill{display:flex;gap:11px;align-items:center;margin-top:12px;padding:13px;border:2px dashed var(--a);border-radius:12px;text-decoration:none;color:var(--t)}.ag2__refill>span{display:grid;place-items:center;width:32px;height:32px;border:2px solid var(--a);border-radius:7px;color:var(--a);font-size:18px}.ag2__refill div{display:flex;flex-direction:column}.ag2__refill strong{color:var(--a);font-size:13px}.ag2__refill small{margin-top:3px;color:var(--m);font-size:10px}.ag2__ship{display:flex;align-items:center;gap:9px;margin:18px 4px 0;font-size:13px}.ag2__ship i{width:12px;height:12px;border-radius:50%;background:#29c96a;box-shadow:0 0 0 2px #c9f2d8}.ag2__atc{width:100%;min-height:62px;margin-top:17px;border:0;border-radius:12px;background:linear-gradient(90deg,var(--ad),var(--a));color:#fff;display:flex;align-items:center;justify-content:center;gap:13px;font:inherit;font-size:15px;font-weight:900}.ag2__atc b{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#fff;color:var(--a);font-size:18px}.ag2__atc em{font-style:normal;padding-left:11px;border-left:1px solid rgb(255 255 255 / 28%)}.ag2__guarantee{text-align:center;margin-top:14px;color:#5e7164;font-size:13px}.ag2__payments{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-top:13px}.ag2__payments svg{height:30px;width:auto;max-width:47px}.ag2__trusted{display:flex;align-items:center;gap:11px;margin-top:20px;padding:12px 14px;border-radius:999px;background:#f1f0ee}.ag2__avatars{display:flex}.ag2__avatars img{width:42px;height:42px;object-fit:cover;border-radius:50%;border:2px solid #fff;margin-left:-9px}.ag2__avatars img:first-child{margin-left:0}.ag2__trusted strong{font-size:12px}.ag2__trusted p{margin:2px 0 0;color:var(--m);font-size:10px}.ag2__sticky{display:none}@media(max-width:899px){.ag2__wrap{grid-template-columns:1fr;gap:20px;width:min(calc(100% - 22px),680px)}.ag2__media{position:static}.ag2__hero{min-height:420px}}@media(max-width:749px){.ag2 h1{font-size:37px}.ag2__hero{min-height:370px;border-radius:14px}.ag2__bundle{min-height:78px;padding:12px 11px}.ag2__copy strong{font-size:16px}.ag2__price strong{font-size:15px}.ag2__trusted{border-radius:18px}.ag2__sticky{position:fixed;z-index:60;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:space-between;gap:9px;padding:9px 12px calc(9px + env(safe-area-inset-bottom));background:#fff;border-top:1px solid var(--l);box-shadow:0 -8px 28px rgb(30 15 20 / 10%)}.ag2__sticky[hidden]{display:none}.ag2__sticky div{display:flex;flex-direction:column}.ag2__sticky small{font-size:8px;color:var(--m)}.ag2__sticky a{padding:13px 16px;min-width:165px;border-radius:9px;background:var(--a);color:#fff;text-decoration:none;text-align:center;font-size:12px;font-weight:900}}
 {% endstylesheet %}
 
 {% schema %}
@@ -135,7 +144,8 @@
     {"type":"checkbox","id":"show_rating","label":"Show rating row","default":false},
     {"type":"text","id":"rating_text","label":"Rating text","default":"Rated 4.8 Excellent"},
     {"type":"text","id":"proof_text","label":"Rating proof text"},
-    {"type":"text","id":"heading","label":"Heading","default":"Aged Garlic + CoQ10 Odorless Softgels"},
+    {"type":"text","id":"heading","label":"Heading","default":"Aged Garlic. Without the Garlic Breath."},
+    {"type":"richtext","id":"subheading","label":"Supporting text","default":"<p>A convenient aged garlic softgel formula with CoQ10 + ubiquinol, built for a simple daily wellness routine.</p>"},
     {"type":"text","id":"sale_badge","label":"Sale badge","default":"AVONENT LAUNCH PRICING"},
     {"type":"text","id":"stock_text","label":"Divider text","default":"Choose your quantity"},
     {"type":"text","id":"bundle_1_title","label":"Bundle 1 title","default":"Buy One"},
@@ -156,6 +166,7 @@
     {"type":"text","id":"button_text","label":"Add to cart text","default":"ADD TO CART"},
     {"type":"text","id":"guarantee_text","label":"Guarantee text","default":"30-day satisfaction guarantee"},
     {"type":"checkbox","id":"show_payments","label":"Show payment icons","default":true},
+    {"type":"checkbox","id":"show_trusted","label":"Show customer trust row","default":false},
     {"type":"image_picker","id":"avatar_1","label":"Trust profile image 1"},
     {"type":"image_picker","id":"avatar_2","label":"Trust profile image 2"},
     {"type":"image_picker","id":"avatar_3","label":"Trust profile image 3"},
