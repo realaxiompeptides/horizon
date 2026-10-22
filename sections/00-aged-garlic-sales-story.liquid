@@ -1,6 +1,5 @@
 {% liquid
   assign av_product = product | default: closest.product
-  assign featured = av_product.featured_image
 %}
 
 <section
@@ -84,10 +83,16 @@
       <div class="aged-garlic-story__visual">
         {% if section.settings.education_image != blank %}
           {{ section.settings.education_image | image_url: width: 1200 | image_tag: loading:'lazy', widths:'420,640,900,1200', class:'aged-garlic-story__image', alt:section.settings.education_image_alt }}
-        {% elsif featured != blank %}
-          {{ featured | image_url: width: 1000 | image_tag: loading:'lazy', widths:'360,540,720,1000', class:'aged-garlic-story__image aged-garlic-story__image--product', alt:av_product.title }}
         {% else %}
-          <div class="aged-garlic-story__placeholder">Add your Avonent product + garlic image here</div>
+          <div class="aged-garlic-story__placeholder">
+            <div class="aged-garlic-story__placeholder-pack">
+              <span>AVONENT HEALTH</span>
+              <strong>AGED GARLIC</strong>
+              <b>+ CoQ10</b>
+              <small>ODORLESS SOFTGEL FORMULA</small>
+            </div>
+            <div class="aged-garlic-story__placeholder-copy">Upload your final Avonent garlic lifestyle image here when the packaging is ready.</div>
+          </div>
         {% endif %}
         <div class="aged-garlic-story__visual-note">Premium DTC imagery goes here — not supplier photography.</div>
       </div>
@@ -290,7 +295,13 @@
   .aged-garlic-story__visual { position:relative; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:520px; padding:34px; border-radius:28px; background:linear-gradient(145deg,#fff7ed,#ead7c4); overflow:hidden; }
   .aged-garlic-story__image { display:block; width:100%; height:auto; max-height:470px; object-fit:cover; border-radius:20px; }
   .aged-garlic-story__image--product { object-fit:contain; filter:drop-shadow(0 26px 24px rgb(70 35 40 / 15%)); }
-  .aged-garlic-story__placeholder { display:grid; place-items:center; width:100%; min-height:390px; padding:40px; border:1px dashed #c9ad9f; border-radius:18px; color:#8b746c; text-align:center; }
+  .aged-garlic-story__placeholder { display:grid; grid-template-columns:1fr; place-items:center; gap:18px; width:100%; min-height:390px; padding:34px; border:1px solid #ead8ca; border-radius:18px; color:#8b746c; text-align:center; background:linear-gradient(145deg,#fffaf4,#f1e1d5); }
+  .aged-garlic-story__placeholder-pack { display:flex; flex-direction:column; justify-content:center; width:min(68%,250px); aspect-ratio:.74; padding:28px 20px; border:1px solid #e8d8cf; border-radius:18px; background:linear-gradient(180deg,#fff,#fff8f1); box-shadow:0 24px 40px rgb(75 25 39 / 13%); transform:rotate(-2deg); text-align:left; }
+  .aged-garlic-story__placeholder-pack span { color:var(--ags-burgundy); font-size:9px; font-weight:850; letter-spacing:.13em; }
+  .aged-garlic-story__placeholder-pack strong { margin-top:35px; color:var(--ags-burgundy-dark); font-size:32px; font-weight:850; line-height:.88; letter-spacing:-.04em; }
+  .aged-garlic-story__placeholder-pack b { margin-top:7px; color:var(--ags-gold); font-size:18px; }
+  .aged-garlic-story__placeholder-pack small { margin-top:28px; padding-top:10px; border-top:1px solid #ead8cf; color:#8c777d; font-size:7px; font-weight:800; letter-spacing:.11em; }
+  .aged-garlic-story__placeholder-copy { max-width:320px; color:#8b746c; font-size:10px; line-height:1.4; }
   .aged-garlic-story__visual-note { margin-top:14px; color:#87706a; font-size:10px; font-weight:650; text-align:center; }
   .aged-garlic-story__ingredient-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
   .aged-garlic-story__ingredient-grid article { min-height:250px; padding:27px; border:1px solid var(--ags-line); border-radius:18px; background:#fff; }
