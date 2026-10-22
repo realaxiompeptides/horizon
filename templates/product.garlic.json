@@ -88,7 +88,7 @@
       }
     },
     "accordions": {
-      "type": "00-aged-garlic-accordions-v2",
+      "type": "00-aged-garlic-details-v3",
       "blocks": {
         "a1": {
           "type": "item",
