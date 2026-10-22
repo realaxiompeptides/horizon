@@ -102,29 +102,29 @@
         "a1": {
           "type": "item",
           "settings": {
-            "heading": "Heart-Health Support, Made Simple",
-            "content": "<p><strong>Aged garlic extract + CoQ10</strong></p><ul><li>Designed to support everyday cardiovascular wellness.</li><li>Provides naturally occurring antioxidant compounds from aged garlic.</li><li>CoQ10 supports normal cellular energy production.</li><li>Odorless softgel format for a simple, consistent daily routine.</li></ul>"
+            "heading": "Heart-Conscious Daily Support",
+            "content": "<p><strong>Aged garlic extract</strong></p><ul><li>Designed to support everyday cardiovascular wellness.</li><li>Simple to include in everyday wellness habits.</li><li>Provides naturally occurring antioxidant support from aged garlic.</li><li>CoQ10 supports normal cellular energy production.</li><li>Gentle, odorless aged garlic softgel format.</li></ul>"
           }
         },
         "a2": {
           "type": "item",
           "settings": {
             "heading": "Key Ingredients",
-            "content": "<p><strong>Aged Garlic Extract (7,500 mg garlic equivalent)</strong></p><ul><li>Contains naturally occurring S-Allyl-Cysteine (SAC), a characteristic compound found in aged garlic.</li><li>Combined with CoQ10 + ubiquinol.</li><li>Odorless aged garlic softgel format.</li></ul><p>The aging process helps transform raw garlic into a milder aged extract that is easier to make part of a daily wellness routine.</p>"
+            "content": "<p><strong>Aged Garlic Extract (7,500 mg Garlic Equivalent)</strong></p><ul><li>Derived from garlic aged for <strong>24 months (730 days)</strong>.</li><li>Contains <strong>S-Allyl-Cysteine (SAC)</strong>, a naturally occurring garlic compound formed during aging.</li><li>Includes CoQ10 + ubiquinol.</li><li>Odorless aged garlic softgel format.</li><li>Designed for convenient long-term daily use.</li></ul><p>Aging transforms raw garlic into a refined, odorless extract that is easy to incorporate into a daily routine.</p><p><strong>What’s Not Included</strong></p><ul><li>GMOs</li><li>Gluten</li><li>Unnecessary additives</li><li>Strong garlic smell or lingering aftertaste</li></ul>"
           }
         },
         "a3": {
           "type": "item",
           "settings": {
             "heading": "How It Works",
-            "content": "<p>Take <strong>two softgels daily</strong> with water, following the directions on the product label.</p><p>Avonent combines aged garlic extract with CoQ10 + ubiquinol to support a simple, heart-conscious daily wellness routine.</p>"
+            "content": "<p>Take <strong>two softgels daily</strong> with water, following the directions on the product label.</p><p>The extended 24-month aging process creates a milder, odorless aged garlic extract designed to fit into a consistent daily wellness routine.</p>"
           }
         },
         "a4": {
           "type": "item",
           "settings": {
             "heading": "What Can I Expect?",
-            "content": "<p>Avonent is designed for consistent everyday use. The formula supports cardiovascular wellness, antioxidant defenses, and normal cellular energy production while avoiding the strong garlic smell and lingering aftertaste associated with raw garlic.</p>"
+            "content": "<p>Avonent is designed for consistent everyday use as part of a heart-conscious wellness routine. The formula combines aged garlic with CoQ10 + ubiquinol while keeping the experience simple, convenient, and odorless.</p>"
           }
         },
         "a5": {
@@ -220,7 +220,7 @@
           "settings": {
             "image": "shopify://shop_images/442E856B-468D-420D-966A-BE0677A5A2FA.png",
             "heading": "Aged Garlic Extract",
-            "text": "<p>Aged garlic extract in a convenient odorless softgel format designed for consistent daily wellness.</p>"
+            "text": "<p>Garlic aged for <strong>24 months (730 days)</strong> to create a refined aged-garlic extract for consistent daily use.</p>"
           }
         },
         "bnf2": {
@@ -228,7 +228,7 @@
           "settings": {
             "image": "shopify://shop_images/7DE99ADE-F333-4542-991E-B0BFA2855581.png",
             "heading": "CoQ10 + Ubiquinol",
-            "text": "<p>Included to support normal cellular energy production and complement a cardiovascular-focused wellness routine.</p>"
+            "text": "<p>A complementary combination included to support normal cellular energy production and everyday cardiovascular wellness.</p>"
           }
         },
         "bnf3": {
@@ -236,7 +236,7 @@
           "settings": {
             "image": "shopify://shop_images/BFDCFB9D-29CB-4E00-BE43-799CAE803D56.png",
             "heading": "S-Allyl-Cysteine (SAC)",
-            "text": "<p>A naturally occurring, water-soluble antioxidant compound that develops as garlic ages.</p>"
+            "text": "<p>A naturally occurring, water-soluble compound that develops during the extended aging process of garlic.</p>"
           }
         },
         "bnf4": {
@@ -244,7 +244,7 @@
           "settings": {
             "image": "shopify://shop_images/07B1D885-5B03-4CF5-9F24-BA7AEFD3C43B.png",
             "heading": "Odorless Formula",
-            "text": "<p>Aged garlic in a convenient softgel designed without the strong garlic smell or lingering aftertaste of raw garlic.</p>"
+            "text": "<p>Aged garlic without the strong smell or lingering aftertaste commonly associated with raw garlic.</p>"
           }
         }
       },
@@ -258,26 +258,26 @@
         "heading_before": "4 Benefits of",
         "heading_accent": "Aged Garlic",
         "choose_heading": "Why Customers Choose Avonent",
-        "choose_intro": "<p>Avonent combines aged garlic extract with CoQ10 + ubiquinol in an odorless daily softgel designed to support cardiovascular wellness and consistent long-term use.</p>",
-        "reason_1_heading": "Cardiovascular Wellness Support",
-        "reason_1_text": "<p>Aged garlic + CoQ10 in one formula designed to complement a heart-conscious daily routine.</p>",
-        "reason_2_heading": "Aged Garlic + SAC",
-        "reason_2_text": "<p>The aging process develops characteristic aged-garlic compounds including SAC while creating a milder extract for everyday use.</p>",
-        "reason_3_heading": "Antioxidant + Cellular Energy Support",
-        "reason_3_text": "<p>Aged garlic provides naturally occurring antioxidant compounds, while CoQ10 supports normal cellular energy production.</p>",
-        "reason_4_heading": "Odorless & Easy to Stay Consistent With",
-        "reason_4_text": "<p>A convenient softgel format without the strong garlic smell or lingering aftertaste associated with raw garlic.</p>",
+        "choose_intro": "<p>Avonent Odorless Aged Garlic is designed to make a consistent daily wellness routine simple, convenient, and easy to stick with.</p>",
+        "reason_1_heading": "Two Daily Softgels",
+        "reason_1_text": "<p>No complicated schedule—just two easy-to-take softgels that fit naturally into your day.</p>",
+        "reason_2_heading": "Odorless Experience",
+        "reason_2_text": "<p>Enjoy aged garlic without the strong smell or lingering aftertaste associated with traditional garlic.</p>",
+        "reason_3_heading": "Fits Your Routine",
+        "reason_3_text": "<p>Simple to take at home, at work, or on the go—wherever your day takes you.</p>",
+        "reason_4_heading": "Built for the Long Run",
+        "reason_4_text": "<p>Made for people who prefer simple, steady wellness habits over complicated routines.</p>",
         "choose_button_text": "Try Risk-Free Today",
         "choose_button_link": "",
         "choose_guarantee": "30-day money-back guarantee",
         "choose_background": "#02c6ea",
         "choose_overlay": "#0068e8",
-        "daily_heading": "Heart-Health Support You Can Make Part of Every Day",
-        "daily_intro": "<p>A simple daily formula built around aged garlic, SAC, CoQ10, and ubiquinol—without making your routine complicated.</p>",
-        "daily_point_1_heading": "Aged Garlic + SAC",
-        "daily_point_1_text": "<p>Aged garlic provides characteristic compounds including S-Allyl-Cysteine (SAC).</p>",
-        "daily_point_2_heading": "CoQ10 + Ubiquinol",
-        "daily_point_2_text": "<p>Included to support normal cellular energy production and complement a cardiovascular-focused wellness routine.</p>",
+        "daily_heading": "Made for Everyday Use",
+        "daily_intro": "<p>The 24-month aging process creates a refined, odorless aged garlic formula designed to make consistency easier.</p>",
+        "daily_point_1_heading": "Simple Daily Serving",
+        "daily_point_1_text": "<p>Two softgels daily—easy to add to a routine you already follow.</p>",
+        "daily_point_2_heading": "No Strong Garlic Aftertaste",
+        "daily_point_2_text": "<p>An odorless format designed without the strong garlic experience of traditional garlic supplements.</p>",
         "daily_visual_alt": "Avonent aged garlic softgel",
         "break_image": "shopify://shop_images/F3F712FB-A4A8-49B5-BBAA-E045BF99C714.png",
         "break_alt": "Avonent Aged Garlic",
@@ -327,7 +327,8 @@
         "card": "#ffffff",
         "text": "#071a52",
         "muted": "#526078",
-        "accent": "#02c6ea"
+        "accent": "#02c6ea",
+        "choose_background_image": ""
       }
     },
     "comparison": {
