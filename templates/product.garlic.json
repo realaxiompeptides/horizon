@@ -308,8 +308,8 @@
         "text": "#071a52",
         "muted": "#526078",
         "accent": "#02c6ea",
-        "break_background": "#0068e8",
-        "break_accent": "#02c6ea"
+        "break_background": "#dff6ff",
+        "break_accent": "#0068e8"
       }
     },
     "story": {
