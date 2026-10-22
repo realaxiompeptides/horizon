@@ -310,40 +310,9 @@
         "accent": "#02c6ea"
       }
     },
-    "softgel": {
-      "type": "00-aged-garlic-softgel-animation",
-      "settings": {
-        "softgel_alt": "Avonent aged garlic softgel",
-        "eyebrow": "SIMPLE DAILY FORMAT",
-        "heading": "Two softgels. One easy daily routine.",
-        "body_text": "<p>The softgel format keeps aged garlic simple to take every day, without turning your routine into another chore.</p>",
-        "note": "Take two softgels daily, following the product label.",
-        "background": "#ffffff",
-        "accent": "#02c6ea",
-        "accent_dark": "#0068e8",
-        "text_color": "#071a52",
-        "muted": "#526078"
-      }
-    },
     "story": {
       "type": "00-aged-garlic-sales-story",
       "settings": {
-        "why_eyebrow": "WHY PEOPLE CHOOSE AGED GARLIC",
-        "why_heading": "Garlic made easier to live with.",
-        "why_text": "<p>A familiar ingredient, reworked into a cleaner daily format. No chopping cloves. No strong garlic breath becoming part of the routine.</p>",
-        "education_eyebrow": "AGED WITH PURPOSE",
-        "education_heading": "Why age garlic in the first place?",
-        "education_text": "<p>Fresh garlic is useful in food, but it is not always convenient as a daily supplement. Aged garlic is designed for a more consistent routine, especially when odor and preparation are the reasons people stop using ordinary garlic.</p>",
-        "education_image_alt": "Avonent aged garlic softgels with garlic",
-        "formula_eyebrow": "WHAT MAKES THIS FORMULA DIFFERENT",
-        "formula_heading": "Aged garlic, paired with CoQ10 + ubiquinol.",
-        "formula_text": "<p>Aged garlic is the foundation. CoQ10 + ubiquinol create the differentiating formula story. Exact ingredient amounts, serving size, and any SAC information should be added only after the final Supplement Facts are verified.</p>",
-        "routine_eyebrow": "ONE SIMPLE ADDITION",
-        "routine_heading": "Built to become the easy part of your day.",
-        "routine_text": "No mixing powders. No garlic prep. Follow the verified label directions and make it part of a routine you can actually keep.",
-        "show_internal_comparison": false,
-        "compare_eyebrow": "A MORE CONSIDERED FORMAT",
-        "compare_heading": "Avonent vs. ordinary garlic supplements",
         "guarantee_eyebrow": "TRY AVONENT FOR 30 DAYS",
         "guarantee_heading": "A simple guarantee. No fake urgency.",
         "guarantee_text": "<p>If Avonent is not right for you, contact us within 30 days and we will help with the next steps under our refund policy.</p>",
@@ -433,8 +402,7 @@
     "accordions",
     "trust",
     "benefits_slider",
-    "softgel",
-    "story",
-    "comparison"
+    "comparison",
+    "story"
   ]
 }
