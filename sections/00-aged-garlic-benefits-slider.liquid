@@ -45,7 +45,7 @@
     </div>
   </div>
 
-  <div class="ag-benefits__extra-cta"><a class="ag-benefits__stage-button" href="#avonent-garlic-buy">{{ section.settings.extra_button_text }} <span aria-hidden="true">↓</span></a></div>
+  <div class="ag-benefits__extra-cta"><a class="ag-benefits__stage-button" href="#avonent-garlic-buy" data-garlic-bottom-offer>{{ section.settings.extra_button_text }} <span aria-hidden="true">↓</span></a></div>
   <div class="ag-benefits__post">
     <div class="ag-benefits__choose" style="--choose-bg:{{ section.settings.choose_background }};--choose-overlay:{{ section.settings.choose_overlay }};">
       {% if section.settings.choose_background_image != blank %}
@@ -76,7 +76,7 @@
         </div>
 
         {% if section.settings.choose_button_text != blank %}
-          <a class="ag-benefits__choose-btn" href="#avonent-garlic-buy">{{ section.settings.choose_button_text }}</a>
+          <a class="ag-benefits__choose-btn" href="#avonent-garlic-buy" data-garlic-bottom-offer>{{ section.settings.choose_button_text }}</a>
         {% endif %}
         <div class="ag-benefits__choose-guarantee">
           <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3 27 7v8c0 7-4.5 11.8-11 14-6.5-2.2-11-7-11-14V7z"></path><path d="m11 16 3 3 7-8"></path></svg>
@@ -265,7 +265,7 @@
         </div>
 
         {% if section.settings.stage_button_text != blank %}
-          <a class="ag-benefits__stage-button" href="#avonent-garlic-buy">{{ section.settings.stage_button_text }} <span>↓</span></a>
+          <a class="ag-benefits__stage-button" href="#avonent-garlic-buy" data-garlic-bottom-offer>{{ section.settings.stage_button_text }} <span>↓</span></a>
         {% endif %}
       </div>
     </div>
