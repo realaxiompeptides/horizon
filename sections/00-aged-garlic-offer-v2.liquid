@@ -414,6 +414,22 @@
   oneTimeButton?.addEventListener('click', () => setMode('one_time'));
   returnSubButton?.addEventListener('click', () => setMode('subscription'));
 
+  const submitButton = form?.querySelector('button[type="submit"][name="add"]');
+  const submitLabel = submitButton?.querySelector('span');
+  const originalLabel = submitLabel?.textContent || 'ADD TO CART';
+  let adding = false;
+  const resetAddButton = () => {
+    adding = false;
+    if (submitButton) {
+      submitButton.disabled = false;
+      submitButton.removeAttribute('aria-busy');
+    }
+    if (submitLabel) submitLabel.textContent = originalLabel;
+  };
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted) resetAddButton();
+  });
+
   if (form) {
     form.addEventListener('click', (event) => {
       const submit = event.target.closest('button[type="submit"][name="add"]');
@@ -422,21 +438,25 @@
 
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
+      if (adding) return;
 
       const values = selectedValues();
       if (!values?.variantId) return;
 
-      const submitButton = form.querySelector('button[type="submit"][name="add"]');
-      const submitLabel = submitButton?.querySelector('span');
-      const originalLabel = submitLabel?.textContent || '';
-
-      if (submitButton) submitButton.disabled = true;
+      adding = true;
+      let added = false;
+      const previousError = root.querySelector('[data-ag2-cart-error]');
+      if (previousError) previousError.hidden = true;
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.setAttribute('aria-busy', 'true');
+      }
       if (submitLabel) submitLabel.textContent = 'ADDING...';
 
       try {
         const rootPath = window.Shopify?.routes?.root || '/';
 
-        // Match Shopify's normal product-form flow (same style used by the working Moringa page).
+        const { CartLinesUpdateEvent } = await import('@shopify/events');
         setPlanInput();
         if (variantInput) variantInput.value = String(values.variantId);
         if (quantityInput) quantityInput.value = String(values.quantity);
@@ -452,11 +472,16 @@
           }
 
           const formData = new FormData(form);
+          const sectionIds = [...new Set([...document.querySelectorAll('cart-items-component')]
+            .map((component) => component.dataset.sectionId).filter(Boolean))].slice(0, 5);
+          if (sectionIds.length) formData.set('sections', sectionIds.join(','));
+          formData.set('sections_url', window.location.pathname);
 
           response = await fetch(rootPath + 'cart/add.js', {
             method: 'POST',
             headers: { 'Accept': 'application/json' },
             credentials: 'same-origin',
+            signal: AbortSignal.timeout(20000),
             body: formData
           });
 
@@ -493,14 +518,31 @@
           throw new Error((typeof message === 'string' ? message : JSON.stringify(message)) + requestSuffix);
         }
 
-        document.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true }));
-        document.dispatchEvent(new CustomEvent('cart:update', { bubbles: true }));
-
-        window.location.assign(rootPath + 'cart');
+        added = true;
+        const cartResponse = await fetch(rootPath + 'cart.js', {
+          headers: { Accept: 'application/json' },
+          credentials: 'same-origin',
+          signal: AbortSignal.timeout(15000)
+        });
+        if (!cartResponse.ok) throw new Error('Cart refresh failed');
+        const cart = await cartResponse.json();
+        root.dispatchEvent(new CartLinesUpdateEvent({
+          action: 'add',
+          context: 'product',
+          lines: [{ merchandiseId: values.variantId, quantity: values.quantity }],
+          promise: Promise.resolve({
+            cart: CartLinesUpdateEvent.createCartFromAjaxResponse(cart),
+            detail: {
+              sections: payload.sections || {},
+              items: cart.items,
+              itemCount: cart.item_count,
+              source: 'avonent-garlic',
+              didError: false
+            }
+          })
+        }));
       } catch (error) {
         console.error('[Avonent garlic add to cart]', error);
-        if (submitLabel) submitLabel.textContent = originalLabel || '{{ section.settings.button_text | escape }}';
-        if (submitButton) submitButton.disabled = false;
 
         let errorBox = root.querySelector('[data-ag2-cart-error]');
         if (!errorBox) {
@@ -509,8 +551,13 @@
           errorBox.className = 'ag2__cart-error';
           submitButton?.insertAdjacentElement('afterend', errorBox);
         }
-        errorBox.textContent = error?.message || 'Unable to add this item to the cart.';
+        errorBox.setAttribute('role', 'alert');
+        errorBox.textContent = added
+          ? 'Added to your cart. Please tap the cart icon to view it.'
+          : error?.message || 'Unable to add this item to the cart.';
         errorBox.hidden = false;
+      } finally {
+        resetAddButton();
       }
     });
   }
