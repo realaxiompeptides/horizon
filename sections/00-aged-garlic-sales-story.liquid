@@ -155,6 +155,7 @@
     </div>
   </div>
 
+  {% if section.settings.show_internal_comparison %}
   <div class="aged-garlic-story__comparison">
     <div class="aged-garlic-story__wrap">
       <header class="aged-garlic-story__header">
@@ -177,6 +178,7 @@
       </div>
     </div>
   </div>
+  {% endif %}
 
   <div class="aged-garlic-story__offer">
     <div class="aged-garlic-story__wrap">
@@ -230,37 +232,6 @@
     </div>
   </div>
 
-  <div class="aged-garlic-mobile-cta" data-aged-garlic-mobile-cta hidden>
-    <div>
-      <small>AVONENT AGED GARLIC</small>
-      <strong>Choose your quantity</strong>
-    </div>
-    <a href="#avonent-garlic-buy">SHOP NOW</a>
-  </div>
-
-  <script>
-    (() => {
-      const bar = document.querySelector('[data-aged-garlic-mobile-cta]');
-      const buy = document.getElementById('avonent-garlic-buy');
-      if (!bar || !buy) return;
-
-      let buyVisible = false;
-      const update = () => {
-        const shouldShow = window.innerWidth < 750 && window.scrollY > 520 && !buyVisible;
-        bar.hidden = !shouldShow;
-      };
-
-      const observer = new IntersectionObserver((entries) => {
-        buyVisible = entries.some((entry) => entry.isIntersecting);
-        update();
-      }, { threshold: 0.12 });
-
-      observer.observe(buy);
-      window.addEventListener('scroll', update, { passive: true });
-      window.addEventListener('resize', update, { passive: true });
-      update();
-    })();
-  </script>
 </section>
 
 {% stylesheet %}
@@ -431,6 +402,7 @@
     {"type":"text","id":"routine_eyebrow","label":"Routine eyebrow","default":"ONE SIMPLE ADDITION"},
     {"type":"text","id":"routine_heading","label":"Routine heading","default":"Built to become the easy part of your day."},
     {"type":"textarea","id":"routine_text","label":"Routine text","default":"No blending. No garlic prep. No complicated schedule on the page before the label is verified—just a straightforward softgel routine."},
+    {"type":"checkbox","id":"show_internal_comparison","label":"Show internal comparison table","default":false},
     {"type":"text","id":"compare_eyebrow","label":"Comparison eyebrow","default":"A MORE CONSIDERED FORMAT"},
     {"type":"text","id":"compare_heading","label":"Comparison heading","default":"Avonent vs. ordinary garlic supplements"},
     {"type":"text","id":"guarantee_eyebrow","label":"Guarantee eyebrow","default":"TRY AVONENT FOR 30 DAYS"},
