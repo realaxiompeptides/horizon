@@ -54,8 +54,8 @@
         "guarantee_text": "30-day money-back guarantee",
         "show_payments": true,
         "show_trusted": true,
-        "trusted_heading": "Trusted across 100,000+ orders",
-        "trusted_text": "Chosen by Avonent customers for simple daily wellness routines.",
+        "trusted_heading": "Trusted by 100K+ customers",
+        "trusted_text": "who choose Avonent for simple, consistent daily wellness support.",
         "show_sticky": true,
         "sticky_label": "AVONENT AGED GARLIC",
         "sticky_button": "ADD TO CART",
@@ -67,7 +67,7 @@
         "muted": "#5F6878",
         "line": "#DCECF5",
         "rating_text": "Excellent",
-        "proof_text": "Over 100,000 Orders",
+        "proof_text": "100K+ Customers",
         "shipping_prefix": "Ships by",
         "shipping_business_days": 1,
         "shipping_suffix": "from US warehouse"
@@ -102,7 +102,8 @@
         "ink": "#071A52",
         "muted": "#5F6878",
         "line": "#DCECF5",
-        "content_width": 1180
+        "content_width": 1180,
+        "show_internal_comparison": false
       }
     },
     "accordions": {
@@ -113,7 +114,7 @@
           "settings": {
             "heading": "Heart-Conscious Daily Support",
             "content": "<p><strong>Aged garlic extract</strong></p><ul><li>Designed for simple daily wellness routines.</li><li>Odorless softgel format.</li><li>Two softgels daily.</li><li>Paired with CoQ10 + ubiquinol.</li></ul>",
-            "open_by_default": true
+            "open_by_default": false
           }
         },
         "a2": {
@@ -283,43 +284,43 @@
         "c1": {
           "type": "row",
           "settings": {
-            "left_text": "Aged garlic format",
-            "right_text": "Varies by brand"
+            "left_text": "Ships from USA",
+            "right_text": "Origin details vary"
           }
         },
         "c2": {
           "type": "row",
           "settings": {
-            "left_text": "Odorless softgel format",
-            "right_text": "Varies by brand"
+            "left_text": "Aged Garlic + CoQ10",
+            "right_text": "Formula varies by brand"
           }
         },
         "c3": {
-          "type": "row",
-          "settings": {
-            "left_text": "CoQ10 included",
-            "right_text": "Often not included"
-          }
-        },
-        "c4": {
           "type": "row",
           "settings": {
             "left_text": "Ubiquinol included",
             "right_text": "Often not included"
           }
         },
+        "c4": {
+          "type": "row",
+          "settings": {
+            "left_text": "Odorless aged garlic softgels",
+            "right_text": "Garlic odor varies"
+          }
+        },
         "c5": {
           "type": "row",
           "settings": {
             "left_text": "Two-softgel daily routine",
-            "right_text": "Varies by brand"
+            "right_text": "Serving format varies"
           }
         },
         "c6": {
           "type": "row",
           "settings": {
             "left_text": "30-day money-back guarantee",
-            "right_text": "Varies by brand"
+            "right_text": "Policies vary by brand"
           }
         }
       },
@@ -332,17 +333,64 @@
         "c6"
       ],
       "settings": {
-        "heading": "Avonent vs. Basic Garlic Supplements",
-        "subheading": "A simple side-by-side look at the format and formula differences that make Avonent easier to fit into a daily routine.",
+        "heading": "Avonent vs. Other Brands",
+        "subheading": "A straightforward look at the format, formula, and buying experience.",
         "left_title": "Avonent",
-        "right_title": "Basic Garlic Supplement",
-        "note": "Other garlic supplements vary by brand. Comparison reflects product-format differences and should be updated if the Avonent formula changes.",
+        "right_title": "Other Brands",
+        "note": "Other supplements vary by brand. Keep comparison statements accurate to the current Avonent product and supplier documentation.",
         "background": "#0068E8",
         "left_background": "#02C6EA",
-        "right_background": "#F7FCFF",
+        "right_background": "#FFFFFF",
         "text": "#071A52",
         "light_text": "#FFFFFF",
-        "line": "#DCECF5"
+        "line": "#CDE9F4"
+      }
+    },
+    "everyday_wellness": {
+      "type": "00-aged-garlic-everyday-wellness",
+      "blocks": {
+        "w1": {
+          "type": "feature",
+          "settings": {
+            "icon": "heart",
+            "heading": "Daily Wellness Routine"
+          }
+        },
+        "w2": {
+          "type": "feature",
+          "settings": {
+            "icon": "shield",
+            "heading": "CoQ10 + Ubiquinol Formula"
+          }
+        },
+        "w3": {
+          "type": "feature",
+          "settings": {
+            "icon": "routine",
+            "heading": "Two-Softgel Daily Routine"
+          }
+        },
+        "w4": {
+          "type": "feature",
+          "settings": {
+            "icon": "leaf",
+            "heading": "Odorless Aged Garlic"
+          }
+        }
+      },
+      "block_order": [
+        "w1",
+        "w2",
+        "w3",
+        "w4"
+      ],
+      "settings": {
+        "heading": "Designed for Everyday Wellness",
+        "subheading": "<p>From a simple softgel format to a more convenient daily routine, here’s what makes Avonent Aged Garlic different.</p>",
+        "background": "#02C6EA",
+        "text": "#FFFFFF",
+        "soft_text": "#E8FBFF",
+        "ring": "#B9F4FF"
       }
     }
   },
@@ -353,6 +401,7 @@
     "media",
     "softgel",
     "story",
-    "comparison"
+    "comparison",
+    "everyday_wellness"
   ]
 }
