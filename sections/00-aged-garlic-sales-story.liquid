@@ -1,0 +1,396 @@
+{% liquid
+  assign av_product = product | default: closest.product
+  assign featured = av_product.featured_image
+%}
+
+<section
+  id="AgedGarlicStory-{{ section.id }}"
+  class="aged-garlic-story"
+  style="
+    --ags-ivory:{{ section.settings.ivory }};
+    --ags-cream:{{ section.settings.cream }};
+    --ags-burgundy:{{ section.settings.burgundy }};
+    --ags-burgundy-dark:{{ section.settings.burgundy_dark }};
+    --ags-gold:{{ section.settings.gold }};
+    --ags-ink:{{ section.settings.ink }};
+    --ags-muted:{{ section.settings.muted }};
+    --ags-line:{{ section.settings.line }};
+    --ags-white:#ffffff;
+    --ags-width:{{ section.settings.content_width }}px;
+  "
+>
+  <div class="aged-garlic-story__why">
+    <div class="aged-garlic-story__wrap">
+      <header class="aged-garlic-story__header">
+        <span class="aged-garlic-story__eyebrow">{{ section.settings.why_eyebrow }}</span>
+        <h2>{{ section.settings.why_heading }}</h2>
+        <div class="aged-garlic-story__lede rte">{{ section.settings.why_text }}</div>
+      </header>
+
+      <div class="aged-garlic-story__benefit-grid">
+        <article class="aged-garlic-story__benefit">
+          <span class="aged-garlic-story__icon">01</span>
+          <h3>Odorless by Design</h3>
+          <p>Made for people who want garlic supplementation without making strong garlic odor part of the routine.</p>
+        </article>
+        <article class="aged-garlic-story__benefit">
+          <span class="aged-garlic-story__icon">02</span>
+          <h3>Aged Garlic</h3>
+          <p>Uses garlic that has gone through an aging or maturation process rather than ordinary raw garlic.</p>
+        </article>
+        <article class="aged-garlic-story__benefit">
+          <span class="aged-garlic-story__icon">03</span>
+          <h3>CoQ10 + Ubiquinol</h3>
+          <p>A differentiated combination that brings aged garlic and the ubiquinol form of CoQ10 into one formula.</p>
+        </article>
+        <article class="aged-garlic-story__benefit">
+          <span class="aged-garlic-story__icon">04</span>
+          <h3>Easy Daily Routine</h3>
+          <p>A softgel format built to fit into the wellness habits you already have—without mixing powders or preparing garlic.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  <div class="aged-garlic-story__education">
+    <div class="aged-garlic-story__wrap aged-garlic-story__split">
+      <div class="aged-garlic-story__education-copy">
+        <span class="aged-garlic-story__eyebrow">{{ section.settings.education_eyebrow }}</span>
+        <h2>{{ section.settings.education_heading }}</h2>
+        <div class="aged-garlic-story__lede rte">{{ section.settings.education_text }}</div>
+
+        <div class="aged-garlic-story__compare-cards">
+          <div class="aged-garlic-story__compare-card aged-garlic-story__compare-card--plain">
+            <span>RAW GARLIC</span>
+            <strong>Useful food. Not always a convenient supplement routine.</strong>
+            <ul>
+              <li>Strong aroma and flavor</li>
+              <li>Requires food prep</li>
+              <li>Not designed as a measured softgel routine</li>
+            </ul>
+          </div>
+          <div class="aged-garlic-story__compare-card aged-garlic-story__compare-card--accent">
+            <span>AGED GARLIC</span>
+            <strong>A more convenient way to make garlic part of a daily supplement habit.</strong>
+            <ul>
+              <li>Odorless positioning</li>
+              <li>Easy softgel format</li>
+              <li>Paired with CoQ10 + ubiquinol</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="aged-garlic-story__visual">
+        {% if section.settings.education_image != blank %}
+          {{ section.settings.education_image | image_url: width: 1200 | image_tag: loading:'lazy', widths:'420,640,900,1200', class:'aged-garlic-story__image', alt:section.settings.education_image_alt }}
+        {% elsif featured != blank %}
+          {{ featured | image_url: width: 1000 | image_tag: loading:'lazy', widths:'360,540,720,1000', class:'aged-garlic-story__image aged-garlic-story__image--product', alt:av_product.title }}
+        {% else %}
+          <div class="aged-garlic-story__placeholder">Add your Avonent product + garlic image here</div>
+        {% endif %}
+        <div class="aged-garlic-story__visual-note">Premium DTC imagery goes here — not supplier photography.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="aged-garlic-story__formula">
+    <div class="aged-garlic-story__wrap">
+      <header class="aged-garlic-story__header">
+        <span class="aged-garlic-story__eyebrow">{{ section.settings.formula_eyebrow }}</span>
+        <h2>{{ section.settings.formula_heading }}</h2>
+        <div class="aged-garlic-story__lede rte">{{ section.settings.formula_text }}</div>
+      </header>
+
+      <div class="aged-garlic-story__ingredient-grid">
+        <article>
+          <span class="aged-garlic-story__ingredient-number">01</span>
+          <h3>Aged Garlic</h3>
+          <p>The foundation of the formula. Final potency, garlic equivalent, aging time and serving amount should match the verified Supplement Facts before launch.</p>
+        </article>
+        <article>
+          <span class="aged-garlic-story__ingredient-number">02</span>
+          <h3>CoQ10</h3>
+          <p>Coenzyme Q10 is a naturally occurring compound involved in normal cellular energy processes. Final amount should be displayed only after the supplier label is verified.</p>
+        </article>
+        <article>
+          <span class="aged-garlic-story__ingredient-number">03</span>
+          <h3>Ubiquinol</h3>
+          <p>Ubiquinol is a form of CoQ10. The page can show the exact quantity once the final product documentation confirms it.</p>
+        </article>
+      </div>
+
+      <div class="aged-garlic-story__facts">
+        <div>
+          <span>SUPPLEMENT FACTS</span>
+          <h3>Full transparency belongs on the page.</h3>
+          <p>Upload the verified back-label image here before paid traffic starts. Serving size, ingredient quantities, other ingredients and allergen information should be readable without leaving the product page.</p>
+        </div>
+        {% if section.settings.facts_image != blank %}
+          {{ section.settings.facts_image | image_url: width: 900 | image_tag: loading:'lazy', widths:'360,540,720,900', class:'aged-garlic-story__facts-image', alt:'Supplement Facts for Avonent Aged Garlic + CoQ10' }}
+        {% else %}
+          <div class="aged-garlic-story__facts-placeholder">SUPPLEMENT FACTS<br><small>Upload verified label before launch</small></div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="aged-garlic-story__routine">
+    <div class="aged-garlic-story__wrap">
+      <div class="aged-garlic-story__routine-card">
+        <div>
+          <span class="aged-garlic-story__eyebrow">{{ section.settings.routine_eyebrow }}</span>
+          <h2>{{ section.settings.routine_heading }}</h2>
+          <p>{{ section.settings.routine_text }}</p>
+        </div>
+        <div class="aged-garlic-story__routine-steps">
+          <div><b>1</b><span>Keep it somewhere you already visit every day.</span></div>
+          <div><b>2</b><span>Follow the serving directions printed on the verified product label.</span></div>
+          <div><b>3</b><span>Stay consistent instead of making your supplement routine complicated.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="aged-garlic-story__comparison">
+    <div class="aged-garlic-story__wrap">
+      <header class="aged-garlic-story__header">
+        <span class="aged-garlic-story__eyebrow">{{ section.settings.compare_eyebrow }}</span>
+        <h2>{{ section.settings.compare_heading }}</h2>
+        <p class="aged-garlic-story__compare-note">We keep this comparison to objective format and formula differences—not vague “better quality” claims.</p>
+      </header>
+
+      <div class="aged-garlic-story__table" role="table" aria-label="Avonent compared with ordinary garlic supplements">
+        <div class="aged-garlic-story__table-row aged-garlic-story__table-head" role="row">
+          <div role="columnheader">What you get</div>
+          <div role="columnheader">Avonent</div>
+          <div role="columnheader">Basic garlic supplement</div>
+        </div>
+        <div class="aged-garlic-story__table-row" role="row"><div role="cell">Aged garlic format</div><div role="cell" class="yes">✓</div><div role="cell">Varies</div></div>
+        <div class="aged-garlic-story__table-row" role="row"><div role="cell">Odorless positioning</div><div role="cell" class="yes">✓</div><div role="cell">Varies</div></div>
+        <div class="aged-garlic-story__table-row" role="row"><div role="cell">CoQ10 included</div><div role="cell" class="yes">✓</div><div role="cell">Often not included</div></div>
+        <div class="aged-garlic-story__table-row" role="row"><div role="cell">Ubiquinol included</div><div role="cell" class="yes">✓</div><div role="cell">Often not included</div></div>
+        <div class="aged-garlic-story__table-row" role="row"><div role="cell">Softgel routine</div><div role="cell" class="yes">✓</div><div role="cell">Varies</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="aged-garlic-story__offer">
+    <div class="aged-garlic-story__wrap">
+      <div class="aged-garlic-story__offer-card">
+        <div>
+          <span class="aged-garlic-story__eyebrow">KEEP IT SIMPLE</span>
+          <h2>Choose the quantity that fits your routine.</h2>
+          <p>No complicated BOGO math. Start with 1 bag, save more with 2, or get the lowest planned per-bag price with 3.</p>
+        </div>
+        <a class="aged-garlic-story__cta" href="#avonent-garlic-buy">CHOOSE YOUR QUANTITY</a>
+        <small>30-Day Guarantee · Secure Checkout</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="aged-garlic-story__guarantee">
+    <div class="aged-garlic-story__wrap">
+      <div class="aged-garlic-story__guarantee-inner">
+        <div class="aged-garlic-story__seal">30<span>DAY</span></div>
+        <div>
+          <span class="aged-garlic-story__eyebrow">{{ section.settings.guarantee_eyebrow }}</span>
+          <h2>{{ section.settings.guarantee_heading }}</h2>
+          <div class="rte">{{ section.settings.guarantee_text }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="aged-garlic-story__faq">
+    <div class="aged-garlic-story__wrap aged-garlic-story__faq-wrap">
+      <header>
+        <span class="aged-garlic-story__eyebrow">QUESTIONS, ANSWERED</span>
+        <h2>Before you add it to your routine.</h2>
+      </header>
+      <div class="aged-garlic-story__faq-list">
+        <details><summary>What is aged garlic?<span>+</span></summary><p>Aged garlic is garlic that has gone through a maturation process before being used in a supplement. The exact Avonent aging process and duration should match the final supplier documentation.</p></details>
+        <details><summary>Does it smell like normal garlic?<span>+</span></summary><p>This product is positioned as an odorless aged-garlic softgel. Individual experience can vary, and the final product label should be the source of truth.</p></details>
+        <details><summary>How many softgels should I take?<span>+</span></summary><p>Follow the directions printed on the final verified product label. We will publish the exact serving directions here once the Supplement Facts are confirmed.</p></details>
+        <details><summary>How long does one bag last?<span>+</span></summary><p>That depends on the verified serving size. Each candidate bag contains 60 softgels, but we will not market a 30-day supply until the serving directions are confirmed.</p></details>
+        <details><summary>Does this contain CoQ10 and ubiquinol?<span>+</span></summary><p>The planned Avonent formula includes CoQ10 + ubiquinol. Exact quantities should be confirmed against the final Supplement Facts before launch.</p></details>
+        <details><summary>Where can I see the Supplement Facts?<span>+</span></summary><p>The verified Supplement Facts panel will appear in the ingredient section above as soon as the final back-label documentation is available.</p></details>
+        <details><summary>Can I take it with medications?<span>+</span></summary><p>If you take medication, have a health condition, are pregnant or nursing, have a procedure planned, or have questions about supplementation, speak with a qualified healthcare professional before use.</p></details>
+        <details><summary>What is the return policy?<span>+</span></summary><p>Avonent offers a 30-day satisfaction guarantee. Returns and refunds are handled according to the refund policy linked on the store.</p></details>
+      </div>
+    </div>
+  </div>
+
+  <div class="aged-garlic-story__disclaimer">
+    <div class="aged-garlic-story__wrap">
+      <p>* Product information on this page should be finalized against the verified Supplement Facts and supplier documentation before launch. Dietary supplements are not intended to diagnose, treat, cure, or prevent disease.</p>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .aged-garlic-story { background:var(--ags-ivory); color:var(--ags-ink); overflow:hidden; }
+  .aged-garlic-story * { box-sizing:border-box; }
+  .aged-garlic-story__wrap { width:min(calc(100% - 36px),var(--ags-width)); margin:0 auto; }
+  .aged-garlic-story__why,.aged-garlic-story__formula,.aged-garlic-story__comparison,.aged-garlic-story__faq { padding:82px 0; }
+  .aged-garlic-story__education,.aged-garlic-story__routine,.aged-garlic-story__offer,.aged-garlic-story__guarantee { padding:72px 0; }
+  .aged-garlic-story__header { max-width:760px; margin:0 auto 36px; text-align:center; }
+  .aged-garlic-story__eyebrow { display:block; margin-bottom:10px; color:var(--ags-burgundy); font-size:11px; font-weight:850; letter-spacing:.14em; line-height:1.2; text-transform:uppercase; }
+  .aged-garlic-story h2 { margin:0; color:var(--ags-ink); font-family:var(--font-heading--family); font-size:clamp(34px,4vw,52px); font-weight:760; letter-spacing:-.035em; line-height:1.02; }
+  .aged-garlic-story h3 { margin:0; color:var(--ags-ink); font-size:18px; font-weight:760; line-height:1.2; }
+  .aged-garlic-story p { color:var(--ags-muted); }
+  .aged-garlic-story__lede { max-width:680px; margin:15px auto 0; color:var(--ags-muted); font-size:16px; line-height:1.65; }
+  .aged-garlic-story__lede p { margin:0; }
+  .aged-garlic-story__benefit-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:13px; }
+  .aged-garlic-story__benefit { min-height:220px; padding:25px 22px; border:1px solid var(--ags-line); border-radius:18px; background:#fff; box-shadow:0 13px 38px rgb(57 35 40 / 5%); }
+  .aged-garlic-story__benefit .aged-garlic-story__icon { display:grid; place-items:center; width:38px; height:38px; margin-bottom:34px; border-radius:50%; background:var(--ags-burgundy); color:#fff; font-size:11px; font-weight:850; }
+  .aged-garlic-story__benefit p { margin:9px 0 0; font-size:13px; line-height:1.55; }
+  .aged-garlic-story__education { background:var(--ags-cream); }
+  .aged-garlic-story__split { display:grid; grid-template-columns:minmax(0,1.05fr) minmax(340px,.95fr); align-items:center; gap:60px; }
+  .aged-garlic-story__education-copy h2 { max-width:620px; }
+  .aged-garlic-story__education-copy .aged-garlic-story__lede { margin-left:0; }
+  .aged-garlic-story__compare-cards { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:28px; }
+  .aged-garlic-story__compare-card { padding:21px; border-radius:16px; }
+  .aged-garlic-story__compare-card--plain { border:1px solid var(--ags-line); background:#fff; }
+  .aged-garlic-story__compare-card--accent { background:var(--ags-burgundy); color:#fff; }
+  .aged-garlic-story__compare-card > span { display:block; margin-bottom:9px; font-size:10px; font-weight:850; letter-spacing:.12em; }
+  .aged-garlic-story__compare-card strong { display:block; font-size:15px; line-height:1.35; }
+  .aged-garlic-story__compare-card ul { margin:15px 0 0; padding-left:18px; font-size:12px; line-height:1.7; }
+  .aged-garlic-story__compare-card--accent ul { color:#f9e9e9; }
+  .aged-garlic-story__visual { position:relative; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:520px; padding:34px; border-radius:28px; background:linear-gradient(145deg,#fff7ed,#ead7c4); overflow:hidden; }
+  .aged-garlic-story__image { display:block; width:100%; height:auto; max-height:470px; object-fit:cover; border-radius:20px; }
+  .aged-garlic-story__image--product { object-fit:contain; filter:drop-shadow(0 26px 24px rgb(70 35 40 / 15%)); }
+  .aged-garlic-story__placeholder { display:grid; place-items:center; width:100%; min-height:390px; padding:40px; border:1px dashed #c9ad9f; border-radius:18px; color:#8b746c; text-align:center; }
+  .aged-garlic-story__visual-note { margin-top:14px; color:#87706a; font-size:10px; font-weight:650; text-align:center; }
+  .aged-garlic-story__ingredient-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .aged-garlic-story__ingredient-grid article { min-height:250px; padding:27px; border:1px solid var(--ags-line); border-radius:18px; background:#fff; }
+  .aged-garlic-story__ingredient-number { display:inline-flex; margin-bottom:50px; color:var(--ags-burgundy); font-size:11px; font-weight:850; }
+  .aged-garlic-story__ingredient-grid p { margin:11px 0 0; font-size:13px; line-height:1.6; }
+  .aged-garlic-story__facts { display:grid; grid-template-columns:1fr minmax(300px,.72fr); align-items:center; gap:38px; margin-top:18px; padding:36px; border-radius:22px; background:var(--ags-burgundy-dark); color:#fff; }
+  .aged-garlic-story__facts > div:first-child > span { color:#dfbd79; font-size:10px; font-weight:850; letter-spacing:.12em; }
+  .aged-garlic-story__facts h3 { margin-top:8px; color:#fff; font-size:30px; }
+  .aged-garlic-story__facts p { max-width:610px; color:#eadfe1; font-size:13px; line-height:1.65; }
+  .aged-garlic-story__facts-image { width:100%; max-height:420px; object-fit:contain; border-radius:12px; background:#fff; }
+  .aged-garlic-story__facts-placeholder { display:grid; place-items:center; min-height:290px; padding:30px; border:1px dashed rgb(255 255 255 / 45%); border-radius:14px; color:#fff; font-size:18px; font-weight:850; letter-spacing:.06em; text-align:center; }
+  .aged-garlic-story__facts-placeholder small { display:block; margin-top:9px; color:#d8c5ca; font-size:11px; font-weight:600; letter-spacing:0; }
+  .aged-garlic-story__routine { background:#fff; }
+  .aged-garlic-story__routine-card { display:grid; grid-template-columns:.85fr 1.15fr; gap:60px; align-items:center; padding:44px; border:1px solid var(--ags-line); border-radius:24px; background:var(--ags-cream); }
+  .aged-garlic-story__routine-card p { margin:15px 0 0; line-height:1.65; }
+  .aged-garlic-story__routine-steps { display:grid; gap:9px; }
+  .aged-garlic-story__routine-steps > div { display:grid; grid-template-columns:38px 1fr; align-items:center; gap:12px; padding:14px 16px; border-radius:13px; background:#fff; }
+  .aged-garlic-story__routine-steps b { display:grid; place-items:center; width:32px; height:32px; border-radius:50%; background:var(--ags-burgundy); color:#fff; font-size:11px; }
+  .aged-garlic-story__routine-steps span { color:var(--ags-ink); font-size:13px; font-weight:650; line-height:1.4; }
+  .aged-garlic-story__comparison { background:var(--ags-ivory); }
+  .aged-garlic-story__compare-note { margin:12px auto 0; color:var(--ags-muted); font-size:12px; }
+  .aged-garlic-story__table { max-width:920px; margin:0 auto; overflow:hidden; border:1px solid var(--ags-line); border-radius:18px; background:#fff; }
+  .aged-garlic-story__table-row { display:grid; grid-template-columns:1.5fr .7fr .9fr; align-items:center; min-height:58px; border-bottom:1px solid var(--ags-line); }
+  .aged-garlic-story__table-row:last-child { border-bottom:0; }
+  .aged-garlic-story__table-row > div { padding:14px 18px; color:var(--ags-muted); font-size:13px; text-align:center; }
+  .aged-garlic-story__table-row > div:first-child { color:var(--ags-ink); font-weight:700; text-align:left; }
+  .aged-garlic-story__table-head { background:var(--ags-burgundy-dark); }
+  .aged-garlic-story__table-head > div,.aged-garlic-story__table-head > div:first-child { color:#fff; font-size:11px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; }
+  .aged-garlic-story__table-row .yes { color:var(--ags-burgundy); font-size:20px; font-weight:900; }
+  .aged-garlic-story__offer { background:var(--ags-burgundy); }
+  .aged-garlic-story__offer-card { display:flex; align-items:center; justify-content:space-between; gap:26px; padding:34px 38px; border:1px solid rgb(255 255 255 / 18%); border-radius:22px; background:var(--ags-burgundy-dark); color:#fff; }
+  .aged-garlic-story__offer-card h2 { max-width:650px; color:#fff; font-size:38px; }
+  .aged-garlic-story__offer-card p { max-width:700px; margin:10px 0 0; color:#eadde0; font-size:13px; line-height:1.55; }
+  .aged-garlic-story__offer-card .aged-garlic-story__eyebrow { color:#e7c98d; }
+  .aged-garlic-story__cta { flex:0 0 auto; display:inline-flex; align-items:center; justify-content:center; min-height:54px; padding:15px 24px; border-radius:12px; background:#fff; color:var(--ags-burgundy-dark); font-size:12px; font-weight:850; text-decoration:none; }
+  .aged-garlic-story__offer-card > small { display:none; }
+  .aged-garlic-story__guarantee { background:#fff; }
+  .aged-garlic-story__guarantee-inner { display:grid; grid-template-columns:130px 1fr; align-items:center; gap:28px; max-width:880px; margin:0 auto; }
+  .aged-garlic-story__seal { display:flex; flex-direction:column; align-items:center; justify-content:center; width:120px; height:120px; border:2px solid var(--ags-gold); border-radius:50%; color:var(--ags-burgundy); font-size:34px; font-weight:850; line-height:.85; }
+  .aged-garlic-story__seal span { margin-top:8px; color:var(--ags-gold); font-size:10px; letter-spacing:.15em; }
+  .aged-garlic-story__guarantee h2 { font-size:40px; }
+  .aged-garlic-story__guarantee .rte { margin-top:11px; color:var(--ags-muted); font-size:14px; line-height:1.6; }
+  .aged-garlic-story__faq { background:var(--ags-cream); }
+  .aged-garlic-story__faq-wrap { display:grid; grid-template-columns:.65fr 1.35fr; gap:70px; }
+  .aged-garlic-story__faq-wrap header { position:sticky; top:120px; align-self:start; }
+  .aged-garlic-story__faq-list { display:grid; gap:9px; }
+  .aged-garlic-story__faq-list details { border:1px solid var(--ags-line); border-radius:14px; background:#fff; overflow:hidden; }
+  .aged-garlic-story__faq-list summary { display:flex; align-items:center; justify-content:space-between; gap:18px; padding:18px 20px; color:var(--ags-ink); font-size:14px; font-weight:730; cursor:pointer; list-style:none; }
+  .aged-garlic-story__faq-list summary::-webkit-details-marker { display:none; }
+  .aged-garlic-story__faq-list summary span { color:var(--ags-burgundy); font-size:19px; transition:transform .18s ease; }
+  .aged-garlic-story__faq-list details[open] summary span { transform:rotate(45deg); }
+  .aged-garlic-story__faq-list details p { margin:0; padding:0 20px 19px; font-size:13px; line-height:1.65; }
+  .aged-garlic-story__disclaimer { padding:22px 0; border-top:1px solid var(--ags-line); background:#fff; }
+  .aged-garlic-story__disclaimer p { max-width:900px; margin:0 auto; color:#82777a; font-size:10px; line-height:1.5; text-align:center; }
+  @media screen and (max-width:899px) {
+    .aged-garlic-story__benefit-grid { grid-template-columns:1fr 1fr; }
+    .aged-garlic-story__split,.aged-garlic-story__routine-card,.aged-garlic-story__faq-wrap { grid-template-columns:1fr; gap:32px; }
+    .aged-garlic-story__faq-wrap header { position:static; }
+    .aged-garlic-story__ingredient-grid { grid-template-columns:1fr; }
+    .aged-garlic-story__ingredient-grid article { min-height:0; }
+    .aged-garlic-story__ingredient-number { margin-bottom:24px; }
+    .aged-garlic-story__facts { grid-template-columns:1fr; }
+    .aged-garlic-story__offer-card { flex-direction:column; align-items:flex-start; }
+  }
+  @media screen and (max-width:749px) {
+    .aged-garlic-story__wrap { width:min(calc(100% - 28px),var(--ags-width)); }
+    .aged-garlic-story__why,.aged-garlic-story__formula,.aged-garlic-story__comparison,.aged-garlic-story__faq { padding:56px 0; }
+    .aged-garlic-story__education,.aged-garlic-story__routine,.aged-garlic-story__offer,.aged-garlic-story__guarantee { padding:48px 0; }
+    .aged-garlic-story__header { margin-bottom:25px; text-align:left; }
+    .aged-garlic-story h2 { font-size:36px; }
+    .aged-garlic-story__lede { margin-left:0; font-size:14px; }
+    .aged-garlic-story__benefit-grid { grid-template-columns:1fr 1fr; gap:8px; }
+    .aged-garlic-story__benefit { min-height:190px; padding:18px 15px; border-radius:14px; }
+    .aged-garlic-story__benefit .aged-garlic-story__icon { width:32px; height:32px; margin-bottom:25px; }
+    .aged-garlic-story__benefit h3 { font-size:15px; }
+    .aged-garlic-story__benefit p { font-size:11.5px; }
+    .aged-garlic-story__compare-cards { grid-template-columns:1fr; }
+    .aged-garlic-story__visual { min-height:390px; padding:22px; border-radius:20px; }
+    .aged-garlic-story__facts { padding:24px 20px; }
+    .aged-garlic-story__facts h3 { font-size:25px; }
+    .aged-garlic-story__routine-card { padding:24px 18px; }
+    .aged-garlic-story__table { overflow-x:auto; }
+    .aged-garlic-story__table-row { min-width:650px; }
+    .aged-garlic-story__offer-card { padding:28px 22px; }
+    .aged-garlic-story__offer-card h2 { font-size:31px; }
+    .aged-garlic-story__cta { width:100%; }
+    .aged-garlic-story__offer-card > small { display:block; width:100%; color:#d9c9cd; font-size:10px; text-align:center; }
+    .aged-garlic-story__guarantee-inner { grid-template-columns:84px 1fr; gap:17px; }
+    .aged-garlic-story__seal { width:78px; height:78px; font-size:23px; }
+    .aged-garlic-story__seal span { margin-top:5px; font-size:8px; }
+    .aged-garlic-story__guarantee h2 { font-size:30px; }
+    .aged-garlic-story__faq-list summary { padding:16px; font-size:13px; }
+    .aged-garlic-story__faq-list details p { padding:0 16px 17px; font-size:12.5px; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name":"Aged Garlic Sales Story",
+  "settings":[
+    {"type":"text","id":"why_eyebrow","label":"Why section eyebrow","default":"WHY PEOPLE CHOOSE AGED GARLIC"},
+    {"type":"text","id":"why_heading","label":"Why section heading","default":"Garlic made easier to live with."},
+    {"type":"richtext","id":"why_text","label":"Why section text","default":"<p>The point is not to make your routine more complicated. It is to take a familiar ingredient and put it into a cleaner, easier daily format.</p>"},
+    {"type":"text","id":"education_eyebrow","label":"Education eyebrow","default":"AGED WITH PURPOSE"},
+    {"type":"text","id":"education_heading","label":"Education heading","default":"Why age garlic in the first place?"},
+    {"type":"richtext","id":"education_text","label":"Education text","default":"<p>Fresh garlic is powerful in the kitchen, but it is not always convenient as a daily supplement. Aging changes the format and makes odorless softgel routines possible without turning your morning into food prep.</p>"},
+    {"type":"image_picker","id":"education_image","label":"Garlic / product education image"},
+    {"type":"text","id":"education_image_alt","label":"Education image alt text","default":"Avonent aged garlic softgels with garlic"},
+    {"type":"text","id":"formula_eyebrow","label":"Formula eyebrow","default":"A SIMPLE FORMULA STORY"},
+    {"type":"text","id":"formula_heading","label":"Formula heading","default":"Know what is in your routine."},
+    {"type":"richtext","id":"formula_text","label":"Formula text","default":"<p>Aged garlic is the foundation. CoQ10 + ubiquinol add the differentiating formula story. Exact amounts belong here only after the back label is verified.</p>"},
+    {"type":"image_picker","id":"facts_image","label":"Verified Supplement Facts image"},
+    {"type":"text","id":"routine_eyebrow","label":"Routine eyebrow","default":"ONE SIMPLE ADDITION"},
+    {"type":"text","id":"routine_heading","label":"Routine heading","default":"Built to become the easy part of your day."},
+    {"type":"textarea","id":"routine_text","label":"Routine text","default":"No blending. No garlic prep. No complicated schedule on the page before the label is verified—just a straightforward softgel routine."},
+    {"type":"text","id":"compare_eyebrow","label":"Comparison eyebrow","default":"A MORE CONSIDERED FORMAT"},
+    {"type":"text","id":"compare_heading","label":"Comparison heading","default":"Avonent vs. ordinary garlic supplements"},
+    {"type":"text","id":"guarantee_eyebrow","label":"Guarantee eyebrow","default":"TRY AVONENT FOR 30 DAYS"},
+    {"type":"text","id":"guarantee_heading","label":"Guarantee heading","default":"A simple guarantee. No fake urgency."},
+    {"type":"richtext","id":"guarantee_text","label":"Guarantee text","default":"<p>If Avonent is not right for you, contact us within 30 days and we will help with the next steps under our refund policy.</p>"},
+    {"type":"color","id":"ivory","label":"Ivory background","default":"#FFF9F2"},
+    {"type":"color","id":"cream","label":"Cream background","default":"#F8EEE5"},
+    {"type":"color","id":"burgundy","label":"Burgundy","default":"#6D172B"},
+    {"type":"color","id":"burgundy_dark","label":"Dark burgundy","default":"#3C0D19"},
+    {"type":"color","id":"gold","label":"Gold","default":"#B58A45"},
+    {"type":"color","id":"ink","label":"Primary text","default":"#1B1718"},
+    {"type":"color","id":"muted","label":"Muted text","default":"#675D60"},
+    {"type":"color","id":"line","label":"Border","default":"#E7DAD2"},
+    {"type":"range","id":"content_width","label":"Content width","min":900,"max":1400,"step":20,"unit":"px","default":1180}
+  ],
+  "presets":[{"name":"Aged Garlic Sales Story"}]
+}
+{% endschema %}
