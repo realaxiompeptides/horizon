@@ -5,19 +5,15 @@
   data-single-open="{{ section.settings.single_open }}"
 >
   <div class="ag-acc2__in">
-    {% if section.settings.heading != blank %}
-      <h2>{{ section.settings.heading }}</h2>
-    {% endif %}
-    {% if section.settings.intro != blank %}
-      <div class="ag-acc2__intro rte">{{ section.settings.intro }}</div>
-    {% endif %}
+    {% if section.settings.heading != blank %}<h2>{{ section.settings.heading }}</h2>{% endif %}
+    {% if section.settings.intro != blank %}<div class="ag-acc2__intro rte">{{ section.settings.intro }}</div>{% endif %}
 
     <div class="ag-acc2__list">
       {% for block in section.blocks %}
-        <details class="ag-acc2__item" {% if block.settings.open_by_default %}open{% endif %} {{ block.shopify_attributes }}>
+        <details class="ag-acc2__item" {{ block.shopify_attributes }}>
           <summary>
             <span>{{ block.settings.heading }}</span>
-            <b aria-hidden="true">+</b>
+            <b class="ag-acc2__toggle" aria-hidden="true"></b>
           </summary>
           <div class="ag-acc2__body rte">{{ block.settings.content }}</div>
         </details>
@@ -31,12 +27,21 @@
   const root = document.getElementById('AGAaccordions-{{ section.id }}');
   if (!root || root.dataset.ready === 'true') return;
   root.dataset.ready = 'true';
-  if (root.dataset.singleOpen !== 'true') return;
-  root.querySelectorAll('details').forEach((item) => {
+
+  const items = [...root.querySelectorAll('details')];
+  items.forEach((item) => {
+    item.open = false;
+    item.removeAttribute('open');
+  });
+
+  items.forEach((item) => {
     item.addEventListener('toggle', () => {
-      if (!item.open) return;
-      root.querySelectorAll('details[open]').forEach((other) => {
-        if (other !== item) other.removeAttribute('open');
+      if (!item.open || root.dataset.singleOpen !== 'true') return;
+      items.forEach((other) => {
+        if (other !== item) {
+          other.open = false;
+          other.removeAttribute('open');
+        }
       });
     });
   });
@@ -44,7 +49,7 @@
 </script>
 
 {% stylesheet %}
-.ag-acc2{background:var(--bg);color:var(--t);padding:30px 0 44px}.ag-acc2 *{box-sizing:border-box}.ag-acc2__in{width:min(calc(100% - 30px),960px);margin:auto}.ag-acc2 h2{margin:0;font-size:clamp(30px,4vw,42px);line-height:1.05;letter-spacing:-.03em}.ag-acc2__intro{margin-top:10px;max-width:760px;color:var(--m);font-size:14px;line-height:1.6}.ag-acc2__intro p{margin:0}.ag-acc2__list{margin-top:22px;border-top:1px dashed var(--l)}.ag-acc2__item{border-bottom:1px dashed var(--l)}.ag-acc2 summary{list-style:none;display:flex;justify-content:space-between;align-items:center;gap:18px;min-height:64px;padding:18px 4px;cursor:pointer;color:var(--t);font-size:18px;font-weight:800}.ag-acc2 summary::-webkit-details-marker{display:none}.ag-acc2 summary b{display:grid;place-items:center;width:30px;height:30px;flex:0 0 30px;border-radius:50%;background:color-mix(in srgb,var(--a) 10%,#fff);color:var(--a);font-size:22px;font-weight:500;transition:transform .18s ease,background .18s ease}.ag-acc2__item[open] summary b{transform:rotate(45deg);background:color-mix(in srgb,var(--a) 16%,#fff)}.ag-acc2__body{padding:0 4px 24px;color:var(--m);font-size:15px;line-height:1.72}.ag-acc2__body strong{color:var(--t)}.ag-acc2__body p:first-child{margin-top:0}.ag-acc2__body p:last-child{margin-bottom:0}.ag-acc2__body ul{padding-left:20px}.ag-acc2__body li+li{margin-top:7px}@media(max-width:749px){.ag-acc2{padding:24px 0 34px}.ag-acc2 h2{font-size:31px}.ag-acc2 summary{min-height:60px;padding:17px 2px;font-size:17px}.ag-acc2__body{padding:0 2px 22px;font-size:14px}}
+.ag-acc2{background:var(--bg);color:var(--t);padding:0 0 8px}.ag-acc2 *{box-sizing:border-box}.ag-acc2__in{width:min(calc(100% - 30px),960px);margin:auto}.ag-acc2 h2{margin:0;font-size:clamp(30px,4vw,42px);line-height:1.05;letter-spacing:-.03em}.ag-acc2__intro{margin-top:8px;max-width:760px;color:var(--m);font-size:14px;line-height:1.55}.ag-acc2__intro p{margin:0}.ag-acc2__list{margin-top:0;border-top:1px dashed var(--l)}.ag-acc2__item{border-bottom:1px dashed var(--l)}.ag-acc2 summary{list-style:none;display:flex;justify-content:space-between;align-items:center;gap:18px;min-height:54px;padding:11px 4px;cursor:pointer;color:var(--t);font-size:18px;font-weight:800}.ag-acc2 summary::-webkit-details-marker{display:none}.ag-acc2__toggle{position:relative;display:block;width:30px;height:30px;flex:0 0 30px;border-radius:50%;background:color-mix(in srgb,var(--a) 10%,#fff)}.ag-acc2__toggle::before,.ag-acc2__toggle::after{content:"";position:absolute;left:50%;top:50%;width:14px;height:2px;border-radius:99px;background:var(--a);transform:translate(-50%,-50%)}.ag-acc2__toggle::after{transform:translate(-50%,-50%) rotate(90deg)}.ag-acc2__item[open] .ag-acc2__toggle{background:color-mix(in srgb,var(--a) 16%,#fff)}.ag-acc2__item[open] .ag-acc2__toggle::after{transform:translate(-50%,-50%) rotate(0deg)}.ag-acc2__body{padding:0 4px 20px;color:var(--m);font-size:15px;line-height:1.68}.ag-acc2__body strong{color:var(--t)}.ag-acc2__body p:first-child{margin-top:0}.ag-acc2__body p:last-child{margin-bottom:0}.ag-acc2__body ul{padding-left:20px}.ag-acc2__body li+li{margin-top:7px}@media(max-width:749px){.ag-acc2{padding:0 0 4px}.ag-acc2 summary{min-height:52px;padding:10px 2px;font-size:17px}.ag-acc2__body{padding:0 2px 18px;font-size:14px}}
 {% endstylesheet %}
 
 {% schema %}
@@ -53,8 +58,8 @@
   "tag":"section",
   "enabled_on":{"templates":["product"]},
   "settings":[
-    {"type":"text","id":"heading","label":"Heading","default":"Heart-Conscious Daily Support"},
-    {"type":"richtext","id":"intro","label":"Intro text","default":"<p>A simple, odorless aged-garlic routine built around easy daily use.</p>"},
+    {"type":"text","id":"heading","label":"Heading","default":""},
+    {"type":"richtext","id":"intro","label":"Intro text","default":""},
     {"type":"checkbox","id":"single_open","label":"Keep only one dropdown open","default":true},
     {"type":"color","id":"background","label":"Background","default":"#FFFFFF"},
     {"type":"color","id":"text","label":"Text","default":"#071A52"},
@@ -68,8 +73,7 @@
       "name":"Dropdown",
       "settings":[
         {"type":"text","id":"heading","label":"Heading","default":"Key ingredients"},
-        {"type":"richtext","id":"content","label":"Content","default":"<p>Edit this answer in the Shopify theme editor.</p>"},
-        {"type":"checkbox","id":"open_by_default","label":"Open by default","default":false}
+        {"type":"richtext","id":"content","label":"Content","default":"<p>Edit this answer in the Shopify theme editor.</p>"}
       ]
     }
   ],
