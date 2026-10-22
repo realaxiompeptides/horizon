@@ -23,7 +23,7 @@
     {% else %}
       <div class="agr__empty"><p>{{ section.settings.empty_text }}</p>{% if shop.email != blank %}<a href="mailto:{{ shop.email | escape }}?subject=Aged%20Garlic%20review">{{ section.settings.share_label }}</a>{% endif %}</div>
     {% endif %}
-    {% if review_count > 0 %}<a class="agr__cta" href="#avonent-garlic-buy">{{ section.settings.cta }}</a>{% endif %}
+    {% if review_count > 0 %}<a class="agr__cta" href="#avonent-garlic-buy" data-garlic-bottom-offer>{{ section.settings.cta }}</a>{% endif %}
   </div>
 </section>
 {% stylesheet %}
