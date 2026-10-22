@@ -3,7 +3,11 @@
     <header><h2>{{ section.settings.heading }}</h2>{% if section.settings.subheading != blank %}<p>{{ section.settings.subheading }}</p>{% endif %}</header>
     <div class="ag-cmp2__cols">
       <div class="ag-cmp2__col ag-cmp2__left">
-        {% if section.settings.product_image != blank %}{{ section.settings.product_image | image_url: width: 700 | image_tag: widths: '280,420,560,700', sizes: '(min-width:900px) 300px,42vw', loading: 'lazy', class: 'ag-cmp2__product', alt: section.settings.left_title }}{% endif %}
+        {% if section.settings.product_image != blank %}
+          {{ section.settings.product_image | image_url: width: 700 | image_tag: widths: '280,420,560,700', sizes: '(min-width:900px) 300px,42vw', loading: 'lazy', class: 'ag-cmp2__product', alt: section.settings.left_title }}
+        {% elsif product.featured_image != blank %}
+          {{ product.featured_image | image_url: width: 700 | image_tag: widths: '280,420,560,700', sizes: '(min-width:900px) 300px,42vw', loading: 'lazy', class: 'ag-cmp2__product', alt: product.title }}
+        {% endif %}
         <h3>{{ section.settings.left_title }}</h3>
         {% for block in section.blocks %}<div class="ag-cmp2__row" {{ block.shopify_attributes }}><i>✓</i><span>{{ block.settings.left_text }}</span></div>{% endfor %}
       </div>
@@ -30,12 +34,12 @@
     {"type":"text","id":"left_title","label":"Left column title","default":"Avonent"},
     {"type":"text","id":"right_title","label":"Right column title","default":"Basic garlic supplement"},
     {"type":"text","id":"note","label":"Comparison note","default":"Keep comparison claims to verifiable product-format differences. Other products vary by brand."},
-    {"type":"color","id":"background","label":"Section background","default":"#7D1F2F"},
-    {"type":"color","id":"left_background","label":"Avonent column","default":"#A33E4A"},
-    {"type":"color","id":"right_background","label":"Other column","default":"#FFFDFC"},
-    {"type":"color","id":"text","label":"Dark text","default":"#242124"},
+    {"type":"color","id":"background","label":"Section background","default":"#0068E8"},
+    {"type":"color","id":"left_background","label":"Avonent column","default":"#02C6EA"},
+    {"type":"color","id":"right_background","label":"Other column","default":"#F7FCFF"},
+    {"type":"color","id":"text","label":"Dark text","default":"#071A52"},
     {"type":"color","id":"light_text","label":"Light text","default":"#FFFFFF"},
-    {"type":"color","id":"line","label":"Row borders","default":"#E4C8CD"}
+    {"type":"color","id":"line","label":"Row borders","default":"#DCECF5"}
   ],
   "blocks":[{"type":"row","name":"Comparison row","settings":[
     {"type":"text","id":"left_text","label":"Avonent text","default":"Aged garlic format"},
