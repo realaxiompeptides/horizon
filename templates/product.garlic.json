@@ -93,40 +93,35 @@
           "type": "item",
           "settings": {
             "heading": "Heart-Conscious Daily Support",
-            "content": "<p><strong>Aged garlic extract</strong></p><ul><li>Designed for simple daily wellness routines.</li><li>Odorless softgel format.</li><li>Two softgels daily.</li><li>Paired with CoQ10 + ubiquinol.</li></ul>",
-            "open_by_default": true
+            "content": "<p><strong>Aged garlic extract</strong></p><ul><li>Designed for simple daily wellness routines.</li><li>Odorless softgel format.</li><li>Two softgels daily.</li><li>Paired with CoQ10 + ubiquinol.</li></ul>"
           }
         },
         "a2": {
           "type": "item",
           "settings": {
             "heading": "Key ingredients",
-            "content": "<p><strong>Aged Garlic Extract (7,500 mg garlic equivalent)</strong></p><ul><li>Odorless aged garlic extract.</li><li>CoQ10 + ubiquinol are included in the formula.</li><li>Exact ingredient amounts should match the Supplement Facts panel.</li></ul>",
-            "open_by_default": false
+            "content": "<p><strong>Aged Garlic Extract (7,500 mg garlic equivalent)</strong></p><ul><li>Odorless aged garlic extract.</li><li>CoQ10 + ubiquinol are included in the formula.</li><li>Exact ingredient amounts should match the Supplement Facts panel.</li></ul>"
           }
         },
         "a3": {
           "type": "item",
           "settings": {
             "heading": "How it works",
-            "content": "<p>Take <strong>two softgels daily</strong> with water, following the directions on the product label.</p><p>The softgel format makes aged garlic easy to add to a consistent daily routine.</p>",
-            "open_by_default": false
+            "content": "<p>Take <strong>two softgels daily</strong> with water, following the directions on the product label.</p><p>The softgel format makes aged garlic easy to add to a consistent daily routine.</p>"
           }
         },
         "a4": {
           "type": "item",
           "settings": {
             "heading": "What can I expect?",
-            "content": "<p>Consistency matters more than complexity. This formula is designed to make aged garlic simple to use every day without strong garlic odor becoming part of the routine.</p>",
-            "open_by_default": false
+            "content": "<p>Consistency matters more than complexity. This formula is designed to make aged garlic simple to use every day without strong garlic odor becoming part of the routine.</p>"
           }
         },
         "a5": {
           "type": "item",
           "settings": {
             "heading": "Money Back Guarantee",
-            "content": "<p>Try Avonent with confidence. If the product is not right for you, contact us within 30 days and we will help with the next steps under our refund policy.</p>",
-            "open_by_default": false
+            "content": "<p>Try Avonent with confidence. If the product is not right for you, contact us within 30 days and we will help with the next steps under our refund policy.</p>"
           }
         }
       },
