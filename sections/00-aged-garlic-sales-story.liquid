@@ -19,91 +19,6 @@
     --ags-width:{{ section.settings.content_width }}px;
   "
 >
-  <div id="avonent-garlic-buy" class="aged-garlic-story__lower-offer">
-    <div class="aged-garlic-story__wrap">
-      <div class="aged-garlic-story__lower-eyebrow">CHOOSE YOUR ROUTINE</div>
-      <h2>Stay consistent. Stock up. Save more.</h2>
-      <p class="aged-garlic-story__lower-intro">Choose the supply that fits your routine and keep Avonent Aged Garlic within reach.</p>
-
-      <div class="aged-garlic-story__lower-meter">
-        <span><i style="width:93%"></i></span>
-        <strong>93% Sold</strong>
-      </div>
-
-      {% form 'product', av_product, id: 'AGStoryLowerOffer-' | append: section.id %}
-        <input type="hidden" name="id" value="{{ current_variant.id }}" data-story-variant-input>
-
-        <div class="aged-garlic-story__lower-bundles">
-          {% for variant in av_product.variants limit: 3 %}
-            <button
-              type="button"
-              class="aged-garlic-story__lower-bundle{% if variant.id == current_variant.id %} is-active{% endif %}"
-              data-story-bundle
-              data-id="{{ variant.id }}"
-              data-price="{{ variant.price }}"
-              data-compare="{{ variant.compare_at_price | default: 0 }}"
-              {% unless variant.available %}disabled{% endunless %}
-            >
-              {% if forloop.index == 2 %}<span class="aged-garlic-story__lower-badge">Most Popular</span>{% endif %}
-              {% if forloop.index == 3 %}<span class="aged-garlic-story__lower-badge">Best Value</span>{% endif %}
-              <span class="aged-garlic-story__lower-radio"><i></i></span>
-              <span class="aged-garlic-story__lower-thumb">
-                {% if av_product.featured_image != blank %}
-                  {{ av_product.featured_image | image_url: width: 220 | image_tag: widths: '90,140,180,220', loading:'lazy', alt:av_product.title }}
-                {% endif %}
-                {% if forloop.index > 1 %}<b>×{{ forloop.index }}</b>{% endif %}
-              </span>
-              <span class="aged-garlic-story__lower-copy">
-                <strong>Buy {{ forloop.index }}</strong>
-                <small>{% case forloop.index %}{% when 1 %}30-Day Supply{% when 2 %}60-Day Supply{% else %}90-Day Supply{% endcase %}</small>
-                <em>{% case forloop.index %}{% when 1 %}Perfect for getting started{% when 2 %}Build a consistent routine{% else %}Stock up and stay prepared{% endcase %}</em>
-              </span>
-              <span class="aged-garlic-story__lower-price">
-                <strong>{{ variant.price | money }}</strong>
-                {% if variant.compare_at_price > variant.price %}<s>{{ variant.compare_at_price | money }}</s>{% endif %}
-              </span>
-            </button>
-          {% endfor %}
-        </div>
-
-        <div class="aged-garlic-story__lower-delivery">
-          <span></span>
-          <p>Order today for estimated delivery soon · <b>Ships from USA 🇺🇸</b></p>
-        </div>
-
-        <button type="submit" name="add" class="aged-garlic-story__lower-atc">
-          <span>Add to cart</span>
-          <strong data-story-button-price>{{ current_variant.price | money }}</strong>
-        </button>
-      {% endform %}
-
-      <div class="aged-garlic-story__lower-payments">
-        {% for type in shop.enabled_payment_types %}
-          {{ type | payment_type_svg_tag }}
-        {% endfor %}
-      </div>
-
-      <div class="aged-garlic-story__lower-guarantee">
-        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3 27 7v8c0 7-4.5 11.8-11 14-6.5-2.2-11-7-11-14V7z"></path><path d="m11 16 3 3 7-8"></path></svg>
-        <span>30-day money-back guarantee</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="aged-garlic-story__guarantee">
-    <div class="aged-garlic-story__wrap">
-      <div class="aged-garlic-story__guarantee-inner">
-        <div class="aged-garlic-story__seal">30<span>DAY</span></div>
-        <div>
-          <span class="aged-garlic-story__eyebrow">{{ section.settings.guarantee_eyebrow }}</span>
-          <h2>{{ section.settings.guarantee_heading }}</h2>
-          <div class="rte">{{ section.settings.guarantee_text }}</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
   <div class="aged-garlic-story__faq">
     <div class="aged-garlic-story__wrap aged-garlic-story__faq-wrap">
       <header>
@@ -123,33 +38,7 @@
     </div>
   </div></section>
 
-<script>
-(() => {
-  const root = document.getElementById('AgedGarlicStory-{{ section.id }}');
-  if (!root || root.dataset.offerReady === 'true') return;
-  root.dataset.offerReady = 'true';
 
-  const buttons = [...root.querySelectorAll('[data-story-bundle]')];
-  const input = root.querySelector('[data-story-variant-input]');
-  const buttonPrice = root.querySelector('[data-story-button-price]');
-  const currency = {{ cart.currency.iso_code | default: shop.currency | json }};
-
-  const money = (cents) => {
-    try {
-      return new Intl.NumberFormat(undefined,{style:'currency',currency}).format(Number(cents)/100);
-    } catch(e) {
-      return '$' + (Number(cents)/100).toFixed(2);
-    }
-  };
-
-  buttons.forEach((button) => button.addEventListener('click', () => {
-    if (button.disabled) return;
-    buttons.forEach((b) => b.classList.toggle('is-active', b === button));
-    if (input) input.value = button.dataset.id;
-    if (buttonPrice) buttonPrice.textContent = money(button.dataset.price || 0);
-  }));
-})();
-</script>
 
 {% stylesheet %}
 .aged-garlic-story{background:var(--ags-ivory);color:var(--ags-ink);overflow:hidden}.aged-garlic-story *{box-sizing:border-box}.aged-garlic-story__wrap{width:min(calc(100% - 36px),var(--ags-width));margin:0 auto}.aged-garlic-story__lower-offer{scroll-margin-top:110px;padding:58px 0 66px;border-top:6px solid #02C6EA;background:#EAF9FC}.aged-garlic-story__lower-eyebrow{text-align:center;color:#087E9D;font-size:12px;font-weight:900;letter-spacing:.18em}.aged-garlic-story__lower-offer h2{margin:8px auto 0;max-width:760px;text-align:center;color:#111;font-size:clamp(42px,5.6vw,64px);font-weight:900;line-height:1;letter-spacing:-.045em}.aged-garlic-story__lower-intro{max-width:720px;margin:18px auto 0;color:#667177;text-align:center;font-size:16px;line-height:1.55}.aged-garlic-story__lower-meter{display:grid;grid-template-columns:1fr auto;align-items:center;gap:18px;margin:34px 0 22px;padding:22px 28px;border-radius:18px;background:#fff}.aged-garlic-story__lower-meter>span{height:10px;border-radius:999px;background:#E1EDF2;overflow:hidden}.aged-garlic-story__lower-meter>span i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#02C6EA,#28D7E8)}.aged-garlic-story__lower-meter strong{color:#EF4C4C;font-size:18px}.aged-garlic-story__lower-bundles{display:grid;gap:12px}.aged-garlic-story__lower-bundle{position:relative;display:grid;grid-template-columns:34px 76px minmax(0,1fr) auto;align-items:center;gap:14px;width:100%;min-height:126px;padding:16px 18px;border:2px solid #D4E5EB;border-radius:18px;background:#fff;color:#111;text-align:left;cursor:pointer}.aged-garlic-story__lower-bundle.is-active{border-color:#02C6EA;background:#F1FCFE}.aged-garlic-story__lower-badge{position:absolute;right:18px;top:-15px;padding:6px 14px;border-radius:999px;background:#087E9D;color:#fff;font-size:11px;font-weight:900}.aged-garlic-story__lower-radio{display:grid;place-items:center;width:28px;height:28px;border:2px solid #ADC2CA;border-radius:50%}.aged-garlic-story__lower-radio i{width:14px;height:14px;border-radius:50%}.aged-garlic-story__lower-bundle.is-active .aged-garlic-story__lower-radio{border-color:#02C6EA}.aged-garlic-story__lower-bundle.is-active .aged-garlic-story__lower-radio i{background:#02C6EA}.aged-garlic-story__lower-thumb{position:relative;display:grid;place-items:center;width:72px;height:72px;border-radius:10px;background:#F4FBFD}.aged-garlic-story__lower-thumb img{display:block;max-width:100%;max-height:100%;object-fit:contain}.aged-garlic-story__lower-thumb b{position:absolute;right:-9px;bottom:-7px;display:grid;place-items:center;min-width:30px;height:30px;padding:0 7px;border:2px solid #fff;border-radius:999px;background:#087E9D;color:#fff;font-size:11px}.aged-garlic-story__lower-copy strong{display:block;font-size:18px}.aged-garlic-story__lower-copy small{display:block;margin-top:2px;color:#5E6D74;font-size:14px}.aged-garlic-story__lower-copy em{display:block;margin-top:5px;color:#087E9D;font-size:11px;font-style:normal;font-weight:800}.aged-garlic-story__lower-price{text-align:right}.aged-garlic-story__lower-price strong{display:block;font-size:18px}.aged-garlic-story__lower-price s{display:block;margin-top:5px;color:#6A757A;font-size:12px}.aged-garlic-story__lower-delivery{display:flex;align-items:center;gap:10px;margin:22px 0;padding:17px 0;border-top:1px dashed #D8E8ED;border-bottom:1px dashed #D8E8ED;color:#617078}.aged-garlic-story__lower-delivery>span{width:18px;height:18px;border:4px solid #B9F4FF;border-radius:50%;box-shadow:inset 0 0 0 3px #fff;background:#02C6EA}.aged-garlic-story__lower-delivery p{margin:0;font-size:13px}.aged-garlic-story__lower-delivery b{color:#087E9D}.aged-garlic-story__lower-atc{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:70px;padding:0 24px;border:0;border-radius:16px;background:#02C6EA;color:#fff;cursor:pointer}.aged-garlic-story__lower-atc span{font-size:18px;font-weight:850}.aged-garlic-story__lower-atc strong{font-size:20px}.aged-garlic-story__lower-payments{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;margin-top:18px}.aged-garlic-story__lower-payments svg{width:auto;height:31px}.aged-garlic-story__lower-guarantee{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:20px;color:#5B6870;font-size:13px;font-weight:750}.aged-garlic-story__lower-guarantee svg{width:26px;height:26px;fill:none;stroke:#02C6EA;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.aged-garlic-story__guarantee{padding:72px 0;background:#fff}.aged-garlic-story__guarantee-inner{display:grid;grid-template-columns:130px 1fr;align-items:center;gap:28px;max-width:880px;margin:0 auto}.aged-garlic-story__seal{display:flex;flex-direction:column;align-items:center;justify-content:center;width:120px;height:120px;border:2px solid var(--ags-gold);border-radius:50%;color:var(--ags-burgundy);font-size:34px;font-weight:850;line-height:.85}.aged-garlic-story__seal span{margin-top:8px;color:var(--ags-gold);font-size:10px;letter-spacing:.15em}.aged-garlic-story__eyebrow{display:block;margin-bottom:10px;color:var(--ags-burgundy);font-size:11px;font-weight:850;letter-spacing:.14em;line-height:1.2;text-transform:uppercase}.aged-garlic-story h2{margin:0;color:var(--ags-ink);font-size:clamp(34px,4vw,52px);font-weight:760;letter-spacing:-.035em;line-height:1.02}.aged-garlic-story__guarantee h2{font-size:40px}.aged-garlic-story__guarantee .rte{margin-top:11px;color:var(--ags-muted);font-size:14px;line-height:1.6}.aged-garlic-story__faq{padding:82px 0;background:var(--ags-cream)}.aged-garlic-story__faq-wrap{display:grid;grid-template-columns:.65fr 1.35fr;gap:70px}.aged-garlic-story__faq-wrap header{position:sticky;top:120px;align-self:start}.aged-garlic-story__faq-list{display:grid;gap:9px}.aged-garlic-story__faq-list details{border:1px solid var(--ags-line);border-radius:14px;background:#fff;overflow:hidden}.aged-garlic-story__faq-list summary{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px;cursor:pointer;color:var(--ags-ink);font-size:13px;font-weight:760;list-style:none}.aged-garlic-story__faq-list summary::-webkit-details-marker{display:none}.aged-garlic-story__faq-list summary span{font-size:19px;font-weight:400}.aged-garlic-story__faq-list details[open] summary span{transform:rotate(45deg)}.aged-garlic-story__faq-list details p{margin:0;padding:0 20px 20px;color:var(--ags-muted);font-size:13px;line-height:1.65}@media(max-width:749px){.aged-garlic-story__lower-offer{padding:44px 0 52px}.aged-garlic-story__lower-offer h2{font-size:43px}.aged-garlic-story__lower-intro{font-size:14px}.aged-garlic-story__lower-meter{padding:18px}.aged-garlic-story__lower-bundle{grid-template-columns:28px 70px minmax(0,1fr) auto;gap:10px;min-height:116px;padding:14px 12px}.aged-garlic-story__lower-thumb{width:66px;height:66px}.aged-garlic-story__lower-copy strong{font-size:17px}.aged-garlic-story__lower-copy small{font-size:13px}.aged-garlic-story__lower-copy em{font-size:10px}.aged-garlic-story__lower-price strong{font-size:17px}.aged-garlic-story__lower-atc{min-height:66px;padding:0 18px}.aged-garlic-story__guarantee-inner{grid-template-columns:78px 1fr;gap:16px}.aged-garlic-story__seal{width:72px;height:72px;font-size:23px}.aged-garlic-story__guarantee h2{font-size:30px}.aged-garlic-story__faq-wrap{grid-template-columns:1fr;gap:24px}.aged-garlic-story__faq-wrap header{position:static}}
