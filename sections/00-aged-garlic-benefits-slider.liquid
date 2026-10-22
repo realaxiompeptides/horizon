@@ -1,0 +1,114 @@
+<section
+  id="AGBenefits-{{ section.id }}"
+  class="ag-benefits"
+  style="--bg:{{ section.settings.background }};--t:{{ section.settings.text }};--m:{{ section.settings.muted }};--a:{{ section.settings.accent }};--card:{{ section.settings.card }};"
+>
+  <div class="ag-benefits__in">
+    <h2>{{ section.settings.heading_before }} <span>{{ section.settings.heading_accent }}</span></h2>
+
+    <div class="ag-benefits__slider" data-ag-benefits-slider>
+      <div class="ag-benefits__track" data-ag-benefits-track>
+        {% for block in section.blocks %}
+          <article class="ag-benefits__slide{% if forloop.first %} is-active{% endif %}" data-ag-benefit-slide {{ block.shopify_attributes }}>
+            <div class="ag-benefits__media">
+              {% if block.settings.image != blank %}
+                {{ block.settings.image | image_url: width: 1200 | image_tag: widths: '480,720,960,1200', loading: 'lazy', class: 'ag-benefits__img', alt: block.settings.heading }}
+              {% elsif forloop.index == 1 and product.featured_image != blank %}
+                {{ product.featured_image | image_url: width: 1200 | image_tag: widths: '480,720,960,1200', loading: 'lazy', class: 'ag-benefits__img ag-benefits__img--contain', alt: product.title }}
+              {% elsif forloop.index == 2 %}
+                <img class="ag-benefits__img ag-benefits__img--contain" src="https://cdn.shopify.com/s/files/1/0759/3525/2646/files/avonent-aged-garlic-softgel-realistic.png?v=1792648420" alt="Golden aged garlic softgels" loading="lazy">
+              {% else %}
+                <div class="ag-benefits__placeholder">
+                  <span>ADD IMAGE</span>
+                  <small>Choose a benefit image in Shopify</small>
+                </div>
+              {% endif %}
+            </div>
+
+            <div class="ag-benefits__copy">
+              <h3>{{ block.settings.heading }}</h3>
+              <div class="rte">{{ block.settings.text }}</div>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+
+      <div class="ag-benefits__controls">
+        <button type="button" class="ag-benefits__arrow" data-ag-benefits-prev aria-label="Previous benefit">‹</button>
+        <div class="ag-benefits__dots">
+          {% for block in section.blocks %}
+            <button type="button" class="ag-benefits__dot{% if forloop.first %} is-active{% endif %}" data-ag-benefits-dot data-index="{{ forloop.index0 }}" aria-label="Show benefit {{ forloop.index }}"></button>
+          {% endfor %}
+        </div>
+        <button type="button" class="ag-benefits__arrow" data-ag-benefits-next aria-label="Next benefit">›</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(() => {
+  const root = document.getElementById('AGBenefits-{{ section.id }}');
+  if (!root || root.dataset.ready === 'true') return;
+  root.dataset.ready = 'true';
+
+  const slides = [...root.querySelectorAll('[data-ag-benefit-slide]')];
+  const dots = [...root.querySelectorAll('[data-ag-benefits-dot]')];
+  const prev = root.querySelector('[data-ag-benefits-prev]');
+  const next = root.querySelector('[data-ag-benefits-next]');
+  let index = 0;
+
+  const show = (nextIndex) => {
+    if (!slides.length) return;
+    index = (nextIndex + slides.length) % slides.length;
+    slides.forEach((slide, i) => slide.classList.toggle('is-active', i === index));
+    dots.forEach((dot, i) => dot.classList.toggle('is-active', i === index));
+  };
+
+  prev?.addEventListener('click', () => show(index - 1));
+  next?.addEventListener('click', () => show(index + 1));
+  dots.forEach((dot) => dot.addEventListener('click', () => show(Number(dot.dataset.index || 0))));
+
+  let startX = 0;
+  root.addEventListener('touchstart', (e) => { startX = e.touches[0]?.clientX || 0; }, { passive: true });
+  root.addEventListener('touchend', (e) => {
+    const endX = e.changedTouches[0]?.clientX || startX;
+    const delta = endX - startX;
+    if (Math.abs(delta) > 45) show(index + (delta < 0 ? 1 : -1));
+  }, { passive: true });
+})();
+</script>
+
+{% stylesheet %}
+.ag-benefits{background:var(--bg);color:var(--t);padding:44px 0 50px}.ag-benefits *{box-sizing:border-box}.ag-benefits__in{width:min(calc(100% - 28px),940px);margin:auto}.ag-benefits h2{margin:0 0 28px;text-align:center;color:var(--t);font-size:clamp(34px,4.4vw,48px);font-weight:820;line-height:1.05;letter-spacing:-.035em}.ag-benefits h2 span{color:var(--a)}.ag-benefits__slider{position:relative}.ag-benefits__track{position:relative}.ag-benefits__slide{display:none;overflow:hidden;border-radius:18px;background:var(--card);box-shadow:0 10px 32px rgb(0 65 120 / 5%)}.ag-benefits__slide.is-active{display:block}.ag-benefits__media{height:560px;padding:14px 14px 0}.ag-benefits__img,.ag-benefits__placeholder{display:block;width:100%;height:100%;border-radius:14px;object-fit:cover;background:#eef8fd}.ag-benefits__img--contain{object-fit:contain;padding:28px;background:linear-gradient(145deg,#fff,#eef9ff)}.ag-benefits__placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;color:#7a889a}.ag-benefits__placeholder span{font-size:13px;font-weight:900;letter-spacing:.12em}.ag-benefits__placeholder small{margin-top:7px;font-size:11px}.ag-benefits__copy{padding:23px 26px 28px;text-align:center}.ag-benefits__copy h3{margin:0;color:var(--t);font-size:24px;font-weight:820;line-height:1.15}.ag-benefits__copy .rte{max-width:720px;margin:14px auto 0;color:var(--m);font-size:15px;line-height:1.65}.ag-benefits__copy .rte p{margin:0}.ag-benefits__controls{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;gap:14px;max-width:300px;margin:20px auto 0}.ag-benefits__arrow{display:grid;place-items:center;width:44px;height:44px;border:0;background:transparent;color:#69727c;font-size:42px;line-height:1;cursor:pointer}.ag-benefits__dots{display:flex;justify-content:center;align-items:center;gap:10px}.ag-benefits__dot{width:9px;height:9px;padding:0;border:0;border-radius:50%;background:color-mix(in srgb,var(--a) 35%,#d9e4eb);cursor:pointer}.ag-benefits__dot.is-active{width:12px;height:12px;background:var(--a)}@media(max-width:749px){.ag-benefits{padding:34px 0 38px}.ag-benefits h2{margin-bottom:22px;font-size:35px}.ag-benefits__media{height:420px;padding:12px 12px 0}.ag-benefits__copy{padding:20px 18px 22px}.ag-benefits__copy h3{font-size:21px}.ag-benefits__copy .rte{font-size:13.5px}.ag-benefits__controls{margin-top:14px}}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name":"4 Benefits of Aged Garlic",
+  "tag":"section",
+  "enabled_on":{"templates":["product"]},
+  "settings":[
+    {"type":"text","id":"heading_before","label":"Heading beginning","default":"4 Benefits of"},
+    {"type":"text","id":"heading_accent","label":"Highlighted heading text","default":"Aged Garlic"},
+    {"type":"color","id":"background","label":"Section background","default":"#F7FCFF"},
+    {"type":"color","id":"card","label":"Card background","default":"#FFFFFF"},
+    {"type":"color","id":"text","label":"Text","default":"#071A52"},
+    {"type":"color","id":"muted","label":"Body text","default":"#526078"},
+    {"type":"color","id":"accent","label":"Avonent blue","default":"#02C6EA"}
+  ],
+  "blocks":[
+    {
+      "type":"benefit",
+      "name":"Benefit slide",
+      "settings":[
+        {"type":"image_picker","id":"image","label":"Benefit image"},
+        {"type":"text","id":"heading","label":"Benefit title","default":"Aged Garlic Extract"},
+        {"type":"richtext","id":"text","label":"Benefit description","default":"<p>Edit this benefit description in the Shopify theme editor.</p>"}
+      ]
+    }
+  ],
+  "max_blocks":6,
+  "presets":[{"name":"4 Benefits of Aged Garlic","blocks":[{"type":"benefit"},{"type":"benefit"},{"type":"benefit"},{"type":"benefit"}]}]
+}
+{% endschema %}
