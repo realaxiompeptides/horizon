@@ -189,7 +189,6 @@
         {% if section.settings.show_gifts %}
           <div class="ag2__rewards" data-ag2-rewards aria-label="Rewards with your garlic order">
             <div class="ag2__rewards-heading">
-              <span>{{ section.settings.gifts_eyebrow }}</span>
               <strong>{{ section.settings.gifts_heading }}</strong>
             </div>
             <div class="ag2__rewards-progress" aria-live="polite" data-ag2-gifts-progress>{% if section.settings.shipping_reward_active %}Buy 2 unlocks free shipping{% else %}Buy 3 unlocks a free digital ebook{% endif %}</div>
@@ -199,13 +198,13 @@
                   {% if section.settings.gift_shipping_image != blank %}
                     {{ section.settings.gift_shipping_image | image_url: width: 320 | image_tag: widths: '120,200,320', loading: 'lazy', alt: 'Free shipping gift', class: 'ag2__reward-img' }}
                   {% else %}
-                    <svg class="ag2__reward-icon" viewBox="0 0 80 72" aria-hidden="true" fill="none"><rect x="9" y="17" width="45" height="31" rx="5" fill="#02C6EA"/><path d="M54 28h11l10 11v9H54V28Z" fill="#0068E8"/><circle cx="24" cy="51" r="7" fill="#DFFAFF" stroke="#0068E8" stroke-width="4"/><circle cx="62" cy="51" r="7" fill="#DFFAFF" stroke="#0068E8" stroke-width="4"/><path d="M18 24h27M18 31h20" stroke="#fff" stroke-width="4" stroke-linecap="round"/></svg>
+                    <svg class="ag2__reward-icon" viewBox="0 0 80 72" aria-hidden="true" fill="none"><rect x="9" y="17" width="45" height="31" rx="5" fill="#0068E8"/><path d="M54 28h11l10 11v9H54V28Z" fill="#188FF0"/><circle cx="24" cy="51" r="7" fill="#DFFAFF" stroke="#0068E8" stroke-width="4"/><circle cx="62" cy="51" r="7" fill="#DFFAFF" stroke="#0068E8" stroke-width="4"/><path d="M18 24h27M18 31h20" stroke="#fff" stroke-width="4" stroke-linecap="round"/></svg>
                   {% endif %}
-                  <span class="ag2__reward-lock" data-ag2-shipping-lock aria-hidden="true">🔒</span>
+                  
                 </div>
-                <span class="ag2__reward-value">{% if section.settings.shipping_reward_active %}{{ section.settings.gift_shipping_value }}{% else %}COMING SOON{% endif %}</span>
-                <strong>{% if section.settings.shipping_reward_active %}{{ section.settings.gift_shipping_title }}{% else %}Shipping Bonus{% endif %}</strong>
-                <small data-ag2-shipping-state>{% if section.settings.shipping_reward_active %}Unlocked{% else %}Not active yet{% endif %}</small>
+                <span class="ag2__reward-value">{{ section.settings.gift_shipping_value }}</span>
+                <strong class="ag2__shipping-title">{{ section.settings.gift_shipping_title }}</strong>
+                <small class="ag2__reward-state" data-ag2-shipping-state><svg class="ag2__state-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span data-ag2-shipping-state-text>{% if section.settings.shipping_reward_active %}UNLOCKED{% else %}LOCKED{% endif %}</span></small>
               </div>
               <div class="ag2__reward" data-ag2-ebook-reward>
                 <div class="ag2__reward-art">
@@ -216,11 +215,11 @@
                   {% else %}
                     <div class="ag2__ebook-mock" aria-label="Avonent wellness ebook cover"><span>AVONENT</span><b>YOUR DAILY<br>WELLNESS GUIDE</b><i>DIGITAL EBOOK</i></div>
                   {% endif %}
-                  <span class="ag2__reward-lock" data-ag2-ebook-lock aria-hidden="true">🔒</span>
+                  
                 </div>
                 <span class="ag2__reward-value">{{ section.settings.gift_ebook_value }}</span>
                 <strong>{{ section.settings.gift_ebook_title }}</strong>
-                <small data-ag2-ebook-state>Unlock with Buy 3</small>
+                <small class="ag2__reward-state" data-ag2-ebook-state><svg class="ag2__state-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span data-ag2-ebook-state-text>LOCKED</span></small>
               </div>
             </div>
             <p class="ag2__rewards-note">{% if section.settings.shipping_reward_active %}{{ section.settings.gifts_note }}{% else %}Buy 3 adds a free digital ebook to your cart. The shipping perk is not active at checkout yet.{% endif %}</p>
@@ -475,11 +474,11 @@
       const ebookUnlocked = n >= 3;
       shippingReward?.classList.toggle('is-unlocked', shippingUnlocked);
       ebookReward?.classList.toggle('is-unlocked', ebookUnlocked);
-      const shipState = rewards.querySelector('[data-ag2-shipping-state]');
-      const ebookState = rewards.querySelector('[data-ag2-ebook-state]');
+      const shipState = rewards.querySelector('[data-ag2-shipping-state-text]');
+      const ebookState = rewards.querySelector('[data-ag2-ebook-state-text]');
       const progress = rewards.querySelector('[data-ag2-gifts-progress]');
-      if (shipState) shipState.textContent = !shippingOfferActive ? 'Not active yet' : shippingUnlocked ? 'UNLOCKED' : 'Unlock with Buy 2';
-      if (ebookState) ebookState.textContent = ebookUnlocked ? 'UNLOCKED' : 'Unlock with Buy 3';
+      if (shipState) shipState.textContent = shippingUnlocked ? 'UNLOCKED' : 'LOCKED';
+      if (ebookState) ebookState.textContent = ebookUnlocked ? 'UNLOCKED' : 'LOCKED';
       if (progress) progress.textContent = !shippingOfferActive
         ? (n >= 3 ? 'Free digital ebook unlocked' : n === 2 ? 'Buy 3 adds a free digital ebook' : 'Buy 3 unlocks a free digital ebook')
         : n === 1
@@ -768,32 +767,32 @@
 {% stylesheet %}
 
 /* Garlic-only tiered reward shelf. All colors inherit Avonent's editable section palette. */
-.ag2__rewards{position:relative;margin:29px 0 19px;padding:27px 16px 13px;border:1.5px solid color-mix(in srgb,var(--ad) 48%,#fff);border-radius:18px;background:linear-gradient(160deg,#f5fcff,#fff 58%,#edfaff);box-shadow:0 12px 28px rgb(3 83 160 / 7%)}
-.ag2__rewards-heading{position:absolute;left:50%;top:-18px;transform:translateX(-50%);display:flex;align-items:center;gap:7px;white-space:nowrap;max-width:calc(100% - 25px);padding:8px 18px;border:1.5px solid var(--ad);border-radius:999px;background:#fff;color:var(--t);box-shadow:0 4px 15px rgb(10 92 172 / 10%)}
-.ag2__rewards-heading span{font-size:9px;letter-spacing:.1em;font-weight:900;color:var(--ad)}
-.ag2__rewards-heading strong{font-size:13px;letter-spacing:.01em;font-weight:850}
-.ag2__rewards-progress{text-align:center;color:var(--ad);font-size:11px;font-weight:760;line-height:1.4;margin:3px 0 14px}
-.ag2__rewards-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.ag2__reward{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0;padding:13px 8px 11px;text-align:center;border:1px solid #d4e5ef;border-radius:14px;background:#f7f9fb;color:#667b8b;transition:background .2s,border-color .2s,box-shadow .2s}
-.ag2__reward.is-unlocked{border-color:#77cee8;background:#e7faff;color:var(--t);box-shadow:0 3px 12px rgb(2 198 234 / 10%)}
-.ag2__reward-art{width:100%;height:67px;display:grid;place-items:center;position:relative}
-.ag2__reward-img{width:auto;max-width:95%;max-height:67px;object-fit:contain}
-.ag2__reward-icon{width:78px;height:66px}
-.ag2__reward-lock{position:absolute;right:9px;top:1px;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:#fff;font-size:14px;box-shadow:0 3px 10px rgb(0 31 62 / 12%)}
-.ag2__reward.is-unlocked .ag2__reward-lock{display:none}
-.ag2__reward:not(.is-unlocked) .ag2__reward-art> :not(.ag2__reward-lock){filter:grayscale(.7);opacity:.56}
-.ag2__reward-value{color:#738b98;font-size:11px;text-decoration:line-through}
-.ag2__reward strong{color:inherit;font-size:13px;line-height:1.2;font-weight:850}
-.ag2__reward.is-unlocked strong{color:var(--ad)}
-.ag2__reward small{font-size:10px;font-weight:800;line-height:1.35;color:#738b98}
-.ag2__reward.is-unlocked small{color:#0095b9}
-.ag2__ebook-mock{height:67px;width:49px;padding:9px 4px 5px;border-radius:3px 7px 7px 3px;background:linear-gradient(140deg,var(--ad),var(--a));box-shadow:4px 4px 7px #0b47712e;color:#fff;display:flex;flex-direction:column;justify-content:space-between;transform:rotate(-7deg);border-left:4px solid #00478b}
-.ag2__ebook-mock span{font-size:6px;font-weight:850;letter-spacing:.11em}
-.ag2__ebook-mock b{font-size:7px;line-height:1.15}
-.ag2__ebook-mock i{font-size:5px;font-style:normal;letter-spacing:.04em}
-.ag2__rewards-note{margin:12px 1px 0;text-align:center;color:var(--m);font-size:10px;line-height:1.5}
-@media(max-width:500px){.ag2__rewards{margin-top:28px;padding:27px 10px 11px}.ag2__rewards-grid{gap:8px}.ag2__reward{padding:12px 6px 10px}.ag2__reward strong{font-size:12px}.ag2__rewards-heading{gap:5px;padding:8px 11px}.ag2__rewards-heading strong{font-size:12px}}
-
+.ag2__rewards{position:relative;margin:25px 0 15px;padding:22px 11px 10px;border:1.5px solid color-mix(in srgb,var(--ad) 55%,#fff);border-radius:15px;background:linear-gradient(160deg,#fbfdff,#f2fbff);box-shadow:0 5px 15px rgb(3 83 160 / 4%)}
+.ag2__rewards-heading{position:absolute;left:50%;top:-15px;transform:translateX(-50%);display:flex;align-items:center;justify-content:center;white-space:nowrap;max-width:calc(100% - 25px);padding:6px 20px;border:1.5px solid var(--ad);border-radius:999px;background:#fff;color:var(--t);box-shadow:0 3px 8px rgb(10 92 172 / 8%)}
+.ag2__rewards-heading strong{font-size:12px;letter-spacing:.02em;font-weight:850}
+.ag2__rewards-progress{text-align:center;color:var(--ad);font-size:10px;font-weight:770;line-height:1.35;margin:0 0 8px}
+.ag2__rewards-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.ag2__reward{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:0;min-height:103px;padding:8px 5px 7px;text-align:center;border:1px solid #d4e5ef;border-radius:12px;background:#f8fbfe;color:#566c7a;transition:background .2s,border-color .2s,box-shadow .2s}
+.ag2__reward.is-unlocked{border-color:#65cce8;background:#eafaff;color:var(--t);box-shadow:0 2px 9px rgb(2 198 234 / 11%)}
+.ag2__reward-art{width:100%;height:43px;display:grid;place-items:center;position:relative}
+.ag2__reward-img{width:auto;max-width:95%;max-height:43px;object-fit:contain}
+.ag2__reward-icon{width:63px;height:48px}
+.ag2__reward:not(.is-unlocked) .ag2__reward-art>*{filter:blur(3.8px);opacity:.42}
+.ag2__reward:not(.is-unlocked) .ag2__reward-value{filter:blur(1.7px);opacity:.45}
+.ag2__reward:not(.is-unlocked)[data-ag2-ebook-reward]>strong{filter:blur(2.1px);opacity:.43}
+.ag2__reward-value{color:#80919c;font-size:10px;text-decoration:line-through}
+.ag2__reward>strong{color:inherit;font-size:11px;line-height:1.15;font-weight:850}
+.ag2__reward.is-unlocked>strong{color:var(--ad)}
+.ag2__reward[data-ag2-shipping-reward]>.ag2__shipping-title{color:#d82f3e;letter-spacing:.01em}
+.ag2__reward-state{display:inline-flex;align-items:center;justify-content:center;gap:4px;min-height:16px;font-size:10px;font-weight:850;line-height:1.3;color:#0068e8}
+.ag2__state-lock{width:12px;height:12px;flex:none;color:#0068e8}
+.ag2__reward.is-unlocked .ag2__state-lock{display:none}
+.ag2__ebook-mock{height:43px;width:33px;padding:5px 3px 3px;border-radius:2px 5px 5px 2px;background:linear-gradient(140deg,var(--ad),var(--a));box-shadow:3px 3px 5px #0b47712e;color:#fff;display:flex;flex-direction:column;justify-content:space-between;transform:rotate(-6deg);border-left:3px solid #00478b}
+.ag2__ebook-mock span{font-size:4px;font-weight:850;letter-spacing:.1em}
+.ag2__ebook-mock b{font-size:4.5px;line-height:1.12}
+.ag2__ebook-mock i{font-size:3.6px;font-style:normal;letter-spacing:.02em}
+.ag2__rewards-note{margin:8px 1px 0;text-align:center;color:var(--m);font-size:9px;line-height:1.35}
+@media(max-width:500px){.ag2__rewards{margin-top:24px;padding:21px 8px 9px}.ag2__rewards-grid{gap:7px}.ag2__reward{min-height:99px;padding:6px 3px 6px}.ag2__reward>strong{font-size:10.5px}.ag2__rewards-heading{padding:6px 16px}.ag2__rewards-heading strong{font-size:12px}.ag2__rewards-note{font-size:9px}}
 .ag2{position:relative;background:var(--bg);color:var(--t);padding:18px 0 44px}.ag2__anchor{position:absolute;top:-110px}.ag2 *{box-sizing:border-box}.ag2__wrap{width:min(calc(100% - 28px),1220px);margin:auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(430px,.9fr);gap:42px}.ag2__media{position:sticky;top:calc(var(--header-group-height,0px) + 12px)}.ag2__hero{min-height:580px;border:1px solid var(--l);border-radius:20px;background:#fff;overflow:hidden;display:grid;place-items:center}.ag2__heroimg{width:100%;height:auto;max-height:640px;object-fit:contain}.ag2__mock{width:58%;aspect-ratio:.72;background:linear-gradient(160deg,#fff,#f3e9e3);border-radius:18px;box-shadow:0 30px 55px rgb(86 20 36 / 16%);padding:44px 28px;display:flex;flex-direction:column;justify-content:center}.ag2__mock span{color:var(--a);font-size:12px;font-weight:900;letter-spacing:.18em}.ag2__mock em{margin-top:28px;color:#8b7c80;font-size:9px;font-style:normal;font-weight:800;letter-spacing:.13em}.ag2__mock strong{font-size:39px;line-height:.9;margin-top:12px;color:var(--ad)}.ag2__mock b{font-size:21px;color:var(--g);margin-top:8px}.ag2__mock small{margin-top:2px;color:var(--a);font-size:12px;font-weight:700}.ag2__mock i{margin-top:34px;padding-top:14px;border-top:1px solid #eadbd2;color:#8a7b7f;font-size:8px;font-style:normal;font-weight:800;letter-spacing:.12em}.ag2__thumbs{display:flex;gap:7px;margin-top:9px;overflow:auto}.ag2__thumb{width:70px;height:58px;flex:0 0 70px;border:1px solid var(--l);border-radius:8px;background:#fff;padding:3px}.ag2__thumb.is-on{border-color:var(--a);box-shadow:0 0 0 1px var(--a)}.ag2__thumb img{width:100%;height:100%;object-fit:cover;border-radius:5px}.ag2__info{padding-top:5px}.ag2__rating{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:8px;font-size:13px;line-height:1.3}.ag2__rating span{color:#ffb400;font-size:19px;letter-spacing:.5px}.ag2__rating b{font-weight:800;color:#1b1b1b}.ag2__rating em{font-style:normal;color:#333;font-weight:650}.ag2 h1{margin:13px 0 0;font-size:clamp(39px,4vw,57px);line-height:.98;letter-spacing:-.045em}.ag2__subheading{margin-top:13px;max-width:560px;color:var(--m);font-size:14px;line-height:1.55}.ag2__subheading p{margin:0}.ag2__benefits{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px;margin-top:21px}.ag2__benefit{display:flex;align-items:center;gap:10px;font-size:14px;line-height:1.35}.ag2__benefit i{display:grid;place-items:center;width:21px;height:21px;flex:0 0 21px;border-radius:50%;background:#62a77b;color:#fff;font-style:normal;font-size:12px;font-weight:900}.ag2__sale{display:inline-flex;margin-top:22px;background:linear-gradient(90deg,var(--ad),var(--a));color:#fff;border-radius:8px;padding:7px 12px;font-size:11px;font-weight:900;letter-spacing:.08em}.ag2__rule{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;margin:24px 0 13px;color:var(--ad);font-size:12px;font-weight:800}.ag2__rule span{height:1px;background:color-mix(in srgb,var(--a) 30%,transparent)}.ag2__bundles{display:grid;gap:10px}.ag2__bundle{position:relative;width:100%;min-height:82px;display:grid;grid-template-columns:20px 1fr auto;align-items:center;gap:12px;padding:14px;border:1px solid color-mix(in srgb,var(--a) 22%,var(--l));border-radius:13px;background:#fff;color:var(--t);text-align:left;font:inherit;box-shadow:0 3px 12px rgb(4 62 118 / 3%)}.ag2__bundle.is-on{border:2px solid var(--a);background:linear-gradient(90deg,color-mix(in srgb,var(--a) 9%,#fff),#fff);box-shadow:0 8px 22px rgb(0 144 255 / 9%)}.ag2__badge{position:absolute;right:12px;top:-10px;background:var(--a);color:#fff;padding:5px 10px;border-radius:999px;font-size:9px;font-weight:900}.ag2__radio{width:20px;height:20px;border:2px solid #d9cdcf;border-radius:50%;display:grid;place-items:center}.ag2__radio i{width:10px;height:10px;border-radius:50%}.ag2__bundle.is-on .ag2__radio{border-color:var(--a)}.ag2__bundle.is-on .ag2__radio i{background:var(--a)}.ag2__copy,.ag2__price{display:flex;flex-direction:column}.ag2__copy strong{font-size:18px}.ag2__copy small{margin-top:3px;color:var(--a);font-size:12px}.ag2__price{align-items:flex-end}.ag2__price strong{color:var(--ad);font-size:17px}.ag2__price small,.ag2__price s{margin-top:3px;color:#777;font-size:10px}.ag2__refill{display:flex;gap:11px;align-items:center;margin-top:12px;padding:13px;border:2px dashed var(--a);border-radius:12px;text-decoration:none;color:var(--t)}.ag2__refill>span{display:grid;place-items:center;width:32px;height:32px;border:2px solid var(--a);border-radius:7px;color:var(--a);font-size:18px}.ag2__refill div{display:flex;flex-direction:column}.ag2__refill strong{color:var(--a);font-size:13px}.ag2__refill small{margin-top:3px;color:var(--m);font-size:10px}.ag2__ship{display:flex;align-items:center;gap:10px;margin:18px 4px 0;color:var(--t);font-size:13px}.ag2__ship i{width:13px;height:13px;flex:0 0 13px;border-radius:50%;background:#21c76a;box-shadow:0 0 0 3px #d9f8e5}.ag2__ship b{font-weight:800}.ag2__atc{width:100%;min-height:62px;margin-top:17px;border:0;border-radius:12px;background:linear-gradient(90deg,var(--ad),var(--a));color:#fff;display:flex;align-items:center;justify-content:center;gap:13px;font:inherit;font-size:15px;font-weight:900}.ag2__atc b{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#fff;color:var(--a);font-size:18px}.ag2__atc em{font-style:normal;padding-left:11px;border-left:1px solid rgb(255 255 255 / 28%)}.ag2__purchase-mode{margin:0 0 12px;border-top:1px solid var(--l);border-bottom:1px solid var(--l)}.ag2__purchase-option{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;padding:13px 2px;border:0;background:transparent;color:var(--t);font:inherit;text-align:left;cursor:pointer}.ag2__purchase-copy{display:flex;flex-direction:column;gap:3px}.ag2__purchase-copy strong{color:var(--a);font-size:16px;font-weight:850}.ag2__purchase-copy small{color:var(--m);font-size:10px;line-height:1.25}.ag2__purchase-price{display:flex;align-items:baseline;justify-content:flex-end;gap:8px;white-space:nowrap}.ag2__purchase-price strong{color:#111;font-size:19px;font-weight:900}.ag2__purchase-price s{color:#7a858a;font-size:11px}.ag2__purchase-price em{padding:4px 7px;border-radius:6px;background:var(--a);color:#fff;font-size:9px;font-style:normal;font-weight:850}.ag2__cart-error{margin:9px 0 0;padding:10px 12px;border:1px solid #efb2b2;border-radius:9px;background:#fff5f5;color:#9a1d1d;font-size:12px;font-weight:750;line-height:1.35;text-align:center}.ag2__purchase-meta{display:grid;justify-items:center;gap:8px;width:100%;margin-top:10px}.ag2__recurring{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px;width:100%;color:#111;font-size:11px;font-weight:700}.ag2__recurring-item{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}.ag2__recurring-item svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.ag2__recurring>i{width:1px;height:16px;background:#cfdadd}.ag2__one-time-toggle,.ag2__subscription-return{appearance:none;margin:0;padding:0 0 2px;border:0;border-bottom:1px solid currentColor;background:transparent;color:#087e9d;font:inherit;font-size:11px;font-weight:750;line-height:1.35;text-align:center;cursor:pointer}.ag2__one-time-toggle strong,.ag2__subscription-return strong{font-weight:900}.ag2__one-time-toggle span{font-weight:650}.ag2__one-time-toggle.is-on{color:var(--t);border-bottom-color:transparent}.ag2--one-time .ag2__purchase-option{opacity:.68}.ag2--one-time .ag2__purchase-copy strong{color:var(--m)}.ag2--one-time .ag2__bundle.is-on{background:#fff;border-color:var(--ad)}.ag2--one-time .ag2__bundle.is-on .ag2__radio{border-color:var(--ad)}.ag2--one-time .ag2__bundle.is-on .ag2__radio i{background:var(--ad)}.ag2--one-time .ag2__atc{background:linear-gradient(90deg,var(--ad),#157da8)}.ag2__payments{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-top:13px}.ag2__payments svg{height:30px;width:auto;max-width:47px}.ag2__trusted{display:flex;align-items:center;gap:14px;margin-top:18px;padding:10px 16px;border:0;border-radius:999px;background:#f3f5f7}.ag2__avatars{position:relative;display:flex;flex:0 0 auto;padding-right:9px}.ag2__avatars img,.ag2__avatar-fallback{display:grid;place-items:center;width:44px;height:44px;object-fit:cover;border-radius:50%;border:2px solid #fff;margin-left:-10px;overflow:hidden}.ag2__avatars img:first-child,.ag2__avatar-fallback:first-child{margin-left:0}.ag2__avatar-fallback{background:linear-gradient(145deg,#8ddff0,#02c6ea);color:#fff}.ag2__avatar-fallback--two{background:linear-gradient(145deg,#4ba8ff,#0068e8)}.ag2__avatar-fallback--three{background:linear-gradient(145deg,#91caa4,#55a575)}.ag2__avatar-fallback svg{width:27px;height:27px;fill:currentColor}.ag2__avatar-verified{position:absolute;right:0;top:-5px;display:grid;place-items:center;width:23px;height:23px;border:2px solid #fff;border-radius:50%;background:#47b876;color:#fff;font-size:13px;font-weight:900}.ag2__trusted strong{display:block;color:#111;font-size:15px;font-weight:850;line-height:1.15}.ag2__trusted p{margin:3px 0 0;color:#242424;font-size:11px;line-height:1.28}.ag2__sticky{display:none}@media(max-width:899px){.ag2{padding-bottom:8px}.ag2__wrap{grid-template-columns:1fr;gap:20px;width:min(calc(100% - 22px),680px)}.ag2__media{position:static}.ag2__hero{min-height:420px}}@media(max-width:749px){.ag2__purchase-option{gap:8px;padding:11px 0}.ag2__purchase-copy strong{font-size:14px}.ag2__purchase-price{gap:5px}.ag2__purchase-price strong{font-size:16px}.ag2__purchase-price s{font-size:10px}.ag2__purchase-price em{font-size:8px}.ag2__recurring{gap:8px;font-size:10.5px}.ag2__one-time-toggle,.ag2__subscription-return{font-size:10.5px}.ag2 h1{font-size:35px}.ag2__benefits{grid-template-columns:1fr;gap:9px}.ag2__hero{min-height:370px;border-radius:14px}.ag2__bundle{min-height:78px;padding:12px 11px}.ag2__copy strong{font-size:16px}.ag2__price strong{font-size:15px}.ag2__trusted{border-radius:999px;padding:10px 12px}.ag2__trusted strong{font-size:14px}.ag2__trusted p{font-size:10.5px}.ag2__avatars img,.ag2__avatar-fallback{width:42px;height:42px}.ag2__sticky{position:fixed;z-index:60;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:space-between;gap:9px;padding:9px 12px calc(9px + env(safe-area-inset-bottom));background:#fff;border-top:1px solid var(--l);box-shadow:0 -8px 28px rgb(30 15 20 / 10%)}.ag2__sticky[hidden]{display:none}.ag2__sticky div{display:flex;flex-direction:column}.ag2__sticky small{font-size:8px;color:var(--m)}.ag2__sticky a{padding:13px 16px;min-width:165px;border-radius:9px;background:var(--a);color:#fff;text-decoration:none;text-align:center;font-size:12px;font-weight:900}}
 .ag2 [hidden]{display:none!important}.ag2--bottom{padding:38px 0;background:linear-gradient(150deg,#dff8fc,#f6fcff)}.ag2__bottom-heading{max-width:760px;margin:0 auto 28px;padding:0 18px;text-align:center}.ag2__bottom-heading>p{color:#087e9d;font-size:12px;font-weight:850;letter-spacing:.14em;margin:0 0 10px}.ag2__bottom-heading h2{color:#071a52;font-size:clamp(32px,5vw,48px);line-height:1.08;letter-spacing:-.035em;margin:0 0 12px}.ag2__bottom-heading>div{color:#526078;font-size:15px;line-height:1.5}.ag2__bottom-heading>div p{margin:0}.ag2__product-title{font-size:26px;line-height:1.15;margin:0 0 12px;color:var(--t)}.ag2--bottom .ag2__media{align-self:start}.ag2--bottom .ag2__hero{min-height:0;padding:16px}.ag2--bottom .ag2__heroimg{max-height:440px}.ag2--bottom .ag2__thumbs{display:none}@media(max-width:749px){.ag2--bottom .ag2__hero{max-width:300px;margin:auto}.ag2--bottom .ag2__heroimg{max-height:280px}.ag2--bottom .ag2__wrap{gap:24px}.ag2__product-title{text-align:center;font-size:23px}}@media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
 
@@ -1019,12 +1018,6 @@
       "id": "shipping_reward_active",
       "label": "Enable shipping reward (after checkout is configured)",
       "default": false
-    },
-    {
-      "type": "text",
-      "id": "gifts_eyebrow",
-      "label": "Gift panel eyebrow",
-      "default": "YOUR EXTRAS"
     },
     {
       "type": "text",
