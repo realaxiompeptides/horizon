@@ -11,6 +11,8 @@
   if selected_allocation != blank
     assign selected_plan_id = selected_allocation.selling_plan.id
     assign selected_subscription_price = selected_allocation.price
+  elsif section.settings.subscription_plan_id != blank
+    assign selected_plan_id = section.settings.subscription_plan_id | strip
   endif
 
   assign form_id = 'AGOffer-' | append: section.id
@@ -125,6 +127,8 @@
               if allocation != blank
                 assign plan_id = allocation.selling_plan.id
                 assign unit_subscription_price = allocation.price
+              elsif section.settings.subscription_plan_id != blank
+                assign plan_id = section.settings.subscription_plan_id | strip
               endif
 
               assign subscription_total = unit_subscription_price | times: n
@@ -149,7 +153,6 @@
               data-one-time-price="{{ one_time_total }}"
               data-compare-price="{{ compare_total }}"
               data-quantity="{{ n }}"
-              {% unless v.available %}disabled{% endunless %}
             >
               {% if badge != blank %}<small class="ag2__badge">{{ badge }}</small>{% endif %}
               <span class="ag2__radio"><i></i></span>
@@ -399,12 +402,12 @@
     }));
   };
 
-  bundles.forEach((button) => {
-    button.addEventListener('click', () => {
-      if (button.disabled) return;
-      bundles.forEach((b) => b.classList.toggle('is-on', b === button));
-      render();
-    });
+  root.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-ag2-bundle]');
+    if (!button || !root.contains(button)) return;
+    event.preventDefault();
+    bundles.forEach((b) => b.classList.toggle('is-on', b === button));
+    render();
   });
 
   subscribeButton?.addEventListener('click', () => setMode('subscription'));
@@ -464,7 +467,7 @@
 
   // Default: Buy 2 + Subscribe & Save.
   const preferred = bundles[1] || bundles[0];
-  if (preferred && !preferred.disabled) {
+  if (preferred) {
     bundles.forEach((b) => b.classList.toggle('is-on', b === preferred));
   }
   setMode('subscription');
@@ -503,6 +506,7 @@
     {"type":"text","id":"bundle_3_badge","label":"Bundle 3 badge","default":"Best Value"},
     {"type":"text","id":"per_bag_label","label":"Per bag label","default":"/ bag"},
     {"type":"text","id":"subscription_label","label":"Subscription label","default":"Subscribe & Save"},
+    {"type":"text","id":"subscription_plan_id","label":"Subscription plan ID fallback","default":"3633709222","info":"Fallback Appstle selling plan ID used only if Shopify Liquid does not expose the allocation."},
     {"type":"text","id":"subscription_helper","label":"Subscription helper","default":"Automatic refills · cancel anytime"},
     {"type":"text","id":"refill_every_text","label":"Recurring delivery text","default":"Refills ship every 30 days"},
     {"type":"text","id":"cancel_text","label":"Cancel text","default":"Skip or cancel anytime"},
