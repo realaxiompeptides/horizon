@@ -47,10 +47,10 @@
         "show_rating": true,
         "rating_text": "Excellent",
         "proof_text": "100K+ Customers",
-        "heading": "Aged Garlic Extract \u2013 7500mg Odorless Softgels",
+        "heading": "Aged Garlic Extract – 7500mg Odorless Softgels",
         "subheading": "<p>Aged Garlic + CoQ10</p>",
         "sale_badge": "BLACK FRIDAY SALE - SAVE 54%",
-        "stock_text": "Low Stock \u2013 Selling Fast",
+        "stock_text": "Low Stock – Selling Fast",
         "bundle_1_title": "Buy One",
         "bundle_1_subtitle": "30 Day Supply",
         "bundle_1_badge": "",
@@ -63,12 +63,12 @@
         "per_bag_label": "each",
         "subscription_label": "Subscribe & Save",
         "subscription_plan_id": "3633709222",
-        "subscription_helper": "Automatic refills \u00b7 cancel anytime",
+        "subscription_helper": "Automatic refills · cancel anytime",
         "refill_every_text": "Refills ship every 30 days",
         "cancel_text": "Skip or cancel anytime",
         "one_time_label": "One-Time Purchase",
         "one_time_suffix": "+ $4.95 Shipping",
-        "subscription_return_label": "Switch back to Subscribe & Save \u2014",
+        "subscription_return_label": "Switch back to Subscribe & Save —",
         "show_refill": false,
         "refill_heading": "Save more with automatic refills",
         "refill_text": "Connect this to your subscription option when it is ready.",
@@ -110,7 +110,7 @@
           "type": "item",
           "settings": {
             "heading": "Key Ingredients",
-            "content": "<p><strong>Aged Garlic Extract (7,500 mg Garlic Equivalent)</strong></p><ul><li>Derived from garlic aged for <strong>24 months (730 days)</strong>.</li><li>Contains <strong>S-Allyl-Cysteine (SAC)</strong>, a naturally occurring garlic compound formed during aging.</li><li>Includes CoQ10 + ubiquinol.</li><li>Odorless aged garlic softgel format.</li><li>Designed for convenient long-term daily use.</li></ul><p>Aging transforms raw garlic into a refined, odorless extract that is easy to incorporate into a daily routine.</p><p><strong>What\u2019s Not Included</strong></p><ul><li>GMOs</li><li>Gluten</li><li>Unnecessary additives</li><li>Strong garlic smell or lingering aftertaste</li></ul>"
+            "content": "<p><strong>Aged Garlic Extract (7,500 mg Garlic Equivalent)</strong></p><ul><li>Derived from garlic aged for <strong>24 months (730 days)</strong>.</li><li>Contains <strong>S-Allyl-Cysteine (SAC)</strong>, a naturally occurring garlic compound formed during aging.</li><li>Includes CoQ10 + ubiquinol.</li><li>Odorless aged garlic softgel format.</li><li>Designed for convenient long-term daily use.</li></ul><p>Aging transforms raw garlic into a refined, odorless extract that is easy to incorporate into a daily routine.</p><p><strong>What’s Not Included</strong></p><ul><li>GMOs</li><li>Gluten</li><li>Unnecessary additives</li><li>Strong garlic smell or lingering aftertaste</li></ul>"
           }
         },
         "a3": {
@@ -260,11 +260,11 @@
         "choose_heading": "Why Customers Choose Avonent",
         "choose_intro": "<p>Avonent Odorless Aged Garlic is designed to make a consistent daily wellness routine simple, convenient, and easy to stick with.</p>",
         "reason_1_heading": "Two Daily Softgels",
-        "reason_1_text": "<p>No complicated schedule\u2014just two easy-to-take softgels that fit naturally into your day.</p>",
+        "reason_1_text": "<p>No complicated schedule—just two easy-to-take softgels that fit naturally into your day.</p>",
         "reason_2_heading": "Odorless Experience",
         "reason_2_text": "<p>Enjoy aged garlic without the strong smell or lingering aftertaste associated with traditional garlic.</p>",
         "reason_3_heading": "Fits Your Routine",
-        "reason_3_text": "<p>Simple to take at home, at work, or on the go\u2014wherever your day takes you.</p>",
+        "reason_3_text": "<p>Simple to take at home, at work, or on the go—wherever your day takes you.</p>",
         "reason_4_heading": "Built for the Long Run",
         "reason_4_text": "<p>Made for people who prefer simple, steady wellness habits over complicated routines.</p>",
         "choose_button_text": "Try Risk-Free Today",
@@ -275,7 +275,7 @@
         "daily_heading": "Made for Everyday Use",
         "daily_intro": "<p>The 24-month aging process creates a refined, odorless aged garlic formula designed to make consistency easier.</p>",
         "daily_point_1_heading": "Simple Daily Serving",
-        "daily_point_1_text": "<p>Two softgels daily\u2014easy to add to a routine you already follow.</p>",
+        "daily_point_1_text": "<p>Two softgels daily—easy to add to a routine you already follow.</p>",
         "daily_point_2_heading": "No Strong Garlic Aftertaste",
         "daily_point_2_text": "<p>An odorless format designed without the strong garlic experience of traditional garlic supplements.</p>",
         "daily_visual_alt": "Avonent aged garlic softgel",
@@ -310,7 +310,7 @@
         "crafted_4_title": "Odorless for Everyday Use",
         "crafted_4_subtitle": "Heart-conscious support without the strong garlic experience.",
         "crafted_4_body": "<p>A convenient softgel format designed without the strong smell or lingering aftertaste associated with raw garlic.</p>",
-        "crafted_footer": "Non-GMO \u00b7 Gluten-Free \u00b7 No unnecessary additives",
+        "crafted_footer": "Non-GMO · Gluten-Free · No unnecessary additives",
         "stage_eyebrow": "YOUR DAILY ROUTINE",
         "stage_heading": "Build the Habit. Keep It Simple.",
         "stage_intro": "<p>A simple four-stage routine designed to make consistency feel natural.</p>",
@@ -415,7 +415,7 @@
         "formula_text": "<p>Aged garlic is the foundation. CoQ10 + ubiquinol add the differentiating formula story. Exact amounts belong here only after the back label is verified.</p>",
         "routine_eyebrow": "ONE SIMPLE ADDITION",
         "routine_heading": "Built to become the easy part of your day.",
-        "routine_text": "No blending. No garlic prep. No complicated schedule on the page before the label is verified\u2014just a straightforward softgel routine.",
+        "routine_text": "No blending. No garlic prep. No complicated schedule on the page before the label is verified—just a straightforward softgel routine.",
         "show_internal_comparison": false,
         "compare_eyebrow": "A MORE CONSIDERED FORMAT",
         "compare_heading": "Avonent vs. ordinary garlic supplements",
@@ -441,7 +441,7 @@
         "show_rating": false,
         "rating_text": "Excellent",
         "proof_text": "100K+ Customers",
-        "heading": "Aged Garlic Extract \u2013 7500mg Odorless Softgels",
+        "heading": "Aged Garlic Extract – 7500mg Odorless Softgels",
         "subheading": "",
         "sale_badge": "",
         "stock_text": "Choose your supply",
@@ -457,12 +457,12 @@
         "per_bag_label": "each",
         "subscription_label": "Subscribe & Save",
         "subscription_plan_id": "3633709222",
-        "subscription_helper": "Automatic refills \u00b7 cancel anytime",
+        "subscription_helper": "Automatic refills · cancel anytime",
         "refill_every_text": "Refills ship every 30 days",
         "cancel_text": "Skip or cancel anytime",
         "one_time_label": "One-Time Purchase",
         "one_time_suffix": "+ $4.95 Shipping",
-        "subscription_return_label": "Switch back to Subscribe & Save \u2014",
+        "subscription_return_label": "Switch back to Subscribe & Save —",
         "show_refill": false,
         "refill_heading": "Save more with automatic refills",
         "refill_text": "Connect this to your subscription option when it is ready.",
@@ -488,14 +488,101 @@
         "text": "#071a52",
         "muted": "#5f6878",
         "line": "#dcecf5",
-        "bottom_purchase": true
+        "bottom_purchase": true,
+        "sold_percent": 93,
+        "show_sold_bar": true,
+        "sold_label": "Sold"
       }
     },
     "garlic_reviews": {
       "type": "00-aged-garlic-reviews",
-      "settings": {},
-      "blocks": {},
-      "block_order": []
+      "settings": {
+        "heading": "Real routines. Real experiences.",
+        "source_note": "Customer reviews transferred from Elaré. Original wording retained.",
+        "verified_label": "Verified customer"
+      },
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "author": "Peter La…",
+            "rating": 5,
+            "date": "05/20/2026",
+            "body": "<p>Getting older makes daily habits feel a little more important. Not looking for anything complicated these days, just products that are easy to stick with. That is probably what works best about Elaré. One softgel, no strong garlic smell, and done. It fits into the morning routine without needing much thought. Been trying to stay more mindful about long-term wellness, and this feels like one of those simple habits that is easy to keep around.</p>",
+            "country": "🇺🇸",
+            "verified": true,
+            "excerpt": false
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "author": "Carol Si…",
+            "rating": 5,
+            "date": "05/05/2026",
+            "body": "<p>These days, more attention goes into long-term wellness than quick fixes. Elaré has become part of that mindset. The simple routine, odorless softgels, and convenient format make it easy to stay consistent with healthy habits.</p>",
+            "country": "🇺🇸",
+            "verified": true,
+            "excerpt": false
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "author": "Carol Be…",
+            "rating": 4,
+            "date": "04/30/2026",
+            "body": "<p>Some supplements end up forgotten after a few weeks, but this one has stayed in rotation. The serving is simple, the softgels are comfortable to take, and the pouch keeps everything organized. It feels like a practical product designed for everyday use rather than something overly complicated.</p>",
+            "country": "🇺🇸",
+            "verified": true,
+            "excerpt": false
+          }
+        },
+        "review_4": {
+          "type": "review",
+          "settings": {
+            "author": "Kenneth …",
+            "rating": 5,
+            "date": "03/27/2026",
+            "body": "<p>Healthy habits tend to work best when they are realistic enough to maintain. That is probably why Elaré has stayed part of the routine. The odorless softgels are convenient, the serving is simple, and everything feels designed around consistency rather than complexity.</p><p>Over time, more focus has gone toward making thoughtful choices and building routines that support long-term wellness goals. Elaré fits naturally into that approach.</p>",
+            "country": "🇺🇸",
+            "verified": true,
+            "excerpt": true
+          }
+        },
+        "review_5": {
+          "type": "review",
+          "settings": {
+            "author": "James F…",
+            "rating": 5,
+            "date": "03/18/2026",
+            "body": "<p>After dealing with one too many supplements that left an unpleasant aftertaste, a change felt overdue. This has been a much more pleasant experience. The softgels are comfortable to take and rarely cross my mind afterward. It fits smoothly into everyday life.</p>",
+            "country": "🇺🇸",
+            "verified": true,
+            "excerpt": false
+          }
+        },
+        "review_6": {
+          "type": "review",
+          "settings": {
+            "author": "Mark Ric…",
+            "rating": 4,
+            "date": "03/12/2026",
+            "body": "<p>Been using aged garlic products off and on for years. This one feels more practical than most. One softgel, done. Does not really need to be more complicated than that.</p>",
+            "country": "🇺🇸",
+            "verified": true,
+            "excerpt": false
+          }
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3",
+        "review_4",
+        "review_5",
+        "review_6"
+      ]
     }
   },
   "order": [

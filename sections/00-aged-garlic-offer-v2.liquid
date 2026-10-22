@@ -84,9 +84,8 @@
 
       {% if section.settings.sale_badge != blank %}<div class="ag2__sale">{{ section.settings.sale_badge }}</div>{% endif %}
       {% unless section.settings.bottom_purchase %}<div class="ag2__rule"><span></span><b>{{ section.settings.stock_text }}</b><span></span></div>{% endunless %}
-      {% if section.settings.bottom_purchase and section.settings.batch_total > 0 and section.settings.batch_sold >= 0 and section.settings.batch_sold <= section.settings.batch_total %}
-        {% assign sold_percent = section.settings.batch_sold | times: 100.0 | divided_by: section.settings.batch_total | round %}
-        <div class="ag2__sold"><progress max="100" value="{{ sold_percent }}" aria-label="{{ section.settings.sold_label | escape }}"></progress><strong>{{ sold_percent }}% {{ section.settings.sold_label | escape }}</strong></div>
+      {% if section.settings.bottom_purchase and section.settings.show_sold_bar %}
+        <div class="ag2__sold"><progress max="100" value="{{ section.settings.sold_percent }}" aria-label="{{ section.settings.sold_label | escape }}"></progress><strong>{{ section.settings.sold_percent }}% {{ section.settings.sold_label | escape }}</strong></div>
       {% endif %}
 
       {% form 'product', p, id: form_id %}
@@ -251,7 +250,7 @@
   </div>
 
   {% if section.settings.show_sticky %}
-    <div class="ag2__sticky" data-ag2-sticky hidden><div><small>{{ section.settings.sticky_label }}</small><strong data-ag2-sticky-price>{{ v.price | money }}</strong></div><a href="#avonent-garlic-buy">{{ section.settings.sticky_button }} <b>→</b></a></div>
+    <div class="ag2__sticky" data-ag2-sticky hidden>{% if hero != blank %}{{ hero | image_url: width: 100 | image_tag: class: 'ag2__sticky-image', width: 44, height: 44, loading: 'lazy', alt: '' }}{% endif %}<div><small>{{ section.settings.sticky_label }}</small><strong data-ag2-sticky-price>{{ v.price | money }}</strong></div><a href="#avonent-garlic-buy">{{ section.settings.sticky_button }} <b>→</b></a></div>
   {% endif %}
 </section>
 
@@ -600,14 +599,26 @@
 
   const sticky = root.querySelector('[data-ag2-sticky]');
   if (sticky) {
+    sticky.style.cssText = root.style.cssText;
+    document.body.appendChild(sticky);
+    root.addEventListener('shopify:section:unload', () => sticky.remove());
     const updateSticky = () => {
       const purchase = document.getElementById('avonent-garlic-buy')?.closest('.ag2');
       const box = purchase?.getBoundingClientRect();
       const purchaseVisible = box && box.top < innerHeight && box.bottom > 100;
       sticky.hidden = !(innerWidth < 750 && root.getBoundingClientRect().bottom < 120 && !purchaseVisible);
+      const viewport = window.visualViewport;
+      const inset = viewport ? Math.max(0, innerHeight - viewport.height - viewport.offsetTop) : 0;
+      sticky.style.bottom = inset + 'px';
+      if (purchase && stickyPrice) {
+        const price = purchase.querySelector('[data-ag2-price]');
+        if (price) stickyPrice.textContent = price.textContent;
+      }
     };
     addEventListener('scroll', updateSticky, { passive: true });
     addEventListener('resize', updateSticky, { passive: true });
+    window.visualViewport?.addEventListener('resize', updateSticky, { passive: true });
+    window.visualViewport?.addEventListener('scroll', updateSticky, { passive: true });
     updateSticky();
   }
 
@@ -626,6 +637,9 @@
 
 .ag2--bottom .ag2__wrap{display:block;max-width:760px;width:calc(100% - 28px)}.ag2--bottom .ag2__info{padding:0}.ag2--bottom .ag2__benefits:empty{display:none}.ag2--bottom .ag2__bundles{gap:18px}.ag2--bottom .ag2__bundle{grid-template-columns:22px 64px minmax(0,1fr) auto;gap:14px;min-height:110px;padding:20px 18px;border-width:2px;border-radius:16px}.ag2--bottom .ag2__bundle:not(.is-on){border-color:#d5e6ec}.ag2__bundle-thumb{position:relative;width:64px;height:72px;display:grid;place-items:center}.ag2__bundle-thumb img{width:100%;height:100%;object-fit:contain;border-radius:7px}.ag2__bundle-thumb b{position:absolute;right:-5px;bottom:-5px;background:#087e9d;color:white;border:2px solid white;border-radius:50%;font-size:11px;display:grid;place-items:center;width:26px;height:26px}.ag2--bottom .ag2__copy strong{font-size:20px}.ag2--bottom .ag2__copy small{font-size:13px;color:#5f6878}.ag2__copy em{font-style:normal;color:#087e9d;font-weight:750;font-size:12px;margin-top:5px;line-height:1.3}.ag2--bottom .ag2__price strong{font-size:21px;color:#071a52}.ag2--bottom .ag2__badge{background:#087e9d;font-size:11px;top:-13px;padding:5px 12px}.ag2--bottom .ag2__purchase-mode{margin-bottom:26px}.ag2--bottom .ag2__purchase-option{padding:20px 0}.ag2--bottom .ag2__purchase-copy strong{font-size:22px;color:#087e9d}.ag2--bottom .ag2__purchase-price{flex-wrap:wrap;max-width:48%}.ag2--bottom .ag2__purchase-price strong{font-size:28px;color:#087e9d}.ag2--bottom .ag2__purchase-price em{background:#087e9d}.ag2--bottom .ag2__ship{padding:17px 0;margin:22px 0 0;border-block:1px dashed #ccdee6;justify-content:center}.ag2--bottom .ag2__atc{min-height:66px;font-size:18px}.ag2__assurance{text-align:center;color:#526078;font-size:13px;font-weight:700;margin:20px 0 0}.ag2__assurance span{color:#02b9d9}.ag2__sold{display:flex;align-items:center;gap:18px;padding:22px;background:white;border-radius:16px;margin:0 0 12px}.ag2__sold progress{appearance:none;flex:1;min-width:0;height:9px;border:0;border-radius:9px;overflow:hidden;background:#e1edf2}.ag2__sold progress::-webkit-progress-bar{background:#e1edf2}.ag2__sold progress::-webkit-progress-value{background:#ed5353;border-radius:9px}.ag2__sold progress::-moz-progress-bar{background:#ed5353}.ag2__sold strong{font-size:17px;color:#de4040;white-space:nowrap}.ag2--bottom button:focus-visible{outline:3px solid #071a52;outline-offset:4px}
 @media(max-width:480px){.ag2--bottom .ag2__bundle{grid-template-columns:18px 45px minmax(0,1fr) auto;gap:9px;padding:16px 10px;min-height:98px}.ag2__bundle-thumb{width:45px;height:55px}.ag2--bottom .ag2__radio{width:18px;height:18px}.ag2--bottom .ag2__copy strong{font-size:16px}.ag2--bottom .ag2__copy small{font-size:11px}.ag2__copy em{font-size:10px}.ag2--bottom .ag2__price strong{font-size:17px}.ag2--bottom .ag2__purchase-copy strong{font-size:17px}.ag2--bottom .ag2__purchase-price strong{font-size:23px}.ag2--bottom .ag2__atc{font-size:16px}.ag2--bottom .ag2__payments{gap:4px}.ag2--bottom .ag2__payments svg{height:23px;max-width:34px}}
+
+.ag2__sticky[hidden]{display:none!important}.ag2__sticky{box-sizing:border-box}.ag2__sticky-image{width:44px;height:44px;object-fit:contain;border-radius:8px;background:#f5fbfd;flex-shrink:0}
+@media(max-width:749px){body:has(>.ag2__sticky){padding-bottom:calc(92px + env(safe-area-inset-bottom,0px))}body>.ag2__sticky{position:fixed;inset:auto 0 0;z-index:80;box-sizing:border-box;width:100%;max-width:100vw;display:flex;align-items:center;gap:10px;padding:12px 14px calc(16px + env(safe-area-inset-bottom,0px));background:#fff;border-top:1px solid #dcecf5;box-shadow:0 -5px 25px #071a5214;color:var(--t);transform:none}body>.ag2__sticky div{min-width:0;flex:1;display:flex;flex-direction:column;gap:3px}body>.ag2__sticky small{font-size:9px;line-height:1.25;letter-spacing:.03em;color:#5f6878}body>.ag2__sticky strong{font-size:20px;line-height:1.15;color:#071a52}body>.ag2__sticky a{display:flex;align-items:center;justify-content:center;gap:10px;flex:0 0 46%;min-width:0;min-height:50px;padding:12px 10px;border-radius:12px;background:linear-gradient(100deg,#0068e8,#02c6ea);color:#fff;text-decoration:none;text-align:center;font-size:13px;font-weight:850;line-height:1.2;box-shadow:0 3px 10px #0068e824}body>.ag2__sticky a b{display:grid;place-items:center;border-radius:50%;width:24px;height:24px;background:#fff;color:#0068e8;font-size:17px}body:has(dialog[open])>.ag2__sticky{visibility:hidden;pointer-events:none}}
 {% endstylesheet %}
 
 {% schema %}
@@ -1023,6 +1037,21 @@
       "id": "bundle_3_benefit",
       "label": "Bundle 3 benefit",
       "default": "Stock up and stay prepared"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sold_bar",
+      "label": "Show confirmed sold percentage",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "sold_percent",
+      "label": "Confirmed percentage sold",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 93
     }
   ],
   "blocks": [
@@ -1061,4 +1090,5 @@
   ]
 }
 {% endschema %}
+
 
