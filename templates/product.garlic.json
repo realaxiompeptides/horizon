@@ -3,93 +3,107 @@
     "main": {
       "type": "00-aged-garlic-offer-v2",
       "blocks": {
-        "b1": {"type":"benefit","settings":{"text":"Odorless aged garlic softgels"}},
-        "b2": {"type":"benefit","settings":{"text":"CoQ10 + ubiquinol"}},
-        "b3": {"type":"benefit","settings":{"text":"Simple daily routine"}},
-        "b4": {"type":"benefit","settings":{"text":"30-day satisfaction guarantee"}}
+        "b1": {
+          "type": "benefit",
+          "settings": {
+            "text": "Odorless aged garlic softgels"
+          }
+        },
+        "b2": {
+          "type": "benefit",
+          "settings": {
+            "text": "CoQ10 + ubiquinol"
+          }
+        },
+        "b3": {
+          "type": "benefit",
+          "settings": {
+            "text": "Simple daily routine"
+          }
+        },
+        "b4": {
+          "type": "benefit",
+          "settings": {
+            "text": "30-day satisfaction guarantee"
+          }
+        }
       },
-      "block_order": ["b1","b2","b3","b4"],
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ],
       "settings": {
         "show_rating": false,
-        "heading": "Aged Garlic + CoQ10 Odorless Softgels",
-        "sale_badge": "AVONENT LAUNCH PRICING",
+        "heading": "Aged Garlic. Without the Garlic Breath.",
+        "subheading": "<p>A convenient aged garlic softgel formula with CoQ10 + ubiquinol, built for a simple daily wellness routine.</p>",
+        "sale_badge": "NEW FROM AVONENT",
         "stock_text": "Choose your quantity",
-        "bundle_1_title": "Buy One",
-        "bundle_1_subtitle": "30 Day Supply",
-        "bundle_2_title": "Buy Two",
-        "bundle_2_subtitle": "60 Day Supply",
+        "bundle_1_title": "1 Bag",
+        "bundle_1_subtitle": "Simple starter option",
+        "bundle_2_title": "2 Bags",
+        "bundle_2_subtitle": "Save more",
         "bundle_2_badge": "Most Popular",
-        "bundle_3_title": "Buy Three",
-        "bundle_3_subtitle": "90 Day Supply",
+        "bundle_3_title": "3 Bags",
+        "bundle_3_subtitle": "Lowest cost per bag",
         "bundle_3_badge": "Best Value",
+        "per_bag_label": "each",
         "show_refill": false,
-        "shipping_text": "Shipping details shown at checkout",
+        "shipping_text": "U.S. fulfillment · Shipping shown at checkout",
         "button_text": "ADD TO CART",
         "guarantee_text": "30-day satisfaction guarantee",
         "show_payments": true,
-        "trusted_heading": "Trusted by Avonent customers",
-        "trusted_text": "Add real customer photos and verified social proof here.",
-        "show_sticky": true
+        "show_trusted": false,
+        "trusted_heading": "",
+        "trusted_text": "",
+        "show_sticky": false,
+        "sticky_label": "AVONENT AGED GARLIC",
+        "sticky_button": "SHOP NOW",
+        "background": "#FFFDFC",
+        "accent": "#6D172B",
+        "accent_dark": "#3C0D19",
+        "gold": "#B58A45",
+        "text": "#1B1718",
+        "muted": "#675D60",
+        "line": "#E7DAD2"
       }
     },
-    "accordions": {
-      "type": "00-aged-garlic-accordions-v2",
-      "blocks": {
-        "a1": {"type":"item","settings":{"heading":"Daily wellness support","content":"<p>Aged garlic is a familiar ingredient in a convenient softgel format designed to fit into a simple daily wellness routine.</p>"}},
-        "a2": {"type":"item","settings":{"heading":"Key ingredients","content":"<p>Use this section for the exact aged garlic, CoQ10, ubiquinol, and other ingredient details shown on your verified product label.</p>"}},
-        "a3": {"type":"item","settings":{"heading":"How it fits your routine","content":"<p>Follow the serving directions on the product label and use consistently as part of your normal supplement routine.</p>"}},
-        "a4": {"type":"item","settings":{"heading":"What can I expect?","content":"<p>Individual experiences vary. Use this section to set realistic expectations that match your verified product information.</p>"}},
-        "a5": {"type":"item","settings":{"heading":"Money-back guarantee","content":"<p>Avonent offers a 30-day satisfaction guarantee. Returns are handled according to the store refund policy.</p>"}}
-      },
-      "block_order": ["a1","a2","a3","a4","a5"],
-      "settings": {}
-    },
-    "trust": {
-      "type": "00-aged-garlic-trust-v2",
-      "blocks": {
-        "t1": {"type":"trust_item","settings":{"text":"Odorless softgel format"}},
-        "t2": {"type":"trust_item","settings":{"text":"Aged garlic"}},
-        "t3": {"type":"trust_item","settings":{"text":"CoQ10 + ubiquinol"}},
-        "t4": {"type":"trust_item","settings":{"text":"Easy daily routine"}},
-        "t5": {"type":"trust_item","settings":{"text":"30-day satisfaction guarantee"}},
-        "t6": {"type":"trust_item","settings":{"text":"Clear product information"}}
-      },
-      "block_order": ["t1","t2","t3","t4","t5","t6"],
+    "story": {
+      "type": "00-aged-garlic-sales-story",
       "settings": {
-        "heading": "Why choose Avonent for your daily routine?",
-        "footer": "Straightforward formula. Easy daily use."
-      }
-    },
-    "media": {
-      "type": "00-garlic-media",
-      "blocks": {
-        "m1": {"type":"media","settings":{"title":"Customer story"}},
-        "m2": {"type":"media","settings":{"title":"Product in routine"}},
-        "m3": {"type":"media","settings":{"title":"Customer story"}}
-      },
-      "block_order": ["m1","m2","m3"],
-      "settings": {
-        "heading": "What customers are saying",
-        "subheading": "Add real customer photos, UGC thumbnails, or product lifestyle images."
-      }
-    },
-    "comparison": {
-      "type": "00-aged-garlic-comparison-v2",
-      "blocks": {
-        "c1": {"type":"row","settings":{"left_text":"Aged garlic format","right_text":"Varies by brand"}},
-        "c2": {"type":"row","settings":{"left_text":"Odorless positioning","right_text":"Varies by brand"}},
-        "c3": {"type":"row","settings":{"left_text":"CoQ10 included","right_text":"Varies by brand"}},
-        "c4": {"type":"row","settings":{"left_text":"Ubiquinol included","right_text":"Varies by brand"}},
-        "c5": {"type":"row","settings":{"left_text":"Softgel routine","right_text":"Varies by brand"}}
-      },
-      "block_order": ["c1","c2","c3","c4","c5"],
-      "settings": {
-        "heading": "Avonent vs. basic garlic supplements",
-        "subheading": "A simple side-by-side view of format and formula differences.",
-        "left_title": "Avonent",
-        "right_title": "Basic garlic supplement"
+        "why_eyebrow": "WHY PEOPLE CHOOSE AGED GARLIC",
+        "why_heading": "Garlic made easier to live with.",
+        "why_text": "<p>A familiar ingredient, reworked into a cleaner daily format. No chopping cloves. No strong garlic breath becoming part of the routine.</p>",
+        "education_eyebrow": "AGED WITH PURPOSE",
+        "education_heading": "Why age garlic in the first place?",
+        "education_text": "<p>Fresh garlic is useful in food, but it is not always convenient as a daily supplement. Aged garlic is designed for a more consistent routine, especially when odor and preparation are the reasons people stop using ordinary garlic.</p>",
+        "education_image_alt": "Avonent aged garlic softgels with garlic",
+        "formula_eyebrow": "WHAT MAKES THIS FORMULA DIFFERENT",
+        "formula_heading": "Aged garlic, paired with CoQ10 + ubiquinol.",
+        "formula_text": "<p>Aged garlic is the foundation. CoQ10 + ubiquinol create the differentiating formula story. Exact ingredient amounts, serving size, and any SAC information should be added only after the final Supplement Facts are verified.</p>",
+        "routine_eyebrow": "ONE SIMPLE ADDITION",
+        "routine_heading": "Built to become the easy part of your day.",
+        "routine_text": "No mixing powders. No garlic prep. Follow the verified label directions and make it part of a routine you can actually keep.",
+        "compare_eyebrow": "A MORE CONSIDERED FORMAT",
+        "compare_heading": "Avonent vs. ordinary garlic supplements",
+        "guarantee_eyebrow": "TRY AVONENT FOR 30 DAYS",
+        "guarantee_heading": "A simple guarantee. No fake urgency.",
+        "guarantee_text": "<p>If Avonent is not right for you, contact us within 30 days and we will help with the next steps under our refund policy.</p>",
+        "ivory": "#FFF9F2",
+        "cream": "#F8EEE5",
+        "burgundy": "#6D172B",
+        "burgundy_dark": "#3C0D19",
+        "gold": "#B58A45",
+        "ink": "#1B1718",
+        "muted": "#675D60",
+        "line": "#E7DAD2",
+        "content_width": 1180
       }
     }
   },
-  "order": ["main","accordions","trust","media","comparison"]
+  "order": [
+    "main",
+    "story"
+  ]
 }
