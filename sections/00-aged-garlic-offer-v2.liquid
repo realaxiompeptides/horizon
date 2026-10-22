@@ -1,0 +1,179 @@
+{% liquid
+  assign p = product
+  assign v = p.selected_or_first_available_variant
+  if p.variants.size > 1
+    assign v = p.variants[1]
+  endif
+  assign form_id = 'AGOffer-' | append: section.id
+  assign hero = section.settings.image_1
+  if hero == blank
+    assign hero = p.featured_image
+  endif
+%}
+
+<section id="AGOffer-{{ section.id }}" class="ag2" style="--a:{{ section.settings.accent }};--ad:{{ section.settings.accent_dark }};--g:{{ section.settings.gold }};--t:{{ section.settings.text }};--m:{{ section.settings.muted }};--l:{{ section.settings.line }};--bg:{{ section.settings.background }};">
+  <div class="ag2__wrap">
+    <div class="ag2__media">
+      <div class="ag2__hero" data-ag2-hero>
+        {% if hero != blank %}
+          {{ hero | image_url: width: 1400 | image_tag: widths: '480,720,960,1200,1400', sizes: '(min-width:900px) 50vw,100vw', loading: 'eager', fetchpriority: 'high', class: 'ag2__heroimg', alt: p.title }}
+        {% else %}
+          <div class="ag2__mock"><span>AVONENT</span><strong>AGED GARLIC</strong><b>+ CoQ10</b></div>
+        {% endif %}
+      </div>
+      <div class="ag2__thumbs">
+        {% for i in (1..4) %}
+          {% assign k = 'image_' | append: i %}
+          {% assign im = section.settings[k] %}
+          {% if i == 1 and im == blank %}{% assign im = p.featured_image %}{% endif %}
+          {% if im != blank %}
+            <button type="button" class="ag2__thumb{% if forloop.first %} is-on{% endif %}" data-ag2-thumb data-src="{{ im | image_url: width: 1400 }}">
+              {{ im | image_url: width: 180 | image_tag: loading: 'lazy', alt: p.title }}
+            </button>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="ag2__info">
+      {% if section.settings.show_rating %}
+        <div class="ag2__rating"><span>★★★★★</span><b>{{ section.settings.rating_text }}</b>{% if section.settings.proof_text != blank %}<em>| {{ section.settings.proof_text }}</em>{% endif %}</div>
+      {% endif %}
+
+      <h1>{{ section.settings.heading | default: p.title }}</h1>
+
+      <div class="ag2__benefits">
+        {% for block in section.blocks %}
+          {% if block.type == 'benefit' %}
+            <div class="ag2__benefit" {{ block.shopify_attributes }}><i>✓</i><span>{{ block.settings.text }}</span></div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      {% if section.settings.sale_badge != blank %}<div class="ag2__sale">{{ section.settings.sale_badge }}</div>{% endif %}
+      <div class="ag2__rule"><span></span><b>{{ section.settings.stock_text }}</b><span></span></div>
+
+      {% form 'product', p, id: form_id %}
+        <input type="hidden" name="id" value="{{ v.id }}" data-ag2-input>
+        <input type="hidden" name="quantity" value="1">
+
+        <div class="ag2__bundles">
+          {% for variant in p.variants %}
+            {% liquid
+              assign n = forloop.index
+              assign tk = 'bundle_' | append: n | append: '_title'
+              assign sk = 'bundle_' | append: n | append: '_subtitle'
+              assign bk = 'bundle_' | append: n | append: '_badge'
+              assign title = section.settings[tk] | default: variant.title
+              assign sub = section.settings[sk]
+              assign badge = section.settings[bk]
+              assign each = variant.price | divided_by: n
+              assign on = false
+              if variant.id == v.id
+                assign on = true
+              endif
+            %}
+            <button type="button" class="ag2__bundle{% if on %} is-on{% endif %}" data-ag2-bundle data-id="{{ variant.id }}" data-price="{{ variant.price }}" {% unless variant.available %}disabled{% endunless %}>
+              {% if badge != blank %}<small class="ag2__badge">{{ badge }}</small>{% endif %}
+              <span class="ag2__radio"><i></i></span>
+              <span class="ag2__copy"><strong>{{ title }}</strong>{% if sub != blank %}<small>{{ sub }}</small>{% endif %}</span>
+              <span class="ag2__price"><strong>{{ variant.price | money }}</strong>{% if n > 1 %}<small>{{ each | money }} {{ section.settings.per_bag_label }}</small>{% endif %}{% if variant.compare_at_price > variant.price %}<s>{{ variant.compare_at_price | money }}</s>{% endif %}</span>
+            </button>
+          {% endfor %}
+        </div>
+
+        {% if section.settings.show_refill %}
+          <a class="ag2__refill" {% if section.settings.refill_link != blank %}href="{{ section.settings.refill_link }}"{% endif %}><span>↻</span><div><strong>{{ section.settings.refill_heading }}</strong><small>{{ section.settings.refill_text }}</small></div></a>
+        {% endif %}
+
+        <div class="ag2__ship"><i></i><span>{{ section.settings.shipping_text }}</span></div>
+        <button type="submit" name="add" class="ag2__atc"><span>{{ section.settings.button_text }}</span><b>→</b><em data-ag2-price>{{ v.price | money }}</em></button>
+      {% endform %}
+
+      <div class="ag2__guarantee">☆ {{ section.settings.guarantee_text }}</div>
+
+      {% if section.settings.show_payments %}
+        <div class="ag2__payments">{% for type in shop.enabled_payment_types %}{{ type | payment_type_svg_tag }}{% endfor %}</div>
+      {% endif %}
+
+      <div class="ag2__trusted">
+        <div class="ag2__avatars">
+          {% for i in (1..3) %}
+            {% assign ak = 'avatar_' | append: i %}
+            {% assign av = section.settings[ak] %}
+            {% if av != blank %}{{ av | image_url: width: 100 | image_tag: width: 42, height: 42, loading: 'lazy', alt: section.settings.trusted_heading }}{% endif %}
+          {% endfor %}
+        </div>
+        <div><strong>{{ section.settings.trusted_heading }}</strong><p>{{ section.settings.trusted_text }}</p></div>
+      </div>
+    </div>
+  </div>
+
+  {% if section.settings.show_sticky %}
+    <div class="ag2__sticky" data-ag2-sticky hidden><div><small>{{ section.settings.sticky_label }}</small><strong data-ag2-sticky-price>{{ v.price | money }}</strong></div><a href="#AGOffer-{{ section.id }}">{{ section.settings.sticky_button }} <b>→</b></a></div>
+  {% endif %}
+</section>
+
+<script>
+(()=>{const r=document.getElementById('AGOffer-{{ section.id }}');if(!r||r.dataset.ready)return;r.dataset.ready='1';const bs=[...r.querySelectorAll('[data-ag2-bundle]')],inp=r.querySelector('[data-ag2-input]'),price=r.querySelector('[data-ag2-price]'),sp=r.querySelector('[data-ag2-sticky-price]'),cur={{ cart.currency.iso_code | default: shop.currency | json }};const fmt=c=>{try{return new Intl.NumberFormat(undefined,{style:'currency',currency:cur}).format(Number(c)/100)}catch(e){return '$'+(Number(c)/100).toFixed(2)}};bs.forEach(b=>b.addEventListener('click',()=>{if(b.disabled)return;bs.forEach(x=>x.classList.toggle('is-on',x===b));inp.value=b.dataset.id;const x=fmt(b.dataset.price);if(price)price.textContent=x;if(sp)sp.textContent=x}));const img=r.querySelector('[data-ag2-hero] img');r.querySelectorAll('[data-ag2-thumb]').forEach(t=>t.addEventListener('click',()=>{r.querySelectorAll('[data-ag2-thumb]').forEach(x=>x.classList.toggle('is-on',x===t));if(img)img.src=t.dataset.src}));const st=r.querySelector('[data-ag2-sticky]');if(st){const u=()=>st.hidden=!(innerWidth<750&&r.getBoundingClientRect().bottom<120);addEventListener('scroll',u,{passive:true});addEventListener('resize',u,{passive:true});u()}})();
+</script>
+
+{% stylesheet %}
+.ag2{background:var(--bg);color:var(--t);padding:14px 0 38px}.ag2 *{box-sizing:border-box}.ag2__wrap{width:min(calc(100% - 28px),1220px);margin:auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(430px,.9fr);gap:42px}.ag2__media{position:sticky;top:calc(var(--header-group-height,0px) + 12px)}.ag2__hero{min-height:580px;border:1px solid var(--l);border-radius:20px;background:#fff;overflow:hidden;display:grid;place-items:center}.ag2__heroimg{width:100%;height:auto;max-height:640px;object-fit:contain}.ag2__mock{width:58%;aspect-ratio:.72;background:linear-gradient(160deg,#fff,#f3e9e3);border-radius:18px;box-shadow:0 30px 55px rgb(86 20 36 / 16%);padding:44px 28px;display:flex;flex-direction:column;justify-content:center}.ag2__mock span{color:var(--a);font-size:12px;font-weight:900;letter-spacing:.18em}.ag2__mock strong{font-size:39px;line-height:.9;margin-top:34px;color:var(--ad)}.ag2__mock b{font-size:21px;color:var(--g);margin-top:8px}.ag2__thumbs{display:flex;gap:7px;margin-top:9px;overflow:auto}.ag2__thumb{width:70px;height:58px;flex:0 0 70px;border:1px solid var(--l);border-radius:8px;background:#fff;padding:3px}.ag2__thumb.is-on{border-color:var(--a);box-shadow:0 0 0 1px var(--a)}.ag2__thumb img{width:100%;height:100%;object-fit:cover;border-radius:5px}.ag2__info{padding-top:5px}.ag2__rating{display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-size:13px}.ag2__rating span{color:#f2b700;font-size:18px}.ag2__rating em{font-style:normal;color:var(--m)}.ag2 h1{margin:13px 0 0;font-size:clamp(39px,4vw,57px);line-height:.98;letter-spacing:-.045em}.ag2__benefits{display:grid;gap:9px;margin-top:21px}.ag2__benefit{display:flex;align-items:center;gap:10px;font-size:14px}.ag2__benefit i{display:grid;place-items:center;width:21px;height:21px;border-radius:50%;background:#7ea48a;color:#fff;font-style:normal;font-size:12px;font-weight:900}.ag2__sale{display:inline-flex;margin-top:22px;background:var(--a);color:#fff;border-radius:7px;padding:7px 12px;font-size:11px;font-weight:900;letter-spacing:.08em}.ag2__rule{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:9px;margin:24px 0 13px;color:var(--a);font-size:12px}.ag2__rule span{height:1px;background:color-mix(in srgb,var(--a) 30%,transparent)}.ag2__bundles{display:grid;gap:10px}.ag2__bundle{position:relative;width:100%;min-height:82px;display:grid;grid-template-columns:20px 1fr auto;align-items:center;gap:12px;padding:14px;border:1px solid color-mix(in srgb,var(--a) 25%,var(--l));border-radius:13px;background:#fff;color:var(--t);text-align:left;font:inherit}.ag2__bundle.is-on{border:2px solid var(--a);background:color-mix(in srgb,var(--a) 7%,#fff)}.ag2__badge{position:absolute;right:12px;top:-10px;background:var(--a);color:#fff;padding:5px 10px;border-radius:999px;font-size:9px;font-weight:900}.ag2__radio{width:20px;height:20px;border:2px solid #d9cdcf;border-radius:50%;display:grid;place-items:center}.ag2__radio i{width:10px;height:10px;border-radius:50%}.ag2__bundle.is-on .ag2__radio{border-color:var(--a)}.ag2__bundle.is-on .ag2__radio i{background:var(--a)}.ag2__copy,.ag2__price{display:flex;flex-direction:column}.ag2__copy strong{font-size:18px}.ag2__copy small{margin-top:3px;color:var(--a);font-size:12px}.ag2__price{align-items:flex-end}.ag2__price strong{color:var(--a);font-size:17px}.ag2__price small,.ag2__price s{margin-top:3px;color:#777;font-size:10px}.ag2__refill{display:flex;gap:11px;align-items:center;margin-top:12px;padding:13px;border:2px dashed var(--a);border-radius:12px;text-decoration:none;color:var(--t)}.ag2__refill>span{display:grid;place-items:center;width:32px;height:32px;border:2px solid var(--a);border-radius:7px;color:var(--a);font-size:18px}.ag2__refill div{display:flex;flex-direction:column}.ag2__refill strong{color:var(--a);font-size:13px}.ag2__refill small{margin-top:3px;color:var(--m);font-size:10px}.ag2__ship{display:flex;align-items:center;gap:9px;margin:18px 4px 0;font-size:13px}.ag2__ship i{width:12px;height:12px;border-radius:50%;background:#29c96a;box-shadow:0 0 0 2px #c9f2d8}.ag2__atc{width:100%;min-height:62px;margin-top:17px;border:0;border-radius:10px;background:linear-gradient(90deg,var(--ad),var(--a));color:#fff;display:flex;align-items:center;justify-content:center;gap:13px;font:inherit;font-size:15px;font-weight:900}.ag2__atc b{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#fff;color:var(--a);font-size:18px}.ag2__atc em{font-style:normal;padding-left:11px;border-left:1px solid rgb(255 255 255 / 28%)}.ag2__guarantee{text-align:center;margin-top:14px;color:#5e7164;font-size:13px}.ag2__payments{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-top:13px}.ag2__payments svg{height:30px;width:auto;max-width:47px}.ag2__trusted{display:flex;align-items:center;gap:11px;margin-top:20px;padding:12px 14px;border-radius:999px;background:#f1f0ee}.ag2__avatars{display:flex}.ag2__avatars img{width:42px;height:42px;object-fit:cover;border-radius:50%;border:2px solid #fff;margin-left:-9px}.ag2__avatars img:first-child{margin-left:0}.ag2__trusted strong{font-size:12px}.ag2__trusted p{margin:2px 0 0;color:var(--m);font-size:10px}.ag2__sticky{display:none}@media(max-width:899px){.ag2__wrap{grid-template-columns:1fr;gap:20px;width:min(calc(100% - 22px),680px)}.ag2__media{position:static}.ag2__hero{min-height:420px}}@media(max-width:749px){.ag2 h1{font-size:37px}.ag2__hero{min-height:370px;border-radius:14px}.ag2__bundle{min-height:78px;padding:12px 11px}.ag2__copy strong{font-size:16px}.ag2__price strong{font-size:15px}.ag2__trusted{border-radius:18px}.ag2__sticky{position:fixed;z-index:60;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:space-between;gap:9px;padding:9px 12px calc(9px + env(safe-area-inset-bottom));background:#fff;border-top:1px solid var(--l);box-shadow:0 -8px 28px rgb(30 15 20 / 10%)}.ag2__sticky[hidden]{display:none}.ag2__sticky div{display:flex;flex-direction:column}.ag2__sticky small{font-size:8px;color:var(--m)}.ag2__sticky a{padding:13px 16px;min-width:165px;border-radius:9px;background:var(--a);color:#fff;text-decoration:none;text-align:center;font-size:12px;font-weight:900}}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name":"Aged Garlic Offer V2",
+  "tag":"section",
+  "enabled_on":{"templates":["product"]},
+  "settings":[
+    {"type":"image_picker","id":"image_1","label":"Product image 1"},
+    {"type":"image_picker","id":"image_2","label":"Product image 2"},
+    {"type":"image_picker","id":"image_3","label":"Product image 3"},
+    {"type":"image_picker","id":"image_4","label":"Product image 4"},
+    {"type":"checkbox","id":"show_rating","label":"Show rating row","default":false},
+    {"type":"text","id":"rating_text","label":"Rating text","default":"Rated 4.8 Excellent"},
+    {"type":"text","id":"proof_text","label":"Rating proof text","default":""},
+    {"type":"text","id":"heading","label":"Heading","default":"Aged Garlic + CoQ10 Odorless Softgels"},
+    {"type":"text","id":"sale_badge","label":"Sale badge","default":"AVONENT LAUNCH PRICING"},
+    {"type":"text","id":"stock_text","label":"Divider text","default":"Choose your quantity"},
+    {"type":"text","id":"bundle_1_title","label":"Bundle 1 title","default":"Buy One"},
+    {"type":"text","id":"bundle_1_subtitle","label":"Bundle 1 subtitle","default":"30 Day Supply"},
+    {"type":"text","id":"bundle_1_badge","label":"Bundle 1 badge","default":""},
+    {"type":"text","id":"bundle_2_title","label":"Bundle 2 title","default":"Buy Two"},
+    {"type":"text","id":"bundle_2_subtitle","label":"Bundle 2 subtitle","default":"60 Day Supply"},
+    {"type":"text","id":"bundle_2_badge","label":"Bundle 2 badge","default":"Most Popular"},
+    {"type":"text","id":"bundle_3_title","label":"Bundle 3 title","default":"Buy Three"},
+    {"type":"text","id":"bundle_3_subtitle","label":"Bundle 3 subtitle","default":"90 Day Supply"},
+    {"type":"text","id":"bundle_3_badge","label":"Bundle 3 badge","default":"Best Value"},
+    {"type":"text","id":"per_bag_label","label":"Per bag label","default":"/ bag"},
+    {"type":"checkbox","id":"show_refill","label":"Show refill box","default":false},
+    {"type":"text","id":"refill_heading","label":"Refill heading","default":"Save more with automatic refills"},
+    {"type":"text","id":"refill_text","label":"Refill text","default":"Connect this to your subscription option when it is ready."},
+    {"type":"url","id":"refill_link","label":"Refill link"},
+    {"type":"text","id":"shipping_text","label":"Shipping text","default":"Shipping details shown at checkout"},
+    {"type":"text","id":"button_text","label":"Add to cart text","default":"ADD TO CART"},
+    {"type":"text","id":"guarantee_text","label":"Guarantee text","default":"30-day satisfaction guarantee"},
+    {"type":"checkbox","id":"show_payments","label":"Show payment icons","default":true},
+    {"type":"image_picker","id":"avatar_1","label":"Trust profile image 1"},
+    {"type":"image_picker","id":"avatar_2","label":"Trust profile image 2"},
+    {"type":"image_picker","id":"avatar_3","label":"Trust profile image 3"},
+    {"type":"text","id":"trusted_heading","label":"Trust heading","default":"Trusted by Avonent customers"},
+    {"type":"text","id":"trusted_text","label":"Trust subtext","default":"Add real customer photos and verified social proof here."},
+    {"type":"checkbox","id":"show_sticky","label":"Show mobile sticky cart","default":true},
+    {"type":"text","id":"sticky_label","label":"Sticky label","default":"AVONENT AGED GARLIC"},
+    {"type":"text","id":"sticky_button","label":"Sticky button","default":"ADD TO CART"},
+    {"type":"color","id":"background","label":"Background","default":"#FFFDFC"},
+    {"type":"color","id":"accent","label":"Burgundy","default":"#8B2635"},
+    {"type":"color","id":"accent_dark","label":"Dark burgundy","default":"#5E1320"},
+    {"type":"color","id":"gold","label":"Gold","default":"#B9914B"},
+    {"type":"color","id":"text","label":"Text","default":"#242124"},
+    {"type":"color","id":"muted","label":"Muted text","default":"#625B5E"},
+    {"type":"color","id":"line","label":"Borders","default":"#E8D7D9"}
+  ],
+  "blocks":[{"type":"benefit","name":"Benefit","settings":[{"type":"text","id":"text","label":"Text","default":"Odorless aged garlic softgels"}]}],
+  "max_blocks":6,
+  "presets":[{"name":"Aged Garlic Offer V2","blocks":[{"type":"benefit"},{"type":"benefit"},{"type":"benefit"},{"type":"benefit"}]}]
+}
+{% endschema %}
