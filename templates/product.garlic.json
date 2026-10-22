@@ -61,6 +61,14 @@
         "bundle_3_subtitle": "90 Day Supply",
         "bundle_3_badge": "Best Value",
         "per_bag_label": "each",
+        "subscription_label": "Subscribe & Save",
+        "subscription_plan_id": "3633709222",
+        "subscription_helper": "Automatic refills · cancel anytime",
+        "refill_every_text": "Refills ship every 30 days",
+        "cancel_text": "Skip or cancel anytime",
+        "one_time_label": "One-Time Purchase",
+        "one_time_suffix": "+ $4.95 Shipping",
+        "subscription_return_label": "Switch back to Subscribe & Save —",
         "show_refill": false,
         "refill_heading": "Save more with automatic refills",
         "refill_text": "Connect this to your subscription option when it is ready.",
@@ -85,15 +93,7 @@
         "gold": "#ffb400",
         "text": "#071a52",
         "muted": "#5f6878",
-        "line": "#dcecf5",
-        "subscription_label": "Subscribe & Save",
-        "subscription_helper": "Automatic refills · cancel anytime",
-        "refill_every_text": "Refills ship every 30 days",
-        "cancel_text": "Skip or cancel anytime",
-        "one_time_label": "One-Time Purchase",
-        "one_time_suffix": "+ $4.95 Shipping",
-        "subscription_return_label": "Switch back to Subscribe & Save —",
-        "subscription_plan_id": "3633709222"
+        "line": "#dcecf5"
       }
     },
     "accordions": {
@@ -218,6 +218,7 @@
         "bnf1": {
           "type": "benefit",
           "settings": {
+            "image": "shopify://shop_images/442E856B-468D-420D-966A-BE0677A5A2FA.png",
             "heading": "Aged Garlic Extract",
             "text": "<p>A convenient odorless aged-garlic format designed to fit into a simple daily wellness routine.</p>"
           }
@@ -225,6 +226,7 @@
         "bnf2": {
           "type": "benefit",
           "settings": {
+            "image": "shopify://shop_images/7DE99ADE-F333-4542-991E-B0BFA2855581.png",
             "heading": "CoQ10 + Ubiquinol",
             "text": "<p>A differentiated formula that combines aged garlic with CoQ10 and ubiquinol in one daily softgel routine.</p>"
           }
@@ -232,6 +234,7 @@
         "bnf3": {
           "type": "benefit",
           "settings": {
+            "image": "shopify://shop_images/BFDCFB9D-29CB-4E00-BE43-799CAE803D56.png",
             "heading": "Odorless Formula",
             "text": "<p>Designed for people who want aged garlic without making strong garlic odor part of their everyday routine.</p>"
           }
@@ -239,6 +242,7 @@
         "bnf4": {
           "type": "benefit",
           "settings": {
+            "image": "shopify://shop_images/07B1D885-5B03-4CF5-9F24-BA7AEFD3C43B.png",
             "heading": "Easy Daily Routine",
             "text": "<p>Two softgels daily makes the formula easy to add to a consistent wellness habit.</p>"
           }
