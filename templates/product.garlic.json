@@ -207,45 +207,6 @@
         "check_color": "#72b58a"
       }
     },
-    "media": {
-      "type": "00-garlic-media",
-      "blocks": {
-        "m1": {
-          "type": "media",
-          "settings": {
-            "link": "",
-            "title": "Customer Story"
-          }
-        },
-        "m2": {
-          "type": "media",
-          "settings": {
-            "link": "",
-            "title": "Daily Routine"
-          }
-        },
-        "m3": {
-          "type": "media",
-          "settings": {
-            "link": "",
-            "title": "Avonent Customer"
-          }
-        }
-      },
-      "block_order": [
-        "m1",
-        "m2",
-        "m3"
-      ],
-      "settings": {
-        "heading": "What our customers are saying",
-        "subheading": "Add real customer photos, UGC thumbnails, or customer videos here as they come in.",
-        "background": "#ffffff",
-        "text": "#071a52",
-        "muted": "#5f6878",
-        "accent": "#02c6ea"
-      }
-    },
     "softgel": {
       "type": "00-aged-garlic-softgel-animation",
       "settings": {
@@ -361,13 +322,61 @@
         "light_text": "#ffffff",
         "line": "#dcecf5"
       }
+    },
+    "benefits_slider": {
+      "type": "00-aged-garlic-benefits-slider",
+      "blocks": {
+        "bnf1": {
+          "type": "benefit",
+          "settings": {
+            "heading": "Aged Garlic Extract",
+            "text": "<p>A convenient odorless aged-garlic format designed to fit into a simple daily wellness routine.</p>"
+          }
+        },
+        "bnf2": {
+          "type": "benefit",
+          "settings": {
+            "heading": "CoQ10 + Ubiquinol",
+            "text": "<p>A differentiated formula that combines aged garlic with CoQ10 and ubiquinol in one daily softgel routine.</p>"
+          }
+        },
+        "bnf3": {
+          "type": "benefit",
+          "settings": {
+            "heading": "Odorless Formula",
+            "text": "<p>Designed for people who want aged garlic without making strong garlic odor part of their everyday routine.</p>"
+          }
+        },
+        "bnf4": {
+          "type": "benefit",
+          "settings": {
+            "heading": "Easy Daily Routine",
+            "text": "<p>Two softgels daily makes the formula easy to add to a consistent wellness habit.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "bnf1",
+        "bnf2",
+        "bnf3",
+        "bnf4"
+      ],
+      "settings": {
+        "heading_before": "4 Benefits of",
+        "heading_accent": "Aged Garlic",
+        "background": "#F7FCFF",
+        "card": "#FFFFFF",
+        "text": "#071A52",
+        "muted": "#526078",
+        "accent": "#02C6EA"
+      }
     }
   },
   "order": [
     "main",
     "accordions",
     "trust",
-    "media",
+    "benefits_slider",
     "softgel",
     "story",
     "comparison"
