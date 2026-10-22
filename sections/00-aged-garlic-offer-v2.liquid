@@ -250,7 +250,7 @@
   </div>
 
   {% if section.settings.show_sticky %}
-    <div class="ag2__sticky" data-ag2-sticky hidden>{% if hero != blank %}{{ hero | image_url: width: 100 | image_tag: class: 'ag2__sticky-image', width: 44, height: 44, loading: 'lazy', alt: '' }}{% endif %}<div><small>{{ section.settings.sticky_label }}</small><strong data-ag2-sticky-price>{{ v.price | money }}</strong></div><a href="#avonent-garlic-buy">{{ section.settings.sticky_button }} <b>→</b></a></div>
+    <div class="ag2__sticky" data-ag2-sticky hidden>{% if hero != blank %}{{ hero | image_url: width: 100 | image_tag: class: 'ag2__sticky-image', width: 44, height: 44, loading: 'lazy', alt: '' }}{% endif %}<div><small>{{ section.settings.sticky_label }}</small><strong data-ag2-sticky-price>{{ v.price | money }}</strong></div><a href="#avonent-garlic-buy" data-garlic-bottom-offer>{{ section.settings.sticky_button }} <b>→</b></a></div>
   {% endif %}
 </section>
 
@@ -259,6 +259,30 @@
   const root = document.getElementById('AGOffer-{{ section.id }}');
   if (!root || root.dataset.ready === '1') return;
   root.dataset.ready = '1';
+
+  // All garlic CTAs below the primary offer should land on the lower purchase section.
+  if (!window.__avonentGarlicBottomOfferJump) {
+    window.__avonentGarlicBottomOfferJump = true;
+    document.addEventListener('click', (event) => {
+      const trigger = event.target.closest('[data-garlic-bottom-offer], a[href="#avonent-garlic-buy"]');
+      if (!trigger) return;
+
+      const anchor = document.getElementById('avonent-garlic-buy');
+      const target = anchor?.closest('.ag2--bottom') || anchor;
+      if (!target) return;
+
+      event.preventDefault();
+
+      const cssHeader = parseFloat(
+        getComputedStyle(document.documentElement).getPropertyValue('--header-group-height')
+      ) || 0;
+      const offset = Math.max(cssHeader + 14, 82);
+      const top = target.getBoundingClientRect().top + window.scrollY - offset;
+
+      window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+      if (history.replaceState) history.replaceState(null, '', '#avonent-garlic-buy');
+    });
+  }
 
   const form = root.querySelector('form[action*="/cart/add"]');
   const bundles = [...root.querySelectorAll('[data-ag2-bundle]')];
