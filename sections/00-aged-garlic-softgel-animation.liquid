@@ -1,13 +1,13 @@
 <section
   id="AGSoftgel-{{ section.id }}"
   class="ag-softgel"
-  style="--bg:{{ section.settings.background }};--a:{{ section.settings.accent }};--ad:{{ section.settings.accent_dark }};--t:{{ section.settings.text }};--m:{{ section.settings.muted }};"
+  style="--bg:{{ section.settings.background }};--a:{{ section.settings.accent }};--ad:{{ section.settings.accent_dark }};--t:{{ section.settings.text_color }};--m:{{ section.settings.muted }};"
 >
   <div class="ag-softgel__in">
     <div class="ag-softgel__copy">
       {% if section.settings.eyebrow != blank %}<span class="ag-softgel__eyebrow">{{ section.settings.eyebrow }}</span>{% endif %}
       <h2>{{ section.settings.heading }}</h2>
-      <div class="ag-softgel__text rte">{{ section.settings.text }}</div>
+      <div class="ag-softgel__text rte">{{ section.settings.body_text }}</div>
       {% if section.settings.note != blank %}<p class="ag-softgel__note">{{ section.settings.note }}</p>{% endif %}
     </div>
 
@@ -53,12 +53,12 @@
     {"type":"text","id":"softgel_alt","label":"Softgel alt text","default":"Aged garlic softgel"},
     {"type":"text","id":"eyebrow","label":"Eyebrow","default":"SIMPLE DAILY FORMAT"},
     {"type":"text","id":"heading","label":"Heading","default":"Two softgels. One easy daily routine."},
-    {"type":"richtext","id":"text","label":"Body text","default":"<p>The softgel format keeps aged garlic simple to take every day, without turning your routine into another chore.</p>"},
+    {"type":"richtext","id":"body_text","label":"Body text","default":"<p>The softgel format keeps aged garlic simple to take every day, without turning your routine into another chore.</p>"},
     {"type":"text","id":"note","label":"Small note","default":"Follow the serving directions on the product label."},
     {"type":"color","id":"background","label":"Background","default":"#FFFFFF"},
     {"type":"color","id":"accent","label":"Avonent blue","default":"#02C6EA"},
     {"type":"color","id":"accent_dark","label":"Deep blue","default":"#0068E8"},
-    {"type":"color","id":"text","label":"Text","default":"#071A52"},
+    {"type":"color","id":"text_color","label":"Text","default":"#071A52"},
     {"type":"color","id":"muted","label":"Muted text","default":"#526078"}
   ],
   "presets":[{"name":"Animated Softgel Story"}]
