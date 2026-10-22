@@ -215,6 +215,12 @@
       {% render 'quick-add-modal' %}
     {% endif %}
 
+    {% comment %}Garlic gift cart synchronization only acts on aged-garlic-capsules lines.{% endcomment %}
+    {% assign garlic_ebook_gift = all_products['ebook-garlic'] %}
+    {% assign garlic_ebook_variant = garlic_ebook_gift.selected_or_first_available_variant %}
+    {% if garlic_ebook_variant != blank and garlic_ebook_variant.price == 0 %}
+      <script src="{{ 'avonent-garlic-gift-cart.js' | asset_url }}" data-ebook-variant-id="{{ garlic_ebook_variant.id }}" defer></script>
+    {% endif %}
     {% if template.suffix == 'moringa' %}
       <script src="{{ 'avonent-moringa-price-sync.js' | asset_url }}" defer></script>
       <script src="{{ 'avonent-moringa-overrides.js' | asset_url }}" defer></script>
