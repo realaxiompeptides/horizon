@@ -226,6 +226,38 @@
       <p>* Product information on this page should be finalized against the verified Supplement Facts and supplier documentation before launch. Dietary supplements are not intended to diagnose, treat, cure, or prevent disease.</p>
     </div>
   </div>
+
+  <div class="aged-garlic-mobile-cta" data-aged-garlic-mobile-cta hidden>
+    <div>
+      <small>AVONENT AGED GARLIC</small>
+      <strong>Choose your quantity</strong>
+    </div>
+    <a href="#avonent-garlic-buy">SHOP NOW</a>
+  </div>
+
+  <script>
+    (() => {
+      const bar = document.querySelector('[data-aged-garlic-mobile-cta]');
+      const buy = document.getElementById('avonent-garlic-buy');
+      if (!bar || !buy) return;
+
+      let buyVisible = false;
+      const update = () => {
+        const shouldShow = window.innerWidth < 750 && window.scrollY > 520 && !buyVisible;
+        bar.hidden = !shouldShow;
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        buyVisible = entries.some((entry) => entry.isIntersecting);
+        update();
+      }, { threshold: 0.12 });
+
+      observer.observe(buy);
+      window.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update, { passive: true });
+      update();
+    })();
+  </script>
 </section>
 
 {% stylesheet %}
@@ -315,6 +347,7 @@
   .aged-garlic-story__faq-list details p { margin:0; padding:0 20px 19px; font-size:13px; line-height:1.65; }
   .aged-garlic-story__disclaimer { padding:22px 0; border-top:1px solid var(--ags-line); background:#fff; }
   .aged-garlic-story__disclaimer p { max-width:900px; margin:0 auto; color:#82777a; font-size:10px; line-height:1.5; text-align:center; }
+  .aged-garlic-mobile-cta { display:none; }
   @media screen and (max-width:899px) {
     .aged-garlic-story__benefit-grid { grid-template-columns:1fr 1fr; }
     .aged-garlic-story__split,.aged-garlic-story__routine-card,.aged-garlic-story__faq-wrap { grid-template-columns:1fr; gap:32px; }
@@ -354,6 +387,19 @@
     .aged-garlic-story__guarantee h2 { font-size:30px; }
     .aged-garlic-story__faq-list summary { padding:16px; font-size:13px; }
     .aged-garlic-story__faq-list details p { padding:0 16px 17px; font-size:12.5px; }
+    .aged-garlic-mobile-cta:not([hidden]) {
+      position:fixed; left:12px; right:12px; bottom:12px; z-index:50; display:flex;
+      align-items:center; justify-content:space-between; gap:12px; padding:10px 10px 10px 14px;
+      border:1px solid rgb(255 255 255 / 18%); border-radius:16px; background:rgb(60 13 25 / 96%);
+      box-shadow:0 16px 44px rgb(37 9 16 / 28%); backdrop-filter:blur(14px); color:#fff;
+    }
+    .aged-garlic-mobile-cta div { display:flex; flex-direction:column; min-width:0; }
+    .aged-garlic-mobile-cta small { color:#dfbd79; font-size:8px; font-weight:850; letter-spacing:.1em; line-height:1.2; }
+    .aged-garlic-mobile-cta strong { margin-top:3px; color:#fff; font-size:12px; line-height:1.2; }
+    .aged-garlic-mobile-cta a {
+      flex:0 0 auto; display:inline-flex; align-items:center; justify-content:center; min-height:42px; padding:10px 16px;
+      border-radius:10px; background:#fff; color:#3C0D19; font-size:10px; font-weight:900; text-decoration:none;
+    }
   }
 {% endstylesheet %}
 
