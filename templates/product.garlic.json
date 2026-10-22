@@ -38,28 +38,27 @@
         "show_rating": true,
         "heading": "Aged Garlic Extract – 7500mg Odorless Softgels",
         "subheading": "<p>Aged Garlic + CoQ10</p>",
-        "sale_badge": "AVONENT LAUNCH OFFER",
-        "stock_text": "Choose your quantity",
-        "bundle_1_title": "1 Bag",
-        "bundle_1_subtitle": "Starter",
-        "bundle_2_title": "2 Bags",
-        "bundle_2_subtitle": "Most Popular",
+        "sale_badge": "BLACK FRIDAY SALE - SAVE 54%",
+        "stock_text": "Low Stock – Selling Fast",
+        "bundle_1_title": "Buy One",
+        "bundle_1_subtitle": "30 Day Supply",
+        "bundle_2_title": "Buy Two",
+        "bundle_2_subtitle": "60 Day Supply",
         "bundle_2_badge": "Most Popular",
-        "bundle_3_title": "3 Bags",
-        "bundle_3_subtitle": "Best Value",
+        "bundle_3_title": "Buy Three",
+        "bundle_3_subtitle": "90 Day Supply",
         "bundle_3_badge": "Best Value",
         "per_bag_label": "each",
         "show_refill": false,
-        "shipping_text": "U.S. fulfillment · Shipping shown at checkout",
         "button_text": "ADD TO CART",
         "guarantee_text": "30-day money-back guarantee",
         "show_payments": true,
         "show_trusted": true,
-        "trusted_heading": "100,000+ Orders Fulfilled",
-        "trusted_text": "Trusted by customers who choose Avonent for their daily wellness routine.",
-        "show_sticky": false,
+        "trusted_heading": "Trusted across 100,000+ orders",
+        "trusted_text": "Chosen by Avonent customers for simple daily wellness routines.",
+        "show_sticky": true,
         "sticky_label": "AVONENT AGED GARLIC",
-        "sticky_button": "SHOP NOW",
+        "sticky_button": "ADD TO CART",
         "background": "#FFFFFF",
         "accent": "#02C6EA",
         "accent_dark": "#0068E8",
@@ -67,8 +66,11 @@
         "text": "#071A52",
         "muted": "#5F6878",
         "line": "#DCECF5",
-        "rating_text": "Customer Reviews",
-        "proof_text": "100,000+ Orders"
+        "rating_text": "Excellent",
+        "proof_text": "Over 100,000 Orders",
+        "shipping_prefix": "Ships by",
+        "shipping_business_days": 1,
+        "shipping_suffix": "from US warehouse"
       }
     },
     "story": {
@@ -102,10 +104,148 @@
         "line": "#DCECF5",
         "content_width": 1180
       }
+    },
+    "accordions": {
+      "type": "00-aged-garlic-accordions-v2",
+      "blocks": {
+        "a1": {
+          "type": "item",
+          "settings": {
+            "heading": "Heart-Conscious Daily Support",
+            "content": "<p><strong>Aged garlic extract</strong></p><ul><li>Designed for simple daily wellness routines.</li><li>Odorless softgel format.</li><li>Two softgels daily.</li><li>Paired with CoQ10 + ubiquinol.</li></ul>",
+            "open_by_default": true
+          }
+        },
+        "a2": {
+          "type": "item",
+          "settings": {
+            "heading": "Key ingredients",
+            "content": "<p><strong>Aged Garlic Extract (7,500 mg garlic equivalent)</strong></p><ul><li>Odorless aged garlic extract.</li><li>CoQ10 + ubiquinol are included in the formula.</li><li>Exact ingredient amounts should match the Supplement Facts panel.</li></ul>",
+            "open_by_default": false
+          }
+        },
+        "a3": {
+          "type": "item",
+          "settings": {
+            "heading": "How it works",
+            "content": "<p>Take <strong>two softgels daily</strong> with water, following the directions on the product label.</p><p>The softgel format makes aged garlic easy to add to a consistent daily routine.</p>",
+            "open_by_default": false
+          }
+        },
+        "a4": {
+          "type": "item",
+          "settings": {
+            "heading": "What can I expect?",
+            "content": "<p>Consistency matters more than complexity. This formula is designed to make aged garlic simple to use every day without strong garlic odor becoming part of the routine.</p>",
+            "open_by_default": false
+          }
+        },
+        "a5": {
+          "type": "item",
+          "settings": {
+            "heading": "Money Back Guarantee",
+            "content": "<p>Try Avonent with confidence. If the product is not right for you, contact us within 30 days and we will help with the next steps under our refund policy.</p>",
+            "open_by_default": false
+          }
+        }
+      },
+      "block_order": [
+        "a1",
+        "a2",
+        "a3",
+        "a4",
+        "a5"
+      ],
+      "settings": {
+        "heading": "",
+        "intro": "",
+        "single_open": true,
+        "background": "#FFFFFF",
+        "text": "#071A52",
+        "muted": "#46536A",
+        "line": "#CADDEA",
+        "accent": "#02C6EA"
+      }
+    },
+    "trust": {
+      "type": "00-aged-garlic-trust-v2",
+      "blocks": {
+        "t1": {
+          "type": "trust_item",
+          "settings": {
+            "text": "Odorless Formula"
+          }
+        },
+        "t2": {
+          "type": "trust_item",
+          "settings": {
+            "text": "Aged Garlic + CoQ10"
+          }
+        },
+        "t3": {
+          "type": "trust_item",
+          "settings": {
+            "text": "Ubiquinol Included"
+          }
+        },
+        "t4": {
+          "type": "trust_item",
+          "settings": {
+            "text": "Two-Softgel Daily Routine"
+          }
+        },
+        "t5": {
+          "type": "trust_item",
+          "settings": {
+            "text": "U.S. Fulfillment"
+          }
+        },
+        "t6": {
+          "type": "trust_item",
+          "settings": {
+            "text": "30-Day Guarantee"
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6"
+      ],
+      "settings": {
+        "eyebrow": "WHY AVONENT",
+        "heading": "Why Trust Avonent as Your Wellness Partner?",
+        "footer": "Carefully Crafted Formula",
+        "background": "#FFFFFF",
+        "accent": "#02C6EA",
+        "accent_dark": "#0068E8",
+        "text": "#FFFFFF",
+        "check_color": "#72B58A"
+      }
+    },
+    "softgel": {
+      "type": "00-aged-garlic-softgel-animation",
+      "settings": {
+        "softgel_alt": "Avonent aged garlic softgel",
+        "eyebrow": "SIMPLE DAILY FORMAT",
+        "heading": "Two softgels. One easy daily routine.",
+        "text": "#071A52",
+        "note": "Take two softgels daily, following the product label.",
+        "background": "#FFFFFF",
+        "accent": "#02C6EA",
+        "accent_dark": "#0068E8",
+        "muted": "#526078"
+      }
     }
   },
   "order": [
     "main",
+    "accordions",
+    "trust",
+    "softgel",
     "story"
   ]
 }
