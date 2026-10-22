@@ -69,6 +69,7 @@
         "shipping_business_days": 1,
         "shipping_suffix": "from US warehouse",
         "button_text": "ADD TO CART",
+        "details_button_text": "SEE PRODUCT DETAILS",
         "guarantee_text": "30-day money-back guarantee",
         "show_payments": true,
         "show_trusted": true,
@@ -83,8 +84,7 @@
         "gold": "#ffb400",
         "text": "#071a52",
         "muted": "#5f6878",
-        "line": "#dcecf5",
-        "details_button_text": "CHOOSE YOUR SUPPLY"
+        "line": "#dcecf5"
       }
     },
     "accordions": {
@@ -266,6 +266,7 @@
         "daily_point_2_heading": "No Strong Garlic Aftertaste",
         "daily_point_2_text": "<p>An odorless softgel format made to keep the routine convenient.</p>",
         "daily_visual_alt": "Avonent aged garlic softgel",
+        "break_image": "shopify://shop_images/F3F712FB-A4A8-49B5-BBAA-E045BF99C714.png",
         "break_alt": "Avonent Aged Garlic",
         "wellness_heading": "Designed for Everyday Wellness",
         "wellness_subheading": "<p>From a simple softgel format to an easy daily routine, here’s what makes Avonent Aged Garlic different.</p>",
@@ -276,11 +277,6 @@
         "wellness_product_image": "shopify://shop_images/F3F712FB-A4A8-49B5-BBAA-E045BF99C714.png",
         "wellness_background": "#02c6ea",
         "wellness_ring": "#b9f4ff",
-        "background": "#f7fcff",
-        "card": "#ffffff",
-        "text": "#071a52",
-        "muted": "#526078",
-        "accent": "#02c6ea",
         "crafted_heading": "Carefully Crafted. Thoughtfully Aged.",
         "crafted_intro": "<p>Avonent Aged Garlic Extract is built around a simple daily formula designed for consistent everyday use.</p>",
         "crafted_1_title": "Heart-Conscious Living",
@@ -307,7 +303,12 @@
         "stage_3_text": "<ul><li>Continue your daily routine</li><li>Keep wellness habits simple</li><li>Focus on long-term consistency</li></ul>",
         "stage_4_title": "Make It Last",
         "stage_4_text": "<ul><li>Build around daily consistency</li><li>Keep the routine practical</li><li>Make it part of everyday life</li></ul>",
-        "stage_button_text": "CHOOSE YOUR SUPPLY"
+        "stage_button_text": "CHOOSE YOUR SUPPLY",
+        "background": "#f7fcff",
+        "card": "#ffffff",
+        "text": "#071a52",
+        "muted": "#526078",
+        "accent": "#02c6ea"
       }
     },
     "softgel": {
@@ -426,44 +427,6 @@
         "light_text": "#ffffff",
         "line": "#dcecf5"
       }
-    },
-    "lower_offer": {
-      "type": "00-aged-garlic-lower-offer",
-      "settings": {
-        "eyebrow": "CHOOSE YOUR ROUTINE",
-        "heading": "Stay consistent. Stock up. Save more.",
-        "intro": "<p>Choose the supply that fits your routine and keep Avonent Aged Garlic within reach.</p>",
-        "show_stock_meter": true,
-        "sold_percent": 93,
-        "offer_label": "Choose your supply",
-        "offer_subtext": "One-time purchase",
-        "bundle_1_title": "Buy 1",
-        "bundle_1_supply": "30-Day Supply",
-        "bundle_1_helper": "Perfect for getting started",
-        "bundle_1_badge": "",
-        "bundle_2_title": "Buy 2",
-        "bundle_2_supply": "60-Day Supply",
-        "bundle_2_helper": "Build a consistent routine",
-        "bundle_2_badge": "Most Popular",
-        "bundle_3_title": "Buy 3",
-        "bundle_3_supply": "90-Day Supply",
-        "bundle_3_helper": "Stock up and stay prepared",
-        "bundle_3_badge": "Best Value",
-        "delivery_prefix": "Order today for estimated delivery soon ·",
-        "delivery_highlight": "Ships from USA 🇺🇸",
-        "button_text": "Add to cart",
-        "perk_1": "Simple one-time purchase",
-        "perk_2": "No subscription required",
-        "one_time_note": "Choose the quantity that fits your routine.",
-        "guarantee_text": "30-day money-back guarantee",
-        "background": "#eaf9fc",
-        "card_background": "#ffffff",
-        "text": "#111111",
-        "muted": "#667177",
-        "accent": "#02c6ea",
-        "accent_dark": "#087e9d",
-        "line": "#d8e8ed"
-      }
     }
   },
   "order": [
@@ -473,7 +436,6 @@
     "benefits_slider",
     "softgel",
     "story",
-    "comparison",
-    "lower_offer"
+    "comparison"
   ]
 }
