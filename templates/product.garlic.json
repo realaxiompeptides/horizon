@@ -86,7 +86,14 @@
         "gold": "#ffb400",
         "text": "#071a52",
         "muted": "#5f6878",
-        "line": "#dcecf5"
+        "line": "#dcecf5",
+        "subscription_label": "Subscribe & Save",
+        "subscription_helper": "Automatic refills · cancel anytime",
+        "refill_every_text": "Refills ship every 30 days",
+        "cancel_text": "Skip or cancel anytime",
+        "one_time_label": "One-Time Purchase",
+        "one_time_suffix": "+ $4.95 Shipping",
+        "subscription_return_label": "Switch back to Subscribe & Save —"
       }
     },
     "accordions": {
