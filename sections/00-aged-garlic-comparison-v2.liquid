@@ -37,7 +37,7 @@
 
     <div class="ag-cmp2__purchase">
       <ul>{% for i in (1..4) %}{% assign point_key = 'purchase_point_' | append: i %}<li><span aria-hidden="true">✓</span>{{ section.settings[point_key] | escape }}</li>{% endfor %}</ul>
-      <a href="#avonent-garlic-buy">{{ section.settings.purchase_button | escape }} <span aria-hidden="true">↓</span></a>
+      <a href="#avonent-garlic-buy" data-garlic-bottom-offer>{{ section.settings.purchase_button | escape }} <span aria-hidden="true">↓</span></a>
       <p>{{ section.settings.purchase_guarantee | escape }}</p>
     </div>
     {% if section.settings.note != blank %}<p class="ag-cmp2__note">{{ section.settings.note }}</p>{% endif %}
