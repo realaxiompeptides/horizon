@@ -232,12 +232,117 @@
         "softgel_alt": "Avonent aged garlic softgel",
         "eyebrow": "SIMPLE DAILY FORMAT",
         "heading": "Two softgels. One easy daily routine.",
-        "text": "#071A52",
         "note": "Take two softgels daily, following the product label.",
         "background": "#FFFFFF",
         "accent": "#02C6EA",
         "accent_dark": "#0068E8",
-        "muted": "#526078"
+        "muted": "#526078",
+        "body_text": "<p>The softgel format keeps aged garlic simple to take every day, without turning your routine into another chore.</p>",
+        "text_color": "#071A52"
+      }
+    },
+    "media": {
+      "type": "00-garlic-media",
+      "blocks": {
+        "m1": {
+          "type": "media",
+          "settings": {
+            "title": "Customer Story"
+          }
+        },
+        "m2": {
+          "type": "media",
+          "settings": {
+            "title": "Daily Routine"
+          }
+        },
+        "m3": {
+          "type": "media",
+          "settings": {
+            "title": "Avonent Customer"
+          }
+        }
+      },
+      "block_order": [
+        "m1",
+        "m2",
+        "m3"
+      ],
+      "settings": {
+        "heading": "What our customers are saying",
+        "subheading": "Add real customer photos, UGC thumbnails, or customer videos here as they come in.",
+        "background": "#FFFFFF",
+        "text": "#071A52",
+        "muted": "#5F6878",
+        "accent": "#02C6EA"
+      }
+    },
+    "comparison": {
+      "type": "00-aged-garlic-comparison-v2",
+      "blocks": {
+        "c1": {
+          "type": "row",
+          "settings": {
+            "left_text": "Aged garlic format",
+            "right_text": "Varies by brand"
+          }
+        },
+        "c2": {
+          "type": "row",
+          "settings": {
+            "left_text": "Odorless softgel format",
+            "right_text": "Varies by brand"
+          }
+        },
+        "c3": {
+          "type": "row",
+          "settings": {
+            "left_text": "CoQ10 included",
+            "right_text": "Often not included"
+          }
+        },
+        "c4": {
+          "type": "row",
+          "settings": {
+            "left_text": "Ubiquinol included",
+            "right_text": "Often not included"
+          }
+        },
+        "c5": {
+          "type": "row",
+          "settings": {
+            "left_text": "Two-softgel daily routine",
+            "right_text": "Varies by brand"
+          }
+        },
+        "c6": {
+          "type": "row",
+          "settings": {
+            "left_text": "30-day money-back guarantee",
+            "right_text": "Varies by brand"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ],
+      "settings": {
+        "heading": "Avonent vs. Basic Garlic Supplements",
+        "subheading": "A simple side-by-side look at the format and formula differences that make Avonent easier to fit into a daily routine.",
+        "left_title": "Avonent",
+        "right_title": "Basic Garlic Supplement",
+        "note": "Other garlic supplements vary by brand. Comparison reflects product-format differences and should be updated if the Avonent formula changes.",
+        "background": "#0068E8",
+        "left_background": "#02C6EA",
+        "right_background": "#F7FCFF",
+        "text": "#071A52",
+        "light_text": "#FFFFFF",
+        "line": "#DCECF5"
       }
     }
   },
@@ -245,7 +350,9 @@
     "main",
     "accordions",
     "trust",
+    "media",
     "softgel",
-    "story"
+    "story",
+    "comparison"
   ]
 }
