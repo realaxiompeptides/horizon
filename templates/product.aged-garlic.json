@@ -1,302 +1,53 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "main": {
-      "type": "00-avonent-product-main",
-      "blocks": {
-        "aged_garlic_hero": {
-          "type": "00-aged-garlic-hero-copy",
-          "name": "Aged Garlic Hero Copy",
-          "settings": {
-            "eyebrow": "ODORLESS DAILY GARLIC SUPPORT",
-            "heading": "Aged Garlic. Without the Garlic Breath.",
-            "description": "<p>A convenient aged garlic softgel formula with CoQ10 + ubiquinol, made for a simple daily wellness routine.</p>",
-            "chip_1_enabled": true,
-            "chip_1_text": "Odorless",
-            "chip_2_enabled": true,
-            "chip_2_text": "Aged Garlic",
-            "chip_3_enabled": true,
-            "chip_3_text": "CoQ10 + Ubiquinol",
-            "chip_4_enabled": true,
-            "chip_4_text": "Easy Daily Softgels",
-            "accent_color": "#6D172B",
-            "gold_color": "#B58A45",
-            "text_color": "#1A1718",
-            "muted_color": "#665D60",
-            "soft_background": "#FFF7EE"
-          },
-          "blocks": {}
-        },
-        "product_title": {
-          "type": "product-title",
-          "name": "t:names.title",
-          "settings": {
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "h5",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "text_color": "#6D172B",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "garlic_bundle": {
-          "type": "00-aged-garlic-bundle-selector",
-          "name": "Aged Garlic Bundles",
-          "settings": {
-            "heading": "Choose your quantity",
-            "bundle_1_title": "1 Bag",
-            "bundle_1_subtitle": "Try it",
-            "bundle_1_variant": "1 Bag",
-            "bundle_1_bag_count": 1,
-            "bundle_1_badge": "",
-            "bundle_2_title": "2 Bags",
-            "bundle_2_subtitle": "Save more",
-            "bundle_2_variant": "2 Bags",
-            "bundle_2_bag_count": 2,
-            "bundle_2_badge": "Most Popular",
-            "bundle_3_title": "3 Bags",
-            "bundle_3_subtitle": "Lowest cost per bag",
-            "bundle_3_variant": "3 Bags",
-            "bundle_3_bag_count": 3,
-            "bundle_3_badge": "Best Value",
-            "shipping_note": "Shipping shown at checkout",
-            "accent_color": "#6D172B",
-            "accent_dark_color": "#4B0F1F",
-            "gold_color": "#B58A45",
-            "selected_background": "#FFF7EE",
-            "card_background": "#FFFFFF",
-            "border_color": "#E6D9D2",
-            "text_color": "#1A1718",
-            "muted_color": "#6E6265"
-          },
-          "blocks": {}
-        },
-        "delivery_estimate": {
-          "type": "00-avonent-delivery-estimate",
-          "name": "Avonent Delivery Estimate",
-          "settings": {
-            "prefix": "Estimated delivery",
-            "delivery_days": 5,
-            "skip_weekends": true,
-            "fallback_date_text": "Soon",
-            "separator": "·",
-            "shipping_text": "U.S. fulfillment",
-            "show_flag": true,
-            "show_status_dot": true,
-            "accent_color": "#6D172B",
-            "text_color": "#1A1718",
-            "muted_text_color": "#6E6265",
-            "divider_color": "#E6D9D2",
-            "background_color": "#FFFFFF",
-            "text_size": 12,
-            "corner_radius": 0,
-            "padding_y": 10,
-            "padding_x": 4,
-            "spacing_top": 3,
-            "spacing_bottom": 3
-          },
-          "blocks": {}
-        },
-        "buy_buttons": {
-          "type": "buy-buttons",
-          "name": "Buy buttons",
-          "settings": {
-            "stacking": true,
-            "text_color": "",
-            "avonent_subscription_first": false,
-            "avonent_selling_plan_id": "",
-            "avonent_show_recurring_note": false,
-            "avonent_refill_text": "Refills ship every 30 days",
-            "avonent_cancel_text": "Skip or cancel anytime",
-            "avonent_one_time_text": "",
-            "avonent_subscription_text": "",
-            "avonent_one_time_status": "",
-            "avonent_link_color": "#6D172B",
-            "avonent_text_color": "#1A1718",
-            "avonent_muted_color": "#6E6265",
-            "avonent_link_size": 14,
-            "avonent_spacing_top": 10,
-            "avonent_spacing_bottom": 2,
-            "show_pickup_availability": false,
-            "gift_card_form": false,
-            "recipient_button_style": "default",
-            "recipient_button_background": "{{ settings.color_palette.background }}",
-            "recipient_button_text": "{{ settings.color_palette.foreground }}",
-            "recipient_button_border": "{{ settings.color_palette.foreground }}",
-            "selected_recipient_button_style": "default",
-            "selected_recipient_button_background": "{{ settings.color_palette.foreground }}",
-            "selected_recipient_button_text": "{{ settings.color_palette.background }}",
-            "selected_recipient_button_border": "{{ settings.color_palette.foreground }}",
-            "input_style": "default",
-            "input_background_color": "{{ settings.color_palette.background }}",
-            "input_text_color": "{{ settings.color_palette.foreground }}",
-            "input_border_color": "{{ settings.color_palette.foreground }}",
-            "border_width": 1,
-            "border_radius": 14,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "quantity": {
-              "type": "quantity",
-              "static": true,
-              "settings": {
-                "input_style": "default",
-                "input_background_color": "{{ settings.color_palette.background }}",
-                "input_text_color": "{{ settings.color_palette.foreground }}",
-                "input_border_color": "{{ settings.color_palette.foreground }}",
-                "border_width": 1,
-                "border_radius": 14
-              },
-              "blocks": {},
-              "disabled": true
-            },
-            "add-to-cart": {
-              "type": "add-to-cart",
-              "static": true,
-              "settings": {
-                "style_class": "button-custom",
-                "custom_button_background": "#6D172B",
-                "custom_button_text": "#FFFFFF",
-                "custom_button_border": "#6D172B"
-              },
-              "blocks": {}
-            },
-            "accelerated-checkout": {
-              "type": "accelerated-checkout",
-              "disabled": true,
-              "static": true,
-              "settings": {},
-              "blocks": {}
-            }
-          },
-          "block_order": []
-        },
-        "payment_icons": {
-          "type": "payment-icons",
-          "name": "Payment icons",
-          "settings": {
-            "horizontal_alignment": "center",
-            "gap": 6,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "garlic_trust": {
-          "type": "00-aged-garlic-trust-row",
-          "name": "Aged Garlic Trust Row",
-          "settings": {
-            "item_1": "30-Day Guarantee",
-            "item_2": "Secure Checkout",
-            "item_3": "U.S. Fulfillment",
-            "accent_color": "#6D172B",
-            "text_color": "#1A1718",
-            "muted_color": "#665D60",
-            "border_color": "#EADDD5"
-          },
-          "blocks": {}
-        },
-        "media-gallery": {
-          "type": "_product-media-gallery",
-          "static": true,
-          "settings": {
-            "media_presentation": "carousel",
-            "media_columns": "one",
-            "image_gap": 8,
-            "large_first_image": false,
-            "icons_style": "arrow",
-            "slideshow_controls_style": "thumbnails",
-            "slideshow_mobile_controls_style": "dots",
-            "thumbnail_position": "bottom",
-            "thumbnail_width": 54,
-            "thumbnail_radius": 12,
-            "aspect_ratio": "adapt",
-            "constrain_to_viewport": true,
-            "media_fit": "contain",
-            "media_radius": 18,
-            "extend_media": false,
-            "zoom": true,
-            "video_loop": false,
-            "hide_variants": true,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "aged_garlic_hero",
-        "product_title",
-        "garlic_bundle",
-        "delivery_estimate",
-        "buy_buttons",
-        "payment_icons",
-        "garlic_trust"
-      ],
+      "type": "00-aged-garlic-product-main",
       "settings": {
-        "content_width": "content-center-aligned",
-        "desktop_media_position": "left",
-        "equal_columns": true,
-        "limit_details_width": false,
-        "gap": 46,
-        "sticky_details_desktop": true,
-        "enable_sticky_add_to_cart_v2": false,
-        "details_gap": 13,
-        "details_background_color": "#FFFFFF",
-        "details_border_color": "#E8DDD7",
-        "details_border_width": 0,
-        "details_radius": 20,
-        "details_padding_desktop": 18,
-        "details_padding_mobile": 16,
-        "background_color": "#FFFDF9",
-        "padding-block-start": 18,
-        "padding-block-end": 30
+        "eyebrow": "ODORLESS DAILY GARLIC SUPPORT",
+        "headline": "Aged Garlic. Without the Garlic Breath.",
+        "subhead": "<p>A convenient aged garlic softgel formula with CoQ10 + ubiquinol, made for a simple daily wellness routine.</p>",
+        "badge_1": "Odorless",
+        "badge_2": "Aged Garlic",
+        "badge_3": "CoQ10 + Ubiquinol",
+        "badge_4": "Easy Daily Softgels",
+        "offer_heading": "Choose your quantity",
+        "bundle_1_note": "Try it",
+        "bundle_2_note": "Save more",
+        "bundle_3_note": "Lowest cost per bag",
+        "popular_badge": "Most Popular",
+        "value_badge": "Best Value",
+        "button_text": "ADD TO CART",
+        "trust_1": "30-Day Guarantee",
+        "trust_2": "Secure Checkout",
+        "trust_3": "U.S. Fulfillment",
+        "shipping_text": "Fast U.S. fulfillment · Shipping calculated at checkout",
+        "microcopy": "Review the product label before use. If you take medication, have a health condition, are pregnant or nursing, or have questions about supplementation, speak with a qualified healthcare professional.",
+        "ivory": "#FFF9F2",
+        "cream": "#F8EEE5",
+        "burgundy": "#6D172B",
+        "burgundy_dark": "#3C0D19",
+        "gold": "#B58A45",
+        "ink": "#1B1718",
+        "muted": "#675D60",
+        "line": "#E7DAD2"
       }
     },
-    "aged_garlic_sales_story": {
+    "story": {
       "type": "00-aged-garlic-sales-story",
       "settings": {
         "why_eyebrow": "WHY PEOPLE CHOOSE AGED GARLIC",
         "why_heading": "Garlic made easier to live with.",
-        "why_text": "<p>The point is not to make your routine more complicated. It is to take a familiar ingredient and put it into a cleaner, easier daily format.</p>",
+        "why_text": "<p>A familiar ingredient, reworked into a cleaner and more convenient daily softgel routine.</p>",
         "education_eyebrow": "AGED WITH PURPOSE",
         "education_heading": "Why age garlic in the first place?",
-        "education_text": "<p>Fresh garlic is powerful in the kitchen, but it is not always convenient as a daily supplement. Aging changes the format and makes odorless softgel routines possible without turning your morning into food prep.</p>",
+        "education_text": "<p>Fresh garlic is useful in the kitchen, but it is not always convenient as a daily supplement. Aged garlic is built for a more practical routine without turning your morning into food prep.</p>",
         "education_image_alt": "Avonent aged garlic softgels with garlic",
         "formula_eyebrow": "A SIMPLE FORMULA STORY",
-        "formula_heading": "Know what is in your routine.",
-        "formula_text": "<p>Aged garlic is the foundation. CoQ10 + ubiquinol add the differentiating formula story. Exact amounts belong here only after the back label is verified.</p>",
+        "formula_heading": "More than a basic garlic capsule.",
+        "formula_text": "<p>Aged garlic is the foundation. CoQ10 + ubiquinol give the formula a more differentiated daily-wellness profile while keeping the routine simple.</p>",
         "routine_eyebrow": "ONE SIMPLE ADDITION",
         "routine_heading": "Built to become the easy part of your day.",
-        "routine_text": "No blending. No garlic prep. No complicated schedule on the page before the label is verified—just a straightforward softgel routine.",
+        "routine_text": "No blending. No garlic prep. Just a straightforward softgel routine that fits beside the habits you already have.",
         "compare_eyebrow": "A MORE CONSIDERED FORMAT",
         "compare_heading": "Avonent vs. ordinary garlic supplements",
         "guarantee_eyebrow": "TRY AVONENT FOR 30 DAYS",
@@ -314,8 +65,5 @@
       }
     }
   },
-  "order": [
-    "main",
-    "aged_garlic_sales_story"
-  ]
+  "order": ["main", "story"]
 }
