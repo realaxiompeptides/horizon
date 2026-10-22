@@ -572,6 +572,8 @@
         let payload = null;
         let response = null;
         let lastRequestId = '';
+        const sectionIds = [...new Set([...document.querySelectorAll('cart-items-component')]
+          .map((component) => component.dataset.sectionId).filter(Boolean))].slice(0, 5);
 
         for (let attempt = 0; attempt < delays.length; attempt += 1) {
           if (delays[attempt]) {
@@ -579,8 +581,6 @@
           }
 
           const formData = new FormData(form);
-          const sectionIds = [...new Set([...document.querySelectorAll('cart-items-component')]
-            .map((component) => component.dataset.sectionId).filter(Boolean))].slice(0, 5);
           if (sectionIds.length) formData.set('sections', sectionIds.join(','));
           formData.set('sections_url', window.location.pathname);
 
