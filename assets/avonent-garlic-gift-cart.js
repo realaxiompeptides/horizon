@@ -1,5 +1,5 @@
 /**
- * Reconciles Avonent's garlic Buy 3 digital bonus with cart quantity changes.
+ * Reconciles Avonent's garlic digital bonus with cart quantity changes.
  * The reward applies ONLY to the aged-garlic-capsules product; it is a one-time
  * $0 digital cart line, never an Appstle recurring subscription item.
  */
@@ -54,16 +54,16 @@
         item.properties?._avonent_garlic_gift === 'buy3');
 
       let changed = false;
-      if (garlicQuantity >= 3 && !cart.items.some((item) => Number(item.variant_id) === ebookVariantId)) {
+      if (garlicQuantity >= 1 && !cart.items.some((item) => Number(item.variant_id) === ebookVariantId)) {
         await cartPost('cart/add.js', {
           items: [{
             id: ebookVariantId,
             quantity: 1,
-            properties: { _avonent_garlic_gift: 'buy3', _gift_for: 'Aged Garlic Buy 3' }
+            properties: { _avonent_garlic_gift: 'buy3', _gift_for: 'Aged Garlic' }
           }]
         });
         changed = true;
-      } else if (garlicQuantity < 3 && giftLines.length) {
+      } else if (garlicQuantity < 1 && giftLines.length) {
         for (const item of giftLines) {
           await cartPost('cart/change.js', { id: item.key, quantity: 0 });
         }

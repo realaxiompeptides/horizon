@@ -646,7 +646,7 @@
         }
 
         added = true;
-        // Add a separate, one-time $0 digital product line for qualifying Buy 3 garlic carts.
+        // Add a separate, one-time $0 digital product line for all garlic carts.
         // This happens after the existing garlic FormData submission, preserving Appstle's selling plan.
         const cartBeforeGiftResponse = await fetch(rootPath + 'cart.js', {
           headers: { Accept: 'application/json' },
@@ -658,15 +658,14 @@
         const garlicCount = cart.items.reduce((total, item) =>
           total + (Number(item.variant_id) === garlicVariantId ? Number(item.quantity || 0) : 0), 0);
         const hasOurGift = cart.items.some((item) =>
-          Number(item.variant_id) === ebookGiftId &&
-          item.properties?._avonent_garlic_gift === 'buy3');
+          Number(item.variant_id) === ebookGiftId);
 
-        if (ebookGiftId && garlicCount >= 3 && !hasOurGift) {
+        if (ebookGiftId && garlicCount >= 1 && !hasOurGift) {
           const giftForm = new FormData();
           giftForm.set('id', String(ebookGiftId));
           giftForm.set('quantity', '1');
           giftForm.set('properties[_avonent_garlic_gift]', 'buy3');
-          giftForm.set('properties[_gift_for]', 'Aged Garlic Buy 3');
+          giftForm.set('properties[_gift_for]', 'Aged Garlic');
           if (sectionIds.length) giftForm.set('sections', sectionIds.join(','));
           giftForm.set('sections_url', window.location.pathname);
 
@@ -1043,7 +1042,7 @@
       "type": "checkbox",
       "id": "show_gifts",
       "label": "Show tiered gift panel",
-      "default": true
+      "default": false
     },
     {
       "type": "checkbox",
