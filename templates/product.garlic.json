@@ -44,6 +44,10 @@
         "b4"
       ],
       "settings": {
+        "bottom_purchase": false,
+        "purchase_eyebrow": "CHOOSE YOUR ROUTINE",
+        "purchase_heading": "Stay consistent. Stock up. Save more.",
+        "purchase_intro": "<p>Choose your supply of Avonent Aged Garlic and make it part of your daily routine.</p>",
         "show_rating": true,
         "rating_text": "Excellent",
         "proof_text": "100K+ Customers",
@@ -71,7 +75,13 @@
         "subscription_return_label": "Switch back to Subscribe & Save —",
         "show_gifts": false,
         "shipping_reward_active": false,
+        "gifts_heading": "GIFTS UNLOCKED",
+        "gift_shipping_value": "$4.95",
+        "gift_shipping_title": "FREE Shipping",
         "gift_ebook_product": "ebook-garlic",
+        "gift_ebook_value": "$24.99 Value",
+        "gift_ebook_title": "FREE Aged Garlic eBook",
+        "gifts_note": "Free standard shipping on this first order only. Refill shipping is $4.95. Digital ebook added once with Buy 3.",
         "show_refill": false,
         "refill_heading": "Save more with automatic refills",
         "refill_text": "Connect this to your subscription option when it is ready.",
@@ -96,7 +106,16 @@
         "gold": "#ffb400",
         "text": "#071a52",
         "muted": "#5f6878",
-        "line": "#dcecf5"
+        "line": "#dcecf5",
+        "batch_total": 0,
+        "batch_sold": 0,
+        "sold_label": "Sold from this batch",
+        "purchase_guarantee": "30-day money-back guarantee",
+        "bundle_1_benefit": "Perfect for getting started",
+        "bundle_2_benefit": "Build a consistent routine",
+        "bundle_3_benefit": "Stock up and stay prepared",
+        "show_sold_bar": false,
+        "sold_percent": 93
       }
     },
     "accordions": {
@@ -258,9 +277,10 @@
         "bnf4"
       ],
       "settings": {
+        "extra_button_text": "Try Risk-Free Today",
         "heading_before": "4 Benefits of",
         "heading_accent": "Aged Garlic",
-        "choose_background_image": "",
+        "choose_background_image": "shopify://shop_images/IMG_2354.png",
         "choose_heading": "Why Customers Choose Avonent",
         "choose_intro": "<p>Avonent Odorless Aged Garlic is designed to make a consistent daily wellness routine simple, convenient, and easy to stick with.</p>",
         "reason_1_heading": "Two Daily Softgels",
@@ -389,6 +409,12 @@
         "c6"
       ],
       "settings": {
+        "purchase_point_1": "Carefully Selected Ingredients",
+        "purchase_point_2": "24-Month Aged Garlic Extract",
+        "purchase_point_3": "Odorless Daily Formula",
+        "purchase_point_4": "Quality-Focused Formula",
+        "purchase_button": "Try Risk-Free Today",
+        "purchase_guarantee": "30-day money-back guarantee",
         "heading": "Avonent vs. Basic Garlic Supplements",
         "subheading": "A simple side-by-side look at the format and formula differences that make Avonent easier to fit into a daily routine.",
         "product_image": "shopify://shop_images/F3F712FB-A4A8-49B5-BBAA-E045BF99C714.png",
@@ -403,27 +429,13 @@
         "line": "#dcecf5"
       }
     },
-    "story": {
-      "type": "00-aged-garlic-sales-story",
-      "settings": {
-        "guarantee_eyebrow": "TRY AVONENT FOR 30 DAYS",
-        "guarantee_heading": "A simple guarantee. No fake urgency.",
-        "guarantee_text": "<p>If Avonent is not right for you, contact us within 30 days and we will help with the next steps under our refund policy.</p>",
-        "ivory": "#f7fcff",
-        "cream": "#eff9fe",
-        "burgundy": "#02c6ea",
-        "burgundy_dark": "#0068e8",
-        "gold": "#ffb400",
-        "ink": "#071a52",
-        "muted": "#5f6878",
-        "line": "#dcecf5",
-        "content_width": 1180
-      }
-    },
     "bottom_purchase": {
       "type": "00-aged-garlic-offer-v2",
       "settings": {
         "bottom_purchase": true,
+        "purchase_eyebrow": "CHOOSE YOUR ROUTINE",
+        "purchase_heading": "Stay consistent. Stock up. Save more.",
+        "purchase_intro": "<p>Choose your supply of Avonent Aged Garlic and make it part of your daily routine.</p>",
         "show_rating": false,
         "rating_text": "Excellent",
         "proof_text": "100K+ Customers",
@@ -451,7 +463,13 @@
         "subscription_return_label": "Switch back to Subscribe & Save —",
         "show_gifts": false,
         "shipping_reward_active": false,
+        "gifts_heading": "GIFTS UNLOCKED",
+        "gift_shipping_value": "$4.95",
+        "gift_shipping_title": "FREE Shipping",
         "gift_ebook_product": "ebook-garlic",
+        "gift_ebook_value": "$24.99 Value",
+        "gift_ebook_title": "FREE Aged Garlic eBook",
+        "gifts_note": "Free standard shipping on this first order only. Refill shipping is $4.95. Digital ebook added once with Buy 3.",
         "show_refill": false,
         "refill_heading": "Save more with automatic refills",
         "refill_text": "Connect this to your subscription option when it is ready.",
@@ -477,7 +495,13 @@
         "text": "#071a52",
         "muted": "#5f6878",
         "line": "#dcecf5",
+        "batch_total": 0,
+        "batch_sold": 0,
         "sold_label": "Sold",
+        "purchase_guarantee": "30-day money-back guarantee",
+        "bundle_1_benefit": "Perfect for getting started",
+        "bundle_2_benefit": "Build a consistent routine",
+        "bundle_3_benefit": "Stock up and stay prepared",
         "show_sold_bar": true,
         "sold_percent": 93
       }
@@ -491,6 +515,7 @@
             "author": "Peter La…",
             "country": "🇺🇸",
             "rating": 5,
+            "title": "",
             "body": "<p>Getting older makes daily habits feel a little more important. Not looking for anything complicated these days, just products that are easy to stick with. That is probably what works best about Avonent. One softgel, no strong garlic smell, and done. It fits into the morning routine without needing much thought. Been trying to stay more mindful about long-term wellness, and this feels like one of those simple habits that is easy to keep around.</p>",
             "date": "05/20/2026",
             "verified": true,
@@ -503,6 +528,7 @@
             "author": "Carol Si…",
             "country": "🇺🇸",
             "rating": 5,
+            "title": "",
             "body": "<p>These days, more attention goes into long-term wellness than quick fixes. Avonent has become part of that mindset. The simple routine, odorless softgels, and convenient format make it easy to stay consistent with healthy habits.</p>",
             "date": "05/05/2026",
             "verified": true,
@@ -515,6 +541,7 @@
             "author": "Carol Be…",
             "country": "🇺🇸",
             "rating": 4,
+            "title": "",
             "body": "<p>Some supplements end up forgotten after a few weeks, but this one has stayed in rotation. The serving is simple, the softgels are comfortable to take, and the pouch keeps everything organized. It feels like a practical product designed for everyday use rather than something overly complicated.</p>",
             "date": "04/30/2026",
             "verified": true,
@@ -527,6 +554,7 @@
             "author": "Kenneth …",
             "country": "🇺🇸",
             "rating": 5,
+            "title": "",
             "body": "<p>Healthy habits tend to work best when they are realistic enough to maintain. That is probably why Avonent has stayed part of the routine. The odorless softgels are convenient, the serving is simple, and everything feels designed around consistency rather than complexity.</p><p>Over time, more focus has gone toward making thoughtful choices and building routines that support long-term wellness goals. Avonent fits naturally into that approach.</p>",
             "date": "03/27/2026",
             "verified": true,
@@ -539,6 +567,7 @@
             "author": "James F…",
             "country": "🇺🇸",
             "rating": 5,
+            "title": "",
             "body": "<p>After dealing with one too many supplements that left an unpleasant aftertaste, a change felt overdue. This has been a much more pleasant experience. The softgels are comfortable to take and rarely cross my mind afterward. It fits smoothly into everyday life.</p>",
             "date": "03/18/2026",
             "verified": true,
@@ -551,6 +580,7 @@
             "author": "Mark Ric…",
             "country": "🇺🇸",
             "rating": 4,
+            "title": "",
             "body": "<p>Been using aged garlic products off and on for years. This one feels more practical than most. One softgel, done. Does not really need to be more complicated than that.</p>",
             "date": "03/12/2026",
             "verified": true,
@@ -567,9 +597,34 @@
         "review_6"
       ],
       "settings": {
+        "eyebrow": "CUSTOMER REVIEWS",
         "heading": "Real routines. Real experiences.",
+        "empty_text": "Have you tried Avonent Aged Garlic? Share your experience with our community.",
+        "share_label": "Share your review",
+        "rating_label": "out of 5 stars",
+        "read_more": "Read more",
+        "read_less": "Read less",
+        "cta": "Choose Your Supply →",
         "source_note": "Customer reviews transferred from Avonent. Original wording retained.",
-        "verified_label": "Verified customer"
+        "verified_label": "Verified customer",
+        "excerpt_label": "Review excerpt"
+      }
+    },
+    "story": {
+      "type": "00-aged-garlic-sales-story",
+      "settings": {
+        "guarantee_eyebrow": "TRY AVONENT FOR 30 DAYS",
+        "guarantee_heading": "A simple guarantee. No fake urgency.",
+        "guarantee_text": "<p>If Avonent is not right for you, contact us within 30 days and we will help with the next steps under our refund policy.</p>",
+        "ivory": "#f7fcff",
+        "cream": "#eff9fe",
+        "burgundy": "#02c6ea",
+        "burgundy_dark": "#0068e8",
+        "gold": "#ffb400",
+        "ink": "#071a52",
+        "muted": "#5f6878",
+        "line": "#dcecf5",
+        "content_width": 1180
       }
     }
   },
