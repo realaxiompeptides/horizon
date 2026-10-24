@@ -15,25 +15,25 @@
         "b1": {
           "type": "benefit",
           "settings": {
-            "text": "Aged garlic for daily cardiovascular wellness"
+            "text": "Promotes cardiovascular wellness and vitality"
           }
         },
         "b2": {
           "type": "benefit",
           "settings": {
-            "text": "CoQ10 + ubiquinol"
+            "text": "20-month aged - completely odorless"
           }
         },
         "b3": {
           "type": "benefit",
           "settings": {
-            "text": "Naturally occurring SAC"
+            "text": "Supports heart health and arterial function"
           }
         },
         "b4": {
           "type": "benefit",
           "settings": {
-            "text": "Odorless daily softgels"
+            "text": "Supports healthy blood pressure levels"
           }
         }
       },
@@ -50,10 +50,10 @@
         "purchase_heading": "Stay consistent. Stock up. Save more.",
         "purchase_intro": "<p>Choose your supply of Avonent Aged Garlic and make it part of your daily routine.</p>",
         "show_rating": true,
-        "rating_text": "Excellent",
-        "proof_text": "100K+ Customers",
+        "rating_text": "Rated 4.9",
+        "proof_text": "100k+ customers",
         "heading": "Aged Garlic Extract – 7500mg Odorless Softgels",
-        "subheading": "<p>Aged Garlic + CoQ10</p>",
+        "subheading": "",
         "sale_badge": "BLACK FRIDAY SALE - SAVE 54%",
         "stock_text": "Low Stock – Selling Fast",
         "bundle_1_title": "Buy One",
