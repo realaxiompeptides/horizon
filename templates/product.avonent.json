@@ -427,7 +427,6 @@
         "limit_details_width": false,
         "gap": 32,
         "sticky_details_desktop": true,
-        "enable_sticky_add_to_cart": true,
         "details_gap": 14,
         "details_background_color": "#ffffff",
         "details_border_color": "#e8eef0",
