@@ -45,6 +45,7 @@
       ],
       "settings": {
         "bottom_purchase": false,
+        "purchase_banner_alt": "Avonent Aged Garlic",
         "purchase_eyebrow": "CHOOSE YOUR ROUTINE",
         "purchase_heading": "Stay consistent. Stock up. Save more.",
         "purchase_intro": "<p>Choose your supply of Avonent Aged Garlic and make it part of your daily routine.</p>",
@@ -434,6 +435,8 @@
       "type": "00-aged-garlic-offer-v2",
       "settings": {
         "bottom_purchase": true,
+        "purchase_banner_image": "shopify://shop_images/ED3C68E7-159E-44D5-B324-51DAF0789157.png",
+        "purchase_banner_alt": "Avonent Aged Garlic",
         "purchase_eyebrow": "CHOOSE YOUR ROUTINE",
         "purchase_heading": "Stay consistent. Stock up. Save more.",
         "purchase_intro": "<p>Choose your supply of Avonent Aged Garlic and make it part of your daily routine.</p>",
