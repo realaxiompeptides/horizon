@@ -704,10 +704,10 @@
           "type": "journey_step",
           "settings": {
             "week": "Week 1",
-            "title": "Early Relief",
-            "benefit_1": "Digestion feels lighter*",
-            "benefit_2": "Bloating starts to settle*",
-            "benefit_3": "Less heaviness after meals*",
+            "title": "Start the Routine",
+            "benefit_1": "Take two softgels daily and make Avonent part of the same routine each day.",
+            "benefit_2": "The odorless aged-garlic format makes daily consistency simple.",
+            "benefit_3": "Begin building a consistent cardiovascular-wellness habit.",
             "benefit_4": ""
           }
         },
@@ -715,10 +715,10 @@
           "type": "journey_step",
           "settings": {
             "week": "Week 2",
-            "title": "Real Comfort",
-            "benefit_1": "Less gas and pressure*",
-            "benefit_2": "Mornings feel clearer*",
-            "benefit_3": "Energy starts to steady*",
+            "title": "Build Consistency",
+            "benefit_1": "Consistent aged garlic supports healthy circulation and cardiovascular wellness.",
+            "benefit_2": "CoQ10 supports normal cellular energy production as part of the daily formula.",
+            "benefit_3": "The routine starts to feel easier to maintain day after day.",
             "benefit_4": ""
           }
         },
@@ -726,10 +726,10 @@
           "type": "journey_step",
           "settings": {
             "week": "Week 3",
-            "title": "Gut Working Better",
-            "benefit_1": "More consistent comfort*",
-            "benefit_2": "Easier to enjoy meals*",
-            "benefit_3": "Regularity improves*",
+            "title": "Support That Builds",
+            "benefit_1": "Daily use keeps heart and arterial wellness support consistent.",
+            "benefit_2": "The odorless format helps keep the routine simple without strong garlic aftertaste.",
+            "benefit_3": "By now, Avonent can feel like a natural part of your everyday wellness routine.",
             "benefit_4": ""
           }
         },
@@ -737,10 +737,10 @@
           "type": "journey_step",
           "settings": {
             "week": "Week 4",
-            "title": "Lasting Balance",
-            "benefit_1": "Light and comfortable becomes normal*",
-            "benefit_2": "Steady energy all day*",
-            "benefit_3": "Your gut finally feels supported*",
+            "title": "Make It Your Baseline",
+            "benefit_1": "Keep taking two softgels daily for consistent cardiovascular-wellness support.",
+            "benefit_2": "Pair the routine with movement, hydration, sleep, and balanced nutrition.",
+            "benefit_3": "Long-term consistency keeps healthy circulation and vitality support part of your everyday routine.",
             "benefit_4": ""
           }
         }
@@ -753,8 +753,8 @@
       ],
       "settings": {
         "eyebrow": "Your Wellness",
-        "heading": "Journey with Avonent",
-        "description": "<p>Built for daily use. Here’s how things may shift with consistent use. Individual experiences vary.</p>",
+        "heading": "Your First Month with Avonent",
+        "description": "<p>Built for daily use. Here’s how Avonent can fit into a consistent cardiovascular-wellness routine over the first four weeks. Individual experiences vary.</p>",
         "disclaimer": "",
         "background_color": "#ffffff",
         "card_color": "#ffffff",
