@@ -147,7 +147,7 @@
             </span>
             {% if section.settings.sale_badge != blank %}<span class="ag2__sale">{{ section.settings.sale_badge }}</span>{% endif %}
           </button>
-          <small class="ag2__offer-disclosure">Subscription pricing · automatic refills every 30 days · skip or cancel anytime</small>
+
           <em class="ag2__visually-hidden" data-ag2-mode-save{% unless v.price > selected_subscription_price %} hidden{% endunless %}>
             {% if v.price > selected_subscription_price %}Save {{ v.price | minus: selected_subscription_price | times: 100.0 | divided_by: v.price | round }}%{% endif %}
           </em>
