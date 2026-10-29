@@ -7,22 +7,114 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
-/*
- * Avonent dedicated cinnamon advertorial page.
- * Edit images and copy through Online Store > Themes > Customize.
- */
 {
   "sections": {
     "main": {
       "type": "00-avonent-cinnamon-listicle-v2",
+      "blocks": {
+        "reason_1": {
+          "type": "benefit",
+          "settings": {
+            "category": "METABOLIC WELLNESS",
+            "heading": "Your Glucose Routine Deserves More Than Guesswork",
+            "body": "<p>Cutting back on sugar is only one piece of the metabolic-health picture. Your body uses insulin to handle glucose, and daily habits help support that process.</p><p><strong>Make your supplement choice as intentional as the rest of your routine.</strong> Avonent brings true Ceylon cinnamon and berberine HCl together in one formula you can evaluate ingredient by ingredient.</p>",
+            "highlight": "An intentional addition to your metabolic wellness routine",
+            "image_alt": "Avonent Ceylon cinnamon ingredient photograph",
+            "image_caption": ""
+          }
+        },
+        "reason_2": {
+          "type": "benefit",
+          "settings": {
+            "category": "A SMARTER CINNAMON CHOICE",
+            "heading": "Stop Treating Every Cinnamon Capsule Like It's the Same",
+            "body": "<p>Some labels simply say 'cinnamon.' That tells you very little about which variety you are getting or what else is in the capsule.</p><p><strong>Avonent names the ingredients upfront:</strong> genuine Ceylon cinnamon, berberine HCl and MCT oil. You should never have to guess what makes a supplement different from the cheapest bottle on the shelf.</p>",
+            "highlight": "Know the cinnamon variety—not just the marketing",
+            "image_alt": "Avonent Ceylon cinnamon ingredient photograph",
+            "image_caption": ""
+          }
+        },
+        "reason_3": {
+          "type": "benefit",
+          "settings": {
+            "category": "EVERYDAY ENERGY",
+            "heading": "Tired of Feeling Like You're Running on Empty by 3 PM?",
+            "body": "<p>Afternoon sluggishness can have many causes, from sleep and meal timing to stress and activity. A supplement cannot replace those foundations—but the ingredients you choose can still be a thoughtful part of your daily wellness plan.</p><p><strong>Skip the instant-fix hype.</strong> Avonent is designed to fit a consistent, long-term routine rather than promise an overnight transformation.</p>",
+            "highlight": "Build consistency instead of chasing another quick fix",
+            "image_alt": "Avonent Ceylon cinnamon ingredient photograph",
+            "image_caption": ""
+          }
+        },
+        "reason_4": {
+          "type": "benefit",
+          "settings": {
+            "category": "FORMULA CONFIDENCE",
+            "heading": "Don't Trade One Frustration for Another",
+            "body": "<p>If you've tried products with vague labels and oversized promises, you know how frustrating supplement shopping can be. A better standard starts with clear ingredients and realistic expectations.</p><p><strong>Avonent tells you what's in the softgel.</strong> It's a dietary supplement—not a substitute for prescription medication or medical care. That honesty makes it easier to decide whether it belongs in your routine.</p>",
+            "highlight": "Straightforward formula. No prescription-replacement promises",
+            "image_alt": "Avonent Ceylon cinnamon ingredient photograph",
+            "image_caption": ""
+          }
+        },
+        "reason_5": {
+          "type": "benefit",
+          "settings": {
+            "category": "GENUINE CEYLON",
+            "heading": "Why Pay for Generic Cinnamon When You Can Choose True Ceylon?",
+            "body": "<p>True Ceylon cinnamon (<em>Cinnamomum verum</em>) is a different variety from common Cassia cinnamon. One meaningful distinction: Ceylon naturally contains much less coumarin.</p><p><strong>Details matter when something becomes a daily habit.</strong> Avonent identifies the cinnamon variety so you can make an informed choice instead of relying on a generic label.</p>",
+            "highlight": "True Ceylon cinnamon—not an unspecified variety",
+            "image_alt": "Avonent Ceylon cinnamon ingredient photograph",
+            "image_caption": ""
+          }
+        },
+        "reason_6": {
+          "type": "benefit",
+          "settings": {
+            "category": "A PURPOSEFUL BLEND",
+            "heading": "Ceylon + Berberine + MCT: More Than a Pretty Label",
+            "body": "<p>There is no need to hide behind a confusing 'proprietary blend.' Our daily serving combines 1,200 mg Ceylon cinnamon, 400 mg berberine HCl, and 200 mg MCT oil.</p><p>Cinnamon and berberine have each attracted scientific interest in metabolic health, but outcomes differ across studies and individuals. <strong>We let you see the actual formula before you buy.</strong></p>",
+            "highlight": "Three named ingredients with clear quantities",
+            "image_alt": "Avonent Ceylon cinnamon ingredient photograph",
+            "image_caption": ""
+          }
+        },
+        "reason_7": {
+          "type": "benefit",
+          "settings": {
+            "category": "LOVED BY THOUSANDS",
+            "heading": "Trusted by Over 100,000 Customers",
+            "body": "<p>More than 100,000 customers have chosen Avonent, and over 10,000 five-star reviews reflect the excitement around our Ceylon cinnamon formula. People want more than another anonymous supplement bottle—they want ingredients they can understand and a routine they can feel good about.</p><p><strong>Meet a simpler approach to daily metabolic wellness.</strong> Avonent pairs true Ceylon cinnamon with berberine HCl and MCT oil, so you can support your healthy habits without mystery blends or unnecessary complexity.</p>",
+            "highlight": "Join 100,000+ Avonent customers",
+            "image_alt": "Avonent Ceylon cinnamon ingredient photograph",
+            "image_caption": ""
+          }
+        }
+      },
+      "block_order": [
+        "reason_1",
+        "reason_2",
+        "reason_3",
+        "reason_4",
+        "reason_5",
+        "reason_6",
+        "reason_7"
+      ],
       "settings": {
         "featured_product": "cinnamon-berberine-example",
         "announcement_text": "TRUE CEYLON. BERBERINE HCL. AN EVERYDAY ROUTINE BUILT WITH INTENTION.",
+        "accent_color": "#b96a46",
+        "text_color": "#292522",
+        "background_color": "#fffbf7",
+        "hero_image": "shopify://shop_images/53C5CBE5-7895-4096-92EF-077872E32743.png",
+        "hero_image_alt": "Avonent Ceylon cinnamon daily supplement",
+        "hero_image_badge": "TRUE CEYLON · THOUGHTFUL FORMULA",
         "hero_eyebrow": "Why Avonent is different",
         "hero_title": "7 Benefits Everyone’s Talking About With Avonent Ceylon Cinnamon",
         "hero_subtitle": "(Beyond the Quest to Tackle Stubborn Blood Sugar)",
         "hero_intro": "<p><strong>Fed up with stubborn blood-sugar numbers?</strong> Whether you’re tired of trying one wellness routine after another or you’re searching for a more thoughtful daily supplement, there’s a reason Avonent Ceylon Cinnamon is getting attention. Here are seven standout details behind our Ceylon cinnamon, berberine HCl and MCT oil blend.</p>",
         "hero_cta": "Save Up to 70% OFF",
+        "show_social_proof": true,
+        "social_proof_text": "10,000+ Reviews | 100,000+ Happy Customers",
         "hero_microcopy": "90-day money-back guarantee",
         "intro_band_text": "Stop settling for vague labels. See exactly what sets true Ceylon cinnamon, berberine HCl and MCT oil apart.",
         "benefits_heading": "Seven compelling reasons to make the switch",
@@ -40,108 +132,35 @@
         "results_4_text": "reported positive changes in energy and kidney-health indicators they were tracking.",
         "results_note": "Self-reported observations in a customer survey after 12 weeks. Not a controlled clinical trial; these responses do not establish that Avonent caused the changes.",
         "formula_title": "A More Thoughtful Way to Support Everyday Metabolic Wellness",
+        "formula_eyebrow": "A FORMULA WORTH KNOWING",
         "formula_description": "True Ceylon cinnamon brings naturally occurring cinnamaldehyde and polyphenols to the table. Avonent pairs a concentrated 12:1 Ceylon cinnamon extract with berberine HCl and MCT oil in one straightforward daily formula. Especially when you’re over 40 and tired of generic supplements, knowing what’s inside is a smart place to start.",
         "formula_cta": "Explore the ingredient details",
-        "reviews_title": "Real Reviews From the Avonent Community",
-        "reviews_subtitle": "A dedicated home for genuine customer stories. Preview the layout now; real testimonials can be added from the theme editor.",
-        "final_cta": "Save Up to 70% OFF + Free Shipping",
-        "sticky_cta": "Save Up to 70% OFF",
-        "show_social_proof": true,
-        "social_proof_text": "10,000+ Reviews | 100,000+ Happy Customers",
         "show_offer": true,
+        "offer_secondary_image_alt": "Additional Avonent Ceylon cinnamon product photo",
+        "offer_image_alt": "Avonent Ceylon cinnamon supplement",
+        "offer_image_label": "AVONENT CEYLON CINNAMON",
         "offer_eyebrow": "SPECIAL BUNDLE OFFER",
         "offer_title": "BUY 2, GET 1 FREE — FOR A LIMITED TIME!",
         "offer_subtitle": "This popular bundle offer is drawing attention, and some quantities may sell out. Choose your Avonent Ceylon Cinnamon supply while savings are available.",
         "offer_savings_text": "SAVE UP TO 70% OFF",
         "timer_label": "DEAL ENDING IN:",
+        "timer_deadline": "",
         "timer_minutes": 7,
         "timer_seconds": 0,
         "timer_context": "",
         "stock_risk_text": "Sell-Out Risk: High",
+        "stock_risk_label": "Sell-Out Risk:",
+        "stock_risk_level": "High",
         "ebook_text": "FREE E-BOOK",
         "offer_cta": "Save Up to 70% OFF",
         "offer_guarantee": "Try it today with a 90-Day Money-Back Guarantee!",
+        "reviews_title": "Real Reviews From the Avonent Community",
+        "reviews_subtitle": "A dedicated home for genuine customer stories. Preview the layout now; real testimonials can be added from the theme editor.",
         "show_review_previews": true,
-        "sticky_subtext": "90-day money-back guarantee",
-        "hero_image_badge": "TRUE CEYLON · THOUGHTFUL FORMULA",
-        "formula_eyebrow": "A FORMULA WORTH KNOWING",
-        "stock_risk_label": "Sell-Out Risk:",
-        "stock_risk_level": "High"
-      },
-      "blocks": {
-        "reason_1": {
-          "type": "benefit",
-          "settings": {
-            "category": "METABOLIC WELLNESS",
-            "heading": "Your Glucose Routine Deserves More Than Guesswork",
-            "body": "<p>Cutting back on sugar is only one piece of the metabolic-health picture. Your body uses insulin to handle glucose, and daily habits help support that process.</p><p><strong>Make your supplement choice as intentional as the rest of your routine.</strong> Avonent brings true Ceylon cinnamon and berberine HCl together in one formula you can evaluate ingredient by ingredient.</p>",
-            "highlight": "An intentional addition to your metabolic wellness routine"
-          }
-        },
-        "reason_2": {
-          "type": "benefit",
-          "settings": {
-            "category": "A SMARTER CINNAMON CHOICE",
-            "heading": "Stop Treating Every Cinnamon Capsule Like It's the Same",
-            "body": "<p>Some labels simply say 'cinnamon.' That tells you very little about which variety you are getting or what else is in the capsule.</p><p><strong>Avonent names the ingredients upfront:</strong> genuine Ceylon cinnamon, berberine HCl and MCT oil. You should never have to guess what makes a supplement different from the cheapest bottle on the shelf.</p>",
-            "highlight": "Know the cinnamon variety—not just the marketing"
-          }
-        },
-        "reason_3": {
-          "type": "benefit",
-          "settings": {
-            "category": "EVERYDAY ENERGY",
-            "heading": "Tired of Feeling Like You're Running on Empty by 3 PM?",
-            "body": "<p>Afternoon sluggishness can have many causes, from sleep and meal timing to stress and activity. A supplement cannot replace those foundations—but the ingredients you choose can still be a thoughtful part of your daily wellness plan.</p><p><strong>Skip the instant-fix hype.</strong> Avonent is designed to fit a consistent, long-term routine rather than promise an overnight transformation.</p>",
-            "highlight": "Build consistency instead of chasing another quick fix"
-          }
-        },
-        "reason_4": {
-          "type": "benefit",
-          "settings": {
-            "category": "FORMULA CONFIDENCE",
-            "heading": "Don't Trade One Frustration for Another",
-            "body": "<p>If you've tried products with vague labels and oversized promises, you know how frustrating supplement shopping can be. A better standard starts with clear ingredients and realistic expectations.</p><p><strong>Avonent tells you what's in the softgel.</strong> It's a dietary supplement—not a substitute for prescription medication or medical care. That honesty makes it easier to decide whether it belongs in your routine.</p>",
-            "highlight": "Straightforward formula. No prescription-replacement promises"
-          }
-        },
-        "reason_5": {
-          "type": "benefit",
-          "settings": {
-            "category": "GENUINE CEYLON",
-            "heading": "Why Pay for Generic Cinnamon When You Can Choose True Ceylon?",
-            "body": "<p>True Ceylon cinnamon (<em>Cinnamomum verum</em>) is a different variety from common Cassia cinnamon. One meaningful distinction: Ceylon naturally contains much less coumarin.</p><p><strong>Details matter when something becomes a daily habit.</strong> Avonent identifies the cinnamon variety so you can make an informed choice instead of relying on a generic label.</p>",
-            "highlight": "True Ceylon cinnamon—not an unspecified variety"
-          }
-        },
-        "reason_6": {
-          "type": "benefit",
-          "settings": {
-            "category": "A PURPOSEFUL BLEND",
-            "heading": "Ceylon + Berberine + MCT: More Than a Pretty Label",
-            "body": "<p>There is no need to hide behind a confusing 'proprietary blend.' Our daily serving combines 1,200 mg Ceylon cinnamon, 400 mg berberine HCl, and 200 mg MCT oil.</p><p>Cinnamon and berberine have each attracted scientific interest in metabolic health, but outcomes differ across studies and individuals. <strong>We let you see the actual formula before you buy.</strong></p>",
-            "highlight": "Three named ingredients with clear quantities"
-          }
-        },
-        "reason_7": {
-          "type": "benefit",
-          "settings": {
-            "category": "LOVED BY THOUSANDS",
-            "heading": "Trusted by Over 100,000 Customers",
-            "body": "<p>More than 100,000 customers have chosen Avonent, and over 10,000 five-star reviews reflect the excitement around our Ceylon cinnamon formula. People want more than another anonymous supplement bottle—they want ingredients they can understand and a routine they can feel good about.</p><p><strong>Meet a simpler approach to daily metabolic wellness.</strong> Avonent pairs true Ceylon cinnamon with berberine HCl and MCT oil, so you can support your healthy habits without mystery blends or unnecessary complexity.</p>",
-            "highlight": "Join 100,000+ Avonent customers"
-          }
-        }
-      },
-      "block_order": [
-        "reason_1",
-        "reason_2",
-        "reason_3",
-        "reason_4",
-        "reason_5",
-        "reason_6",
-        "reason_7"
-      ]
+        "final_cta": "Save Up to 70% OFF + Free Shipping",
+        "sticky_cta": "Save Up to 70% OFF",
+        "sticky_subtext": "90-day money-back guarantee"
+      }
     }
   },
   "order": [
