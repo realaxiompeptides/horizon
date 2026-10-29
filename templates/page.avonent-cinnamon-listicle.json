@@ -72,41 +72,6 @@
             "body": "<p>The best routine is one you can maintain. Avonent is designed as a simple addition to thoughtful daily habits, with a 30-day money-back guarantee so you can evaluate whether it fits your lifestyle.</p>",
             "highlight": "Made for consistency, not overnight promises"
           }
-        },
-        "faq_1": {
-          "type": "faq",
-          "settings": {
-            "question": "What makes Ceylon cinnamon different from Cassia cinnamon?",
-            "answer": "<p>They are different varieties of cinnamon. True Ceylon cinnamon generally contains much less naturally occurring coumarin than Cassia. It is still important to follow label directions and discuss supplements with your healthcare professional if you have concerns.</p>"
-          }
-        },
-        "faq_2": {
-          "type": "faq",
-          "settings": {
-            "question": "Will this replace my prescription medication?",
-            "answer": "<p>No. Avonent is a dietary supplement, not a treatment for diabetes or a replacement for medication. Never stop or change prescriptions without guidance from your clinician. Berberine can interact with blood-sugar medications.</p>"
-          }
-        },
-        "faq_3": {
-          "type": "faq",
-          "settings": {
-            "question": "What ingredients are in Avonent Ceylon Cinnamon?",
-            "answer": "<p>The featured formula includes 1,200 mg Ceylon cinnamon, 400 mg Berberine HCl, and 200 mg MCT oil. Please check the current product label for the complete ingredient list, serving size, and directions.</p>"
-          }
-        },
-        "faq_4": {
-          "type": "faq",
-          "settings": {
-            "question": "How long does it take to see results?",
-            "answer": "<p>Everyone’s experience is different, and there is no guaranteed timeline for a supplement. Nutrition, movement, sleep, and your individual health needs all matter. Follow the label and seek medical advice about blood sugar concerns.</p>"
-          }
-        },
-        "faq_5": {
-          "type": "faq",
-          "settings": {
-            "question": "Is there a money-back guarantee?",
-            "answer": "<p>Avonent offers a 30-day money-back guarantee. Review our return policy for the full eligibility and refund details before ordering.</p>"
-          }
         }
       },
       "block_order": [
@@ -116,12 +81,7 @@
         "reason_4",
         "reason_5",
         "reason_6",
-        "reason_7",
-        "faq_1",
-        "faq_2",
-        "faq_3",
-        "faq_4",
-        "faq_5"
+        "reason_7"
       ]
     }
   },
