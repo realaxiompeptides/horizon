@@ -1,3 +1,12 @@
+{% comment %} AVONENT_CINNAMON_BERBERINE_HIDE {% endcomment %}
+{% liquid
+  assign av_cb_section_product = closest.product | default: product
+  assign av_cb_hide_section = false
+  if template.suffix == 'cinnamon-berberine' or av_cb_section_product.handle == 'cinnamon-berberine-example'
+    assign av_cb_hide_section = true
+  endif
+%}
+{% unless av_cb_hide_section %}
 {% liquid
   # Desktop timeline restored to the original vertical layout; animation revision 2.
   assign section_id = 'AvonentJourney-' | append: section.id
@@ -209,6 +218,9 @@
     window.setTimeout(request,600);
   })();
 </script>
+
+
+{% endunless %}
 
 {% schema %}
 {
