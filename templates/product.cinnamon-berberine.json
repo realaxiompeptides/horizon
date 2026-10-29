@@ -173,6 +173,7 @@
         "risk_free": {
           "type": "risk_free",
           "settings": {
+            "image": "shopify://shop_images/1A6460DC-D7AB-4437-8C6B-6FCE6D237D46.png",
             "eyebrow": "FEEL THE DIFFERENCE",
             "heading": "90-Day Risk-Free Trial",
             "body": "Try Avonent for 90 days. If it is not right for you, contact us within 90 days and we will help with the next steps under our refund policy.",
