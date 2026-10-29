@@ -125,7 +125,7 @@
             <span class="avl-offer__image-tag">{{ section.settings.offer_image_label | escape }}</span>
           </div>
           <div class="avl-offer__details">
-            <a class="avl-button avl-offer__button" href="{{ avl_product_url }}">{{ section.settings.offer_cta | escape }} <span aria-hidden="true">↗</span></a>
+            <p class="avl-offer__cta-heading">Choose Your Bundle &amp; Unlock Up to 70% OFF</p>\n            <a class="avl-button avl-offer__button" href="{{ avl_product_url }}">{{ section.settings.offer_cta | escape }} <span aria-hidden="true">↗</span></a>
             <div class="avl-offer__timer" data-avl-timer data-duration="{{ section.settings.timer_minutes | times: 60 | plus: section.settings.timer_seconds }}" data-deadline="{{ section.settings.timer_deadline | escape }}">
               <div class="avl-offer__timer-label" data-avl-timer-label>{{ section.settings.timer_label | escape }}</div>
               <div class="avl-offer__clock" role="timer" aria-label="Deal countdown"><span data-avl-minutes>07</span><span class="avl-offer__colon">:</span><span data-avl-seconds>00</span></div>
@@ -522,7 +522,7 @@
   .avl-offer__risk strong{color:#b52325;font-weight:950;letter-spacing:.02em}
   .avl-offer__ebook{font-size:12px}
   .avl-sticky{position:fixed;z-index:55;left:50%;bottom:calc(12px + env(safe-area-inset-bottom));width:min(560px,calc(100% - 30px));min-height:0;display:flex;align-items:stretch;justify-content:center;gap:0;padding:0;background:transparent;border:0;box-shadow:none;backdrop-filter:none;opacity:0;visibility:hidden;pointer-events:none;transform:translate(-50%,calc(100% + 26px));transition:opacity .22s ease,transform .22s ease,visibility .22s}
-  .avl-sticky__inner{width:100%;display:flex;flex-direction:column;align-items:center;gap:5px}\n  .avl-sticky__microcopy{color:#6d5b50;font-size:11px;line-height:1.25;font-weight:650;text-align:center;letter-spacing:.01em}\n  .avl-sticky.avl-sticky--visible{opacity:1;visibility:visible;pointer-events:auto;transform:translateX(-50%)}
+  .avl-offer__cta-heading{text-align:center;font-size:16px;font-weight:850;color:#5d3528;line-height:1.35;margin:0 0 12px!important}\n  .avl-sticky__inner{width:100%;display:flex;flex-direction:column;align-items:center;gap:5px}\n  .avl-sticky__microcopy{color:#6d5b50;font-size:11px;line-height:1.25;font-weight:650;text-align:center;letter-spacing:.01em}\n  .avl-sticky.avl-sticky--visible{opacity:1;visibility:visible;pointer-events:auto;transform:translateX(-50%)}
   .avl-sticky__button{width:100%;min-height:55px;display:flex;align-items:center;justify-content:center;border-radius:100px;font-size:16px;padding:13px 22px;box-shadow:0 10px 24px rgba(81,40,21,.26)}
   .avl-sticky__button span{font-size:19px}
   @media(max-width:700px){
@@ -592,18 +592,24 @@
   const firstButton = root.querySelector('.avl-hero .avl-button');
   if (sticky && firstButton) {
     const updateSticky = () => {
-      const hasPassed = firstButton.getBoundingClientRect().bottom < 0;
+      const rect = firstButton.getBoundingClientRect();
+      const hasPassed = rect.bottom < 0;
       sticky.classList.toggle('avl-sticky--visible', hasPassed);
       sticky.setAttribute('aria-hidden', String(!hasPassed));
     };
     window.addEventListener('scroll', updateSticky, { passive: true });
-    // The theme may scroll in a nested element; capture those scroll events as well.
     document.addEventListener('scroll', updateSticky, { passive: true, capture: true });
     window.addEventListener('resize', updateSticky, { passive: true });
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(updateSticky, { threshold: [0, 1] });
+      observer.observe(firstButton);
+      cleaners.push(() => observer.disconnect());
+    }
     cleaners.push(() => window.removeEventListener('scroll', updateSticky));
     cleaners.push(() => document.removeEventListener('scroll', updateSticky, true));
     cleaners.push(() => window.removeEventListener('resize', updateSticky));
     updateSticky();
+    window.requestAnimationFrame(updateSticky);
   }
   const timer = root.querySelector('[data-avl-timer]');
   if (timer) {
