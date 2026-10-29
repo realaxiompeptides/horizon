@@ -8,6 +8,21 @@
   <head>
     {% if template.suffix == 'cinnamon-berberine' or product.handle == 'cinnamon-berberine-example' %}
       <script>document.documentElement.classList.add('av-cb-cinnamon-page');</script>
+<style>
+html.av-cb-cinnamon-page #header-component .hidden{display:none!important}
+html.av-cb-cinnamon-page #header-component .header-actions__action{background:transparent;border:0;border-radius:0;padding:8px;min-width:40px;min-height:44px;color:#171513;box-shadow:none}
+@media(max-width:749px){
+html.av-cb-cinnamon-page #header-component .header__columns{display:grid!important;grid-template-columns:40px 40px minmax(0,1fr) 40px 40px!important;grid-template-areas:'leftA leftB center rightA rightB'!important;gap:0!important;padding:0!important;min-height:64px}
+html.av-cb-cinnamon-page #header-component .header__column{display:contents!important}
+html.av-cb-cinnamon-page #header-component .header__row{padding-inline:12px}
+html.av-cb-cinnamon-page #header-component .header-logo{grid-area:center;justify-self:center;min-width:0;padding:0}
+html.av-cb-cinnamon-page #header-component .header-actions__text-style,html.av-cb-cinnamon-page #header-component .mobile\:hidden{display:none!important}
+html.av-cb-cinnamon-page #header-component .av-cb-header-logo{gap:5px}
+html.av-cb-cinnamon-page #header-component .av-cb-header-logo svg{width:25px;height:25px;flex-basis:25px}
+html.av-cb-cinnamon-page #header-component .av-cb-header-logo span{font-size:24px}
+html.av-cb-cinnamon-page #header-component header-actions{gap:0}
+}
+</style>
     {% endif %}
     {%- if settings.favicon != blank -%}
       <link
