@@ -1,3 +1,14 @@
+{% comment %} AVONENT_CINNAMON_BERBERINE_RENDERER {% endcomment %}
+{% liquid
+  assign av_cb_product = closest.product | default: product
+  assign av_cb_page = false
+  if template.suffix == 'cinnamon-berberine' or av_cb_product.handle == 'cinnamon-berberine-example'
+    assign av_cb_page = true
+  endif
+%}
+{% if av_cb_page %}
+  {% render '00-cinnamon-berberine-page', product: av_cb_product %}
+{% else %}
 <script type="application/ld+json">
   {{ closest.product | structured_data }}
 </script>
@@ -502,6 +513,9 @@
     }
   }
 {% endstylesheet %}
+
+
+{% endif %}
 
 {% schema %}
 {
