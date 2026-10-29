@@ -574,21 +574,13 @@
         if content_block.settings.trust_image_alt != blank
           assign av_cb_trust_image_alt = content_block.settings.trust_image_alt
         endif
-      when 'trust'
-        if content_block.settings.image != blank
-          assign av_cb_trust_image = content_block.settings.image
-        endif
-        if content_block.settings.alt != blank
-          assign av_cb_trust_image_alt = content_block.settings.alt
-        endif
-        assign av_cb_trust_block = content_block
     endcase
   endfor
 
-  if av_cb_trust_block == blank and editor.settings.trust_image != blank
+  if editor.settings.trust_image != blank
     assign av_cb_trust_image = editor.settings.trust_image
   endif
-  if av_cb_trust_block == blank and editor.settings.trust_image_alt != blank
+  if editor.settings.trust_image_alt != blank
     assign av_cb_trust_image_alt = editor.settings.trust_image_alt
   endif
 
@@ -848,14 +840,12 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
 .av-cb__comparison-icon svg{width:16px;height:16px;display:block;fill:currentColor}
 .av-cb__comparison-card--ours .av-cb__comparison-icon{background:rgba(255,255,255,.14);color:#fff}
 .av-cb__compare-cta{max-width:680px;margin:auto}
-.av-cb__reviews{padding:38px 0 30px;background:#faf6f2}.av-cb__reviews-head{text-align:center}.av-cb__reviews-head>span{color:#b8612b;font-size:28px;letter-spacing:3px}.av-cb__reviews-head h2{font-size:clamp(27px,4vw,39px);margin:10px 0 8px}.av-cb__reviews-head p{color:#605851;margin:0 0 10px}
-.av-cb__photo-track,.av-cb__review-track{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;overscroll-behavior-inline:contain;padding:10px 0 12px;scrollbar-width:none;-ms-overflow-style:none}.av-cb__photo-track::-webkit-scrollbar,.av-cb__review-track::-webkit-scrollbar{display:none}
-.av-cb__review-track{align-items:flex-start}
+.av-cb__reviews{padding:50px 0;background:#faf6f2}.av-cb__reviews-head{text-align:center}.av-cb__reviews-head>span{color:#b8612b;font-size:32px;letter-spacing:3px}.av-cb__reviews-head h2{font-size:clamp(28px,4vw,42px);margin:14px 0}.av-cb__reviews-head p{color:#605851}
+.av-cb__photo-track,.av-cb__review-track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-inline:contain;padding:12px 0 20px;scrollbar-width:thin;scrollbar-color:#bd7950 #eaded5}
 .av-cb__photo-track figure{flex:0 0 180px;height:190px;margin:0;border-radius:14px;overflow:hidden;scroll-snap-align:start}.av-cb__photo-track img{width:100%;height:100%;object-fit:cover}
-.av-cb__review-card{flex:0 0 calc(50% - 7px);min-width:0;scroll-snap-align:start;background:white;border:1px solid #ddd;border-radius:18px;padding:22px;display:flex;flex-direction:column}
-.av-cb__review-rating{display:flex;align-items:center;gap:10px}.av-cb__review-score{font-size:18px;font-weight:800;color:#171513}.av-cb__review-stars{color:#ab531f;font-size:21px;letter-spacing:1px}.av-cb__review-card h3{font-size:20px;line-height:1.25;margin:16px 0 10px}.av-cb__review-card p{font-size:15.5px;line-height:1.5;white-space:normal;margin:0}.av-cb__review-card footer{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;margin-top:18px;padding-top:17px;border-top:1px solid #eee;font-size:12.5px}.av-cb__review-card footer span{color:#ab531f;font-weight:700}.av-cb__review-tags{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:14px}.av-cb__review-tag{display:flex;align-items:center;justify-content:center;min-height:34px;padding:6px 9px;border:1px solid #c86731;border-radius:999px;color:#b35421;background:#fff8f3;font-size:11.5px;font-weight:650;text-align:center}.av-cb__review-placeholder{display:grid;place-items:center;background:#e9dfd6;color:#65574d}
-.av-cb__review-controls{display:flex;flex-direction:column;align-items:center;gap:14px;margin-top:14px}.av-cb__review-dots{display:flex;align-items:center;justify-content:center;gap:9px}.av-cb__review-dot{width:10px;height:10px;padding:0;border:0;border-radius:999px;background:#d6d3d0;cursor:pointer;transition:.2s ease}.av-cb__review-dot.is-active{width:44px;background:var(--blue)}.av-cb__review-arrows{display:flex;gap:12px}.av-cb__review-arrow{width:48px;height:48px;border:1px solid #e5cbbb;border-radius:50%;background:#fff7f2;color:var(--blue);display:grid;place-items:center;cursor:pointer}.av-cb__review-arrow svg{width:21px;height:21px}.av-cb__review-arrow:hover{background:#f3dfd2}
-@media(max-width:600px){.av-cb__comparison{gap:12px;margin-top:76px}.av-cb__comparison-card{padding-top:86px;border-radius:14px}.av-cb__comparison-image{width:92px;height:108px;top:-56px}.av-cb__comparison-card h3{font-size:20px;padding:12px 8px 20px}.av-cb__comparison-row{font-size:13px;min-height:115px;padding:15px 8px}.av-cb__reviews{padding:30px 0 26px}.av-cb__reviews-head>span{font-size:26px}.av-cb__reviews-head h2{font-size:29px}.av-cb__reviews-head p{font-size:14px}.av-cb__review-card{flex-basis:100%;padding:20px}.av-cb__review-card h3{font-size:19px;margin:14px 0 9px}.av-cb__review-card p{font-size:14.5px;line-height:1.48}.av-cb__review-rating{gap:8px}.av-cb__review-score{font-size:17px}.av-cb__review-stars{font-size:20px}.av-cb__review-tag{font-size:11px;min-height:32px}.av-cb__review-arrow{width:46px;height:46px}.av-cb__photo-track figure{flex-basis:140px;height:155px}}
+.av-cb__review-card{flex:0 0 calc(50% - 8px);min-width:0;scroll-snap-align:start;background:white;border:1px solid #ddd;border-radius:18px;padding:28px;display:flex;flex-direction:column}
+.av-cb__review-rating{display:flex;align-items:center;gap:12px}.av-cb__review-score{font-size:19px;font-weight:800;color:#171513}.av-cb__review-stars{color:#ab531f;font-size:23px;letter-spacing:1px}.av-cb__review-card h3{font-size:23px;margin:20px 0 12px}.av-cb__review-card p{font-size:17px;line-height:1.65;white-space:normal}.av-cb__review-card footer{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;margin-top:auto;padding-top:22px;border-top:1px solid #eee;font-size:13px}.av-cb__review-card footer span{color:#ab531f;font-weight:700}.av-cb__review-tags{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}.av-cb__review-tag{display:flex;align-items:center;justify-content:center;min-height:38px;padding:7px 10px;border:1px solid #c86731;border-radius:999px;color:#b35421;background:#fff8f3;font-size:12px;font-weight:650;text-align:center}.av-cb__review-placeholder{display:grid;place-items:center;background:#e9dfd6;color:#65574d}
+@media(max-width:600px){.av-cb__comparison{gap:12px;margin-top:76px}.av-cb__comparison-card{padding-top:86px;border-radius:14px}.av-cb__comparison-image{width:92px;height:108px;top:-56px}.av-cb__comparison-card h3{font-size:20px;padding:12px 8px 20px}.av-cb__comparison-row{font-size:13px;min-height:115px;padding:15px 8px}.av-cb__review-card{flex-basis:90%;padding:22px}.av-cb__photo-track figure{flex-basis:140px;height:155px}}
 
   </style>
 
@@ -1019,7 +1009,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       </details>
     </div>
 
-    <div class="av-cb__trust-image-section" style="margin-top:10px;"{% if av_cb_trust_block != blank %} {{ av_cb_trust_block.shopify_attributes }}{% endif %}>
+    <div class="av-cb__trust-image-section" style="margin-top:10px;">
       {% if av_cb_trust_image != blank %}
         <span style="display:block;width:100%;">{{ av_cb_trust_image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '600,900,1200,1600', sizes: '(min-width: 900px) 1200px, calc(100vw - 22px)', alt: av_cb_trust_image_alt, style: 'display:block;width:100%;height:auto;border-radius:18px;' }}</span>
       {% else %}
@@ -1167,7 +1157,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
           {% if review.type == 'review' %}
             {% if review.settings.quote != blank %}
               {% assign av_cb_review_rating = review.settings.rating_display | default: review.settings.rating %}
-              <article class="av-cb__review-card" data-av-cb-review-card {{ review.shopify_attributes }}>
+              <article class="av-cb__review-card" {{ review.shopify_attributes }}>
                 <div class="av-cb__review-rating" aria-label="{{ av_cb_review_rating }} out of 5 stars">
                   <span class="av-cb__review-score">{{ av_cb_review_rating }}</span>
                   <span class="av-cb__review-stars" aria-hidden="true">★★★★★</span>
@@ -1191,84 +1181,8 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
           {% endif %}
         {% endfor %}
       </div>
-
-      <div class="av-cb__review-controls" data-av-cb-review-carousel>
-        <div class="av-cb__review-dots" aria-label="Choose customer review">
-          {% assign av_cb_review_dot_index = 0 %}
-          {% for review in editor.blocks %}
-            {% if review.type == 'review' and review.settings.quote != blank %}
-              <button class="av-cb__review-dot{% if av_cb_review_dot_index == 0 %} is-active{% endif %}" type="button" data-av-cb-review-dot="{{ av_cb_review_dot_index }}" aria-label="Go to review {{ av_cb_review_dot_index | plus: 1 }}"></button>
-              {% assign av_cb_review_dot_index = av_cb_review_dot_index | plus: 1 %}
-            {% endif %}
-          {% endfor %}
-        </div>
-        <div class="av-cb__review-arrows">
-          <button class="av-cb__review-arrow" type="button" data-av-cb-review-prev aria-label="Previous review"><svg viewBox="0 0 24 24" fill="none"><path d="m14.5 6-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-          <button class="av-cb__review-arrow" type="button" data-av-cb-review-next aria-label="Next review"><svg viewBox="0 0 24 24" fill="none"><path d="m9.5 6 6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        </div>
-      </div>
     </div>
   </section>
-  <section class="av-cb__benefits-section" style="--benefits-bg:{{ av_cb_benefits_bg }};--benefits-text:{{ av_cb_benefits_text }};">
-    <div class="av-cb__benefits-inner">
-      <header class="av-cb__benefits-head">
-        <h2>{{ av_cb_benefits_heading }}</h2>
-        <p>{{ av_cb_benefits_subheading | newline_to_br }}</p>
-      </header>
-
-      <div class="av-cb__benefits-grid">
-        {% for i in (1..4) %}
-          {% case i %}
-            {% when 1 %}
-              {% assign av_cb_benefit_icon = av_cb_benefits_icon_1 %}
-              {% assign av_cb_benefit_title = av_cb_benefits_item_1 %}
-            {% when 2 %}
-              {% assign av_cb_benefit_icon = av_cb_benefits_icon_2 %}
-              {% assign av_cb_benefit_title = av_cb_benefits_item_2 %}
-            {% when 3 %}
-              {% assign av_cb_benefit_icon = av_cb_benefits_icon_3 %}
-              {% assign av_cb_benefit_title = av_cb_benefits_item_3 %}
-            {% else %}
-              {% assign av_cb_benefit_icon = av_cb_benefits_icon_4 %}
-              {% assign av_cb_benefit_title = av_cb_benefits_item_4 %}
-          {% endcase %}
-          <div class="av-cb__benefit-tile">
-            <span class="av-cb__benefit-icon" aria-hidden="true">
-              {% if av_cb_benefit_icon != blank %}
-                {{ av_cb_benefit_icon | image_url: width: 140 | image_tag: loading: 'lazy', widths: '70,100,140', alt: '' }}
-              {% else %}
-                {% case i %}
-                  {% when 1 %}
-                    <svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="20" r="8" stroke="currentColor" stroke-width="3"/><circle cx="32" cy="44" r="8" stroke="currentColor" stroke-width="3"/><path d="M18 8c-5 8-5 40 0 48M46 8c5 8 5 40 0 48" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
-                  {% when 2 %}
-                    <svg viewBox="0 0 64 64" fill="none"><path d="M18 44c0-11 5-18 14-18s14 7 14 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M24 22c2-8 6-12 8-12s6 4 8 12" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="32" cy="38" r="5" stroke="currentColor" stroke-width="3"/></svg>
-                  {% when 3 %}
-                    <svg viewBox="0 0 64 64" fill="none"><path d="M14 43c12-22 30-25 38-24-3 13-13 28-34 29" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 44c8-8 15-14 28-20" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
-                  {% else %}
-                    <svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="22" stroke="currentColor" stroke-width="3"/><path d="M32 18v14l10 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                {% endcase %}
-              {% endif %}
-            </span>
-            <strong>{{ av_cb_benefit_title }}</strong>
-          </div>
-        {% endfor %}
-      </div>
-
-      <div class="av-cb__benefits-image-wrap">
-        {% if av_cb_benefits_image != blank %}
-          {{ av_cb_benefits_image | image_url: width: 1800 | image_tag: class: 'av-cb__benefits-image', loading: 'lazy', widths: '600,900,1200,1600,1800', sizes: '(min-width:900px) 760px, 100vw', alt: av_cb_benefits_heading }}
-        {% elsif av_cb_product.featured_image %}
-          {{ av_cb_product.featured_image | image_url: width: 1600 | image_tag: class: 'av-cb__benefits-image', loading: 'lazy', widths: '600,900,1200,1600', sizes: '(min-width:900px) 760px, 100vw', alt: av_cb_display_title }}
-        {% else %}
-          <div class="av-cb__benefits-image-placeholder">Add your bottom product image in the “CB Benefits Bottom Image” product metafield.</div>
-        {% endif %}
-      </div>
-      <p class="av-cb__benefits-disclaimer">*These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.</p>
-    </div>
-  </section>
-
-
-
   <section class="av-cb__science-section" data-av-cb-science style="--science-bg:{{ av_cb_science_bg }};--science-accent:{{ av_cb_science_accent }};">
     <div class="av-cb__science-wrap">
       <header class="av-cb__science-head">
@@ -1407,6 +1321,65 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
 
 <section class="av-cb__compare-section"><div class="av-cb__compare-wrap"><header class="av-cb__compare-head"><h2>{{ av_cb_compare_heading }}</h2><p>{{ av_cb_compare_subheading }}</p></header>{% for comparison in editor.blocks %}{% if comparison.type == 'compare' %}<div class="av-cb__comparison">
 {% for side in (1..2) %}<article class="av-cb__comparison-card{% if side == 1 %} av-cb__comparison-card--ours{% endif %}">{% if side == 1 %}{% assign column_image = comparison.settings.ours_image | default: av_cb_product.featured_image %}{% assign column_name = comparison.settings.ours_name %}{% else %}{% assign column_image = comparison.settings.other_image %}{% assign column_name = comparison.settings.other_name %}{% endif %}<div class="av-cb__comparison-image">{% if column_image != blank %}{{ column_image | image_url: width: 500 | image_tag: loading: 'lazy', widths: '180,300,500', alt: column_name }}{% else %}<svg viewBox="0 0 48 48" width="80" height="80" fill="none" aria-hidden="true"><rect x="13" y="7" width="22" height="34" rx="11" stroke="currentColor" stroke-width="2"/><path d="M13 24h22" stroke="currentColor" stroke-width="2"/></svg>{% endif %}</div><h3>{{ column_name | escape }}</h3>{% for i in (1..6) %}{% if side == 1 %}{% assign row_key = 'ours_' | append: i %}{% else %}{% assign row_key = 'other_' | append: i %}{% endif %}<div class="av-cb__comparison-row"><span class="av-cb__comparison-icon" aria-hidden="true">{% if side == 1 %}<svg viewBox="0 0 512 512"><path d="M173.9 439.4 7.5 273c-10-10-10-26.2 0-36.2l36.2-36.2c10-10 26.2-10 36.2 0L192 312.7 432.1 72.6c10-10 26.2-10 36.2 0l36.2 36.2c10 10 10 26.2 0 36.2L210.1 439.4c-10 10-26.2 10-36.2 0Z"/></svg>{% else %}<svg viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3l105.4 105.3c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256l105.3-105.4Z"/></svg>{% endif %}</span><span>{{ comparison.settings[row_key] | escape }}</span></div>{% endfor %}</article>{% endfor %}</div>{% endif %}{% endfor %}<a class="av-cb__compare-cta" href="#av-cb-top">{{ av_cb_compare_cta }}</a><div class="av-cb__compare-guarantee">{{ av_cb_compare_guarantee }}</div></div></section>
+
+
+  <section class="av-cb__benefits-section" style="--benefits-bg:{{ av_cb_benefits_bg }};--benefits-text:{{ av_cb_benefits_text }};">
+    <div class="av-cb__benefits-inner">
+      <header class="av-cb__benefits-head">
+        <h2>{{ av_cb_benefits_heading }}</h2>
+        <p>{{ av_cb_benefits_subheading | newline_to_br }}</p>
+      </header>
+
+      <div class="av-cb__benefits-grid">
+        {% for i in (1..4) %}
+          {% case i %}
+            {% when 1 %}
+              {% assign av_cb_benefit_icon = av_cb_benefits_icon_1 %}
+              {% assign av_cb_benefit_title = av_cb_benefits_item_1 %}
+            {% when 2 %}
+              {% assign av_cb_benefit_icon = av_cb_benefits_icon_2 %}
+              {% assign av_cb_benefit_title = av_cb_benefits_item_2 %}
+            {% when 3 %}
+              {% assign av_cb_benefit_icon = av_cb_benefits_icon_3 %}
+              {% assign av_cb_benefit_title = av_cb_benefits_item_3 %}
+            {% else %}
+              {% assign av_cb_benefit_icon = av_cb_benefits_icon_4 %}
+              {% assign av_cb_benefit_title = av_cb_benefits_item_4 %}
+          {% endcase %}
+          <div class="av-cb__benefit-tile">
+            <span class="av-cb__benefit-icon" aria-hidden="true">
+              {% if av_cb_benefit_icon != blank %}
+                {{ av_cb_benefit_icon | image_url: width: 140 | image_tag: loading: 'lazy', widths: '70,100,140', alt: '' }}
+              {% else %}
+                {% case i %}
+                  {% when 1 %}
+                    <svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="20" r="8" stroke="currentColor" stroke-width="3"/><circle cx="32" cy="44" r="8" stroke="currentColor" stroke-width="3"/><path d="M18 8c-5 8-5 40 0 48M46 8c5 8 5 40 0 48" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+                  {% when 2 %}
+                    <svg viewBox="0 0 64 64" fill="none"><path d="M18 44c0-11 5-18 14-18s14 7 14 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M24 22c2-8 6-12 8-12s6 4 8 12" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="32" cy="38" r="5" stroke="currentColor" stroke-width="3"/></svg>
+                  {% when 3 %}
+                    <svg viewBox="0 0 64 64" fill="none"><path d="M14 43c12-22 30-25 38-24-3 13-13 28-34 29" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 44c8-8 15-14 28-20" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+                  {% else %}
+                    <svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="22" stroke="currentColor" stroke-width="3"/><path d="M32 18v14l10 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                {% endcase %}
+              {% endif %}
+            </span>
+            <strong>{{ av_cb_benefit_title }}</strong>
+          </div>
+        {% endfor %}
+      </div>
+
+      <div class="av-cb__benefits-image-wrap">
+        {% if av_cb_benefits_image != blank %}
+          {{ av_cb_benefits_image | image_url: width: 1800 | image_tag: class: 'av-cb__benefits-image', loading: 'lazy', widths: '600,900,1200,1600,1800', sizes: '(min-width:900px) 760px, 100vw', alt: av_cb_benefits_heading }}
+        {% elsif av_cb_product.featured_image %}
+          {{ av_cb_product.featured_image | image_url: width: 1600 | image_tag: class: 'av-cb__benefits-image', loading: 'lazy', widths: '600,900,1200,1600', sizes: '(min-width:900px) 760px, 100vw', alt: av_cb_display_title }}
+        {% else %}
+          <div class="av-cb__benefits-image-placeholder">Add your bottom product image in the “CB Benefits Bottom Image” product metafield.</div>
+        {% endif %}
+      </div>
+      <p class="av-cb__benefits-disclaimer">*These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.</p>
+    </div>
+  </section>
 
 
   <section class="av-cb__faq-section" data-av-cb-faq>
@@ -1569,39 +1542,6 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
           scrollTimer = setTimeout(() => setActive(currentIndex()), 80);
         }, {passive:true});
       });
-      const reviewTrack = root.querySelector('.av-cb__review-track');
-      const reviewCards = Array.from(root.querySelectorAll('[data-av-cb-review-card]'));
-      const reviewDots = Array.from(root.querySelectorAll('[data-av-cb-review-dot]'));
-      const reviewPrev = root.querySelector('[data-av-cb-review-prev]');
-      const reviewNext = root.querySelector('[data-av-cb-review-next]');
-      if (reviewTrack && reviewCards.length) {
-        const setReviewActive = index => reviewDots.forEach((dot, i) => dot.classList.toggle('is-active', i === index));
-        const reviewIndex = () => {
-          const left = reviewTrack.getBoundingClientRect().left;
-          let best = 0;
-          let distance = Infinity;
-          reviewCards.forEach((card, i) => {
-            const d = Math.abs(card.getBoundingClientRect().left - left);
-            if (d < distance) { distance = d; best = i; }
-          });
-          return best;
-        };
-        const goReview = rawIndex => {
-          const count = reviewCards.length;
-          const index = ((rawIndex % count) + count) % count;
-          reviewTrack.scrollTo({left: reviewCards[index].offsetLeft - reviewTrack.offsetLeft, behavior:'smooth'});
-          setReviewActive(index);
-        };
-        reviewPrev?.addEventListener('click', () => goReview(reviewIndex() - 1));
-        reviewNext?.addEventListener('click', () => goReview(reviewIndex() + 1));
-        reviewDots.forEach((dot, i) => dot.addEventListener('click', () => goReview(i)));
-        let reviewScrollTimer;
-        reviewTrack.addEventListener('scroll', () => {
-          clearTimeout(reviewScrollTimer);
-          reviewScrollTimer = setTimeout(() => setReviewActive(reviewIndex()), 80);
-        }, {passive:true});
-      }
-
       const scienceSections = root.querySelectorAll('[data-av-cb-science]');
       scienceSections.forEach(section => {
         const cards = Array.from(section.querySelectorAll('.av-cb__science-card'));

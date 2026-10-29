@@ -204,9 +204,9 @@
             "quote": "My blood sugar used to bounce all over the place no matter what I did. I’d eat clean, skip the junk, and still get those nasty afternoon crashes that made me reach for coffee or something sweet just to function. Started taking Avonent a couple months ago and things actually leveled out. The combo of the Ceylon cinnamon and berberine seems to keep things steadier. Energy lasts longer, fewer spikes and dips, and I’m not constantly thinking about my next snack. Feels good to not be at the mercy of my numbers anymore.",
             "rating": 5,
             "rating_display": "5.0",
-            "verified": true,
             "tag_1": "Steadier Days",
-            "tag_2": "Fewer Cravings"
+            "tag_2": "Fewer Cravings",
+            "verified": true
           }
         },
         "review_2": {
@@ -217,9 +217,9 @@
             "quote": "I used to wake up already tired and foggy, then spend the first hour wondering what my blood sugar was going to do. Tried a bunch of different supplements and nothing really stuck. Avonent has been different. The berberine and Ceylon cinnamon together seem to help keep my levels more even. Cravings are way down, I don’t crash mid-afternoon like I used to, and I can actually get through the morning without feeling like garbage. Simple little softgel but it’s made a noticeable difference.",
             "rating": 5,
             "rating_display": "5.0",
-            "verified": true,
             "tag_1": "Clearer Mornings",
-            "tag_2": "Balanced Cravings"
+            "tag_2": "Balanced Cravings",
+            "verified": true
           }
         },
         "review_3": {
@@ -230,9 +230,9 @@
             "quote": "I was pretty skeptical at first. Another cinnamon product, right? But my neighbor kept pushing this one because it’s Ceylon and has berberine in it, plus the MCT oil. Figured I’d give it a shot. About two months in my doctor looked at my numbers and asked what I changed. Told him about Avonent and he just nodded and said keep doing it. No stomach issues either, which is a first for me with these kinds of supplements.",
             "rating": 5,
             "rating_display": "5.0",
-            "verified": true,
             "tag_1": "Easy on Stomach",
-            "tag_2": "Two-Month Update"
+            "tag_2": "Two-Month Update",
+            "verified": true
           }
         },
         "review_4": {
@@ -243,9 +243,9 @@
             "quote": "My husband was taking regular cinnamon capsules from the store for a while. Barely did anything and sometimes gave him heartburn. I looked into it and found out most of those are Cassia, which isn’t great long-term. Switched him to Avonent because it uses actual Ceylon and has berberine. Within a few weeks his morning readings dropped from the 140s into the low 120s and stayed more consistent. Energy is better too. Softgels are easier on his stomach than the old capsules were.",
             "rating": 5,
             "rating_display": "4.9",
-            "verified": true,
             "tag_1": "Ceylon Switch",
-            "tag_2": "Gentler Softgels"
+            "tag_2": "Gentler Softgels",
+            "verified": true
           }
         },
         "review_5": {
@@ -256,9 +256,9 @@
             "quote": "I’m pretty picky about what I put in my body, especially after years of nursing. A lot of supplements are just cheap fillers. Avonent feels different — Ceylon cinnamon, berberine, and the MCT oil base. I’ve been on it about three months now. Energy is more stable, those 2pm sugar cravings basically disappeared, and my last labs looked better. No digestive problems either. For once it actually feels like the product is doing something instead of just sitting on the shelf.",
             "rating": 5,
             "rating_display": "5.0",
-            "verified": true,
             "tag_1": "Quality Formula",
-            "tag_2": "Afternoon Balance"
+            "tag_2": "Afternoon Balance",
+            "verified": true
           }
         },
         "review_6": {
@@ -269,15 +269,9 @@
             "quote": "I’ve wasted so much money on powders and gummies that promised better blood sugar control and never delivered. Got frustrated and almost gave up. Tried Avonent mostly because of the berberine and Ceylon cinnamon combo. One softgel a day and my energy stopped crashing in the afternoons. Focus is better, I’m not hunting for snacks every couple hours, and I finally feel more consistent throughout the day. Actually sticks with something for once.",
             "rating": 5,
             "rating_display": "5.0",
-            "verified": true,
             "tag_1": "Steady Focus",
-            "tag_2": "Simple Routine"
-          }
-        },
-        "trust": {
-          "type": "trust",
-          "settings": {
-            "alt": "Why Trust Avonent"
+            "tag_2": "Simple Routine",
+            "verified": true
           }
         }
       },
@@ -291,7 +285,6 @@
         "benefits",
         "faq",
         "details",
-        "trust",
         "review_1",
         "review_2",
         "review_3",
@@ -300,8 +293,9 @@
         "review_6"
       ],
       "settings": {
-        "reviews_heading": "Real Stories, Real Results",
-        "reviews_intro": "Honest experiences from Avonent customers.",
+        "reviews_heading": "Real stories. Everyday routines.",
+        "reviews_intro": "Experiences shared by Avonent customers.",
+        "trust_image": "shopify://shop_images/1FA0CA01-7E0B-48B4-BA27-C66E6A6F100B.png",
         "trust_image_alt": "Why Trust Avonent"
       }
     }
