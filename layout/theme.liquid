@@ -217,7 +217,7 @@ html.av-cb-cinnamon-page #header-component header-actions{gap:0}
       >
         {% comment %} AVONENT_CINNAMON_BERBERINE_LAYOUT_ROUTE {% endcomment %}
         {% if template.suffix == 'cinnamon-berberine' or product.handle == 'cinnamon-berberine-example' %}
-          {% render '00-cinnamon-berberine-page', product: product %}
+          {{ content_for_layout }}
         {% else %}
           {{ content_for_layout }}
         {% endif %}

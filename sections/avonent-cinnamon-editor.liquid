@@ -1,0 +1,927 @@
+{% render '00-cinnamon-berberine-page', product: product, editor: section %}
+{% schema %}
+{
+  "name": "Cinnamon page editor",
+  "settings": [
+    {
+      "type": "text",
+      "id": "reviews_heading",
+      "label": "Reviews heading",
+      "default": "Real stories. Everyday routines."
+    },
+    {
+      "type": "textarea",
+      "id": "reviews_intro",
+      "label": "Reviews introduction",
+      "default": "Experiences shared by Avonent customers."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hero",
+      "name": "Hero content",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "hero_image",
+          "label": "Main product image override"
+        },
+        {
+          "type": "textarea",
+          "id": "display_title",
+          "label": "Display title"
+        },
+        {
+          "type": "textarea",
+          "id": "rating_text",
+          "label": "Rating text"
+        },
+        {
+          "type": "textarea",
+          "id": "benefit_1",
+          "label": "Benefit 1"
+        },
+        {
+          "type": "textarea",
+          "id": "benefit_2",
+          "label": "Benefit 2"
+        },
+        {
+          "type": "textarea",
+          "id": "benefit_3",
+          "label": "Benefit 3"
+        },
+        {
+          "type": "textarea",
+          "id": "benefit_4",
+          "label": "Benefit 4"
+        },
+        {
+          "type": "textarea",
+          "id": "sold_percent",
+          "label": "Sold percent"
+        },
+        {
+          "type": "textarea",
+          "id": "sale_badge",
+          "label": "Sale badge"
+        },
+        {
+          "type": "textarea",
+          "id": "bundle_2_badge",
+          "label": "Bundle 2 badge"
+        },
+        {
+          "type": "textarea",
+          "id": "bundle_3_badge",
+          "label": "Bundle 3 badge"
+        },
+        {
+          "type": "textarea",
+          "id": "bundle_1_title",
+          "label": "Bundle 1 title"
+        },
+        {
+          "type": "textarea",
+          "id": "bundle_1_subtitle",
+          "label": "Bundle 1 subtitle"
+        },
+        {
+          "type": "textarea",
+          "id": "bundle_2_title",
+          "label": "Bundle 2 title"
+        },
+        {
+          "type": "textarea",
+          "id": "bundle_2_subtitle",
+          "label": "Bundle 2 subtitle"
+        },
+        {
+          "type": "textarea",
+          "id": "bundle_3_title",
+          "label": "Bundle 3 title"
+        },
+        {
+          "type": "textarea",
+          "id": "bundle_3_subtitle",
+          "label": "Bundle 3 subtitle"
+        },
+        {
+          "type": "textarea",
+          "id": "add_to_cart_text",
+          "label": "Add to cart text"
+        },
+        {
+          "type": "textarea",
+          "id": "refill_text",
+          "label": "Refill text"
+        },
+        {
+          "type": "textarea",
+          "id": "cancel_text",
+          "label": "Cancel text"
+        }
+      ]
+    },
+    {
+      "type": "results",
+      "name": "Results content",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "stats_heading",
+          "label": "Stats heading"
+        },
+        {
+          "type": "image_picker",
+          "id": "stats_bg",
+          "label": "Stats bg"
+        },
+        {
+          "type": "color",
+          "id": "stats_overlay_color",
+          "label": "Stats overlay color"
+        },
+        {
+          "type": "textarea",
+          "id": "stats_overlay_opacity",
+          "label": "Stats overlay opacity"
+        },
+        {
+          "type": "textarea",
+          "id": "stats_duration",
+          "label": "Stats duration"
+        },
+        {
+          "type": "textarea",
+          "id": "stat_1_start",
+          "label": "Stat 1 start"
+        },
+        {
+          "type": "textarea",
+          "id": "stat_1_end",
+          "label": "Stat 1 end"
+        },
+        {
+          "type": "textarea",
+          "id": "stat_1_label",
+          "label": "Stat 1 label"
+        },
+        {
+          "type": "textarea",
+          "id": "stat_2_start",
+          "label": "Stat 2 start"
+        },
+        {
+          "type": "textarea",
+          "id": "stat_2_end",
+          "label": "Stat 2 end"
+        },
+        {
+          "type": "textarea",
+          "id": "stat_2_label",
+          "label": "Stat 2 label"
+        },
+        {
+          "type": "textarea",
+          "id": "stat_3_start",
+          "label": "Stat 3 start"
+        },
+        {
+          "type": "textarea",
+          "id": "stat_3_end",
+          "label": "Stat 3 end"
+        },
+        {
+          "type": "textarea",
+          "id": "stat_3_label",
+          "label": "Stat 3 label"
+        },
+        {
+          "type": "textarea",
+          "id": "stat_4_start",
+          "label": "Stat 4 start"
+        },
+        {
+          "type": "textarea",
+          "id": "stat_4_end",
+          "label": "Stat 4 end"
+        },
+        {
+          "type": "textarea",
+          "id": "stat_4_label",
+          "label": "Stat 4 label"
+        },
+        {
+          "type": "textarea",
+          "id": "stats_cta",
+          "label": "Stats cta"
+        },
+        {
+          "type": "textarea",
+          "id": "stats_guarantee",
+          "label": "Stats guarantee"
+        },
+        {
+          "type": "image_picker",
+          "id": "stats_guarantee_icon",
+          "label": "Stats guarantee icon"
+        },
+        {
+          "type": "color",
+          "id": "stats_text_color",
+          "label": "Stats text color"
+        },
+        {
+          "type": "checkbox",
+          "id": "stats_show",
+          "label": "Stats show",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "carousel",
+      "name": "Carousel content",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "carousel_heading",
+          "label": "Carousel heading"
+        },
+        {
+          "type": "image_picker",
+          "id": "carousel_1_image",
+          "label": "Carousel 1 image"
+        },
+        {
+          "type": "textarea",
+          "id": "carousel_1_title",
+          "label": "Carousel 1 title"
+        },
+        {
+          "type": "textarea",
+          "id": "carousel_1_body",
+          "label": "Carousel 1 body"
+        },
+        {
+          "type": "image_picker",
+          "id": "carousel_2_image",
+          "label": "Carousel 2 image"
+        },
+        {
+          "type": "textarea",
+          "id": "carousel_2_title",
+          "label": "Carousel 2 title"
+        },
+        {
+          "type": "textarea",
+          "id": "carousel_2_body",
+          "label": "Carousel 2 body"
+        },
+        {
+          "type": "image_picker",
+          "id": "carousel_3_image",
+          "label": "Carousel 3 image"
+        },
+        {
+          "type": "textarea",
+          "id": "carousel_3_title",
+          "label": "Carousel 3 title"
+        },
+        {
+          "type": "textarea",
+          "id": "carousel_3_body",
+          "label": "Carousel 3 body"
+        },
+        {
+          "type": "image_picker",
+          "id": "carousel_4_image",
+          "label": "Carousel 4 image"
+        },
+        {
+          "type": "textarea",
+          "id": "carousel_4_title",
+          "label": "Carousel 4 title"
+        },
+        {
+          "type": "textarea",
+          "id": "carousel_4_body",
+          "label": "Carousel 4 body"
+        }
+      ]
+    },
+    {
+      "type": "science",
+      "name": "Science content",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "science_heading",
+          "label": "Science heading"
+        },
+        {
+          "type": "textarea",
+          "id": "science_intro",
+          "label": "Science intro"
+        },
+        {
+          "type": "image_picker",
+          "id": "science_1_image",
+          "label": "Science 1 image"
+        },
+        {
+          "type": "textarea",
+          "id": "science_1_title",
+          "label": "Science 1 title"
+        },
+        {
+          "type": "textarea",
+          "id": "science_1_subtitle",
+          "label": "Science 1 subtitle"
+        },
+        {
+          "type": "textarea",
+          "id": "science_1_body",
+          "label": "Science 1 body"
+        },
+        {
+          "type": "image_picker",
+          "id": "science_2_image",
+          "label": "Science 2 image"
+        },
+        {
+          "type": "textarea",
+          "id": "science_2_title",
+          "label": "Science 2 title"
+        },
+        {
+          "type": "textarea",
+          "id": "science_2_subtitle",
+          "label": "Science 2 subtitle"
+        },
+        {
+          "type": "textarea",
+          "id": "science_2_body",
+          "label": "Science 2 body"
+        },
+        {
+          "type": "image_picker",
+          "id": "science_3_image",
+          "label": "Science 3 image"
+        },
+        {
+          "type": "textarea",
+          "id": "science_3_title",
+          "label": "Science 3 title"
+        },
+        {
+          "type": "textarea",
+          "id": "science_3_subtitle",
+          "label": "Science 3 subtitle"
+        },
+        {
+          "type": "textarea",
+          "id": "science_3_body",
+          "label": "Science 3 body"
+        },
+        {
+          "type": "image_picker",
+          "id": "science_4_image",
+          "label": "Science 4 image"
+        },
+        {
+          "type": "textarea",
+          "id": "science_4_title",
+          "label": "Science 4 title"
+        },
+        {
+          "type": "textarea",
+          "id": "science_4_subtitle",
+          "label": "Science 4 subtitle"
+        },
+        {
+          "type": "textarea",
+          "id": "science_4_body",
+          "label": "Science 4 body"
+        },
+        {
+          "type": "textarea",
+          "id": "science_cta",
+          "label": "Science cta"
+        },
+        {
+          "type": "textarea",
+          "id": "science_guarantee",
+          "label": "Science guarantee"
+        },
+        {
+          "type": "textarea",
+          "id": "science_ticker_1",
+          "label": "Science ticker 1"
+        },
+        {
+          "type": "textarea",
+          "id": "science_ticker_2",
+          "label": "Science ticker 2"
+        },
+        {
+          "type": "textarea",
+          "id": "science_ticker_3",
+          "label": "Science ticker 3"
+        },
+        {
+          "type": "textarea",
+          "id": "science_ticker_4",
+          "label": "Science ticker 4"
+        },
+        {
+          "type": "color",
+          "id": "science_bg",
+          "label": "Science bg"
+        },
+        {
+          "type": "textarea",
+          "id": "science_accent",
+          "label": "Science accent"
+        }
+      ]
+    },
+    {
+      "type": "journey",
+      "name": "Journey content",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "journey_image",
+          "label": "Journey image"
+        },
+        {
+          "type": "textarea",
+          "id": "journey_eyebrow",
+          "label": "Journey eyebrow"
+        },
+        {
+          "type": "textarea",
+          "id": "journey_heading",
+          "label": "Journey heading"
+        },
+        {
+          "type": "textarea",
+          "id": "journey_intro",
+          "label": "Journey intro"
+        },
+        {
+          "type": "textarea",
+          "id": "journey_1_label",
+          "label": "Journey 1 label"
+        },
+        {
+          "type": "textarea",
+          "id": "journey_1_body",
+          "label": "Journey 1 body"
+        },
+        {
+          "type": "textarea",
+          "id": "journey_2_label",
+          "label": "Journey 2 label"
+        },
+        {
+          "type": "textarea",
+          "id": "journey_2_body",
+          "label": "Journey 2 body"
+        },
+        {
+          "type": "textarea",
+          "id": "journey_3_label",
+          "label": "Journey 3 label"
+        },
+        {
+          "type": "textarea",
+          "id": "journey_3_body",
+          "label": "Journey 3 body"
+        },
+        {
+          "type": "textarea",
+          "id": "journey_4_label",
+          "label": "Journey 4 label"
+        },
+        {
+          "type": "textarea",
+          "id": "journey_4_body",
+          "label": "Journey 4 body"
+        }
+      ]
+    },
+    {
+      "type": "compare",
+      "name": "Compare content",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "compare_price",
+          "label": "Compare price"
+        },
+        {
+          "type": "textarea",
+          "id": "compare_heading",
+          "label": "Compare heading"
+        },
+        {
+          "type": "textarea",
+          "id": "compare_subheading",
+          "label": "Compare subheading"
+        },
+        {
+          "type": "textarea",
+          "id": "compare_cta",
+          "label": "Compare cta"
+        },
+        {
+          "type": "textarea",
+          "id": "compare_guarantee",
+          "label": "Compare guarantee"
+        },
+        {
+          "type": "image_picker",
+          "id": "ours_image",
+          "label": "Avonent overlapping image"
+        },
+        {
+          "type": "image_picker",
+          "id": "other_image",
+          "label": "Other brand overlapping image"
+        },
+        {
+          "type": "text",
+          "id": "ours_name",
+          "label": "Avonent column heading",
+          "default": "Avonent"
+        },
+        {
+          "type": "text",
+          "id": "other_name",
+          "label": "Other column heading",
+          "default": "Other brands"
+        },
+        {
+          "type": "text",
+          "id": "ours_1",
+          "label": "Avonent benefit 1",
+          "default": "True Ceylon cinnamon"
+        },
+        {
+          "type": "text",
+          "id": "other_1",
+          "label": "Other brand point 1",
+          "default": "Cinnamon variety may vary"
+        },
+        {
+          "type": "text",
+          "id": "ours_2",
+          "label": "Avonent benefit 2",
+          "default": "12:1 concentrated extract"
+        },
+        {
+          "type": "text",
+          "id": "other_2",
+          "label": "Other brand point 2",
+          "default": "Extract ratio may be unspecified"
+        },
+        {
+          "type": "text",
+          "id": "ours_3",
+          "label": "Avonent benefit 3",
+          "default": "400 mg Berberine HCl"
+        },
+        {
+          "type": "text",
+          "id": "other_3",
+          "label": "Other brand point 3",
+          "default": "Berberine may not be included"
+        },
+        {
+          "type": "text",
+          "id": "ours_4",
+          "label": "Avonent benefit 4",
+          "default": "MCT oil softgel format"
+        },
+        {
+          "type": "text",
+          "id": "other_4",
+          "label": "Other brand point 4",
+          "default": "May use dry powder capsules"
+        },
+        {
+          "type": "text",
+          "id": "ours_5",
+          "label": "Avonent benefit 5",
+          "default": "Naturally low in coumarin"
+        },
+        {
+          "type": "text",
+          "id": "other_5",
+          "label": "Other brand point 5",
+          "default": "Cassia can contain more coumarin"
+        },
+        {
+          "type": "text",
+          "id": "ours_6",
+          "label": "Avonent benefit 6",
+          "default": "Daily amounts clearly disclosed"
+        },
+        {
+          "type": "text",
+          "id": "other_6",
+          "label": "Other brand point 6",
+          "default": "Check the label for amounts"
+        }
+      ]
+    },
+    {
+      "type": "benefits",
+      "name": "Benefits content",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "benefits_heading",
+          "label": "Benefits heading"
+        },
+        {
+          "type": "textarea",
+          "id": "benefits_subheading",
+          "label": "Benefits subheading"
+        },
+        {
+          "type": "textarea",
+          "id": "benefits_item_1",
+          "label": "Benefits item 1"
+        },
+        {
+          "type": "textarea",
+          "id": "benefits_item_2",
+          "label": "Benefits item 2"
+        },
+        {
+          "type": "textarea",
+          "id": "benefits_item_3",
+          "label": "Benefits item 3"
+        },
+        {
+          "type": "textarea",
+          "id": "benefits_item_4",
+          "label": "Benefits item 4"
+        },
+        {
+          "type": "image_picker",
+          "id": "benefits_icon_1",
+          "label": "Benefits icon 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "benefits_icon_2",
+          "label": "Benefits icon 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "benefits_icon_3",
+          "label": "Benefits icon 3"
+        },
+        {
+          "type": "image_picker",
+          "id": "benefits_icon_4",
+          "label": "Benefits icon 4"
+        },
+        {
+          "type": "image_picker",
+          "id": "benefits_image",
+          "label": "Benefits image"
+        },
+        {
+          "type": "color",
+          "id": "benefits_bg",
+          "label": "Benefits bg"
+        },
+        {
+          "type": "color",
+          "id": "benefits_text",
+          "label": "Benefits text"
+        }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "Faq content",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "faq_heading",
+          "label": "Faq heading"
+        },
+        {
+          "type": "textarea",
+          "id": "faq_1_q",
+          "label": "Faq 1 q"
+        },
+        {
+          "type": "textarea",
+          "id": "faq_1_a",
+          "label": "Faq 1 a"
+        },
+        {
+          "type": "textarea",
+          "id": "faq_2_q",
+          "label": "Faq 2 q"
+        },
+        {
+          "type": "textarea",
+          "id": "faq_2_a",
+          "label": "Faq 2 a"
+        },
+        {
+          "type": "textarea",
+          "id": "faq_3_q",
+          "label": "Faq 3 q"
+        },
+        {
+          "type": "textarea",
+          "id": "faq_3_a",
+          "label": "Faq 3 a"
+        },
+        {
+          "type": "textarea",
+          "id": "faq_4_q",
+          "label": "Faq 4 q"
+        },
+        {
+          "type": "textarea",
+          "id": "faq_4_a",
+          "label": "Faq 4 a"
+        },
+        {
+          "type": "textarea",
+          "id": "faq_5_q",
+          "label": "Faq 5 q"
+        },
+        {
+          "type": "textarea",
+          "id": "faq_5_a",
+          "label": "Faq 5 a"
+        },
+        {
+          "type": "textarea",
+          "id": "faq_6_q",
+          "label": "Faq 6 q"
+        },
+        {
+          "type": "textarea",
+          "id": "faq_6_a",
+          "label": "Faq 6 a"
+        }
+      ]
+    },
+    {
+      "type": "details",
+      "name": "Details content",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "guarantee_image",
+          "label": "Guarantee image"
+        },
+        {
+          "type": "textarea",
+          "id": "guarantee_highlight",
+          "label": "Guarantee highlight"
+        },
+        {
+          "type": "color",
+          "id": "guarantee_color",
+          "label": "Guarantee color"
+        },
+        {
+          "type": "textarea",
+          "id": "stock_title",
+          "label": "Stock title"
+        },
+        {
+          "type": "textarea",
+          "id": "stock_text",
+          "label": "Stock text"
+        },
+        {
+          "type": "textarea",
+          "id": "low_stock_line",
+          "label": "Low stock line"
+        },
+        {
+          "type": "textarea",
+          "id": "guarantee_heading",
+          "label": "Guarantee heading"
+        },
+        {
+          "type": "textarea",
+          "id": "guarantee_body",
+          "label": "Guarantee body"
+        },
+        {
+          "type": "textarea",
+          "id": "acc_1_title",
+          "label": "Acc 1 title"
+        },
+        {
+          "type": "textarea",
+          "id": "acc_1_body",
+          "label": "Acc 1 body"
+        },
+        {
+          "type": "textarea",
+          "id": "acc_2_title",
+          "label": "Acc 2 title"
+        },
+        {
+          "type": "textarea",
+          "id": "acc_2_body",
+          "label": "Acc 2 body"
+        },
+        {
+          "type": "textarea",
+          "id": "acc_3_title",
+          "label": "Acc 3 title"
+        },
+        {
+          "type": "textarea",
+          "id": "acc_3_body",
+          "label": "Acc 3 body"
+        },
+        {
+          "type": "image_picker",
+          "id": "trust_image",
+          "label": "Trust image"
+        },
+        {
+          "type": "textarea",
+          "id": "trust_image_alt",
+          "label": "Trust image alt"
+        }
+      ]
+    },
+    {
+      "type": "review",
+      "name": "Customer photo and review",
+      "limit": 12,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "photo",
+          "label": "Customer photo"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Customer name"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Review title"
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Customer review"
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "checkbox",
+          "id": "verified",
+          "label": "Verified purchase",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cinnamon page editor"
+    }
+  ]
+}
+{% endschema %}
