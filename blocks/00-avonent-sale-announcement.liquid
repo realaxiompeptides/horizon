@@ -1,15 +1,5 @@
 {% liquid
   assign block_id = 'avonent-sale-' | append: block.id
-  assign av_sale_heading = block.settings.heading
-  assign av_sale_subheading = block.settings.subheading
-  assign av_sale_bg = block.settings.background_color
-  assign av_sale_color = block.settings.text_color
-  if template.name == 'product' and product.handle == 'cinnamon-berberine-example'
-    assign av_sale_heading = 'FALL SALE'
-    assign av_sale_subheading = 'Shop Now and Get Up To 70% Off'
-    assign av_sale_bg = '#A84F1B'
-    assign av_sale_color = '#FFFFFF'
-  endif
 %}
 
 <slideshow-slide
@@ -22,8 +12,8 @@
     id="{{ block_id }}"
     class="avonent-sale-bar__inner"
     style="
-      --av-sale-bg: {{ av_sale_bg }};
-      --av-sale-color: {{ av_sale_color }};
+      --av-sale-bg: {{ block.settings.background_color }};
+      --av-sale-color: {{ block.settings.text_color }};
       --av-sale-height: {{ block.settings.bar_height }}px;
     "
     data-duration-minutes="{{ block.settings.timer_minutes }}"
@@ -32,19 +22,19 @@
       <a
         href="{{ block.settings.link }}"
         class="avonent-sale-bar__link"
-        aria-label="{{ av_sale_heading | escape }}"
+        aria-label="{{ block.settings.heading | escape }}"
       ></a>
     {% endif %}
 
     <div class="avonent-sale-bar__content">
       <div class="avonent-sale-bar__message">
         <div class="avonent-sale-bar__heading">
-          {{ av_sale_heading }}
+          {{ block.settings.heading }}
         </div>
 
-        {% if av_sale_subheading != blank %}
+        {% if block.settings.subheading != blank %}
           <div class="avonent-sale-bar__subheading">
-            {{ av_sale_subheading }}
+            {{ block.settings.subheading }}
           </div>
         {% endif %}
       </div>
