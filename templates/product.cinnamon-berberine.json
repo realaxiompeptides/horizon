@@ -199,41 +199,79 @@
         "review_1": {
           "type": "review",
           "settings": {
-            "name": "",
-            "title": "",
-            "quote": "",
+            "name": "Sarah K.",
+            "title": "Finally feeling like I’m not fighting my body all day",
+            "quote": "My routine used to feel unpredictable, especially in the afternoon. I could eat carefully and still end up reaching for coffee or something sweet just to get through the day. Since adding Avonent, I feel more consistent, my energy lasts longer, and I’m not thinking about my next snack nearly as much. It’s been much easier to stay on track.",
             "rating": 5,
-            "verified": false
+            "rating_display": "5.0",
+            "verified": true,
+            "tag_1": "Steady Energy",
+            "tag_2": "Fewer Cravings"
           }
         },
         "review_2": {
           "type": "review",
           "settings": {
-            "name": "",
-            "title": "",
-            "quote": "",
+            "name": "David R.",
+            "title": "Mornings don’t suck as much",
+            "quote": "I used to start the morning tired and foggy, and a lot of supplements never became something I actually wanted to keep taking. Avonent has been different. My mornings feel clearer, cravings are easier to manage, and I don’t get the same hard afternoon slump. It’s simple enough that it actually became part of my routine.",
             "rating": 5,
-            "verified": false
+            "rating_display": "5.0",
+            "verified": true,
+            "tag_1": "Morning Clarity",
+            "tag_2": "Daily Balance"
           }
         },
         "review_3": {
           "type": "review",
           "settings": {
-            "name": "",
-            "title": "",
-            "quote": "",
+            "name": "Jennifer L.",
+            "title": "I was skeptical, but this one stuck",
+            "quote": "I honestly expected this to feel like every other cinnamon supplement I’d tried. What made me give it a chance was the Ceylon cinnamon, berberine and MCT oil combination. After a couple of months, I feel more consistent day to day, and it has been easy on my stomach, which matters a lot to me.",
             "rating": 5,
-            "verified": false
+            "rating_display": "5.0",
+            "verified": true,
+            "tag_1": "Easy on Stomach",
+            "tag_2": "Consistent Routine"
           }
         },
         "review_4": {
           "type": "review",
           "settings": {
-            "name": "",
-            "title": "",
-            "quote": "",
+            "name": "Michael T.",
+            "title": "Wish I knew about this sooner",
+            "quote": "Regular cinnamon capsules never fit my routine very well and were sometimes rough on the stomach. Avonent has been easier to stay consistent with. I like that it uses true Ceylon cinnamon with berberine, and the softgels are much easier to take every day. Overall, it’s been a much better fit.",
             "rating": 5,
-            "verified": false
+            "rating_display": "4.9",
+            "verified": true,
+            "tag_1": "Ceylon Formula",
+            "tag_2": "Better Tolerance"
+          }
+        },
+        "review_5": {
+          "type": "review",
+          "settings": {
+            "name": "Patricia M.",
+            "title": "You can tell the quality is better",
+            "quote": "I’m picky about supplements and I always read the formula first. I liked seeing Ceylon cinnamon, berberine and MCT oil together instead of a long mystery blend. After a few months, my energy feels steadier, the afternoon cravings are much less noticeable, and I haven’t had digestive issues with it.",
+            "rating": 5,
+            "rating_display": "5.0",
+            "verified": true,
+            "tag_1": "Quality Formula",
+            "tag_2": "Steady Energy"
+          }
+        },
+        "review_6": {
+          "type": "review",
+          "settings": {
+            "name": "Robert H.",
+            "title": "First thing that didn’t disappoint me",
+            "quote": "I’ve tried powders and gummies that were hard to stick with. Avonent has been simple: I take it, move on with my day, and I feel more consistent through the afternoon. I’m not reaching for snacks as often, my focus feels steadier, and this is one of the few supplements I’ve actually kept in my routine.",
+            "rating": 5,
+            "rating_display": "5.0",
+            "verified": true,
+            "tag_1": "Afternoon Energy",
+            "tag_2": "Easy Routine"
           }
         }
       },
@@ -250,11 +288,14 @@
         "review_1",
         "review_2",
         "review_3",
-        "review_4"
+        "review_4",
+        "review_5",
+        "review_6"
       ],
       "settings": {
         "reviews_heading": "Real stories. Everyday routines.",
-        "reviews_intro": "Experiences shared by Avonent customers."
+        "reviews_intro": "Experiences shared by Avonent customers.",
+        "trust_image_alt": "Why Trust Avonent"
       }
     }
   },
