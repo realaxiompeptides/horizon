@@ -1497,7 +1497,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
   </section>
 
 
-  <section class="av-cb__faq-section" data-av-cb-faq>
+  <section id="av-cb-faq" class="av-cb__faq-section" data-av-cb-faq>
     <div class="av-cb__faq-wrap">
       <h2 class="av-cb__faq-heading">{{ av_cb_faq_heading }}</h2>
       <div class="av-cb__faq-list">
@@ -1534,6 +1534,23 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
     </span>
     <button class="av-cb__sticky-add" type="button" data-av-cb-sticky-add>Add to Cart</button>
   </div>
+
+
+  <style>
+    /* Ceylon Cinnamon product only: replace drawer blue with the cinnamon brand palette. */
+    html.av-cb-cinnamon-page #cart-drawer .theme-drawer__badge{background:#FFF0E7!important;color:#A84F1B!important}
+    html.av-cb-cinnamon-page #cart-drawer .theme-drawer__close-button:hover{border-color:#E7BEA5!important;background:#FFF4ED!important;color:#A84F1B!important}
+    html.av-cb-cinnamon-page #cart-drawer .avonent-cart-reservation{background:linear-gradient(135deg,#B6551B,#8F3F12)!important;color:#fff!important}
+    html.av-cb-cinnamon-page #cart-drawer .avonent-shipping-protection{border-color:#E8C7B3!important;background:linear-gradient(135deg,#FFF9F5,#FFF0E7)!important}
+    html.av-cb-cinnamon-page #cart-drawer .avonent-shipping-protection__icon{color:#A84F1B!important;box-shadow:0 5px 18px rgba(168,79,27,.14)!important}
+    html.av-cb-cinnamon-page #cart-drawer .avonent-shipping-protection__heading span,
+    html.av-cb-cinnamon-page #cart-drawer .avonent-cart-line__savings{color:#A84F1B!important}
+    html.av-cb-cinnamon-page #cart-drawer .avonent-shipping-protection__toggle[aria-checked='true']{background:#A84F1B!important}
+    html.av-cb-cinnamon-page #cart-drawer .avonent-shipping-protection__toggle:focus-visible{outline-color:rgba(168,79,27,.30)!important}
+    html.av-cb-cinnamon-page #cart-drawer .cart-drawer__summary .avonent-cart-checkout{background:#A84F1B!important;border-color:#A84F1B!important;color:#fff!important}
+    html.av-cb-cinnamon-page #cart-drawer .cart-drawer__summary .avonent-cart-checkout:hover{background:#7D3612!important;border-color:#7D3612!important}
+    html.av-cb-cinnamon-page #cart-drawer .avonent-cart-trusted-stars{color:#A84F1B!important}
+  </style>
 
   <script>
     (() => {
