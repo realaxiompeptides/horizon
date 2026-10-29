@@ -197,7 +197,9 @@
       >
         {% comment %} AVONENT_CINNAMON_BERBERINE_LAYOUT_ROUTE {% endcomment %}
         {% if template.suffix == 'cinnamon-berberine' or product.handle == 'cinnamon-berberine-example' %}
-          {% render '00-cinnamon-berberine-page', product: product %}
+          {% render '00-cinnamon-berberine-hero', product: product %}
+          {% section '00-cinnamon-berberine-details' %}
+          {% render '00-cinnamon-berberine-body', product: product %}
         {% else %}
           {{ content_for_layout }}
         {% endif %}
