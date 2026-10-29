@@ -1,0 +1,467 @@
+{% liquid
+  assign avl_product = section.settings.featured_product | default: all_products['cinnamon-berberine']
+  assign avl_product_url = avl_product.url | default: '/products/cinnamon-berberine'
+  assign avl_product_image = avl_product.featured_image
+  assign avl_hero_image = section.settings.hero_image | default: avl_product_image
+  assign avl_logo = section.settings.logo_image | default: settings.logo
+  assign avl_review_count = 0
+  for block in section.blocks
+    if block.type == 'review' and block.settings.review_text != blank
+      assign avl_review_count = avl_review_count | plus: 1
+    endif
+  endfor
+%}
+
+<div class="avl" id="AvonentListicle-{{ section.id }}" style="--avl-accent: {{ section.settings.accent_color }}; --avl-ink: {{ section.settings.text_color }}; --avl-cream: {{ section.settings.background_color }};">
+  <div class="avl-announcement">
+    <span class="avl-announcement__dot" aria-hidden="true"></span>
+    {{ section.settings.announcement_text | escape }}
+  </div>
+  <div class="avl-brand">
+    <a class="avl-brand__link" href="{{ routes.root_url }}" aria-label="Avonent home">
+      {% if avl_logo != blank %}
+        {{ avl_logo | image_url: width: 400 | image_tag: loading: 'eager', widths: '180, 260, 400', class: 'avl-brand__image', alt: 'Avonent' }}
+      {% else %}
+        <span class="avl-brand__wordmark">Avonent<span class="avl-brand__period">.</span></span>
+      {% endif %}
+    </a>
+  </div>
+
+  <div class="avl-main">
+    <section class="avl-hero avl-container" aria-labelledby="avl-hero-title">
+      <div class="avl-hero__image-wrap">
+        {% if avl_hero_image != blank %}
+          {{ avl_hero_image | image_url: width: 1400 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '480, 720, 960, 1200, 1400', sizes: '(min-width: 900px) 48vw, 100vw', class: 'avl-hero__image', alt: section.settings.hero_image_alt }}
+        {% else %}
+          <div class="avl-image-fallback" aria-label="Ceylon cinnamon botanical illustration"><span class="avl-image-fallback__glyph" aria-hidden="true">✦</span><span>CEYLON CINNAMON</span><small>A more thoughtful everyday ritual</small></div>
+        {% endif %}
+        <span class="avl-hero__image-label">{{ section.settings.hero_image_badge | escape }}</span>
+      </div>
+      <div class="avl-hero__content">
+        <div class="avl-eyebrow"><span class="avl-eyebrow__line"></span>{{ section.settings.hero_eyebrow | escape }}</div>
+        <h1 id="avl-hero-title">{{ section.settings.hero_title | escape }}</h1>
+        <p class="avl-hero__subtitle">{{ section.settings.hero_subtitle | escape }}</p>
+        <div class="avl-rich avl-hero__lead">{{ section.settings.hero_intro }}</div>
+        <a class="avl-button" href="{{ avl_product_url }}">{{ section.settings.hero_cta | escape }} <span aria-hidden="true">↗</span></a>
+        <div class="avl-hero__micro"><span aria-hidden="true">✓</span> {{ section.settings.hero_microcopy | escape }}</div>
+      </div>
+    </section>
+
+    <div class="avl-intro-band">
+      <div class="avl-container avl-intro-band__inner">
+        <span class="avl-intro-band__label">THE AVONENT APPROACH</span>
+        <p>{{ section.settings.intro_band_text | escape }}</p>
+      </div>
+    </div>
+
+    <section class="avl-benefits avl-container" aria-labelledby="avl-benefits-heading">
+      <header class="avl-section-heading">
+        <span class="avl-kicker">THE SEVEN REASONS</span>
+        <h2 id="avl-benefits-heading">{{ section.settings.benefits_heading | escape }}</h2>
+        <p>{{ section.settings.benefits_subheading | escape }}</p>
+      </header>
+      {% assign avl_number = 0 %}
+      {% for block in section.blocks %}
+        {% if block.type == 'benefit' %}
+          {% assign avl_number = avl_number | plus: 1 %}
+          {% assign avl_number_label = avl_number | prepend: '0' | slice: -2, 2 %}
+          {% assign avl_number_even = avl_number | modulo: 2 %}
+          <article class="avl-benefit{% if avl_number_even == 0 %} avl-benefit--reverse{% endif %}" {{ block.shopify_attributes }}>
+            <div class="avl-benefit__copy">
+              <div class="avl-benefit__meta"><span>{{ block.settings.category | escape }}</span><span>{{ avl_number_label }}</span></div>
+              <h3>{{ block.settings.heading | escape }}</h3>
+              <div class="avl-rich avl-benefit__body">{{ block.settings.body }}</div>
+              {% if block.settings.highlight != blank %}
+                <div class="avl-benefit__highlight"><span aria-hidden="true">✓</span> {{ block.settings.highlight | escape }}</div>
+              {% endif %}
+            </div>
+            <div class="avl-benefit__visual">
+              {% if block.settings.image != blank %}
+                {{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '360, 540, 720, 960, 1200', sizes: '(min-width: 900px) 45vw, 100vw', class: 'avl-benefit__image', alt: block.settings.image_alt }}
+              {% else %}
+                <div class="avl-benefit__art" aria-hidden="true">
+                  <span class="avl-benefit__art-circle"></span>
+                  <span class="avl-benefit__art-number">{{ avl_number_label }}</span>
+                  <span class="avl-benefit__art-word">Avonent</span>
+                </div>
+                {% if request.design_mode %}<div class="avl-editor-hint">Select this block to add your own image</div>{% endif %}
+              {% endif %}
+              {% if block.settings.image_caption != blank %}<div class="avl-benefit__caption">{{ block.settings.image_caption | escape }}</div>{% endif %}
+            </div>
+          </article>
+        {% endif %}
+      {% endfor %}
+    </section>
+
+    <section class="avl-formula" aria-labelledby="avl-formula-heading">
+      <div class="avl-container avl-formula__inner">
+        <div class="avl-formula__copy">
+          <span class="avl-kicker">WHAT MAKES IT DIFFERENT</span>
+          <h2 id="avl-formula-heading">{{ section.settings.formula_title | escape }}</h2>
+          <p>{{ section.settings.formula_description | escape }}</p>
+          <div class="avl-formula__facts">
+            <div><strong>1,200 mg</strong><span>True Ceylon Cinnamon</span></div>
+            <div><strong>400 mg</strong><span>Berberine HCl</span></div>
+            <div><strong>200 mg</strong><span>MCT Oil</span></div>
+          </div>
+          <a class="avl-text-link" href="{{ avl_product_url }}">{{ section.settings.formula_cta | escape }} <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="avl-formula__media">
+          {% assign avl_formula_image = section.settings.formula_image | default: avl_product_image %}
+          {% if avl_formula_image != blank %}
+            {{ avl_formula_image | image_url: width: 1100 | image_tag: loading: 'lazy', widths: '360, 600, 800, 1100', sizes: '(min-width: 900px) 44vw, 100vw', alt: 'Avonent Ceylon Cinnamon with Berberine formula' }}
+          {% else %}
+            <div class="avl-formula__monogram" aria-hidden="true">A<span>✦</span></div>
+          {% endif %}
+        </div>
+      </div>
+    </section>
+
+    <section class="avl-offer avl-container" aria-labelledby="avl-offer-heading">
+      <div class="avl-offer__panel">
+        <div class="avl-offer__text">
+          <span class="avl-kicker">A SIMPLE PLACE TO START</span>
+          <h2 id="avl-offer-heading">{{ section.settings.offer_title | escape }}</h2>
+          <p>{{ section.settings.offer_description | escape }}</p>
+          <div class="avl-offer__perks"><span>✓ {{ section.settings.offer_perk_1 | escape }}</span><span>✓ {{ section.settings.offer_perk_2 | escape }}</span></div>
+        </div>
+        <div class="avl-offer__action">
+          <a class="avl-button avl-button--light" href="{{ avl_product_url }}">{{ section.settings.offer_cta | escape }} <span aria-hidden="true">↗</span></a>
+          <small>{{ section.settings.offer_guarantee | escape }}</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="avl-reviews avl-container" aria-labelledby="avl-reviews-heading">
+      <header class="avl-section-heading">
+        <span class="avl-kicker">FROM THE COMMUNITY</span>
+        <h2 id="avl-reviews-heading">{{ section.settings.reviews_title | escape }}</h2>
+        <p>{{ section.settings.reviews_subtitle | escape }}</p>
+      </header>
+      {% if avl_review_count > 0 %}
+        <div class="avl-reviews__grid">
+          {% for block in section.blocks %}
+            {% if block.type == 'review' and block.settings.review_text != blank %}
+              <article class="avl-review" {{ block.shopify_attributes }}>
+                {% if block.settings.image != blank %}
+                  {{ block.settings.image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '320, 540, 700', sizes: '(min-width: 800px) 31vw, 100vw', class: 'avl-review__image', alt: block.settings.image_alt }}
+                {% endif %}
+                <div class="avl-review__content">
+                  <div class="avl-review__stars" aria-label="5 out of 5 stars">★★★★★</div>
+                  <h3>{{ block.settings.review_title | escape }}</h3>
+                  <div class="avl-rich">{{ block.settings.review_text }}</div>
+                  <div class="avl-review__author"><strong>{{ block.settings.author | escape }}</strong>{% if block.settings.verified %}<span>Verified Avonent buyer</span>{% endif %}</div>
+                </div>
+              </article>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="avl-reviews__empty"><p>Interested in hearing from the Avonent community?</p><a href="{{ avl_product_url }}">Visit the product page for the latest customer feedback <span aria-hidden="true">↗</span></a></div>
+      {% endif %}
+    </section>
+
+    <section class="avl-faq avl-container" aria-labelledby="avl-faq-heading">
+      <div class="avl-faq__intro">
+        <span class="avl-kicker">GOOD QUESTIONS, CLEAR ANSWERS</span>
+        <h2 id="avl-faq-heading">{{ section.settings.faq_title | escape }}</h2>
+        <p>{{ section.settings.faq_subtitle | escape }}</p>
+      </div>
+      <div class="avl-faq__items">
+        {% for block in section.blocks %}
+          {% if block.type == 'faq' %}
+            <details class="avl-faq__item" {{ block.shopify_attributes }}>
+              <summary>{{ block.settings.question | escape }}<span class="avl-faq__plus" aria-hidden="true"></span></summary>
+              <div class="avl-rich avl-faq__answer">{{ block.settings.answer }}</div>
+            </details>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </section>
+
+    <div class="avl-final-cta">
+      <div class="avl-container avl-final-cta__inner">
+        <span>Make your daily wellness routine a little more intentional.</span>
+        <a class="avl-button" href="{{ avl_product_url }}">{{ section.settings.final_cta | escape }} <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="avl-disclaimer avl-container">
+    <p>*These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease. Talk with your healthcare professional before using supplements, especially if you take prescription medication for blood sugar.</p>
+  </div>
+  <div class="avl-mini-footer">
+    <div class="avl-mini-footer__brand">Avonent<span>.</span></div>
+    <nav aria-label="Legal links">
+      {% if shop.terms_of_service.url != blank %}<a href="{{ shop.terms_of_service.url }}">Terms &amp; Conditions</a>{% endif %}
+      {% if shop.privacy_policy.url != blank %}<a href="{{ shop.privacy_policy.url }}">Privacy Policy</a>{% endif %}
+      {% if shop.refund_policy.url != blank %}<a href="{{ shop.refund_policy.url }}">Return Policy</a>{% endif %}
+    </nav>
+    <small>© {{ 'now' | date: '%Y' }} Avonent. All rights reserved.</small>
+  </div>
+  <div class="avl-sticky">
+    {% if avl_product_image != blank %}
+      {{ avl_product_image | image_url: width: 112 | image_tag: loading: 'lazy', widths: '72, 112', class: 'avl-sticky__image', alt: 'Avonent Ceylon Cinnamon' }}
+    {% endif %}
+    <div class="avl-sticky__label"><strong>Avonent Ceylon Cinnamon</strong><span>30-day money-back guarantee</span></div>
+    <a href="{{ avl_product_url }}" class="avl-sticky__button">{{ section.settings.sticky_cta | escape }} <span aria-hidden="true">↗</span></a>
+  </div>
+</div>
+
+<style>
+  .avl{--avl-soft:#f5eae1;--avl-line:#e7d8ce;--avl-muted:#6e6661;--avl-paper:#fff;color:var(--avl-ink);background:var(--avl-cream);font-family:var(--font-body--family,Arial,sans-serif);font-size:16px;line-height:1.65;padding-bottom:86px}
+  .avl *{box-sizing:border-box}
+  .avl h1,.avl h2,.avl h3,.avl p{margin:0}
+  .avl h1,.avl h2,.avl h3{font-family:var(--font-heading--family,Georgia,serif);letter-spacing:-.035em;line-height:1.13;font-weight:700}
+  .avl a{color:inherit;text-decoration:none}
+  .avl img{max-width:100%;display:block}
+  .avl-container{width:min(1180px,calc(100% - 48px));margin-inline:auto}
+  .avl-announcement{min-height:42px;background:var(--avl-accent);color:white;display:flex;align-items:center;justify-content:center;gap:10px;padding:8px 20px;text-align:center;font-size:12px;font-weight:750;letter-spacing:.075em;text-transform:uppercase;line-height:1.35}
+  .avl-announcement__dot{width:6px;height:6px;border-radius:50%;background:#ffe6bf;flex:none}
+  .avl-brand{height:88px;display:flex;align-items:center;justify-content:center;background:var(--avl-paper);border-bottom:1px solid #f4ede8}
+  .avl-brand__link{display:inline-flex;align-items:center;justify-content:center}
+  .avl-brand__image{width:auto;max-width:216px;max-height:58px;object-fit:contain}
+  .avl-brand__wordmark,.avl-mini-footer__brand{font-family:Georgia,serif;font-size:40px;line-height:1;font-weight:700;letter-spacing:-.065em}
+  .avl-brand__period,.avl-mini-footer__brand span{color:var(--avl-accent)}
+  .avl-hero{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:64px;padding-top:66px;padding-bottom:95px}
+  .avl-hero__image-wrap{position:relative;aspect-ratio:1.1/1;min-width:0}
+  .avl-hero__image{width:100%;height:100%;object-fit:cover;border-radius:19px;background:#e9d9cc}
+  .avl-hero__image-label{position:absolute;left:20px;bottom:20px;background:rgba(255,255,255,.92);border-radius:100px;padding:8px 17px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+  .avl-eyebrow,.avl-kicker{font-size:12px;letter-spacing:.17em;text-transform:uppercase;font-weight:800;color:var(--avl-accent)}
+  .avl-eyebrow{display:flex;align-items:center;gap:12px}
+  .avl-eyebrow__line{width:30px;height:1px;background:var(--avl-accent)}
+  .avl-hero h1{font-size:clamp(38px,4.15vw,62px);margin-top:18px;max-width:600px}
+  .avl-hero__subtitle{font-size:clamp(19px,1.9vw,24px);line-height:1.35;font-weight:650;margin-top:17px}
+  .avl-hero__lead{margin-top:22px;color:var(--avl-muted);font-size:16px;line-height:1.75;max-width:550px}
+  .avl-rich p+p{margin-top:14px}
+  .avl-rich ul,.avl-rich ol{padding-left:24px;margin:10px 0}
+  .avl-button{display:inline-flex;gap:18px;align-items:center;justify-content:center;background:var(--avl-accent);color:white!important;border-radius:100px;padding:16px 26px;font-weight:750;font-size:15px;letter-spacing:.005em;line-height:1.3;transition:transform .18s ease,background .18s ease;min-height:54px;text-align:center}
+  .avl-button:hover{transform:translateY(-2px);filter:brightness(.93)}
+  .avl-button:focus-visible,.avl a:focus-visible,.avl summary:focus-visible{outline:3px solid #02c6ea;outline-offset:4px}
+  .avl-button span{font-size:20px;line-height:1}
+  .avl-hero .avl-button{margin-top:28px;min-width:250px}
+  .avl-hero__micro{font-size:13px;color:var(--avl-muted);margin-top:12px}
+  .avl-hero__micro span{color:var(--avl-accent);font-weight:900}
+  .avl-intro-band{background:#efe5dc;border-top:1px solid var(--avl-line);border-bottom:1px solid var(--avl-line)}
+  .avl-intro-band__inner{display:flex;align-items:center;justify-content:space-between;gap:60px;padding-block:26px}
+  .avl-intro-band__label{flex:none;font-size:11px;font-weight:800;letter-spacing:.15em;color:var(--avl-accent)}
+  .avl-intro-band p{font-family:Georgia,serif;font-size:clamp(17px,1.75vw,22px);line-height:1.5}
+  .avl-section-heading{text-align:center;max-width:790px;margin:0 auto 65px}
+  .avl-section-heading h2{font-size:clamp(32px,3.4vw,49px);margin-top:14px}
+  .avl-section-heading p{color:var(--avl-muted);line-height:1.7;margin-top:17px}
+  .avl-benefits{padding-top:107px;padding-bottom:75px}
+  .avl-benefit{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:75px;padding:45px 0 76px;border-bottom:1px solid var(--avl-line)}
+  .avl-benefit+.avl-benefit{padding-top:77px}
+  .avl-benefit--reverse .avl-benefit__visual{order:-1}
+  .avl-benefit__meta{display:flex;align-items:center;justify-content:space-between;gap:15px;color:var(--avl-accent);font-weight:800;letter-spacing:.13em;text-transform:uppercase;font-size:12px;padding-bottom:11px;border-bottom:1px solid var(--avl-line)}
+  .avl-benefit__meta span:last-child{font-family:Georgia,serif;font-size:21px;letter-spacing:0}
+  .avl-benefit h3{font-size:clamp(28px,3vw,42px);margin:22px 0}
+  .avl-benefit__body{color:#534e49;font-size:16px;line-height:1.85}
+  .avl-benefit__highlight{margin-top:26px;display:inline-flex;align-items:center;gap:12px;background:#f0e3d8;border-radius:9px;padding:12px 16px;font-weight:700;font-size:13px;color:#684331}
+  .avl-benefit__highlight span{display:grid;place-items:center;border-radius:50%;background:var(--avl-accent);color:#fff;width:23px;height:23px;flex:none}
+  .avl-benefit__visual{min-width:0;position:relative}
+  .avl-benefit__image{width:100%;height:auto;aspect-ratio:1.2/1;object-fit:cover;border-radius:17px}
+  .avl-benefit__art{height:auto;aspect-ratio:1.2/1;background:linear-gradient(140deg,#f1e1d3,#d9ae8e);border-radius:17px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+  .avl-benefit__art-circle{position:absolute;width:70%;aspect-ratio:1;border:1px solid rgba(112,65,38,.22);border-radius:50%;box-shadow:0 0 0 37px rgba(255,255,255,.12),0 0 0 74px rgba(255,255,255,.09)}
+  .avl-benefit__art-number{font-family:Georgia,serif;font-size:clamp(100px,13vw,210px);line-height:1;color:rgba(99,49,29,.23);position:relative}
+  .avl-benefit__art-word{position:absolute;bottom:23px;left:27px;font-family:Georgia,serif;font-size:20px;color:#61402e;font-weight:700}
+  .avl-benefit__caption{text-align:center;color:var(--avl-muted);font-size:12px;margin-top:10px}
+  .avl-editor-hint{position:absolute;bottom:16px;right:16px;background:#fff;border-radius:8px;padding:6px 10px;font-size:12px}
+  .avl-image-fallback{width:100%;height:100%;border-radius:18px;background:radial-gradient(circle at 50% 38%,#e6c4a8,transparent 58%),linear-gradient(130deg,#d8b091,#f6e6d4);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#67412e;font-weight:750;letter-spacing:.12em}
+  .avl-image-fallback__glyph{font-size:100px;line-height:1}
+  .avl-image-fallback small{letter-spacing:.02em;font-weight:400}
+  .avl-formula{background:#f0e6dc;padding:100px 0}
+  .avl-formula__inner{display:grid;grid-template-columns:1fr 1fr;gap:85px;align-items:center}
+  .avl-formula h2{font-size:clamp(32px,3.3vw,49px);margin:14px 0 20px}
+  .avl-formula__copy>p{color:var(--avl-muted);line-height:1.8;max-width:550px}
+  .avl-formula__facts{border-top:1px solid #d9c8b9;border-bottom:1px solid #d9c8b9;margin-top:31px;display:grid;grid-template-columns:repeat(3,1fr);padding:23px 0;gap:16px}
+  .avl-formula__facts div{display:flex;flex-direction:column;gap:7px}
+  .avl-formula__facts strong{font-size:22px;font-family:Georgia,serif;color:var(--avl-accent)}
+  .avl-formula__facts span{font-size:12px;line-height:1.3;color:var(--avl-muted)}
+  .avl-text-link{display:inline-flex;align-items:center;gap:12px;color:var(--avl-accent)!important;margin-top:26px;text-decoration:underline!important;text-underline-offset:5px;font-weight:800}
+  .avl-formula__media img{width:100%;aspect-ratio:1.08/1;object-fit:contain;background:#fff9f3;border-radius:20px;padding:20px}
+  .avl-formula__monogram{aspect-ratio:1.08;background:#d6b497;border-radius:20px;display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-size:200px;color:#85563b}
+  .avl-formula__monogram span{font-size:60px}
+  .avl-offer{padding-block:110px}
+  .avl-offer__panel{background:#663f2f;color:white;border-radius:21px;display:grid;grid-template-columns:1.4fr .65fr;align-items:center;gap:60px;padding:52px 65px;box-shadow:0 15px 35px rgba(71,43,29,.1)}
+  .avl-offer__panel .avl-kicker{color:#ffd8bc}
+  .avl-offer h2{font-size:clamp(31px,3vw,43px);margin:13px 0}
+  .avl-offer p{color:#f4ded0;line-height:1.7}
+  .avl-offer__perks{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:22px;font-size:13px;font-weight:650}
+  .avl-offer__action{text-align:center}
+  .avl-button--light{background:#fff9f3;color:#5f3927!important;width:100%}
+  .avl-offer__action small{display:block;color:#f1d5c6;margin-top:13px;font-size:12px}
+  .avl-reviews{padding-bottom:110px}
+  .avl-reviews__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .avl-review{background:#fff;border:1px solid var(--avl-line);border-radius:15px;overflow:hidden;box-shadow:0 4px 16px rgba(62,43,32,.05)}
+  .avl-review__image{width:100%;aspect-ratio:1.7;object-fit:cover}
+  .avl-review__content{padding:25px}
+  .avl-review__stars{color:#cb8745;letter-spacing:3px;font-size:17px;margin-bottom:10px}
+  .avl-review h3{font-size:21px;margin-bottom:12px}
+  .avl-review .avl-rich{color:var(--avl-muted);font-size:14px;line-height:1.7}
+  .avl-review__author{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:21px;font-size:12px;flex-wrap:wrap}
+  .avl-review__author span{color:#267959;font-weight:700}
+  .avl-reviews__empty{background:#fff;border:1px solid var(--avl-line);border-radius:15px;text-align:center;padding:31px 24px}
+  .avl-reviews__empty p{font-size:19px;font-family:Georgia,serif}
+  .avl-reviews__empty a{display:inline-block;margin-top:10px;color:var(--avl-accent);font-weight:800;text-decoration:underline}
+  .avl-faq{display:grid;grid-template-columns:1fr 1.35fr;gap:100px;padding-bottom:110px}
+  .avl-faq__intro h2{font-size:clamp(31px,3.2vw,46px);margin:16px 0}
+  .avl-faq__intro p{color:var(--avl-muted)}
+  .avl-faq__item{border-bottom:1px solid var(--avl-line);padding:0}
+  .avl-faq__item:first-child{border-top:1px solid var(--avl-line)}
+  .avl-faq__item summary{display:flex;justify-content:space-between;align-items:center;gap:16px;list-style:none;cursor:pointer;padding:21px 4px;font-weight:750;line-height:1.35}
+  .avl-faq__item summary::-webkit-details-marker{display:none}
+  .avl-faq__plus{position:relative;width:16px;height:16px;flex:none}
+  .avl-faq__plus:before,.avl-faq__plus:after{content:'';position:absolute;background:var(--avl-accent);left:0;top:7px;width:16px;height:2px}
+  .avl-faq__plus:after{transform:rotate(90deg)}
+  .avl-faq__item[open] .avl-faq__plus:after{transform:rotate(0)}
+  .avl-faq__answer{color:var(--avl-muted);padding:0 30px 23px 4px;line-height:1.75;font-size:14px}
+  .avl-final-cta{background:#f0e5db;padding:28px 0}
+  .avl-final-cta__inner{display:flex;align-items:center;justify-content:space-between;gap:22px}
+  .avl-final-cta__inner>span{font-family:Georgia,serif;font-size:clamp(18px,2vw,25px);font-weight:700}
+  .avl-disclaimer{padding-top:32px;padding-bottom:30px}
+  .avl-disclaimer p{color:#807872;font-size:11px;line-height:1.6;max-width:990px;margin:auto;text-align:center}
+  .avl-mini-footer{border-top:1px solid var(--avl-line);background:#fff;padding:34px 24px 36px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:19px}
+  .avl-mini-footer__brand{font-size:32px}
+  .avl-mini-footer nav{display:flex;justify-content:center;flex-wrap:wrap;gap:15px 35px;font-size:13px}
+  .avl-mini-footer nav a:hover{text-decoration:underline}
+  .avl-mini-footer small{font-size:11px;color:var(--avl-muted)}
+  .avl-sticky{position:fixed;z-index:55;left:0;bottom:0;width:100%;background:rgba(255,255,255,.98);border-top:1px solid #ebded4;box-shadow:0 -4px 22px rgba(47,31,20,.08);display:flex;align-items:center;justify-content:center;gap:16px;padding:10px 24px;min-height:74px;backdrop-filter:blur(8px)}
+  .avl-sticky__image{width:47px;height:47px;object-fit:contain;border-radius:8px;background:#f8f1eb}
+  .avl-sticky__label{display:flex;flex-direction:column;min-width:0;margin-right:25px;line-height:1.35}
+  .avl-sticky__label strong{font-size:13px}
+  .avl-sticky__label span{font-size:11px;color:var(--avl-muted);margin-top:3px}
+  .avl-sticky__button{min-height:45px;display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--avl-accent);color:white!important;border-radius:100px;padding:10px 29px;font-size:14px;font-weight:800;text-align:center}
+  .avl-sticky__button:hover{filter:brightness(.92)}
+  @media(max-width:899px){
+    .avl-hero{gap:30px;padding:45px 0 68px}
+    .avl-benefit{gap:38px}
+    .avl-formula__inner{gap:40px}
+    .avl-faq{gap:45px}
+    .avl-offer__panel{padding:42px 36px;gap:30px}
+  }
+  @media(max-width:700px){
+    .avl{padding-bottom:76px}
+    .avl-container{width:min(100% - 34px,570px)}
+    .avl-announcement{font-size:10px;min-height:39px;letter-spacing:.05em}
+    .avl-brand{height:72px}
+    .avl-brand__wordmark{font-size:33px}
+    .avl-brand__image{max-height:45px;max-width:180px}
+    .avl-hero{display:flex;flex-direction:column;align-items:stretch;gap:25px;padding-top:25px;padding-bottom:57px}
+    .avl-hero__image-wrap{aspect-ratio:1.28/1}
+    .avl-hero__image-label{left:12px;bottom:12px;padding:6px 11px;font-size:9px}
+    .avl-hero__content{padding:0 2px}
+    .avl-hero h1{font-size:36px;margin-top:11px}
+    .avl-hero__subtitle{font-size:20px}
+    .avl-hero__lead{font-size:15px;margin-top:13px}
+    .avl-hero .avl-button{width:100%;margin-top:22px}
+    .avl-intro-band__inner{flex-direction:column;align-items:flex-start;gap:8px;padding-block:23px}
+    .avl-intro-band p{font-size:19px}
+    .avl-benefits{padding:67px 0 40px}
+    .avl-section-heading{margin-bottom:33px}
+    .avl-section-heading h2{font-size:32px;margin-top:11px}
+    .avl-benefit,.avl-benefit+.avl-benefit{display:flex;flex-direction:column;align-items:stretch;gap:25px;padding:36px 0 46px}
+    .avl-benefit--reverse .avl-benefit__visual{order:0}
+    .avl-benefit h3{font-size:30px;margin:16px 0}
+    .avl-benefit__body{font-size:15px;line-height:1.8}
+    .avl-benefit__image,.avl-benefit__art{aspect-ratio:1.25/1}
+    .avl-benefit__art-number{font-size:140px}
+    .avl-formula{padding:68px 0}
+    .avl-formula__inner{display:flex;flex-direction:column;align-items:stretch;gap:27px}
+    .avl-formula h2{font-size:33px}
+    .avl-formula__facts{gap:8px}
+    .avl-formula__facts strong{font-size:19px}
+    .avl-formula__facts span{font-size:11px}
+    .avl-offer{padding:67px 0}
+    .avl-offer__panel{display:flex;flex-direction:column;align-items:stretch;gap:24px;padding:33px 24px;border-radius:15px}
+    .avl-offer h2{font-size:31px}
+    .avl-reviews{padding-bottom:70px}
+    .avl-reviews__grid{grid-template-columns:1fr}
+    .avl-review__image{aspect-ratio:1.8}
+    .avl-faq{display:block;padding-bottom:70px}
+    .avl-faq__intro{margin-bottom:28px}
+    .avl-faq__intro h2{font-size:33px}
+    .avl-final-cta__inner{flex-direction:column;align-items:stretch;text-align:center}
+    .avl-final-cta .avl-button{width:100%}
+    .avl-mini-footer nav{gap:12px 19px}
+    .avl-sticky{padding:9px 13px;gap:10px;min-height:70px;justify-content:space-between}
+    .avl-sticky__image{width:42px;height:42px}
+    .avl-sticky__label{margin-right:0;flex:1}
+    .avl-sticky__label strong{font-size:11px}
+    .avl-sticky__label span{font-size:9px}
+    .avl-sticky__button{padding:10px 15px;font-size:12px;min-height:42px}
+  }
+  @media(prefers-reduced-motion:reduce){.avl-button{transition:none}.avl-button:hover{transform:none}}
+</style>
+
+{% schema %}
+{
+  "name": "Avonent cinnamon listicle",
+  "tag": "section",
+  "class": "avonent-listicle-section",
+  "settings": [
+    {"type":"product","id":"featured_product","label":"Product to link"},
+    {"type":"image_picker","id":"logo_image","label":"Logo (optional; uses theme logo)"},
+    {"type":"text","id":"announcement_text","label":"Announcement bar","default":"MEET YOUR NEW DAILY WELLNESS RITUAL · 30-DAY GUARANTEE"},
+    {"type":"color","id":"accent_color","label":"Cinnamon accent","default":"#B96A46"},
+    {"type":"color","id":"text_color","label":"Text color","default":"#292522"},
+    {"type":"color","id":"background_color","label":"Page background","default":"#FFFBF7"},
+    {"type":"header","content":"Hero"},
+    {"type":"image_picker","id":"hero_image","label":"Hero photo"},
+    {"type":"text","id":"hero_image_alt","label":"Hero image description","default":"Avonent Ceylon cinnamon daily supplement"},
+    {"type":"text","id":"hero_image_badge","label":"Photo label","default":"A wellness ritual worth keeping"},
+    {"type":"text","id":"hero_eyebrow","label":"Eyebrow","default":"The Avonent guide"},
+    {"type":"text","id":"hero_title","label":"Main headline","default":"7 Reasons to Choose Avonent Ceylon Cinnamon"},
+    {"type":"text","id":"hero_subtitle","label":"Headline subtext","default":"A thoughtful approach to everyday metabolic wellness"},
+    {"type":"richtext","id":"hero_intro","label":"Intro copy","default":"<p>There’s a difference between another supplement on your shelf and a formula designed around your everyday routine. Here’s what makes Avonent Ceylon Cinnamon with Berberine HCl worth a closer look.</p>"},
+    {"type":"text","id":"hero_cta","label":"Top button","default":"See Today’s Offer"},
+    {"type":"text","id":"hero_microcopy","label":"Top button note","default":"30-day money-back guarantee"},
+    {"type":"header","content":"Seven reasons"},
+    {"type":"text","id":"intro_band_text","label":"Intro band","default":"True Ceylon cinnamon, complementary ingredients, and a simple routine — without the dramatic promises."},
+    {"type":"text","id":"benefits_heading","label":"Section headline","default":"What makes Avonent different?"},
+    {"type":"text","id":"benefits_subheading","label":"Section subtext","default":"Seven thoughtful details behind a formula created to complement a balanced daily wellness routine."},
+    {"type":"header","content":"Formula and offer"},
+    {"type":"image_picker","id":"formula_image","label":"Formula product image"},
+    {"type":"text","id":"formula_title","label":"Formula headline","default":"Three key ingredients. One intentional formula."},
+    {"type":"text","id":"formula_description","label":"Formula body","default":"Avonent pairs Ceylon cinnamon with Berberine HCl and MCT oil. Explore the full ingredient panel, directions, and current options on the product page."},
+    {"type":"text","id":"formula_cta","label":"Formula link","default":"See the complete formula"},
+    {"type":"text","id":"offer_title","label":"Offer headline","default":"Make room for a better daily ritual."},
+    {"type":"text","id":"offer_description","label":"Offer body","default":"Choose the Avonent option that fits your routine and see the current price before checking out."},
+    {"type":"text","id":"offer_perk_1","label":"Offer benefit 1","default":"Ceylon cinnamon + berberine"},
+    {"type":"text","id":"offer_perk_2","label":"Offer benefit 2","default":"Simple daily format"},
+    {"type":"text","id":"offer_cta","label":"Offer button","default":"Shop Avonent"},
+    {"type":"text","id":"offer_guarantee","label":"Guarantee line","default":"Protected by our 30-day money-back guarantee"},
+    {"type":"header","content":"Reviews and FAQs"},
+    {"type":"text","id":"reviews_title","label":"Review headline","default":"Everyday experiences, shared honestly."},
+    {"type":"text","id":"reviews_subtitle","label":"Review section intro","default":"Experiences are personal. Explore real customer feedback as you decide what fits your routine."},
+    {"type":"text","id":"faq_title","label":"FAQ headline","default":"Questions before you begin?"},
+    {"type":"text","id":"faq_subtitle","label":"FAQ intro","default":"The essentials, in plain language."},
+    {"type":"text","id":"final_cta","label":"Final button","default":"See Today’s Offer"},
+    {"type":"text","id":"sticky_cta","label":"Sticky button","default":"See Offers"}
+  ],
+  "blocks": [
+    {"type":"benefit","name":"Numbered benefit","limit":7,"settings":[
+      {"type":"text","id":"category","label":"Small category label","default":"THE AVONENT DIFFERENCE"},
+      {"type":"text","id":"heading","label":"Benefit headline","default":"Built for your daily routine"},
+      {"type":"richtext","id":"body","label":"Benefit description","default":"<p>Tell your customers what makes this part of the formula meaningful.</p>"},
+      {"type":"text","id":"highlight","label":"Highlighted takeaway"},
+      {"type":"image_picker","id":"image","label":"Image for this section"},
+      {"type":"text","id":"image_alt","label":"Image description","default":"Avonent Ceylon cinnamon ingredient photograph"},
+      {"type":"text","id":"image_caption","label":"Optional photo caption"}
+    ]},
+    {"type":"review","name":"Real customer review","limit":6,"settings":[
+      {"type":"image_picker","id":"image","label":"Customer image (optional)"},
+      {"type":"text","id":"image_alt","label":"Customer image description"},
+      {"type":"text","id":"review_title","label":"Short review headline","default":"Customer experience"},
+      {"type":"richtext","id":"review_text","label":"Actual customer review"},
+      {"type":"text","id":"author","label":"Customer display name"},
+      {"type":"checkbox","id":"verified","label":"Verified purchaser (only if verified)","default":false}
+    ]},
+    {"type":"faq","name":"FAQ item","limit":10,"settings":[
+      {"type":"text","id":"question","label":"Question","default":"What should I know?"},
+      {"type":"richtext","id":"answer","label":"Answer","default":"<p>Share the details your customers are looking for.</p>"}
+    ]}
+  ],
+  "presets":[{"name":"Avonent cinnamon listicle"}]
+}
+{% endschema %}

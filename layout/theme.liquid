@@ -76,9 +76,11 @@
     {% render 'chat-drawer' %}
 
     <div class="page-wrapper">
-      <div id="header-group">
-        {% sections 'header-group' %}
-      </div>
+      {% unless template.suffix == 'avonent-cinnamon-listicle' %}
+        <div id="header-group">
+          {% sections 'header-group' %}
+        </div>
+      {% endunless %}
 
       <script>
         /**
@@ -201,7 +203,9 @@
         {% else %}
           {{ content_for_layout }}
         {% endif %}
-        {% section '00-cinnamon-berberine-details' %}
+        {% unless template.suffix == 'avonent-cinnamon-listicle' %}
+          {% section '00-cinnamon-berberine-details' %}
+        {% endunless %}
         {% if template.suffix == 'cinnamon-berberine' or product.handle == 'cinnamon-berberine-example' %}
           {% render '00-cinnamon-berberine-body', product: product %}
         {% endif %}
@@ -210,9 +214,11 @@
         {% endif %}
       </main>
 
-      <footer>
-        {% sections 'footer-group' %}
-      </footer>
+      {% unless template.suffix == 'avonent-cinnamon-listicle' %}
+        <footer>
+          {% sections 'footer-group' %}
+        </footer>
+      {% endunless %}
     </div>
 
     {% render 'cart-drawer', render_wrapper: true %}

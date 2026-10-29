@@ -1,0 +1,131 @@
+/*
+ * Avonent dedicated cinnamon advertorial page.
+ * Edit images and copy through Online Store > Themes > Customize.
+ */
+{
+  "sections": {
+    "main": {
+      "type": "00-avonent-cinnamon-listicle",
+      "settings": {
+        "featured_product": "cinnamon-berberine"
+      },
+      "blocks": {
+        "reason_1": {
+          "type": "benefit",
+          "settings": {
+            "category": "GLUCOSE METABOLISM",
+            "heading": "Support the way your body handles glucose",
+            "body": "<p>Glucose metabolism is part of everyday wellness, and the foundations still matter: movement, sleep, meals, and consistency. Cinnamon has been explored in research on metabolic health, although results vary and it is not a substitute for medical care.</p>",
+            "highlight": "Designed to complement your healthy habits"
+          }
+        },
+        "reason_2": {
+          "type": "benefit",
+          "settings": {
+            "category": "INSULIN FUNCTION",
+            "heading": "A daily focus on metabolic balance",
+            "body": "<p>Insulin helps the body move glucose from the bloodstream into cells. Avonent brings Ceylon cinnamon and berberine together in one straightforward formula for people who want to be intentional about their metabolic wellness.</p>",
+            "highlight": "Complementary ingredients, not miracle claims"
+          }
+        },
+        "reason_3": {
+          "type": "benefit",
+          "settings": {
+            "category": "AUTHENTIC CEYLON",
+            "heading": "Real Ceylon cinnamon, not everyday Cassia",
+            "body": "<p>Not all cinnamon is the same. True Ceylon cinnamon is naturally much lower in coumarin than typical Cassia cinnamon. If you take cinnamon regularly, knowing which type is in your formula is an important detail.</p>",
+            "highlight": "Ceylon cinnamon selected with care"
+          }
+        },
+        "reason_4": {
+          "type": "benefit",
+          "settings": {
+            "category": "BERBERINE HCL",
+            "heading": "More than a single-ingredient cinnamon capsule",
+            "body": "<p>Berberine HCl adds a second ingredient that has been investigated for metabolic support. Its effects can vary and it may interact with medications, especially those used to manage blood sugar. Our full ingredient panel is available before you buy.</p>",
+            "highlight": "Ceylon cinnamon + 400 mg berberine HCl"
+          }
+        },
+        "reason_5": {
+          "type": "benefit",
+          "settings": {
+            "category": "MCT OIL",
+            "heading": "A well-considered formula, down to the details",
+            "body": "<p>Avonent includes MCT oil alongside its botanical ingredients. It is part of our convenient softgel formulation, giving you one easy-to-understand product instead of a collection of unrelated bottles.</p>",
+            "highlight": "200 mg MCT oil in the formula"
+          }
+        },
+        "reason_6": {
+          "type": "benefit",
+          "settings": {
+            "category": "FORMULA CLARITY",
+            "heading": "Know what you're actually taking",
+            "body": "<p>You deserve clear ingredient information and realistic expectations. Avonent makes the key components easy to review: Ceylon cinnamon, Berberine HCl, and MCT oil. Check the label for full ingredient, serving, and use details.</p>",
+            "highlight": "Transparent ingredient information"
+          }
+        },
+        "reason_7": {
+          "type": "benefit",
+          "settings": {
+            "category": "EVERYDAY ROUTINE",
+            "heading": "A wellness habit you can keep coming back to",
+            "body": "<p>The best routine is one you can maintain. Avonent is designed as a simple addition to thoughtful daily habits, with a 30-day money-back guarantee so you can evaluate whether it fits your lifestyle.</p>",
+            "highlight": "Made for consistency, not overnight promises"
+          }
+        },
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "What makes Ceylon cinnamon different from Cassia cinnamon?",
+            "answer": "<p>They are different varieties of cinnamon. True Ceylon cinnamon generally contains much less naturally occurring coumarin than Cassia. It is still important to follow label directions and discuss supplements with your healthcare professional if you have concerns.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "Will this replace my prescription medication?",
+            "answer": "<p>No. Avonent is a dietary supplement, not a treatment for diabetes or a replacement for medication. Never stop or change prescriptions without guidance from your clinician. Berberine can interact with blood-sugar medications.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "What ingredients are in Avonent Ceylon Cinnamon?",
+            "answer": "<p>The featured formula includes 1,200 mg Ceylon cinnamon, 400 mg Berberine HCl, and 200 mg MCT oil. Please check the current product label for the complete ingredient list, serving size, and directions.</p>"
+          }
+        },
+        "faq_4": {
+          "type": "faq",
+          "settings": {
+            "question": "How long does it take to see results?",
+            "answer": "<p>Everyone’s experience is different, and there is no guaranteed timeline for a supplement. Nutrition, movement, sleep, and your individual health needs all matter. Follow the label and seek medical advice about blood sugar concerns.</p>"
+          }
+        },
+        "faq_5": {
+          "type": "faq",
+          "settings": {
+            "question": "Is there a money-back guarantee?",
+            "answer": "<p>Avonent offers a 30-day money-back guarantee. Review our return policy for the full eligibility and refund details before ordering.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "reason_1",
+        "reason_2",
+        "reason_3",
+        "reason_4",
+        "reason_5",
+        "reason_6",
+        "reason_7",
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
