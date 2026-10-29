@@ -128,7 +128,7 @@
             <span class="avl-offer__image-tag">{{ section.settings.offer_image_label | escape }}</span>
           </div>
           <div class="avl-offer__details">
-            <div class="avl-offer__save-tag"><span aria-hidden="true">✦</span> {{ section.settings.offer_savings_text | escape }}</div>
+            <a class="avl-button avl-offer__button" href="{{ avl_product_url }}">{{ section.settings.offer_cta | escape }} <span aria-hidden="true">↗</span></a>
             <div class="avl-offer__timer" data-avl-timer data-duration="{{ section.settings.timer_minutes | times: 60 | plus: section.settings.timer_seconds }}" data-deadline="{{ section.settings.timer_deadline | escape }}">
               <div class="avl-offer__timer-label" data-avl-timer-label>{{ section.settings.timer_label | escape }}</div>
               <div class="avl-offer__clock" role="timer" aria-label="Deal countdown"><span data-avl-minutes>07</span><span class="avl-offer__colon">:</span><span data-avl-seconds>00</span></div>
@@ -138,7 +138,6 @@
               <span class="avl-offer__risk"><span class="avl-offer__pulse" aria-hidden="true"></span>{{ section.settings.stock_risk_label | escape }} <strong>{{ section.settings.stock_risk_level | escape }}</strong></span>
               <span class="avl-offer__ebook"><span aria-hidden="true">✧</span>{{ section.settings.ebook_text | escape }}</span>
             </div>
-            <a class="avl-button avl-offer__button" href="{{ avl_product_url }}">{{ section.settings.offer_cta | escape }} <span aria-hidden="true">↗</span></a>
             <p class="avl-offer__guarantee"><span aria-hidden="true">✓</span> {{ section.settings.offer_guarantee | escape }}</p>
           </div>
         </div>
@@ -567,6 +566,24 @@
     .avl-sticky__mobile-note{display:none}
   }
   @media(prefers-reduced-motion:reduce){.avl-sticky{transition:none}}
+
+  .avl-offer__details{text-align:center}
+  .avl-offer__button{display:flex;width:min(480px,100%);margin:12px auto 0;justify-content:center}
+  .avl-offer__timer{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;width:100%;max-width:none;margin:15px auto 0!important;padding:0!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important}
+  .avl-offer__timer-label{font-size:13px;color:#24201d!important;letter-spacing:.045em;line-height:1.3;font-weight:850}
+  .avl-offer__clock{font-size:23px!important;letter-spacing:0!important;gap:3px!important;line-height:1.2;margin:0!important;color:#bf2d25!important;font-weight:900}
+  .avl-offer__clock [data-avl-minutes],.avl-offer__clock [data-avl-seconds]{min-width:1.35em}
+  .avl-offer__colon{transform:none;color:#bf2d25}
+  .avl-offer__timer-context{flex-basis:100%}
+  .avl-offer__perks{justify-content:center;margin:18px 0 13px}
+  .avl-offer__guarantee{margin:0 auto}
+  @media(max-width:700px){
+    .avl-offer__button{width:100%;margin-top:8px}
+    .avl-offer__timer{gap:7px;margin-top:13px!important}
+    .avl-offer__timer-label{font-size:11px;letter-spacing:.035em}
+    .avl-offer__clock{font-size:20px!important}
+    .avl-offer__perks{margin:15px 0 12px}
+  }
 </style>
 <script>
 (() => {
