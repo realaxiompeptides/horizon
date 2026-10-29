@@ -273,6 +273,12 @@
             "tag_1": "Steady Focus",
             "tag_2": "Simple Routine"
           }
+        },
+        "trust": {
+          "type": "trust",
+          "settings": {
+            "alt": "Why Trust Avonent"
+          }
         }
       },
       "block_order": [
@@ -285,6 +291,7 @@
         "benefits",
         "faq",
         "details",
+        "trust",
         "review_1",
         "review_2",
         "review_3",
@@ -293,8 +300,8 @@
         "review_6"
       ],
       "settings": {
-        "reviews_heading": "Real stories. Everyday routines.",
-        "reviews_intro": "Experiences shared by Avonent customers.",
+        "reviews_heading": "Real Stories, Real Results",
+        "reviews_intro": "Honest experiences from Avonent customers.",
         "trust_image_alt": "Why Trust Avonent"
       }
     }
