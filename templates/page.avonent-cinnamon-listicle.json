@@ -147,8 +147,8 @@
         "offer_image_alt": "Avonent Ceylon cinnamon supplement",
         "offer_image_label": "AVONENT CEYLON CINNAMON",
         "offer_eyebrow": "SPECIAL BUNDLE OFFER",
-        "offer_title": "BUY 2, GET 1 FREE — FOR A LIMITED TIME!",
-        "offer_subtitle": "This popular bundle offer is drawing attention, and some quantities may sell out. Choose your Avonent Ceylon Cinnamon supply while savings are available.",
+        "offer_title": "BUY 2, GET 1 FREE FOR A LIMITED TIME ONLY!",
+        "offer_subtitle": "Stock is limited for this bundle. Choose your Avonent Ceylon Cinnamon supply and see the available savings before checkout.",
         "offer_savings_text": "SAVE UP TO 70% OFF",
         "timer_label": "DEAL ENDING IN:",
         "timer_deadline": "",
@@ -165,7 +165,7 @@
         "reviews_subtitle": "A dedicated home for genuine customer stories. Preview the layout now; real testimonials can be added from the theme editor.",
         "show_review_previews": true,
         "final_cta": "Save Up to 70% OFF + Free Shipping",
-        "sticky_cta": "Save Up to 70% OFF",
+        "sticky_cta": "See Bundle Deals — Save Up to 70%",
         "sticky_subtext": "90-day money-back guarantee"
       }
     }
