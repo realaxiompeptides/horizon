@@ -702,8 +702,9 @@
     @media(max-width:600px){.av-cb__pricing--purchase-mode{grid-template-columns:1fr auto;gap:8px 12px;padding:14px 0}.av-cb__purchase-heading{font-size:18px}.av-cb__pricing-values{max-width:190px;gap:6px 8px}.av-cb__sale-price{font-size:22px}.av-cb__compare-price{font-size:15px}.av-cb__sale-badge{font-size:9.5px;min-height:25px;padding:0 8px}}
     .av-cb__low-stock-line{display:flex;align-items:center;gap:12px;margin:7px 0 18px;color:var(--deep);font-size:16px;font-weight:850}.av-cb__low-stock-line:before,.av-cb__low-stock-line:after{content:"";height:2px;background:#e7c2aa;flex:1}.av-cb__low-stock-line span{white-space:nowrap}
     .av-cb__bundles{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:14px}.av-cb__bundle{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;position:relative;border:1.5px solid #e4c8b7;border-radius:16px;padding:15px 16px;background:#fff;cursor:pointer;text-align:left;transition:.18s ease}.av-cb__bundle:hover,.av-cb__bundle.is-active{border-color:var(--blue);box-shadow:0 0 0 2px rgba(168,79,27,.10)}.av-cb__bundle.is-active{background:#fff8f3}.av-cb__bundle-thumb{width:54px;height:54px;border-radius:10px;background:#fff4ec;border:1px solid #ead3c4;display:grid;place-items:center;overflow:hidden}.av-cb__bundle-thumb img{width:100%;height:100%;object-fit:contain}.av-cb__bundle-thumb-fallback{font-size:9px;font-weight:900;color:var(--deep);letter-spacing:.05em;text-align:center;line-height:1.1}.av-cb__bundle-copy strong{display:block;font-size:17px;color:#111}.av-cb__bundle-copy span{display:block;font-size:12px;color:var(--muted);margin-top:3px}.av-cb__bundle-price{text-align:right}.av-cb__bundle-price strong{display:block;color:var(--blue);font-size:18px}.av-cb__bundle-price s{display:block;color:#111;font-size:13px;margin-top:2px;opacity:.78}.av-cb__badge{position:absolute!important;top:-11px;right:14px;background:var(--blue);color:#fff!important;border-radius:999px;padding:4px 10px;font-size:10px!important;font-weight:850;text-transform:uppercase;letter-spacing:.04em}
-    .av-cb__bundle-unlock{display:none;grid-column:1/-1;border-top:1px solid #eadfd8;margin-top:2px;padding-top:12px}
-    .av-cb__bundle.is-active .av-cb__bundle-unlock{display:block}
+    .av-cb__bundle-unlock{display:none!important;grid-column:1/-1;border-top:1px solid #eadfd8;margin-top:2px;padding-top:12px}
+    .av-cb__bundle-unlock[hidden]{display:none!important}
+    .av-cb__bundle.is-active .av-cb__bundle-unlock:not([hidden]){display:block!important}
     .av-cb__bundle-unlock-title{display:block!important;font-size:10.5px!important;font-weight:850!important;letter-spacing:.09em;text-transform:uppercase;color:#7D3612!important;margin:0 0 5px!important}
     .av-cb__bundle-unlock-row{display:flex!important;align-items:center;gap:9px;color:#211d1a!important;font-size:13px!important;line-height:1.3;font-weight:750;margin:0!important;padding:6px 0}
     .av-cb__bundle-unlock-row+.av-cb__bundle-unlock-row{border-top:1px solid #eee2da}
@@ -1056,7 +1057,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
                   <s data-av-cb-bundle-compare="{{ qty }}"{% if av_cb_subscription == blank %} hidden{% endif %}>{% if av_cb_subscription != blank %}{{ av_cb_bundle_one_time_total | money }}{% endif %}</s>
                 </span>
                 {% if qty >= 2 %}
-                  <span class="av-cb__bundle-unlock" data-av-cb-subscription-perk>
+                  <span class="av-cb__bundle-unlock" data-av-cb-bundle-unlock hidden>
                     <span class="av-cb__bundle-unlock-title">Gifts Unlocked</span>
                     <span class="av-cb__bundle-unlock-row">
                       <span class="av-cb__bundle-unlock-check" aria-hidden="true">✓</span>
@@ -1682,6 +1683,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       const purchaseHeading = root.querySelector('[data-av-cb-purchase-heading]');
       const bundleButtons = Array.from(root.querySelectorAll('[data-av-cb-bundle]'));
       const subscriptionPerks = Array.from(root.querySelectorAll('[data-av-cb-subscription-perk]'));
+      const bundleUnlocks = Array.from(root.querySelectorAll('[data-av-cb-bundle-unlock]'));
       const money = (cents) => new Intl.NumberFormat(document.documentElement.lang || 'en-US', {style:'currency', currency:'USD'}).format(Number(cents || 0) / 100);
       let purchaseMode = sellingPlanInput ? 'subscription' : 'one-time';
 
@@ -1729,6 +1731,10 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         setCompare(btnCompare, values.compare, values.price);
 
         subscriptionPerks.forEach(perk => { perk.hidden = !isSubscription; });
+        bundleUnlocks.forEach(unlock => {
+          const card = unlock.closest('[data-av-cb-bundle]');
+          unlock.hidden = !(isSubscription && card && card.classList.contains('is-active'));
+        });
 
         if (purchaseToggleText) {
           if (isSubscription) purchaseToggleText.innerHTML = 'One-Time Purchase <strong>' + money(oneTimeUnit * values.qty) + '</strong> + $4.95 Shipping';
