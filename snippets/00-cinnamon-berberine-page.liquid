@@ -4,6 +4,11 @@
   assign av_cb_form_id = 'AvonentCinnamonBerberineForm-' | append: av_cb_product.id
   assign av_cb_unit_price = av_cb_variant.price | default: av_cb_product.price
   assign av_cb_subscription = av_cb_variant.selling_plan_allocations.first
+  assign av_cb_guarantee_image = av_cb_product.metafields.custom.av_cb_guarantee_image.value
+  assign av_cb_guarantee_highlight = av_cb_product.metafields.custom.av_cb_guarantee_highlight_text.value | default: '90 days'
+  assign av_cb_guarantee_color = av_cb_product.metafields.custom.av_cb_guarantee_highlight_color.value | default: '#02C6EA'
+  assign av_cb_stock_title = av_cb_product.metafields.custom.av_cb_low_stock_title.value | default: 'WARNING: Low Stock Notice'
+  assign av_cb_stock_text = av_cb_product.metafields.custom.av_cb_low_stock_text.value | default: 'Inventory can move quickly during promotions. If Avonent fits your routine, ordering while stock is available can help avoid interruptions.'
 %}
 
 <div class="av-cb" data-av-cb data-unit-price="{{ av_cb_unit_price }}">
@@ -130,42 +135,63 @@
 
 
   <div class="av-cb__top-stack">
-    <div class="av-cb__guarantee-card" style="--guarantee-highlight: {{ settings.av_cb_guarantee_highlight_color | default: '#02C6EA' }}; --guarantee-text: {{ settings.av_cb_guarantee_text_color | default: '#171717' }};">
+    <div class="av-cb__guarantee-card" style="--guarantee-highlight: {{ av_cb_guarantee_color }}; --guarantee-text: #171717;">
       <div class="av-cb__guarantee-image">
-        {% if settings.av_cb_guarantee_image != blank %}
-          {{ settings.av_cb_guarantee_image | image_url: width: 240 | image_tag: loading: 'lazy', widths: '120,180,240', alt: settings.av_cb_guarantee_heading }}
+        {% if av_cb_guarantee_image != blank %}
+          {{ av_cb_guarantee_image | image_url: width: 240 | image_tag: loading: 'lazy', widths: '120,180,240', alt: 'Avonent 90-Day Money-Back Guarantee' }}
         {% else %}
           <div class="av-cb__guarantee-seal"><span>90<br><small>DAYS</small></span></div>
         {% endif %}
       </div>
       <div class="av-cb__guarantee-copy">
-        <h3>{{ settings.av_cb_guarantee_heading | default: '90-Day Money-Back Guarantee' }}</h3>
-        <p>{{ settings.av_cb_guarantee_prefix | default: 'Try Avonent for ' }}<mark>{{ settings.av_cb_guarantee_highlight | default: '90 days' }}</mark>{{ settings.av_cb_guarantee_suffix | default: ' with the confidence of our money-back guarantee.' }}</p>
+        <h3>90-Day Money-Back Guarantee</h3>
+        <p>Try Avonent for <mark>{{ av_cb_guarantee_highlight }}</mark> with the confidence of our money-back guarantee.</p>
       </div>
     </div>
 
-    {% if settings.av_cb_show_low_stock != false %}
-      <div class="av-cb__low-stock" style="--low-stock: {{ settings.av_cb_low_stock_color | default: '#D62828' }}; --low-stock-bg: {{ settings.av_cb_low_stock_bg | default: '#FFF5F5' }};">
-        <div class="av-cb__low-stock-icon" aria-hidden="true">!</div>
-        <div>
-          <h3>{{ settings.av_cb_low_stock_title | default: 'WARNING: Low Stock Notice' }}</h3>
-          <p>{{ settings.av_cb_low_stock_text | default: 'Inventory can move quickly during promotions. If Avonent fits your routine, ordering while stock is available can help avoid interruptions.' }}</p>
-        </div>
+    <div class="av-cb__low-stock" style="--low-stock: #D62828; --low-stock-bg: #FFF5F5;">
+      <div class="av-cb__low-stock-icon" aria-hidden="true">!</div>
+      <div>
+        <h3>{{ av_cb_stock_title }}</h3>
+        <p>{{ av_cb_stock_text }}</p>
       </div>
-    {% endif %}
+    </div>
 
     <div class="av-cb__accordion-list" data-av-cb-accordion-list>
       <details class="av-cb__accordion">
-        <summary><span>{{ settings.av_cb_acc_1_title | default: 'Clinically Supported Benefits' }}</span><span class="av-cb__accordion-icon" aria-hidden="true"></span></summary>
-        <div class="av-cb__accordion-body rte">{{ settings.av_cb_acc_1_body }}</div>
+        <summary><span>Clinically Supported Benefits</span><span class="av-cb__accordion-icon" aria-hidden="true"></span></summary>
+        <div class="av-cb__accordion-body rte">
+          <p><strong>Supported by ingredient research on true Ceylon cinnamon and berberine.</strong></p>
+          <ul>
+            <li>Supports healthy glucose metabolism and blood sugar already within a normal range.*</li>
+            <li>Supports normal insulin sensitivity and efficient glucose use.*</li>
+            <li>Supports healthy circulation and everyday metabolic function.*</li>
+            <li>Provides antioxidant compounds that help protect cells from oxidative stress.*</li>
+            <li>Uses true Ceylon cinnamon, naturally much lower in coumarin than common cassia cinnamon.</li>
+          </ul>
+          <p><small>Research on individual ingredients does not mean the finished Avonent product itself was clinically tested. Individual results vary.</small></p>
+        </div>
       </details>
       <details class="av-cb__accordion">
-        <summary><span>{{ settings.av_cb_acc_2_title | default: 'Key Ingredients' }}</span><span class="av-cb__accordion-icon" aria-hidden="true"></span></summary>
-        <div class="av-cb__accordion-body rte">{{ settings.av_cb_acc_2_body }}</div>
+        <summary><span>Key Ingredients</span><span class="av-cb__accordion-icon" aria-hidden="true"></span></summary>
+        <div class="av-cb__accordion-body rte">
+          <p><strong>True Ceylon Cinnamon (Cinnamomum verum) — 1,200 mg per daily serving</strong></p>
+          <p>A clearly identified true-cinnamon source for metabolic-wellness support.*</p>
+          <p><strong>Berberine HCl — 400 mg per daily serving</strong></p>
+          <p>A researched botanical compound commonly used to support normal glucose and lipid metabolism.*</p>
+          <p><strong>MCT Oil — 200 mg per daily serving</strong></p>
+          <p>An oil-based carrier used in the softgel format.</p>
+          <p><strong>Softgel Delivery</strong></p>
+          <p>Four softgels per daily serving, with 30 daily servings per bottle.</p>
+        </div>
       </details>
       <details class="av-cb__accordion">
-        <summary><span>{{ settings.av_cb_acc_3_title | default: 'How It Works' }}</span><span class="av-cb__accordion-icon" aria-hidden="true"></span></summary>
-        <div class="av-cb__accordion-body rte">{{ settings.av_cb_acc_3_body }}</div>
+        <summary><span>How It Works</span><span class="av-cb__accordion-icon" aria-hidden="true"></span></summary>
+        <div class="av-cb__accordion-body rte">
+          <p>Avonent combines true Ceylon cinnamon and Berberine HCl in one daily formula so you do not need separate bottles for each ingredient.</p>
+          <p>Ceylon cinnamon and berberine are researched for complementary roles in healthy glucose metabolism and broader metabolic wellness.* MCT oil provides the oil base for the softgel format.</p>
+          <p>Take the labeled four-softgel serving consistently as part of a routine that also includes balanced nutrition, movement, hydration, and sleep.</p>
+        </div>
       </details>
     </div>
   </div>
