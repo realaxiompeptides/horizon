@@ -43,6 +43,9 @@
         <p class="avl-hero__subtitle">{{ section.settings.hero_subtitle | escape }}</p>
         <div class="avl-rich avl-hero__lead">{{ section.settings.hero_intro }}</div>
         <a class="avl-button" href="{{ avl_product_url }}">{{ section.settings.hero_cta | escape }} <span aria-hidden="true">↗</span></a>
+        {% if section.settings.show_social_proof %}
+          <div class="avl-social-proof"><span class="avl-social-proof__stars" aria-label="Five stars">★★★★★</span><span>{{ section.settings.social_proof_text | escape }}</span></div>
+        {% endif %}
         <div class="avl-hero__micro"><span aria-hidden="true">✓</span> {{ section.settings.hero_microcopy | escape }}</div>
       </div>
     </section>
@@ -70,10 +73,6 @@
             <div class="avl-benefit__copy">
               <div class="avl-benefit__meta"><span>{{ block.settings.category | escape }}</span><span>{{ avl_number_label }}</span></div>
               <h3>{{ block.settings.heading | escape }}</h3>
-              <div class="avl-rich avl-benefit__body">{{ block.settings.body }}</div>
-              {% if block.settings.highlight != blank %}
-                <div class="avl-benefit__highlight"><span aria-hidden="true">✓</span> {{ block.settings.highlight | escape }}</div>
-              {% endif %}
             </div>
             <div class="avl-benefit__visual">
               {% if block.settings.image != blank %}
@@ -87,6 +86,12 @@
                 {% if request.design_mode %}<div class="avl-editor-hint">Select this block to add your own image</div>{% endif %}
               {% endif %}
               {% if block.settings.image_caption != blank %}<div class="avl-benefit__caption">{{ block.settings.image_caption | escape }}</div>{% endif %}
+            </div>
+            <div class="avl-benefit__body-wrap">
+              <div class="avl-rich avl-benefit__body">{{ block.settings.body }}</div>
+              {% if block.settings.highlight != blank %}
+                <div class="avl-benefit__highlight"><span aria-hidden="true">✓</span> {{ block.settings.highlight | escape }}</div>
+              {% endif %}
             </div>
           </article>
 
@@ -131,35 +136,90 @@
       </div>
     </section>
 
-    {% if avl_review_count > 0 %}
-    <section class="avl-reviews avl-container" aria-labelledby="avl-reviews-heading">
-      <header class="avl-section-heading">
-        <span class="avl-kicker">FROM THE COMMUNITY</span>
-        <h2 id="avl-reviews-heading">{{ section.settings.reviews_title | escape }}</h2>
-        <p>{{ section.settings.reviews_subtitle | escape }}</p>
-      </header>
-      {% if avl_review_count > 0 %}
-        <div class="avl-reviews__grid">
-          {% for block in section.blocks %}
-            {% if block.type == 'review' and block.settings.review_text != blank %}
-              <article class="avl-review" {{ block.shopify_attributes }}>
-                {% if block.settings.image != blank %}
-                  {{ block.settings.image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '320, 540, 700', sizes: '(min-width: 800px) 31vw, 100vw', class: 'avl-review__image', alt: block.settings.image_alt }}
-                {% endif %}
-                <div class="avl-review__content">
-                  <div class="avl-review__stars" aria-label="5 out of 5 stars">★★★★★</div>
-                  <h3>{{ block.settings.review_title | escape }}</h3>
-                  <div class="avl-rich">{{ block.settings.review_text }}</div>
-                  <div class="avl-review__author"><strong>{{ block.settings.author | escape }}</strong>{% if block.settings.verified %}<span>Verified Avonent buyer</span>{% endif %}</div>
-                </div>
-              </article>
+    {% if section.settings.show_offer %}
+      <section class="avl-offer" aria-labelledby="avl-offer-title">
+        <div class="avl-container avl-offer__grid">
+          <div class="avl-offer__visual">
+            {% assign avl_offer_image = section.settings.offer_image | default: avl_product_image %}
+            {% if avl_offer_image != blank %}
+              {{ avl_offer_image | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '320, 540, 760, 1000', sizes: '(min-width: 850px) 40vw, 90vw', class: 'avl-offer__image', alt: section.settings.offer_image_alt }}
+            {% else %}
+              <div class="avl-offer__image-placeholder"><span>Avonent</span><strong>CEYLON CINNAMON + BERBERINE</strong></div>
             {% endif %}
-          {% endfor %}
+            <span class="avl-offer__image-tag">{{ section.settings.offer_image_label | escape }}</span>
+          </div>
+          <div class="avl-offer__details">
+            <span class="avl-kicker">{{ section.settings.offer_eyebrow | escape }}</span>
+            <h2 id="avl-offer-title">{{ section.settings.offer_title | escape }}</h2>
+            <p class="avl-offer__subtitle">{{ section.settings.offer_subtitle | escape }}</p>
+            <div class="avl-offer__save-tag"><span aria-hidden="true">✦</span> {{ section.settings.offer_savings_text | escape }}</div>
+            <div class="avl-offer__timer" data-avl-timer data-duration="{{ section.settings.timer_minutes | times: 60 | plus: section.settings.timer_seconds }}">
+              <div class="avl-offer__timer-label">{{ section.settings.timer_label | escape }}</div>
+              <div class="avl-offer__clock" role="timer" aria-label="Offer window timer"><span data-avl-minutes>06</span><span class="avl-offer__colon">:</span><span data-avl-seconds>40</span></div>
+              <p class="avl-offer__timer-context">{{ section.settings.timer_context | escape }}</p>
+            </div>
+            <div class="avl-offer__perks">
+              <span class="avl-offer__risk"><span class="avl-offer__pulse" aria-hidden="true"></span>{{ section.settings.stock_risk_text | escape }}</span>
+              <span class="avl-offer__ebook"><span aria-hidden="true">✧</span>{{ section.settings.ebook_text | escape }}</span>
+            </div>
+            <a class="avl-button avl-offer__button" href="{{ avl_product_url }}">{{ section.settings.offer_cta | escape }} <span aria-hidden="true">↗</span></a>
+            <p class="avl-offer__guarantee"><span aria-hidden="true">✓</span> {{ section.settings.offer_guarantee | escape }}</p>
+          </div>
         </div>
-      {% else %}
-        <div class="avl-reviews__empty"><p>Interested in hearing from the Avonent community?</p><a href="{{ avl_product_url }}">Visit the product page for the latest customer feedback <span aria-hidden="true">↗</span></a></div>
-      {% endif %}
-    </section>
+      </section>
+    {% endif %}
+
+    {% if avl_review_count > 0 or section.settings.show_review_previews %}
+      <section class="avl-reviews avl-container" aria-labelledby="avl-reviews-heading">
+        <header class="avl-section-heading avl-reviews__heading">
+          <span class="avl-kicker">THE AVONENT COMMUNITY</span>
+          <h2 id="avl-reviews-heading">{{ section.settings.reviews_title | escape }}</h2>
+          <p>{{ section.settings.reviews_subtitle | escape }}</p>
+        </header>
+        <div class="avl-review-carousel" data-avl-carousel>
+          <button type="button" class="avl-review-carousel__arrow" data-avl-prev aria-label="Previous review">‹</button>
+          <div class="avl-review-carousel__viewport" data-avl-viewport tabindex="0" aria-label="Review cards">
+            <div class="avl-review-carousel__track">
+              {% if avl_review_count > 0 %}
+                {% for block in section.blocks %}
+                  {% if block.type == 'review' and block.settings.review_text != blank %}
+                    <article class="avl-review avl-review--real" {{ block.shopify_attributes }}>
+                      {% if block.settings.image != blank %}
+                        {{ block.settings.image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '320, 540, 700', sizes: '(min-width: 800px) 31vw, 76vw', class: 'avl-review__image', alt: block.settings.image_alt }}
+                      {% endif %}
+                      <div class="avl-review__content">
+                        <div class="avl-review__stars" aria-label="Customer rating: {{ block.settings.rating }} out of five stars">{% for avl_star in (1..5) %}{% if avl_star <= block.settings.rating %}★{% else %}☆{% endif %}{% endfor %}</div>
+                        <h3>{{ block.settings.review_title | escape }}</h3>
+                        <div class="avl-rich avl-review__quote">{{ block.settings.review_text }}</div>
+                        <div class="avl-review__author"><strong>{{ block.settings.author | escape }}</strong>{% if block.settings.verified %}<span><span aria-hidden="true">✓</span> Verified Purchase</span>{% endif %}</div>
+                      </div>
+                    </article>
+                  {% endif %}
+                {% endfor %}
+              {% else %}
+                {% for avl_sample in (1..3) %}
+                  <article class="avl-review avl-review--sample">
+                    <div class="avl-review__sample-art"><span>AVONENT</span><span aria-hidden="true">✦</span></div>
+                    <div class="avl-review__content">
+                      <span class="avl-review__example-label">EXAMPLE CARD {{ avl_sample }}</span>
+                      <div class="avl-review__sample-stars" aria-hidden="true">☆☆☆☆☆</div>
+                      <h3>{% if avl_sample == 1 %}Your customer's review headline{% elsif avl_sample == 2 %}Another genuine story goes here{% else %}A third customer experience{% endif %}</h3>
+                      <p class="avl-review__sample-text">Add an actual customer quote, name, rating and optional photo in the Shopify theme editor. This is a layout preview, not a testimonial.</p>
+                      <div class="avl-review__author"><strong>Review placeholder</strong><span>Waiting for your content</span></div>
+                    </div>
+                  </article>
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+          <button type="button" class="avl-review-carousel__arrow" data-avl-next aria-label="Next review">›</button>
+          <div class="avl-review-carousel__dots" data-avl-dots aria-label="Review navigation"></div>
+        </div>
+        {% if avl_review_count == 0 %}<p class="avl-reviews__placeholder-note">Preview cards are clearly marked as examples. Add your verified customer reviews as editable Review blocks to replace them.</p>{% endif %}
+        {% if section.settings.show_social_proof %}
+          <div class="avl-reviews__social"><span aria-hidden="true">★★★★★</span><strong>{{ section.settings.social_proof_text | escape }}</strong></div>
+        {% endif %}
+      </section>
     {% endif %}
 
     <div class="avl-final-cta">
@@ -182,8 +242,8 @@
     {% if avl_product_image != blank %}
       {{ avl_product_image | image_url: width: 112 | image_tag: loading: 'lazy', widths: '72, 112', class: 'avl-sticky__image', alt: 'Avonent Ceylon Cinnamon' }}
     {% endif %}
-    <div class="avl-sticky__label"><strong>Avonent Ceylon Cinnamon</strong><span>30-day money-back guarantee</span></div>
-    <a href="{{ avl_product_url }}" class="avl-sticky__button">{{ section.settings.sticky_cta | escape }} <span aria-hidden="true">↗</span></a>
+    <div class="avl-sticky__label"><strong>Avonent Ceylon Cinnamon</strong><span>{{ section.settings.sticky_subtext | escape }}</span></div>
+    <a href="{{ avl_product_url }}" class="avl-sticky__button">{{ section.settings.sticky_cta | escape }} <span aria-hidden="true">↗</span></a><span class="avl-sticky__mobile-note">{{ section.settings.sticky_subtext | escape }}</span>
   </div>
 </div>
 
@@ -350,7 +410,197 @@
     .avl-sticky__button{padding:10px 15px;font-size:12px;min-height:42px}
   }
   @media(prefers-reduced-motion:reduce){.avl-button{transition:none}.avl-button:hover{transform:none}}
+
+  .avl-hero h1,.avl-benefit h3,.avl-offer h2,.avl-reviews h2{font-family:var(--font-body--family,Arial,sans-serif);font-weight:800;letter-spacing:-.045em}
+  .avl-social-proof{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:15px;font-size:12px;font-weight:650;color:#4b3c32;line-height:1.4}
+  .avl-social-proof__stars{color:#d58d21;letter-spacing:.04em;font-size:16px;white-space:nowrap}
+  .avl-benefit{grid-template-areas:"head visual" "body visual";grid-template-rows:auto 1fr;align-items:stretch;column-gap:75px;row-gap:0}
+  .avl-benefit--reverse{grid-template-areas:"visual head" "visual body"}
+  .avl-benefit__copy{grid-area:head;align-self:end}
+  .avl-benefit__body-wrap{grid-area:body;align-self:start}
+  .avl-benefit__visual{grid-area:visual;align-self:center;order:0}
+  .avl-offer{padding:96px 0;background:linear-gradient(134deg,#f8eadf 0%,#efe0d3 55%,#e5c9b4 100%);border-block:1px solid #e5d0bd}
+  .avl-offer__grid{display:grid;grid-template-columns:minmax(0, .95fr) minmax(0,1.05fr);gap:80px;align-items:center}
+  .avl-offer__visual{position:relative;align-self:stretch;min-width:0;display:grid;place-items:center}
+  .avl-offer__image{width:100%;max-height:580px;aspect-ratio:1/1.1;object-fit:contain;padding:20px;filter:drop-shadow(0 20px 27px rgba(92,47,22,.13))}
+  .avl-offer__image-placeholder{width:100%;aspect-ratio:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:20px;border-radius:25px;background:#e2b99d;color:#79452e;text-align:center;padding:30px}
+  .avl-offer__image-placeholder span{font-size:clamp(37px,6vw,68px);font-family:Georgia,serif;font-weight:800}
+  .avl-offer__image-placeholder strong{font-size:13px;letter-spacing:.14em}
+  .avl-offer__image-tag{position:absolute;left:10%;bottom:5%;background:rgba(255,255,255,.93);border:1px solid #ead9c8;padding:8px 14px;border-radius:100px;text-transform:uppercase;font-size:10px;letter-spacing:.12em;font-weight:800;color:#865239}
+  .avl-offer__details{min-width:0}
+  .avl-offer h2{font-size:clamp(36px,4vw,56px);line-height:1.07;margin:12px 0 13px}
+  .avl-offer__subtitle{font-size:16px;color:#554943;line-height:1.63;max-width:540px}
+  .avl-offer__save-tag{margin-top:22px;display:inline-flex;align-items:center;gap:9px;color:#925338;font-size:14px;font-weight:850;letter-spacing:.07em;text-transform:uppercase}
+  .avl-offer__save-tag span{font-size:21px}
+  .avl-offer__timer{margin-top:20px;padding:22px 25px;background:rgba(255,255,255,.85);border:1px solid #e0bd9f;border-radius:18px;max-width:460px;box-shadow:0 12px 30px rgba(87,51,29,.08)}
+  .avl-offer__timer-label{font-size:11px;text-align:center;letter-spacing:.16em;font-weight:850;color:#6b4838}
+  .avl-offer__clock{display:flex;justify-content:center;align-items:center;gap:8px;margin:11px 0 4px;font-family:var(--font-body--family,Arial,sans-serif);font-size:clamp(55px,6vw,77px);font-weight:850;line-height:1;letter-spacing:-.06em;font-variant-numeric:tabular-nums;color:#382720}
+  .avl-offer__clock [data-avl-minutes],.avl-offer__clock [data-avl-seconds]{min-width:1.7em;text-align:center}
+  .avl-offer__colon{color:var(--avl-accent);transform:translateY(-4px)}
+  .avl-offer__timer-context{font-size:11px;color:#746154;text-align:center;line-height:1.4}
+  .avl-offer__perks{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:17px 0 24px}
+  .avl-offer__risk,.avl-offer__ebook{display:inline-flex;align-items:center;gap:8px;padding:9px 12px;border:1px solid #ddc7b5;background:rgba(255,255,255,.65);border-radius:100px;font-size:11px;font-weight:800;color:#70452e}
+  .avl-offer__risk{color:#9e392e}
+  .avl-offer__pulse{width:8px;height:8px;border-radius:50%;background:#b73e32;box-shadow:0 0 0 4px rgba(183,62,50,.12)}
+  .avl-offer__ebook span{font-size:18px;line-height:0;color:#ac6034}
+  .avl-offer__button{width:min(460px,100%);font-size:17px;min-height:59px}
+  .avl-offer__guarantee{margin-top:14px;font-size:13px;color:#704e3c;font-weight:700;text-align:center;width:min(460px,100%)}
+  .avl-offer__guarantee span{color:#25805d}
+  .avl-reviews{padding-top:96px;padding-bottom:100px}
+  .avl-reviews__heading{max-width:690px;margin-bottom:37px}
+  .avl-review-carousel{display:grid;grid-template-columns:42px minmax(0,1fr) 42px;align-items:center;gap:16px}
+  .avl-review-carousel__viewport{overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;outline-offset:5px}
+  .avl-review-carousel__viewport::-webkit-scrollbar{display:none}
+  .avl-review-carousel__track{display:flex;gap:18px}
+  .avl-review-carousel__track>.avl-review{flex:0 0 calc((100% - 36px)/3);min-width:0;scroll-snap-align:center}
+  .avl-review-carousel__arrow{border:1px solid #decabe;border-radius:50%;width:42px;height:42px;background:#fff;color:#714c36;display:grid;place-items:center;font-size:31px;line-height:1;cursor:pointer;transition:background .2s ease}
+  .avl-review-carousel__arrow:hover{background:#faeade}
+  .avl-review-carousel__dots{grid-column:1/-1;display:flex;justify-content:center;gap:9px;margin-top:6px}
+  .avl-review-carousel__dot{height:9px;width:9px;border-radius:50%;border:0;background:#d8ccc1;cursor:pointer;padding:0;transition:width .2s ease,background .2s ease}
+  .avl-review-carousel__dot[aria-current="true"]{width:26px;border-radius:12px;background:var(--avl-accent)}
+  .avl-review{display:flex;flex-direction:column;min-height:400px;border-radius:17px;border:1px solid #d8bfae;box-shadow:0 10px 32px rgba(70,40,21,.06)}
+  .avl-review__content{display:flex;flex-direction:column;flex:1;padding:25px}
+  .avl-review__content h3{font-family:var(--font-body--family,Arial,sans-serif);font-size:20px;font-weight:800;line-height:1.25}
+  .avl-review__quote{font-size:14px;color:#4d443f;line-height:1.7}
+  .avl-review__author{margin-top:auto;padding-top:20px;align-items:flex-end}
+  .avl-review__author span{display:inline-flex;align-items:center;gap:6px;color:#268a5e}
+  .avl-review__author span span{display:grid;place-items:center;width:18px;height:18px;background:#2e9c70;color:#fff;border-radius:50%;font-size:12px}
+  .avl-review__sample-art{height:135px;background:linear-gradient(130deg,#f1e6db,#dcbca5);display:flex;align-items:center;justify-content:space-around;color:#956749}
+  .avl-review__sample-art span:first-child{font-size:19px;letter-spacing:.24em;font-weight:800}
+  .avl-review__sample-art span:last-child{font-size:70px;opacity:.55}
+  .avl-review__example-label{display:inline-block;background:#f3ede7;color:#8d6750;border-radius:100px;padding:4px 10px;font-size:10px;font-weight:800;letter-spacing:.1em;align-self:flex-start}
+  .avl-review__sample-stars{font-size:22px;letter-spacing:.12em;color:#c4a68f;margin:14px 0 10px}
+  .avl-review__sample-text{font-size:14px;line-height:1.7;color:#665b54}
+  .avl-review--sample .avl-review__author span{color:#998579}
+  .avl-reviews__placeholder-note{text-align:center;color:#8c7c70;font-size:11px;margin-top:18px!important}
+  .avl-reviews__social{display:flex;justify-content:center;align-items:center;gap:14px;flex-wrap:wrap;padding:28px 15px 0;font-size:13px;color:#665141}
+  .avl-reviews__social span{font-size:18px;letter-spacing:2px;color:#c98524}
+  .avl-sticky__mobile-note{display:none}
+  @media(max-width:900px){
+    .avl-offer__grid{gap:35px}
+    .avl-review-carousel__track>.avl-review{flex-basis:calc((100% - 18px)/2)}
+  }
+  @media(max-width:700px){
+    .avl{padding-bottom:calc(110px + env(safe-area-inset-bottom))}
+    .avl-hero h1{font-size:clamp(32px,8.4vw,40px);line-height:1.13}
+    .avl-hero__subtitle{font-size:18px;line-height:1.45}
+    .avl-social-proof{justify-content:center;gap:5px;font-size:11px;text-align:center;white-space:normal}
+    .avl-social-proof__stars{font-size:15px;letter-spacing:0}
+    .avl-hero__micro{text-align:center}
+    .avl-benefit,.avl-benefit+.avl-benefit,.avl-benefit--reverse{display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:"head" "visual" "body";gap:18px;padding:33px 0 45px;align-items:start}
+    .avl-benefit__copy{align-self:auto}
+    .avl-benefit__body-wrap{align-self:auto}
+    .avl-benefit__visual{width:100%;order:0}
+    .avl-benefit h3{font-size:clamp(27px,7vw,32px);line-height:1.22;margin:15px 0 4px}
+    .avl-benefit__image,.avl-benefit__art{aspect-ratio:1.34/1}
+    .avl-benefit__body{font-size:15px;line-height:1.7}
+    .avl-benefit__highlight{margin-top:17px;width:100%;font-size:12px}
+    .avl-offer{padding:48px 0 58px}
+    .avl-offer__grid{display:flex;flex-direction:column;align-items:stretch;gap:19px}
+    .avl-offer__visual{height:auto;min-height:0}
+    .avl-offer__image{aspect-ratio:1.6/1;max-height:260px;padding:0}
+    .avl-offer__image-placeholder{aspect-ratio:1.6/1}
+    .avl-offer__image-tag{left:10px;bottom:8px;font-size:9px;padding:5px 9px}
+    .avl-offer__details{text-align:center}
+    .avl-offer h2{font-size:clamp(32px,8.4vw,41px);margin:10px 0}
+    .avl-offer__subtitle{font-size:14px}
+    .avl-offer__save-tag{margin-top:14px;font-size:13px}
+    .avl-offer__timer{padding:20px 15px;margin:14px auto 0;border-radius:16px}
+    .avl-offer__clock{font-size:59px;margin-top:8px}
+    .avl-offer__perks{justify-content:center;gap:7px;margin:14px 0 20px}
+    .avl-offer__risk,.avl-offer__ebook{font-size:10px;padding:8px 10px}
+    .avl-offer__button{width:100%;font-size:15px}
+    .avl-offer__guarantee{width:100%;font-size:12px}
+    .avl-reviews{padding-top:66px;padding-bottom:70px}
+    .avl-reviews__heading h2{font-size:clamp(29px,7.8vw,38px)}
+    .avl-review-carousel{grid-template-columns:26px minmax(0,1fr) 26px;gap:4px}
+    .avl-review-carousel__arrow{width:26px;height:40px;border:none;background:transparent;font-size:33px}
+    .avl-review-carousel__track>.avl-review{flex-basis:100%}
+    .avl-review{min-height:390px;border:1px solid #ad8a73;border-radius:13px}
+    .avl-review__content{padding:21px}
+    .avl-review__content h3{font-size:19px}
+    .avl-review__sample-art{height:105px}
+    .avl-review__sample-art span:first-child{font-size:13px}
+    .avl-review__sample-art span:last-child{font-size:50px}
+    .avl-review-carousel__dots{margin-top:14px}
+    .avl-reviews__social{font-size:11px;gap:6px}
+    .avl-sticky{display:flex;flex-direction:column;gap:2px;padding:9px 13px calc(7px + env(safe-area-inset-bottom));min-height:0}
+    .avl-sticky__image,.avl-sticky__label{display:none}
+    .avl-sticky__button{width:100%;min-height:43px;font-size:14px;border-radius:100px;padding:10px 14px}
+    .avl-sticky__mobile-note{display:block;font-size:10px;line-height:1.25;text-align:center;color:#786b62}
+  }
+  @media(prefers-reduced-motion:reduce){.avl-review-carousel__viewport{scroll-behavior:auto}.avl-review-carousel__dot{transition:none}}
 </style>
+<script>
+(() => {
+  const root = document.getElementById('AvonentListicle-{{ section.id }}');
+  if (!root) return;
+  const intervals = [];
+  const timer = root.querySelector('[data-avl-timer]');
+  if (timer) {
+    const duration = Math.max(1, Number(timer.dataset.duration) || 400) * 1000;
+    let until = Date.now() + duration;
+    const minutes = timer.querySelector('[data-avl-minutes]');
+    const seconds = timer.querySelector('[data-avl-seconds]');
+    const updateTimer = () => {
+      let remaining = Math.max(0, Math.ceil((until - Date.now()) / 1000));
+      if (!remaining) {
+        until = Date.now() + duration;
+        remaining = Math.ceil(duration / 1000);
+      }
+      minutes.textContent = String(Math.floor(remaining / 60)).padStart(2, '0');
+      seconds.textContent = String(remaining % 60).padStart(2, '0');
+    };
+    updateTimer();
+    intervals.push(window.setInterval(updateTimer, 1000));
+  }
+  const carousel = root.querySelector('[data-avl-carousel]');
+  if (carousel) {
+    const viewport = carousel.querySelector('[data-avl-viewport]');
+    const slides = Array.from(carousel.querySelectorAll('.avl-review'));
+    const dots = carousel.querySelector('[data-avl-dots]');
+    const prev = carousel.querySelector('[data-avl-prev]');
+    const next = carousel.querySelector('[data-avl-next]');
+    const scrollToSlide = (index) => {
+      const target = slides[Math.max(0, Math.min(slides.length - 1, index))];
+      if (target) viewport.scrollTo({ left: target.offsetLeft - slides[0].offsetLeft, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+    };
+    slides.forEach((slide, index) => {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'avl-review-carousel__dot';
+      dot.setAttribute('aria-label', 'Show review ' + (index + 1));
+      dot.addEventListener('click', () => scrollToSlide(index));
+      dots.appendChild(dot);
+    });
+    let active = 0;
+    const updateDots = () => {
+      const first = slides[0];
+      if (!first) return;
+      const left = viewport.scrollLeft;
+      let best = 0;
+      let distance = Infinity;
+      slides.forEach((slide, index) => {
+        const delta = Math.abs((slide.offsetLeft - first.offsetLeft) - left);
+        if (delta < distance) { distance = delta; best = index; }
+      });
+      active = best;
+      Array.from(dots.children).forEach((dot, index) => dot.setAttribute('aria-current', String(index === active)));
+      prev.disabled = active === 0;
+      next.disabled = active === slides.length - 1;
+    };
+    prev.addEventListener('click', () => scrollToSlide(active - 1));
+    next.addEventListener('click', () => scrollToSlide(active + 1));
+    viewport.addEventListener('scroll', updateDots, { passive: true });
+    window.addEventListener('resize', updateDots, { passive: true });
+    updateDots();
+  }
+  document.addEventListener('shopify:section:unload', (event) => {
+    if (event.detail?.sectionId === '{{ section.id }}') intervals.forEach(window.clearInterval);
+  });
+})();
+</script>
+
 
 {% schema %}
 {
@@ -442,6 +692,18 @@
       "id": "hero_cta",
       "label": "Top button",
       "default": "See Today’s Offer"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social_proof",
+      "label": "Show stars and customer counts",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "social_proof_text",
+      "label": "Verified review and customer counts",
+      "default": "10,000+ Reviews | 100,000+ Happy Customers"
     },
     {
       "type": "text",
@@ -577,6 +839,113 @@
     },
     {
       "type": "header",
+      "content": "Offer panel"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_offer",
+      "label": "Show promotional offer panel",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "offer_image",
+      "label": "Offer product image"
+    },
+    {
+      "type": "text",
+      "id": "offer_image_alt",
+      "label": "Offer image description",
+      "default": "Avonent Ceylon cinnamon supplement"
+    },
+    {
+      "type": "text",
+      "id": "offer_image_label",
+      "label": "Offer image tag",
+      "default": "AVONENT CEYLON CINNAMON"
+    },
+    {
+      "type": "text",
+      "id": "offer_eyebrow",
+      "label": "Offer kicker",
+      "default": "YOUR LIMITED-TIME OFFER"
+    },
+    {
+      "type": "text",
+      "id": "offer_title",
+      "label": "Offer headline",
+      "default": "Unlock Up to 70% OFF"
+    },
+    {
+      "type": "textarea",
+      "id": "offer_subtitle",
+      "label": "Offer description",
+      "default": "Explore the best available bundle savings on Avonent Ceylon Cinnamon."
+    },
+    {
+      "type": "text",
+      "id": "offer_savings_text",
+      "label": "Savings highlight",
+      "default": "SAVE UP TO 70% ON SELECT BUNDLES"
+    },
+    {
+      "type": "text",
+      "id": "timer_label",
+      "label": "Countdown headline",
+      "default": "OFFER WINDOW REFRESHES IN:"
+    },
+    {
+      "type": "range",
+      "id": "timer_minutes",
+      "label": "Countdown minutes",
+      "min": 1,
+      "max": 59,
+      "step": 1,
+      "unit": "min",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "timer_seconds",
+      "label": "Countdown seconds",
+      "min": 0,
+      "max": 59,
+      "step": 1,
+      "unit": "sec",
+      "default": 40
+    },
+    {
+      "type": "textarea",
+      "id": "timer_context",
+      "label": "Countdown transparency note",
+      "default": "The offer window renews automatically. Savings may remain available after the timer resets."
+    },
+    {
+      "type": "text",
+      "id": "stock_risk_text",
+      "label": "Inventory status badge",
+      "default": "Sell-Out Risk: High"
+    },
+    {
+      "type": "text",
+      "id": "ebook_text",
+      "label": "Bonus badge",
+      "default": "FREE E-BOOK"
+    },
+    {
+      "type": "text",
+      "id": "offer_cta",
+      "label": "Offer button",
+      "default": "Save Up to 70% OFF"
+    },
+    {
+      "type": "text",
+      "id": "offer_guarantee",
+      "label": "Offer guarantee",
+      "default": "Try it today with a 30-Day Money-Back Guarantee"
+    },
+    {
+      "type": "header",
       "content": "Reviews and FAQs"
     },
     {
@@ -592,6 +961,12 @@
       "default": "Experiences are personal. Explore real customer feedback as you decide what fits your routine."
     },
     {
+      "type": "checkbox",
+      "id": "show_review_previews",
+      "label": "Show labeled example review cards",
+      "default": false
+    },
+    {
       "type": "text",
       "id": "final_cta",
       "label": "Final button",
@@ -602,6 +977,12 @@
       "id": "sticky_cta",
       "label": "Sticky button",
       "default": "See Offers"
+    },
+    {
+      "type": "text",
+      "id": "sticky_subtext",
+      "label": "Sticky bar guarantee line",
+      "default": "30-day money-back guarantee"
     }
   ],
   "blocks": [
@@ -676,6 +1057,15 @@
           "type": "richtext",
           "id": "review_text",
           "label": "Actual customer review"
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Verified rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
         },
         {
           "type": "text",
