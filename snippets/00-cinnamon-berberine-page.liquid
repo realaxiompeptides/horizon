@@ -62,6 +62,19 @@
   assign av_cb_stats_guarantee_icon = av_cb_product.metafields.custom.av_cb_stats_guarantee_icon.value
   assign av_cb_stats_text_color = av_cb_product.metafields.custom.av_cb_stats_text_color.value | default: '#FFFFFF'
   assign av_cb_stats_show = av_cb_product.metafields.custom.av_cb_stats_show.value
+  assign av_cb_carousel_heading = av_cb_product.metafields.custom.av_cb_carousel_heading.value | default: 'Why This Ceylon Cinnamon Formula Is Built Differently'
+  assign av_cb_carousel_1_image = av_cb_product.metafields.custom.av_cb_carousel_1_image.value
+  assign av_cb_carousel_1_title = av_cb_product.metafields.custom.av_cb_carousel_1_title.value | default: 'Genuine Ceylon, Not Common Cassia'
+  assign av_cb_carousel_1_body = av_cb_product.metafields.custom.av_cb_carousel_1_body.value
+  assign av_cb_carousel_2_image = av_cb_product.metafields.custom.av_cb_carousel_2_image.value
+  assign av_cb_carousel_2_title = av_cb_product.metafields.custom.av_cb_carousel_2_title.value | default: '14,400 mg Equivalent + Berberine HCl'
+  assign av_cb_carousel_2_body = av_cb_product.metafields.custom.av_cb_carousel_2_body.value
+  assign av_cb_carousel_3_image = av_cb_product.metafields.custom.av_cb_carousel_3_image.value
+  assign av_cb_carousel_3_title = av_cb_product.metafields.custom.av_cb_carousel_3_title.value | default: 'MCT Oil Softgel Delivery'
+  assign av_cb_carousel_3_body = av_cb_product.metafields.custom.av_cb_carousel_3_body.value
+  assign av_cb_carousel_4_image = av_cb_product.metafields.custom.av_cb_carousel_4_image.value
+  assign av_cb_carousel_4_title = av_cb_product.metafields.custom.av_cb_carousel_4_title.value | default: 'Built Around a Simple 30-Day Routine'
+  assign av_cb_carousel_4_body = av_cb_product.metafields.custom.av_cb_carousel_4_body.value
 %}
 
 <div class="av-cb" data-av-cb data-unit-price="{{ av_cb_unit_price }}" data-compare-price="{{ av_cb_compare_price | escape }}">
@@ -135,6 +148,27 @@
     .av-cb__stats-guarantee-icon img{display:block;width:17px;height:17px;object-fit:contain}
     .av-cb__stats-guarantee-icon svg{display:block;width:17px;height:17px}
 
+    .av-cb__carousel-section{padding:52px 0 18px;background:#fff}
+    .av-cb__carousel-heading{text-align:center;max-width:760px;margin:0 auto 28px;font-size:clamp(30px,4vw,48px);line-height:1.08;letter-spacing:-.035em;color:var(--ink)}
+    .av-cb__carousel-shell{position:relative;overflow:hidden}
+    .av-cb__carousel-track{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:0 max(16px,calc((100vw - 1200px)/2)) 10px;scrollbar-width:none;-ms-overflow-style:none}
+    .av-cb__carousel-track::-webkit-scrollbar{display:none}
+    .av-cb__carousel-card{flex:0 0 min(520px,78vw);scroll-snap-align:start;background:#fff;border:1px solid #e2e7e9;border-radius:22px;overflow:hidden;box-shadow:0 10px 30px rgba(4,47,58,.05)}
+    .av-cb__carousel-media{aspect-ratio:1.28/1;background:linear-gradient(145deg,#f6eee5,#e8d2b9);overflow:hidden}
+    .av-cb__carousel-media img{display:block;width:100%;height:100%;object-fit:cover}
+    .av-cb__carousel-content{padding:24px 24px 28px;text-align:center}
+    .av-cb__carousel-content h3{font-size:22px;line-height:1.2;margin:0 0 12px;color:#111}
+    .av-cb__carousel-content p{font-size:15px;line-height:1.7;margin:0;color:#4c565b}
+    .av-cb__carousel-controls{display:flex;flex-direction:column;align-items:center;gap:16px;margin-top:18px}
+    .av-cb__carousel-dots{display:flex;align-items:center;gap:9px}
+    .av-cb__carousel-dot{width:10px;height:10px;border:0;border-radius:999px;background:#d5d9db;padding:0;cursor:pointer;transition:.2s ease}
+    .av-cb__carousel-dot.is-active{width:42px;background:var(--blue)}
+    .av-cb__carousel-arrows{display:flex;gap:12px}
+    .av-cb__carousel-arrow{width:50px;height:50px;border:0;border-radius:50%;background:#f3f5f6;color:#111;display:grid;place-items:center;cursor:pointer;transition:.18s ease}
+    .av-cb__carousel-arrow:hover{background:#e7ecee}
+    .av-cb__carousel-arrow svg{width:22px;height:22px}
+    @media(min-width:900px){.av-cb__carousel-card{flex-basis:min(520px,44vw)}}
+    @media(max-width:600px){.av-cb__carousel-section{padding:38px 0 14px}.av-cb__carousel-heading{font-size:31px;margin-bottom:22px;padding:0 22px}.av-cb__carousel-track{gap:14px;padding-left:22px;padding-right:22px}.av-cb__carousel-card{flex-basis:82vw;border-radius:18px}.av-cb__carousel-content{padding:20px 18px 23px}.av-cb__carousel-content h3{font-size:19px}.av-cb__carousel-content p{font-size:13.5px;line-height:1.65}.av-cb__carousel-arrow{width:46px;height:46px}}
     @media(max-width:600px){.av-cb__rating{font-size:12.5px;margin-bottom:10px}.av-cb__stars{font-size:16px}.av-cb__benefits{gap:13px;margin:15px 0 20px}.av-cb__benefit{font-size:14.5px;gap:10px}.av-cb__benefit-check{width:18px;height:18px;flex-basis:18px}.av-cb__sold{padding:13px 14px;margin-bottom:14px}.av-cb__sold-track{height:8px}.av-cb__sold-text{font-size:14px}.av-cb__pricing{gap:9px;margin-bottom:10px}.av-cb__sale-price{font-size:24px}.av-cb__compare-price{font-size:17px}.av-cb__sale-badge{font-size:10.5px;min-height:28px;padding:0 9px}.av-cb__low-stock-line{font-size:14px;margin:5px 0 14px;gap:8px}.av-cb__bundle{grid-template-columns:48px 1fr auto;gap:11px;padding:13px 12px}.av-cb__bundle-thumb{width:48px;height:48px}.av-cb__bundle-copy strong{font-size:16px}.av-cb__bundle-price strong{font-size:16px}.av-cb__bundle-price s{font-size:12px}.av-cb__refill-row{font-size:11px;gap:8px;margin-top:9px}.av-cb__refill-icon{width:18px;height:18px}.av-cb__top-stack{width:min(100% - 22px,1200px);margin:3px auto 24px;gap:8px}.av-cb__guarantee-card{grid-template-columns:62px 1fr;gap:12px;padding:15px 16px;border-radius:15px}.av-cb__guarantee-image{width:62px;height:62px}.av-cb__guarantee-image img{max-width:62px;max-height:62px}.av-cb__guarantee-seal{width:58px;height:58px;border-width:5px}.av-cb__guarantee-copy h3{font-size:17px}.av-cb__guarantee-copy p{font-size:12.5px}.av-cb__low-stock{padding:14px 15px;border-radius:15px;gap:9px}.av-cb__low-stock-icon{width:20px;height:20px;font-size:11px}.av-cb__low-stock h3{font-size:15px}.av-cb__low-stock p{font-size:12.5px}.av-cb__accordion summary{padding:14px 16px;font-size:16px}.av-cb__accordion-body{padding:0 16px 14px;font-size:12.5px}.av-cb__stats-section{padding:24px 18px 18px;border-radius:16px}.av-cb__stats-heading{font-size:26px;margin-bottom:16px}.av-cb__stat{padding:12px 0}.av-cb__stat-number{font-size:38px}.av-cb__stat-label{font-size:12.5px}.av-cb__stats-cta{min-height:50px;margin-top:18px;font-size:13px}.av-cb__stats-guarantee{font-size:11px;margin-top:9px}}
 
   </style>
@@ -346,6 +380,62 @@
     {% endunless %}
   </div>
 
+  <section class="av-cb__carousel-section" data-av-cb-carousel>
+    <h2 class="av-cb__carousel-heading">{{ av_cb_carousel_heading }}</h2>
+    <div class="av-cb__carousel-shell">
+      <div class="av-cb__carousel-track" data-av-cb-carousel-track>
+        {% for i in (1..4) %}
+          {% case i %}
+            {% when 1 %}
+              {% assign av_cb_card_image = av_cb_carousel_1_image %}
+              {% assign av_cb_card_title = av_cb_carousel_1_title %}
+              {% assign av_cb_card_body = av_cb_carousel_1_body %}
+            {% when 2 %}
+              {% assign av_cb_card_image = av_cb_carousel_2_image %}
+              {% assign av_cb_card_title = av_cb_carousel_2_title %}
+              {% assign av_cb_card_body = av_cb_carousel_2_body %}
+            {% when 3 %}
+              {% assign av_cb_card_image = av_cb_carousel_3_image %}
+              {% assign av_cb_card_title = av_cb_carousel_3_title %}
+              {% assign av_cb_card_body = av_cb_carousel_3_body %}
+            {% else %}
+              {% assign av_cb_card_image = av_cb_carousel_4_image %}
+              {% assign av_cb_card_title = av_cb_carousel_4_title %}
+              {% assign av_cb_card_body = av_cb_carousel_4_body %}
+          {% endcase %}
+          <article class="av-cb__carousel-card" data-av-cb-carousel-card>
+            <div class="av-cb__carousel-media">
+              {% if av_cb_card_image != blank %}
+                {{ av_cb_card_image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '500,800,1000,1200', sizes: '(min-width: 900px) 520px, 82vw', alt: av_cb_card_title }}
+              {% elsif av_cb_product.featured_image %}
+                {{ av_cb_product.featured_image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '500,800,1000,1200', sizes: '(min-width: 900px) 520px, 82vw', alt: av_cb_card_title }}
+              {% endif %}
+            </div>
+            <div class="av-cb__carousel-content">
+              <h3>{{ av_cb_card_title }}</h3>
+              <p>{{ av_cb_card_body | newline_to_br }}</p>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="av-cb__carousel-controls">
+      <div class="av-cb__carousel-dots" aria-label="Formula carousel pagination">
+        {% for i in (1..4) %}
+          <button type="button" class="av-cb__carousel-dot{% if i == 1 %} is-active{% endif %}" data-av-cb-carousel-dot="{{ forloop.index0 }}" aria-label="Go to slide {{ i }}"></button>
+        {% endfor %}
+      </div>
+      <div class="av-cb__carousel-arrows">
+        <button type="button" class="av-cb__carousel-arrow" data-av-cb-carousel-prev aria-label="Previous slide">
+          <svg viewBox="0 0 24 24" fill="none"><path d="m14.5 6-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="av-cb__carousel-arrow" data-av-cb-carousel-next aria-label="Next slide">
+          <svg viewBox="0 0 24 24" fill="none"><path d="m9.5 6 6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
   <section class="av-cb__section av-cb__section--soft">
     <div class="av-cb__wrap">
       <header class="av-cb__head">
@@ -482,6 +572,39 @@
         } else {
           run();
         }
+      });
+      const carousels = root.querySelectorAll('[data-av-cb-carousel]');
+      carousels.forEach(carousel => {
+        const track = carousel.querySelector('[data-av-cb-carousel-track]');
+        const cards = Array.from(carousel.querySelectorAll('[data-av-cb-carousel-card]'));
+        const dots = Array.from(carousel.querySelectorAll('[data-av-cb-carousel-dot]'));
+        const prev = carousel.querySelector('[data-av-cb-carousel-prev]');
+        const next = carousel.querySelector('[data-av-cb-carousel-next]');
+        if (!track || !cards.length) return;
+        const setActive = index => dots.forEach((dot, i) => dot.classList.toggle('is-active', i === index));
+        const goTo = index => {
+          const safe = Math.max(0, Math.min(cards.length - 1, index));
+          track.scrollTo({left: cards[safe].offsetLeft - track.offsetLeft, behavior:'smooth'});
+          setActive(safe);
+        };
+        const currentIndex = () => {
+          const trackLeft = track.getBoundingClientRect().left;
+          let best = 0;
+          let distance = Infinity;
+          cards.forEach((card, i) => {
+            const d = Math.abs(card.getBoundingClientRect().left - trackLeft);
+            if (d < distance) { distance = d; best = i; }
+          });
+          return best;
+        };
+        prev?.addEventListener('click', () => goTo(currentIndex() - 1));
+        next?.addEventListener('click', () => goTo(currentIndex() + 1));
+        dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
+        let scrollTimer;
+        track.addEventListener('scroll', () => {
+          clearTimeout(scrollTimer);
+          scrollTimer = setTimeout(() => setActive(currentIndex()), 80);
+        }, {passive:true});
       });
       const accordions = root.querySelectorAll('.av-cb__accordion');
       accordions.forEach(item => {
