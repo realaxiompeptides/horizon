@@ -5,7 +5,7 @@
   assign av_cb_unit_price = av_cb_variant.price | default: av_cb_product.price
   assign av_cb_subscription = av_cb_variant.selling_plan_allocations.first
   assign av_cb_guarantee_image = av_cb_product.metafields.custom.av_cb_guarantee_image.value
-  assign av_cb_guarantee_highlight = av_cb_product.metafields.custom.av_cb_guarantee_highlight_text.value | default: '90 days'
+  assign av_cb_guarantee_highlight = av_cb_product.metafields.custom.av_cb_guarantee_highlight_text.value | default: '30-Day'
   assign av_cb_guarantee_color = av_cb_product.metafields.custom.av_cb_guarantee_highlight_color.value | default: '#02C6EA'
   assign av_cb_stock_title = av_cb_product.metafields.custom.av_cb_low_stock_title.value | default: 'WARNING: Low Stock Notice'
   assign av_cb_stock_text = av_cb_product.metafields.custom.av_cb_low_stock_text.value | default: 'Inventory can move quickly during promotions. If Avonent fits your routine, ordering while stock is available can help avoid interruptions.'
@@ -50,14 +50,14 @@
 
     .av-cb__refill-row{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:13px;color:#4f5e65;font-size:12px}
     .av-cb__refill-item{display:inline-flex;align-items:center;gap:7px}.av-cb__refill-icon{width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;color:#151515}.av-cb__refill-divider{width:1px;height:20px;background:#b7c3c7}
-    .av-cb__top-stack{width:min(1200px,calc(100% - 32px));margin:26px auto 42px;display:grid;gap:16px}
-    .av-cb__guarantee-card{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center;border:1.5px dashed #b8dfe7;border-radius:22px;background:#fff;padding:24px;color:var(--guarantee-text,#171717)}
-    .av-cb__guarantee-image{width:92px;height:92px;display:grid;place-items:center;flex:0 0 92px}.av-cb__guarantee-image img{max-width:92px;max-height:92px;object-fit:contain}.av-cb__guarantee-seal{width:88px;height:88px;border-radius:50%;border:8px double var(--blue);display:grid;place-items:center;text-align:center;color:var(--deep);font-weight:900;line-height:1}.av-cb__guarantee-seal small{font-size:10px;letter-spacing:.06em}
-    .av-cb__guarantee-copy h3{font-size:24px;line-height:1.15;margin:0 0 8px}.av-cb__guarantee-copy p{font-size:15px;line-height:1.5;margin:0;color:#5a666c}.av-cb__guarantee-copy mark{background:transparent;color:var(--guarantee-highlight,var(--blue));font-weight:850}
-    .av-cb__low-stock{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:flex-start;border:1.5px dashed var(--low-stock,#D62828);background:var(--low-stock-bg,#FFF5F5);border-radius:22px;padding:22px;color:var(--low-stock,#D62828)}
-    .av-cb__low-stock-icon{width:34px;height:34px;border-radius:50%;background:var(--low-stock,#D62828);color:#fff;display:grid;place-items:center;font-weight:900;font-size:18px;line-height:1}.av-cb__low-stock h3{font-size:20px;margin:0 0 7px;color:inherit}.av-cb__low-stock p{font-size:14px;line-height:1.55;margin:0;color:inherit}
-    .av-cb__accordion-list{display:grid;gap:12px}.av-cb__accordion{border:1.5px solid #d7dde0;border-radius:18px;background:#fff;overflow:hidden}.av-cb__accordion summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px 22px;font-size:18px;font-weight:800}.av-cb__accordion summary::-webkit-details-marker{display:none}.av-cb__accordion-icon{width:26px;height:26px;position:relative;flex:0 0 26px;transition:transform .2s ease}.av-cb__accordion-icon:before,.av-cb__accordion-icon:after{content:"";position:absolute;left:50%;top:50%;background:#151515;transform:translate(-50%,-50%);border-radius:2px}.av-cb__accordion-icon:before{width:20px;height:2px}.av-cb__accordion-icon:after{width:2px;height:20px}.av-cb__accordion[open] .av-cb__accordion-icon{transform:rotate(45deg)}.av-cb__accordion-body{padding:0 22px 22px;color:#4f5e65;font-size:14px;line-height:1.65}.av-cb__accordion-body p:first-child{margin-top:0}.av-cb__accordion-body ul{padding-left:20px}.av-cb__accordion-body li{margin:7px 0}
-    @media(max-width:600px){.av-cb__refill-row{font-size:11px;gap:9px}.av-cb__guarantee-card{grid-template-columns:72px 1fr;gap:14px;padding:18px}.av-cb__guarantee-image{width:72px;height:72px}.av-cb__guarantee-image img{max-width:72px;max-height:72px}.av-cb__guarantee-seal{width:68px;height:68px;border-width:6px}.av-cb__guarantee-copy h3{font-size:19px}.av-cb__guarantee-copy p{font-size:13px}.av-cb__low-stock{padding:18px}.av-cb__accordion summary{padding:18px;font-size:17px}.av-cb__accordion-body{padding:0 18px 18px}}
+    .av-cb__top-stack{width:min(1200px,calc(100% - 32px));margin:18px auto 30px;display:grid;gap:10px}
+    .av-cb__guarantee-card{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;border:1.5px dashed #b8dfe7;border-radius:18px;background:#fff;padding:18px 20px;color:var(--guarantee-text,#171717)}
+    .av-cb__guarantee-image{width:76px;height:76px;display:grid;place-items:center;flex:0 0 76px}.av-cb__guarantee-image img{max-width:76px;max-height:76px;object-fit:contain}.av-cb__guarantee-seal{width:72px;height:72px;border-radius:50%;border:6px double var(--blue);display:grid;place-items:center;text-align:center;color:var(--deep);font-weight:900;line-height:1}.av-cb__guarantee-seal small{font-size:10px;letter-spacing:.06em}
+    .av-cb__guarantee-copy h3{font-size:21px;line-height:1.15;margin:0 0 5px}.av-cb__guarantee-copy p{font-size:14px;line-height:1.45;margin:0;color:#5a666c}.av-cb__guarantee-copy mark{background:transparent;color:var(--guarantee-highlight,var(--blue));font-weight:850}
+    .av-cb__low-stock{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:flex-start;border:1.5px dashed var(--low-stock,#D62828);background:var(--low-stock-bg,#FFF5F5);border-radius:18px;padding:16px 18px;color:var(--low-stock,#D62828)}
+    .av-cb__low-stock-icon{width:22px;height:22px;border-radius:50%;background:var(--low-stock,#D62828);color:#fff;display:grid;place-items:center;font-weight:900;font-size:12px;line-height:1;margin-top:1px}.av-cb__low-stock h3{font-size:17px;margin:0 0 4px;color:inherit}.av-cb__low-stock p{font-size:13px;line-height:1.45;margin:0;color:inherit}
+    .av-cb__accordion-list{display:grid;gap:8px}.av-cb__accordion{border:1px solid #d7dde0;border-radius:14px;background:#fff;overflow:hidden}.av-cb__accordion summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 18px;font-size:17px;font-weight:800}.av-cb__accordion summary::-webkit-details-marker{display:none}.av-cb__accordion-icon{width:26px;height:26px;position:relative;flex:0 0 26px;transition:transform .2s ease}.av-cb__accordion-icon:before,.av-cb__accordion-icon:after{content:"";position:absolute;left:50%;top:50%;background:#151515;transform:translate(-50%,-50%);border-radius:2px}.av-cb__accordion-icon:before{width:20px;height:2px}.av-cb__accordion-icon:after{width:2px;height:20px}.av-cb__accordion[open] .av-cb__accordion-icon{transform:rotate(45deg)}.av-cb__accordion-body{padding:0 18px 16px;color:#4f5e65;font-size:13px;line-height:1.6}.av-cb__accordion-body p:first-child{margin-top:0}.av-cb__accordion-body ul{padding-left:20px}.av-cb__accordion-body li{margin:7px 0}
+    @media(max-width:600px){.av-cb__refill-row{font-size:11px;gap:8px;margin-top:11px}.av-cb__refill-icon{width:18px;height:18px}.av-cb__top-stack{width:min(100% - 22px,1200px);margin:14px auto 24px;gap:8px}.av-cb__guarantee-card{grid-template-columns:62px 1fr;gap:12px;padding:15px 16px;border-radius:15px}.av-cb__guarantee-image{width:62px;height:62px}.av-cb__guarantee-image img{max-width:62px;max-height:62px}.av-cb__guarantee-seal{width:58px;height:58px;border-width:5px}.av-cb__guarantee-copy h3{font-size:17px}.av-cb__guarantee-copy p{font-size:12.5px}.av-cb__low-stock{padding:14px 15px;border-radius:15px;gap:9px}.av-cb__low-stock-icon{width:20px;height:20px;font-size:11px}.av-cb__low-stock h3{font-size:15px}.av-cb__low-stock p{font-size:12.5px}.av-cb__accordion summary{padding:14px 16px;font-size:16px}.av-cb__accordion-body{padding:0 16px 14px;font-size:12.5px}}
 
   </style>
 
@@ -112,23 +112,21 @@
             {% if av_cb_variant.available %}Add to Cart · <span data-av-cb-button-price>{{ av_cb_unit_price | money }}</span>{% else %}Currently Unavailable{% endif %}
           </button>
         {% endform %}
-        {% if av_cb_subscription != blank %}
-          <div class="av-cb__refill-row" aria-label="Subscription details">
-            <span class="av-cb__refill-item">
-              <span class="av-cb__refill-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M20 6v5h-5M4 18v-5h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M18.2 10a7 7 0 0 0-11.9-3L4 9M5.8 14a7 7 0 0 0 11.9 3L20 15" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </span>
-              Refills ship every 30 days
+        <div class="av-cb__refill-row" aria-label="Refill details">
+          <span class="av-cb__refill-item">
+            <span class="av-cb__refill-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M20 6v5h-5M4 18v-5h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M18.2 10a7 7 0 0 0-11.9-3L4 9M5.8 14a7 7 0 0 0 11.9 3L20 15" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </span>
-            <span class="av-cb__refill-divider" aria-hidden="true"></span>
-            <span class="av-cb__refill-item">
-              <span class="av-cb__refill-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.7"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </span>
-              Stop or cancel anytime
+            Refills ship every 30 days
+          </span>
+          <span class="av-cb__refill-divider" aria-hidden="true"></span>
+          <span class="av-cb__refill-item">
+            <span class="av-cb__refill-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.7"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </span>
-          </div>
-        {% endif %}
+            Stop or cancel anytime
+          </span>
+        </div>
       </div>
     </div>
   </section>
@@ -138,14 +136,14 @@
     <div class="av-cb__guarantee-card" style="--guarantee-highlight: {{ av_cb_guarantee_color }}; --guarantee-text: #171717;">
       <div class="av-cb__guarantee-image">
         {% if av_cb_guarantee_image != blank %}
-          {{ av_cb_guarantee_image | image_url: width: 240 | image_tag: loading: 'lazy', widths: '120,180,240', alt: 'Avonent 90-Day Money-Back Guarantee' }}
+          {{ av_cb_guarantee_image | image_url: width: 240 | image_tag: loading: 'lazy', widths: '120,180,240', alt: 'Avonent 30-Day Money-Back Guarantee' }}
         {% else %}
-          <div class="av-cb__guarantee-seal"><span>90<br><small>DAYS</small></span></div>
+          <div class="av-cb__guarantee-seal"><span>30<br><small>DAYS</small></span></div>
         {% endif %}
       </div>
       <div class="av-cb__guarantee-copy">
-        <h3>90-Day Money-Back Guarantee</h3>
-        <p>Try Avonent for <mark>{{ av_cb_guarantee_highlight }}</mark> with the confidence of our money-back guarantee.</p>
+        <h3>30-Day Money-Back Guarantee</h3>
+        <p><mark>{{ av_cb_guarantee_highlight }}</mark> money-back guarantee. Try Avonent with confidence and contact us within 30 days if you are not satisfied.</p>
       </div>
     </div>
 
