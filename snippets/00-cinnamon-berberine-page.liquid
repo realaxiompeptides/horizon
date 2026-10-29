@@ -31,8 +31,8 @@
   assign av_cb_sold_percent = av_cb_product.metafields.custom.av_cb_sold_percent.value | default: 93
   assign av_cb_sale_badge = av_cb_product.metafields.custom.av_cb_sale_badge.value | default: 'Fall Sale – Save 65%'
   assign av_cb_compare_price = av_cb_product.metafields.custom.av_cb_compare_price.value
-  assign av_cb_bundle_2_badge = av_cb_product.metafields.custom.av_cb_bundle_2_badge.value | default: 'Most Popular'
-  assign av_cb_bundle_3_badge = av_cb_product.metafields.custom.av_cb_bundle_3_badge.value | default: 'Best Value'
+  assign av_cb_bundle_2_badge = av_cb_product.metafields.custom.av_cb_bundle_2_badge.value | default: 'Free Shipping'
+  assign av_cb_bundle_3_badge = av_cb_product.metafields.custom.av_cb_bundle_3_badge.value | default: 'Free Shipping + E-Book'
   assign av_cb_low_stock_line = av_cb_product.metafields.custom.av_cb_low_stock_line.value | default: 'Low Stock – Selling Fast'
   assign av_cb_bundle_1_title = av_cb_product.metafields.custom.av_cb_bundle_1_title.value | default: 'Buy 1'
   assign av_cb_bundle_1_subtitle = av_cb_product.metafields.custom.av_cb_bundle_1_subtitle.value | default: '30-Day Supply'
@@ -93,7 +93,7 @@
   assign av_cb_benefits_item_1 = av_cb_product.metafields.custom.av_cb_benefits_item_1.value | default: 'Blood Sugar Support*'
   assign av_cb_benefits_item_2 = av_cb_product.metafields.custom.av_cb_benefits_item_2.value | default: 'Gentle on the Stomach'
   assign av_cb_benefits_item_3 = av_cb_product.metafields.custom.av_cb_benefits_item_3.value | default: 'MCT Oil Delivery'
-  assign av_cb_benefits_item_4 = av_cb_product.metafields.custom.av_cb_benefits_item_4.value | default: 'Low-Coumarin Ceylon'
+  assign av_cb_benefits_item_4 = av_cb_product.metafields.custom.av_cb_benefits_item_4.value | default: 'Coumarin-Free Ceylon'
   assign av_cb_benefits_icon_1 = av_cb_product.metafields.custom.av_cb_benefits_icon_1.value
   assign av_cb_benefits_icon_2 = av_cb_product.metafields.custom.av_cb_benefits_icon_2.value
   assign av_cb_benefits_icon_3 = av_cb_product.metafields.custom.av_cb_benefits_icon_3.value
@@ -1037,8 +1037,8 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
               {% assign av_cb_bundle_one_time_total = av_cb_one_time_unit_price | times: qty %}
               {% assign av_cb_bundle_one_time_compare_total = av_cb_one_time_compare_unit | times: qty %}
               <button class="av-cb__bundle{% if qty == 1 %} is-active{% endif %}" type="button" data-av-cb-bundle="{{ qty }}" data-subscription-price="{{ av_cb_bundle_sub_total }}" data-subscription-compare="{{ av_cb_bundle_one_time_total }}" data-one-time-price="{{ av_cb_bundle_one_time_total }}" data-one-time-compare="{{ av_cb_bundle_one_time_compare_total }}">
-                {% if qty == 2 and av_cb_bundle_2_badge != blank %}<span class="av-cb__badge">{{ av_cb_bundle_2_badge }}</span>{% endif %}
-                {% if qty == 3 and av_cb_bundle_3_badge != blank %}<span class="av-cb__badge">{{ av_cb_bundle_3_badge }}</span>{% endif %}
+                {% if qty == 2 and av_cb_bundle_2_badge != blank %}<span class="av-cb__badge" data-av-cb-subscription-perk>{{ av_cb_bundle_2_badge }}</span>{% endif %}
+                {% if qty == 3 and av_cb_bundle_3_badge != blank %}<span class="av-cb__badge" data-av-cb-subscription-perk>{{ av_cb_bundle_3_badge }}</span>{% endif %}
                 <span class="av-cb__bundle-thumb">
                   {% if av_cb_hero_image %}
                     {{ av_cb_hero_image | image_url: width: 120 | image_tag: loading: 'lazy', widths: '60,90,120', alt: av_cb_display_title }}
@@ -1680,6 +1680,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       const bundleRewards = root.querySelector('[data-av-cb-bundle-rewards]');
       const shippingReward = root.querySelector('[data-av-cb-reward-shipping]');
       const ebookReward = root.querySelector('[data-av-cb-reward-ebook]');
+      const subscriptionPerks = Array.from(root.querySelectorAll('[data-av-cb-subscription-perk]'));
       const money = (cents) => new Intl.NumberFormat(document.documentElement.lang || 'en-US', {style:'currency', currency:'USD'}).format(Number(cents || 0) / 100);
       let purchaseMode = sellingPlanInput ? 'subscription' : 'one-time';
 
@@ -1726,11 +1727,12 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         setCompare(topCompare, values.compare, values.price);
         setCompare(btnCompare, values.compare, values.price);
 
+        subscriptionPerks.forEach(perk => { perk.hidden = !isSubscription; });
         if (bundleRewards) {
-          const unlocksShipping = values.qty >= 2;
+          const unlocksShipping = isSubscription && values.qty >= 2;
           bundleRewards.classList.toggle('is-visible', unlocksShipping);
           if (shippingReward) shippingReward.hidden = !unlocksShipping;
-          if (ebookReward) ebookReward.hidden = values.qty < 3;
+          if (ebookReward) ebookReward.hidden = !(isSubscription && values.qty >= 3);
         }
 
         if (purchaseToggleText) {
