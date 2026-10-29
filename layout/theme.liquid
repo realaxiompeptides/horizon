@@ -6,6 +6,9 @@
   lang="{{ request.locale.iso_code }}"
 >
   <head>
+    {% if template.suffix == 'cinnamon-berberine' or product.handle == 'cinnamon-berberine-example' %}
+      <script>document.documentElement.classList.add('av-cb-cinnamon-page');</script>
+    {% endif %}
     {%- if settings.favicon != blank -%}
       <link
         rel="icon"
@@ -199,16 +202,11 @@
       >
         {% comment %} AVONENT_CINNAMON_BERBERINE_LAYOUT_ROUTE {% endcomment %}
         {% if template.suffix == 'cinnamon-berberine' or product.handle == 'cinnamon-berberine-example' %}
-          {% render '00-cinnamon-berberine-hero', product: product %}
+          {% render '00-cinnamon-berberine-page', product: product %}
         {% else %}
           {{ content_for_layout }}
         {% endif %}
-        {% unless template.suffix == 'avonent-cinnamon-listicle' %}
-          {% section '00-cinnamon-berberine-details' %}
-        {% endunless %}
-        {% if template.suffix == 'cinnamon-berberine' or product.handle == 'cinnamon-berberine-example' %}
-          {% render '00-cinnamon-berberine-body', product: product %}
-        {% endif %}
+
         {% if template.suffix == 'moringa' %}
           {% section '00-avonent-real-stories-carousel' %}
         {% endif %}
@@ -243,3 +241,4 @@
     {% endif %}
   </body>
 </html>
+
