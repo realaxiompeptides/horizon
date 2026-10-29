@@ -22,7 +22,7 @@
   assign av_cb_stock_title = av_cb_product.metafields.custom.av_cb_low_stock_title.value | default: 'WARNING: Low Stock Notice'
   assign av_cb_stock_text = av_cb_product.metafields.custom.av_cb_low_stock_text.value | default: 'Inventory can move quickly during promotions. If Avonent fits your routine, ordering while stock is available can help avoid interruptions.'
   assign av_cb_display_title = av_cb_product.metafields.custom.av_cb_display_title.value | default: 'Berberine + True Ceylon Cinnamon'
-  assign av_cb_hero_description = av_cb_product.metafields.custom.av_cb_hero_description.value | default: 'Avonent Ceylon Cinnamon + Berberine is designed to support healthy blood sugar, glucose metabolism, and everyday metabolic balance — helping support a steadier daily routine around meals and throughout the day.*\n\nFour daily softgels combine true Sri Lankan Ceylon cinnamon with Berberine HCl in a concentrated, easy-to-take formula built for consistent daily support.*'
+  assign av_cb_hero_description = av_cb_product.metafields.custom.av_cb_hero_description.value | default: 'Avonent Ceylon Cinnamon + Berberine supports healthy blood sugar, glucose metabolism, and everyday metabolic balance — helping support steadier days around meals and throughout the day.*\n\nFour daily softgels combine true Sri Lankan Ceylon cinnamon with Berberine HCl in one concentrated formula built for consistent daily use.*'
   assign av_cb_rating_text = av_cb_product.metafields.custom.av_cb_rating_text.value | default: 'Rated 4.9 • Thousands of 5-Star Reviews'
   assign av_cb_benefit_1 = av_cb_product.metafields.custom.av_cb_benefit_1.value | default: 'Supports Healthy Glucose Metabolism*'
   assign av_cb_benefit_2 = av_cb_product.metafields.custom.av_cb_benefit_2.value | default: 'Supports Healthy Insulin Sensitivity*'
@@ -702,6 +702,14 @@
     @media(max-width:600px){.av-cb__pricing--purchase-mode{grid-template-columns:1fr auto;gap:8px 12px;padding:14px 0}.av-cb__purchase-heading{font-size:18px}.av-cb__pricing-values{max-width:190px;gap:6px 8px}.av-cb__sale-price{font-size:22px}.av-cb__compare-price{font-size:15px}.av-cb__sale-badge{font-size:9.5px;min-height:25px;padding:0 8px}}
     .av-cb__low-stock-line{display:flex;align-items:center;gap:12px;margin:7px 0 18px;color:var(--deep);font-size:16px;font-weight:850}.av-cb__low-stock-line:before,.av-cb__low-stock-line:after{content:"";height:2px;background:#e7c2aa;flex:1}.av-cb__low-stock-line span{white-space:nowrap}
     .av-cb__bundles{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:14px}.av-cb__bundle{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;position:relative;border:1.5px solid #e4c8b7;border-radius:16px;padding:15px 16px;background:#fff;cursor:pointer;text-align:left;transition:.18s ease}.av-cb__bundle:hover,.av-cb__bundle.is-active{border-color:var(--blue);box-shadow:0 0 0 2px rgba(168,79,27,.10)}.av-cb__bundle.is-active{background:#fff8f3}.av-cb__bundle-thumb{width:54px;height:54px;border-radius:10px;background:#fff4ec;border:1px solid #ead3c4;display:grid;place-items:center;overflow:hidden}.av-cb__bundle-thumb img{width:100%;height:100%;object-fit:contain}.av-cb__bundle-thumb-fallback{font-size:9px;font-weight:900;color:var(--deep);letter-spacing:.05em;text-align:center;line-height:1.1}.av-cb__bundle-copy strong{display:block;font-size:17px;color:#111}.av-cb__bundle-copy span{display:block;font-size:12px;color:var(--muted);margin-top:3px}.av-cb__bundle-price{text-align:right}.av-cb__bundle-price strong{display:block;color:var(--blue);font-size:18px}.av-cb__bundle-price s{display:block;color:#111;font-size:13px;margin-top:2px;opacity:.78}.av-cb__badge{position:absolute!important;top:-11px;right:14px;background:var(--blue);color:#fff!important;border-radius:999px;padding:4px 10px;font-size:10px!important;font-weight:850;text-transform:uppercase;letter-spacing:.04em}
+    .av-cb__bundle-rewards{display:none;margin:-2px 0 15px;border:1.5px solid #e1c5b4;border-radius:15px;background:#fffaf6;padding:14px 16px;box-shadow:0 8px 20px rgba(125,54,18,.05)}
+    .av-cb__bundle-rewards.is-visible{display:block}
+    .av-cb__bundle-rewards-title{font-size:12px;font-weight:850;letter-spacing:.09em;text-transform:uppercase;color:#7D3612;margin-bottom:7px}
+    .av-cb__bundle-reward{display:flex;align-items:center;gap:10px;padding:8px 0;color:#211d1a;font-size:14px;line-height:1.35;font-weight:750}
+    .av-cb__bundle-reward+.av-cb__bundle-reward{border-top:1px solid #eadfd8}
+    .av-cb__bundle-reward-check{width:22px;height:22px;border-radius:50%;background:#A84F1B;color:#fff;display:grid;place-items:center;flex:0 0 22px;font-size:13px;font-weight:900}
+    .av-cb__bundle-reward small{display:block;color:#786d66;font-size:11.5px;font-weight:500;margin-top:2px}
+    @media(max-width:600px){.av-cb__bundle-rewards{padding:11px 13px;margin-bottom:13px}.av-cb__bundle-rewards-title{font-size:10.5px}.av-cb__bundle-reward{font-size:12.75px;padding:6px 0}}
 
     .av-cb__buy{width:100%;min-height:76px;border:0;border-radius:14px;background:var(--blue);color:#fff;cursor:pointer;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;padding:10px 16px;box-shadow:0 10px 24px rgba(125,54,18,.18)}.av-cb__buy[disabled]{opacity:.45;cursor:not-allowed}.av-cb__buy-mainline{display:flex;align-items:baseline;justify-content:center;gap:10px;flex-wrap:wrap;font-size:17px;font-weight:800;line-height:1.15}.av-cb__buy-divider{opacity:.55;font-weight:400}.av-cb__buy-price{font-size:18px;font-weight:850}.av-cb__buy-compare{font-size:15px;font-weight:500;text-decoration:line-through;text-decoration-thickness:1.4px;opacity:.66}.av-cb__buy-guarantee{font-size:12.5px;font-weight:500;line-height:1.1;opacity:.92}
     .av-cb__micro{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-top:10px}.av-cb__micro b{color:var(--ink)}
@@ -717,7 +725,7 @@
     .av-cb__disclaimer{font-size:10px!important;color:#7b8a90!important;max-width:860px;margin:24px auto 0!important;text-align:center;line-height:1.5!important}
     .av-cb__sticky{display:none}
     @media(max-width:900px){.av-cb__hero-grid{grid-template-columns:1fr;gap:24px}.av-cb__media{min-height:390px}.av-cb__trust-grid{grid-template-columns:repeat(2,1fr)}.av-cb__trust-item:nth-child(2){border-right:0}.av-cb__formula,.av-cb__timeline{grid-template-columns:1fr 1fr}.av-cb__education,.av-cb__compare{grid-template-columns:1fr}.av-cb__guarantee{grid-template-columns:auto 1fr}.av-cb__guarantee .av-cb__cta{grid-column:1/-1}.av-cb__title{font-size:40px}}
-    @media(max-width:600px){.av-cb__wrap{width:min(100% - 22px,1200px)}.av-cb__hero{padding-top:0}.av-cb__media{width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);min-height:0;border-radius:0}.av-cb__formula-bottle{width:75%;padding:22px}.av-cb__formula-bottle b{font-size:30px}.av-cb__title{font-size:31px;line-height:1.04;letter-spacing:-.03em}.av-cb__subtitle{font-size:15px}.av-cb__benefit{font-size:14.5px}.av-cb__benefits{gap:14px}.av-cb__bundles{grid-template-columns:1fr}.av-cb__bundle{padding:13px 14px}.av-cb__trust-grid{grid-template-columns:1fr 1fr}.av-cb__trust-item{padding:14px 8px}.av-cb__section{padding:50px 0}.av-cb__formula,.av-cb__timeline{grid-template-columns:1fr}.av-cb__guarantee{grid-template-columns:1fr;text-align:center}.av-cb__seal{margin:auto}.av-cb__sticky{position:fixed;display:grid;grid-template-columns:48px minmax(0,1fr) auto;z-index:40;left:10px;right:10px;bottom:max(10px,env(safe-area-inset-bottom));background:rgba(255,255,255,.97);backdrop-filter:blur(14px);border:1px solid #E8D5C8;box-shadow:0 14px 38px rgba(43,24,14,.16);border-radius:16px;padding:9px;align-items:center;gap:10px;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(14px);transition:opacity .2s ease,transform .2s ease,visibility .2s ease}.av-cb__sticky.is-visible{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0)}.av-cb__sticky-img{width:48px;height:48px;border-radius:11px;overflow:hidden;background:#fff5ef;border:1px solid #ead3c4;display:grid;place-items:center}.av-cb__sticky-img img{width:100%;height:100%;object-fit:contain}.av-cb__sticky-copy{min-width:0;display:grid;gap:2px}.av-cb__sticky-title{font-size:12px;line-height:1.2;font-weight:750;color:#1D1916;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.av-cb__sticky-price{font-size:14px;line-height:1.1;font-weight:850;color:var(--blue)}.av-cb__sticky-add{border:0;background:var(--blue);color:#fff;min-height:46px;padding:0 17px;border-radius:12px;font-size:12px;font-weight:850;letter-spacing:.01em;cursor:pointer}.av-cb{padding-bottom:86px}}
+    @media(max-width:600px){.av-cb__wrap{width:min(100% - 22px,1200px)}.av-cb__hero{padding-top:0}.av-cb__media{width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);min-height:0;border-radius:0}.av-cb__formula-bottle{width:75%;padding:22px}.av-cb__formula-bottle b{font-size:30px}.av-cb__rating{margin-bottom:10px;font-size:12.5px;gap:7px}.av-cb__stars{font-size:16px}.av-cb__title{font-size:28px;line-height:1.03;letter-spacing:-.03em;margin-bottom:10px}.av-cb__hero-description{font-size:14px;line-height:1.48;margin-bottom:15px}.av-cb__hero-description br+br{margin-top:6px}.av-cb__subtitle{font-size:15px}.av-cb__benefit{font-size:13.5px;line-height:1.38;gap:9px}.av-cb__benefits{gap:10px;margin:14px 0 18px}.av-cb__benefit-check{width:17px;height:17px;flex-basis:17px}.av-cb__sold{padding:13px 15px;margin-bottom:14px}.av-cb__sold-text{font-size:14px}.av-cb__bundles{grid-template-columns:1fr}.av-cb__bundle{padding:13px 14px}.av-cb__trust-grid{grid-template-columns:1fr 1fr}.av-cb__trust-item{padding:14px 8px}.av-cb__section{padding:50px 0}.av-cb__formula,.av-cb__timeline{grid-template-columns:1fr}.av-cb__guarantee{grid-template-columns:1fr;text-align:center}.av-cb__seal{margin:auto}.av-cb__sticky{position:fixed;display:grid;grid-template-columns:48px minmax(0,1fr) auto;z-index:40;left:10px;right:10px;bottom:max(10px,env(safe-area-inset-bottom));background:rgba(255,255,255,.97);backdrop-filter:blur(14px);border:1px solid #E8D5C8;box-shadow:0 14px 38px rgba(43,24,14,.16);border-radius:16px;padding:9px;align-items:center;gap:10px;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(14px);transition:opacity .2s ease,transform .2s ease,visibility .2s ease}.av-cb__sticky.is-visible{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0)}.av-cb__sticky-img{width:48px;height:48px;border-radius:11px;overflow:hidden;background:#fff5ef;border:1px solid #ead3c4;display:grid;place-items:center}.av-cb__sticky-img img{width:100%;height:100%;object-fit:contain}.av-cb__sticky-copy{min-width:0;display:grid;gap:2px}.av-cb__sticky-title{font-size:12px;line-height:1.2;font-weight:750;color:#1D1916;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.av-cb__sticky-price{font-size:14px;line-height:1.1;font-weight:850;color:var(--blue)}.av-cb__sticky-add{border:0;background:var(--blue);color:#fff;min-height:46px;padding:0 17px;border-radius:12px;font-size:12px;font-weight:850;letter-spacing:.01em;cursor:pointer}.av-cb{padding-bottom:86px}}
 
     .av-cb__delivery-estimate{display:flex;align-items:center;justify-content:center;gap:9px;margin:14px 0 12px;padding:11px 14px;border-radius:12px;background:#f2f3ed;color:#34312e;font-size:13px;line-height:1.25}.av-cb__delivery-estimate strong{color:var(--deep);font-weight:800;text-decoration:underline;text-underline-offset:2px}.av-cb__delivery-icon{width:24px;height:24px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;flex:0 0 24px}.av-cb__delivery-icon svg{width:15px;height:15px}
     .av-cb__refill-row{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:13px;color:#4f5e65;font-size:12px}
@@ -885,7 +893,7 @@
     .av-cb__post-risk-review-card p{margin:0;color:#28231f;font-size:17px;line-height:1.62}
     .av-cb__post-risk-tags{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
     .av-cb__post-risk-tags span{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:0 16px;border:1.5px solid #C86F3A;border-radius:999px;color:#B6551B;font-size:13px}
-    @media(max-width:600px){.av-cb__post-risk-reviews{padding:44px 0 52px}.av-cb__post-risk-reviews-wrap{width:min(100% - 22px,900px)}.av-cb__post-risk-reviews-head{margin-bottom:24px}.av-cb__post-risk-rating{gap:9px;font-size:13px}.av-cb__post-risk-stars{font-size:20px}.av-cb__post-risk-divider{height:20px}.av-cb__post-risk-reviews-head h2{font-size:31px;margin-top:18px}.av-cb__post-risk-review-list{gap:16px}.av-cb__post-risk-review-card{padding:22px 20px;border-radius:15px}.av-cb__post-risk-review-rating{margin-bottom:15px}.av-cb__post-risk-review-rating strong,.av-cb__post-risk-review-rating span{font-size:19px}.av-cb__post-risk-review-card p{font-size:14.5px;line-height:1.6}.av-cb__post-risk-tags{margin-top:20px;gap:8px}.av-cb__post-risk-tags span{min-height:33px;padding:0 13px;font-size:12px}}
+    @media(max-width:600px){.av-cb__post-risk-reviews{padding:36px 0 44px}.av-cb__post-risk-reviews-wrap{width:min(100% - 22px,900px)}.av-cb__post-risk-reviews-head{margin-bottom:20px}.av-cb__post-risk-rating{gap:9px;font-size:13px}.av-cb__post-risk-stars{font-size:20px}.av-cb__post-risk-divider{height:20px}.av-cb__post-risk-reviews-head h2{font-size:28px;margin-top:15px}.av-cb__post-risk-review-list{gap:13px}.av-cb__post-risk-review-card{padding:18px 17px;border-radius:14px}.av-cb__post-risk-review-rating{margin-bottom:15px}.av-cb__post-risk-review-rating strong,.av-cb__post-risk-review-rating span{font-size:19px}.av-cb__post-risk-review-card p{font-size:13.25px;line-height:1.5}.av-cb__post-risk-tags{margin-top:15px;gap:7px}.av-cb__post-risk-tags span{min-height:33px;padding:0 13px;font-size:12px}}
     .av-cb__faq-section{background:#fff;padding:62px 0 72px}
     .av-cb__faq-wrap{width:min(900px,calc(100% - 32px));margin:0 auto}
     .av-cb__faq-heading{text-align:center;font-size:clamp(34px,4.3vw,50px);line-height:1.05;letter-spacing:-.035em;margin:0 0 32px;color:#16110e}
@@ -1048,6 +1056,18 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
                 </span>
               </button>
             {% endfor %}
+          </div>
+
+          <div class="av-cb__bundle-rewards" data-av-cb-bundle-rewards aria-live="polite">
+            <div class="av-cb__bundle-rewards-title">Gifts Unlocked</div>
+            <div class="av-cb__bundle-reward" data-av-cb-reward-shipping>
+              <span class="av-cb__bundle-reward-check" aria-hidden="true">✓</span>
+              <span>FREE Shipping</span>
+            </div>
+            <div class="av-cb__bundle-reward" data-av-cb-reward-ebook hidden>
+              <span class="av-cb__bundle-reward-check" aria-hidden="true">✓</span>
+              <span>FREE E-Book <strong>($29.99 Value)</strong><small>Digital guide — delivered with your order</small></span>
+            </div>
           </div>
 
           <div class="av-cb__delivery-estimate" aria-live="polite">
@@ -1657,6 +1677,9 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       const purchaseToggleText = root.querySelector('[data-av-cb-purchase-toggle-text]');
       const purchaseHeading = root.querySelector('[data-av-cb-purchase-heading]');
       const bundleButtons = Array.from(root.querySelectorAll('[data-av-cb-bundle]'));
+      const bundleRewards = root.querySelector('[data-av-cb-bundle-rewards]');
+      const shippingReward = root.querySelector('[data-av-cb-reward-shipping]');
+      const ebookReward = root.querySelector('[data-av-cb-reward-ebook]');
       const money = (cents) => new Intl.NumberFormat(document.documentElement.lang || 'en-US', {style:'currency', currency:'USD'}).format(Number(cents || 0) / 100);
       let purchaseMode = sellingPlanInput ? 'subscription' : 'one-time';
 
@@ -1702,6 +1725,13 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         if (stickyPrice) stickyPrice.textContent = money(values.price);
         setCompare(topCompare, values.compare, values.price);
         setCompare(btnCompare, values.compare, values.price);
+
+        if (bundleRewards) {
+          const unlocksShipping = values.qty >= 2;
+          bundleRewards.classList.toggle('is-visible', unlocksShipping);
+          if (shippingReward) shippingReward.hidden = !unlocksShipping;
+          if (ebookReward) ebookReward.hidden = values.qty < 3;
+        }
 
         if (purchaseToggleText) {
           if (isSubscription) purchaseToggleText.innerHTML = 'One-Time Purchase <strong>' + money(oneTimeUnit * values.qty) + '</strong> + $4.95 Shipping';
