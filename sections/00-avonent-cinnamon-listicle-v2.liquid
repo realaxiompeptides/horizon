@@ -583,8 +583,11 @@
       sticky.setAttribute('aria-hidden', String(!hasPassed));
     };
     window.addEventListener('scroll', updateSticky, { passive: true });
+    // Horizon scrolls the .page-wrapper element, not window. Capture all scroll roots.
+    document.addEventListener('scroll', updateSticky, { passive: true, capture: true });
     window.addEventListener('resize', updateSticky, { passive: true });
     cleaners.push(() => window.removeEventListener('scroll', updateSticky));
+    cleaners.push(() => document.removeEventListener('scroll', updateSticky, true));
     cleaners.push(() => window.removeEventListener('resize', updateSticky));
     updateSticky();
   }
