@@ -962,6 +962,7 @@
       const qtyInput = root.querySelector('[data-av-cb-quantity]');
       const total = root.querySelector('[data-av-cb-price]');
       const btnTotal = root.querySelector('[data-av-cb-button-price]');
+      const stickyPrice = root.querySelector('[data-av-cb-sticky-price]');
       const money = (cents) => new Intl.NumberFormat(document.documentElement.lang || 'en-US', {style:'currency', currency:'USD'}).format(cents / 100);
       root.querySelectorAll('[data-av-cb-bundle-price]').forEach(el => {
         const qty = Number(el.dataset.avCbBundlePrice || 1);
@@ -980,6 +981,7 @@
           if (qtyInput) qtyInput.value = qty;
           if (total) total.textContent = money(unit * qty);
           if (btnTotal) btnTotal.textContent = money(unit * qty);
+          if (stickyPrice) stickyPrice.textContent = money(unit * qty);
         });
       });
       const statsSections = root.querySelectorAll('[data-av-cb-stats]');
@@ -1100,4 +1102,3 @@
     })();
   </script>
 </div>
-
