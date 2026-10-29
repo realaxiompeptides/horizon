@@ -76,17 +76,17 @@
   assign av_cb_stats_show = av_cb_product.metafields.custom.av_cb_stats_show.value
   assign av_cb_carousel_heading = av_cb_product.metafields.custom.av_cb_carousel_heading.value | default: 'Why This Ceylon Cinnamon Formula Is Built Differently'
   assign av_cb_carousel_1_image = av_cb_product.metafields.custom.av_cb_carousel_1_image.value
-  assign av_cb_carousel_1_title = av_cb_product.metafields.custom.av_cb_carousel_1_title.value | default: 'Genuine Ceylon, Not Common Cassia'
-  assign av_cb_carousel_1_body = av_cb_product.metafields.custom.av_cb_carousel_1_body.value
+  assign av_cb_carousel_1_title = av_cb_product.metafields.custom.av_cb_carousel_1_title.value | default: 'Sri Lankan Ceylon, Not Common Cassia'
+  assign av_cb_carousel_1_body = av_cb_product.metafields.custom.av_cb_carousel_1_body.value | default: 'Avonent uses Cinnamomum verum — true Ceylon cinnamon harvested in Sri Lanka, not generic Cassia. Our supplier-confirmed 12:1 extract delivers the equivalent of 14,400 mg of raw Ceylon cinnamon per full daily serving, giving you authentic origin and concentrated potency in a simple softgel routine.'
   assign av_cb_carousel_2_image = av_cb_product.metafields.custom.av_cb_carousel_2_image.value
-  assign av_cb_carousel_2_title = av_cb_product.metafields.custom.av_cb_carousel_2_title.value | default: '14,400 mg Equivalent + Berberine HCl'
-  assign av_cb_carousel_2_body = av_cb_product.metafields.custom.av_cb_carousel_2_body.value
+  assign av_cb_carousel_2_title = av_cb_product.metafields.custom.av_cb_carousel_2_title.value | default: '400 mg Berberine HCl for Metabolic Support'
+  assign av_cb_carousel_2_body = av_cb_product.metafields.custom.av_cb_carousel_2_body.value | default: 'Each daily serving delivers 400 mg of Berberine HCl. Berberine has been studied for its role in supporting healthy glucose metabolism, insulin sensitivity, and overall metabolic function.* Avonent builds that support directly into your daily routine — no separate berberine bottle needed.'
   assign av_cb_carousel_3_image = av_cb_product.metafields.custom.av_cb_carousel_3_image.value
   assign av_cb_carousel_3_title = av_cb_product.metafields.custom.av_cb_carousel_3_title.value | default: 'MCT Oil Softgel Delivery'
   assign av_cb_carousel_3_body = av_cb_product.metafields.custom.av_cb_carousel_3_body.value
   assign av_cb_carousel_4_image = av_cb_product.metafields.custom.av_cb_carousel_4_image.value
-  assign av_cb_carousel_4_title = av_cb_product.metafields.custom.av_cb_carousel_4_title.value | default: 'Built Around a Simple 30-Day Routine'
-  assign av_cb_carousel_4_body = av_cb_product.metafields.custom.av_cb_carousel_4_body.value
+  assign av_cb_carousel_4_title = av_cb_product.metafields.custom.av_cb_carousel_4_title.value | default: '14,400 mg Equivalent. Built for Real Potency.'
+  assign av_cb_carousel_4_body = av_cb_product.metafields.custom.av_cb_carousel_4_body.value | default: 'Many cinnamon supplements rely on a few hundred milligrams of basic powder. Avonent uses a concentrated 12:1 Ceylon extract that delivers the equivalent of 14,400 mg of raw cinnamon per full daily serving — so you get a meaningfully concentrated formula without spooning loose cinnamon into coffee or relying on a long stack of basic powder capsules.'
   assign av_cb_benefits_heading = av_cb_product.metafields.custom.av_cb_benefits_heading.value | default: 'Feel Supported. Every Day.'
   assign av_cb_benefits_subheading = av_cb_product.metafields.custom.av_cb_benefits_subheading.value | default: 'A concentrated Ceylon cinnamon + Berberine HCl formula built around simple, consistent daily metabolic support.'
   assign av_cb_benefits_item_1 = av_cb_product.metafields.custom.av_cb_benefits_item_1.value | default: 'Blood Sugar Support*'
@@ -1614,6 +1614,23 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         saleBar.style.setProperty('--av-sale-bg', '#A84F1B');
         saleBar.style.setProperty('--av-sale-color', '#FFFFFF');
       }
+      const cinnamonContactUrl = {% if pages['contact'] != blank %}{{ pages['contact'].url | json }}{% else %}"/pages/contact"{% endif %};
+      const cinnamonTrackUrl = {% if pages['track-your-order'] != blank %}{{ pages['track-your-order'].url | json }}{% else %}"/pages/track-your-order"{% endif %};
+      const cinnamonMenuLinks = [
+        { label: 'Shop Ceylon Cinnamon', href: '#av-cb-top' },
+        { label: 'Contact', href: cinnamonContactUrl },
+        { label: 'Track Order', href: cinnamonTrackUrl }
+      ];
+      document.querySelectorAll('.header-drawer .menu-drawer__menu.has-submenu').forEach((menu) => {
+        menu.innerHTML = cinnamonMenuLinks.map((item, index) => `
+          <li style="--menu-drawer-animation-index: ${index + 1};" class="menu-drawer__list-item--flat">
+            <a href="${item.href}" class="menu-drawer__menu-item menu-drawer__menu-item--mainlist menu-drawer__animated-element">
+              <span class="menu-drawer__menu-item-text wrap-text">${item.label}</span>
+            </a>
+          </li>
+        `).join('');
+      });
+
       if (!root) return;
       const subscriptionUnit = Number(root.dataset.subscriptionUnitPrice || 0);
       const oneTimeUnit = Number(root.dataset.oneTimeUnitPrice || 0);
