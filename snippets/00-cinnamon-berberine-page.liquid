@@ -88,6 +88,32 @@
   assign av_cb_benefits_image = av_cb_product.metafields.custom.av_cb_benefits_image.value
   assign av_cb_benefits_bg = av_cb_product.metafields.custom.av_cb_benefits_bg.value | default: '#0A88A6'
   assign av_cb_benefits_text = av_cb_product.metafields.custom.av_cb_benefits_text.value | default: '#FFFFFF'
+  assign av_cb_science_heading = av_cb_product.metafields.custom.av_cb_science_heading.value | default: 'Benefits, Backed by Ingredient Research'
+  assign av_cb_science_intro = av_cb_product.metafields.custom.av_cb_science_intro.value
+  assign av_cb_science_1_image = av_cb_product.metafields.custom.av_cb_science_1_image.value
+  assign av_cb_science_1_title = av_cb_product.metafields.custom.av_cb_science_1_title.value
+  assign av_cb_science_1_subtitle = av_cb_product.metafields.custom.av_cb_science_1_subtitle.value
+  assign av_cb_science_1_body = av_cb_product.metafields.custom.av_cb_science_1_body.value
+  assign av_cb_science_2_image = av_cb_product.metafields.custom.av_cb_science_2_image.value
+  assign av_cb_science_2_title = av_cb_product.metafields.custom.av_cb_science_2_title.value
+  assign av_cb_science_2_subtitle = av_cb_product.metafields.custom.av_cb_science_2_subtitle.value
+  assign av_cb_science_2_body = av_cb_product.metafields.custom.av_cb_science_2_body.value
+  assign av_cb_science_3_image = av_cb_product.metafields.custom.av_cb_science_3_image.value
+  assign av_cb_science_3_title = av_cb_product.metafields.custom.av_cb_science_3_title.value
+  assign av_cb_science_3_subtitle = av_cb_product.metafields.custom.av_cb_science_3_subtitle.value
+  assign av_cb_science_3_body = av_cb_product.metafields.custom.av_cb_science_3_body.value
+  assign av_cb_science_4_image = av_cb_product.metafields.custom.av_cb_science_4_image.value
+  assign av_cb_science_4_title = av_cb_product.metafields.custom.av_cb_science_4_title.value
+  assign av_cb_science_4_subtitle = av_cb_product.metafields.custom.av_cb_science_4_subtitle.value
+  assign av_cb_science_4_body = av_cb_product.metafields.custom.av_cb_science_4_body.value
+  assign av_cb_science_cta = av_cb_product.metafields.custom.av_cb_science_cta.value | default: 'Try Risk-Free Today'
+  assign av_cb_science_guarantee = av_cb_product.metafields.custom.av_cb_science_guarantee.value | default: '30-Day Money-Back Guarantee'
+  assign av_cb_science_ticker_1 = av_cb_product.metafields.custom.av_cb_science_ticker_1.value | default: '14,400 mg Ceylon Equivalent'
+  assign av_cb_science_ticker_2 = av_cb_product.metafields.custom.av_cb_science_ticker_2.value | default: '400 mg Berberine HCl'
+  assign av_cb_science_ticker_3 = av_cb_product.metafields.custom.av_cb_science_ticker_3.value | default: '200 mg MCT Oil'
+  assign av_cb_science_ticker_4 = av_cb_product.metafields.custom.av_cb_science_ticker_4.value | default: '30 Daily Servings'
+  assign av_cb_science_bg = av_cb_product.metafields.custom.av_cb_science_bg.value | default: '#FFF8F2'
+  assign av_cb_science_accent = av_cb_product.metafields.custom.av_cb_science_accent.value | default: '#A84F1B'
 %}
 
 <div class="av-cb" data-av-cb data-unit-price="{{ av_cb_unit_price }}" data-compare-price="{{ av_cb_compare_price | escape }}">
@@ -182,6 +208,45 @@
     .av-cb__carousel-arrow svg{width:22px;height:22px}
     @media(min-width:900px){.av-cb__carousel-card{flex-basis:min(520px,44vw)}}
     @media(max-width:600px){.av-cb__carousel-section{padding:38px 0 14px}.av-cb__carousel-heading{font-size:31px;margin-bottom:22px;padding:0 22px}.av-cb__carousel-track{gap:14px;padding-left:22px;padding-right:22px}.av-cb__carousel-card{flex-basis:82vw;border-radius:18px}.av-cb__carousel-content{padding:20px 18px 23px}.av-cb__carousel-content h3{font-size:19px}.av-cb__carousel-content p{font-size:13.5px;line-height:1.65}.av-cb__carousel-arrow{width:46px;height:46px}}
+    .av-cb__science-section{background:var(--science-bg,#fff8f2);padding:58px 0 0;color:#111}
+    .av-cb__science-wrap{width:min(920px,calc(100% - 32px));margin:0 auto}
+    .av-cb__science-head{text-align:center;max-width:760px;margin:0 auto 32px}
+    .av-cb__science-head h2{font-size:clamp(32px,4.2vw,48px);line-height:1.08;letter-spacing:-.035em;margin:0 0 16px;font-weight:500}
+    .av-cb__science-head h2 em{font-style:normal;color:var(--science-accent,#a84f1b)}
+    .av-cb__science-head p{font-size:16px;line-height:1.65;margin:0 auto;color:#323232;max-width:720px}
+    .av-cb__science-cards{display:grid;gap:16px}
+    .av-cb__science-card{background:#fff;border:1.5px solid #ddd6d0;border-radius:18px;overflow:hidden;perspective:900px}
+    .av-cb__science-card summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:150px 1fr auto;gap:22px;align-items:center;padding:18px 20px}
+    .av-cb__science-card summary::-webkit-details-marker{display:none}
+    .av-cb__science-thumb{width:150px;height:128px;border-radius:12px;overflow:hidden;background:#f3eee8;display:grid;place-items:center;color:var(--science-accent,#a84f1b)}
+    .av-cb__science-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .av-cb__science-thumb svg{width:64px;height:64px}
+    .av-cb__science-copy h3{font-size:21px;line-height:1.18;margin:0 0 7px;font-weight:600;color:#111}
+    .av-cb__science-copy p{font-size:14px;line-height:1.45;margin:0;color:#505050}
+    .av-cb__science-toggle{width:44px;height:44px;border-radius:50%;border:2px solid #b9b9b9;display:grid;place-items:center;position:relative;flex:0 0 44px}
+    .av-cb__science-toggle:before,.av-cb__science-toggle:after{content:"";position:absolute;left:50%;top:50%;background:#888;transform:translate(-50%,-50%);border-radius:4px}
+    .av-cb__science-toggle:before{width:15px;height:2.5px}
+    .av-cb__science-toggle:after{width:2.5px;height:15px}
+    .av-cb__science-card[open] .av-cb__science-toggle:after{opacity:0}
+    .av-cb__science-card[open] summary{display:flex;justify-content:flex-end;padding:12px 18px 0}
+    .av-cb__science-card[open] .av-cb__science-thumb,.av-cb__science-card[open] .av-cb__science-copy{display:none}
+    .av-cb__science-body{padding:0 22px 24px;font-size:16px;line-height:1.6;color:#515151;transform-origin:left center;animation:avCbScienceFlip .34s ease both}
+    @keyframes avCbScienceFlip{0%{opacity:0;transform:rotateY(-12deg) translateX(12px)}100%{opacity:1;transform:rotateY(0) translateX(0)}}
+    .av-cb__science-cta-wrap{padding:28px 0 22px}
+    .av-cb__science-cta{display:flex;align-items:center;justify-content:center;width:min(680px,100%);min-height:58px;margin:0 auto;background:var(--science-accent,#a84f1b);color:#fff!important;border-radius:999px;font-size:16px;font-weight:650;text-decoration:none!important}
+    .av-cb__science-guarantee{display:flex;align-items:center;justify-content:center;gap:8px;margin:12px auto 0;color:#202020;font-size:13px;font-weight:600}
+    .av-cb__science-guarantee svg{width:18px;height:18px;color:var(--science-accent,#a84f1b)}
+    .av-cb__science-ticker{overflow:hidden;border-top:1px solid #ded8d3;border-bottom:1px solid #ded8d3;background:#fff;margin-top:20px}
+    .av-cb__science-ticker-track{display:flex;width:max-content;align-items:center;animation:avCbTicker 24s linear infinite}
+    .av-cb__science-ticker:hover .av-cb__science-ticker-track{animation-play-state:paused}
+    .av-cb__science-ticker-group{display:flex;align-items:center}
+    .av-cb__science-ticker-item{display:flex;align-items:center;gap:9px;white-space:nowrap;padding:13px 28px;font-size:13px;font-weight:700;color:#151515}
+    .av-cb__science-ticker-icon{width:24px;height:24px;border:1.5px solid var(--science-accent,#a84f1b);border-radius:50%;display:grid;place-items:center;color:var(--science-accent,#a84f1b)}
+    .av-cb__science-ticker-icon svg{width:14px;height:14px}
+    @keyframes avCbTicker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    @media(prefers-reduced-motion:reduce){.av-cb__science-ticker-track{animation:none}.av-cb__science-body{animation:none}}
+    @media(max-width:600px){.av-cb__science-section{padding-top:42px}.av-cb__science-wrap{width:min(100% - 22px,920px)}.av-cb__science-head{margin-bottom:25px}.av-cb__science-head h2{font-size:31px}.av-cb__science-head p{font-size:14px}.av-cb__science-cards{gap:12px}.av-cb__science-card{border-radius:15px}.av-cb__science-card summary{grid-template-columns:88px 1fr auto;gap:12px;padding:14px}.av-cb__science-thumb{width:88px;height:82px;border-radius:10px}.av-cb__science-thumb svg{width:44px;height:44px}.av-cb__science-copy h3{font-size:17px;margin-bottom:5px}.av-cb__science-copy p{font-size:12.5px}.av-cb__science-toggle{width:36px;height:36px;flex-basis:36px}.av-cb__science-card[open] summary{padding:10px 12px 0}.av-cb__science-body{padding:0 18px 20px;font-size:14px}.av-cb__science-cta-wrap{padding:22px 0 18px}.av-cb__science-cta{min-height:54px;font-size:15px}.av-cb__science-guarantee{font-size:12px}.av-cb__science-ticker-item{padding:11px 22px;font-size:12px}}
+
     .av-cb__benefits-section{position:relative;overflow:hidden;background:var(--benefits-bg,#0A88A6);color:var(--benefits-text,#fff);padding:54px 24px 0}
     .av-cb__benefits-inner{width:min(980px,100%);margin:0 auto}
     .av-cb__benefits-head{text-align:center;max-width:760px;margin:0 auto 32px}
@@ -465,6 +530,98 @@
     </div>
   </section>
 
+  <section class="av-cb__science-section" data-av-cb-science style="--science-bg:{{ av_cb_science_bg }};--science-accent:{{ av_cb_science_accent }};">
+    <div class="av-cb__science-wrap">
+      <header class="av-cb__science-head">
+        <h2><em>Benefits.</em> Backed by Ingredient Research.</h2>
+        <p>{{ av_cb_science_intro | newline_to_br }}</p>
+      </header>
+
+      <div class="av-cb__science-cards">
+        {% for i in (1..4) %}
+          {% case i %}
+            {% when 1 %}
+              {% assign av_cb_science_image = av_cb_science_1_image %}
+              {% assign av_cb_science_title = av_cb_science_1_title %}
+              {% assign av_cb_science_subtitle = av_cb_science_1_subtitle %}
+              {% assign av_cb_science_body = av_cb_science_1_body %}
+            {% when 2 %}
+              {% assign av_cb_science_image = av_cb_science_2_image %}
+              {% assign av_cb_science_title = av_cb_science_2_title %}
+              {% assign av_cb_science_subtitle = av_cb_science_2_subtitle %}
+              {% assign av_cb_science_body = av_cb_science_2_body %}
+            {% when 3 %}
+              {% assign av_cb_science_image = av_cb_science_3_image %}
+              {% assign av_cb_science_title = av_cb_science_3_title %}
+              {% assign av_cb_science_subtitle = av_cb_science_3_subtitle %}
+              {% assign av_cb_science_body = av_cb_science_3_body %}
+            {% else %}
+              {% assign av_cb_science_image = av_cb_science_4_image %}
+              {% assign av_cb_science_title = av_cb_science_4_title %}
+              {% assign av_cb_science_subtitle = av_cb_science_4_subtitle %}
+              {% assign av_cb_science_body = av_cb_science_4_body %}
+          {% endcase %}
+          <details class="av-cb__science-card">
+            <summary>
+              <span class="av-cb__science-thumb">
+                {% if av_cb_science_image != blank %}
+                  {{ av_cb_science_image | image_url: width: 500 | image_tag: loading: 'lazy', widths: '180,300,500', sizes: '150px', alt: av_cb_science_title }}
+                {% else %}
+                  {% case i %}
+                    {% when 1 %}
+                      <svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="19" r="8" stroke="currentColor" stroke-width="3"/><circle cx="32" cy="45" r="8" stroke="currentColor" stroke-width="3"/><path d="M18 8c-5 8-5 40 0 48M46 8c5 8 5 40 0 48" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+                    {% when 2 %}
+                      <svg viewBox="0 0 64 64" fill="none"><path d="M12 46c12-24 30-28 40-27-3 16-14 30-36 30" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 46c9-8 17-15 30-21" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+                    {% when 3 %}
+                      <svg viewBox="0 0 64 64" fill="none"><path d="M18 43c0-11 5-18 14-18s14 7 14 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M24 22c2-8 6-12 8-12s6 4 8 12" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="32" cy="38" r="5" stroke="currentColor" stroke-width="3"/></svg>
+                    {% else %}
+                      <svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="22" stroke="currentColor" stroke-width="3"/><path d="M32 18v14l10 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  {% endcase %}
+                {% endif %}
+              </span>
+              <span class="av-cb__science-copy">
+                <h3>{{ av_cb_science_title }}</h3>
+                <p>{{ av_cb_science_subtitle }}</p>
+              </span>
+              <span class="av-cb__science-toggle" aria-hidden="true"></span>
+            </summary>
+            <div class="av-cb__science-body">{{ av_cb_science_body | newline_to_br }}</div>
+          </details>
+        {% endfor %}
+      </div>
+
+      <div class="av-cb__science-cta-wrap">
+        <a href="#av-cb-top" class="av-cb__science-cta">{{ av_cb_science_cta }}</a>
+        <div class="av-cb__science-guarantee">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3.5 19 6v5.5c0 4.4-2.7 7.8-7 9-4.3-1.2-7-4.6-7-9V6l7-2.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m8.8 12 2 2 4.5-4.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>{{ av_cb_science_guarantee }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="av-cb__science-ticker" aria-label="Formula highlights">
+      <div class="av-cb__science-ticker-track">
+        {% for pass in (1..2) %}
+          <div class="av-cb__science-ticker-group" {% if pass == 2 %}aria-hidden="true"{% endif %}>
+            {% for i in (1..4) %}
+              {% case i %}
+                {% when 1 %}{% assign av_cb_ticker_text = av_cb_science_ticker_1 %}
+                {% when 2 %}{% assign av_cb_ticker_text = av_cb_science_ticker_2 %}
+                {% when 3 %}{% assign av_cb_ticker_text = av_cb_science_ticker_3 %}
+                {% else %}{% assign av_cb_ticker_text = av_cb_science_ticker_4 %}
+              {% endcase %}
+              <span class="av-cb__science-ticker-item">
+                <span class="av-cb__science-ticker-icon" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none"><path d="m4.2 10.2 3.4 3.4 8.2-8.2" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                {{ av_cb_ticker_text }}
+              </span>
+            {% endfor %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+
   <section class="av-cb__benefits-section" style="--benefits-bg:{{ av_cb_benefits_bg }};--benefits-text:{{ av_cb_benefits_text }};">
     <div class="av-cb__benefits-inner">
       <header class="av-cb__benefits-head">
@@ -631,6 +788,18 @@
           clearTimeout(scrollTimer);
           scrollTimer = setTimeout(() => setActive(currentIndex()), 80);
         }, {passive:true});
+      });
+      const scienceSections = root.querySelectorAll('[data-av-cb-science]');
+      scienceSections.forEach(section => {
+        const cards = Array.from(section.querySelectorAll('.av-cb__science-card'));
+        cards.forEach(card => {
+          card.addEventListener('toggle', () => {
+            if (!card.open) return;
+            cards.forEach(other => {
+              if (other !== card) other.open = false;
+            });
+          });
+        });
       });
       const accordions = root.querySelectorAll('.av-cb__accordion');
       accordions.forEach(item => {
