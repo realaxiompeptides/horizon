@@ -577,6 +577,13 @@
     endcase
   endfor
 
+  if editor.settings.trust_image != blank
+    assign av_cb_trust_image = editor.settings.trust_image
+  endif
+  if editor.settings.trust_image_alt != blank
+    assign av_cb_trust_image_alt = editor.settings.trust_image_alt
+  endif
+
   assign av_cb_guarantee_highlight = 'Less than 1%'
   assign av_cb_guarantee_color = '#A84F1B'
   assign av_cb_guarantee_heading = '90-Day Money-Back Guarantee'
@@ -837,7 +844,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
 .av-cb__photo-track,.av-cb__review-track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-inline:contain;padding:12px 0 20px;scrollbar-width:thin;scrollbar-color:#bd7950 #eaded5}
 .av-cb__photo-track figure{flex:0 0 180px;height:190px;margin:0;border-radius:14px;overflow:hidden;scroll-snap-align:start}.av-cb__photo-track img{width:100%;height:100%;object-fit:cover}
 .av-cb__review-card{flex:0 0 calc(50% - 8px);min-width:0;scroll-snap-align:start;background:white;border:1px solid #ddd;border-radius:18px;padding:28px;display:flex;flex-direction:column}
-.av-cb__review-card h3{font-size:23px;margin:20px 0 12px}.av-cb__review-card p{font-size:17px;line-height:1.65;white-space:normal}.av-cb__review-card footer{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;margin-top:auto;padding-top:22px;border-top:1px solid #eee;font-size:13px}.av-cb__review-card footer span,.av-cb__review-stars{color:#ab531f}.av-cb__review-placeholder{display:grid;place-items:center;background:#e9dfd6;color:#65574d}
+.av-cb__review-rating{display:flex;align-items:center;gap:12px}.av-cb__review-score{font-size:19px;font-weight:800;color:#171513}.av-cb__review-stars{color:#ab531f;font-size:23px;letter-spacing:1px}.av-cb__review-card h3{font-size:23px;margin:20px 0 12px}.av-cb__review-card p{font-size:17px;line-height:1.65;white-space:normal}.av-cb__review-card footer{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;margin-top:auto;padding-top:22px;border-top:1px solid #eee;font-size:13px}.av-cb__review-card footer span{color:#ab531f;font-weight:700}.av-cb__review-tags{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}.av-cb__review-tag{display:flex;align-items:center;justify-content:center;min-height:38px;padding:7px 10px;border:1px solid #c86731;border-radius:999px;color:#b35421;background:#fff8f3;font-size:12px;font-weight:650;text-align:center}.av-cb__review-placeholder{display:grid;place-items:center;background:#e9dfd6;color:#65574d}
 @media(max-width:600px){.av-cb__comparison{gap:12px;margin-top:76px}.av-cb__comparison-card{padding-top:86px;border-radius:14px}.av-cb__comparison-image{width:92px;height:108px;top:-56px}.av-cb__comparison-card h3{font-size:20px;padding:12px 8px 20px}.av-cb__comparison-row{font-size:13px;min-height:115px;padding:15px 8px}.av-cb__review-card{flex-basis:90%;padding:22px}.av-cb__photo-track figure{flex-basis:140px;height:155px}}
 
   </style>
@@ -1121,7 +1128,61 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
     </div>
   </section>
 
-<section class="av-cb__reviews"><div class="av-cb__wrap"><div class="av-cb__reviews-head"><span aria-hidden="true">★★★★★</span><h2>{{ editor.settings.reviews_heading }}</h2><p>{{ editor.settings.reviews_intro }}</p></div><div class="av-cb__photo-track" tabindex="0" role="region" aria-label="Customer photos">{% for review in editor.blocks %}{% if review.type == 'review' %}{% if review.settings.photo != blank %}<figure {{ review.shopify_attributes }}>{{ review.settings.photo | image_url: width: 600 | image_tag: loading: 'lazy', widths: '200,400,600', alt: review.settings.name }}</figure>{% elsif request.design_mode %}<figure class="av-cb__review-placeholder">Add customer photo</figure>{% endif %}{% endif %}{% endfor %}</div><div class="av-cb__review-track" tabindex="0" role="region" aria-label="Customer reviews">{% for review in editor.blocks %}{% if review.type == 'review' %}{% if review.settings.quote != blank %}<article class="av-cb__review-card" {{ review.shopify_attributes }}><div class="av-cb__review-stars" aria-label="{{ review.settings.rating }} out of 5 stars">{{ review.settings.rating }} / 5 ★</div><h3>{{ review.settings.title | escape }}</h3><p>{{ review.settings.quote | escape | newline_to_br }}</p><footer><strong>{{ review.settings.name | escape }}</strong>{% if review.settings.verified %}<span>✓ Verified customer</span>{% endif %}</footer></article>{% elsif request.design_mode %}<article class="av-cb__review-card" {{ review.shopify_attributes }}>Add a customer review in this block.</article>{% endif %}{% endif %}{% endfor %}</div></div></section>
+<section class="av-cb__reviews">
+    <div class="av-cb__wrap">
+      <div class="av-cb__reviews-head">
+        <span aria-hidden="true">★★★★★</span>
+        <h2>{{ editor.settings.reviews_heading }}</h2>
+        <p>{{ editor.settings.reviews_intro }}</p>
+      </div>
+
+      {% assign av_cb_has_review_photo = false %}
+      {% for review in editor.blocks %}
+        {% if review.type == 'review' and review.settings.photo != blank %}
+          {% assign av_cb_has_review_photo = true %}
+        {% endif %}
+      {% endfor %}
+      {% if av_cb_has_review_photo %}
+        <div class="av-cb__photo-track" tabindex="0" role="region" aria-label="Customer photos">
+          {% for review in editor.blocks %}
+            {% if review.type == 'review' and review.settings.photo != blank %}
+              <figure {{ review.shopify_attributes }}>{{ review.settings.photo | image_url: width: 600 | image_tag: loading: 'lazy', widths: '200,400,600', alt: review.settings.name }}</figure>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <div class="av-cb__review-track" tabindex="0" role="region" aria-label="Customer reviews">
+        {% for review in editor.blocks %}
+          {% if review.type == 'review' %}
+            {% if review.settings.quote != blank %}
+              {% assign av_cb_review_rating = review.settings.rating_display | default: review.settings.rating %}
+              <article class="av-cb__review-card" {{ review.shopify_attributes }}>
+                <div class="av-cb__review-rating" aria-label="{{ av_cb_review_rating }} out of 5 stars">
+                  <span class="av-cb__review-score">{{ av_cb_review_rating }}</span>
+                  <span class="av-cb__review-stars" aria-hidden="true">★★★★★</span>
+                </div>
+                <h3>{{ review.settings.title | escape }}</h3>
+                <p>{{ review.settings.quote | escape | newline_to_br }}</p>
+                <footer>
+                  <strong>{{ review.settings.name | escape }}</strong>
+                  {% if review.settings.verified %}<span>✓ Verified customer</span>{% endif %}
+                </footer>
+                {% if review.settings.tag_1 != blank or review.settings.tag_2 != blank %}
+                  <div class="av-cb__review-tags">
+                    {% if review.settings.tag_1 != blank %}<span class="av-cb__review-tag">{{ review.settings.tag_1 | escape }}</span>{% endif %}
+                    {% if review.settings.tag_2 != blank %}<span class="av-cb__review-tag">{{ review.settings.tag_2 | escape }}</span>{% endif %}
+                  </div>
+                {% endif %}
+              </article>
+            {% elsif request.design_mode %}
+              <article class="av-cb__review-card" {{ review.shopify_attributes }}>Add a customer review in this block.</article>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </section>
   <section class="av-cb__science-section" data-av-cb-science style="--science-bg:{{ av_cb_science_bg }};--science-accent:{{ av_cb_science_accent }};">
     <div class="av-cb__science-wrap">
       <header class="av-cb__science-head">
