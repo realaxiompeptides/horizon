@@ -75,6 +75,19 @@
   assign av_cb_carousel_4_image = av_cb_product.metafields.custom.av_cb_carousel_4_image.value
   assign av_cb_carousel_4_title = av_cb_product.metafields.custom.av_cb_carousel_4_title.value | default: 'Built Around a Simple 30-Day Routine'
   assign av_cb_carousel_4_body = av_cb_product.metafields.custom.av_cb_carousel_4_body.value
+  assign av_cb_benefits_heading = av_cb_product.metafields.custom.av_cb_benefits_heading.value | default: 'Feel Supported. Every Day.'
+  assign av_cb_benefits_subheading = av_cb_product.metafields.custom.av_cb_benefits_subheading.value | default: 'A concentrated Ceylon cinnamon + Berberine HCl formula built around simple, consistent daily metabolic support.'
+  assign av_cb_benefits_item_1 = av_cb_product.metafields.custom.av_cb_benefits_item_1.value | default: 'Healthy Glucose Metabolism*'
+  assign av_cb_benefits_item_2 = av_cb_product.metafields.custom.av_cb_benefits_item_2.value | default: 'MCT Oil Softgel Format'
+  assign av_cb_benefits_item_3 = av_cb_product.metafields.custom.av_cb_benefits_item_3.value | default: 'True Ceylon + Berberine HCl'
+  assign av_cb_benefits_item_4 = av_cb_product.metafields.custom.av_cb_benefits_item_4.value | default: 'Simple 30-Day Routine'
+  assign av_cb_benefits_icon_1 = av_cb_product.metafields.custom.av_cb_benefits_icon_1.value
+  assign av_cb_benefits_icon_2 = av_cb_product.metafields.custom.av_cb_benefits_icon_2.value
+  assign av_cb_benefits_icon_3 = av_cb_product.metafields.custom.av_cb_benefits_icon_3.value
+  assign av_cb_benefits_icon_4 = av_cb_product.metafields.custom.av_cb_benefits_icon_4.value
+  assign av_cb_benefits_image = av_cb_product.metafields.custom.av_cb_benefits_image.value
+  assign av_cb_benefits_bg = av_cb_product.metafields.custom.av_cb_benefits_bg.value | default: '#0A88A6'
+  assign av_cb_benefits_text = av_cb_product.metafields.custom.av_cb_benefits_text.value | default: '#FFFFFF'
 %}
 
 <div class="av-cb" data-av-cb data-unit-price="{{ av_cb_unit_price }}" data-compare-price="{{ av_cb_compare_price | escape }}">
@@ -169,6 +182,22 @@
     .av-cb__carousel-arrow svg{width:22px;height:22px}
     @media(min-width:900px){.av-cb__carousel-card{flex-basis:min(520px,44vw)}}
     @media(max-width:600px){.av-cb__carousel-section{padding:38px 0 14px}.av-cb__carousel-heading{font-size:31px;margin-bottom:22px;padding:0 22px}.av-cb__carousel-track{gap:14px;padding-left:22px;padding-right:22px}.av-cb__carousel-card{flex-basis:82vw;border-radius:18px}.av-cb__carousel-content{padding:20px 18px 23px}.av-cb__carousel-content h3{font-size:19px}.av-cb__carousel-content p{font-size:13.5px;line-height:1.65}.av-cb__carousel-arrow{width:46px;height:46px}}
+    .av-cb__benefits-section{position:relative;overflow:hidden;background:var(--benefits-bg,#0A88A6);color:var(--benefits-text,#fff);padding:54px 24px 0}
+    .av-cb__benefits-inner{width:min(980px,100%);margin:0 auto}
+    .av-cb__benefits-head{text-align:center;max-width:760px;margin:0 auto 32px}
+    .av-cb__benefits-head h2{font-size:clamp(32px,4.2vw,50px);line-height:1.05;letter-spacing:-.035em;margin:0 0 14px;color:inherit;font-weight:650}
+    .av-cb__benefits-head p{font-size:16px;line-height:1.6;margin:0 auto;max-width:680px;color:inherit;opacity:.94}
+    .av-cb__benefits-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 40px;max-width:760px;margin:0 auto 36px}
+    .av-cb__benefit-tile{text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px}
+    .av-cb__benefit-icon{width:62px;height:62px;display:grid;place-items:center;color:inherit}
+    .av-cb__benefit-icon img{display:block;max-width:58px;max-height:58px;object-fit:contain;filter:brightness(0) invert(1)}
+    .av-cb__benefit-icon svg{width:54px;height:54px;display:block}
+    .av-cb__benefit-tile strong{font-size:18px;line-height:1.25;font-weight:600;color:inherit;max-width:220px}
+    .av-cb__benefits-image-wrap{min-height:380px;display:flex;align-items:flex-end;justify-content:center;margin-top:12px}
+    .av-cb__benefits-image{display:block;width:min(760px,100%);max-height:520px;object-fit:contain;object-position:center bottom}
+    .av-cb__benefits-image-placeholder{width:min(760px,100%);min-height:380px;display:grid;place-items:end center;color:rgba(255,255,255,.78);border:1px dashed rgba(255,255,255,.32);border-bottom:0;border-radius:24px 24px 0 0;padding:28px;text-align:center;font-size:13px}
+    .av-cb__benefits-disclaimer{font-size:10px;line-height:1.45;text-align:center;opacity:.72;margin:12px auto 18px;max-width:760px}
+    @media(max-width:600px){.av-cb__benefits-section{padding:42px 18px 0}.av-cb__benefits-head{margin-bottom:26px}.av-cb__benefits-head h2{font-size:31px}.av-cb__benefits-head p{font-size:14px}.av-cb__benefits-grid{gap:26px 18px;margin-bottom:26px}.av-cb__benefit-icon{width:52px;height:52px}.av-cb__benefit-icon svg{width:46px;height:46px}.av-cb__benefit-icon img{max-width:48px;max-height:48px}.av-cb__benefit-tile strong{font-size:15px}.av-cb__benefits-image-wrap{min-height:320px;margin-top:6px}.av-cb__benefits-image{max-height:440px}.av-cb__benefits-image-placeholder{min-height:320px}}
     @media(max-width:600px){.av-cb__rating{font-size:12.5px;margin-bottom:10px}.av-cb__stars{font-size:16px}.av-cb__benefits{gap:13px;margin:15px 0 20px}.av-cb__benefit{font-size:14.5px;gap:10px}.av-cb__benefit-check{width:18px;height:18px;flex-basis:18px}.av-cb__sold{padding:13px 14px;margin-bottom:14px}.av-cb__sold-track{height:8px}.av-cb__sold-text{font-size:14px}.av-cb__pricing{gap:9px;margin-bottom:10px}.av-cb__sale-price{font-size:24px}.av-cb__compare-price{font-size:17px}.av-cb__sale-badge{font-size:10.5px;min-height:28px;padding:0 9px}.av-cb__low-stock-line{font-size:14px;margin:5px 0 14px;gap:8px}.av-cb__bundle{grid-template-columns:48px 1fr auto;gap:11px;padding:13px 12px}.av-cb__bundle-thumb{width:48px;height:48px}.av-cb__bundle-copy strong{font-size:16px}.av-cb__bundle-price strong{font-size:16px}.av-cb__bundle-price s{font-size:12px}.av-cb__refill-row{font-size:11px;gap:8px;margin-top:9px}.av-cb__refill-icon{width:18px;height:18px}.av-cb__top-stack{width:min(100% - 22px,1200px);margin:3px auto 24px;gap:8px}.av-cb__guarantee-card{grid-template-columns:62px 1fr;gap:12px;padding:15px 16px;border-radius:15px}.av-cb__guarantee-image{width:62px;height:62px}.av-cb__guarantee-image img{max-width:62px;max-height:62px}.av-cb__guarantee-seal{width:58px;height:58px;border-width:5px}.av-cb__guarantee-copy h3{font-size:17px}.av-cb__guarantee-copy p{font-size:12.5px}.av-cb__low-stock{padding:14px 15px;border-radius:15px;gap:9px}.av-cb__low-stock-icon{width:20px;height:20px;font-size:11px}.av-cb__low-stock h3{font-size:15px}.av-cb__low-stock p{font-size:12.5px}.av-cb__accordion summary{padding:14px 16px;font-size:16px}.av-cb__accordion-body{padding:0 16px 14px;font-size:12.5px}.av-cb__stats-section{padding:24px 18px 18px;border-radius:16px}.av-cb__stats-heading{font-size:26px;margin-bottom:16px}.av-cb__stat{padding:12px 0}.av-cb__stat-number{font-size:38px}.av-cb__stat-label{font-size:12.5px}.av-cb__stats-cta{min-height:50px;margin-top:18px;font-size:13px}.av-cb__stats-guarantee{font-size:11px;margin-top:9px}}
 
   </style>
@@ -436,64 +465,61 @@
     </div>
   </section>
 
-  <section class="av-cb__section av-cb__section--soft">
-    <div class="av-cb__wrap">
-      <header class="av-cb__head">
-        <div class="av-cb__eyebrow">Inside the formula</div>
-        <h2>Three ingredients. One simple 30-day formula.</h2>
-        <p>No mystery blend. Every core ingredient and daily amount is clearly stated.</p>
+  <section class="av-cb__benefits-section" style="--benefits-bg:{{ av_cb_benefits_bg }};--benefits-text:{{ av_cb_benefits_text }};">
+    <div class="av-cb__benefits-inner">
+      <header class="av-cb__benefits-head">
+        <h2>{{ av_cb_benefits_heading }}</h2>
+        <p>{{ av_cb_benefits_subheading | newline_to_br }}</p>
       </header>
-      <div class="av-cb__formula">
-        <article class="av-cb__formula-card"><div class="num">1,200</div><div class="unit">mg per daily serving</div><h3>True Ceylon Cinnamon</h3><p>Cinnamomum verum gives the formula a clearly identified cinnamon source and supports healthy glucose metabolism as part of a balanced lifestyle.*</p></article>
-        <article class="av-cb__formula-card"><div class="num">400</div><div class="unit">mg per daily serving</div><h3>Berberine HCl</h3><p>A researched botanical compound commonly used in metabolic-wellness formulas to support normal glucose and lipid metabolism.*</p></article>
-        <article class="av-cb__formula-card"><div class="num">200</div><div class="unit">mg per daily serving</div><h3>MCT Oil</h3><p>An oil-based carrier that helps create the convenient softgel format instead of a dry powder-only capsule.</p></article>
-      </div>
-    </div>
-  </section>
 
-  <section class="av-cb__section">
-    <div class="av-cb__wrap">
-      <header class="av-cb__head"><div class="av-cb__eyebrow">Not all cinnamon is the same</div><h2>True Ceylon vs. common cassia.</h2><p>The cinnamon source is part of the product story—not an afterthought.</p></header>
-      <div class="av-cb__education">
-        <article class="av-cb__edu av-cb__edu--ceylon"><div class="label">Avonent uses</div><h3>Ceylon Cinnamon</h3><p><strong>Cinnamomum verum</strong>, often called “true cinnamon.” It is naturally much lower in coumarin than common cassia cinnamon and gives the formula a premium, clearly identified cinnamon source.</p></article>
-        <article class="av-cb__edu"><div class="label">Common alternative</div><h3>Cassia Cinnamon</h3><p>The cinnamon most shoppers see in ordinary grocery and supplement products. Cassia is a different species and naturally contains substantially more coumarin than Ceylon cinnamon.</p></article>
+      <div class="av-cb__benefits-grid">
+        {% for i in (1..4) %}
+          {% case i %}
+            {% when 1 %}
+              {% assign av_cb_benefit_icon = av_cb_benefits_icon_1 %}
+              {% assign av_cb_benefit_title = av_cb_benefits_item_1 %}
+            {% when 2 %}
+              {% assign av_cb_benefit_icon = av_cb_benefits_icon_2 %}
+              {% assign av_cb_benefit_title = av_cb_benefits_item_2 %}
+            {% when 3 %}
+              {% assign av_cb_benefit_icon = av_cb_benefits_icon_3 %}
+              {% assign av_cb_benefit_title = av_cb_benefits_item_3 %}
+            {% else %}
+              {% assign av_cb_benefit_icon = av_cb_benefits_icon_4 %}
+              {% assign av_cb_benefit_title = av_cb_benefits_item_4 %}
+          {% endcase %}
+          <div class="av-cb__benefit-tile">
+            <span class="av-cb__benefit-icon" aria-hidden="true">
+              {% if av_cb_benefit_icon != blank %}
+                {{ av_cb_benefit_icon | image_url: width: 140 | image_tag: loading: 'lazy', widths: '70,100,140', alt: '' }}
+              {% else %}
+                {% case i %}
+                  {% when 1 %}
+                    <svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="20" r="8" stroke="currentColor" stroke-width="3"/><circle cx="32" cy="44" r="8" stroke="currentColor" stroke-width="3"/><path d="M18 8c-5 8-5 40 0 48M46 8c5 8 5 40 0 48" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+                  {% when 2 %}
+                    <svg viewBox="0 0 64 64" fill="none"><path d="M18 44c0-11 5-18 14-18s14 7 14 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M24 22c2-8 6-12 8-12s6 4 8 12" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="32" cy="38" r="5" stroke="currentColor" stroke-width="3"/></svg>
+                  {% when 3 %}
+                    <svg viewBox="0 0 64 64" fill="none"><path d="M14 43c12-22 30-25 38-24-3 13-13 28-34 29" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 44c8-8 15-14 28-20" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+                  {% else %}
+                    <svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="22" stroke="currentColor" stroke-width="3"/><path d="M32 18v14l10 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                {% endcase %}
+              {% endif %}
+            </span>
+            <strong>{{ av_cb_benefit_title }}</strong>
+          </div>
+        {% endfor %}
       </div>
-    </div>
-  </section>
 
-  <section class="av-cb__section av-cb__section--blue">
-    <div class="av-cb__wrap">
-      <header class="av-cb__head"><div class="av-cb__eyebrow">The Avonent difference</div><h2>A more complete cinnamon formula.</h2><p>Instead of a generic single-ingredient capsule, Avonent combines three clearly disclosed components in one monthly routine.</p></header>
-      <div class="av-cb__compare">
-        <article class="av-cb__compare-card av-cb__compare-card--av">
-          <h3>Avonent</h3>
-          <div class="av-cb__row"><span class="av-cb__check">✓</span><div><b>True Ceylon clearly identified</b><span>Cinnamomum verum</span></div></div>
-          <div class="av-cb__row"><span class="av-cb__check">✓</span><div><b>Ceylon + Berberine</b><span>Two botanical actives in one formula</span></div></div>
-          <div class="av-cb__row"><span class="av-cb__check">✓</span><div><b>Exact daily amounts shown</b><span>1,200 mg + 400 mg + 200 mg</span></div></div>
-          <div class="av-cb__row"><span class="av-cb__check">✓</span><div><b>MCT oil softgel base</b><span>Oil-based format</span></div></div>
-          <div class="av-cb__row"><span class="av-cb__check">✓</span><div><b>Exactly 30 servings</b><span>Built around monthly consistency</span></div></div>
-        </article>
-        <article class="av-cb__compare-card">
-          <h3>Typical basic formula</h3>
-          <div class="av-cb__row"><span class="av-cb__check">–</span><div><b>Cinnamon variety may be vague</b><span>Often simply labeled “cinnamon”</span></div></div>
-          <div class="av-cb__row"><span class="av-cb__check">–</span><div><b>Often single ingredient</b><span>May require separate products</span></div></div>
-          <div class="av-cb__row"><span class="av-cb__check">–</span><div><b>Serving details can vary</b><span>Compare labels carefully</span></div></div>
-          <div class="av-cb__row"><span class="av-cb__check">–</span><div><b>Common powder capsule format</b><span>No MCT oil base</span></div></div>
-          <div class="av-cb__row"><span class="av-cb__check">–</span><div><b>Supply length varies</b><span>Not always designed as a month</span></div></div>
-        </article>
+      <div class="av-cb__benefits-image-wrap">
+        {% if av_cb_benefits_image != blank %}
+          {{ av_cb_benefits_image | image_url: width: 1800 | image_tag: class: 'av-cb__benefits-image', loading: 'lazy', widths: '600,900,1200,1600,1800', sizes: '(min-width:900px) 760px, 100vw', alt: av_cb_benefits_heading }}
+        {% elsif av_cb_product.featured_image %}
+          {{ av_cb_product.featured_image | image_url: width: 1600 | image_tag: class: 'av-cb__benefits-image', loading: 'lazy', widths: '600,900,1200,1600', sizes: '(min-width:900px) 760px, 100vw', alt: av_cb_display_title }}
+        {% else %}
+          <div class="av-cb__benefits-image-placeholder">Add your bottom product image in the “CB Benefits Bottom Image” product metafield.</div>
+        {% endif %}
       </div>
-    </div>
-  </section>
-
-  <section class="av-cb__section av-cb__section--soft">
-    <div class="av-cb__wrap">
-      <header class="av-cb__head"><div class="av-cb__eyebrow">Your 30-day routine</div><h2>Consistency beats complexity.</h2><p>One bottle contains 120 softgels and 30 full daily servings.</p></header>
-      <div class="av-cb__timeline">
-        <article class="av-cb__week"><b>Week 1</b><h3>Start the routine</h3><p>Take the labeled 4-softgel serving each day and anchor it to the same part of your routine.</p></article>
-        <article class="av-cb__week"><b>Week 2</b><h3>Make it automatic</h3><p>Keep the serving consistent alongside meals, movement, hydration, and sleep.</p></article>
-        <article class="av-cb__week"><b>Week 3</b><h3>Stay consistent</h3><p>You are more than halfway through the bottle. Keep using the formula exactly as directed.</p></article>
-        <article class="av-cb__week"><b>Week 4</b><h3>Finish the bottle</h3><p>Complete the 30-serving routine and decide whether it fits your long-term wellness habits.</p></article>
-      </div>
+      <p class="av-cb__benefits-disclaimer">*These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.</p>
     </div>
   </section>
 
