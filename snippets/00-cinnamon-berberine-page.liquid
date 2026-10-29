@@ -21,6 +21,25 @@
   assign av_cb_bundle_2_badge = av_cb_product.metafields.custom.av_cb_bundle_2_badge.value | default: 'Most Popular'
   assign av_cb_bundle_3_badge = av_cb_product.metafields.custom.av_cb_bundle_3_badge.value | default: 'Best Value'
   assign av_cb_low_stock_line = av_cb_product.metafields.custom.av_cb_low_stock_line.value | default: 'Low Stock – Selling Fast'
+  assign av_cb_bundle_1_title = av_cb_product.metafields.custom.av_cb_bundle_1_title.value | default: 'Buy 1'
+  assign av_cb_bundle_1_subtitle = av_cb_product.metafields.custom.av_cb_bundle_1_subtitle.value | default: '30-Day Supply'
+  assign av_cb_bundle_2_title = av_cb_product.metafields.custom.av_cb_bundle_2_title.value | default: 'Buy 2'
+  assign av_cb_bundle_2_subtitle = av_cb_product.metafields.custom.av_cb_bundle_2_subtitle.value | default: '60-Day Supply'
+  assign av_cb_bundle_3_title = av_cb_product.metafields.custom.av_cb_bundle_3_title.value | default: 'Buy 3'
+  assign av_cb_bundle_3_subtitle = av_cb_product.metafields.custom.av_cb_bundle_3_subtitle.value | default: '90-Day Supply'
+  assign av_cb_add_to_cart_text = av_cb_product.metafields.custom.av_cb_add_to_cart_text.value | default: 'Add to Cart'
+  assign av_cb_refill_text = av_cb_product.metafields.custom.av_cb_refill_text.value | default: 'Refills ship every 30 days'
+  assign av_cb_cancel_text = av_cb_product.metafields.custom.av_cb_cancel_text.value | default: 'Stop or cancel anytime'
+  assign av_cb_guarantee_heading = av_cb_product.metafields.custom.av_cb_guarantee_heading.value | default: '30-Day Money-Back Guarantee'
+  assign av_cb_guarantee_body = av_cb_product.metafields.custom.av_cb_guarantee_body.value | default: 'money-back guarantee. Try Avonent with confidence and contact us within 30 days if you are not satisfied.'
+  assign av_cb_acc_1_title = av_cb_product.metafields.custom.av_cb_acc_1_title.value | default: 'Clinically Supported Benefits'
+  assign av_cb_acc_1_body = av_cb_product.metafields.custom.av_cb_acc_1_body.value
+  assign av_cb_acc_2_title = av_cb_product.metafields.custom.av_cb_acc_2_title.value | default: 'Key Ingredients'
+  assign av_cb_acc_2_body = av_cb_product.metafields.custom.av_cb_acc_2_body.value
+  assign av_cb_acc_3_title = av_cb_product.metafields.custom.av_cb_acc_3_title.value | default: 'How It Works'
+  assign av_cb_acc_3_body = av_cb_product.metafields.custom.av_cb_acc_3_body.value
+  assign av_cb_trust_image = av_cb_product.metafields.custom.av_cb_trust_image.value
+  assign av_cb_trust_image_alt = av_cb_product.metafields.custom.av_cb_trust_image_alt.value | default: 'Why Trust Avonent'
 %}
 
 <div class="av-cb" data-av-cb data-unit-price="{{ av_cb_unit_price }}" data-compare-price="{{ av_cb_compare_price | escape }}">
@@ -136,7 +155,16 @@
 
           <div class="av-cb__bundles" role="group" aria-label="Choose supply">
             {% for qty in (1..3) %}
-              {% assign bundle_days = qty | times: 30 %}
+              {% if qty == 1 %}
+                {% assign av_cb_bundle_title = av_cb_bundle_1_title %}
+                {% assign av_cb_bundle_subtitle = av_cb_bundle_1_subtitle %}
+              {% elsif qty == 2 %}
+                {% assign av_cb_bundle_title = av_cb_bundle_2_title %}
+                {% assign av_cb_bundle_subtitle = av_cb_bundle_2_subtitle %}
+              {% else %}
+                {% assign av_cb_bundle_title = av_cb_bundle_3_title %}
+                {% assign av_cb_bundle_subtitle = av_cb_bundle_3_subtitle %}
+              {% endif %}
               <button class="av-cb__bundle{% if qty == 1 %} is-active{% endif %}" type="button" data-av-cb-bundle="{{ qty }}">
                 {% if qty == 2 and av_cb_bundle_2_badge != blank %}<span class="av-cb__badge">{{ av_cb_bundle_2_badge }}</span>{% endif %}
                 {% if qty == 3 and av_cb_bundle_3_badge != blank %}<span class="av-cb__badge">{{ av_cb_bundle_3_badge }}</span>{% endif %}
@@ -148,8 +176,8 @@
                   {% endif %}
                 </span>
                 <span class="av-cb__bundle-copy">
-                  <strong>Buy {{ qty }}</strong>
-                  <span>{{ bundle_days }}-Day Supply</span>
+                  <strong>{{ av_cb_bundle_title }}</strong>
+                  <span>{{ av_cb_bundle_subtitle }}</span>
                 </span>
                 <span class="av-cb__bundle-price">
                   <strong data-av-cb-bundle-price="{{ qty }}"></strong>
@@ -160,7 +188,7 @@
           </div>
 
           <button class="av-cb__buy" type="submit" {% unless av_cb_variant.available %}disabled{% endunless %}>
-            {% if av_cb_variant.available %}Add to Cart · <span data-av-cb-button-price>{{ av_cb_unit_price | money }}</span>{% else %}Currently Unavailable{% endif %}
+            {% if av_cb_variant.available %}{{ av_cb_add_to_cart_text }} · <span data-av-cb-button-price>{{ av_cb_unit_price | money }}</span>{% else %}Currently Unavailable{% endif %}
           </button>
         {% endform %}
 
@@ -169,14 +197,14 @@
             <span class="av-cb__refill-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M20 6v5h-5M4 18v-5h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M18.2 10a7 7 0 0 0-11.9-3L4 9M5.8 14a7 7 0 0 0 11.9 3L20 15" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </span>
-            Refills ship every 30 days
+            {{ av_cb_refill_text }}
           </span>
           <span class="av-cb__refill-divider" aria-hidden="true"></span>
           <span class="av-cb__refill-item">
             <span class="av-cb__refill-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.7"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </span>
-            Stop or cancel anytime
+            {{ av_cb_cancel_text }}
           </span>
         </div>
       </div>
@@ -194,8 +222,8 @@
         {% endif %}
       </div>
       <div class="av-cb__guarantee-copy">
-        <h3>30-Day Money-Back Guarantee</h3>
-        <p><mark>{{ av_cb_guarantee_highlight }}</mark> money-back guarantee. Try Avonent with confidence and contact us within 30 days if you are not satisfied.</p>
+        <h3>{{ av_cb_guarantee_heading }}</h3>
+        <p><mark>{{ av_cb_guarantee_highlight }}</mark> {{ av_cb_guarantee_body }}</p>
       </div>
     </div>
 
@@ -209,40 +237,25 @@
 
     <div class="av-cb__accordion-list" data-av-cb-accordion-list>
       <details class="av-cb__accordion">
-        <summary><span>Clinically Supported Benefits</span><span class="av-cb__accordion-icon" aria-hidden="true"></span></summary>
-        <div class="av-cb__accordion-body rte">
-          <p><strong>Supported by ingredient research on true Ceylon cinnamon and berberine.</strong></p>
-          <ul>
-            <li>Supports healthy glucose metabolism and blood sugar already within a normal range.*</li>
-            <li>Supports normal insulin sensitivity and efficient glucose use.*</li>
-            <li>Supports healthy circulation and everyday metabolic function.*</li>
-            <li>Provides antioxidant compounds that help protect cells from oxidative stress.*</li>
-            <li>Uses true Ceylon cinnamon, naturally much lower in coumarin than common cassia cinnamon.</li>
-          </ul>
-          <p><small>Research on individual ingredients does not mean the finished Avonent product itself was clinically tested. Individual results vary.</small></p>
-        </div>
+        <summary><span>{{ av_cb_acc_1_title }}</span><span class="av-cb__accordion-icon" aria-hidden="true"></span></summary>
+        <div class="av-cb__accordion-body rte">{{ av_cb_acc_1_body | newline_to_br }}</div>
       </details>
       <details class="av-cb__accordion">
-        <summary><span>Key Ingredients</span><span class="av-cb__accordion-icon" aria-hidden="true"></span></summary>
-        <div class="av-cb__accordion-body rte">
-          <p><strong>True Ceylon Cinnamon (Cinnamomum verum) — 1,200 mg per daily serving</strong></p>
-          <p>A clearly identified true-cinnamon source for metabolic-wellness support.*</p>
-          <p><strong>Berberine HCl — 400 mg per daily serving</strong></p>
-          <p>A researched botanical compound commonly used to support normal glucose and lipid metabolism.*</p>
-          <p><strong>MCT Oil — 200 mg per daily serving</strong></p>
-          <p>An oil-based carrier used in the softgel format.</p>
-          <p><strong>Softgel Delivery</strong></p>
-          <p>Four softgels per daily serving, with 30 daily servings per bottle.</p>
-        </div>
+        <summary><span>{{ av_cb_acc_2_title }}</span><span class="av-cb__accordion-icon" aria-hidden="true"></span></summary>
+        <div class="av-cb__accordion-body rte">{{ av_cb_acc_2_body | newline_to_br }}</div>
       </details>
       <details class="av-cb__accordion">
-        <summary><span>How It Works</span><span class="av-cb__accordion-icon" aria-hidden="true"></span></summary>
-        <div class="av-cb__accordion-body rte">
-          <p>Avonent combines true Ceylon cinnamon and Berberine HCl in one daily formula so you do not need separate bottles for each ingredient.</p>
-          <p>Ceylon cinnamon and berberine are researched for complementary roles in healthy glucose metabolism and broader metabolic wellness.* MCT oil provides the oil base for the softgel format.</p>
-          <p>Take the labeled four-softgel serving consistently as part of a routine that also includes balanced nutrition, movement, hydration, and sleep.</p>
-        </div>
+        <summary><span>{{ av_cb_acc_3_title }}</span><span class="av-cb__accordion-icon" aria-hidden="true"></span></summary>
+        <div class="av-cb__accordion-body rte">{{ av_cb_acc_3_body | newline_to_br }}</div>
       </details>
+    </div>
+
+    <div class="av-cb__trust-image-section">
+      {% if av_cb_trust_image != blank %}
+        {{ av_cb_trust_image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '600,900,1200,1600', sizes: '(min-width: 900px) 1200px, calc(100vw - 22px)', alt: av_cb_trust_image_alt }}
+      {% else %}
+        <img src="https://cdn.shopify.com/s/files/1/0759/3525/2646/files/avonent-why-trust-avonent.png?v=1793242624" alt="{{ av_cb_trust_image_alt | escape }}" loading="lazy">
+      {% endif %}
     </div>
   </div>
 
