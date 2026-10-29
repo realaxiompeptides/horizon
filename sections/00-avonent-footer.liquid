@@ -1,20 +1,29 @@
 {% liquid
   assign footer_id = 'avonent-footer-' | append: section.id
+  assign avonent_cinnamon_footer = false
+  if template.name == 'product' and product.template_suffix == 'cinnamon-berberine'
+    assign avonent_cinnamon_footer = true
+  endif
+
+  assign avonent_footer_logo = section.settings.logo
+  if avonent_cinnamon_footer and section.settings.cinnamon_logo != blank
+    assign avonent_footer_logo = section.settings.cinnamon_logo
+  endif
 %}
 
 <section
   id="{{ footer_id }}"
-  class="avonent-footer"
+  class="avonent-footer{% if avonent_cinnamon_footer %} avonent-footer--cinnamon{% endif %}"
   style="
-    --av-footer-bg: {{ section.settings.background_color }};
-    --av-footer-text: {{ section.settings.text_color }};
-    --av-footer-muted: {{ section.settings.muted_text_color }};
-    --av-footer-accent: {{ section.settings.accent_color }};
-    --av-footer-border: {{ section.settings.border_color }};
-    --av-footer-input-bg: {{ section.settings.input_background }};
-    --av-footer-input-text: {{ section.settings.input_text_color }};
-    --av-footer-button-bg: {{ section.settings.button_background }};
-    --av-footer-button-text: {{ section.settings.button_text_color }};
+    --av-footer-bg: {% if avonent_cinnamon_footer %}#2B180F{% else %}{{ section.settings.background_color }}{% endif %};
+    --av-footer-text: {% if avonent_cinnamon_footer %}#FFF8F2{% else %}{{ section.settings.text_color }}{% endif %};
+    --av-footer-muted: {% if avonent_cinnamon_footer %}#D8C7BA{% else %}{{ section.settings.muted_text_color }}{% endif %};
+    --av-footer-accent: {% if avonent_cinnamon_footer %}#C86F3A{% else %}{{ section.settings.accent_color }}{% endif %};
+    --av-footer-border: {% if avonent_cinnamon_footer %}#5B3828{% else %}{{ section.settings.border_color }}{% endif %};
+    --av-footer-input-bg: {% if avonent_cinnamon_footer %}#FFFDFC{% else %}{{ section.settings.input_background }}{% endif %};
+    --av-footer-input-text: {% if avonent_cinnamon_footer %}#2B180F{% else %}{{ section.settings.input_text_color }}{% endif %};
+    --av-footer-button-bg: {% if avonent_cinnamon_footer %}#C86F3A{% else %}{{ section.settings.button_background }}{% endif %};
+    --av-footer-button-text: {% if avonent_cinnamon_footer %}#FFFFFF{% else %}{{ section.settings.button_text_color }}{% endif %};
     --av-footer-radius: {{ section.settings.corner_radius }}px;
     --av-footer-padding-top: {{ section.settings.padding_top }}px;
     --av-footer-padding-bottom: {{ section.settings.padding_bottom }}px;
@@ -22,6 +31,106 @@
 >
 
   <div class="avonent-footer__container">
+
+    {% if avonent_cinnamon_footer %}
+      <div class="avonent-footer__cinnamon-grid">
+        <div class="avonent-footer__cinnamon-brand">
+          <a href="{{ routes.root_url }}" class="avonent-footer__cinnamon-logo-link" aria-label="{{ shop.name | escape }}">
+            {% if avonent_footer_logo != blank %}
+              {{
+                avonent_footer_logo
+                | image_url: width: 720
+                | image_tag:
+                  class: 'avonent-footer__cinnamon-logo',
+                  loading: 'lazy',
+                  widths: '180, 280, 420, 560, 720',
+                  sizes: '(max-width: 749px) 210px, 250px'
+              }}
+            {% else %}
+              <span class="avonent-footer__cinnamon-logo-text">{{ section.settings.brand_name }}</span>
+            {% endif %}
+          </a>
+
+          <div class="avonent-footer__cinnamon-tagline">{{ section.settings.cinnamon_tagline }}</div>
+          <div class="avonent-footer__cinnamon-description">{{ section.settings.cinnamon_description }}</div>
+
+          <div class="avonent-footer__support-list">
+            <a class="avonent-footer__support-row" href="{% if pages['contact'] != blank %}{{ pages['contact'].url }}{% else %}/pages/contact{% endif %}">
+              <span class="avonent-footer__support-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><rect x="4" y="6.5" width="16" height="11" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="m5 8 7 5 7-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <span>{{ section.settings.cinnamon_contact_label }}</span>
+            </a>
+            <div class="avonent-footer__support-row">
+              <span class="avonent-footer__support-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/><path d="M12 7.5V12l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <span>{{ section.settings.cinnamon_support_text }}</span>
+            </div>
+          </div>
+        </div>
+
+        <nav class="avonent-footer__cinnamon-column" aria-label="Quick links">
+          <h3>QUICK LINKS</h3>
+          <ul>
+            <li><a href="{{ routes.root_url }}">Home</a></li>
+            <li><a href="{% if pages['contact'] != blank %}{{ pages['contact'].url }}{% else %}/pages/contact{% endif %}">Contact</a></li>
+            <li><a href="{% if pages['track-your-order'] != blank %}{{ pages['track-your-order'].url }}{% else %}/pages/track-your-order{% endif %}">Track My Order</a></li>
+            <li><a href="{{ product.url }}#av-cb-faq">FAQ</a></li>
+          </ul>
+        </nav>
+
+        <nav class="avonent-footer__cinnamon-column" aria-label="Policies">
+          <h3>POLICIES</h3>
+          <ul>
+            {% if shop.privacy_policy != blank %}<li><a href="{{ shop.privacy_policy.url }}">Privacy Policy</a></li>{% endif %}
+            {% if shop.terms_of_service != blank %}<li><a href="{{ shop.terms_of_service.url }}">Terms of Service</a></li>{% endif %}
+            {% if shop.refund_policy != blank %}<li><a href="{{ shop.refund_policy.url }}">Refund Policy</a></li>{% endif %}
+            {% if shop.shipping_policy != blank %}<li><a href="{{ shop.shipping_policy.url }}">Shipping Policy</a></li>{% endif %}
+          </ul>
+        </nav>
+
+        {% if section.settings.show_newsletter %}
+          <div class="avonent-footer__cinnamon-newsletter">
+            <div class="avonent-footer__cinnamon-eyebrow">{{ section.settings.newsletter_eyebrow }}</div>
+            <h3>{{ section.settings.newsletter_heading }}</h3>
+            <div class="avonent-footer__cinnamon-newsletter-copy">{{ section.settings.newsletter_text }}</div>
+
+            {% form 'customer', class: 'avonent-footer__cinnamon-form' %}
+              <input type="hidden" name="contact[tags]" value="newsletter">
+              <label class="visually-hidden" for="AvonentCinnamonFooterEmail-{{ section.id }}">Email address</label>
+              <div class="avonent-footer__cinnamon-form-row">
+                <input id="AvonentCinnamonFooterEmail-{{ section.id }}" class="avonent-footer__cinnamon-input" type="email" name="contact[email]" placeholder="{{ section.settings.email_placeholder }}" autocomplete="email" required>
+                <button class="avonent-footer__cinnamon-submit" type="submit">{{ section.settings.button_label }} <span aria-hidden="true">→</span></button>
+              </div>
+              {% if form.posted_successfully? %}<div class="avonent-footer__form-message">{{ section.settings.success_text }}</div>{% endif %}
+              {% if form.errors %}<div class="avonent-footer__form-message avonent-footer__form-message--error">{{ form.errors | default_errors }}</div>{% endif %}
+            {% endform %}
+          </div>
+        {% endif %}
+      </div>
+
+      {% if section.settings.show_disclaimer %}
+        <div class="avonent-footer__cinnamon-disclaimer">
+          {% if section.settings.disclaimer_heading != blank %}<strong>{{ section.settings.disclaimer_heading }}</strong>{% endif %}
+          <div>{{ section.settings.fda_disclaimer }}</div>
+          <div>{{ section.settings.additional_disclaimer }}</div>
+        </div>
+      {% endif %}
+
+      {% if section.settings.show_payment_icons %}
+        <div class="avonent-footer__cinnamon-payment">
+          <span>{{ section.settings.payment_heading }}</span>
+          <div class="avonent-footer__cinnamon-payment-icons" aria-label="Accepted payment methods">
+            {% for type in shop.enabled_payment_types %}<span>{{ type | payment_type_svg_tag }}</span>{% endfor %}
+          </div>
+        </div>
+      {% endif %}
+
+      <div class="avonent-footer__cinnamon-bottom">
+        <span>© {{ 'now' | date: '%Y' }} {{ section.settings.brand_name }}. {{ section.settings.copyright_text }}</span>
+      </div>
+    {% else %}
 
     {%- comment -%}
       BRAND + NEWSLETTER
@@ -434,6 +543,7 @@
 
     </div>
 
+    {% endif %}
   </div>
 
 </section>
@@ -1387,6 +1497,60 @@
   .avonent-footer,.avonent-footer :is(h2,h3,p,a,input,button,label,summary){font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
   .avonent-footer__input{font-size:16px}
   .avonent-footer :is(input,button,a,summary):focus-visible{outline:2px solid currentColor;outline-offset:4px}
+
+
+  /* Cinnamon product footer only. */
+  .avonent-footer--cinnamon{background:var(--av-footer-bg);color:var(--av-footer-text)}
+  .avonent-footer--cinnamon .avonent-footer__container{width:min(calc(100% - 56px),1380px)}
+  .avonent-footer__cinnamon-grid{display:grid;grid-template-columns:minmax(260px,1.25fr) minmax(150px,.62fr) minmax(170px,.68fr) minmax(280px,1fr);gap:clamp(34px,4.5vw,72px);align-items:start;padding-bottom:44px;border-bottom:1px solid var(--av-footer-border)}
+  .avonent-footer__cinnamon-logo-link{display:inline-flex;color:var(--av-footer-text);text-decoration:none}
+  .avonent-footer__cinnamon-logo{width:auto;max-width:250px;max-height:82px;object-fit:contain;object-position:left center}
+  .avonent-footer__cinnamon-logo-text{font-family:Georgia,"Times New Roman",serif;font-size:clamp(42px,4vw,62px);font-weight:700;line-height:.95;letter-spacing:-.035em;color:#fffaf6}
+  .avonent-footer__cinnamon-tagline{margin-top:22px;max-width:430px;color:#ead9cd;font-size:16px;font-style:italic;line-height:1.55}
+  .avonent-footer__cinnamon-description{margin-top:11px;max-width:440px;color:var(--av-footer-muted);font-size:14px;line-height:1.65}
+  .avonent-footer__cinnamon-description p,.avonent-footer__cinnamon-newsletter-copy p,.avonent-footer__cinnamon-disclaimer p{margin:0}
+  .avonent-footer__support-list{display:grid;gap:13px;max-width:460px;margin-top:24px;padding-top:22px;border-top:1px solid var(--av-footer-border)}
+  .avonent-footer__support-row{display:flex;align-items:flex-start;gap:12px;color:#dcc8ba;text-decoration:none;font-size:13.5px;line-height:1.45}
+  a.avonent-footer__support-row:hover{color:#fff8f2}
+  .avonent-footer__support-icon{display:inline-grid;place-items:center;width:22px;height:22px;flex:0 0 22px;color:var(--av-footer-accent)}
+  .avonent-footer__support-icon svg{width:20px;height:20px}
+  .avonent-footer__cinnamon-column h3,.avonent-footer__cinnamon-newsletter h3,.avonent-footer__cinnamon-eyebrow{margin:0;color:#fff8f2;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+  .avonent-footer__cinnamon-column ul{display:grid;gap:13px;list-style:none;margin:22px 0 0;padding:0}
+  .avonent-footer__cinnamon-column a{color:#d9c6b8;text-decoration:none;font-size:14px;line-height:1.35;transition:color 160ms ease,transform 160ms ease}
+  .avonent-footer__cinnamon-column a:hover{color:#fff8f2;transform:translateX(2px)}
+  .avonent-footer__cinnamon-newsletter h3{margin-top:12px;font-size:23px;letter-spacing:-.02em;text-transform:none}
+  .avonent-footer__cinnamon-eyebrow{color:var(--av-footer-accent)}
+  .avonent-footer__cinnamon-newsletter-copy{margin-top:11px;color:var(--av-footer-muted);font-size:13.5px;line-height:1.55}
+  .avonent-footer__cinnamon-form{margin-top:20px}
+  .avonent-footer__cinnamon-form-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;padding:6px;border:1px solid var(--av-footer-border);border-radius:14px;background:rgba(255,255,255,.035)}
+  .avonent-footer__cinnamon-input{min-width:0;height:46px;padding:0 13px;border:0;border-radius:10px;background:var(--av-footer-input-bg);color:var(--av-footer-input-text);font-size:14px;outline:none}
+  .avonent-footer__cinnamon-submit{min-height:46px;padding:0 18px;border:0;border-radius:10px;background:var(--av-footer-button-bg);color:var(--av-footer-button-text);font-size:12px;font-weight:800;letter-spacing:.05em;cursor:pointer}
+  .avonent-footer__cinnamon-disclaimer{display:grid;gap:8px;padding:26px 0;border-bottom:1px solid var(--av-footer-border);color:#bda99b;font-size:10.5px;line-height:1.55}
+  .avonent-footer__cinnamon-disclaimer strong{color:#ead9cd;font-size:11px;letter-spacing:.05em;text-transform:uppercase}
+  .avonent-footer__cinnamon-payment{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:22px 0;border-bottom:1px solid var(--av-footer-border);color:#ead9cd;font-size:11px;font-weight:800;letter-spacing:.06em}
+  .avonent-footer__cinnamon-payment-icons{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:7px}
+  .avonent-footer__cinnamon-payment-icons span{display:inline-flex;align-items:center;justify-content:center;min-width:42px;height:28px;padding:3px 6px;border-radius:6px;background:#fff}
+  .avonent-footer__cinnamon-payment-icons svg{max-height:22px;width:auto}
+  .avonent-footer__cinnamon-bottom{padding-top:20px;color:#ad988a;font-size:11px}
+  @media(max-width:980px){.avonent-footer__cinnamon-grid{grid-template-columns:1.2fr .8fr .8fr}.avonent-footer__cinnamon-newsletter{grid-column:1/-1;max-width:620px}}
+  @media(max-width:700px){
+    .avonent-footer--cinnamon{padding-top:48px;padding-bottom:calc(110px + env(safe-area-inset-bottom))}
+    .avonent-footer--cinnamon .avonent-footer__container{width:min(calc(100% - 40px),1380px)}
+    .avonent-footer__cinnamon-grid{grid-template-columns:1fr;gap:34px;padding-bottom:34px}
+    .avonent-footer__cinnamon-logo{max-width:220px;max-height:74px}
+    .avonent-footer__cinnamon-logo-text{font-size:48px}
+    .avonent-footer__cinnamon-tagline{margin-top:18px;font-size:15px}
+    .avonent-footer__cinnamon-description{font-size:13.5px}
+    .avonent-footer__cinnamon-column{padding-top:4px}
+    .avonent-footer__cinnamon-column ul{gap:14px;margin-top:17px}
+    .avonent-footer__cinnamon-column a{font-size:14.5px}
+    .avonent-footer__cinnamon-newsletter{grid-column:auto;padding-top:2px}
+    .avonent-footer__cinnamon-form-row{grid-template-columns:1fr auto}
+    .avonent-footer__cinnamon-submit{padding-inline:16px}
+    .avonent-footer__cinnamon-payment{align-items:flex-start;flex-direction:column}
+    .avonent-footer__cinnamon-payment-icons{justify-content:flex-start}
+  }
+
 </style>
 
 
@@ -1432,6 +1596,41 @@
       "id": "brand_description",
       "label": "Brand description",
       "default": "<p>Thoughtfully selected supplements designed to support better everyday routines.</p>"
+    },
+
+    {
+      "type": "header",
+      "content": "Cinnamon product footer"
+    },
+    {
+      "type": "image_picker",
+      "id": "cinnamon_logo",
+      "label": "Cinnamon footer logo",
+      "info": "Optional transparent logo used only on the Ceylon Cinnamon + Berberine product page."
+    },
+    {
+      "type": "text",
+      "id": "cinnamon_tagline",
+      "label": "Cinnamon footer tagline",
+      "default": "Real Ceylon cinnamon. Thoughtful formulation. Built for everyday consistency."
+    },
+    {
+      "type": "richtext",
+      "id": "cinnamon_description",
+      "label": "Cinnamon footer description",
+      "default": "<p>True Ceylon cinnamon, Berberine HCl and an MCT-oil softgel format in one straightforward daily routine.</p>"
+    },
+    {
+      "type": "text",
+      "id": "cinnamon_contact_label",
+      "label": "Contact link text",
+      "default": "Contact our support team"
+    },
+    {
+      "type": "text",
+      "id": "cinnamon_support_text",
+      "label": "Support availability",
+      "default": "Here for you 24/7 — evenings and weekends too."
     },
 
 
