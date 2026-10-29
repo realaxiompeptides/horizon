@@ -253,11 +253,11 @@
       </details>
     </div>
 
-    <div class="av-cb__trust-image-section">
+    <div class="av-cb__trust-image-section" style="margin-top:10px;">
       {% if av_cb_trust_image != blank %}
-        {{ av_cb_trust_image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '600,900,1200,1600', sizes: '(min-width: 900px) 1200px, calc(100vw - 22px)', alt: av_cb_trust_image_alt }}
+        <span style="display:block;width:100%;">{{ av_cb_trust_image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '600,900,1200,1600', sizes: '(min-width: 900px) 1200px, calc(100vw - 22px)', alt: av_cb_trust_image_alt, style: 'display:block;width:100%;height:auto;border-radius:18px;' }}</span>
       {% else %}
-        <img src="https://cdn.shopify.com/s/files/1/0759/3525/2646/files/avonent-why-trust-avonent.png?v=1793242624" alt="{{ av_cb_trust_image_alt | escape }}" loading="lazy">
+        <img src="https://cdn.shopify.com/s/files/1/0759/3525/2646/files/avonent-why-trust-avonent.png?v=1793242624" alt="{{ av_cb_trust_image_alt | escape }}" loading="lazy" style="display:block;width:100%;height:auto;border-radius:18px;">
       {% endif %}
     </div>
   </div>
