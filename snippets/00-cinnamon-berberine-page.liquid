@@ -126,6 +126,23 @@
   assign av_cb_journey_3_body = av_cb_product.metafields.custom.av_cb_journey_3_body.value
   assign av_cb_journey_4_label = av_cb_product.metafields.custom.av_cb_journey_4_label.value
   assign av_cb_journey_4_body = av_cb_product.metafields.custom.av_cb_journey_4_body.value
+  assign av_cb_compare_heading = av_cb_product.metafields.custom.av_cb_compare_heading.value | default: 'Avonent vs. Typical Cinnamon Supplements'
+  assign av_cb_compare_subheading = av_cb_product.metafields.custom.av_cb_compare_subheading.value
+  assign av_cb_compare_cta = av_cb_product.metafields.custom.av_cb_compare_cta.value | default: 'Try Avonent Risk-Free'
+  assign av_cb_compare_guarantee = av_cb_product.metafields.custom.av_cb_compare_guarantee.value | default: '30-Day Money-Back Guarantee'
+  assign av_cb_faq_heading = av_cb_product.metafields.custom.av_cb_faq_heading.value | default: 'Frequently Asked Questions'
+  assign av_cb_faq_1_q = av_cb_product.metafields.custom.av_cb_faq_1_q.value
+  assign av_cb_faq_1_a = av_cb_product.metafields.custom.av_cb_faq_1_a.value
+  assign av_cb_faq_2_q = av_cb_product.metafields.custom.av_cb_faq_2_q.value
+  assign av_cb_faq_2_a = av_cb_product.metafields.custom.av_cb_faq_2_a.value
+  assign av_cb_faq_3_q = av_cb_product.metafields.custom.av_cb_faq_3_q.value
+  assign av_cb_faq_3_a = av_cb_product.metafields.custom.av_cb_faq_3_a.value
+  assign av_cb_faq_4_q = av_cb_product.metafields.custom.av_cb_faq_4_q.value
+  assign av_cb_faq_4_a = av_cb_product.metafields.custom.av_cb_faq_4_a.value
+  assign av_cb_faq_5_q = av_cb_product.metafields.custom.av_cb_faq_5_q.value
+  assign av_cb_faq_5_a = av_cb_product.metafields.custom.av_cb_faq_5_a.value
+  assign av_cb_faq_6_q = av_cb_product.metafields.custom.av_cb_faq_6_q.value
+  assign av_cb_faq_6_a = av_cb_product.metafields.custom.av_cb_faq_6_a.value
 %}
 
 <div class="av-cb" data-av-cb data-unit-price="{{ av_cb_unit_price }}" data-compare-price="{{ av_cb_compare_price | escape }}">
@@ -281,6 +298,51 @@
     .av-cb__timeline-line{display:flex;align-items:flex-start;gap:9px;color:#443a35;font-size:14px;line-height:1.45}
     .av-cb__timeline-check{color:var(--blue);font-weight:900;line-height:1.2}
     @media(max-width:600px){.av-cb__journey{padding:26px 0 44px}.av-cb__journey-wrap{width:min(100% - 22px,900px)}.av-cb__journey-image{margin-bottom:26px;border-radius:16px;min-height:180px}.av-cb__journey-eyebrow{font-size:16px}.av-cb__journey-head h2{font-size:29px}.av-cb__journey-head p{font-size:13.5px}.av-cb__timeline{padding-left:24px}.av-cb__timeline:before{left:7px}.av-cb__timeline-dot{left:-22px}.av-cb__timeline-label{font-size:12px}.av-cb__timeline-line{font-size:13px}}
+
+    .av-cb__compare-section{background:#A84F1B;color:#fff;padding:58px 0}
+    .av-cb__compare-wrap{width:min(1100px,calc(100% - 32px));margin:0 auto}
+    .av-cb__compare-head{text-align:center;max-width:780px;margin:0 auto 34px}
+    .av-cb__compare-head h2{font-size:clamp(32px,4.3vw,50px);line-height:1.06;letter-spacing:-.035em;margin:0 0 14px;color:#fff}
+    .av-cb__compare-head p{font-size:16px;line-height:1.6;margin:0;color:rgba(255,255,255,.9)}
+    .av-cb__compare-layout{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:32px;align-items:center}
+    .av-cb__compare-table{display:grid;grid-template-columns:1fr 1fr;border-radius:20px;overflow:hidden;box-shadow:0 20px 48px rgba(76,27,5,.18)}
+    .av-cb__compare-col{background:#fff;color:#201713}
+    .av-cb__compare-col--ours{background:#7D3612;color:#fff}
+    .av-cb__compare-brand{min-height:122px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:16px;text-align:center;border-bottom:1px solid rgba(255,255,255,.2)}
+    .av-cb__compare-col:not(.av-cb__compare-col--ours) .av-cb__compare-brand{border-bottom:1px solid #eaded7}
+    .av-cb__compare-brand img{width:72px;height:72px;object-fit:contain;border-radius:12px;background:#fff}
+    .av-cb__compare-brand strong{font-size:17px}
+    .av-cb__compare-generic-icon{width:62px;height:62px;border-radius:50%;background:#f4ece7;display:grid;place-items:center;color:#7d6c64}
+    .av-cb__compare-generic-icon svg{width:34px;height:34px}
+    .av-cb__compare-row{min-height:68px;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.18);font-size:13px;line-height:1.35;font-weight:650}
+    .av-cb__compare-col:not(.av-cb__compare-col--ours) .av-cb__compare-row{border-bottom:1px solid #eaded7;color:#4f4743}
+    .av-cb__compare-row:last-child{border-bottom:0}
+    .av-cb__compare-row span{display:inline-flex;align-items:center;gap:8px;justify-content:center}
+    .av-cb__compare-check,.av-cb__compare-x{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;flex:0 0 22px;font-size:13px;font-weight:900}
+    .av-cb__compare-check{background:#fff;color:#7D3612}
+    .av-cb__compare-x{background:#8f827c;color:#fff}
+    .av-cb__compare-copy h3{font-size:clamp(28px,3.4vw,40px);line-height:1.1;margin:0 0 20px;color:#fff}
+    .av-cb__compare-points{display:grid;gap:14px;margin-bottom:24px}
+    .av-cb__compare-point{display:flex;align-items:flex-start;gap:11px;font-size:14px;line-height:1.5;color:#fff}
+    .av-cb__compare-point i{font-style:normal;width:24px;height:24px;border-radius:50%;background:#fff;color:#A84F1B;display:grid;place-items:center;flex:0 0 24px;font-weight:900;margin-top:1px}
+    .av-cb__compare-cta{display:flex;align-items:center;justify-content:center;width:100%;min-height:56px;border-radius:999px;background:#fff;color:#7D3612!important;font-weight:850;text-decoration:none!important}
+    .av-cb__compare-guarantee{display:flex;align-items:center;justify-content:center;gap:8px;font-size:12px;font-weight:700;margin-top:12px;color:#fff}
+    .av-cb__compare-guarantee svg{width:17px;height:17px}
+    .av-cb__faq-section{background:#fff;padding:62px 0 72px}
+    .av-cb__faq-wrap{width:min(900px,calc(100% - 32px));margin:0 auto}
+    .av-cb__faq-heading{text-align:center;font-size:clamp(34px,4.3vw,50px);line-height:1.05;letter-spacing:-.035em;margin:0 0 32px;color:#16110e}
+    .av-cb__faq-list{display:grid;gap:12px}
+    .av-cb__faq-item{border:1px solid #eadfd8;border-radius:16px;background:#fffaf6;overflow:hidden;transition:border-color .2s ease,box-shadow .2s ease}
+    .av-cb__faq-item[open]{border-color:#d7a585;box-shadow:0 10px 28px rgba(119,59,25,.07)}
+    .av-cb__faq-item summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:19px 20px;font-size:16px;font-weight:750;color:#1b1512}
+    .av-cb__faq-item summary::-webkit-details-marker{display:none}
+    .av-cb__faq-plus{width:28px;height:28px;border-radius:50%;border:1.5px solid #d2b09a;position:relative;flex:0 0 28px}
+    .av-cb__faq-plus:before,.av-cb__faq-plus:after{content:"";position:absolute;left:50%;top:50%;background:#A84F1B;transform:translate(-50%,-50%);border-radius:2px}
+    .av-cb__faq-plus:before{width:12px;height:2px}.av-cb__faq-plus:after{width:2px;height:12px}
+    .av-cb__faq-item[open] .av-cb__faq-plus:after{opacity:0}
+    .av-cb__faq-answer{padding:0 20px 20px;color:#5f534d;font-size:14px;line-height:1.65}
+    @media(max-width:800px){.av-cb__compare-layout{grid-template-columns:1fr}.av-cb__compare-copy{max-width:700px;margin:auto}.av-cb__compare-table{max-width:700px;margin:auto}}
+    @media(max-width:600px){.av-cb__compare-section{padding:44px 0}.av-cb__compare-wrap{width:min(100% - 22px,1100px)}.av-cb__compare-head{margin-bottom:25px}.av-cb__compare-head h2{font-size:31px}.av-cb__compare-head p{font-size:13.5px}.av-cb__compare-brand{min-height:104px;padding:12px 8px}.av-cb__compare-brand img{width:58px;height:58px}.av-cb__compare-brand strong{font-size:14px}.av-cb__compare-row{min-height:66px;padding:10px 8px;font-size:11.5px}.av-cb__compare-check,.av-cb__compare-x{width:19px;height:19px;flex-basis:19px;font-size:11px}.av-cb__compare-copy h3{font-size:29px;margin-bottom:16px}.av-cb__compare-point{font-size:13px}.av-cb__faq-section{padding:48px 0 58px}.av-cb__faq-wrap{width:min(100% - 22px,900px)}.av-cb__faq-heading{font-size:31px;margin-bottom:24px}.av-cb__faq-item summary{padding:17px 16px;font-size:14px}.av-cb__faq-answer{padding:0 16px 17px;font-size:13px}}
 
     .av-cb__benefits-section{position:relative;overflow:hidden;background:var(--benefits-bg,#0A88A6);color:var(--benefits-text,#fff);padding:54px 24px 0}
     .av-cb__benefits-inner{width:min(980px,100%);margin:0 auto}
@@ -707,6 +769,65 @@
   </section>
 
 
+  <section class="av-cb__compare-section">
+    <div class="av-cb__compare-wrap">
+      <header class="av-cb__compare-head">
+        <h2>{{ av_cb_compare_heading }}</h2>
+        <p>{{ av_cb_compare_subheading | newline_to_br }}</p>
+      </header>
+
+      <div class="av-cb__compare-layout">
+        <div class="av-cb__compare-table" aria-label="Avonent compared with typical cinnamon supplements">
+          <div class="av-cb__compare-col av-cb__compare-col--ours">
+            <div class="av-cb__compare-brand">
+              {% if av_cb_product.featured_image %}
+                {{ av_cb_product.featured_image | image_url: width: 180 | image_tag: loading: 'lazy', widths: '90,120,180', alt: av_cb_product.title }}
+              {% endif %}
+              <strong>AVONENT</strong>
+            </div>
+            <div class="av-cb__compare-row"><span><b class="av-cb__compare-check">✓</b>True Ceylon (Cinnamomum verum)</span></div>
+            <div class="av-cb__compare-row"><span><b class="av-cb__compare-check">✓</b>12:1 extract · 14,400 mg equivalent</span></div>
+            <div class="av-cb__compare-row"><span><b class="av-cb__compare-check">✓</b>400 mg Berberine HCl</span></div>
+            <div class="av-cb__compare-row"><span><b class="av-cb__compare-check">✓</b>MCT oil softgel format</span></div>
+            <div class="av-cb__compare-row"><span><b class="av-cb__compare-check">✓</b>Naturally very low in coumarin</span></div>
+            <div class="av-cb__compare-row"><span><b class="av-cb__compare-check">✓</b>Exact daily amounts disclosed</span></div>
+          </div>
+
+          <div class="av-cb__compare-col">
+            <div class="av-cb__compare-brand">
+              <span class="av-cb__compare-generic-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none"><path d="M15 17h18v14a8 8 0 0 1-8 8h-2a8 8 0 0 1-8-8V17Z" stroke="currentColor" stroke-width="2.3"/><path d="M18 11h12v6H18z" stroke="currentColor" stroke-width="2.3"/></svg>
+              </span>
+              <strong>Typical Cinnamon Supplement</strong>
+            </div>
+            <div class="av-cb__compare-row"><span><b class="av-cb__compare-x">×</b>May use cassia or unspecified cinnamon</span></div>
+            <div class="av-cb__compare-row"><span><b class="av-cb__compare-x">×</b>Often lower-dose powder formulas</span></div>
+            <div class="av-cb__compare-row"><span><b class="av-cb__compare-x">×</b>Often no Berberine HCl included</span></div>
+            <div class="av-cb__compare-row"><span><b class="av-cb__compare-x">×</b>Often dry powder capsules</span></div>
+            <div class="av-cb__compare-row"><span><b class="av-cb__compare-x">×</b>Cassia can be much higher in coumarin</span></div>
+            <div class="av-cb__compare-row"><span><b class="av-cb__compare-x">×</b>Extract ratio may be unclear</span></div>
+          </div>
+        </div>
+
+        <div class="av-cb__compare-copy">
+          <h3>Built to Give You More Than “Just Cinnamon.”</h3>
+          <div class="av-cb__compare-points">
+            <div class="av-cb__compare-point"><i>✓</i><span><strong>True Ceylon first.</strong> A clearly identified Cinnamomum verum formula instead of generic “cinnamon.”</span></div>
+            <div class="av-cb__compare-point"><i>✓</i><span><strong>Concentrated daily serving.</strong> 1,200 mg of 12:1 Ceylon extract, equivalent to 14,400 mg raw cinnamon.</span></div>
+            <div class="av-cb__compare-point"><i>✓</i><span><strong>More complete formula.</strong> Berberine HCl and MCT oil are already built into the same softgel routine.</span></div>
+            <div class="av-cb__compare-point"><i>✓</i><span><strong>No mystery blend.</strong> The core daily amounts are stated clearly so you know what you are actually taking.</span></div>
+          </div>
+          <a class="av-cb__compare-cta" href="#av-cb-top">{{ av_cb_compare_cta }}</a>
+          <div class="av-cb__compare-guarantee">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3.5 19 6v5.5c0 4.4-2.7 7.8-7 9-4.3-1.2-7-4.6-7-9V6l7-2.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m8.8 12 2 2 4.5-4.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>{{ av_cb_compare_guarantee }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
   <section class="av-cb__benefits-section" style="--benefits-bg:{{ av_cb_benefits_bg }};--benefits-text:{{ av_cb_benefits_text }};">
     <div class="av-cb__benefits-inner">
       <header class="av-cb__benefits-head">
@@ -762,6 +883,31 @@
         {% endif %}
       </div>
       <p class="av-cb__benefits-disclaimer">*These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.</p>
+    </div>
+  </section>
+
+
+  <section class="av-cb__faq-section" data-av-cb-faq>
+    <div class="av-cb__faq-wrap">
+      <h2 class="av-cb__faq-heading">{{ av_cb_faq_heading }}</h2>
+      <div class="av-cb__faq-list">
+        {% for i in (1..6) %}
+          {% case i %}
+            {% when 1 %}{% assign faq_q = av_cb_faq_1_q %}{% assign faq_a = av_cb_faq_1_a %}
+            {% when 2 %}{% assign faq_q = av_cb_faq_2_q %}{% assign faq_a = av_cb_faq_2_a %}
+            {% when 3 %}{% assign faq_q = av_cb_faq_3_q %}{% assign faq_a = av_cb_faq_3_a %}
+            {% when 4 %}{% assign faq_q = av_cb_faq_4_q %}{% assign faq_a = av_cb_faq_4_a %}
+            {% when 5 %}{% assign faq_q = av_cb_faq_5_q %}{% assign faq_a = av_cb_faq_5_a %}
+            {% else %}{% assign faq_q = av_cb_faq_6_q %}{% assign faq_a = av_cb_faq_6_a %}
+          {% endcase %}
+          {% if faq_q != blank and faq_a != blank %}
+            <details class="av-cb__faq-item">
+              <summary><span>{{ faq_q }}</span><span class="av-cb__faq-plus" aria-hidden="true"></span></summary>
+              <div class="av-cb__faq-answer">{{ faq_a | newline_to_br }}</div>
+            </details>
+          {% endif %}
+        {% endfor %}
+      </div>
     </div>
   </section>
 
@@ -894,6 +1040,18 @@
           });
         });
       });
+      const faqSection = root.querySelector('[data-av-cb-faq]');
+      if (faqSection) {
+        const faqItems = Array.from(faqSection.querySelectorAll('.av-cb__faq-item'));
+        faqItems.forEach(item => {
+          item.addEventListener('toggle', () => {
+            if (!item.open) return;
+            faqItems.forEach(other => {
+              if (other !== item) other.open = false;
+            });
+          });
+        });
+      }
       const accordions = root.querySelectorAll('.av-cb__accordion');
       accordions.forEach(item => {
         item.addEventListener('toggle', () => {
