@@ -16,10 +16,10 @@
           "type": "00-avonent-rating",
           "name": "Avonent Rating",
           "settings": {
-            "rating": "4.9",
-            "review_text": "Thousands of 5-Star Reviews",
-            "show_stars": true,
-            "show_rating_number": true,
+            "rating": "",
+            "review_text": "Berberine + True Ceylon Cinnamon + MCT Oil",
+            "show_stars": false,
+            "show_rating_number": false,
             "link": "",
             "star_color": "#02c6ea",
             "text_color": "#111111",
@@ -61,23 +61,23 @@
           "name": "Avonent Benefits Grid",
           "settings": {
             "benefit_1_enabled": true,
-            "benefit_1_text": "Zero Bloat After Meals",
-            "benefit_1_icon": "bolt",
+            "benefit_1_text": "Supports Healthy Glucose Metabolism",
+            "benefit_1_icon": "activity",
             "benefit_2_enabled": true,
-            "benefit_2_text": "Wake Up Light & Clear",
-            "benefit_2_icon": "shield_check",
+            "benefit_2_text": "True Ceylon — Not Common Cassia",
+            "benefit_2_icon": "leaf",
             "benefit_3_enabled": true,
-            "benefit_3_text": "No More Random Gas",
-            "benefit_3_icon": "gut",
+            "benefit_3_text": "Berberine HCl Metabolic Support",
+            "benefit_3_icon": "sparkle",
             "benefit_4_enabled": true,
-            "benefit_4_text": "Eat What You Want",
-            "benefit_4_icon": "heart",
+            "benefit_4_text": "MCT Oil Softgel Delivery",
+            "benefit_4_icon": "droplet",
             "benefit_5_enabled": true,
-            "benefit_5_text": "Energized From Better Digestion",
-            "benefit_5_icon": "activity",
+            "benefit_5_text": "30-Day Supply Per Bottle",
+            "benefit_5_icon": "shield_check",
             "benefit_6_enabled": true,
-            "benefit_6_text": "Calm Everyday Gut Relief",
-            "benefit_6_icon": "sparkle",
+            "benefit_6_text": "Simple 4-Softgel Daily Serving",
+            "benefit_6_icon": "check",
             "benefit_7_enabled": false,
             "benefit_7_text": "Mental Clarity",
             "benefit_7_icon": "brain",
@@ -150,10 +150,10 @@
             "one_time_label": "One-Time Purchase",
             "subscription_label": "Subscribe & Save",
             "default_purchase_type": "one_time",
-            "show_subscription_helper": true,
-            "subscription_helper": "Recurring delivery · Cancel anytime",
+            "show_subscription_helper": false,
+            "subscription_helper": "30-day recurring delivery",
             "show_sale_badge": true,
-            "sale_name": "SUMMER SALE",
+            "sale_name": "LAUNCH OFFER",
             "show_savings_amount": true,
             "show_savings_percent": false,
             "accent_color": "#02c6ea",
@@ -200,25 +200,25 @@
             "show_images": true,
             "bundle_1_enabled": true,
             "bundle_1_title": "Buy 1",
-            "bundle_1_subtitle": "Starter",
+            "bundle_1_subtitle": "30-Day Supply",
             "bundle_1_variant": "",
             "bundle_1_quantity": 1,
             "bundle_1_badge": "",
-            "bundle_1_savings_text": "",
+            "bundle_1_savings_text": "Start your routine",
             "bundle_2_enabled": true,
             "bundle_2_title": "Buy 2",
-            "bundle_2_subtitle": "Best Seller",
+            "bundle_2_subtitle": "60-Day Supply",
             "bundle_2_variant": "",
             "bundle_2_quantity": 2,
             "bundle_2_badge": "Most Popular",
-            "bundle_2_savings_text": "",
+            "bundle_2_savings_text": "Stay consistent",
             "bundle_3_enabled": true,
             "bundle_3_title": "Buy 3",
-            "bundle_3_subtitle": "Best Value",
+            "bundle_3_subtitle": "90-Day Supply",
             "bundle_3_variant": "",
             "bundle_3_quantity": 3,
             "bundle_3_badge": "Best Value",
-            "bundle_3_savings_text": "",
+            "bundle_3_savings_text": "Stock up & save",
             "bundle_4_enabled": false,
             "bundle_4_title": "Buy 4",
             "bundle_4_subtitle": "Stock Up",
@@ -243,13 +243,13 @@
           "type": "00-avonent-delivery-estimate",
           "name": "Avonent Delivery Estimate",
           "settings": {
-            "prefix": "Order today for delivery by",
+            "prefix": "30-day bottle ·",
             "delivery_days": 4,
             "skip_weekends": true,
             "fallback_date_text": "Soon",
             "separator": "·",
-            "shipping_text": "Ships from USA",
-            "show_flag": true,
+            "shipping_text": "Shipping calculated at checkout",
+            "show_flag": false,
             "show_status_dot": true,
             "accent_color": "#02c6ea",
             "text_color": "#111111",
@@ -346,23 +346,23 @@
           "settings": {
             "open_first": false,
             "item_1_enabled": true,
-            "item_1_title": "Description",
-            "item_1_content": "<p><strong>Avonent Advanced Digestive Complex</strong> is a comprehensive 10-in-1 formula designed to support digestion from multiple angles. Each two-capsule serving delivers 1,015 mg of targeted digestive support, including 500 mg of artichoke leaf extract, a 300 mg botanical blend, 125 mg of ox bile, 50 mg of DigeZyme® multi-enzyme complex, and 40 mg of slippery elm bark extract.</p><p>Instead of relying on a single enzyme, this formula combines digestive enzymes, bile support, and soothing botanicals to help your body process everyday meals more comfortably. DigeZyme® helps break down proteins, fats, carbohydrates, fiber, and lactose, while artichoke and ox bile support normal bile activity and the digestion of dietary fats.</p><p>Slippery elm and complementary botanicals round out the formula with gentle digestive support—giving you a complete daily routine for digestive comfort, balance, and consistency.</p>",
+            "item_1_title": "What It Is",
+            "item_1_content": "<p><strong>Avonent Berberine + Ceylon Cinnamon</strong> is a three-ingredient metabolic-support formula built around 1,200 mg of true Ceylon cinnamon, 400 mg of Berberine HCl, and 200 mg of MCT oil per daily serving.</p><p>Each bottle contains 120 softgels. A full serving is 4 softgels, giving you exactly 30 daily servings per bottle.</p>",
             "item_2_enabled": true,
-            "item_2_title": "Benefits",
-            "item_2_content": "<ul><li><strong>More comfortable digestion:</strong> supports digestive comfort before and after everyday meals.</li><li><strong>Complete food breakdown:</strong> helps digest proteins, fats, carbohydrates, fiber, and lactose.</li><li><strong>Targeted fat digestion:</strong> supports normal bile activity and the breakdown of dietary fats.</li><li><strong>Less post-meal heaviness:</strong> helps ease occasional bloating, gas, and uncomfortable fullness.</li><li><strong>Liver and gallbladder support:</strong> supports normal digestive function involving the liver, bile, and gallbladder.</li><li><strong>Daily digestive balance:</strong> promotes regularity and healthy everyday digestive function.</li><li><strong>Better nutrient breakdown:</strong> supports the digestive process your body uses to access nutrients from food.</li><li><strong>Simple 10-in-1 support:</strong> combines multiple digestive ingredients in one convenient two-capsule serving.</li></ul>",
+            "item_2_title": "Formula Benefits",
+            "item_2_content": "<ul><li><strong>Healthy glucose metabolism:</strong> Ceylon cinnamon and berberine are included to support normal metabolic function as part of a balanced lifestyle.*</li><li><strong>True Ceylon cinnamon:</strong> Cinnamomum verum, not common cassia.</li><li><strong>Berberine HCl:</strong> a widely studied botanical compound used in metabolic-wellness formulas.</li><li><strong>MCT oil softgel base:</strong> a convenient oil-based format for everyday use.</li><li><strong>Simple monthly routine:</strong> 30 servings per bottle.</li></ul><p>*These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.</p>",
             "item_3_enabled": true,
             "item_3_title": "Recommended Use",
-            "item_3_content": "<p><strong>Take 2 capsules daily</strong> with water, preferably with a meal. Taking the capsules shortly before or with food allows the formula to support the digestive process when you need it most.</p><p>Use consistently as part of your daily wellness routine, and do not exceed the suggested serving.</p>",
+            "item_3_content": "<p><strong>Serving size: 4 softgels daily.</strong> Follow the directions on the product label and do not exceed the suggested serving.</p><p><strong>Important:</strong> Berberine can interact with medications. Talk with a qualified healthcare professional before use if you take prescription medication, are pregnant or nursing, or have a medical condition.</p>",
             "item_4_enabled": true,
-            "item_4_title": "Do You Offer a Guarantee?",
-            "item_4_content": "<p>Yes! All Avonent orders are backed by our 30-day satisfaction guarantee.</p><p>If you're not completely satisfied, contact our support team and we'll review your order and help make it right according to our refund policy.</p>",
-            "item_5_enabled": false,
+            "item_4_title": "30-Day Guarantee",
+            "item_4_content": "<p>Your order is covered by Avonent's 30-day satisfaction guarantee. If you are not satisfied, contact support within 30 days and we will help according to the refund policy.</p>",
+            "item_5_enabled": true,
             "item_5_title": "Ingredients",
-            "item_5_content": "<p>Add ingredient information here.</p>",
-            "item_6_enabled": false,
-            "item_6_title": "Shipping",
-            "item_6_content": "<p>Add shipping information here.</p>",
+            "item_5_content": "<p><strong>Per daily serving (4 softgels):</strong> Ceylon Cinnamon 1,200 mg, Berberine HCl 400 mg, and MCT Oil 200 mg.</p>",
+            "item_6_enabled": true,
+            "item_6_title": "Supply",
+            "item_6_content": "<p>Each bottle contains 120 softgels. At 4 softgels per daily serving, one bottle provides 30 servings — a full 30-day supply.</p>",
             "text_color": "#111111",
             "muted_text_color": "#444444",
             "border_color": "#e1e5e7",
@@ -411,7 +411,6 @@
         "product_title_F8y7BN",
         "00_avonent_benefits_grid_AcNT8i",
         "description",
-        "demand_meter",
         "00_avonent_price_offer_zQyQbb",
         "variant_picker",
         "bundle_selector",
@@ -445,36 +444,36 @@
         "ingredient_research": {
           "type": "stat",
           "settings": {
-            "kicker": "INGREDIENT-LEVEL RESEARCH",
-            "value": "12+",
-            "label": "Published studies on our ingredients",
+            "kicker": "TRUE CEYLON CINNAMON",
+            "value": "1,200 mg",
+            "label": "per daily serving",
             "detail": ""
           }
         },
         "formula_amount": {
           "type": "stat",
           "settings": {
-            "kicker": "10-IN-1 FORMULA",
-            "value": "1,000+ mg",
-            "label": "Active ingredients per serving",
+            "kicker": "BERBERINE HCl",
+            "value": "400 mg",
+            "label": "per daily serving",
             "detail": ""
           }
         },
         "traditional_use": {
           "type": "stat",
           "settings": {
-            "kicker": "BOTANICAL TRADITION",
-            "value": "2,000+",
-            "label": "Years of traditional botanical use",
+            "kicker": "MCT OIL",
+            "value": "200 mg",
+            "label": "per daily serving",
             "detail": ""
           }
         },
         "orders_shipped": {
           "type": "stat",
           "settings": {
-            "kicker": "CUSTOMER MILESTONE",
-            "value": "100,000+",
-            "label": "Orders shipped",
+            "kicker": "MONTHLY ROUTINE",
+            "value": "30",
+            "label": "daily servings per bottle",
             "detail": ""
           }
         }
@@ -486,14 +485,14 @@
         "orders_shipped"
       ],
       "settings": {
-        "eyebrow": "TRADITION MEETS FORMULATION",
-        "heading": "Rooted in nature. Built for modern digestion.",
-        "description": "<p>A thoughtfully designed blend of botanicals, digestive enzymes, and bile support for a simple daily wellness routine.</p>",
+        "eyebrow": "THREE-INGREDIENT FORMULA",
+        "heading": "Simple formula. Clear daily amounts.",
+        "description": "<p>Every 4-softgel serving combines true Ceylon cinnamon, Berberine HCl, and MCT oil in one straightforward 30-day routine.</p>",
         "overlay_opacity": 75,
-        "button_text": "Try Avonent Risk-Free",
+        "button_text": "Choose Your Supply",
         "button_link": "",
         "guarantee_text": "30-day money-back guarantee",
-        "footnote": "",
+        "footnote": "Amounts shown per daily serving.",
         "background_color": "#087e9d",
         "text_color": "#ffffff",
         "muted_text_color": "#d7f3f8",
@@ -510,82 +509,40 @@
     "avonent_formula_breakdown": {
       "type": "00-avonent-formula-breakdown",
       "blocks": {
-        "artichoke_extract": {
+        "ceylon_cinnamon": {
           "type": "ingredient",
           "settings": {
-            "image": "shopify://shop_images/EE596049-5BD0-41D5-894B-76076508F580.png",
-            "role": "FAT + BILE SUPPORT",
-            "name": "Artichoke Extract",
-            "amount": "500 mg",
-            "benefit_heading": "For meals that tend to sit heavy.",
-            "explanation": "<p>Artichoke extract supports healthy bile flow, helping your body handle dietary fats and supporting more comfortable digestion after rich meals.</p>",
+            "role": "TRUE CEYLON CINNAMON",
+            "name": "Ceylon Cinnamon",
+            "amount": "1,200 mg per daily serving",
+            "benefit_heading": "True cinnamon, not common cassia.",
+            "explanation": "<p>Cinnamomum verum is the Ceylon variety of cinnamon. It complements berberine in a daily formula designed to support healthy glucose metabolism and overall metabolic wellness.*</p>",
             "details_label": "Why it is included",
-            "details": ""
+            "details": "<p>Ceylon cinnamon is naturally much lower in coumarin than common cassia cinnamon and gives the formula a clear, premium cinnamon identity.</p>"
           }
         },
-        "terminalia_chebula": {
+        "berberine_hcl": {
           "type": "ingredient",
           "settings": {
-            "image": "shopify://shop_images/37646A5E-CD1D-45ED-9652-E39FF98543A7.png",
-            "role": "DAILY REGULARITY",
-            "name": "Terminalia chebula Fruit Extract",
-            "amount": "Part of the 300 mg botanical blend",
-            "benefit_heading": "For a routine that feels more predictable.",
-            "explanation": "<p>A time-tested botanical that supports natural digestive movement, comfortable regularity, and everyday gut balance.</p>",
+            "role": "METABOLIC SUPPORT",
+            "name": "Berberine HCl",
+            "amount": "400 mg per daily serving",
+            "benefit_heading": "A researched botanical for metabolic wellness.",
+            "explanation": "<p>Berberine HCl is widely studied for its role in supporting healthy glucose and lipid metabolism as part of a balanced lifestyle.*</p>",
             "details_label": "Why it is included",
-            "details": ""
+            "details": "<p>Pairing berberine with true Ceylon cinnamon creates a more differentiated formula than a single-ingredient cinnamon or berberine product.</p>"
           }
         },
-        "sphaeranthus_indicus": {
+        "mct_oil": {
           "type": "ingredient",
           "settings": {
-            "image": "shopify://shop_images/A929BD16-DF1D-422F-A109-10F3AAF241DD.png",
-            "role": "POST-MEAL COMFORT",
-            "name": "Sphaeranthus indicus Flower Extract",
-            "amount": "Part of the 300 mg botanical blend",
-            "benefit_heading": "Traditional support for modern meals.",
-            "explanation": "<p>A distinctive botanical traditionally used to support digestive comfort and help your stomach feel more settled after eating.</p>",
+            "role": "SOFTGEL CARRIER",
+            "name": "MCT Oil",
+            "amount": "200 mg per daily serving",
+            "benefit_heading": "An oil-based softgel format.",
+            "explanation": "<p>MCT oil provides the oil base for the softgel formula and helps package the actives in a convenient daily format.</p>",
             "details_label": "Why it is included",
-            "details": ""
-          }
-        },
-        "ox_bile": {
-          "type": "ingredient",
-          "settings": {
-            "image": "shopify://shop_images/8AD2BC79-7DA5-46FD-BF14-8717FB2E9B2B.png",
-            "role": "TARGETED FAT DIGESTION",
-            "name": "Ox Bile Powder",
-            "amount": "125 mg",
-            "benefit_heading": "Extra support for heavier meals.",
-            "explanation": "<p>Provides concentrated bile acids that support the breakdown and absorption of dietary fats—especially when rich foods leave you feeling weighed down.</p>",
-            "details_label": "Why it is included",
-            "details": ""
-          }
-        },
-        "digezyme": {
-          "type": "ingredient",
-          "settings": {
-            "image": "shopify://shop_images/B37E348E-57D9-4600-921E-5ABFE3FDFA35.png",
-            "role": "5-ENZYME FOOD BREAKDOWN",
-            "name": "DigeZyme®",
-            "amount": "50 mg multi-enzyme complex",
-            "benefit_heading": "Helps break down the entire meal.",
-            "explanation": "<p>Five targeted enzymes help break down proteins, fats, carbohydrates, fiber, and lactose—supporting easier digestion and helping your body get more from the foods you eat.*</p>",
-            "details_label": "Why it is included",
-            "details": ""
-          }
-        },
-        "slippery_elm": {
-          "type": "ingredient",
-          "settings": {
-            "image": "shopify://shop_images/75E05387-DF21-4A17-94A1-2CDDC062CB5C.png",
-            "role": "SOOTHING DIGESTIVE SUPPORT",
-            "name": "Slippery Elm Bark Extract",
-            "amount": "40 mg",
-            "benefit_heading": "Comfort for a sensitive stomach.",
-            "explanation": "<p>Slippery elm forms a naturally soothing texture when mixed with water, helping support the digestive lining and a more comfortable gut environment.</p>",
-            "details_label": "Why it is included",
-            "details": ""
+            "details": "<p>The result is a smooth softgel format rather than a dry powder-only capsule.</p>"
           }
         }
       },
@@ -599,17 +556,17 @@
       ],
       "settings": {
         "eyebrow": "INSIDE THE FORMULA",
-        "heading": "More than enzymes. A complete plan for what happens after you eat.",
-        "description": "<p>Ten targeted ingredients work across food breakdown, fat digestion, digestive comfort, and regularity—so one simple routine can replace the guesswork.</p>",
-        "content_heading": "Every ingredient has a job.",
-        "content_intro": "<p>No mystery blend. No complicated science lesson. Just a clear look at why each ingredient earned its place.</p>",
-        "mobile_columns": "2",
-        "mobile_initial_count": 6,
+        "heading": "Three ingredients. One simple 30-day formula.",
+        "description": "<p>No mystery blend. Every bottle gives you 120 softgels and 30 daily servings built around true Ceylon cinnamon, Berberine HCl, and an MCT oil softgel base.</p>",
+        "content_heading": "What each ingredient contributes",
+        "content_intro": "<p>The daily amounts are disclosed clearly so you know exactly what is in the routine.</p>",
+        "mobile_columns": "1",
+        "mobile_initial_count": 3,
         "show_more_label": "View all ingredients",
         "show_less_label": "Show fewer ingredients",
-        "trust_1": "Third-party lab tested",
-        "trust_2": "Ships from the USA",
-        "trust_3": "Quality-focused formula",
+        "trust_1": "Clearly disclosed amounts",
+        "trust_2": "30 servings per bottle",
+        "trust_3": "True Ceylon + Berberine",
         "background_color": "#f7fcfd",
         "card_color": "#ffffff",
         "soft_color": "#eaf9fc",
@@ -632,24 +589,24 @@
           "type": "process_step",
           "disabled": true,
           "settings": {
-            "heading": "Take as directed",
-            "text": "<p>Use Avonent with your meal according to the directions on the label.</p>"
+            "heading": "Start with true Ceylon",
+            "text": "<p>Cinnamomum verum gives the formula a clearly identified cinnamon source rather than generic cinnamon.</p>"
           }
         },
         "process_step_gPm74L": {
           "type": "process_step",
           "disabled": true,
           "settings": {
-            "heading": "Support all five digestive jobs",
-            "text": "<p>Protease, lipase, amylase, cellulase, and lactase help break down different parts of a mixed meal.</p>"
+            "heading": "Add Berberine HCl",
+            "text": "<p>Berberine adds a second botanical component designed to support healthy glucose metabolism and metabolic wellness.*</p>"
           }
         },
         "process_step_bDcgye": {
           "type": "process_step",
           "disabled": true,
           "settings": {
-            "heading": "Feel better supported after eating",
-            "text": "<p>Designed to support comfortable digestion and help with occasional bloating, gas, and post-meal heaviness.*</p>"
+            "heading": "Make it easy to repeat",
+            "text": "<p>MCT oil provides the softgel base, and the 120-count bottle is portioned into 30 daily servings.</p>"
           }
         }
       },
@@ -660,29 +617,27 @@
       ],
       "name": "00 Avonent Before/After",
       "settings": {
-        "eyebrow": "FROM PLATE TO COMFORT",
-        "heading": "A heavy meal asks your digestion to do five jobs at once.",
-        "intro": "<p>Protein. Fats. Carbohydrates. Fiber. Lactose. One mixed meal can contain all five—and each one requires different digestive support.</p>",
-        "before_tab": "Before Support",
-        "before_label": "THE HEAVY-MEAL PROBLEM",
-        "before_image": "shopify://shop_images/A7162ED3-B2D7-4591-BD38-CD872AE47EAA.png",
-        "before_image_alt": "Conceptual illustration of a complex mixed meal during digestion",
-        "before_heading": "One meal. A lot to break down.",
-        "before_text": "<p>Rich, complicated meals can sometimes leave you feeling bloated, gassy, overly full, or weighed down long after the last bite.</p>",
-        "before_points": "<ul><li>Protein, fats, carbs, fiber, and dairy all require different digestive work</li><li>Mixed meals can be harder to handle than a single type of food</li><li>Occasional pressure, gas, and uncomfortable fullness can follow</li></ul>",
-        "after_tab": "With Avonent",
-        "after_label": "WITH AVONENT SUPPORT",
-        "after_image": "shopify://shop_images/660F3A1D-A9A8-4C2B-8F91-A77754AB205A.png",
-        "after_image_alt": "Conceptual illustration of Avonent supporting mixed-meal digestion",
-        "after_heading": "Support for the whole plate.",
-        "after_text": "<p>Avonent combines five digestive enzymes to help break down protein, fats, carbohydrates, fiber, and lactose—plus artichoke, ox bile, slippery elm, and targeted botanicals for more complete digestive support.</p>",
-        "after_points": "<ul><li>Broad enzyme support for every part of a mixed meal</li><li>Additional support for normal fat digestion and bile activity</li><li>Designed to support post-meal comfort and help with occasional bloating</li></ul>",
-        "process_heading": "How Avonent supports the process",
-        "closing_heading": "Made for real meals. Not perfect diets.",
-        "closing_text": "<p>Protein-heavy lunches. Restaurant dinners. Dairy. Takeout nights. Avonent provides broader digestive support for the food you actually eat.</p>",
-        "button_label": "SUPPORT YOUR NEXT MEAL",
+        "eyebrow": "NOT ALL FORMULAS ARE THE SAME",
+        "heading": "Ceylon + Berberine + MCT oil, in one monthly routine.",
+        "intro": "<p>Instead of selling another generic cinnamon capsule, Avonent combines three clearly identified ingredients with a full 30-day serving count.</p>",
+        "before_tab": "Typical Formula",
+        "before_label": "COMMON APPROACH",
+        "before_image_alt": "Typical generic cinnamon supplement concept",
+        "before_heading": "One ingredient. Unclear cinnamon. Little differentiation.",
+        "before_text": "<p>Many basic formulas rely on a single ingredient, do not clearly distinguish Ceylon from cassia, or make you buy separate products to build the routine yourself.</p>",
+        "before_points": "<ul><li>Cinnamon variety may be unclear</li><li>Often a single-ingredient formula</li><li>May rely on dry powder-only capsules</li></ul>",
+        "after_tab": "Avonent Formula",
+        "after_label": "THREE-PART FORMULA",
+        "after_image_alt": "Avonent Ceylon cinnamon, berberine, and MCT oil formula concept",
+        "after_heading": "Three ingredients. One bottle.",
+        "after_text": "<p>Each daily serving provides 1,200 mg Ceylon cinnamon, 400 mg Berberine HCl, and 200 mg MCT oil in a softgel format.</p>",
+        "after_points": "<ul><li>True Ceylon cinnamon clearly identified</li><li>Berberine HCl included in the same formula</li><li>MCT oil softgel base</li><li>Exactly 30 daily servings per bottle</li></ul>",
+        "process_heading": "Why the combination makes sense",
+        "closing_heading": "Built for a simple 30-day habit.",
+        "closing_text": "<p>Four softgels per daily serving. One bottle per month. Clear ingredients without a complicated stack.</p>",
+        "button_label": "CHOOSE YOUR 30-DAY SUPPLY",
         "button_link": "",
-        "disclaimer": "",
+        "disclaimer": "Supports general metabolic wellness. Individual experiences vary. Use only as directed.",
         "accent_color": "#02c6ea",
         "background_color": "#eaf9fc",
         "card_color": "#ffffff",
@@ -704,9 +659,9 @@
           "settings": {
             "week": "Week 1",
             "title": "Start the Routine",
-            "benefit_1": "Take two softgels daily and make Avonent part of the same routine each day.",
-            "benefit_2": "The odorless aged-garlic format makes daily consistency simple.",
-            "benefit_3": "Begin building a consistent cardiovascular-wellness habit.",
+            "benefit_1": "Take the labeled 4-softgel serving each day.",
+            "benefit_2": "Keep the bottle somewhere easy to remember.",
+            "benefit_3": "Focus on consistency rather than chasing an overnight effect.",
             "benefit_4": ""
           }
         },
@@ -714,10 +669,10 @@
           "type": "journey_step",
           "settings": {
             "week": "Week 2",
-            "title": "Build Consistency",
-            "benefit_1": "Consistent aged garlic supports healthy circulation and cardiovascular wellness.",
-            "benefit_2": "CoQ10 supports normal cellular energy production as part of the daily formula.",
-            "benefit_3": "The routine starts to feel easier to maintain day after day.",
+            "title": "Make It Automatic",
+            "benefit_1": "Keep your daily serving tied to the same part of your routine.",
+            "benefit_2": "Stay consistent with meals, movement, hydration, and sleep.",
+            "benefit_3": "The goal is a routine you can actually repeat.",
             "benefit_4": ""
           }
         },
@@ -725,10 +680,10 @@
           "type": "journey_step",
           "settings": {
             "week": "Week 3",
-            "title": "Support That Builds",
-            "benefit_1": "Daily use keeps heart and arterial wellness support consistent.",
-            "benefit_2": "The odorless format helps keep the routine simple without strong garlic aftertaste.",
-            "benefit_3": "By now, Avonent can feel like a natural part of your everyday wellness routine.",
+            "title": "Stay Consistent",
+            "benefit_1": "You are now more than halfway through the bottle.",
+            "benefit_2": "Continue using the formula exactly as directed.",
+            "benefit_3": "Keep the rest of your metabolic-wellness habits consistent too.",
             "benefit_4": ""
           }
         },
@@ -736,10 +691,10 @@
           "type": "journey_step",
           "settings": {
             "week": "Week 4",
-            "title": "Make It Your Baseline",
-            "benefit_1": "Keep taking two softgels daily for consistent cardiovascular-wellness support.",
-            "benefit_2": "Pair the routine with movement, hydration, sleep, and balanced nutrition.",
-            "benefit_3": "Long-term consistency keeps healthy circulation and vitality support part of your everyday routine.",
+            "title": "Finish the 30-Day Bottle",
+            "benefit_1": "Complete the final week of the 30-serving bottle.",
+            "benefit_2": "Decide whether the routine fits your goals and lifestyle.",
+            "benefit_3": "A monthly replenishment schedule can make consistency easier.",
             "benefit_4": ""
           }
         }
@@ -751,10 +706,10 @@
         "journey_step_8xDAnR"
       ],
       "settings": {
-        "eyebrow": "Your Wellness",
-        "heading": "Your First Month with Avonent",
-        "description": "<p>Built for daily use. Here’s how Avonent can fit into a consistent cardiovascular-wellness routine over the first four weeks. Individual experiences vary.</p>",
-        "disclaimer": "",
+        "eyebrow": "YOUR 30-DAY ROUTINE",
+        "heading": "One bottle. Four weeks of consistency.",
+        "description": "<p>No overnight promises. This bottle is designed around consistent daily use, with 30 full servings in each bottle.</p>",
+        "disclaimer": "Individual experiences vary. This timeline describes a consistency routine, not guaranteed results.",
         "background_color": "#ffffff",
         "card_color": "#ffffff",
         "soft_color": "#eaf9fc",
@@ -773,51 +728,51 @@
         "row_1": {
           "type": "comparison_row",
           "settings": {
-            "icon": "flask",
-            "avonent_text": "Third-Party Tested",
-            "other_text": "No Test Proof",
-            "reason_title": "Quality-Focused",
-            "reason_text": "Built around thoughtful formulation rather than short-lived trends."
+            "icon": "leaf",
+            "avonent_text": "True Ceylon clearly identified",
+            "other_text": "Cinnamon variety may be unclear",
+            "reason_title": "Know the cinnamon",
+            "reason_text": "Avonent specifies Cinnamomum verum rather than leaving the cinnamon type vague."
           }
         },
         "row_2": {
           "type": "comparison_row",
           "settings": {
-            "icon": "shield",
-            "avonent_text": "Made in the USA",
-            "other_text": "Overseas Manufacturing",
-            "reason_title": "Clear & Transparent",
-            "reason_text": "Straightforward product information so you can make a more informed choice."
+            "icon": "sparkle",
+            "avonent_text": "Ceylon + Berberine",
+            "other_text": "Often single ingredient",
+            "reason_title": "Two botanical actives",
+            "reason_text": "The formula combines Ceylon cinnamon and Berberine HCl in the same daily routine."
           }
         },
         "row_3": {
           "type": "comparison_row",
           "settings": {
-            "icon": "leaf",
-            "avonent_text": "No Fillers or Junk",
-            "other_text": "Cheap Additives",
-            "reason_title": "Made for Consistency",
-            "reason_text": "Designed to fit naturally into a repeatable daily wellness routine."
+            "icon": "flask",
+            "avonent_text": "Exact daily amounts shown",
+            "other_text": "May use proprietary blends",
+            "reason_title": "Transparent amounts",
+            "reason_text": "You can see the stated amount of each core ingredient per daily serving."
           }
         },
         "row_4": {
           "type": "comparison_row",
           "settings": {
-            "icon": "sparkle",
-            "avonent_text": "Transparent Formulas",
-            "other_text": "Hidden Ingredients",
-            "reason_title": "Premium by Design",
-            "reason_text": "A clean, modern experience from product discovery through delivery."
+            "icon": "droplet",
+            "avonent_text": "MCT oil softgel base",
+            "other_text": "Often dry powder only",
+            "reason_title": "Softgel format",
+            "reason_text": "MCT oil provides an oil-based softgel format for everyday use."
           }
         },
         "row_5": {
           "type": "comparison_row",
           "settings": {
             "icon": "check",
-            "avonent_text": "Premium Quality Standards",
-            "other_text": "Low-Cost Shortcuts",
-            "reason_title": "Support That Stays With You",
-            "reason_text": "Helpful customer service and clear policies when you need assistance."
+            "avonent_text": "30 servings per bottle",
+            "other_text": "Serving counts vary",
+            "reason_title": "Built for monthly use",
+            "reason_text": "120 softgels at 4 per daily serving gives you exactly 30 servings."
           }
         }
       },
@@ -829,16 +784,14 @@
         "row_5"
       ],
       "settings": {
-        "avonent_image": "shopify://shop_images/avonent-digestive-complex-1996B5-background.png",
         "avonent_label": "AVONENT",
-        "other_image": "shopify://shop_images/62ED769E-2EE1-4A4C-9BE5-F906DFD484C5.png",
-        "other_label": "Other Brands",
+        "other_label": "Typical Formula",
         "eyebrow": "THE AVONENT DIFFERENCE",
-        "heading": "Avonent vs. Other Brands",
-        "description": "A premium routine should feel simple, transparent, and built around quality. Customize the comparison below with product claims your brand can substantiate.",
-        "button_text": "Shop Avonent",
+        "heading": "A more complete cinnamon formula.",
+        "description": "Instead of relying on a single generic ingredient, Avonent clearly combines true Ceylon cinnamon, Berberine HCl, and MCT oil in one 30-day softgel routine.",
+        "button_text": "Choose Your Supply",
         "button_link": "",
-        "guarantee_text": "30 Day Money-Back Guarantee",
+        "guarantee_text": "30-Day Money-Back Guarantee",
         "background_color": "#087e9d",
         "panel_color": "#0a92b3",
         "panel_soft_color": "#ffffff",
@@ -868,10 +821,10 @@
         "strip_text": "30-Day Money-Back Guarantee",
         "days": 30,
         "show_seal": true,
-        "eyebrow": "FEEL THE DIFFERENCE",
-        "heading": "30-Day Risk-Free Trial",
-        "description": "<p>Try Avonent for 30 days. If you are not satisfied, contact us within 30 days for help with a return under our refund policy.</p>",
-        "button_text": "Try Risk-Free Today",
+        "eyebrow": "TRY IT FOR 30 DAYS",
+        "heading": "A full bottle, backed by our 30-day guarantee.",
+        "description": "<p>Try Avonent Berberine + Ceylon Cinnamon as directed. If you are not satisfied, contact us within 30 days and we will help according to our refund policy.</p>",
+        "button_text": "Choose Your Supply",
         "button_link": "",
         "policy_text": "",
         "policy_link": "shopify://policies/refund-policy",
@@ -903,11 +856,11 @@
       "name": "00 Avonent Bottom Offer",
       "settings": {
         "anchor_id": "avonent-bottom-offer",
-        "eyebrow": "CHOOSE YOUR ROUTINE",
-        "heading": "Stay consistent. Stock up. Save more.",
-        "description": "<p>Choose the supply that fits your routine and keep your daily digestive support within reach.</p>",
+        "eyebrow": "CHOOSE YOUR SUPPLY",
+        "heading": "30, 60, or 90 days — keep the routine simple.",
+        "description": "<p>Each bottle contains 120 softgels and 30 daily servings of Ceylon cinnamon, Berberine HCl, and MCT oil.</p>",
         "purchase_label": "One-Time Purchase",
-        "sale_name": "SUMMER SALE",
+        "sale_name": "LAUNCH OFFER",
         "bundle_legend": "",
         "default_bundle": "2",
         "show_bundle_images": true,
@@ -916,24 +869,24 @@
         "bundle_1_subtitle": "30-Day Supply",
         "bundle_1_quantity": 1,
         "bundle_1_badge": "",
-        "bundle_1_savings": "Perfect for getting started",
+        "bundle_1_savings": "Start your routine",
         "bundle_2_enabled": true,
         "bundle_2_title": "Buy 2",
         "bundle_2_subtitle": "60-Day Supply",
         "bundle_2_quantity": 2,
         "bundle_2_badge": "Most Popular",
-        "bundle_2_savings": "Build a consistent routine",
+        "bundle_2_savings": "Stay consistent",
         "bundle_3_enabled": true,
         "bundle_3_title": "Buy 3",
         "bundle_3_subtitle": "90-Day Supply",
         "bundle_3_quantity": 3,
         "bundle_3_badge": "Best Value",
-        "bundle_3_savings": "Stock up and stay prepared",
-        "show_stock_meter": true,
+        "bundle_3_savings": "Stock up",
+        "show_stock_meter": false,
         "sold_percent": 93,
-        "sold_text": "Sold",
-        "delivery_text": "Order today for estimated delivery soon",
-        "shipping_text": "Ships from USA 🇺🇸",
+        "sold_text": "",
+        "delivery_text": "30 servings per bottle",
+        "shipping_text": "Shipping calculated at checkout",
         "guarantee_text": "30-day money-back guarantee",
         "show_payment_icons": true,
         "background_color": "#f3fbfd",
@@ -1052,7 +1005,8 @@
         "content_width": 1240,
         "padding_top": 24,
         "padding_bottom": 24
-      }
+      },
+      "disabled": true
     },
     "avonent_faq_mCxfYk": {
       "type": "avonent-faq",
@@ -1060,64 +1014,64 @@
         "faq_tcHqcn": {
           "type": "faq",
           "settings": {
-            "question": "What is Avonent Advanced Digestive Complex?",
-            "answer": "<p>Avonent combines digestive enzymes, carefully selected botanicals, and bile support in one complete daily formula. It is designed to support the breakdown of proteins, fats, carbohydrates, fiber, and lactose while supporting digestive comfort and regularity.*</p>"
+            "question": "What is Avonent Berberine + Ceylon Cinnamon?",
+            "answer": "<p>It is a three-ingredient softgel formula with Ceylon cinnamon, Berberine HCl, and MCT oil, designed to support healthy glucose metabolism and general metabolic wellness as part of a balanced lifestyle.*</p>"
           }
         },
         "faq_BHckdg": {
           "type": "faq",
           "settings": {
-            "question": "What kinds of food does the formula help digest?",
-            "answer": "<p>The five-enzyme DigeZyme® complex includes amylase, protease, lipase, cellulase, and lactase. Together, these enzymes support the breakdown of carbohydrates, proteins, fats, plant fiber, and lactose—making the formula useful across everyday meals, high-protein foods, dairy, takeout, and richer restaurant meals.*</p>"
+            "question": "What is in each daily serving?",
+            "answer": "<p>Each 4-softgel daily serving provides 1,200 mg Ceylon cinnamon, 400 mg Berberine HCl, and 200 mg MCT oil.</p>"
           }
         },
         "faq_iRYHGm": {
           "type": "faq",
           "settings": {
-            "question": "When and how should I take Avonent?",
-            "answer": "<p>Take Avonent exactly as directed on the product label. Consistency matters, so choose a time that fits naturally into your daily routine. Do not exceed the recommended serving.</p>"
+            "question": "Why Ceylon cinnamon instead of common cassia?",
+            "answer": "<p>Ceylon cinnamon is Cinnamomum verum, often called true cinnamon. It is naturally much lower in coumarin than common cassia cinnamon and gives the formula a clearly identified cinnamon source.</p>"
           }
         },
         "faq_Bca8ym": {
           "type": "faq",
           "settings": {
-            "question": "Is every batch third-party tested?",
-            "answer": "<p>Yes. Every batch of Avonent is third-party tested for identity, purity, potency, and contaminants before it leaves the facility. We believe what is shown on the label should match what is inside the bottle, which is why we keep the formula and serving details visible and straightforward.</p>"
+            "question": "How do I take it?",
+            "answer": "<p>The serving size is 4 softgels daily. Follow the directions on the label and do not exceed the suggested serving.</p>"
           }
         },
         "faq_WCe6tR": {
           "type": "faq",
           "settings": {
-            "question": "Can I take Avonent with other supplements or medications?",
-            "answer": "<p>Many people include digestive support as part of a broader wellness routine, but every routine is different. If you take prescription or over-the-counter medication, are pregnant or nursing, have a medical condition, or have a procedure planned, speak with a qualified healthcare professional before adding any new supplement.</p>"
+            "question": "How long does one bottle last?",
+            "answer": "<p>Each bottle contains 120 softgels. At 4 softgels per daily serving, that equals 30 servings — a full 30-day supply.</p>"
           }
         },
         "faq_L88rQi": {
           "type": "faq",
           "settings": {
-            "question": "Is Avonent vegan or vegetarian?",
-            "answer": "<p>No. Advanced Digestive Complex contains ox bile powder, so it is not vegan or vegetarian. We list this clearly because you deserve to know exactly what is included before you buy.</p>"
+            "question": "Can I take this with medications?",
+            "answer": "<p>Berberine can interact with medications. Speak with a qualified healthcare professional before use if you take prescription medication, are pregnant or nursing, or have a medical condition.</p>"
           }
         },
         "faq_XLnfyJ": {
           "type": "faq",
           "settings": {
-            "question": "How quickly should I expect to notice a difference?",
-            "answer": "<p>Every body and routine is different. Some people may notice changes sooner than others, while some need more time and consistency. Follow the serving directions, pay attention to your own experience, and remember that individual results can vary.</p>"
+            "question": "Is this a subscription product?",
+            "answer": "<p>The bottle is designed as a 30-day supply. Subscription availability is shown on the purchase options when a recurring plan is enabled for the product.</p>"
           }
         },
         "faq_YnLFVE": {
           "type": "faq",
           "settings": {
-            "question": "What is the 30-day money-back guarantee?",
-            "answer": "<p>Every order is covered by our 30-day money-back guarantee. Try Avonent as directed, and if it is not right for you, contact our support team within 30 days of delivery. We will help you with the next steps under our refund policy—clearly, quickly, and without unnecessary hassle.</p>"
+            "question": "What is the return policy?",
+            "answer": "<p>Avonent offers a 30-day satisfaction guarantee. Contact support within 30 days and we will help according to the current refund policy.</p>"
           }
         },
         "faq_irXchY": {
           "type": "faq",
           "settings": {
-            "question": "Where does Avonent ship from?",
-            "answer": "<p>Avonent orders ship from the United States. Available shipping options and the latest estimated delivery timing are shown during checkout before you place your order.</p>"
+            "question": "Where does Avonent ship?",
+            "answer": "<p>Available shipping options, costs, and estimated delivery timing are shown at checkout before you place your order.</p>"
           }
         }
       },
@@ -1134,13 +1088,13 @@
       ],
       "name": "00 Avonent FAQ",
       "settings": {
-        "eyebrow": "Questions, answered",
-        "heading": "Frequently asked questions",
-        "subheading": "Clear answers about the formula, testing, shipping, and your 30-day guarantee.",
+        "eyebrow": "QUESTIONS, ANSWERED",
+        "heading": "Berberine + Ceylon Cinnamon FAQ",
+        "subheading": "Clear answers about the formula, serving size, Ceylon cinnamon, medications, supply length, shipping, and the 30-day guarantee.",
         "open_first": false,
         "show_trust_badges": false,
-        "trust_one": "Third-party tested",
-        "trust_two": "Ships from the USA",
+        "trust_one": "Clearly disclosed amounts",
+        "trust_two": "30 servings per bottle",
         "trust_three": "30-day guarantee",
         "show_support_card": true,
         "support_heading": "Still have a question?",
