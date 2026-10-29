@@ -3,8 +3,19 @@
   assign av_cb_hero_image = product.featured_image
   assign av_cb_variant = av_cb_product.selected_or_first_available_variant
   assign av_cb_form_id = 'AvonentCinnamonBerberineForm-' | append: av_cb_product.id
-  assign av_cb_unit_price = av_cb_variant.price | default: av_cb_product.price
+  assign av_cb_one_time_unit_price = av_cb_variant.price | default: av_cb_product.price
   assign av_cb_subscription = av_cb_variant.selling_plan_allocations.first
+  assign av_cb_subscription_unit_price = av_cb_one_time_unit_price
+  assign av_cb_subscription_plan_id = blank
+  if av_cb_subscription != blank
+    assign av_cb_subscription_unit_price = av_cb_subscription.price
+    assign av_cb_subscription_plan_id = av_cb_subscription.selling_plan.id
+  endif
+  assign av_cb_unit_price = av_cb_subscription_unit_price
+  assign av_cb_one_time_compare_unit = av_cb_variant.compare_at_price
+  if av_cb_one_time_compare_unit == blank or av_cb_one_time_compare_unit <= av_cb_one_time_unit_price
+    assign av_cb_one_time_compare_unit = 0
+  endif
   assign av_cb_guarantee_image = av_cb_product.metafields.custom.av_cb_guarantee_image.value
   assign av_cb_guarantee_highlight = av_cb_product.metafields.custom.av_cb_guarantee_highlight_text.value | default: '30-Day'
   assign av_cb_guarantee_color = av_cb_product.metafields.custom.av_cb_guarantee_highlight_color.value | default: '#02C6EA'
@@ -592,7 +603,7 @@
   assign av_cb_compare_guarantee = '90-Day Money-Back Guarantee'
 %}
 
-<div class="av-cb" data-av-cb data-unit-price="{{ av_cb_unit_price }}" data-compare-price="{{ av_cb_compare_price | escape }}">
+<div class="av-cb" data-av-cb data-subscription-unit-price="{{ av_cb_subscription_unit_price }}" data-one-time-unit-price="{{ av_cb_one_time_unit_price }}" data-one-time-compare-unit-price="{{ av_cb_one_time_compare_unit }}" data-subscription-plan-id="{{ av_cb_subscription_plan_id }}">
   <style>
     .av-cb{--blue:#A84F1B;--deep:#7D3612;--ink:#171513;--muted:#645C57;--line:#E7D2C4;--soft:#FFF4EC;--soft2:#FFFBF7;background:#fff;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
     html.av-cb-cinnamon-page .avonent-sale-bar__inner{--av-sale-bg:#A84F1B!important;--av-sale-color:#fff!important;background:#A84F1B!important;color:#fff!important}
@@ -652,8 +663,11 @@
     @media(max-width:900px){.av-cb__hero-grid{grid-template-columns:1fr;gap:24px}.av-cb__media{min-height:390px}.av-cb__trust-grid{grid-template-columns:repeat(2,1fr)}.av-cb__trust-item:nth-child(2){border-right:0}.av-cb__formula,.av-cb__timeline{grid-template-columns:1fr 1fr}.av-cb__education,.av-cb__compare{grid-template-columns:1fr}.av-cb__guarantee{grid-template-columns:auto 1fr}.av-cb__guarantee .av-cb__cta{grid-column:1/-1}.av-cb__title{font-size:40px}}
     @media(max-width:600px){.av-cb__wrap{width:min(100% - 22px,1200px)}.av-cb__hero{padding-top:0}.av-cb__media{width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);min-height:0;border-radius:0}.av-cb__formula-bottle{width:75%;padding:22px}.av-cb__formula-bottle b{font-size:30px}.av-cb__title{font-size:31px;line-height:1.04;letter-spacing:-.03em}.av-cb__subtitle{font-size:15px}.av-cb__benefit{font-size:14.5px}.av-cb__benefits{gap:14px}.av-cb__bundles{grid-template-columns:1fr}.av-cb__bundle{padding:13px 14px}.av-cb__trust-grid{grid-template-columns:1fr 1fr}.av-cb__trust-item{padding:14px 8px}.av-cb__section{padding:50px 0}.av-cb__formula,.av-cb__timeline{grid-template-columns:1fr}.av-cb__guarantee{grid-template-columns:1fr;text-align:center}.av-cb__seal{margin:auto}.av-cb__sticky{position:fixed;display:grid;grid-template-columns:48px minmax(0,1fr) auto;z-index:40;left:10px;right:10px;bottom:max(10px,env(safe-area-inset-bottom));background:rgba(255,255,255,.97);backdrop-filter:blur(14px);border:1px solid #E8D5C8;box-shadow:0 14px 38px rgba(43,24,14,.16);border-radius:16px;padding:9px;align-items:center;gap:10px}.av-cb__sticky-img{width:48px;height:48px;border-radius:11px;overflow:hidden;background:#fff5ef;border:1px solid #ead3c4;display:grid;place-items:center}.av-cb__sticky-img img{width:100%;height:100%;object-fit:contain}.av-cb__sticky-copy{min-width:0;display:grid;gap:2px}.av-cb__sticky-title{font-size:12px;line-height:1.2;font-weight:750;color:#1D1916;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.av-cb__sticky-price{font-size:14px;line-height:1.1;font-weight:850;color:var(--blue)}.av-cb__sticky-add{border:0;background:var(--blue);color:#fff;min-height:46px;padding:0 17px;border-radius:12px;font-size:12px;font-weight:850;letter-spacing:.01em;cursor:pointer}.av-cb{padding-bottom:86px}}
 
+    .av-cb__delivery-estimate{display:flex;align-items:center;justify-content:center;gap:9px;margin:14px 0 12px;padding:11px 14px;border-radius:12px;background:#f2f3ed;color:#34312e;font-size:13px;line-height:1.25}.av-cb__delivery-estimate strong{color:var(--deep);font-weight:800;text-decoration:underline;text-underline-offset:2px}.av-cb__delivery-icon{width:24px;height:24px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;flex:0 0 24px}.av-cb__delivery-icon svg{width:15px;height:15px}
     .av-cb__refill-row{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:13px;color:#4f5e65;font-size:12px}
+    .av-cb__refill-row[hidden]{display:none!important}
     .av-cb__refill-item{display:inline-flex;align-items:center;gap:7px}.av-cb__refill-icon{width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;color:#151515}.av-cb__refill-divider{width:1px;height:20px;background:#b7c3c7}
+    .av-cb__purchase-toggle{display:block;width:fit-content;max-width:100%;margin:12px auto 0;padding:8px 12px;border:0;background:transparent;color:var(--deep);font:inherit;font-size:12.5px;font-weight:700;text-align:center;text-decoration:underline;text-underline-offset:3px;cursor:pointer}.av-cb__purchase-toggle:hover{color:var(--blue)}.av-cb__purchase-toggle strong{font-weight:850}
     .av-cb__top-stack{width:min(1200px,calc(100% - 32px));margin:6px auto 28px;display:grid;gap:10px}
     .av-cb__guarantee-card{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;border:1.5px dashed var(--blue);border-radius:18px;background:#fffaf6;padding:18px 20px;color:var(--guarantee-text,#171717);box-shadow:0 8px 24px rgba(125,54,18,.06)}
     .av-cb__guarantee-image{width:76px;height:76px;display:grid;place-items:center;flex:0 0 76px}.av-cb__guarantee-image img{max-width:76px;max-height:76px;object-fit:contain}.av-cb__guarantee-seal{width:72px;height:72px;border-radius:50%;border:2px solid var(--blue);background:#fff;display:grid;place-items:center;text-align:center;color:var(--deep);font-weight:850;line-height:1;box-shadow:inset 0 0 0 4px #fff4ec}.av-cb__guarantee-seal small{font-size:10px;letter-spacing:.06em}
@@ -889,10 +903,8 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         </div>
 
         <div class="av-cb__pricing">
-          <span class="av-cb__sale-price" data-av-cb-price>{{ av_cb_unit_price | money }}</span>
-          {% if av_cb_compare_price != blank %}
-            <span class="av-cb__compare-price" data-av-cb-compare-price>${{ av_cb_compare_price }}</span>
-          {% endif %}
+          <span class="av-cb__sale-price" data-av-cb-price>{{ av_cb_subscription_unit_price | money }}</span>
+          <span class="av-cb__compare-price" data-av-cb-compare-price{% if av_cb_subscription == blank and av_cb_one_time_compare_unit == 0 %} hidden{% endif %}>{% if av_cb_subscription != blank %}{{ av_cb_one_time_unit_price | money }}{% elsif av_cb_one_time_compare_unit > 0 %}{{ av_cb_one_time_compare_unit | money }}{% endif %}</span>
           <span class="av-cb__sale-badge">{{ av_cb_sale_badge }}</span>
         </div>
 
@@ -901,6 +913,9 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         {% form 'product', av_cb_product, id: av_cb_form_id, class: 'av-cb__form' %}
           <input type="hidden" name="id" value="{{ av_cb_variant.id }}">
           <input type="hidden" name="quantity" value="1" data-av-cb-quantity>
+          {% if av_cb_subscription != blank %}
+            <input type="hidden" name="selling_plan" value="{{ av_cb_subscription_plan_id }}" data-av-cb-selling-plan data-plan-id="{{ av_cb_subscription_plan_id }}">
+          {% endif %}
 
           <div class="av-cb__bundles" role="group" aria-label="Choose supply">
             {% for qty in (1..3) %}
@@ -914,7 +929,10 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
                 {% assign av_cb_bundle_title = av_cb_bundle_3_title %}
                 {% assign av_cb_bundle_subtitle = av_cb_bundle_3_subtitle %}
               {% endif %}
-              <button class="av-cb__bundle{% if qty == 1 %} is-active{% endif %}" type="button" data-av-cb-bundle="{{ qty }}">
+              {% assign av_cb_bundle_sub_total = av_cb_subscription_unit_price | times: qty %}
+              {% assign av_cb_bundle_one_time_total = av_cb_one_time_unit_price | times: qty %}
+              {% assign av_cb_bundle_one_time_compare_total = av_cb_one_time_compare_unit | times: qty %}
+              <button class="av-cb__bundle{% if qty == 1 %} is-active{% endif %}" type="button" data-av-cb-bundle="{{ qty }}" data-subscription-price="{{ av_cb_bundle_sub_total }}" data-subscription-compare="{{ av_cb_bundle_one_time_total }}" data-one-time-price="{{ av_cb_bundle_one_time_total }}" data-one-time-compare="{{ av_cb_bundle_one_time_compare_total }}">
                 {% if qty == 2 and av_cb_bundle_2_badge != blank %}<span class="av-cb__badge">{{ av_cb_bundle_2_badge }}</span>{% endif %}
                 {% if qty == 3 and av_cb_bundle_3_badge != blank %}<span class="av-cb__badge">{{ av_cb_bundle_3_badge }}</span>{% endif %}
                 <span class="av-cb__bundle-thumb">
@@ -929,11 +947,18 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
                   <span>{{ av_cb_bundle_subtitle }}</span>
                 </span>
                 <span class="av-cb__bundle-price">
-                  <strong data-av-cb-bundle-price="{{ qty }}"></strong>
-                  {% if av_cb_compare_price != blank %}<s data-av-cb-bundle-compare="{{ qty }}"></s>{% endif %}
+                  <strong data-av-cb-bundle-price="{{ qty }}">{{ av_cb_bundle_sub_total | money }}</strong>
+                  <s data-av-cb-bundle-compare="{{ qty }}"{% if av_cb_subscription == blank %} hidden{% endif %}>{% if av_cb_subscription != blank %}{{ av_cb_bundle_one_time_total | money }}{% endif %}</s>
                 </span>
               </button>
             {% endfor %}
+          </div>
+
+          <div class="av-cb__delivery-estimate" aria-live="polite">
+            <span class="av-cb__delivery-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/><path d="M12 7.5V12l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span>Order now for delivery by: <strong data-av-cb-delivery-date></strong></span>
           </div>
 
           <button class="av-cb__buy" type="submit" {% unless av_cb_variant.available %}disabled{% endunless %}>
@@ -941,8 +966,8 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
               <span class="av-cb__buy-mainline">
                 <span>{{ av_cb_add_to_cart_text }}</span>
                 <span class="av-cb__buy-divider" aria-hidden="true">|</span>
-                <span class="av-cb__buy-price" data-av-cb-button-price>{{ av_cb_unit_price | money }}</span>
-                {% if av_cb_compare_price != blank %}<s class="av-cb__buy-compare" data-av-cb-button-compare></s>{% endif %}
+                <span class="av-cb__buy-price" data-av-cb-button-price>{{ av_cb_subscription_unit_price | money }}</span>
+                <s class="av-cb__buy-compare" data-av-cb-button-compare{% if av_cb_subscription == blank and av_cb_one_time_compare_unit == 0 %} hidden{% endif %}>{% if av_cb_subscription != blank %}{{ av_cb_one_time_unit_price | money }}{% elsif av_cb_one_time_compare_unit > 0 %}{{ av_cb_one_time_compare_unit | money }}{% endif %}</s>
               </span>
               <span class="av-cb__buy-guarantee">90-Day Money-Back Guarantee</span>
             {% else %}
@@ -966,6 +991,12 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
             {{ av_cb_cancel_text }}
           </span>
         </div>
+
+        {% if av_cb_subscription != blank %}
+          <button class="av-cb__purchase-toggle" type="button" data-av-cb-purchase-toggle aria-pressed="false">
+            <span data-av-cb-purchase-toggle-text>One-Time Purchase <strong data-av-cb-one-time-toggle-price>{{ av_cb_one_time_unit_price | money }}</strong> + $4.95 Shipping</span>
+          </button>
+        {% endif %}
       </div>
     </div>
   </section>
@@ -1415,7 +1446,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
     </span>
     <span class="av-cb__sticky-copy">
       <span class="av-cb__sticky-title">Ceylon Cinnamon + Berberine HCl</span>
-      <span class="av-cb__sticky-price" data-av-cb-sticky-price>{{ av_cb_unit_price | money }}</span>
+      <span class="av-cb__sticky-price" data-av-cb-sticky-price>{{ av_cb_subscription_unit_price | money }}</span>
     </span>
     <button class="av-cb__sticky-add" type="button" data-av-cb-sticky-add>Add to Cart</button>
   </div>
@@ -1438,37 +1469,92 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         saleBar.style.setProperty('--av-sale-color', '#FFFFFF');
       }
       if (!root) return;
-      const unit = Number(root.dataset.unitPrice || 0);
-      const compareDollars = Number.parseFloat(root.dataset.comparePrice || '');
-      const compareUnit = Number.isFinite(compareDollars) ? Math.round(compareDollars * 100) : null;
+      const subscriptionUnit = Number(root.dataset.subscriptionUnitPrice || 0);
+      const oneTimeUnit = Number(root.dataset.oneTimeUnitPrice || 0);
+      const oneTimeCompareUnit = Number(root.dataset.oneTimeCompareUnitPrice || 0);
       const qtyInput = root.querySelector('[data-av-cb-quantity]');
+      const sellingPlanInput = root.querySelector('[data-av-cb-selling-plan]');
       const total = root.querySelector('[data-av-cb-price]');
+      const topCompare = root.querySelector('[data-av-cb-compare-price]');
       const btnTotal = root.querySelector('[data-av-cb-button-price]');
       const btnCompare = root.querySelector('[data-av-cb-button-compare]');
       const stickyPrice = root.querySelector('[data-av-cb-sticky-price]');
-      const money = (cents) => new Intl.NumberFormat(document.documentElement.lang || 'en-US', {style:'currency', currency:'USD'}).format(cents / 100);
-      root.querySelectorAll('[data-av-cb-bundle-price]').forEach(el => {
-        const qty = Number(el.dataset.avCbBundlePrice || 1);
-        el.textContent = money(unit * qty);
-      });
-      if (compareUnit) {
-        root.querySelectorAll('[data-av-cb-bundle-compare]').forEach(el => {
-          const qty = Number(el.dataset.avCbBundleCompare || 1);
-          el.textContent = money(compareUnit * qty);
+      const refillRow = root.querySelector('.av-cb__refill-row');
+      const purchaseToggle = root.querySelector('[data-av-cb-purchase-toggle]');
+      const purchaseToggleText = root.querySelector('[data-av-cb-purchase-toggle-text]');
+      const bundleButtons = Array.from(root.querySelectorAll('[data-av-cb-bundle]'));
+      const money = (cents) => new Intl.NumberFormat(document.documentElement.lang || 'en-US', {style:'currency', currency:'USD'}).format(Number(cents || 0) / 100);
+      let purchaseMode = sellingPlanInput ? 'subscription' : 'one-time';
+
+      const selectedBundle = () => root.querySelector('[data-av-cb-bundle].is-active') || bundleButtons[0];
+      const valuesFor = (btn) => {
+        const qty = Number(btn?.dataset.avCbBundle || 1);
+        const isSubscription = purchaseMode === 'subscription' && sellingPlanInput;
+        return {
+          qty,
+          price: Number(isSubscription ? btn?.dataset.subscriptionPrice : btn?.dataset.oneTimePrice) || 0,
+          compare: Number(isSubscription ? btn?.dataset.subscriptionCompare : btn?.dataset.oneTimeCompare) || 0
+        };
+      };
+      const setCompare = (el, value, base) => {
+        if (!el) return;
+        const show = Number(value) > Number(base);
+        el.textContent = show ? money(value) : '';
+        el.hidden = !show;
+      };
+      const renderMode = () => {
+        const isSubscription = purchaseMode === 'subscription' && sellingPlanInput;
+        if (sellingPlanInput) {
+          sellingPlanInput.disabled = !isSubscription;
+          if (isSubscription) sellingPlanInput.value = sellingPlanInput.dataset.planId || root.dataset.subscriptionPlanId || '';
+        }
+        if (refillRow) refillRow.hidden = !isSubscription;
+        if (purchaseToggle) purchaseToggle.setAttribute('aria-pressed', String(!isSubscription));
+
+        bundleButtons.forEach((btn) => {
+          const values = valuesFor(btn);
+          const priceEl = btn.querySelector('[data-av-cb-bundle-price]');
+          const compareEl = btn.querySelector('[data-av-cb-bundle-compare]');
+          if (priceEl) priceEl.textContent = money(values.price);
+          setCompare(compareEl, values.compare, values.price);
         });
-        if (btnCompare) btnCompare.textContent = money(compareUnit);
-      }
-      root.querySelectorAll('[data-av-cb-bundle]').forEach(btn => {
+
+        const active = selectedBundle();
+        const values = valuesFor(active);
+        if (qtyInput) qtyInput.value = values.qty;
+        if (total) total.textContent = money(values.price);
+        if (btnTotal) btnTotal.textContent = money(values.price);
+        if (stickyPrice) stickyPrice.textContent = money(values.price);
+        setCompare(topCompare, values.compare, values.price);
+        setCompare(btnCompare, values.compare, values.price);
+
+        if (purchaseToggleText) {
+          if (isSubscription) purchaseToggleText.innerHTML = 'One-Time Purchase <strong>' + money(oneTimeUnit * values.qty) + '</strong> + $4.95 Shipping';
+          else purchaseToggleText.innerHTML = 'Switch back to Subscribe & Save — <strong>' + money(subscriptionUnit * values.qty) + '</strong>';
+        }
+      };
+
+      bundleButtons.forEach((btn) => {
         btn.addEventListener('click', () => {
-          const qty = Number(btn.dataset.avCbBundle || 1);
-          root.querySelectorAll('[data-av-cb-bundle]').forEach(x => x.classList.toggle('is-active', x === btn));
-          if (qtyInput) qtyInput.value = qty;
-          if (total) total.textContent = money(unit * qty);
-          if (btnTotal) btnTotal.textContent = money(unit * qty);
-          if (btnCompare && compareUnit) btnCompare.textContent = money(compareUnit * qty);
-          if (stickyPrice) stickyPrice.textContent = money(unit * qty);
+          bundleButtons.forEach(x => x.classList.toggle('is-active', x === btn));
+          renderMode();
         });
       });
+      purchaseToggle?.addEventListener('click', () => {
+        purchaseMode = purchaseMode === 'subscription' ? 'one-time' : 'subscription';
+        renderMode();
+      });
+      renderMode();
+
+      const deliveryDate = root.querySelector('[data-av-cb-delivery-date]');
+      if (deliveryDate) {
+        const date = new Date();
+        date.setDate(date.getDate() + 5);
+        const day = date.getDate();
+        const mod100 = day % 100;
+        const suffix = mod100 >= 11 && mod100 <= 13 ? 'th' : ({1:'st',2:'nd',3:'rd'}[day % 10] || 'th');
+        deliveryDate.textContent = date.toLocaleDateString(document.documentElement.lang || 'en-US', {month:'long'}) + ' ' + day + suffix;
+      }
       const statsSections = root.querySelectorAll('[data-av-cb-stats]');
       const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       statsSections.forEach(section => {
