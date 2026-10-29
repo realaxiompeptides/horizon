@@ -1,0 +1,16 @@
+api_version = "2026-10"
+
+[[extensions]]
+name = "Avonent Cinnamon Subscription Free Shipping"
+handle = "avonent-cinnamon-subscription-free-shipping"
+type = "function"
+description = "100% shipping discount for 2+ cinnamon Subscribe & Save units only"
+
+[[extensions.targeting]]
+target = "cart.delivery-options.discounts.generate.run"
+input_query = "src/cart_delivery_options_discounts_generate_run.graphql"
+export = "cart-delivery-options-discounts-generate-run"
+
+[extensions.build]
+command = ""
+path = "dist/function.wasm"
