@@ -1,7 +1,7 @@
 {% liquid
   assign av_cb_product = product
   assign av_cb_variant = av_cb_product.selected_or_first_available_variant
-  assign av_cb_form_id = 'AvonentCinnamonBerberine-' | append: section.id
+  assign av_cb_form_id = 'AvonentCinnamonBerberineForm-' | append: av_cb_product.id
   assign av_cb_unit_price = av_cb_variant.price | default: av_cb_product.price
 %}
 
