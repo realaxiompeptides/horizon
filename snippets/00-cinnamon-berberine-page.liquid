@@ -131,6 +131,8 @@
 <div class="av-cb" data-av-cb data-unit-price="{{ av_cb_unit_price }}" data-compare-price="{{ av_cb_compare_price | escape }}">
   <style>
     .av-cb{--blue:#A84F1B;--deep:#7D3612;--ink:#16110E;--muted:#665A53;--line:#E7D2C4;--soft:#FFF4EC;--soft2:#FFFBF7;background:#fff;color:var(--ink);font-family:inherit}
+    html.av-cb-cinnamon-page .avonent-sale-bar__inner{--av-sale-bg:#A84F1B!important;--av-sale-color:#fff!important;background:#A84F1B!important;color:#fff!important}
+    html.av-cb-cinnamon-page .avonent-sale-bar{background:#A84F1B!important;color:#fff!important}
     .av-cb *{box-sizing:border-box}.av-cb a{text-decoration:none}.av-cb__wrap{width:min(1200px,calc(100% - 32px));margin:0 auto}
     .av-cb__hero{padding:34px 0 10px;background:linear-gradient(180deg,#fff 0%,#fff8f3 100%)}
     .av-cb__hero-grid{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(360px,.98fr);gap:48px;align-items:center}
@@ -566,7 +568,7 @@
   <section class="av-cb__science-section" data-av-cb-science style="--science-bg:{{ av_cb_science_bg }};--science-accent:{{ av_cb_science_accent }};">
     <div class="av-cb__science-wrap">
       <header class="av-cb__science-head">
-        <h2><em>Benefits.</em> Backed by Ingredient Research.</h2>
+        <h2>{{ av_cb_science_heading | replace: 'Benefits.', '<em>Benefits.</em>' }}</h2>
         <p>{{ av_cb_science_intro | newline_to_br }}</p>
       </header>
 
@@ -767,6 +769,13 @@
     (() => {
       const root = document.currentScript.closest('[data-av-cb]');
       document.documentElement.classList.add('av-cb-cinnamon-page');
+      const saleHeading = document.querySelector('.avonent-sale-bar__heading');
+      if (saleHeading) saleHeading.textContent = 'FALL SALE';
+      const saleBar = document.querySelector('.avonent-sale-bar__inner');
+      if (saleBar) {
+        saleBar.style.setProperty('--av-sale-bg', '#A84F1B');
+        saleBar.style.setProperty('--av-sale-color', '#FFFFFF');
+      }
       if (!root) return;
       const unit = Number(root.dataset.unitPrice || 0);
       const compareDollars = Number.parseFloat(root.dataset.comparePrice || '');
