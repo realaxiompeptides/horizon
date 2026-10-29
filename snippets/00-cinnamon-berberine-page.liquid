@@ -3,6 +3,7 @@
   assign av_cb_variant = av_cb_product.selected_or_first_available_variant
   assign av_cb_form_id = 'AvonentCinnamonBerberineForm-' | append: av_cb_product.id
   assign av_cb_unit_price = av_cb_variant.price | default: av_cb_product.price
+  assign av_cb_subscription = av_cb_variant.selling_plan_allocations.first
 %}
 
 <div class="av-cb" data-av-cb data-unit-price="{{ av_cb_unit_price }}">
@@ -41,6 +42,18 @@
     .av-cb__sticky{display:none}
     @media(max-width:900px){.av-cb__hero-grid{grid-template-columns:1fr;gap:24px}.av-cb__media{min-height:390px}.av-cb__trust-grid{grid-template-columns:repeat(2,1fr)}.av-cb__trust-item:nth-child(2){border-right:0}.av-cb__formula,.av-cb__timeline{grid-template-columns:1fr 1fr}.av-cb__education,.av-cb__compare{grid-template-columns:1fr}.av-cb__guarantee{grid-template-columns:auto 1fr}.av-cb__guarantee .av-cb__cta{grid-column:1/-1}.av-cb__title{font-size:46px}}
     @media(max-width:600px){.av-cb__wrap{width:min(100% - 22px,1200px)}.av-cb__hero{padding-top:16px}.av-cb__media{min-height:315px;border-radius:20px}.av-cb__formula-bottle{width:75%;padding:22px}.av-cb__formula-bottle b{font-size:30px}.av-cb__title{font-size:38px}.av-cb__subtitle{font-size:15px}.av-cb__bundles{grid-template-columns:1fr}.av-cb__bundle{padding:13px 14px}.av-cb__trust-grid{grid-template-columns:1fr 1fr}.av-cb__trust-item{padding:14px 8px}.av-cb__section{padding:50px 0}.av-cb__formula,.av-cb__timeline{grid-template-columns:1fr}.av-cb__guarantee{grid-template-columns:1fr;text-align:center}.av-cb__seal{margin:auto}.av-cb__sticky{position:fixed;display:flex;z-index:40;left:10px;right:10px;bottom:10px;background:#fff;border:1px solid var(--line);box-shadow:0 12px 40px rgba(0,0,0,.16);border-radius:14px;padding:9px;align-items:center;justify-content:space-between;gap:10px}.av-cb__sticky b{font-size:12px}.av-cb__sticky a{background:#111;color:#fff;padding:12px 18px;border-radius:10px;font-size:12px;font-weight:800}.av-cb{padding-bottom:72px}}
+
+    .av-cb__refill-row{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:13px;color:#4f5e65;font-size:12px}
+    .av-cb__refill-item{display:inline-flex;align-items:center;gap:7px}.av-cb__refill-icon{width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;color:#151515}.av-cb__refill-divider{width:1px;height:20px;background:#b7c3c7}
+    .av-cb__top-stack{width:min(1200px,calc(100% - 32px));margin:26px auto 42px;display:grid;gap:16px}
+    .av-cb__guarantee-card{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center;border:1.5px dashed #b8dfe7;border-radius:22px;background:#fff;padding:24px;color:var(--guarantee-text,#171717)}
+    .av-cb__guarantee-image{width:92px;height:92px;display:grid;place-items:center;flex:0 0 92px}.av-cb__guarantee-image img{max-width:92px;max-height:92px;object-fit:contain}.av-cb__guarantee-seal{width:88px;height:88px;border-radius:50%;border:8px double var(--blue);display:grid;place-items:center;text-align:center;color:var(--deep);font-weight:900;line-height:1}.av-cb__guarantee-seal small{font-size:10px;letter-spacing:.06em}
+    .av-cb__guarantee-copy h3{font-size:24px;line-height:1.15;margin:0 0 8px}.av-cb__guarantee-copy p{font-size:15px;line-height:1.5;margin:0;color:#5a666c}.av-cb__guarantee-copy mark{background:transparent;color:var(--guarantee-highlight,var(--blue));font-weight:850}
+    .av-cb__low-stock{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:flex-start;border:1.5px dashed var(--low-stock,#D62828);background:var(--low-stock-bg,#FFF5F5);border-radius:22px;padding:22px;color:var(--low-stock,#D62828)}
+    .av-cb__low-stock-icon{width:34px;height:34px;border-radius:50%;background:var(--low-stock,#D62828);color:#fff;display:grid;place-items:center;font-weight:900;font-size:18px;line-height:1}.av-cb__low-stock h3{font-size:20px;margin:0 0 7px;color:inherit}.av-cb__low-stock p{font-size:14px;line-height:1.55;margin:0;color:inherit}
+    .av-cb__accordion-list{display:grid;gap:12px}.av-cb__accordion{border:1.5px solid #d7dde0;border-radius:18px;background:#fff;overflow:hidden}.av-cb__accordion summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px 22px;font-size:18px;font-weight:800}.av-cb__accordion summary::-webkit-details-marker{display:none}.av-cb__accordion-icon{width:26px;height:26px;position:relative;flex:0 0 26px;transition:transform .2s ease}.av-cb__accordion-icon:before,.av-cb__accordion-icon:after{content:"";position:absolute;left:50%;top:50%;background:#151515;transform:translate(-50%,-50%);border-radius:2px}.av-cb__accordion-icon:before{width:20px;height:2px}.av-cb__accordion-icon:after{width:2px;height:20px}.av-cb__accordion[open] .av-cb__accordion-icon{transform:rotate(45deg)}.av-cb__accordion-body{padding:0 22px 22px;color:#4f5e65;font-size:14px;line-height:1.65}.av-cb__accordion-body p:first-child{margin-top:0}.av-cb__accordion-body ul{padding-left:20px}.av-cb__accordion-body li{margin:7px 0}
+    @media(max-width:600px){.av-cb__refill-row{font-size:11px;gap:9px}.av-cb__guarantee-card{grid-template-columns:72px 1fr;gap:14px;padding:18px}.av-cb__guarantee-image{width:72px;height:72px}.av-cb__guarantee-image img{max-width:72px;max-height:72px}.av-cb__guarantee-seal{width:68px;height:68px;border-width:6px}.av-cb__guarantee-copy h3{font-size:19px}.av-cb__guarantee-copy p{font-size:13px}.av-cb__low-stock{padding:18px}.av-cb__accordion summary{padding:18px;font-size:17px}.av-cb__accordion-body{padding:0 18px 18px}}
+
   </style>
 
   <section class="av-cb__hero" id="av-cb-top">
@@ -94,21 +107,66 @@
             {% if av_cb_variant.available %}Add to Cart · <span data-av-cb-button-price>{{ av_cb_unit_price | money }}</span>{% else %}Currently Unavailable{% endif %}
           </button>
         {% endform %}
-        <div class="av-cb__micro">
-          <span><b>120 softgels</b> per bottle</span>
-          <span><b>4 softgels</b> per serving</span>
-          <span><b>30 servings</b> per bottle</span>
-        </div>
+        {% if av_cb_subscription != blank %}
+          <div class="av-cb__refill-row" aria-label="Subscription details">
+            <span class="av-cb__refill-item">
+              <span class="av-cb__refill-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M20 6v5h-5M4 18v-5h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M18.2 10a7 7 0 0 0-11.9-3L4 9M5.8 14a7 7 0 0 0 11.9 3L20 15" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              Refills ship every 30 days
+            </span>
+            <span class="av-cb__refill-divider" aria-hidden="true"></span>
+            <span class="av-cb__refill-item">
+              <span class="av-cb__refill-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.7"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              Stop or cancel anytime
+            </span>
+          </div>
+        {% endif %}
       </div>
     </div>
   </section>
 
-  <div class="av-cb__trust">
-    <div class="av-cb__wrap av-cb__trust-grid">
-      <div class="av-cb__trust-item"><b>True Ceylon Cinnamon</b><span>Not common cassia</span></div>
-      <div class="av-cb__trust-item"><b>Berberine HCl</b><span>Metabolic-wellness formula</span></div>
-      <div class="av-cb__trust-item"><b>MCT Oil Softgel</b><span>Oil-based format</span></div>
-      <div class="av-cb__trust-item"><b>30-Day Guarantee</b><span>Shop with confidence</span></div>
+
+  <div class="av-cb__top-stack">
+    <div class="av-cb__guarantee-card" style="--guarantee-highlight: {{ settings.av_cb_guarantee_highlight_color | default: '#02C6EA' }}; --guarantee-text: {{ settings.av_cb_guarantee_text_color | default: '#171717' }};">
+      <div class="av-cb__guarantee-image">
+        {% if settings.av_cb_guarantee_image != blank %}
+          {{ settings.av_cb_guarantee_image | image_url: width: 240 | image_tag: loading: 'lazy', widths: '120,180,240', alt: settings.av_cb_guarantee_heading }}
+        {% else %}
+          <div class="av-cb__guarantee-seal"><span>90<br><small>DAYS</small></span></div>
+        {% endif %}
+      </div>
+      <div class="av-cb__guarantee-copy">
+        <h3>{{ settings.av_cb_guarantee_heading | default: '90-Day Money-Back Guarantee' }}</h3>
+        <p>{{ settings.av_cb_guarantee_prefix | default: 'Try Avonent for ' }}<mark>{{ settings.av_cb_guarantee_highlight | default: '90 days' }}</mark>{{ settings.av_cb_guarantee_suffix | default: ' with the confidence of our money-back guarantee.' }}</p>
+      </div>
+    </div>
+
+    {% if settings.av_cb_show_low_stock != false %}
+      <div class="av-cb__low-stock" style="--low-stock: {{ settings.av_cb_low_stock_color | default: '#D62828' }}; --low-stock-bg: {{ settings.av_cb_low_stock_bg | default: '#FFF5F5' }};">
+        <div class="av-cb__low-stock-icon" aria-hidden="true">!</div>
+        <div>
+          <h3>{{ settings.av_cb_low_stock_title | default: 'WARNING: Low Stock Notice' }}</h3>
+          <p>{{ settings.av_cb_low_stock_text | default: 'Inventory can move quickly during promotions. If Avonent fits your routine, ordering while stock is available can help avoid interruptions.' }}</p>
+        </div>
+      </div>
+    {% endif %}
+
+    <div class="av-cb__accordion-list" data-av-cb-accordion-list>
+      <details class="av-cb__accordion">
+        <summary><span>{{ settings.av_cb_acc_1_title | default: 'Clinically Supported Benefits' }}</span><span class="av-cb__accordion-icon" aria-hidden="true"></span></summary>
+        <div class="av-cb__accordion-body rte">{{ settings.av_cb_acc_1_body }}</div>
+      </details>
+      <details class="av-cb__accordion">
+        <summary><span>{{ settings.av_cb_acc_2_title | default: 'Key Ingredients' }}</span><span class="av-cb__accordion-icon" aria-hidden="true"></span></summary>
+        <div class="av-cb__accordion-body rte">{{ settings.av_cb_acc_2_body }}</div>
+      </details>
+      <details class="av-cb__accordion">
+        <summary><span>{{ settings.av_cb_acc_3_title | default: 'How It Works' }}</span><span class="av-cb__accordion-icon" aria-hidden="true"></span></summary>
+        <div class="av-cb__accordion-body rte">{{ settings.av_cb_acc_3_body }}</div>
+      </details>
     </div>
   </div>
 
@@ -173,31 +231,6 @@
     </div>
   </section>
 
-  <section class="av-cb__section">
-    <div class="av-cb__wrap">
-      <div class="av-cb__guarantee">
-        <div class="av-cb__seal">30<br><small>DAYS</small></div>
-        <div><h2>Try the full 30-day bottle.</h2><p>Your order is covered by Avonent’s 30-day satisfaction guarantee. Contact support within 30 days for help under the current refund policy.</p></div>
-        <a class="av-cb__cta" href="#av-cb-top">Choose Your Supply</a>
-      </div>
-    </div>
-  </section>
-
-  <section class="av-cb__section av-cb__section--soft">
-    <div class="av-cb__wrap">
-      <header class="av-cb__head"><div class="av-cb__eyebrow">Questions, answered</div><h2>Berberine + Ceylon Cinnamon FAQ</h2></header>
-      <div class="av-cb__faq">
-        <details><summary>What is in each daily serving?</summary><p>Each 4-softgel daily serving provides 1,200 mg Ceylon cinnamon, 400 mg Berberine HCl, and 200 mg MCT oil.</p></details>
-        <details><summary>How long does one bottle last?</summary><p>Each bottle contains 120 softgels. At 4 softgels per daily serving, that equals 30 servings — a full 30-day supply.</p></details>
-        <details><summary>Why Ceylon instead of common cassia?</summary><p>Ceylon cinnamon is Cinnamomum verum, often called true cinnamon. It is naturally much lower in coumarin than common cassia cinnamon.</p></details>
-        <details><summary>Why combine Ceylon cinnamon with berberine?</summary><p>The formula pairs two distinct botanical ingredients commonly used in metabolic-wellness products, giving you one combined daily routine instead of separate bottles.*</p></details>
-        <details><summary>What does the MCT oil do?</summary><p>MCT oil provides the oil base for the softgel format and distinguishes this product from a basic dry powder-only capsule.</p></details>
-        <details><summary>Can I take it with medications?</summary><p>Berberine can interact with medications. Speak with a qualified healthcare professional before use if you take prescription medication, are pregnant or nursing, or have a medical condition.</p></details>
-        <details><summary>Is this currently a subscription?</summary><p>This bottle is designed as a 30-day supply. Recurring delivery is only available when a subscription option is shown in the purchase area.</p></details>
-      </div>
-      <p class="av-cb__disclaimer">*These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease. Individual experiences vary.</p>
-    </div>
-  </section>
 
   <div class="av-cb__sticky">
     <b>Berberine + Ceylon · {{ av_cb_unit_price | money }}</b>
@@ -222,6 +255,15 @@
           if (total) total.textContent = money(unit * qty);
           if (btnTotal) btnTotal.textContent = money(unit * qty);
           if (supply) supply.textContent = String(qty * 30) + '-day supply';
+        });
+      });
+      const accordions = root.querySelectorAll('.av-cb__accordion');
+      accordions.forEach(item => {
+        item.addEventListener('toggle', () => {
+          if (!item.open) return;
+          accordions.forEach(other => {
+            if (other !== item) other.open = false;
+          });
         });
       });
     })();
