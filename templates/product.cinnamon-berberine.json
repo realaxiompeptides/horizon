@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "cinnamon": {
@@ -5,57 +14,225 @@
       "blocks": {
         "hero": {
           "type": "hero",
-          "settings": {}
+          "settings": {
+            "display_title": "",
+            "rating_text": "",
+            "benefit_1": "",
+            "benefit_2": "",
+            "benefit_3": "",
+            "benefit_4": "",
+            "sold_percent": "",
+            "sale_badge": "",
+            "bundle_2_badge": "",
+            "bundle_3_badge": "",
+            "bundle_1_title": "",
+            "bundle_1_subtitle": "",
+            "bundle_2_title": "",
+            "bundle_2_subtitle": "",
+            "bundle_3_title": "",
+            "bundle_3_subtitle": "",
+            "add_to_cart_text": "",
+            "refill_text": "",
+            "cancel_text": ""
+          }
         },
         "results": {
           "type": "results",
           "settings": {
-            "stats_bg": "shopify://shop_images/avonent-cinnamon-results-background.webp"
+            "stats_heading": "",
+            "stats_bg": "shopify://shop_images/avonent-cinnamon-results-background.webp",
+            "stats_overlay_color": "",
+            "stats_overlay_opacity": "",
+            "stats_duration": "",
+            "stat_1_start": "",
+            "stat_1_end": "",
+            "stat_1_label": "",
+            "stat_2_start": "",
+            "stat_2_end": "",
+            "stat_2_label": "",
+            "stat_3_start": "",
+            "stat_3_end": "",
+            "stat_3_label": "",
+            "stat_4_start": "",
+            "stat_4_end": "",
+            "stat_4_label": "",
+            "stats_cta": "",
+            "stats_guarantee": "",
+            "stats_text_color": "",
+            "stats_show": true
           }
         },
         "carousel": {
           "type": "carousel",
-          "settings": {}
+          "settings": {
+            "carousel_heading": "",
+            "carousel_1_title": "",
+            "carousel_1_body": "",
+            "carousel_2_title": "",
+            "carousel_2_body": "",
+            "carousel_3_title": "",
+            "carousel_3_body": "",
+            "carousel_4_title": "",
+            "carousel_4_body": ""
+          }
         },
         "science": {
           "type": "science",
-          "settings": {}
+          "settings": {
+            "science_heading": "",
+            "science_intro": "",
+            "science_1_title": "",
+            "science_1_subtitle": "",
+            "science_1_body": "",
+            "science_2_title": "",
+            "science_2_subtitle": "",
+            "science_2_body": "",
+            "science_3_title": "",
+            "science_3_subtitle": "",
+            "science_3_body": "",
+            "science_4_title": "",
+            "science_4_subtitle": "",
+            "science_4_body": "",
+            "science_cta": "",
+            "science_guarantee": "",
+            "science_ticker_1": "",
+            "science_ticker_2": "",
+            "science_ticker_3": "",
+            "science_ticker_4": "",
+            "science_bg": "",
+            "science_accent": ""
+          }
         },
         "journey": {
           "type": "journey",
-          "settings": {}
+          "settings": {
+            "journey_image": "shopify://shop_images/92BFCE50-C2ED-4CE6-AEBE-4BCB6C4BB095.png",
+            "journey_eyebrow": "",
+            "journey_heading": "",
+            "journey_intro": "",
+            "journey_1_label": "",
+            "journey_1_body": "",
+            "journey_2_label": "",
+            "journey_2_body": "",
+            "journey_3_label": "",
+            "journey_3_body": "",
+            "journey_4_label": "",
+            "journey_4_body": ""
+          }
         },
         "compare": {
           "type": "compare",
-          "settings": {}
+          "settings": {
+            "compare_price": "",
+            "compare_heading": "",
+            "compare_subheading": "",
+            "compare_cta": "",
+            "compare_guarantee": "",
+            "ours_name": "Avonent",
+            "other_name": "Other brands",
+            "ours_1": "True Ceylon cinnamon",
+            "other_1": "Cinnamon variety may vary",
+            "ours_2": "12:1 concentrated extract",
+            "other_2": "Extract ratio may be unspecified",
+            "ours_3": "400 mg Berberine HCl",
+            "other_3": "Berberine may not be included",
+            "ours_4": "MCT oil softgel format",
+            "other_4": "May use dry powder capsules",
+            "ours_5": "Naturally low in coumarin",
+            "other_5": "Cassia can contain more coumarin",
+            "ours_6": "Daily amounts clearly disclosed",
+            "other_6": "Check the label for amounts"
+          }
         },
         "benefits": {
           "type": "benefits",
-          "settings": {}
+          "settings": {
+            "benefits_heading": "",
+            "benefits_subheading": "",
+            "benefits_item_1": "",
+            "benefits_item_2": "",
+            "benefits_item_3": "",
+            "benefits_item_4": "",
+            "benefits_bg": "",
+            "benefits_text": ""
+          }
         },
         "faq": {
           "type": "faq",
-          "settings": {}
+          "settings": {
+            "faq_heading": "",
+            "faq_1_q": "",
+            "faq_1_a": "",
+            "faq_2_q": "",
+            "faq_2_a": "",
+            "faq_3_q": "",
+            "faq_3_a": "",
+            "faq_4_q": "",
+            "faq_4_a": "",
+            "faq_5_q": "",
+            "faq_5_a": "",
+            "faq_6_q": "",
+            "faq_6_a": ""
+          }
         },
         "details": {
           "type": "details",
-          "settings": {}
+          "settings": {
+            "guarantee_highlight": "",
+            "guarantee_color": "",
+            "stock_title": "",
+            "stock_text": "",
+            "low_stock_line": "",
+            "guarantee_heading": "",
+            "guarantee_body": "",
+            "acc_1_title": "",
+            "acc_1_body": "",
+            "acc_2_title": "",
+            "acc_2_body": "",
+            "acc_3_title": "",
+            "acc_3_body": "",
+            "trust_image_alt": ""
+          }
         },
         "review_1": {
           "type": "review",
-          "settings": {}
+          "settings": {
+            "name": "",
+            "title": "",
+            "quote": "",
+            "rating": 5,
+            "verified": false
+          }
         },
         "review_2": {
           "type": "review",
-          "settings": {}
+          "settings": {
+            "name": "",
+            "title": "",
+            "quote": "",
+            "rating": 5,
+            "verified": false
+          }
         },
         "review_3": {
           "type": "review",
-          "settings": {}
+          "settings": {
+            "name": "",
+            "title": "",
+            "quote": "",
+            "rating": 5,
+            "verified": false
+          }
         },
         "review_4": {
           "type": "review",
-          "settings": {}
+          "settings": {
+            "name": "",
+            "title": "",
+            "quote": "",
+            "rating": 5,
+            "verified": false
+          }
         }
       },
       "block_order": [
@@ -73,7 +250,10 @@
         "review_3",
         "review_4"
       ],
-      "settings": {}
+      "settings": {
+        "reviews_heading": "Real stories. Everyday routines.",
+        "reviews_intro": "Experiences shared by Avonent customers."
+      }
     }
   },
   "order": [
