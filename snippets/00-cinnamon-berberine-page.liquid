@@ -36,12 +36,6 @@
   assign av_cb_cancel_text = av_cb_product.metafields.custom.av_cb_cancel_text.value | default: 'Stop or cancel anytime'
   assign av_cb_guarantee_heading = av_cb_product.metafields.custom.av_cb_guarantee_heading.value | default: '30-Day Money-Back Guarantee'
   assign av_cb_guarantee_body = av_cb_product.metafields.custom.av_cb_guarantee_body.value | default: 'money-back guarantee. Try Avonent with confidence and contact us within 30 days if you are not satisfied.'
-  assign av_cb_acc_1_title = av_cb_product.metafields.custom.av_cb_acc_1_title.value | default: 'Clinically Supported Benefits'
-  assign av_cb_acc_1_body = av_cb_product.metafields.custom.av_cb_acc_1_body.value
-  assign av_cb_acc_2_title = av_cb_product.metafields.custom.av_cb_acc_2_title.value | default: 'Key Ingredients'
-  assign av_cb_acc_2_body = av_cb_product.metafields.custom.av_cb_acc_2_body.value
-  assign av_cb_acc_3_title = av_cb_product.metafields.custom.av_cb_acc_3_title.value | default: 'How It Works'
-  assign av_cb_acc_3_body = av_cb_product.metafields.custom.av_cb_acc_3_body.value
   assign av_cb_trust_image = av_cb_product.metafields.custom.av_cb_trust_image.value
   assign av_cb_trust_image_alt = av_cb_product.metafields.custom.av_cb_trust_image_alt.value | default: 'Why Trust Avonent'
   assign av_cb_stats_heading = av_cb_product.metafields.custom.av_cb_stats_heading.value | default: 'Avonent by the Numbers'
@@ -610,7 +604,7 @@
       {% if av_cb_trust_image != blank %}
         <span style="display:block;width:100%;">{{ av_cb_trust_image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '600,900,1200,1600', sizes: '(min-width: 900px) 1200px, calc(100vw - 22px)', alt: av_cb_trust_image_alt, style: 'display:block;width:100%;height:auto;border-radius:18px;' }}</span>
       {% else %}
-        <img src="https://cdn.shopify.com/s/files/1/0759/3525/2646/files/avonent-why-trust-avonent.png?v=1793242624" alt="{{ av_cb_trust_image_alt | escape }}" loading="lazy" style="display:block;width:100%;height:auto;border-radius:18px;">
+        <img width="1600" height="900" src="https://cdn.shopify.com/s/files/1/0759/3525/2646/files/avonent-why-trust-avonent.png?v=1793242624" alt="{{ av_cb_trust_image_alt | escape }}" loading="lazy" style="display:block;width:100%;height:auto;border-radius:18px;">
       {% endif %}
     </div>
 
