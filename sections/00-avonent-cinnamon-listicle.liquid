@@ -131,21 +131,6 @@
       </div>
     </section>
 
-    <section class="avl-offer avl-container" aria-labelledby="avl-offer-heading">
-      <div class="avl-offer__panel">
-        <div class="avl-offer__text">
-          <span class="avl-kicker">A SIMPLE PLACE TO START</span>
-          <h2 id="avl-offer-heading">{{ section.settings.offer_title | escape }}</h2>
-          <p>{{ section.settings.offer_description | escape }}</p>
-          <div class="avl-offer__perks"><span>✓ {{ section.settings.offer_perk_1 | escape }}</span><span>✓ {{ section.settings.offer_perk_2 | escape }}</span></div>
-        </div>
-        <div class="avl-offer__action">
-          <a class="avl-button avl-button--light" href="{{ avl_product_url }}">{{ section.settings.offer_cta | escape }} <span aria-hidden="true">↗</span></a>
-          <small>{{ section.settings.offer_guarantee | escape }}</small>
-        </div>
-      </div>
-    </section>
-
     {% if avl_review_count > 0 %}
     <section class="avl-reviews avl-container" aria-labelledby="avl-reviews-heading">
       <header class="avl-section-heading">
@@ -276,15 +261,6 @@
   .avl-formula__media img{width:100%;aspect-ratio:1.08/1;object-fit:contain;background:#fff9f3;border-radius:20px;padding:20px}
   .avl-formula__monogram{aspect-ratio:1.08;background:#d6b497;border-radius:20px;display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-size:200px;color:#85563b}
   .avl-formula__monogram span{font-size:60px}
-  .avl-offer{padding-block:110px}
-  .avl-offer__panel{background:#663f2f;color:white;border-radius:21px;display:grid;grid-template-columns:1.4fr .65fr;align-items:center;gap:60px;padding:52px 65px;box-shadow:0 15px 35px rgba(71,43,29,.1)}
-  .avl-offer__panel .avl-kicker{color:#ffd8bc}
-  .avl-offer h2{font-size:clamp(31px,3vw,43px);margin:13px 0}
-  .avl-offer p{color:#f4ded0;line-height:1.7}
-  .avl-offer__perks{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:22px;font-size:13px;font-weight:650}
-  .avl-offer__action{text-align:center}
-  .avl-button--light{background:#fff9f3;color:#5f3927!important;width:100%}
-  .avl-offer__action small{display:block;color:#f1d5c6;margin-top:13px;font-size:12px}
   .avl-reviews{padding-bottom:110px}
   .avl-reviews__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
   .avl-review{background:#fff;border:1px solid var(--avl-line);border-radius:15px;overflow:hidden;box-shadow:0 4px 16px rgba(62,43,32,.05)}
@@ -327,7 +303,6 @@
     .avl-hero{gap:30px;padding:45px 0 68px}
     .avl-benefit{gap:38px}
     .avl-formula__inner{gap:40px}
-    .avl-offer__panel{padding:42px 36px;gap:30px}
   }
   @media(max-width:700px){
     .avl{padding-bottom:76px}
@@ -361,9 +336,6 @@
     .avl-formula__facts{gap:8px}
     .avl-formula__facts strong{font-size:19px}
     .avl-formula__facts span{font-size:11px}
-    .avl-offer{padding:67px 0}
-    .avl-offer__panel{display:flex;flex-direction:column;align-items:stretch;gap:24px;padding:33px 24px;border-radius:15px}
-    .avl-offer h2{font-size:31px}
     .avl-reviews{padding-bottom:70px}
     .avl-reviews__grid{grid-template-columns:1fr}
     .avl-review__image{aspect-ratio:1.8}
@@ -578,7 +550,7 @@
     },
     {
       "type": "header",
-      "content": "Formula and offer"
+      "content": "Formula"
     },
     {
       "type": "image_picker",
@@ -602,42 +574,6 @@
       "id": "formula_cta",
       "label": "Formula link",
       "default": "See the complete formula"
-    },
-    {
-      "type": "text",
-      "id": "offer_title",
-      "label": "Offer headline",
-      "default": "Make room for a better daily ritual."
-    },
-    {
-      "type": "text",
-      "id": "offer_description",
-      "label": "Offer body",
-      "default": "Choose the Avonent option that fits your routine and see the current price before checking out."
-    },
-    {
-      "type": "text",
-      "id": "offer_perk_1",
-      "label": "Offer benefit 1",
-      "default": "Ceylon cinnamon + berberine"
-    },
-    {
-      "type": "text",
-      "id": "offer_perk_2",
-      "label": "Offer benefit 2",
-      "default": "Simple daily format"
-    },
-    {
-      "type": "text",
-      "id": "offer_cta",
-      "label": "Offer button",
-      "default": "Shop Avonent"
-    },
-    {
-      "type": "text",
-      "id": "offer_guarantee",
-      "label": "Guarantee line",
-      "default": "Protected by our 30-day money-back guarantee"
     },
     {
       "type": "header",
