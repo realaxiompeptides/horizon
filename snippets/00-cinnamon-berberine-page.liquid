@@ -212,11 +212,11 @@
     .av-cb__carousel-content p{font-size:15px;line-height:1.7;margin:0;color:#4c565b}
     .av-cb__carousel-controls{display:flex;flex-direction:column;align-items:center;gap:16px;margin-top:18px}
     .av-cb__carousel-dots{display:flex;align-items:center;gap:9px}
-    .av-cb__carousel-dot{width:10px;height:10px;border:0;border-radius:999px;background:#d5d9db;padding:0;cursor:pointer;transition:.2s ease}
+    .av-cb__carousel-dot{width:10px;height:10px;border:0;border-radius:999px;background:#decfc5;padding:0;cursor:pointer;transition:.2s ease}
     .av-cb__carousel-dot.is-active{width:42px;background:var(--blue)}
     .av-cb__carousel-arrows{display:flex;gap:12px}
-    .av-cb__carousel-arrow{width:50px;height:50px;border:0;border-radius:50%;background:#f3f5f6;color:#111;display:grid;place-items:center;cursor:pointer;transition:.18s ease}
-    .av-cb__carousel-arrow:hover{background:#e7ecee}
+    .av-cb__carousel-arrow{width:50px;height:50px;border:1px solid #e5cbbb;border-radius:50%;background:#fff5ef;color:var(--blue);display:grid;place-items:center;cursor:pointer;transition:.18s ease}
+    .av-cb__carousel-arrow:hover{background:#f3dfd2}
     .av-cb__carousel-arrow svg{width:22px;height:22px}
     @media(min-width:900px){.av-cb__carousel-card{flex-basis:min(520px,44vw)}}
     @media(max-width:600px){.av-cb__carousel-section{padding:38px 0 14px}.av-cb__carousel-heading{font-size:31px;margin-bottom:22px;padding:0 22px}.av-cb__carousel-track{gap:14px;padding-left:22px;padding-right:22px}.av-cb__carousel-card{flex-basis:82vw;border-radius:18px}.av-cb__carousel-content{padding:20px 18px 23px}.av-cb__carousel-content h3{font-size:19px}.av-cb__carousel-content p{font-size:13.5px;line-height:1.65}.av-cb__carousel-arrow{width:46px;height:46px}}
@@ -660,6 +660,8 @@
       <div class="av-cb__journey-image">
         {% if av_cb_journey_image != blank %}
           {{ av_cb_journey_image | image_url: width: 1800 | image_tag: loading: 'lazy', widths: '600,900,1200,1600,1800', sizes: '(min-width:900px) 900px, calc(100vw - 22px)', alt: av_cb_journey_heading }}
+        {% elsif av_cb_product.featured_image %}
+          {{ av_cb_product.featured_image | image_url: width: 1800 | image_tag: loading: 'lazy', widths: '600,900,1200,1600,1800', sizes: '(min-width:900px) 900px, calc(100vw - 22px)', alt: av_cb_journey_heading }}
         {% else %}
           <div class="av-cb__journey-image-placeholder">Add your journey banner in the “CB Journey Image” product metafield.</div>
         {% endif %}
@@ -683,7 +685,7 @@
             <span class="av-cb__timeline-dot" aria-hidden="true"></span>
             <div class="av-cb__timeline-label">{{ jlabel }}</div>
             <div class="av-cb__timeline-list">
-              {% assign journey_lines = jbody | split: newline %}
+              {% assign journey_lines = jbody | newline_to_br | split: '<br />' %}
               {% for line in journey_lines %}
                 {% if line != blank %}
                   <div class="av-cb__timeline-line"><span class="av-cb__timeline-check">✓</span><span>{{ line }}</span></div>
