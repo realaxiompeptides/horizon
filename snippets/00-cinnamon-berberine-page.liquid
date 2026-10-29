@@ -114,15 +114,27 @@
   assign av_cb_science_ticker_4 = av_cb_product.metafields.custom.av_cb_science_ticker_4.value | default: '30 Daily Servings'
   assign av_cb_science_bg = av_cb_product.metafields.custom.av_cb_science_bg.value | default: '#FFF8F2'
   assign av_cb_science_accent = av_cb_product.metafields.custom.av_cb_science_accent.value | default: '#A84F1B'
+  assign av_cb_journey_image = av_cb_product.metafields.custom.av_cb_journey_image.value
+  assign av_cb_journey_eyebrow = av_cb_product.metafields.custom.av_cb_journey_eyebrow.value | default: 'Your Wellness Journey'
+  assign av_cb_journey_heading = av_cb_product.metafields.custom.av_cb_journey_heading.value | default: 'Build the Routine. Stay Consistent. Give It Time.'
+  assign av_cb_journey_intro = av_cb_product.metafields.custom.av_cb_journey_intro.value
+  assign av_cb_journey_1_label = av_cb_product.metafields.custom.av_cb_journey_1_label.value
+  assign av_cb_journey_1_body = av_cb_product.metafields.custom.av_cb_journey_1_body.value
+  assign av_cb_journey_2_label = av_cb_product.metafields.custom.av_cb_journey_2_label.value
+  assign av_cb_journey_2_body = av_cb_product.metafields.custom.av_cb_journey_2_body.value
+  assign av_cb_journey_3_label = av_cb_product.metafields.custom.av_cb_journey_3_label.value
+  assign av_cb_journey_3_body = av_cb_product.metafields.custom.av_cb_journey_3_body.value
+  assign av_cb_journey_4_label = av_cb_product.metafields.custom.av_cb_journey_4_label.value
+  assign av_cb_journey_4_body = av_cb_product.metafields.custom.av_cb_journey_4_body.value
 %}
 
 <div class="av-cb" data-av-cb data-unit-price="{{ av_cb_unit_price }}" data-compare-price="{{ av_cb_compare_price | escape }}">
   <style>
-    .av-cb{--blue:#02c6ea;--deep:#087e9d;--ink:#08171d;--muted:#5f7078;--line:#d9ebef;--soft:#eefbfe;--soft2:#f7fdff;background:#fff;color:var(--ink);font-family:inherit}
+    .av-cb{--blue:#A84F1B;--deep:#7D3612;--ink:#16110E;--muted:#665A53;--line:#E7D2C4;--soft:#FFF4EC;--soft2:#FFFBF7;background:#fff;color:var(--ink);font-family:inherit}
     .av-cb *{box-sizing:border-box}.av-cb a{text-decoration:none}.av-cb__wrap{width:min(1200px,calc(100% - 32px));margin:0 auto}
-    .av-cb__hero{padding:34px 0 10px;background:linear-gradient(180deg,#fff 0%,#f4fcfe 100%)}
+    .av-cb__hero{padding:34px 0 10px;background:linear-gradient(180deg,#fff 0%,#fff8f3 100%)}
     .av-cb__hero-grid{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(360px,.98fr);gap:48px;align-items:center}
-    .av-cb__media{min-height:520px;border:1px solid var(--line);border-radius:28px;background:radial-gradient(circle at 50% 38%,#fff 0 24%,#e9faff 58%,#dff7fc 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:28px}
+    .av-cb__media{min-height:520px;border:1px solid var(--line);border-radius:28px;background:radial-gradient(circle at 50% 38%,#fff 0 24%,#fff5ed 58%,#f9e7da 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:28px}
     .av-cb__media img{max-width:100%;max-height:500px;object-fit:contain;filter:drop-shadow(0 28px 35px rgba(0,0,0,.12))}
     .av-cb__formula-bottle{width:min(330px,85%);aspect-ratio:4/5;border-radius:28px;background:#fff;border:1px solid #d8edf2;box-shadow:0 28px 70px rgba(5,103,128,.13);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:34px}
     .av-cb__formula-bottle b{font-size:38px;line-height:1}.av-cb__formula-bottle span{font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin-top:10px;color:var(--deep)}.av-cb__formula-bottle small{margin-top:16px;color:var(--muted)}
@@ -142,8 +154,8 @@
     .av-cb__benefits{display:grid;gap:16px;margin:20px 0 25px}.av-cb__benefit{display:flex;align-items:flex-start;gap:12px;font-size:16px;line-height:1.35;color:#38484f}.av-cb__benefit-check{width:20px;height:20px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;flex:0 0 20px;margin-top:0}.av-cb__benefit-check svg{width:12px;height:12px}
     .av-cb__sold{background:#fff;border:1px solid #e2eef1;border-radius:16px;padding:16px 18px;margin:0 0 18px;box-shadow:0 10px 30px rgba(7,74,91,.06)}.av-cb__sold-row{display:flex;align-items:center;gap:14px}.av-cb__sold-track{height:10px;background:#e9eef0;border-radius:999px;overflow:hidden;flex:1}.av-cb__sold-fill{height:100%;width:var(--sold);background:var(--blue);border-radius:inherit}.av-cb__sold-text{font-size:16px;font-weight:850;color:var(--deep);white-space:nowrap}
     .av-cb__pricing{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 14px}.av-cb__sale-price{font-size:27px;font-weight:850;color:var(--blue)}.av-cb__compare-price{font-size:20px;font-weight:650;color:#111;text-decoration:line-through;text-decoration-thickness:1.5px;opacity:.82}.av-cb__sale-badge{display:inline-flex;align-items:center;min-height:31px;padding:0 11px;border-radius:9px;background:var(--blue);color:#fff;font-size:12px;font-weight:850}
-    .av-cb__low-stock-line{display:flex;align-items:center;gap:12px;margin:7px 0 18px;color:var(--deep);font-size:16px;font-weight:850}.av-cb__low-stock-line:before,.av-cb__low-stock-line:after{content:"";height:2px;background:#bfeaf2;flex:1}.av-cb__low-stock-line span{white-space:nowrap}
-    .av-cb__bundles{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:14px}.av-cb__bundle{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;position:relative;border:1.5px solid #cfe3e8;border-radius:16px;padding:15px 16px;background:#fff;cursor:pointer;text-align:left;transition:.18s ease}.av-cb__bundle:hover,.av-cb__bundle.is-active{border-color:var(--blue);box-shadow:0 0 0 2px rgba(2,198,234,.10)}.av-cb__bundle.is-active{background:#f4fcfe}.av-cb__bundle-thumb{width:54px;height:54px;border-radius:10px;background:#eefbfe;border:1px solid #d9edf2;display:grid;place-items:center;overflow:hidden}.av-cb__bundle-thumb img{width:100%;height:100%;object-fit:contain}.av-cb__bundle-thumb-fallback{font-size:9px;font-weight:900;color:var(--deep);letter-spacing:.05em;text-align:center;line-height:1.1}.av-cb__bundle-copy strong{display:block;font-size:17px;color:#111}.av-cb__bundle-copy span{display:block;font-size:12px;color:var(--muted);margin-top:3px}.av-cb__bundle-price{text-align:right}.av-cb__bundle-price strong{display:block;color:var(--blue);font-size:18px}.av-cb__bundle-price s{display:block;color:#111;font-size:13px;margin-top:2px;opacity:.78}.av-cb__badge{position:absolute!important;top:-11px;right:14px;background:var(--blue);color:#fff!important;border-radius:999px;padding:4px 10px;font-size:10px!important;font-weight:850;text-transform:uppercase;letter-spacing:.04em}
+    .av-cb__low-stock-line{display:flex;align-items:center;gap:12px;margin:7px 0 18px;color:var(--deep);font-size:16px;font-weight:850}.av-cb__low-stock-line:before,.av-cb__low-stock-line:after{content:"";height:2px;background:#e7c2aa;flex:1}.av-cb__low-stock-line span{white-space:nowrap}
+    .av-cb__bundles{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:14px}.av-cb__bundle{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;position:relative;border:1.5px solid #e4c8b7;border-radius:16px;padding:15px 16px;background:#fff;cursor:pointer;text-align:left;transition:.18s ease}.av-cb__bundle:hover,.av-cb__bundle.is-active{border-color:var(--blue);box-shadow:0 0 0 2px rgba(2,198,234,.10)}.av-cb__bundle.is-active{background:#fff8f3}.av-cb__bundle-thumb{width:54px;height:54px;border-radius:10px;background:#fff4ec;border:1px solid #ead3c4;display:grid;place-items:center;overflow:hidden}.av-cb__bundle-thumb img{width:100%;height:100%;object-fit:contain}.av-cb__bundle-thumb-fallback{font-size:9px;font-weight:900;color:var(--deep);letter-spacing:.05em;text-align:center;line-height:1.1}.av-cb__bundle-copy strong{display:block;font-size:17px;color:#111}.av-cb__bundle-copy span{display:block;font-size:12px;color:var(--muted);margin-top:3px}.av-cb__bundle-price{text-align:right}.av-cb__bundle-price strong{display:block;color:var(--blue);font-size:18px}.av-cb__bundle-price s{display:block;color:#111;font-size:13px;margin-top:2px;opacity:.78}.av-cb__badge{position:absolute!important;top:-11px;right:14px;background:var(--blue);color:#fff!important;border-radius:999px;padding:4px 10px;font-size:10px!important;font-weight:850;text-transform:uppercase;letter-spacing:.04em}
 
     .av-cb__buy{width:100%;min-height:56px;border:0;border-radius:14px;background:#111;color:#fff;font-weight:800;font-size:16px;cursor:pointer;display:flex;justify-content:center;align-items:center;gap:8px}.av-cb__buy[disabled]{opacity:.45;cursor:not-allowed}
     .av-cb__micro{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-top:10px}.av-cb__micro b{color:var(--ink)}
@@ -215,7 +227,7 @@
     .av-cb__science-head h2 em{font-style:normal;color:var(--science-accent,#a84f1b)}
     .av-cb__science-head p{font-size:16px;line-height:1.65;margin:0 auto;color:#323232;max-width:720px}
     .av-cb__science-cards{display:grid;gap:16px}
-    .av-cb__science-card{background:#fff;border:1.5px solid #ddd6d0;border-radius:18px;overflow:hidden;perspective:900px}
+    .av-cb__science-card{background:#fff;border:1.5px solid #ddd6d0;border-radius:18px;overflow:hidden;transition:border-color .25s ease,box-shadow .25s ease,transform .25s ease}
     .av-cb__science-card summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:150px 1fr auto;gap:22px;align-items:center;padding:18px 20px}
     .av-cb__science-card summary::-webkit-details-marker{display:none}
     .av-cb__science-thumb{width:150px;height:128px;border-radius:12px;overflow:hidden;background:#f3eee8;display:grid;place-items:center;color:var(--science-accent,#a84f1b)}
@@ -230,8 +242,9 @@
     .av-cb__science-card[open] .av-cb__science-toggle:after{opacity:0}
     .av-cb__science-card[open] summary{display:flex;justify-content:flex-end;padding:12px 18px 0}
     .av-cb__science-card[open] .av-cb__science-thumb,.av-cb__science-card[open] .av-cb__science-copy{display:none}
-    .av-cb__science-body{padding:0 22px 24px;font-size:16px;line-height:1.6;color:#515151;transform-origin:left center;animation:avCbScienceFlip .34s ease both}
-    @keyframes avCbScienceFlip{0%{opacity:0;transform:rotateY(-12deg) translateX(12px)}100%{opacity:1;transform:rotateY(0) translateX(0)}}
+    .av-cb__science-card[open]{border-color:var(--science-accent,#a84f1b);box-shadow:0 12px 30px rgba(168,79,27,.09);transform:translateX(2px)}
+    .av-cb__science-body{padding:2px 22px 24px;font-size:16px;line-height:1.6;color:#515151;transform-origin:left center;animation:avCbScienceSlide .38s cubic-bezier(.2,.8,.2,1) both}
+    @keyframes avCbScienceSlide{0%{opacity:0;transform:translateX(28px) rotateY(-8deg)}100%{opacity:1;transform:translateX(0) rotateY(0)}}
     .av-cb__science-cta-wrap{padding:28px 0 22px}
     .av-cb__science-cta{display:flex;align-items:center;justify-content:center;width:min(680px,100%);min-height:58px;margin:0 auto;background:var(--science-accent,#a84f1b);color:#fff!important;border-radius:999px;font-size:16px;font-weight:650;text-decoration:none!important}
     .av-cb__science-guarantee{display:flex;align-items:center;justify-content:center;gap:8px;margin:12px auto 0;color:#202020;font-size:13px;font-weight:600}
@@ -244,8 +257,28 @@
     .av-cb__science-ticker-icon{width:24px;height:24px;border:1.5px solid var(--science-accent,#a84f1b);border-radius:50%;display:grid;place-items:center;color:var(--science-accent,#a84f1b)}
     .av-cb__science-ticker-icon svg{width:14px;height:14px}
     @keyframes avCbTicker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-    @media(prefers-reduced-motion:reduce){.av-cb__science-ticker-track{animation:none}.av-cb__science-body{animation:none}}
+    @media(prefers-reduced-motion:reduce){.av-cb__science-ticker-track{animation:none}.av-cb__science-body{animation:none}.av-cb__science-card{transition:none}}
     @media(max-width:600px){.av-cb__science-section{padding-top:42px}.av-cb__science-wrap{width:min(100% - 22px,920px)}.av-cb__science-head{margin-bottom:25px}.av-cb__science-head h2{font-size:31px}.av-cb__science-head p{font-size:14px}.av-cb__science-cards{gap:12px}.av-cb__science-card{border-radius:15px}.av-cb__science-card summary{grid-template-columns:88px 1fr auto;gap:12px;padding:14px}.av-cb__science-thumb{width:88px;height:82px;border-radius:10px}.av-cb__science-thumb svg{width:44px;height:44px}.av-cb__science-copy h3{font-size:17px;margin-bottom:5px}.av-cb__science-copy p{font-size:12.5px}.av-cb__science-toggle{width:36px;height:36px;flex-basis:36px}.av-cb__science-card[open] summary{padding:10px 12px 0}.av-cb__science-body{padding:0 18px 20px;font-size:14px}.av-cb__science-cta-wrap{padding:22px 0 18px}.av-cb__science-cta{min-height:54px;font-size:15px}.av-cb__science-guarantee{font-size:12px}.av-cb__science-ticker-item{padding:11px 22px;font-size:12px}}
+
+    .av-cb__journey{background:#fff;padding:34px 0 58px}
+    .av-cb__journey-wrap{width:min(900px,calc(100% - 32px));margin:0 auto}
+    .av-cb__journey-image{margin:0 auto 34px;border-radius:20px;overflow:hidden;background:#f3e4d8;min-height:220px;display:grid;place-items:center}
+    .av-cb__journey-image img{display:block;width:100%;max-height:520px;object-fit:cover}
+    .av-cb__journey-image-placeholder{padding:64px 24px;text-align:center;color:#7c695e;font-size:13px}
+    .av-cb__journey-head{text-align:center;max-width:720px;margin:0 auto 30px}
+    .av-cb__journey-eyebrow{font-size:18px;color:var(--blue);margin-bottom:5px}
+    .av-cb__journey-head h2{font-size:clamp(28px,4vw,42px);line-height:1.08;letter-spacing:-.03em;margin:0 0 14px;color:#17120f}
+    .av-cb__journey-head p{font-size:15px;line-height:1.65;color:#5e514a;margin:0}
+    .av-cb__timeline{position:relative;max-width:760px;margin:0 auto;padding-left:28px}
+    .av-cb__timeline:before{content:"";position:absolute;left:8px;top:8px;bottom:8px;width:2px;background:#dfb398}
+    .av-cb__timeline-item{position:relative;padding:0 0 25px 0}
+    .av-cb__timeline-item:last-child{padding-bottom:0}
+    .av-cb__timeline-dot{position:absolute;left:-25px;top:6px;width:12px;height:12px;border:2px solid var(--blue);background:#fff;border-radius:50%;box-shadow:0 0 0 3px #fff}
+    .av-cb__timeline-label{background:var(--blue);color:#fff;border-radius:8px;padding:9px 13px;font-size:13px;font-weight:750;margin-bottom:12px}
+    .av-cb__timeline-list{display:grid;gap:8px}
+    .av-cb__timeline-line{display:flex;align-items:flex-start;gap:9px;color:#443a35;font-size:14px;line-height:1.45}
+    .av-cb__timeline-check{color:var(--blue);font-weight:900;line-height:1.2}
+    @media(max-width:600px){.av-cb__journey{padding:26px 0 44px}.av-cb__journey-wrap{width:min(100% - 22px,900px)}.av-cb__journey-image{margin-bottom:26px;border-radius:16px;min-height:180px}.av-cb__journey-eyebrow{font-size:16px}.av-cb__journey-head h2{font-size:29px}.av-cb__journey-head p{font-size:13.5px}.av-cb__timeline{padding-left:24px}.av-cb__timeline:before{left:7px}.av-cb__timeline-dot{left:-22px}.av-cb__timeline-label{font-size:12px}.av-cb__timeline-line{font-size:13px}}
 
     .av-cb__benefits-section{position:relative;overflow:hidden;background:var(--benefits-bg,#0A88A6);color:var(--benefits-text,#fff);padding:54px 24px 0}
     .av-cb__benefits-inner{width:min(980px,100%);margin:0 auto}
@@ -622,6 +655,48 @@
   </section>
 
 
+  <section class="av-cb__journey">
+    <div class="av-cb__journey-wrap">
+      <div class="av-cb__journey-image">
+        {% if av_cb_journey_image != blank %}
+          {{ av_cb_journey_image | image_url: width: 1800 | image_tag: loading: 'lazy', widths: '600,900,1200,1600,1800', sizes: '(min-width:900px) 900px, calc(100vw - 22px)', alt: av_cb_journey_heading }}
+        {% else %}
+          <div class="av-cb__journey-image-placeholder">Add your journey banner in the “CB Journey Image” product metafield.</div>
+        {% endif %}
+      </div>
+
+      <header class="av-cb__journey-head">
+        <div class="av-cb__journey-eyebrow">{{ av_cb_journey_eyebrow }}</div>
+        <h2>{{ av_cb_journey_heading }}</h2>
+        <p>{{ av_cb_journey_intro | newline_to_br }}</p>
+      </header>
+
+      <div class="av-cb__timeline">
+        {% for i in (1..4) %}
+          {% case i %}
+            {% when 1 %}{% assign jlabel = av_cb_journey_1_label %}{% assign jbody = av_cb_journey_1_body %}
+            {% when 2 %}{% assign jlabel = av_cb_journey_2_label %}{% assign jbody = av_cb_journey_2_body %}
+            {% when 3 %}{% assign jlabel = av_cb_journey_3_label %}{% assign jbody = av_cb_journey_3_body %}
+            {% else %}{% assign jlabel = av_cb_journey_4_label %}{% assign jbody = av_cb_journey_4_body %}
+          {% endcase %}
+          <div class="av-cb__timeline-item">
+            <span class="av-cb__timeline-dot" aria-hidden="true"></span>
+            <div class="av-cb__timeline-label">{{ jlabel }}</div>
+            <div class="av-cb__timeline-list">
+              {% assign journey_lines = jbody | split: newline %}
+              {% for line in journey_lines %}
+                {% if line != blank %}
+                  <div class="av-cb__timeline-line"><span class="av-cb__timeline-check">✓</span><span>{{ line }}</span></div>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+
   <section class="av-cb__benefits-section" style="--benefits-bg:{{ av_cb_benefits_bg }};--benefits-text:{{ av_cb_benefits_text }};">
     <div class="av-cb__benefits-inner">
       <header class="av-cb__benefits-head">
@@ -689,6 +764,7 @@
   <script>
     (() => {
       const root = document.currentScript.closest('[data-av-cb]');
+      document.documentElement.classList.add('av-cb-cinnamon-page');
       if (!root) return;
       const unit = Number(root.dataset.unitPrice || 0);
       const compareDollars = Number.parseFloat(root.dataset.comparePrice || '');
