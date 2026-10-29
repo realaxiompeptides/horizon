@@ -15,12 +15,13 @@
         "hero": {
           "type": "hero",
           "settings": {
-            "display_title": "",
+            "display_title": "Berberine + True Ceylon Cinnamon",
+            "hero_description": "Avonent Ceylon Cinnamon + Berberine is designed to support healthy blood sugar, glucose metabolism, and everyday metabolic balance — helping support a steadier daily routine around meals and throughout the day.*\n\nFour daily softgels combine true Sri Lankan Ceylon cinnamon with Berberine HCl in a concentrated, easy-to-take formula built for consistent daily support.*",
             "rating_text": "",
-            "benefit_1": "",
-            "benefit_2": "",
-            "benefit_3": "",
-            "benefit_4": "",
+            "benefit_1": "Supports Healthy Blood Sugar & Glucose Metabolism*",
+            "benefit_2": "True Sri Lankan Ceylon — Not Common Cassia",
+            "benefit_3": "400 mg Berberine HCl for Dual-Ingredient Support*",
+            "benefit_4": "12:1 Extract — 14,400 mg Raw-Cinnamon Equivalent",
             "sold_percent": "",
             "sale_badge": "",
             "bundle_2_badge": "",
@@ -67,8 +68,8 @@
           "settings": {
             "carousel_heading": "",
             "carousel_1_image": "shopify://shop_images/FD7231F1-01ED-4B52-8882-17A475D74AA1.png",
-            "carousel_1_title": "Sri Lankan Ceylon, Not Common Cassia",
-            "carousel_1_body": "Avonent uses Cinnamomum verum — true Ceylon cinnamon harvested in Sri Lanka, not generic Cassia. Our supplier-confirmed 12:1 extract delivers the equivalent of 14,400 mg of raw Ceylon cinnamon per full daily serving, giving you authentic origin and concentrated potency in a simple softgel routine.",
+            "carousel_1_title": "Sri Lankan Ceylon With a Centuries-Old Heritage",
+            "carousel_1_body": "Cinnamon has been prized for thousands of years, and true Ceylon cinnamon — Cinnamomum verum — is indigenous to Sri Lanka. Avonent starts with genuine Sri Lankan Ceylon, not common Cassia, then uses a supplier-confirmed 12:1 concentrated extract for a clearly disclosed daily serving.",
             "carousel_2_image": "shopify://shop_images/B45AFB74-F056-4B81-AB95-AE7BA910FFFA.png",
             "carousel_2_title": "400 mg Berberine HCl for Metabolic Support",
             "carousel_2_body": "Each daily serving delivers 400 mg of Berberine HCl. Berberine has been studied for its role in supporting healthy glucose metabolism, insulin sensitivity, and overall metabolic function.* Avonent builds that support directly into your daily routine — no separate berberine bottle needed.",
@@ -83,8 +84,8 @@
         "science": {
           "type": "science",
           "settings": {
-            "science_heading": "",
-            "science_intro": "",
+            "science_heading": "Two Ingredients. Two Complementary Paths to Metabolic Support.",
+            "science_intro": "True Ceylon cinnamon and Berberine HCl are researched for different roles in metabolic health. Avonent brings them together in one clearly disclosed formula to support healthy blood sugar, glucose metabolism, insulin sensitivity, and everyday metabolic balance.*",
             "science_1_image": "shopify://shop_images/6EECC4C1-1B6B-425F-A348-533E76E53580.png",
             "science_1_title": "",
             "science_1_subtitle": "",
@@ -115,17 +116,17 @@
           "type": "journey",
           "settings": {
             "journey_image": "shopify://shop_images/92BFCE50-C2ED-4CE6-AEBE-4BCB6C4BB095.png",
-            "journey_eyebrow": "",
-            "journey_heading": "",
-            "journey_intro": "",
-            "journey_1_label": "",
-            "journey_1_body": "",
-            "journey_2_label": "",
-            "journey_2_body": "",
-            "journey_3_label": "",
-            "journey_3_body": "",
-            "journey_4_label": "",
-            "journey_4_body": ""
+            "journey_eyebrow": "WHY DAILY METABOLIC SUPPORT MATTERS",
+            "journey_heading": "Afternoon Dips. Cravings. Feeling Off After Meals.",
+            "journey_intro": "Meals, stress, inconsistent sleep, and long stretches of sitting can all make a balanced daily routine harder to maintain. Avonent is built for adults who want simple, consistent support for healthy blood sugar, insulin sensitivity, and metabolic balance — without adding another complicated supplement stack.*",
+            "journey_1_label": "After Meals",
+            "journey_1_body": "Supports healthy glucose metabolism and insulin sensitivity as part of your everyday routine.*",
+            "journey_2_label": "Afternoon Steadiness",
+            "journey_2_body": "Healthy metabolic function plays a role in how steady you feel throughout the day. Avonent supports the metabolic pathways behind that balance.*",
+            "journey_3_label": "Cravings & Routine",
+            "journey_3_body": "A consistent routine can make it easier to stay intentional around meals instead of chasing quick fixes. Avonent is designed to fit that routine simply.",
+            "journey_4_label": "Consistency Over Time",
+            "journey_4_body": "Each bottle provides 30 full daily servings with clearly disclosed amounts of concentrated Ceylon cinnamon extract and Berberine HCl."
           }
         },
         "compare": {
@@ -208,12 +209,12 @@
             "low_stock_line": "",
             "guarantee_heading": "",
             "guarantee_body": "",
-            "acc_1_title": "🔬 Clinically Supported Benefits",
-            "acc_1_body": "🔬 <strong>Two researched ingredients. One focused daily formula.</strong><br><br>• <strong>Healthy blood sugar support:</strong> Ceylon cinnamon and berberine are studied for their roles in healthy glucose metabolism.*<br>• <strong>Healthy insulin response:</strong> Supports normal insulin sensitivity and the way your body handles glucose.*<br>• <strong>Everyday metabolic balance:</strong> Supports healthy metabolic function and cellular energy pathways.*<br>• <strong>Antioxidant support:</strong> Ceylon cinnamon naturally contains polyphenols that help support oxidative balance.*<br><br><em>Designed to complement a balanced diet, regular movement, and appropriate medical care.</em>",
-            "acc_2_title": "🌿 Key Ingredients",
-            "acc_2_body": "🌿 <strong>True Ceylon Cinnamon — Cinnamomum verum</strong><br>• <strong>Harvested in Sri Lanka</strong> — the traditional home of genuine Ceylon cinnamon.<br>• <strong>12:1 concentrated extract</strong> — 1,200 mg per full daily serving, equivalent to 14,400 mg of raw Ceylon cinnamon.<br>• <strong>Not common Cassia</strong> — true Ceylon is naturally much lower in coumarin than Cassia.<br><br>🟡 <strong>Berberine HCl — 400 mg per daily serving</strong><br>• Supports healthy glucose metabolism and insulin sensitivity.*<br>• Adds a second researched ingredient for broader metabolic support.*<br><br>🥥 <strong>MCT Oil Softgel Delivery</strong><br>• Keeps the formula in a smooth oil-based softgel format.<br>• No loose cinnamon powder or gritty drink mixes.",
-            "acc_3_title": "⚙️ How It Works",
-            "acc_3_body": "⚙️ <strong>Built differently from basic cinnamon capsules.</strong><br><br>1️⃣ <strong>Start with genuine Ceylon.</strong> We use Cinnamomum verum harvested in Sri Lanka — not generic Cassia powder.<br><br>2️⃣ <strong>Concentrate the cinnamon.</strong> A 12:1 extract provides a 14,400 mg raw-cinnamon equivalent per full daily serving.<br><br>3️⃣ <strong>Add Berberine HCl.</strong> 400 mg per daily serving complements Ceylon cinnamon with another researched ingredient for healthy glucose and metabolic support.*<br><br>4️⃣ <strong>Deliver it in an MCT-oil softgel.</strong> A clean, easy-to-take format without stirring cinnamon into drinks or relying on dry powder capsules.",
+            "acc_1_title": "Clinically Supported Benefits",
+            "acc_1_body": "<strong>Two researched ingredients. One focused daily formula.</strong><br><br>• <strong>Healthy blood sugar:</strong> Ceylon cinnamon and Berberine HCl are studied for their roles in healthy glucose metabolism.*<br>• <strong>Healthy insulin response:</strong> Supports normal insulin sensitivity and the way your body handles glucose.*<br>• <strong>Metabolic balance:</strong> Supports healthy metabolic function and cellular energy pathways.*<br>• <strong>Antioxidant support:</strong> Ceylon cinnamon naturally contains polyphenols that help support oxidative balance.*<br><br><em>Designed to complement a balanced diet, regular movement, and appropriate medical care.</em>",
+            "acc_2_title": "Key Ingredients",
+            "acc_2_body": "🌿 <strong>True Ceylon Cinnamon — Cinnamomum verum</strong><br>• <strong>Harvested in Sri Lanka</strong> — the traditional home of genuine Ceylon cinnamon.<br>• <strong>12:1 concentrated extract</strong> — 1,200 mg per full daily serving.<br>• <strong>14,400 mg raw-cinnamon equivalent</strong> per full daily serving.<br>• <strong>Not common Cassia</strong> — true Ceylon is naturally much lower in coumarin than Cassia.<br><br><strong>Berberine HCl — 400 mg per daily serving</strong><br>• <strong>Supports healthy glucose metabolism</strong> and insulin sensitivity.*<br>• Adds a <strong>second researched ingredient</strong> for broader metabolic support.*<br><br><strong>MCT Oil Softgel Delivery</strong><br>• A <strong>smooth oil-based softgel format</strong> with no loose cinnamon powder or gritty drink mix.",
+            "acc_3_title": "How It Works",
+            "acc_3_body": "<strong>Built differently from basic cinnamon capsules.</strong><br><br><strong>1. Start with genuine Ceylon.</strong> We use <strong>Cinnamomum verum harvested in Sri Lanka</strong> — not generic Cassia powder.<br><br><strong>2. Concentrate the cinnamon.</strong> A <strong>12:1 extract</strong> provides a <strong>14,400 mg raw-cinnamon equivalent</strong> per full daily serving.<br><br><strong>3. Add Berberine HCl.</strong> <strong>400 mg per daily serving</strong> complements Ceylon cinnamon with another researched ingredient for healthy glucose and metabolic support.*<br><br><strong>4. Use an MCT-oil softgel.</strong> A clean, easy-to-take format without stirring cinnamon into drinks or relying on dry powder capsules.",
             "trust_image_alt": ""
           }
         },
