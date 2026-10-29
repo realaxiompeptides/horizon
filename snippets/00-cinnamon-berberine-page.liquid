@@ -576,6 +576,13 @@
         endif
     endcase
   endfor
+
+  assign av_cb_guarantee_highlight = 'Less than 1%'
+  assign av_cb_guarantee_color = '#A84F1B'
+  assign av_cb_guarantee_heading = '90-Day Money-Back Guarantee'
+  assign av_cb_guarantee_body = 'of customers use our 90-Day Money-Back Guarantee.'
+  assign av_cb_stats_guarantee = '90-Day Money-Back Guarantee'
+  assign av_cb_compare_guarantee = '90-Day Money-Back Guarantee'
 %}
 
 <div class="av-cb" data-av-cb data-unit-price="{{ av_cb_unit_price }}" data-compare-price="{{ av_cb_compare_price | escape }}">
@@ -599,8 +606,8 @@
     .av-cb *{box-sizing:border-box}.av-cb a{text-decoration:none}.av-cb__wrap{width:min(1200px,calc(100% - 32px));margin:0 auto}
     .av-cb__hero{padding:34px 0 10px;background:linear-gradient(180deg,#fff 0%,#fff8f3 100%)}
     .av-cb__hero-grid{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(360px,.98fr);gap:48px;align-items:center}
-    .av-cb__media{min-height:520px;border:1px solid var(--line);border-radius:28px;background:radial-gradient(circle at 50% 38%,#fff 0 24%,#fff5ed 58%,#f9e7da 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:28px}
-    .av-cb__media img{max-width:100%;max-height:500px;object-fit:contain;filter:drop-shadow(0 28px 35px rgba(0,0,0,.12))}
+    .av-cb__media{min-height:0;border:0;border-radius:0;background:transparent;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:0}
+    .av-cb__media img{display:block;width:100%;max-width:100%;height:auto;max-height:none;object-fit:contain;filter:none}
     .av-cb__formula-bottle{width:min(330px,85%);aspect-ratio:4/5;border-radius:28px;background:#fff;border:1px solid #d8edf2;box-shadow:0 28px 70px rgba(5,103,128,.13);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:34px}
     .av-cb__formula-bottle b{font-size:38px;line-height:1}.av-cb__formula-bottle span{font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin-top:10px;color:var(--deep)}.av-cb__formula-bottle small{margin-top:16px;color:var(--muted)}
     .av-cb__eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--deep);margin-bottom:12px}
@@ -622,7 +629,7 @@
     .av-cb__low-stock-line{display:flex;align-items:center;gap:12px;margin:7px 0 18px;color:var(--deep);font-size:16px;font-weight:850}.av-cb__low-stock-line:before,.av-cb__low-stock-line:after{content:"";height:2px;background:#e7c2aa;flex:1}.av-cb__low-stock-line span{white-space:nowrap}
     .av-cb__bundles{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:14px}.av-cb__bundle{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;position:relative;border:1.5px solid #e4c8b7;border-radius:16px;padding:15px 16px;background:#fff;cursor:pointer;text-align:left;transition:.18s ease}.av-cb__bundle:hover,.av-cb__bundle.is-active{border-color:var(--blue);box-shadow:0 0 0 2px rgba(168,79,27,.10)}.av-cb__bundle.is-active{background:#fff8f3}.av-cb__bundle-thumb{width:54px;height:54px;border-radius:10px;background:#fff4ec;border:1px solid #ead3c4;display:grid;place-items:center;overflow:hidden}.av-cb__bundle-thumb img{width:100%;height:100%;object-fit:contain}.av-cb__bundle-thumb-fallback{font-size:9px;font-weight:900;color:var(--deep);letter-spacing:.05em;text-align:center;line-height:1.1}.av-cb__bundle-copy strong{display:block;font-size:17px;color:#111}.av-cb__bundle-copy span{display:block;font-size:12px;color:var(--muted);margin-top:3px}.av-cb__bundle-price{text-align:right}.av-cb__bundle-price strong{display:block;color:var(--blue);font-size:18px}.av-cb__bundle-price s{display:block;color:#111;font-size:13px;margin-top:2px;opacity:.78}.av-cb__badge{position:absolute!important;top:-11px;right:14px;background:var(--blue);color:#fff!important;border-radius:999px;padding:4px 10px;font-size:10px!important;font-weight:850;text-transform:uppercase;letter-spacing:.04em}
 
-    .av-cb__buy{width:100%;min-height:56px;border:0;border-radius:14px;background:#111;color:#fff;font-weight:800;font-size:16px;cursor:pointer;display:flex;justify-content:center;align-items:center;gap:8px}.av-cb__buy[disabled]{opacity:.45;cursor:not-allowed}
+    .av-cb__buy{width:100%;min-height:76px;border:0;border-radius:14px;background:var(--blue);color:#fff;cursor:pointer;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;padding:10px 16px;box-shadow:0 10px 24px rgba(125,54,18,.18)}.av-cb__buy[disabled]{opacity:.45;cursor:not-allowed}.av-cb__buy-mainline{display:flex;align-items:baseline;justify-content:center;gap:10px;flex-wrap:wrap;font-size:17px;font-weight:800;line-height:1.15}.av-cb__buy-divider{opacity:.55;font-weight:400}.av-cb__buy-price{font-size:18px;font-weight:850}.av-cb__buy-compare{font-size:15px;font-weight:500;text-decoration:line-through;text-decoration-thickness:1.4px;opacity:.66}.av-cb__buy-guarantee{font-size:12.5px;font-weight:500;line-height:1.1;opacity:.92}
     .av-cb__micro{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-top:10px}.av-cb__micro b{color:var(--ink)}
     .av-cb__trust{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#fff}.av-cb__trust-grid{display:grid;grid-template-columns:repeat(4,1fr)}.av-cb__trust-item{padding:18px;text-align:center;border-right:1px solid var(--line)}.av-cb__trust-item:last-child{border-right:0}.av-cb__trust-item b{display:block;font-size:14px}.av-cb__trust-item span{display:block;font-size:11px;color:var(--muted);margin-top:2px}
     .av-cb__section{padding:72px 0}.av-cb__section--soft{background:var(--soft2)}.av-cb__section--blue{background:var(--deep);color:#fff}
@@ -636,12 +643,12 @@
     .av-cb__disclaimer{font-size:10px!important;color:#7b8a90!important;max-width:860px;margin:24px auto 0!important;text-align:center;line-height:1.5!important}
     .av-cb__sticky{display:none}
     @media(max-width:900px){.av-cb__hero-grid{grid-template-columns:1fr;gap:24px}.av-cb__media{min-height:390px}.av-cb__trust-grid{grid-template-columns:repeat(2,1fr)}.av-cb__trust-item:nth-child(2){border-right:0}.av-cb__formula,.av-cb__timeline{grid-template-columns:1fr 1fr}.av-cb__education,.av-cb__compare{grid-template-columns:1fr}.av-cb__guarantee{grid-template-columns:auto 1fr}.av-cb__guarantee .av-cb__cta{grid-column:1/-1}.av-cb__title{font-size:40px}}
-    @media(max-width:600px){.av-cb__wrap{width:min(100% - 22px,1200px)}.av-cb__hero{padding-top:16px}.av-cb__media{min-height:315px;border-radius:20px}.av-cb__formula-bottle{width:75%;padding:22px}.av-cb__formula-bottle b{font-size:30px}.av-cb__title{font-size:31px;line-height:1.04;letter-spacing:-.03em}.av-cb__subtitle{font-size:15px}.av-cb__benefit{font-size:14.5px}.av-cb__benefits{gap:14px}.av-cb__bundles{grid-template-columns:1fr}.av-cb__bundle{padding:13px 14px}.av-cb__trust-grid{grid-template-columns:1fr 1fr}.av-cb__trust-item{padding:14px 8px}.av-cb__section{padding:50px 0}.av-cb__formula,.av-cb__timeline{grid-template-columns:1fr}.av-cb__guarantee{grid-template-columns:1fr;text-align:center}.av-cb__seal{margin:auto}.av-cb__sticky{position:fixed;display:grid;grid-template-columns:48px minmax(0,1fr) auto;z-index:40;left:10px;right:10px;bottom:max(10px,env(safe-area-inset-bottom));background:rgba(255,255,255,.97);backdrop-filter:blur(14px);border:1px solid #E8D5C8;box-shadow:0 14px 38px rgba(43,24,14,.16);border-radius:16px;padding:9px;align-items:center;gap:10px}.av-cb__sticky-img{width:48px;height:48px;border-radius:11px;overflow:hidden;background:#fff5ef;border:1px solid #ead3c4;display:grid;place-items:center}.av-cb__sticky-img img{width:100%;height:100%;object-fit:contain}.av-cb__sticky-copy{min-width:0;display:grid;gap:2px}.av-cb__sticky-title{font-size:12px;line-height:1.2;font-weight:750;color:#1D1916;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.av-cb__sticky-price{font-size:14px;line-height:1.1;font-weight:850;color:var(--blue)}.av-cb__sticky-add{border:0;background:var(--blue);color:#fff;min-height:46px;padding:0 17px;border-radius:12px;font-size:12px;font-weight:850;letter-spacing:.01em;cursor:pointer}.av-cb{padding-bottom:86px}}
+    @media(max-width:600px){.av-cb__wrap{width:min(100% - 22px,1200px)}.av-cb__hero{padding-top:0}.av-cb__media{width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);min-height:0;border-radius:0}.av-cb__formula-bottle{width:75%;padding:22px}.av-cb__formula-bottle b{font-size:30px}.av-cb__title{font-size:31px;line-height:1.04;letter-spacing:-.03em}.av-cb__subtitle{font-size:15px}.av-cb__benefit{font-size:14.5px}.av-cb__benefits{gap:14px}.av-cb__bundles{grid-template-columns:1fr}.av-cb__bundle{padding:13px 14px}.av-cb__trust-grid{grid-template-columns:1fr 1fr}.av-cb__trust-item{padding:14px 8px}.av-cb__section{padding:50px 0}.av-cb__formula,.av-cb__timeline{grid-template-columns:1fr}.av-cb__guarantee{grid-template-columns:1fr;text-align:center}.av-cb__seal{margin:auto}.av-cb__sticky{position:fixed;display:grid;grid-template-columns:48px minmax(0,1fr) auto;z-index:40;left:10px;right:10px;bottom:max(10px,env(safe-area-inset-bottom));background:rgba(255,255,255,.97);backdrop-filter:blur(14px);border:1px solid #E8D5C8;box-shadow:0 14px 38px rgba(43,24,14,.16);border-radius:16px;padding:9px;align-items:center;gap:10px}.av-cb__sticky-img{width:48px;height:48px;border-radius:11px;overflow:hidden;background:#fff5ef;border:1px solid #ead3c4;display:grid;place-items:center}.av-cb__sticky-img img{width:100%;height:100%;object-fit:contain}.av-cb__sticky-copy{min-width:0;display:grid;gap:2px}.av-cb__sticky-title{font-size:12px;line-height:1.2;font-weight:750;color:#1D1916;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.av-cb__sticky-price{font-size:14px;line-height:1.1;font-weight:850;color:var(--blue)}.av-cb__sticky-add{border:0;background:var(--blue);color:#fff;min-height:46px;padding:0 17px;border-radius:12px;font-size:12px;font-weight:850;letter-spacing:.01em;cursor:pointer}.av-cb{padding-bottom:86px}}
 
     .av-cb__refill-row{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:13px;color:#4f5e65;font-size:12px}
     .av-cb__refill-item{display:inline-flex;align-items:center;gap:7px}.av-cb__refill-icon{width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;color:#151515}.av-cb__refill-divider{width:1px;height:20px;background:#b7c3c7}
     .av-cb__top-stack{width:min(1200px,calc(100% - 32px));margin:6px auto 28px;display:grid;gap:10px}
-    .av-cb__guarantee-card{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;border:0;border-radius:18px;background:#fffaf6;padding:18px 20px;color:var(--guarantee-text,#171717);box-shadow:0 8px 24px rgba(125,54,18,.08)}
+    .av-cb__guarantee-card{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;border:1.5px dashed var(--blue);border-radius:18px;background:#fffaf6;padding:18px 20px;color:var(--guarantee-text,#171717);box-shadow:0 8px 24px rgba(125,54,18,.06)}
     .av-cb__guarantee-image{width:76px;height:76px;display:grid;place-items:center;flex:0 0 76px}.av-cb__guarantee-image img{max-width:76px;max-height:76px;object-fit:contain}.av-cb__guarantee-seal{width:72px;height:72px;border-radius:50%;border:2px solid var(--blue);background:#fff;display:grid;place-items:center;text-align:center;color:var(--deep);font-weight:850;line-height:1;box-shadow:inset 0 0 0 4px #fff4ec}.av-cb__guarantee-seal small{font-size:10px;letter-spacing:.06em}
     .av-cb__guarantee-copy h3{font-size:21px;line-height:1.15;margin:0 0 5px;color:var(--blue)}.av-cb__guarantee-copy p{font-size:14px;line-height:1.45;margin:0;color:#5a666c}.av-cb__guarantee-copy mark{background:transparent;color:var(--guarantee-highlight,var(--blue));font-weight:850}
     .av-cb__low-stock{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:flex-start;border:1.5px dashed var(--low-stock,#D62828);background:var(--low-stock-bg,#FFF5F5);border-radius:18px;padding:16px 18px;color:var(--low-stock,#D62828)}
@@ -815,7 +822,7 @@ html.av-cb-cinnamon-page #MainContent{margin:0;padding:0;width:100%;max-width:no
 html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
 .av-cb{padding-bottom:0!important}.av-cb__stats-section{border-radius:0}
 .av-cb__comparison{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:92px auto 30px;max-width:850px;align-items:stretch}
-.av-cb__comparison-card{position:relative;background:#fff;color:#514e4b;border:1px solid #ddd;border-radius:20px;overflow:visible;padding-top:84px;text-align:center}
+.av-cb__comparison-card{position:relative;background:#fff;color:#514e4b;border:1px solid #ddd;border-radius:20px;overflow:visible;padding-top:110px;text-align:center}
 .av-cb__comparison-card--ours{background:#9f3e10;border-color:#9f3e10;color:#fff}
 .av-cb__comparison-image{position:absolute;top:-70px;left:50%;transform:translateX(-50%);width:130px;height:140px;display:grid;place-items:center;pointer-events:none}
 .av-cb__comparison-image img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 8px 12px #0002);background:transparent}
@@ -831,7 +838,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
 .av-cb__photo-track figure{flex:0 0 180px;height:190px;margin:0;border-radius:14px;overflow:hidden;scroll-snap-align:start}.av-cb__photo-track img{width:100%;height:100%;object-fit:cover}
 .av-cb__review-card{flex:0 0 calc(50% - 8px);min-width:0;scroll-snap-align:start;background:white;border:1px solid #ddd;border-radius:18px;padding:28px;display:flex;flex-direction:column}
 .av-cb__review-card h3{font-size:23px;margin:20px 0 12px}.av-cb__review-card p{font-size:17px;line-height:1.65;white-space:normal}.av-cb__review-card footer{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;margin-top:auto;padding-top:22px;border-top:1px solid #eee;font-size:13px}.av-cb__review-card footer span,.av-cb__review-stars{color:#ab531f}.av-cb__review-placeholder{display:grid;place-items:center;background:#e9dfd6;color:#65574d}
-@media(max-width:600px){.av-cb__comparison{gap:12px;margin-top:76px}.av-cb__comparison-card{padding-top:62px;border-radius:14px}.av-cb__comparison-image{width:92px;height:108px;top:-56px}.av-cb__comparison-card h3{font-size:20px;padding:12px 8px 20px}.av-cb__comparison-row{font-size:13px;min-height:115px;padding:15px 8px}.av-cb__review-card{flex-basis:90%;padding:22px}.av-cb__photo-track figure{flex-basis:140px;height:155px}}
+@media(max-width:600px){.av-cb__comparison{gap:12px;margin-top:76px}.av-cb__comparison-card{padding-top:86px;border-radius:14px}.av-cb__comparison-image{width:92px;height:108px;top:-56px}.av-cb__comparison-card h3{font-size:20px;padding:12px 8px 20px}.av-cb__comparison-row{font-size:13px;min-height:115px;padding:15px 8px}.av-cb__review-card{flex-basis:90%;padding:22px}.av-cb__photo-track figure{flex-basis:140px;height:155px}}
 
   </style>
 
@@ -923,7 +930,17 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
           </div>
 
           <button class="av-cb__buy" type="submit" {% unless av_cb_variant.available %}disabled{% endunless %}>
-            {% if av_cb_variant.available %}{{ av_cb_add_to_cart_text }} · <span data-av-cb-button-price>{{ av_cb_unit_price | money }}</span>{% else %}Currently Unavailable{% endif %}
+            {% if av_cb_variant.available %}
+              <span class="av-cb__buy-mainline">
+                <span>{{ av_cb_add_to_cart_text }}</span>
+                <span class="av-cb__buy-divider" aria-hidden="true">|</span>
+                <span class="av-cb__buy-price" data-av-cb-button-price>{{ av_cb_unit_price | money }}</span>
+                {% if av_cb_compare_price != blank %}<s class="av-cb__buy-compare" data-av-cb-button-compare></s>{% endif %}
+              </span>
+              <span class="av-cb__buy-guarantee">90-Day Money-Back Guarantee</span>
+            {% else %}
+              <span class="av-cb__buy-mainline">Currently Unavailable</span>
+            {% endif %}
           </button>
         {% endform %}
 
@@ -951,9 +968,9 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
     <div class="av-cb__guarantee-card" style="--guarantee-highlight: {{ av_cb_guarantee_color }}; --guarantee-text: #171717;">
       <div class="av-cb__guarantee-image">
         {% if av_cb_guarantee_image != blank %}
-          {{ av_cb_guarantee_image | image_url: width: 240 | image_tag: loading: 'lazy', widths: '120,180,240', alt: 'Avonent 30-Day Money-Back Guarantee' }}
+          {{ av_cb_guarantee_image | image_url: width: 240 | image_tag: loading: 'lazy', widths: '120,180,240', alt: 'Avonent 90-Day Money-Back Guarantee' }}
         {% else %}
-          <div class="av-cb__guarantee-seal"><span>30<br><small>DAYS</small></span></div>
+          <div class="av-cb__guarantee-seal"><span>90<br><small>DAYS</small></span></div>
         {% endif %}
       </div>
       <div class="av-cb__guarantee-copy">
@@ -1366,6 +1383,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       const qtyInput = root.querySelector('[data-av-cb-quantity]');
       const total = root.querySelector('[data-av-cb-price]');
       const btnTotal = root.querySelector('[data-av-cb-button-price]');
+      const btnCompare = root.querySelector('[data-av-cb-button-compare]');
       const stickyPrice = root.querySelector('[data-av-cb-sticky-price]');
       const money = (cents) => new Intl.NumberFormat(document.documentElement.lang || 'en-US', {style:'currency', currency:'USD'}).format(cents / 100);
       root.querySelectorAll('[data-av-cb-bundle-price]').forEach(el => {
@@ -1377,6 +1395,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
           const qty = Number(el.dataset.avCbBundleCompare || 1);
           el.textContent = money(compareUnit * qty);
         });
+        if (btnCompare) btnCompare.textContent = money(compareUnit);
       }
       root.querySelectorAll('[data-av-cb-bundle]').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -1385,6 +1404,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
           if (qtyInput) qtyInput.value = qty;
           if (total) total.textContent = money(unit * qty);
           if (btnTotal) btnTotal.textContent = money(unit * qty);
+          if (btnCompare && compareUnit) btnCompare.textContent = money(compareUnit * qty);
           if (stickyPrice) stickyPrice.textContent = money(unit * qty);
         });
       });
