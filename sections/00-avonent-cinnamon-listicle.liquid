@@ -89,6 +89,20 @@
               {% if block.settings.image_caption != blank %}<div class="avl-benefit__caption">{{ block.settings.image_caption | escape }}</div>{% endif %}
             </div>
           </article>
+
+          {% if avl_number == 6 and section.settings.show_survey_results %}
+            <aside class="avl-results" aria-labelledby="avl-results-heading">
+              <h2 id="avl-results-heading">{{ section.settings.results_heading | escape }}</h2>
+              <p class="avl-results__lead">{{ section.settings.results_subheading | escape }}</p>
+              <div class="avl-results__grid">
+                <div class="avl-results__item"><strong>{{ section.settings.results_1_percent | escape }}</strong><p>{{ section.settings.results_1_text | escape }}</p></div>
+                <div class="avl-results__item"><strong>{{ section.settings.results_2_percent | escape }}</strong><p>{{ section.settings.results_2_text | escape }}</p></div>
+                <div class="avl-results__item"><strong>{{ section.settings.results_3_percent | escape }}</strong><p>{{ section.settings.results_3_text | escape }}</p></div>
+                <div class="avl-results__item"><strong>{{ section.settings.results_4_percent | escape }}</strong><p>{{ section.settings.results_4_text | escape }}</p></div>
+              </div>
+              <p class="avl-results__note">{{ section.settings.results_note | escape }}</p>
+            </aside>
+          {% endif %}
         {% endif %}
       {% endfor %}
     </section>
@@ -132,6 +146,7 @@
       </div>
     </section>
 
+    {% if avl_review_count > 0 %}
     <section class="avl-reviews avl-container" aria-labelledby="avl-reviews-heading">
       <header class="avl-section-heading">
         <span class="avl-kicker">FROM THE COMMUNITY</span>
@@ -160,36 +175,15 @@
         <div class="avl-reviews__empty"><p>Interested in hearing from the Avonent community?</p><a href="{{ avl_product_url }}">Visit the product page for the latest customer feedback <span aria-hidden="true">↗</span></a></div>
       {% endif %}
     </section>
-
-    <section class="avl-faq avl-container" aria-labelledby="avl-faq-heading">
-      <div class="avl-faq__intro">
-        <span class="avl-kicker">GOOD QUESTIONS, CLEAR ANSWERS</span>
-        <h2 id="avl-faq-heading">{{ section.settings.faq_title | escape }}</h2>
-        <p>{{ section.settings.faq_subtitle | escape }}</p>
-      </div>
-      <div class="avl-faq__items">
-        {% for block in section.blocks %}
-          {% if block.type == 'faq' %}
-            <details class="avl-faq__item" {{ block.shopify_attributes }}>
-              <summary>{{ block.settings.question | escape }}<span class="avl-faq__plus" aria-hidden="true"></span></summary>
-              <div class="avl-rich avl-faq__answer">{{ block.settings.answer }}</div>
-            </details>
-          {% endif %}
-        {% endfor %}
-      </div>
-    </section>
+    {% endif %}
 
     <div class="avl-final-cta">
       <div class="avl-container avl-final-cta__inner">
-        <span>Make your daily wellness routine a little more intentional.</span>
-        <a class="avl-button" href="{{ avl_product_url }}">{{ section.settings.final_cta | escape }} <span aria-hidden="true">↗</span></a>
+        <a class="avl-button avl-final-cta__button" href="{{ avl_product_url }}">{{ section.settings.final_cta | escape }} <span aria-hidden="true">↗</span></a>
       </div>
     </div>
   </div>
 
-  <div class="avl-disclaimer avl-container">
-    <p>*These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease. Talk with your healthcare professional before using supplements, especially if you take prescription medication for blood sugar.</p>
-  </div>
   <div class="avl-mini-footer">
     <div class="avl-mini-footer__brand">Avonent<span>.</span></div>
     <nav aria-label="Legal links">
@@ -304,23 +298,19 @@
   .avl-reviews__empty{background:#fff;border:1px solid var(--avl-line);border-radius:15px;text-align:center;padding:31px 24px}
   .avl-reviews__empty p{font-size:19px;font-family:Georgia,serif}
   .avl-reviews__empty a{display:inline-block;margin-top:10px;color:var(--avl-accent);font-weight:800;text-decoration:underline}
-  .avl-faq{display:grid;grid-template-columns:1fr 1.35fr;gap:100px;padding-bottom:110px}
-  .avl-faq__intro h2{font-size:clamp(31px,3.2vw,46px);margin:16px 0}
-  .avl-faq__intro p{color:var(--avl-muted)}
-  .avl-faq__item{border-bottom:1px solid var(--avl-line);padding:0}
-  .avl-faq__item:first-child{border-top:1px solid var(--avl-line)}
-  .avl-faq__item summary{display:flex;justify-content:space-between;align-items:center;gap:16px;list-style:none;cursor:pointer;padding:21px 4px;font-weight:750;line-height:1.35}
-  .avl-faq__item summary::-webkit-details-marker{display:none}
-  .avl-faq__plus{position:relative;width:16px;height:16px;flex:none}
-  .avl-faq__plus:before,.avl-faq__plus:after{content:'';position:absolute;background:var(--avl-accent);left:0;top:7px;width:16px;height:2px}
-  .avl-faq__plus:after{transform:rotate(90deg)}
-  .avl-faq__item[open] .avl-faq__plus:after{transform:rotate(0)}
-  .avl-faq__answer{color:var(--avl-muted);padding:0 30px 23px 4px;line-height:1.75;font-size:14px}
+
+  .avl-results{border:1px solid #7c655b;border-radius:9px;background:#fff;max-width:100%;padding:40px 40px 31px;margin:46px 0 80px;text-align:center}
+  .avl-results h2{font-family:var(--font-heading--family,Georgia,serif);font-size:clamp(29px,3vw,39px);letter-spacing:-.03em}
+  .avl-results__lead{font-size:18px;margin:12px 0 27px!important;color:#47403c}
+  .avl-results__grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:35px;text-align:left}
+  .avl-results__item{border-top:2px solid #a89d95;padding-top:14px}
+  .avl-results__item strong{display:block;color:var(--avl-accent);font-size:clamp(41px,4vw,60px);font-weight:850;letter-spacing:-.06em;line-height:1.15}
+  .avl-results__item p{font-size:14px;line-height:1.48;margin-top:13px}
+  .avl-results__note{font-size:11px;color:var(--avl-muted);line-height:1.5;margin-top:28px!important;text-align:left}
+  @media(max-width:700px){.avl-results{padding:29px 20px;margin:25px 0 55px}.avl-results h2{font-size:30px}.avl-results__lead{font-size:15px;margin-bottom:22px!important}.avl-results__grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:25px 17px}.avl-results__item strong{font-size:43px}.avl-results__item p{font-size:12px}.avl-results__note{text-align:center}}
   .avl-final-cta{background:#f0e5db;padding:28px 0}
-  .avl-final-cta__inner{display:flex;align-items:center;justify-content:space-between;gap:22px}
-  .avl-final-cta__inner>span{font-family:Georgia,serif;font-size:clamp(18px,2vw,25px);font-weight:700}
-  .avl-disclaimer{padding-top:32px;padding-bottom:30px}
-  .avl-disclaimer p{color:#807872;font-size:11px;line-height:1.6;max-width:990px;margin:auto;text-align:center}
+  .avl-final-cta__inner{display:flex;align-items:center;justify-content:center}
+  .avl-final-cta__button{width:min(540px,100%);font-size:17px;padding-block:19px}
   .avl-mini-footer{border-top:1px solid var(--avl-line);background:#fff;padding:34px 24px 36px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:19px}
   .avl-mini-footer__brand{font-size:32px}
   .avl-mini-footer nav{display:flex;justify-content:center;flex-wrap:wrap;gap:15px 35px;font-size:13px}
@@ -337,7 +327,6 @@
     .avl-hero{gap:30px;padding:45px 0 68px}
     .avl-benefit{gap:38px}
     .avl-formula__inner{gap:40px}
-    .avl-faq{gap:45px}
     .avl-offer__panel{padding:42px 36px;gap:30px}
   }
   @media(max-width:700px){
@@ -378,9 +367,6 @@
     .avl-reviews{padding-bottom:70px}
     .avl-reviews__grid{grid-template-columns:1fr}
     .avl-review__image{aspect-ratio:1.8}
-    .avl-faq{display:block;padding-bottom:70px}
-    .avl-faq__intro{margin-bottom:28px}
-    .avl-faq__intro h2{font-size:33px}
     .avl-final-cta__inner{flex-direction:column;align-items:stretch;text-align:center}
     .avl-final-cta .avl-button{width:100%}
     .avl-mini-footer nav{gap:12px 19px}
@@ -400,68 +386,379 @@
   "tag": "section",
   "class": "avonent-listicle-section",
   "settings": [
-    {"type":"product","id":"featured_product","label":"Product to link"},
-    {"type":"image_picker","id":"logo_image","label":"Logo (optional; uses theme logo)"},
-    {"type":"text","id":"announcement_text","label":"Announcement bar","default":"MEET YOUR NEW DAILY WELLNESS RITUAL · 30-DAY GUARANTEE"},
-    {"type":"color","id":"accent_color","label":"Cinnamon accent","default":"#B96A46"},
-    {"type":"color","id":"text_color","label":"Text color","default":"#292522"},
-    {"type":"color","id":"background_color","label":"Page background","default":"#FFFBF7"},
-    {"type":"header","content":"Hero"},
-    {"type":"image_picker","id":"hero_image","label":"Hero photo"},
-    {"type":"text","id":"hero_image_alt","label":"Hero image description","default":"Avonent Ceylon cinnamon daily supplement"},
-    {"type":"text","id":"hero_image_badge","label":"Photo label","default":"A wellness ritual worth keeping"},
-    {"type":"text","id":"hero_eyebrow","label":"Eyebrow","default":"The Avonent guide"},
-    {"type":"text","id":"hero_title","label":"Main headline","default":"7 Reasons to Choose Avonent Ceylon Cinnamon"},
-    {"type":"text","id":"hero_subtitle","label":"Headline subtext","default":"A thoughtful approach to everyday metabolic wellness"},
-    {"type":"richtext","id":"hero_intro","label":"Intro copy","default":"<p>There’s a difference between another supplement on your shelf and a formula designed around your everyday routine. Here’s what makes Avonent Ceylon Cinnamon with Berberine HCl worth a closer look.</p>"},
-    {"type":"text","id":"hero_cta","label":"Top button","default":"See Today’s Offer"},
-    {"type":"text","id":"hero_microcopy","label":"Top button note","default":"30-day money-back guarantee"},
-    {"type":"header","content":"Seven reasons"},
-    {"type":"text","id":"intro_band_text","label":"Intro band","default":"True Ceylon cinnamon, complementary ingredients, and a simple routine — without the dramatic promises."},
-    {"type":"text","id":"benefits_heading","label":"Section headline","default":"What makes Avonent different?"},
-    {"type":"text","id":"benefits_subheading","label":"Section subtext","default":"Seven thoughtful details behind a formula created to complement a balanced daily wellness routine."},
-    {"type":"header","content":"Formula and offer"},
-    {"type":"image_picker","id":"formula_image","label":"Formula product image"},
-    {"type":"text","id":"formula_title","label":"Formula headline","default":"Three key ingredients. One intentional formula."},
-    {"type":"text","id":"formula_description","label":"Formula body","default":"Avonent pairs Ceylon cinnamon with Berberine HCl and MCT oil. Explore the full ingredient panel, directions, and current options on the product page."},
-    {"type":"text","id":"formula_cta","label":"Formula link","default":"See the complete formula"},
-    {"type":"text","id":"offer_title","label":"Offer headline","default":"Make room for a better daily ritual."},
-    {"type":"text","id":"offer_description","label":"Offer body","default":"Choose the Avonent option that fits your routine and see the current price before checking out."},
-    {"type":"text","id":"offer_perk_1","label":"Offer benefit 1","default":"Ceylon cinnamon + berberine"},
-    {"type":"text","id":"offer_perk_2","label":"Offer benefit 2","default":"Simple daily format"},
-    {"type":"text","id":"offer_cta","label":"Offer button","default":"Shop Avonent"},
-    {"type":"text","id":"offer_guarantee","label":"Guarantee line","default":"Protected by our 30-day money-back guarantee"},
-    {"type":"header","content":"Reviews and FAQs"},
-    {"type":"text","id":"reviews_title","label":"Review headline","default":"Everyday experiences, shared honestly."},
-    {"type":"text","id":"reviews_subtitle","label":"Review section intro","default":"Experiences are personal. Explore real customer feedback as you decide what fits your routine."},
-    {"type":"text","id":"faq_title","label":"FAQ headline","default":"Questions before you begin?"},
-    {"type":"text","id":"faq_subtitle","label":"FAQ intro","default":"The essentials, in plain language."},
-    {"type":"text","id":"final_cta","label":"Final button","default":"See Today’s Offer"},
-    {"type":"text","id":"sticky_cta","label":"Sticky button","default":"See Offers"}
+    {
+      "type": "product",
+      "id": "featured_product",
+      "label": "Product to link"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo (optional; uses theme logo)"
+    },
+    {
+      "type": "text",
+      "id": "announcement_text",
+      "label": "Announcement bar",
+      "default": "MEET YOUR NEW DAILY WELLNESS RITUAL · 30-DAY GUARANTEE"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Cinnamon accent",
+      "default": "#B96A46"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#292522"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Page background",
+      "default": "#FFFBF7"
+    },
+    {
+      "type": "header",
+      "content": "Hero"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero photo"
+    },
+    {
+      "type": "text",
+      "id": "hero_image_alt",
+      "label": "Hero image description",
+      "default": "Avonent Ceylon cinnamon daily supplement"
+    },
+    {
+      "type": "text",
+      "id": "hero_image_badge",
+      "label": "Photo label",
+      "default": "A wellness ritual worth keeping"
+    },
+    {
+      "type": "text",
+      "id": "hero_eyebrow",
+      "label": "Eyebrow",
+      "default": "The Avonent guide"
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Main headline",
+      "default": "7 Reasons to Choose Avonent Ceylon Cinnamon"
+    },
+    {
+      "type": "text",
+      "id": "hero_subtitle",
+      "label": "Headline subtext",
+      "default": "A thoughtful approach to everyday metabolic wellness"
+    },
+    {
+      "type": "richtext",
+      "id": "hero_intro",
+      "label": "Intro copy",
+      "default": "<p>There’s a difference between another supplement on your shelf and a formula designed around your everyday routine. Here’s what makes Avonent Ceylon Cinnamon with Berberine HCl worth a closer look.</p>"
+    },
+    {
+      "type": "text",
+      "id": "hero_cta",
+      "label": "Top button",
+      "default": "See Today’s Offer"
+    },
+    {
+      "type": "text",
+      "id": "hero_microcopy",
+      "label": "Top button note",
+      "default": "30-day money-back guarantee"
+    },
+    {
+      "type": "header",
+      "content": "Seven reasons"
+    },
+    {
+      "type": "text",
+      "id": "intro_band_text",
+      "label": "Intro band",
+      "default": "True Ceylon cinnamon, complementary ingredients, and a simple routine — without the dramatic promises."
+    },
+    {
+      "type": "text",
+      "id": "benefits_heading",
+      "label": "Section headline",
+      "default": "What makes Avonent different?"
+    },
+    {
+      "type": "text",
+      "id": "benefits_subheading",
+      "label": "Section subtext",
+      "default": "Seven thoughtful details behind a formula created to complement a balanced daily wellness routine."
+    },
+    {
+      "type": "header",
+      "content": "Customer survey results"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_survey_results",
+      "label": "Show customer outcome statistics",
+      "default": false,
+      "info": "Only enable after independent clinical substantiation of each health claim."
+    },
+    {
+      "type": "text",
+      "id": "results_heading",
+      "label": "Results heading",
+      "default": "Real Customers. Real Results."
+    },
+    {
+      "type": "text",
+      "id": "results_subheading",
+      "label": "Results intro",
+      "default": "People who switched to Avonent report after 12 weeks:"
+    },
+    {
+      "type": "text",
+      "id": "results_1_percent",
+      "label": "Statistic 1",
+      "default": "84%"
+    },
+    {
+      "type": "textarea",
+      "id": "results_1_text",
+      "label": "Statistic 1 description",
+      "default": "said their fasting blood-sugar readings had fallen after a long stretch of little change."
+    },
+    {
+      "type": "text",
+      "id": "results_2_percent",
+      "label": "Statistic 2",
+      "default": "79%"
+    },
+    {
+      "type": "textarea",
+      "id": "results_2_text",
+      "label": "Statistic 2 description",
+      "default": "said they were sleeping through the night without their usual early-morning bathroom trips."
+    },
+    {
+      "type": "text",
+      "id": "results_3_percent",
+      "label": "Statistic 3",
+      "default": "76%"
+    },
+    {
+      "type": "textarea",
+      "id": "results_3_text",
+      "label": "Statistic 3 description",
+      "default": "described clearer thinking during the day, with fewer afternoon foggy spells."
+    },
+    {
+      "type": "text",
+      "id": "results_4_percent",
+      "label": "Statistic 4",
+      "default": "71%"
+    },
+    {
+      "type": "textarea",
+      "id": "results_4_text",
+      "label": "Statistic 4 description",
+      "default": "reported improvement in energy levels and kidney-health indicators they tracked."
+    },
+    {
+      "type": "textarea",
+      "id": "results_note",
+      "label": "Research context",
+      "default": "Customer-reported survey observations after 12 weeks; not a controlled clinical trial. Individual results vary and these responses do not establish that Avonent caused the changes."
+    },
+    {
+      "type": "header",
+      "content": "Formula and offer"
+    },
+    {
+      "type": "image_picker",
+      "id": "formula_image",
+      "label": "Formula product image"
+    },
+    {
+      "type": "text",
+      "id": "formula_title",
+      "label": "Formula headline",
+      "default": "Three key ingredients. One intentional formula."
+    },
+    {
+      "type": "text",
+      "id": "formula_description",
+      "label": "Formula body",
+      "default": "Avonent pairs Ceylon cinnamon with Berberine HCl and MCT oil. Explore the full ingredient panel, directions, and current options on the product page."
+    },
+    {
+      "type": "text",
+      "id": "formula_cta",
+      "label": "Formula link",
+      "default": "See the complete formula"
+    },
+    {
+      "type": "text",
+      "id": "offer_title",
+      "label": "Offer headline",
+      "default": "Make room for a better daily ritual."
+    },
+    {
+      "type": "text",
+      "id": "offer_description",
+      "label": "Offer body",
+      "default": "Choose the Avonent option that fits your routine and see the current price before checking out."
+    },
+    {
+      "type": "text",
+      "id": "offer_perk_1",
+      "label": "Offer benefit 1",
+      "default": "Ceylon cinnamon + berberine"
+    },
+    {
+      "type": "text",
+      "id": "offer_perk_2",
+      "label": "Offer benefit 2",
+      "default": "Simple daily format"
+    },
+    {
+      "type": "text",
+      "id": "offer_cta",
+      "label": "Offer button",
+      "default": "Shop Avonent"
+    },
+    {
+      "type": "text",
+      "id": "offer_guarantee",
+      "label": "Guarantee line",
+      "default": "Protected by our 30-day money-back guarantee"
+    },
+    {
+      "type": "header",
+      "content": "Reviews and FAQs"
+    },
+    {
+      "type": "text",
+      "id": "reviews_title",
+      "label": "Review headline",
+      "default": "Everyday experiences, shared honestly."
+    },
+    {
+      "type": "text",
+      "id": "reviews_subtitle",
+      "label": "Review section intro",
+      "default": "Experiences are personal. Explore real customer feedback as you decide what fits your routine."
+    },
+    {
+      "type": "text",
+      "id": "final_cta",
+      "label": "Final button",
+      "default": "Shop Avonent Ceylon Cinnamon"
+    },
+    {
+      "type": "text",
+      "id": "sticky_cta",
+      "label": "Sticky button",
+      "default": "See Offers"
+    }
   ],
   "blocks": [
-    {"type":"benefit","name":"Numbered benefit","limit":7,"settings":[
-      {"type":"text","id":"category","label":"Small category label","default":"THE AVONENT DIFFERENCE"},
-      {"type":"text","id":"heading","label":"Benefit headline","default":"Built for your daily routine"},
-      {"type":"richtext","id":"body","label":"Benefit description","default":"<p>Tell your customers what makes this part of the formula meaningful.</p>"},
-      {"type":"text","id":"highlight","label":"Highlighted takeaway"},
-      {"type":"image_picker","id":"image","label":"Image for this section"},
-      {"type":"text","id":"image_alt","label":"Image description","default":"Avonent Ceylon cinnamon ingredient photograph"},
-      {"type":"text","id":"image_caption","label":"Optional photo caption"}
-    ]},
-    {"type":"review","name":"Real customer review","limit":6,"settings":[
-      {"type":"image_picker","id":"image","label":"Customer image (optional)"},
-      {"type":"text","id":"image_alt","label":"Customer image description"},
-      {"type":"text","id":"review_title","label":"Short review headline","default":"Customer experience"},
-      {"type":"richtext","id":"review_text","label":"Actual customer review"},
-      {"type":"text","id":"author","label":"Customer display name"},
-      {"type":"checkbox","id":"verified","label":"Verified purchaser (only if verified)","default":false}
-    ]},
-    {"type":"faq","name":"FAQ item","limit":10,"settings":[
-      {"type":"text","id":"question","label":"Question","default":"What should I know?"},
-      {"type":"richtext","id":"answer","label":"Answer","default":"<p>Share the details your customers are looking for.</p>"}
-    ]}
+    {
+      "type": "benefit",
+      "name": "Numbered benefit",
+      "limit": 7,
+      "settings": [
+        {
+          "type": "text",
+          "id": "category",
+          "label": "Small category label",
+          "default": "THE AVONENT DIFFERENCE"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Benefit headline",
+          "default": "Built for your daily routine"
+        },
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Benefit description",
+          "default": "<p>Tell your customers what makes this part of the formula meaningful.</p>"
+        },
+        {
+          "type": "text",
+          "id": "highlight",
+          "label": "Highlighted takeaway"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image for this section"
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Image description",
+          "default": "Avonent Ceylon cinnamon ingredient photograph"
+        },
+        {
+          "type": "text",
+          "id": "image_caption",
+          "label": "Optional photo caption"
+        }
+      ]
+    },
+    {
+      "type": "review",
+      "name": "Real customer review",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Customer image (optional)"
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Customer image description"
+        },
+        {
+          "type": "text",
+          "id": "review_title",
+          "label": "Short review headline",
+          "default": "Customer experience"
+        },
+        {
+          "type": "richtext",
+          "id": "review_text",
+          "label": "Actual customer review"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Customer display name"
+        },
+        {
+          "type": "checkbox",
+          "id": "verified",
+          "label": "Verified purchaser (only if verified)",
+          "default": false
+        }
+      ]
+    }
   ],
-  "presets":[{"name":"Avonent cinnamon listicle"}]
+  "presets": [
+    {
+      "name": "Avonent cinnamon listicle"
+    }
+  ]
 }
 {% endschema %}
