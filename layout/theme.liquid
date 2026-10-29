@@ -195,7 +195,12 @@
         data-product-transition="{{ settings.transition_to_main_product }}"
         data-template="{{ template }}"
       >
-        {{ content_for_layout }}
+        {% comment %} AVONENT_CINNAMON_BERBERINE_LAYOUT_ROUTE {% endcomment %}
+        {% if template.suffix == 'cinnamon-berberine' or product.handle == 'cinnamon-berberine-example' %}
+          {% render '00-cinnamon-berberine-page', product: product %}
+        {% else %}
+          {{ content_for_layout }}
+        {% endif %}
         {% if template.suffix == 'moringa' %}
           {% section '00-avonent-real-stories-carousel' %}
         {% endif %}
