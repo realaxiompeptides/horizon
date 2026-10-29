@@ -24,8 +24,12 @@
 #shopify-section-{{ section.id }} .av-cb__review-arrow{width:46px;height:46px;border:1px solid #e5cbbb;border-radius:50%;background:#fff7f2;color:#A84F1B;display:grid;place-items:center;cursor:pointer}
 #shopify-section-{{ section.id }} .av-cb__review-arrow svg{width:21px;height:21px}
 @media(max-width:600px){
-  #shopify-section-{{ section.id }} .av-cb__review-card{flex:0 0 100%;padding:20px}
-  #shopify-section-{{ section.id }} .av-cb__reviews{padding:28px 0 26px}
+  #shopify-section-{{ section.id }} .av-cb__review-card{flex:0 0 100%;padding:17px}
+  #shopify-section-{{ section.id }} .av-cb__review-card h3{font-size:19px;margin:15px 0 9px}
+  #shopify-section-{{ section.id }} .av-cb__review-card p{font-size:13.25px;line-height:1.5}
+  #shopify-section-{{ section.id }} .av-cb__review-card footer{padding-top:16px}
+  #shopify-section-{{ section.id }} .av-cb__review-tags{margin-top:13px}
+  #shopify-section-{{ section.id }} .av-cb__reviews{padding:24px 0 24px}
 }
 </style>
 <script>
@@ -200,12 +204,14 @@
         {
           "type": "textarea",
           "id": "bundle_2_badge",
-          "label": "Bundle 2 badge"
+          "label": "Bundle 2 badge",
+          "default": "Free Shipping"
         },
         {
           "type": "textarea",
           "id": "bundle_3_badge",
-          "label": "Bundle 3 badge"
+          "label": "Bundle 3 badge",
+          "default": "Free Shipping + E-Book"
         },
         {
           "type": "textarea",
@@ -736,7 +742,7 @@
           "type": "text",
           "id": "ours_2",
           "label": "Avonent benefit 2",
-          "default": "No Coumarin Detected"
+          "default": "No Coumarin — True Ceylon"
         },
         {
           "type": "text",
@@ -831,7 +837,7 @@
           "type": "textarea",
           "id": "benefits_item_4",
           "label": "Benefit 4",
-          "default": "Low-Coumarin Ceylon"
+          "default": "Coumarin-Free Ceylon"
         },
         {
           "type": "image_picker",
