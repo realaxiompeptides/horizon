@@ -17,7 +17,7 @@
     assign av_cb_one_time_compare_unit = 0
   endif
   assign av_cb_guarantee_image = av_cb_product.metafields.custom.av_cb_guarantee_image.value
-  assign av_cb_guarantee_highlight = av_cb_product.metafields.custom.av_cb_guarantee_highlight_text.value | default: '30-Day'
+  assign av_cb_guarantee_highlight = av_cb_product.metafields.custom.av_cb_guarantee_highlight_text.value | default: '90-Day'
   assign av_cb_guarantee_color = av_cb_product.metafields.custom.av_cb_guarantee_highlight_color.value | default: '#02C6EA'
   assign av_cb_stock_title = av_cb_product.metafields.custom.av_cb_low_stock_title.value | default: 'WARNING: Low Stock Notice'
   assign av_cb_stock_text = av_cb_product.metafields.custom.av_cb_low_stock_text.value | default: 'Inventory can move quickly during promotions. If Avonent fits your routine, ordering while stock is available can help avoid interruptions.'
@@ -42,8 +42,8 @@
   assign av_cb_add_to_cart_text = av_cb_product.metafields.custom.av_cb_add_to_cart_text.value | default: 'Add to Cart'
   assign av_cb_refill_text = av_cb_product.metafields.custom.av_cb_refill_text.value | default: 'Refills ship every 30 days'
   assign av_cb_cancel_text = av_cb_product.metafields.custom.av_cb_cancel_text.value | default: 'Stop or cancel anytime'
-  assign av_cb_guarantee_heading = av_cb_product.metafields.custom.av_cb_guarantee_heading.value | default: '30-Day Money-Back Guarantee'
-  assign av_cb_guarantee_body = av_cb_product.metafields.custom.av_cb_guarantee_body.value | default: 'money-back guarantee. Try Avonent with confidence and contact us within 30 days if you are not satisfied.'
+  assign av_cb_guarantee_heading = av_cb_product.metafields.custom.av_cb_guarantee_heading.value | default: '90-Day Money-Back Guarantee'
+  assign av_cb_guarantee_body = av_cb_product.metafields.custom.av_cb_guarantee_body.value | default: 'money-back guarantee. Try Avonent with confidence and contact us within 90 days if you are not satisfied.'
   assign av_cb_acc_1_title = av_cb_product.metafields.custom.av_cb_acc_1_title.value | default: 'Clinically Supported Benefits'
   assign av_cb_acc_1_body = av_cb_product.metafields.custom.av_cb_acc_1_body.value
   assign av_cb_acc_2_title = av_cb_product.metafields.custom.av_cb_acc_2_title.value | default: 'Key Ingredients'
@@ -70,7 +70,7 @@
   assign av_cb_stat_4_end = av_cb_product.metafields.custom.av_cb_stat_4_end.value
   assign av_cb_stat_4_label = av_cb_product.metafields.custom.av_cb_stat_4_label.value
   assign av_cb_stats_cta = av_cb_product.metafields.custom.av_cb_stats_cta.value | default: 'Try Risk-Free Today'
-  assign av_cb_stats_guarantee = av_cb_product.metafields.custom.av_cb_stats_guarantee.value | default: '30-Day Money-Back Guarantee'
+  assign av_cb_stats_guarantee = av_cb_product.metafields.custom.av_cb_stats_guarantee.value | default: '90-Day Money-Back Guarantee'
   assign av_cb_stats_guarantee_icon = av_cb_product.metafields.custom.av_cb_stats_guarantee_icon.value
   assign av_cb_stats_text_color = av_cb_product.metafields.custom.av_cb_stats_text_color.value | default: '#FFFFFF'
   assign av_cb_stats_show = av_cb_product.metafields.custom.av_cb_stats_show.value
@@ -112,15 +112,15 @@
   assign av_cb_science_2_subtitle = av_cb_product.metafields.custom.av_cb_science_2_subtitle.value | default: 'Oil-based softgel, no cinnamon powder'
   assign av_cb_science_2_body = av_cb_product.metafields.custom.av_cb_science_2_body.value | default: 'Avonent uses an MCT-oil softgel instead of a dry cinnamon powder capsule. No loose powder and no gritty cinnamon taste — just a smoother daily format designed to be easy to take consistently.'
   assign av_cb_science_3_image = av_cb_product.metafields.custom.av_cb_science_3_image.value
-  assign av_cb_science_3_title = av_cb_product.metafields.custom.av_cb_science_3_title.value | default: 'No Coumarin Detected'
-  assign av_cb_science_3_subtitle = av_cb_product.metafields.custom.av_cb_science_3_subtitle.value | default: 'Verified in our lab test'
-  assign av_cb_science_3_body = av_cb_product.metafields.custom.av_cb_science_3_body.value | default: 'Avonent uses Cinnamomum verum — true Ceylon cinnamon, not common Cassia. In the lab test provided for this formula, coumarin was not detected, giving you a cleaner, verified cinnamon choice for a consistent daily routine.'
+  assign av_cb_science_3_title = av_cb_product.metafields.custom.av_cb_science_3_title.value | default: 'Liver Health Support'
+  assign av_cb_science_3_subtitle = av_cb_product.metafields.custom.av_cb_science_3_subtitle.value | default: 'Made with coumarin-free Ceylon cinnamon'
+  assign av_cb_science_3_body = av_cb_product.metafields.custom.av_cb_science_3_body.value | default: 'Avonent uses Cinnamomum verum — true Ceylon cinnamon rather than common Cassia. The lab test provided for this formula reported no detectable coumarin, supporting a cleaner cinnamon choice for a consistent daily routine.'
   assign av_cb_science_4_image = av_cb_product.metafields.custom.av_cb_science_4_image.value
-  assign av_cb_science_4_title = av_cb_product.metafields.custom.av_cb_science_4_title.value | default: 'MCT Oil Delivery'
-  assign av_cb_science_4_subtitle = av_cb_product.metafields.custom.av_cb_science_4_subtitle.value | default: 'Oil-based carrier for the extract'
-  assign av_cb_science_4_body = av_cb_product.metafields.custom.av_cb_science_4_body.value | default: 'Avonent delivers its 12:1 Ceylon cinnamon extract in an MCT-oil softgel rather than a dry powder capsule. The oil-based carrier creates a clean, easy-to-take delivery format built for simple, consistent everyday use.'
+  assign av_cb_science_4_title = av_cb_product.metafields.custom.av_cb_science_4_title.value | default: 'Enhanced Absorption'
+  assign av_cb_science_4_subtitle = av_cb_product.metafields.custom.av_cb_science_4_subtitle.value | default: 'Helps your body absorb cinnamon'
+  assign av_cb_science_4_body = av_cb_product.metafields.custom.av_cb_science_4_body.value | default: 'Avonent suspends its concentrated Ceylon cinnamon extract in MCT oil inside a softgel instead of using a basic dry-powder capsule. The oil-based carrier is designed to support efficient delivery while keeping the daily routine simple and easy to take.'
   assign av_cb_science_cta = av_cb_product.metafields.custom.av_cb_science_cta.value | default: 'Try Risk-Free Today'
-  assign av_cb_science_guarantee = av_cb_product.metafields.custom.av_cb_science_guarantee.value | default: '30-Day Money-Back Guarantee'
+  assign av_cb_science_guarantee = av_cb_product.metafields.custom.av_cb_science_guarantee.value | default: '90-Day Money-Back Guarantee'
   assign av_cb_science_ticker_1 = av_cb_product.metafields.custom.av_cb_science_ticker_1.value | default: '14,400 mg Ceylon Equivalent'
   assign av_cb_science_ticker_2 = av_cb_product.metafields.custom.av_cb_science_ticker_2.value | default: '400 mg Berberine HCl'
   assign av_cb_science_ticker_3 = av_cb_product.metafields.custom.av_cb_science_ticker_3.value | default: '200 mg MCT Oil'
@@ -142,7 +142,7 @@
   assign av_cb_compare_heading = av_cb_product.metafields.custom.av_cb_compare_heading.value | default: 'Avonent vs. Typical Cinnamon Supplements'
   assign av_cb_compare_subheading = av_cb_product.metafields.custom.av_cb_compare_subheading.value
   assign av_cb_compare_cta = av_cb_product.metafields.custom.av_cb_compare_cta.value | default: 'Try Avonent Risk-Free'
-  assign av_cb_compare_guarantee = av_cb_product.metafields.custom.av_cb_compare_guarantee.value | default: '30-Day Money-Back Guarantee'
+  assign av_cb_compare_guarantee = av_cb_product.metafields.custom.av_cb_compare_guarantee.value | default: '90-Day Money-Back Guarantee'
   assign av_cb_risk_image = blank
   assign av_cb_risk_eyebrow = 'FEEL THE DIFFERENCE'
   assign av_cb_risk_heading = '90-Day Risk-Free Trial'
@@ -787,7 +787,7 @@
     .av-cb__science-ticker-icon svg{width:14px;height:14px}
     @keyframes avCbTicker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
     @media(prefers-reduced-motion:reduce){.av-cb__science-ticker-track{animation:none}.av-cb__science-body{animation:none}.av-cb__science-card{transition:none}}
-    @media(max-width:600px){.av-cb__science-section{padding-top:42px}.av-cb__science-wrap{width:min(100% - 22px,920px)}.av-cb__science-head{margin-bottom:25px}.av-cb__science-head h2{font-size:31px}.av-cb__science-head p{font-size:14px}.av-cb__science-cards{gap:12px}.av-cb__science-card{border-radius:15px}.av-cb__science-card summary{grid-template-columns:88px 1fr auto;gap:12px;padding:14px}.av-cb__science-thumb{width:88px;height:82px;border-radius:10px}.av-cb__science-thumb svg{width:44px;height:44px}.av-cb__science-copy h3{font-size:17px;margin-bottom:5px}.av-cb__science-copy p{font-size:12.5px}.av-cb__science-toggle{width:36px;height:36px;flex-basis:36px}.av-cb__science-card[open] summary{padding:10px 12px 0}.av-cb__science-body{padding:0 18px 20px;font-size:14px}.av-cb__science-cta-wrap{padding:22px 0 18px}.av-cb__science-cta{min-height:54px;font-size:15px}.av-cb__science-guarantee{font-size:12px}.av-cb__science-ticker-item{padding:11px 22px;font-size:12px}}
+    @media(max-width:600px){.av-cb__science-section{padding-top:42px}.av-cb__science-wrap{width:min(100% - 22px,920px)}.av-cb__science-head{margin-bottom:25px}.av-cb__science-head h2{font-size:31px}.av-cb__science-head p{font-size:14px}.av-cb__science-cards{gap:15px}.av-cb__science-card{border-radius:15px}.av-cb__science-card summary{grid-template-columns:88px 1fr auto;gap:12px;padding:14px}.av-cb__science-thumb{width:88px;height:82px;border-radius:10px}.av-cb__science-thumb svg{width:44px;height:44px}.av-cb__science-copy h3{font-size:17px;margin-bottom:5px}.av-cb__science-copy p{font-size:12.5px}.av-cb__science-toggle{width:36px;height:36px;flex-basis:36px}.av-cb__science-card[open] summary{padding:10px 12px 0}.av-cb__science-body{padding:0 18px 20px;font-size:14px}.av-cb__science-cta-wrap{padding:22px 0 18px}.av-cb__science-cta{min-height:54px;font-size:15px}.av-cb__science-guarantee{font-size:12px}.av-cb__science-ticker-item{padding:11px 22px;font-size:12px}}
 
     .av-cb__journey{background:#fff;padding:34px 0 58px}
     .av-cb__journey-wrap{width:min(900px,calc(100% - 32px));margin:0 auto}
@@ -849,6 +849,23 @@
     .av-cb__risk-image-wrap{width:min(760px,100%);margin:34px auto 0;display:flex;justify-content:center;align-items:flex-end;min-height:260px}
     .av-cb__risk-image{display:block;width:100%;height:auto;max-height:560px;object-fit:contain;object-position:center bottom}.av-cb__risk-image--fallback{width:min(440px,76%)}
     @media(max-width:600px){.av-cb__risk-section{padding-top:46px}.av-cb__risk-inner{width:min(100% - 24px,880px)}.av-cb__risk-seal{width:92px;height:92px;margin-bottom:22px}.av-cb__risk-seal strong{font-size:36px}.av-cb__risk-seal-top,.av-cb__risk-seal-bottom{font-size:14px}.av-cb__risk-section h2{font-size:34px}.av-cb__risk-section p{font-size:15px}.av-cb__risk-button{min-height:56px;font-size:16px;margin-top:24px}.av-cb__risk-image-wrap{margin-top:28px;min-height:210px}}
+    .av-cb__post-risk-reviews{background:#fff;padding:54px 0 62px;color:#181411}
+    .av-cb__post-risk-reviews-wrap{width:min(900px,calc(100% - 32px));margin:0 auto}
+    .av-cb__post-risk-reviews-head{text-align:center;margin:0 auto 30px}
+    .av-cb__post-risk-rating{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;font-size:15px;color:#2c2825}
+    .av-cb__post-risk-stars,.av-cb__post-risk-review-rating span{color:#C86F3A;letter-spacing:1px}
+    .av-cb__post-risk-stars{font-size:24px;line-height:1}
+    .av-cb__post-risk-divider{width:1px;height:24px;background:#cfc6c0}
+    .av-cb__post-risk-reviews-head h2{font-size:clamp(32px,4.2vw,48px);line-height:1.08;letter-spacing:-.035em;margin:24px 0 0;font-weight:500}
+    .av-cb__post-risk-review-list{display:grid;gap:22px}
+    .av-cb__post-risk-review-card{background:#fff;border:1.5px solid #ddd8d4;border-radius:18px;padding:28px 30px}
+    .av-cb__post-risk-review-rating{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+    .av-cb__post-risk-review-rating strong{font-size:22px;color:#111}
+    .av-cb__post-risk-review-rating span{font-size:22px}
+    .av-cb__post-risk-review-card p{margin:0;color:#28231f;font-size:17px;line-height:1.62}
+    .av-cb__post-risk-tags{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+    .av-cb__post-risk-tags span{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:0 16px;border:1.5px solid #C86F3A;border-radius:999px;color:#B6551B;font-size:13px}
+    @media(max-width:600px){.av-cb__post-risk-reviews{padding:44px 0 52px}.av-cb__post-risk-reviews-wrap{width:min(100% - 22px,900px)}.av-cb__post-risk-reviews-head{margin-bottom:24px}.av-cb__post-risk-rating{gap:9px;font-size:13px}.av-cb__post-risk-stars{font-size:20px}.av-cb__post-risk-divider{height:20px}.av-cb__post-risk-reviews-head h2{font-size:31px;margin-top:18px}.av-cb__post-risk-review-list{gap:16px}.av-cb__post-risk-review-card{padding:22px 20px;border-radius:15px}.av-cb__post-risk-review-rating{margin-bottom:15px}.av-cb__post-risk-review-rating strong,.av-cb__post-risk-review-rating span{font-size:19px}.av-cb__post-risk-review-card p{font-size:14.5px;line-height:1.6}.av-cb__post-risk-tags{margin-top:20px;gap:8px}.av-cb__post-risk-tags span{min-height:33px;padding:0 13px;font-size:12px}}
     .av-cb__faq-section{background:#fff;padding:62px 0 72px}
     .av-cb__faq-wrap{width:min(900px,calc(100% - 32px));margin:0 auto}
     .av-cb__faq-heading{text-align:center;font-size:clamp(34px,4.3vw,50px);line-height:1.05;letter-spacing:-.035em;margin:0 0 32px;color:#16110e}
@@ -1492,6 +1509,34 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         {% elsif av_cb_product.featured_image %}
           {{ av_cb_product.featured_image | image_url: width: 1600 | image_tag: class: 'av-cb__risk-image av-cb__risk-image--fallback', loading: 'lazy', widths: '600,900,1200,1600', sizes: '(min-width:900px) 760px, 100vw', alt: av_cb_display_title }}
         {% endif %}
+      </div>
+    </div>
+  </section>
+
+  <section class="av-cb__post-risk-reviews" aria-labelledby="av-cb-post-risk-reviews-heading">
+    <div class="av-cb__post-risk-reviews-wrap">
+      <header class="av-cb__post-risk-reviews-head">
+        <div class="av-cb__post-risk-rating">
+          <span class="av-cb__post-risk-stars" aria-hidden="true">★★★★★</span>
+          <span>Rated 4.9 / 5</span>
+          <span class="av-cb__post-risk-divider" aria-hidden="true"></span>
+          <span>Trusted by <strong>4,000+</strong></span>
+        </div>
+        <h2 id="av-cb-post-risk-reviews-heading">They Felt the Shift. You Will Too.</h2>
+      </header>
+
+      <div class="av-cb__post-risk-review-list">
+        <article class="av-cb__post-risk-review-card">
+          <div class="av-cb__post-risk-review-rating"><strong>4.9</strong><span aria-hidden="true">★★★★★</span></div>
+          <p>I've been consistent with my daily serving every morning for almost two months now, and my blood sugar readings have never been steadier. The first few weeks I didn't notice much, but by week 6 the difference was clear. Sticking with it daily is what made it work.</p>
+          <div class="av-cb__post-risk-tags"><span>Consistent Use</span><span>Steady Blood Sugar</span></div>
+        </article>
+
+        <article class="av-cb__post-risk-review-card">
+          <div class="av-cb__post-risk-review-rating"><strong>5.0</strong><span aria-hidden="true">★★★★★</span></div>
+          <p>I was skeptical that a supplement could actually move the needle, but three months of daily use later, my fasting numbers are the best they've been in years. It's not a quick fix, but it's something you have to stick with — and for me that consistency paid off.</p>
+          <div class="av-cb__post-risk-tags"><span>Long-Term Results</span><span>Balanced Blood Sugar</span></div>
+        </article>
       </div>
     </div>
   </section>
