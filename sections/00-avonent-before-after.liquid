@@ -1,3 +1,12 @@
+{% comment %} AVONENT_CINNAMON_BERBERINE_HIDE {% endcomment %}
+{% liquid
+  assign av_cb_section_product = closest.product | default: product
+  assign av_cb_hide_section = false
+  if template.suffix == 'cinnamon-berberine' or av_cb_section_product.handle == 'cinnamon-berberine-example'
+    assign av_cb_hide_section = true
+  endif
+%}
+{% unless av_cb_hide_section %}
 {% comment %}
   Avonent Before & After Digestive Support
   Add this file to: sections/00-avonent-before-after.liquid
@@ -617,6 +626,9 @@
     });
   })();
 </script>
+
+
+{% endunless %}
 
 {% schema %}
 {
