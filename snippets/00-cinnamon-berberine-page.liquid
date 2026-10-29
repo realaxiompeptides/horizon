@@ -1,3 +1,7 @@
+{% doc %}
+  Renders the Avonent cinnamon product page.
+  @param {product} product - The current product.
+{% enddoc %}
 {% liquid
   assign av_cb_product = product
   assign av_cb_variant = av_cb_product.selected_or_first_available_variant
@@ -375,6 +379,81 @@
     @media(max-width:600px){.av-cb__benefits-section{padding:42px 18px 0}.av-cb__benefits-head{margin-bottom:26px}.av-cb__benefits-head h2{font-size:31px}.av-cb__benefits-head p{font-size:14px}.av-cb__benefits-grid{gap:26px 18px;margin-bottom:26px}.av-cb__benefit-icon{width:52px;height:52px}.av-cb__benefit-icon svg{width:46px;height:46px}.av-cb__benefit-icon img{max-width:48px;max-height:48px}.av-cb__benefit-tile strong{font-size:15px}.av-cb__benefits-image-wrap{min-height:320px;margin-top:6px}.av-cb__benefits-image{max-height:440px}.av-cb__benefits-image-placeholder{min-height:320px}}
     @media(max-width:600px){.av-cb__rating{font-size:12.5px;margin-bottom:10px}.av-cb__stars{font-size:16px}.av-cb__benefits{gap:13px;margin:15px 0 20px}.av-cb__benefit{font-size:14.5px;gap:10px}.av-cb__benefit-check{width:18px;height:18px;flex-basis:18px}.av-cb__sold{padding:13px 14px;margin-bottom:14px}.av-cb__sold-track{height:8px}.av-cb__sold-text{font-size:14px}.av-cb__pricing{gap:9px;margin-bottom:10px}.av-cb__sale-price{font-size:24px}.av-cb__compare-price{font-size:17px}.av-cb__sale-badge{font-size:10.5px;min-height:28px;padding:0 9px}.av-cb__low-stock-line{font-size:14px;margin:5px 0 14px;gap:8px}.av-cb__bundle{grid-template-columns:48px 1fr auto;gap:11px;padding:13px 12px}.av-cb__bundle-thumb{width:48px;height:48px}.av-cb__bundle-copy strong{font-size:16px}.av-cb__bundle-price strong{font-size:16px}.av-cb__bundle-price s{font-size:12px}.av-cb__refill-row{font-size:11px;gap:8px;margin-top:9px}.av-cb__refill-icon{width:18px;height:18px}.av-cb__top-stack{width:min(100% - 22px,1200px);margin:3px auto 24px;gap:8px}.av-cb__guarantee-card{grid-template-columns:62px 1fr;gap:12px;padding:15px 16px;border-radius:15px}.av-cb__guarantee-image{width:62px;height:62px}.av-cb__guarantee-image img{max-width:62px;max-height:62px}.av-cb__guarantee-seal{width:58px;height:58px;border-width:5px}.av-cb__guarantee-copy h3{font-size:17px}.av-cb__guarantee-copy p{font-size:12.5px}.av-cb__low-stock{padding:14px 15px;border-radius:15px;gap:9px}.av-cb__low-stock-icon{width:20px;height:20px;font-size:11px}.av-cb__low-stock h3{font-size:15px}.av-cb__low-stock p{font-size:12.5px}.av-cb__accordion summary{padding:14px 16px;font-size:16px}.av-cb__accordion-body{padding:0 16px 14px;font-size:12.5px}.av-cb__stats-section{padding:32px 22px 24px;border-radius:18px;background-position:center}.av-cb__stats-heading{font-size:31px;margin-bottom:22px}.av-cb__stat{grid-template-columns:92px 1fr;gap:14px;padding:17px 0}.av-cb__stat-number{font-size:50px}.av-cb__stat-label{font-size:14px}.av-cb__stats-cta{min-height:54px;margin-top:22px;font-size:15px}.av-cb__stats-guarantee{font-size:12px;margin-top:10px}}
 
+
+    .av-cb,.av-cb :is(h1,h2,h3,h4,p,span,strong,b,button,summary,a,input){font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+    .av-cb :is(h1,h2,h3){text-wrap:balance}
+    .av-cb__title{font-weight:750;line-height:1.12;letter-spacing:-.035em}
+    .av-cb__buy{background:var(--blue);transition:background .18s ease}
+    .av-cb__buy:hover,.av-cb__sticky-add:hover{background:var(--deep)}
+    .av-cb :is(button,summary,a):focus-visible{outline:3px solid #7d3612;outline-offset:4px}
+    .av-cb__accordion-list{gap:12px}
+    .av-cb__accordion,.av-cb__faq-item{border:1px solid #e5d9d0;border-radius:16px;box-shadow:0 3px 12px #40240d05}
+    .av-cb__accordion summary,.av-cb__faq-item summary{min-height:64px;padding:20px 22px;font-size:17px;font-weight:750;background:#faf7f4;line-height:1.35}
+    .av-cb__accordion[open] summary,.av-cb__faq-item[open] summary{border-bottom:1px solid #ede4dd}
+    .av-cb__accordion-body,.av-cb__faq-answer{padding:22px;color:#504943;font-size:16px;line-height:1.7}
+    .av-cb__accordion-body strong{font-weight:750;color:#211b17}
+    .av-cb__accordion-body p{margin:0 0 18px}
+    .av-cb__accordion-body p:last-child{margin-bottom:0}
+    .av-cb__accordion-body ul{padding-left:22px;margin:12px 0 20px}
+    .av-cb__accordion-body li{padding-left:3px;margin:10px 0}
+    .av-cb__accordion-body li::marker{color:var(--blue)}
+    .av-cb__accordion-body .av-cb__note{font-size:13px;color:#72665e;border-top:1px solid #eee4dc;padding-top:16px}
+    .av-cb__journey .av-cb__timeline{display:block;max-width:760px;padding-left:32px;--journey-progress:0px;--journey-length:100%;--journey-start:12px}
+    .av-cb__journey .av-cb__timeline:before,.av-cb__journey .av-cb__timeline:after{content:"";position:absolute;left:8px;top:var(--journey-start);bottom:auto;width:2px;height:var(--journey-length);background:#e4ddd7}
+    .av-cb__journey .av-cb__timeline:after{height:var(--journey-progress);background:var(--blue)}
+    .av-cb__timeline-item{padding-bottom:32px}
+    .av-cb__timeline-dot{left:-29px;top:12px;width:12px;height:12px;z-index:1;background:#fff;border:2px solid #d7cdc4;box-shadow:0 0 0 4px #fff;transition:background .2s,border-color .2s}
+    .av-cb__timeline-item.is-reached .av-cb__timeline-dot{background:var(--blue);border-color:var(--blue)}
+    .av-cb__timeline-label{padding:12px 16px;font-size:15px;font-weight:700;border-radius:8px;margin-bottom:15px}
+    .av-cb__timeline-line{font-size:15px;line-height:1.6}
+    .av-cb__timeline-list{gap:10px}
+    .av-cb__sticky[hidden]{display:none!important}
+    .av-cb__sticky{position:fixed;display:grid;grid-template-columns:56px minmax(0,1fr) auto;z-index:40;left:50%;right:auto;transform:translateX(-50%);bottom:max(12px,env(safe-area-inset-bottom));width:min(720px,calc(100% - 24px));padding:12px;gap:14px;align-items:center;background:#fff;border:1px solid #e8d5c8;border-radius:16px;box-shadow:0 4px 28px #2b180e25}
+    .av-cb__sticky-img{display:grid;width:56px;height:56px;border:1px solid #ead3c4;border-radius:10px;overflow:hidden}
+    .av-cb__sticky-img img{width:100%;height:100%;object-fit:contain}
+    .av-cb__sticky-copy{min-width:0;display:grid;gap:4px}
+    .av-cb__sticky-title{white-space:normal;font-size:14px;font-weight:700;line-height:1.3;color:#211b17}
+    .av-cb__sticky-price{font-size:18px;font-weight:750;color:var(--blue)}
+    .av-cb__sticky-add{min-height:52px;padding:0 24px;border:0;border-radius:10px;background:var(--blue);color:#fff;font-size:15px;font-weight:750;cursor:pointer;white-space:nowrap}
+    .av-cb__sticky-add:disabled{opacity:.5;cursor:not-allowed}
+    html.av-cb-cinnamon-page{scroll-padding-top:90px}
+    html.av-cb-cinnamon-page body{margin:0}
+    html.av-cb-cinnamon-page .hidden{display:none!important}
+    html.av-cb-cinnamon-page .visually-hidden{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+    html.av-cb-cinnamon-page #header-component .header-actions__action{background:transparent;border:0;border-radius:0;padding:8px;min-width:40px;min-height:44px;color:#171513;box-shadow:none}
+    html.av-cb-cinnamon-page .avonent-footer{padding-bottom:calc(115px + env(safe-area-inset-bottom))}
+    html.av-cb-cinnamon-page .avonent-footer__newsletter-eyebrow{color:#e4aa80}
+    @media(max-width:749px){
+      html.av-cb-cinnamon-page #header-component .header__columns{display:grid!important;grid-template-columns:40px 40px minmax(0,1fr) 40px 40px!important;grid-template-areas:'leftA leftB center rightA rightB'!important;gap:0!important;padding:0!important;min-height:64px}
+      html.av-cb-cinnamon-page #header-component .header__column{display:contents!important}
+      html.av-cb-cinnamon-page #header-component .header__row{padding-inline:12px}
+      html.av-cb-cinnamon-page #header-component .header-logo{grid-area:center;justify-self:center;min-width:0;padding:0}
+      html.av-cb-cinnamon-page #header-component .header-actions__text-style,html.av-cb-cinnamon-page #header-component .mobile\:hidden{display:none!important}
+      html.av-cb-cinnamon-page #header-component .av-cb-header-logo{gap:5px}
+      html.av-cb-cinnamon-page #header-component .av-cb-header-logo svg{width:25px;height:25px;flex-basis:25px}
+      html.av-cb-cinnamon-page #header-component .av-cb-header-logo span{font-size:24px}
+      html.av-cb-cinnamon-page #header-component header-actions{gap:0}
+    }
+    @media(max-width:600px){
+      .av-cb__title{font-size:30px;line-height:1.14;margin-bottom:18px}
+      .av-cb__wrap,.av-cb__top-stack,.av-cb__journey-wrap,.av-cb__faq-wrap{width:calc(100% - 32px)}
+      .av-cb__media{min-height:0;padding:16px;aspect-ratio:1}
+      .av-cb__media img{width:100%;height:100%;max-height:none;object-fit:contain}
+      .av-cb__rating{font-size:11.5px;gap:7px;flex-wrap:wrap}
+      .av-cb__benefit{font-size:15px;line-height:1.5}
+      .av-cb__accordion summary,.av-cb__faq-item summary{font-size:16px;padding:17px 18px}
+      .av-cb__accordion-body,.av-cb__faq-answer{font-size:15px;padding:18px;line-height:1.65}
+      .av-cb__sticky{grid-template-columns:44px minmax(0,1fr) auto;gap:9px;padding:10px;bottom:max(8px,env(safe-area-inset-bottom));width:calc(100% - 16px);border-radius:14px}
+      .av-cb__sticky-img{width:44px;height:48px}
+      .av-cb__sticky-title{font-size:11.5px;line-height:1.25}
+      .av-cb__sticky-price{font-size:15px}
+      .av-cb__sticky-add{padding:0 14px;min-height:48px;font-size:13px}
+      .av-cb__timeline-line{font-size:14px}
+      .av-cb__timeline-label{font-size:13px}
+      .av-cb{padding-bottom:0}
+    }
+    @media(prefers-reduced-motion:reduce){.av-cb__timeline-dot{transition:none}.av-cb__science-body{animation:none}}
+
   </style>
 
   <section class="av-cb__hero" id="av-cb-top">
@@ -514,16 +593,16 @@
 
     <div class="av-cb__accordion-list" data-av-cb-accordion-list>
       <details class="av-cb__accordion">
-        <summary><span>{{ av_cb_acc_1_title }}</span><span class="av-cb__accordion-icon" aria-hidden="true"></span></summary>
-        <div class="av-cb__accordion-body rte">{{ av_cb_acc_1_body | newline_to_br }}</div>
+        <summary><span>Why choose Avonent?</span><span class="av-cb__accordion-icon" aria-hidden="true"></span></summary>
+        <div class="av-cb__accordion-body rte"><p><strong>Your daily routine deserves more than another generic cinnamon capsule.</strong> Avonent brings true Ceylon cinnamon, Berberine HCl and MCT oil together in one clearly labeled formula.</p><ul><li><strong>🌿 True Ceylon cinnamon:</strong> a named botanical source—Cinnamomum verum.</li><li><strong>✨ A three-ingredient approach:</strong> cinnamon and berberine, with an MCT oil softgel base.</li><li><strong>📅 A full 30-day supply:</strong> 120 softgels, with four softgels per labeled daily serving.</li><li><strong>🛡️ Shop with confidence:</strong> backed by Avonent’s 30-day money-back guarantee.</li></ul><p><strong>Know what you’re taking. Make your routine easier to keep.</strong></p></div>
       </details>
       <details class="av-cb__accordion">
-        <summary><span>{{ av_cb_acc_2_title }}</span><span class="av-cb__accordion-icon" aria-hidden="true"></span></summary>
-        <div class="av-cb__accordion-body rte">{{ av_cb_acc_2_body | newline_to_br }}</div>
+        <summary><span>What’s inside the formula?</span><span class="av-cb__accordion-icon" aria-hidden="true"></span></summary>
+        <div class="av-cb__accordion-body rte"><p><strong>🌿 Ceylon cinnamon — 1,200 mg per daily serving</strong><br>True Ceylon cinnamon (Cinnamomum verum), clearly identified on the formula. Check the product label for the extract ratio and equivalent amount.</p><p><strong>✨ Berberine HCl — 400 mg per daily serving</strong><br>Included alongside the cinnamon, so both ingredients fit into the same daily routine.</p><p><strong>🥥 MCT oil — 200 mg per daily serving</strong><br>The oil-based component of the softgel formula.</p><p><strong>One bottle. 120 softgels. 30 daily servings.</strong><br>Four softgels make one labeled daily serving. Always follow the directions on your bottle.</p></div>
       </details>
       <details class="av-cb__accordion">
-        <summary><span>{{ av_cb_acc_3_title }}</span><span class="av-cb__accordion-icon" aria-hidden="true"></span></summary>
-        <div class="av-cb__accordion-body rte">{{ av_cb_acc_3_body | newline_to_br }}</div>
+        <summary><span>How to build your daily routine</span><span class="av-cb__accordion-icon" aria-hidden="true"></span></summary>
+        <div class="av-cb__accordion-body rte"><p><strong>Three ingredients. One straightforward routine.</strong> Avonent combines Ceylon cinnamon and Berberine HCl with MCT oil in a softgel format.</p><p><strong>1. Check the label.</strong><br>Review the ingredients and directions before your first serving.</p><p><strong>2. Make it part of your day.</strong><br>Follow the labeled four-softgel serving and choose a consistent time that works with your routine.</p><p><strong>3. Keep the bigger picture in mind.</strong><br>Pair your supplement routine with balanced meals, regular movement and sleep. Individual experiences vary.</p><p><strong>Ready for a simpler routine?</strong> Choose your supply above and start with Avonent’s <strong>30-day money-back guarantee.</strong></p><p class="av-cb__note">Ask a healthcare professional before use if you take medication, have a medical condition, are pregnant or nursing. Supplements do not replace prescribed treatment.</p></div>
       </details>
     </div>
 
@@ -925,7 +1004,7 @@
   </section>
 
 
-  <div class="av-cb__sticky" aria-label="Quick add to cart">
+  <div class="av-cb__sticky" aria-label="Quick add to cart" hidden>
     <span class="av-cb__sticky-img">
       {% if av_cb_product.featured_image %}
         {{ av_cb_product.featured_image | image_url: width: 120 | image_tag: loading: 'lazy', widths: '60,90,120', alt: av_cb_product.title }}
@@ -935,7 +1014,7 @@
       <span class="av-cb__sticky-title">Ceylon Cinnamon + Berberine HCl</span>
       <span class="av-cb__sticky-price" data-av-cb-sticky-price>{{ av_cb_unit_price | money }}</span>
     </span>
-    <button class="av-cb__sticky-add" type="button" data-av-cb-sticky-add>Add to Cart</button>
+    <button class="av-cb__sticky-add" type="button" data-av-cb-sticky-add {% unless av_cb_variant.available %}disabled{% endunless %}>{% if av_cb_variant.available %}Add to Cart{% else %}Sold Out{% endif %}</button>
   </div>
 
   <script>
@@ -1085,10 +1164,55 @@
       const productForm = root.querySelector('.av-cb__form');
       if (stickyAdd && productForm) {
         stickyAdd.addEventListener('click', () => {
-          if (typeof productForm.requestSubmit === 'function') productForm.requestSubmit();
+          const submit = productForm.querySelector('button[type="submit"]');
+          if (!submit || submit.disabled) return;
+          if (typeof productForm.requestSubmit === 'function') productForm.requestSubmit(submit);
           else productForm.submit();
         });
       }
+
+
+      const sticky = root.querySelector('.av-cb__sticky');
+      const buyButton = root.querySelector('.av-cb__buy');
+      const timeline = root.querySelector('.av-cb__journey .av-cb__timeline');
+      const milestones = timeline ? Array.from(timeline.querySelectorAll('.av-cb__timeline-item')) : [];
+      let framePending = false;
+      const updateScrollUI = () => {
+        framePending = false;
+        if (!root.isConnected) return;
+        const header = document.querySelector('#header-component');
+        const headerBottom = Math.max(0, header?.getBoundingClientRect().bottom || 0);
+        if (sticky && buyButton) sticky.hidden = buyButton.getBoundingClientRect().bottom > headerBottom;
+        if (!timeline || !milestones.length) return;
+        const rect = timeline.getBoundingClientRect();
+        const centers = milestones.map(item => {
+          const dot = item.querySelector('.av-cb__timeline-dot').getBoundingClientRect();
+          return dot.top + dot.height / 2 - rect.top;
+        });
+        const start = centers[0];
+        const length = centers[centers.length - 1] - start;
+        const readingLine = Math.max(headerBottom + 80, window.innerHeight * .57);
+        const progress = Math.max(0, Math.min(length, readingLine - rect.top - start));
+        timeline.style.setProperty('--journey-start', start + 'px');
+        timeline.style.setProperty('--journey-length', length + 'px');
+        timeline.style.setProperty('--journey-progress', progress + 'px');
+        milestones.forEach((item,index) => item.classList.toggle('is-reached', rect.top + centers[index] <= readingLine));
+      };
+      const scheduleScrollUI = () => {
+        if (!framePending) { framePending = true; requestAnimationFrame(updateScrollUI); }
+      };
+      window.addEventListener('scroll', scheduleScrollUI, {passive:true});
+      window.addEventListener('resize', scheduleScrollUI, {passive:true});
+      if ('ResizeObserver' in window) {
+        const layoutObserver = new ResizeObserver(scheduleScrollUI);
+        layoutObserver.observe(root);
+      }
+      root.querySelectorAll('details').forEach(item => item.addEventListener('toggle', scheduleScrollUI));
+      root.querySelectorAll('[data-av-cb-bundle]').forEach(button => {
+        button.setAttribute('aria-pressed', String(button.classList.contains('is-active')));
+        button.addEventListener('click', () => root.querySelectorAll('[data-av-cb-bundle]').forEach(other => other.setAttribute('aria-pressed', String(other === button))));
+      });
+      scheduleScrollUI();
 
       const accordions = root.querySelectorAll('.av-cb__accordion');
       accordions.forEach(item => {
@@ -1102,3 +1226,4 @@
     })();
   </script>
 </div>
+
