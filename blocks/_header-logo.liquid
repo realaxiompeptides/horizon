@@ -19,6 +19,10 @@
   endif
 
   assign alt_text_fallback = 'accessibility.home_logo_alt' | t: store_name: shop.name
+  assign is_cinnamon_product = false
+  if template.name == 'product' and product.handle == 'cinnamon-berberine-example'
+    assign is_cinnamon_product = true
+  endif
 %}
 
 {% comment %}
@@ -40,6 +44,15 @@
   "
   {{ block.shopify_attributes }}
 >
+  {% if is_cinnamon_product %}
+    <span class="header-logo__cinnamon-mark" aria-label="{{ shop.name | escape }}">
+      <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+        <circle cx="24" cy="24" r="20.5" stroke="currentColor" stroke-width="2.8"/>
+        <path d="M26.8 8.8 15.9 25h8.1l-2.7 14.2L33.5 21h-8.2l1.5-12.2Z" stroke="currentColor" stroke-width="2.8" stroke-linejoin="round"/>
+      </svg>
+      <span>Avonent</span>
+    </span>
+  {% else %}
   {% liquid
     assign logo_width = settings.logo_height | times: settings.logo.aspect_ratio | ceil
     assign logo_width_mobile = settings.logo_height_mobile | times: settings.logo.aspect_ratio | ceil
@@ -80,9 +93,43 @@
       %}
     </span>
   {% endif %}
+  {% endif %}
 </a>
 
 {% stylesheet %}
+  .header-logo__cinnamon-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: #a84f1b;
+    line-height: 1;
+  }
+
+  .header-logo__cinnamon-mark svg {
+    width: 34px;
+    height: 34px;
+    flex: 0 0 34px;
+  }
+
+  .header-logo__cinnamon-mark > span {
+    color: #111;
+    font-family: var(--font-body--family);
+    font-size: 25px;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+  }
+
+  @media screen and (min-width: 750px) {
+    .header-logo__cinnamon-mark svg {
+      width: 38px;
+      height: 38px;
+      flex-basis: 38px;
+    }
+    .header-logo__cinnamon-mark > span {
+      font-size: 28px;
+    }
+  }
+
   .header-logo {
     display: flex;
     height: 100%;
