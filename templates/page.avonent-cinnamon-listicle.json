@@ -7,7 +7,7 @@
     "main": {
       "type": "00-avonent-cinnamon-listicle",
       "settings": {
-        "featured_product": "cinnamon-berberine"
+        "featured_product": "cinnamon-berberine-example"
       },
       "blocks": {
         "reason_1": {

@@ -1,6 +1,6 @@
 {% liquid
-  assign avl_product = section.settings.featured_product | default: all_products['cinnamon-berberine']
-  assign avl_product_url = avl_product.url | default: '/products/cinnamon-berberine'
+  assign avl_product = section.settings.featured_product | default: all_products['cinnamon-berberine-example']
+  assign avl_product_url = avl_product.url | default: '/products/cinnamon-berberine-example'
   assign avl_product_image = avl_product.featured_image
   assign avl_hero_image = section.settings.hero_image | default: avl_product_image
   assign avl_logo = section.settings.logo_image | default: settings.logo
