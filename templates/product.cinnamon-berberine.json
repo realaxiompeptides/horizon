@@ -159,9 +159,9 @@
             "benefits_item_2": "Gentle on the Stomach",
             "benefits_item_3": "MCT Oil Delivery",
             "benefits_item_4": "Low-Coumarin Ceylon",
+            "benefits_image": "shopify://shop_images/3C21520E-7F05-44A2-AA05-891FC040230F.png",
             "benefits_bg": "",
-            "benefits_text": "",
-            "benefits_image": ""
+            "benefits_text": ""
           }
         },
         "risk_free": {
@@ -171,8 +171,8 @@
             "heading": "90-Day Risk-Free Trial",
             "body": "Try Avonent for 90 days. If it is not right for you, contact us within 90 days and we will help with the next steps under our refund policy.",
             "button_text": "Try Risk-Free Today",
-            "background": "#FFF4EC",
-            "accent": "#A84F1B"
+            "background": "#fff4ec",
+            "accent": "#a84f1b"
           }
         },
         "faq": {
