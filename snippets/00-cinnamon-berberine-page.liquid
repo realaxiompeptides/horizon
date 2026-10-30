@@ -656,9 +656,11 @@
   assign av_cb_guarantee_body = 'of customers use our 90-Day Money-Back Guarantee.'
   assign av_cb_stats_guarantee = '90-Day Money-Back Guarantee'
   assign av_cb_compare_guarantee = '90-Day Money-Back Guarantee'
+  assign av_cb_protection_product = all_products['shipping-protection']
+  assign av_cb_protection_variant = av_cb_protection_product.selected_or_first_available_variant
 %}
 
-<div class="av-cb" data-av-cb data-subscription-unit-price="{{ av_cb_subscription_unit_price }}" data-one-time-unit-price="{{ av_cb_one_time_unit_price }}" data-one-time-compare-unit-price="{{ av_cb_one_time_compare_unit }}" data-subscription-plan-id="{{ av_cb_subscription_plan_id }}" data-bonus-variant-id="57944860229798">
+<div class="av-cb" data-av-cb data-subscription-unit-price="{{ av_cb_subscription_unit_price }}" data-one-time-unit-price="{{ av_cb_one_time_unit_price }}" data-one-time-compare-unit-price="{{ av_cb_one_time_compare_unit }}" data-subscription-plan-id="{{ av_cb_subscription_plan_id }}" data-bonus-variant-id="57944860229798" data-protection-variant-id="{{ av_cb_protection_variant.id }}">
   <style>
     .av-cb{--blue:#A84F1B;--deep:#7D3612;--ink:#171513;--muted:#645C57;--line:#E7D2C4;--soft:#FFF4EC;--soft2:#FFFBF7;background:#fff;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}.av-cb,.av-cb button,.av-cb input,.av-cb select,.av-cb textarea,.av-cb summary{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif!important}
     html.av-cb-cinnamon-page .avonent-sale-bar__inner{--av-sale-bg:#A84F1B!important;--av-sale-color:#fff!important;background:#A84F1B!important;color:#fff!important}
@@ -1013,7 +1015,6 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
           data-product-id="{{ av_cb_product.id }}"
           data-product-url="{{ av_cb_product.url }}"
           data-quantity-default="1"
-          on:submit="/handleSubmit"
         >
           <div class="visually-hidden" aria-live="assertive" role="status" aria-atomic="true" ref="liveRegion"></div>
         {% form 'product', av_cb_product, id: av_cb_form_id, class: 'av-cb__form', data-type: 'add-to-cart-form' %}
@@ -1799,70 +1800,84 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       };
 
       productForm?.addEventListener('submit', async (event) => {
-        const isSubscription = purchaseMode === 'subscription' && sellingPlanInput && !sellingPlanInput.disabled;
-        const values = valuesFor(selectedBundle());
-        const bonusQty = values.qty === 2 ? 1 : (values.qty === 3 ? 2 : 0);
-        if (!isSubscription || bonusQty === 0 || !bonusVariantId) return;
-
+        // This custom cinnamon form owns the entire add flow. The theme's
+        // built-in /handleSubmit binding is intentionally removed above so
+        // one click can never add the paid subscription a second time.
         event.preventDefault();
         event.stopImmediatePropagation();
+
+        const isSubscription = purchaseMode === 'subscription' && sellingPlanInput && !sellingPlanInput.disabled;
+        const values = valuesFor(selectedBundle());
+        const bonusQty = isSubscription ? (values.qty === 2 ? 1 : (values.qty === 3 ? 2 : 0)) : 0;
 
         const submitButton = productForm.querySelector('button[type="submit"]');
         const variantId = Number(variantInput?.value || 0);
         const sellingPlanId = sellingPlanInput?.value || sellingPlanInput?.dataset.planId || root.dataset.subscriptionPlanId || '';
-        if (!variantId || !sellingPlanId) {
+        const protectionVariantId = Number(root.dataset.protectionVariantId || 0);
+
+        if (!variantId || (isSubscription && !sellingPlanId)) {
           enableBundleSubmit();
           return;
         }
 
         if (submitButton) submitButton.disabled = true;
+
         try {
-          // Build the whole finished cart state before opening the drawer so the
-          // customer never sees a paid-only cart followed by a second refresh.
           const currentCartResponse = await fetch('/cart.js', {
             headers: { 'Accept': 'application/json' },
             credentials: 'same-origin'
           });
           const currentCart = currentCartResponse.ok ? await currentCartResponse.json() : { items: [] };
 
-          const cartDrawerComponent = document.querySelector('#cart-drawer cart-drawer-component');
-          const protectionVariantId = Number(cartDrawerComponent?.dataset.protectionVariantId || 0);
           const wantsProtection = sessionStorage.getItem('avonentShippingProtectionEnabled') !== 'false';
           const alreadyHasProtection = Array.isArray(currentCart.items) && currentCart.items.some((item) =>
             Number(item.variant_id) === protectionVariantId || item.handle === 'shipping-protection'
           );
 
-          // Shopify renders newly-added lines in reverse insertion order.
-          // Add protection first (hidden in the line-item list), then the free
-          // bonus, then the paid subscription so the paid line appears first.
-          const bundleItems = [];
+          const items = [];
 
+          // Add protection in the SAME request so opening the drawer never
+          // causes a second protection add and visible cart refresh.
           if (wantsProtection && protectionVariantId && !alreadyHasProtection) {
-            bundleItems.push({
+            items.push({
               id: protectionVariantId,
               quantity: 1
             });
           }
 
-          bundleItems.push({
-            id: bonusVariantId,
-            quantity: bonusQty,
-            properties: { '_Avonent bonus': 'First order free bottle' }
-          });
+          // Shopify displays newly-added lines in reverse insertion order.
+          // Bonus goes in before the paid line so the paid cinnamon appears
+          // above the $0 bonus in the drawer.
+          if (bonusQty > 0) {
+            items.push({
+              id: bonusVariantId,
+              quantity: bonusQty,
+              properties: { '_Avonent bonus': 'First order free bottle' }
+            });
+          }
 
-          bundleItems.push({
+          const paidItem = {
             id: variantId,
-            quantity: values.qty,
-            selling_plan: sellingPlanId,
-            properties: { '_Avonent bundle': values.qty === 2 ? 'Buy 2 Get 1 Free' : 'Buy 3 Get 2 Free' }
-          });
+            quantity: values.qty
+          };
+
+          if (isSubscription) {
+            paidItem.selling_plan = sellingPlanId;
+            if (bonusQty > 0) {
+              paidItem.properties = {
+                '_Avonent bundle': values.qty === 2 ? 'Buy 2 Get 1 Free' : 'Buy 3 Get 2 Free'
+              };
+            }
+          }
+
+          items.push(paidItem);
 
           const response = await fetch('/cart/add.js', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
             credentials: 'same-origin',
             body: JSON.stringify({
-              items: bundleItems,
+              items,
               sections: 'cart-drawer-section',
               sections_url: window.location.pathname
             })
@@ -1870,22 +1885,23 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
 
           const result = await response.json().catch(() => ({}));
           if (!response.ok || result.status || result.errors) {
-            throw new Error(result.description || result.message || 'Unable to add bundle to cart.');
+            throw new Error(result.description || result.message || 'Unable to add to cart.');
           }
 
-          const cartResponse = await fetch('/cart.js', {
+          const finalCartResponse = await fetch('/cart.js', {
             headers: { 'Accept': 'application/json' },
-            credentials: 'same-origin'
+            credentials: 'same-origin',
+            cache: 'no-store'
           });
-          const cart = cartResponse.ok ? await cartResponse.json() : null;
+          const finalCart = finalCartResponse.ok ? await finalCartResponse.json() : null;
 
           await openUpdatedCartDrawer(
             result.sections?.['cart-drawer-section'] || '',
-            cart ? Number(cart.item_count || 0) : NaN
+            finalCart ? Number(finalCart.item_count || 0) : NaN
           );
         } catch (error) {
-          console.error('Avonent bundle add failed:', error);
-          alert(error.message || 'Unable to add bundle to cart. Please try again.');
+          console.error('Avonent cinnamon add failed:', error);
+          alert(error.message || 'Unable to add to cart. Please try again.');
         } finally {
           enableBundleSubmit();
         }
