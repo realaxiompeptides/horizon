@@ -80,7 +80,7 @@
             "avonent_drawer_width": 390,
             "avonent_drawer_link_size": 18,
             "avonent_drawer_accent_color": "#02c6ea",
-            "avonent_drawer_show_support": true,
+            "avonent_drawer_show_support": false,
             "avonent_drawer_support_label": "Customer Support",
             "avonent_drawer_support_email": "avonentbusiness@gmail.com"
           },
