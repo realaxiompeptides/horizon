@@ -60,7 +60,7 @@
           "type": "_header-menu",
           "static": true,
           "settings": {
-            "menu": "main-menu",
+            "menu": "ceylon-cinnamon-menu",
             "background_color": "{{ settings.color_palette.background }}",
             "text_color": "",
             "type_font_primary_size": "0.875rem",
@@ -76,7 +76,13 @@
             "text_color_navigation_bar": "",
             "drawer_accordion": true,
             "drawer_accordion_expand_first": false,
-            "drawer_dividers": false
+            "drawer_dividers": false,
+            "avonent_drawer_width": 390,
+            "avonent_drawer_link_size": 18,
+            "avonent_drawer_accent_color": "#02c6ea",
+            "avonent_drawer_show_support": true,
+            "avonent_drawer_support_label": "Customer Support",
+            "avonent_drawer_support_email": "avonentbusiness@gmail.com"
           },
           "blocks": {}
         }
@@ -163,4 +169,3 @@
     "avonent_header_cleanup"
   ]
 }
-
