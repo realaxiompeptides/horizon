@@ -214,6 +214,7 @@
         "timer_deadline": "",
         "timer_minutes": 7,
         "timer_seconds": 0,
+        "timer_repeat": true,
         "timer_context": "",
         "stock_risk_text": "Sell-Out Risk: High",
         "stock_risk_label": "Sell-Out Risk:",
