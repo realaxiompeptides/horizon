@@ -127,14 +127,14 @@
           <div class="avl-offer__details">
             <p class="avl-offer__cta-heading">Choose Your Bundle &amp; Unlock Up to 70% OFF</p>
             <a class="avl-button avl-offer__button" href="{{ avl_product_url }}">{{ section.settings.offer_cta | escape }} <span aria-hidden="true">↗</span></a>
-            <div class="avl-offer__timer" data-avl-timer data-duration="{{ section.settings.timer_minutes | times: 60 | plus: section.settings.timer_seconds }}" data-deadline="{{ section.settings.timer_deadline | escape }}">
+            <div class="avl-offer__timer" data-avl-timer data-duration="{{ section.settings.timer_minutes | times: 60 | plus: section.settings.timer_seconds }}" data-deadline="{{ section.settings.timer_deadline | escape }}" data-repeat="{{ section.settings.timer_repeat }}">
               <div class="avl-offer__timer-label" data-avl-timer-label>{{ section.settings.timer_label | escape }}</div>
               <div class="avl-offer__clock" role="timer" aria-label="Deal countdown"><span data-avl-minutes>07</span><span class="avl-offer__colon">:</span><span data-avl-seconds>00</span></div>
               {% if section.settings.timer_context != blank %}<p class="avl-offer__timer-context">{{ section.settings.timer_context | escape }}</p>{% endif %}
             </div>
             <div class="avl-offer__perks">
-              <span class="avl-offer__risk"><span class="avl-offer__pulse" aria-hidden="true"></span>{{ section.settings.stock_risk_label | escape }} <strong>{{ section.settings.stock_risk_level | escape }}</strong></span>
-              <span class="avl-offer__ebook"><span aria-hidden="true">✧</span>{{ section.settings.ebook_text | escape }}</span>
+              <span class="avl-offer__risk">{{ section.settings.stock_risk_label | escape }} <strong>{{ section.settings.stock_risk_level | escape }}</strong></span>
+              <span class="avl-offer__ebook">{{ section.settings.ebook_text | escape }}</span>
             </div>
             <p class="avl-offer__guarantee"><span aria-hidden="true">✓</span> {{ section.settings.offer_guarantee | escape }}</p>
           </div>
@@ -633,6 +633,7 @@
   if (timer) {
     const duration = Math.max(1, Number(timer.dataset.duration) || 420) * 1000;
     const configuredDeadline = Date.parse(timer.dataset.deadline || '');
+    const shouldRepeat = timer.dataset.repeat === 'true';
     const storageKey = 'avonent-listicle-timer-{{ section.id }}';
     let until = Number.isFinite(configuredDeadline) ? configuredDeadline : 0;
     if (!until) {
@@ -649,8 +650,21 @@
     const minutes = timer.querySelector('[data-avl-minutes]');
     const seconds = timer.querySelector('[data-avl-seconds]');
     const label = timer.querySelector('[data-avl-timer-label]');
+    const activeLabel = label ? label.textContent : '';
+    const saveUntil = () => {
+      try {
+        window.sessionStorage.setItem(storageKey, String(until));
+      } catch (error) {}
+    };
     const updateTimer = () => {
-      const remaining = Math.max(0, Math.ceil((until - Date.now()) / 1000));
+      let remaining = Math.max(0, Math.ceil((until - Date.now()) / 1000));
+      if (remaining === 0 && shouldRepeat) {
+        until = Date.now() + duration;
+        saveUntil();
+        remaining = Math.ceil(duration / 1000);
+        timer.removeAttribute('data-expired');
+        if (label) label.textContent = activeLabel;
+      }
       minutes.textContent = String(Math.floor(remaining / 60)).padStart(2, '0');
       seconds.textContent = String(remaining % 60).padStart(2, '0');
       if (remaining === 0) {
@@ -1101,6 +1115,12 @@
       "default": 40
     },
     {
+      "type": "checkbox",
+      "id": "timer_repeat",
+      "label": "Repeat countdown after it ends",
+      "default": true
+    },
+    {
       "type": "textarea",
       "id": "timer_context",
       "label": "Countdown transparency note",
@@ -1140,7 +1160,7 @@
       "type": "text",
       "id": "offer_guarantee",
       "label": "Offer guarantee",
-      "default": "Try it today with a 30-Day Money-Back Guarantee"
+      "default": "Try it today with a 90-Day Money-Back Guarantee!"
     },
     {
       "type": "header",
