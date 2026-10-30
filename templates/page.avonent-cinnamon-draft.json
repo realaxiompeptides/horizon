@@ -7,46 +7,10 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
-/*
- * Avonent dedicated cinnamon advertorial page.
- * Edit images and copy through Online Store > Themes > Customize.
- */
 {
   "sections": {
     "main": {
       "type": "00-avonent-cinnamon-listicle",
-      "settings": {
-        "featured_product": "cinnamon-berberine-example",
-        "announcement_text": "TRUE CEYLON. BERBERINE HCL. AN EVERYDAY ROUTINE BUILT WITH INTENTION.",
-        "hero_eyebrow": "Why Avonent is different",
-        "hero_title": "7 Reasons to Skip Generic Cinnamon and Choose Avonent",
-        "hero_subtitle": "A smarter daily formula starts with the ingredients—not exaggerated promises.",
-        "hero_intro": "<p><strong>Another generic cinnamon capsule?</strong> You deserve a closer look at what you are actually taking. Avonent combines genuine Ceylon cinnamon, berberine HCl, and MCT oil in one intentional softgel formula for people who take their metabolic wellness seriously.</p>",
-        "hero_cta": "See the 45% Offer",
-        "hero_microcopy": "30-day money-back guarantee",
-        "intro_band_text": "Stop settling for vague labels. See exactly what sets true Ceylon cinnamon, berberine HCl and MCT oil apart.",
-        "benefits_heading": "Seven compelling reasons to make the switch",
-        "benefits_subheading": "Know what's in the formula, why each ingredient is there, and how it can fit into a more intentional daily routine.",
-        "show_survey_results": true,
-        "results_heading": "Real Customers. Real Results.",
-        "results_subheading": "People who switched to Avonent report after 12 weeks:",
-        "results_1_percent": "84%",
-        "results_1_text": "said their fasting blood-sugar readings had finally moved down after a long period of little change.",
-        "results_2_percent": "79%",
-        "results_2_text": "reported sleeping through the night with fewer early-morning bathroom trips.",
-        "results_3_percent": "76%",
-        "results_3_text": "described feeling more mentally alert throughout the day, with less afternoon fog.",
-        "results_4_percent": "71%",
-        "results_4_text": "reported positive changes in energy and kidney-health indicators they were tracking.",
-        "results_note": "Self-reported observations in a customer survey after 12 weeks. Not a controlled clinical trial; these responses do not establish that Avonent caused the changes.",
-        "formula_title": "What makes this formula worth a closer look?",
-        "formula_description": "A clear three-part formula: 1,200 mg true Ceylon cinnamon, 400 mg berberine HCl, and 200 mg MCT oil per daily serving. No vague 'proprietary miracle blend' story—just ingredients you can evaluate for yourself.",
-        "formula_cta": "Explore the ingredient details",
-        "reviews_title": "What the Avonent community is saying",
-        "reviews_subtitle": "Experiences vary. Read genuine customer feedback before choosing what's right for your routine.",
-        "final_cta": "Save 45% OFF + Free Shipping",
-        "sticky_cta": "See the Offer"
-      },
       "blocks": {
         "reason_1": {
           "type": "benefit",
@@ -120,7 +84,39 @@
         "reason_5",
         "reason_6",
         "reason_7"
-      ]
+      ],
+      "settings": {
+        "featured_product": "ceylon-cinnamon-berberine-capsules",
+        "announcement_text": "TRUE CEYLON. BERBERINE HCL. AN EVERYDAY ROUTINE BUILT WITH INTENTION.",
+        "hero_eyebrow": "Why Avonent is different",
+        "hero_title": "7 Reasons to Skip Generic Cinnamon and Choose Avonent",
+        "hero_subtitle": "A smarter daily formula starts with the ingredients—not exaggerated promises.",
+        "hero_intro": "<p><strong>Another generic cinnamon capsule?</strong> You deserve a closer look at what you are actually taking. Avonent combines genuine Ceylon cinnamon, berberine HCl, and MCT oil in one intentional softgel formula for people who take their metabolic wellness seriously.</p>",
+        "hero_cta": "See the 45% Offer",
+        "hero_microcopy": "30-day money-back guarantee",
+        "intro_band_text": "Stop settling for vague labels. See exactly what sets true Ceylon cinnamon, berberine HCl and MCT oil apart.",
+        "benefits_heading": "Seven compelling reasons to make the switch",
+        "benefits_subheading": "Know what's in the formula, why each ingredient is there, and how it can fit into a more intentional daily routine.",
+        "show_survey_results": true,
+        "results_heading": "Real Customers. Real Results.",
+        "results_subheading": "People who switched to Avonent report after 12 weeks:",
+        "results_1_percent": "84%",
+        "results_1_text": "said their fasting blood-sugar readings had finally moved down after a long period of little change.",
+        "results_2_percent": "79%",
+        "results_2_text": "reported sleeping through the night with fewer early-morning bathroom trips.",
+        "results_3_percent": "76%",
+        "results_3_text": "described feeling more mentally alert throughout the day, with less afternoon fog.",
+        "results_4_percent": "71%",
+        "results_4_text": "reported positive changes in energy and kidney-health indicators they were tracking.",
+        "results_note": "Self-reported observations in a customer survey after 12 weeks. Not a controlled clinical trial; these responses do not establish that Avonent caused the changes.",
+        "formula_title": "What makes this formula worth a closer look?",
+        "formula_description": "A clear three-part formula: 1,200 mg true Ceylon cinnamon, 400 mg berberine HCl, and 200 mg MCT oil per daily serving. No vague 'proprietary miracle blend' story—just ingredients you can evaluate for yourself.",
+        "formula_cta": "Explore the ingredient details",
+        "reviews_title": "What the Avonent community is saying",
+        "reviews_subtitle": "Experiences vary. Read genuine customer feedback before choosing what's right for your routine.",
+        "final_cta": "Save 45% OFF + Free Shipping",
+        "sticky_cta": "See the Offer"
+      }
     }
   },
   "order": [
