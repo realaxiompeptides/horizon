@@ -32,7 +32,7 @@
   assign av_cb_sale_badge = av_cb_product.metafields.custom.av_cb_sale_badge.value | default: 'Fall Sale – Save 65%'
   assign av_cb_compare_price = av_cb_product.metafields.custom.av_cb_compare_price.value
   assign av_cb_bundle_2_badge = av_cb_product.metafields.custom.av_cb_bundle_2_badge.value | default: 'Free Shipping'
-  assign av_cb_bundle_3_badge = av_cb_product.metafields.custom.av_cb_bundle_3_badge.value | default: 'Free Shipping + E-Book'
+  assign av_cb_bundle_3_badge = av_cb_product.metafields.custom.av_cb_bundle_3_badge.value | default: 'Free Shipping + Free E-Book ($24.99 Value)'
   assign av_cb_low_stock_line = av_cb_product.metafields.custom.av_cb_low_stock_line.value | default: 'Low Stock – Selling Fast'
   assign av_cb_bundle_1_title = av_cb_product.metafields.custom.av_cb_bundle_1_title.value | default: 'Buy 1'
   assign av_cb_bundle_1_subtitle = av_cb_product.metafields.custom.av_cb_bundle_1_subtitle.value | default: '30-Day Supply'
@@ -658,7 +658,7 @@
   assign av_cb_compare_guarantee = '90-Day Money-Back Guarantee'
 %}
 
-<div class="av-cb" data-av-cb data-subscription-unit-price="{{ av_cb_subscription_unit_price }}" data-one-time-unit-price="{{ av_cb_one_time_unit_price }}" data-one-time-compare-unit-price="{{ av_cb_one_time_compare_unit }}" data-subscription-plan-id="{{ av_cb_subscription_plan_id }}">
+<div class="av-cb" data-av-cb data-subscription-unit-price="{{ av_cb_subscription_unit_price }}" data-one-time-unit-price="{{ av_cb_one_time_unit_price }}" data-one-time-compare-unit-price="{{ av_cb_one_time_compare_unit }}" data-subscription-plan-id="{{ av_cb_subscription_plan_id }}" data-bonus-variant-id="57944860229798">
   <style>
     .av-cb{--blue:#A84F1B;--deep:#7D3612;--ink:#171513;--muted:#645C57;--line:#E7D2C4;--soft:#FFF4EC;--soft2:#FFFBF7;background:#fff;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}.av-cb,.av-cb button,.av-cb input,.av-cb select,.av-cb textarea,.av-cb summary{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif!important}
     html.av-cb-cinnamon-page .avonent-sale-bar__inner{--av-sale-bg:#A84F1B!important;--av-sale-color:#fff!important;background:#A84F1B!important;color:#fff!important}
@@ -1049,8 +1049,8 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
                   {% endif %}
                 </span>
                 <span class="av-cb__bundle-copy">
-                  <strong>{{ av_cb_bundle_title }}</strong>
-                  <span>{{ av_cb_bundle_subtitle }}</span>
+                  <strong data-av-cb-bundle-title data-one-time-title="{% if qty == 1 %}Buy 1{% elsif qty == 2 %}Buy 2{% else %}Buy 3{% endif %}" data-subscription-title="{% if qty == 1 %}Buy 1{% elsif qty == 2 %}Buy 2 Get 1 FREE{% else %}Buy 3 Get 2 FREE{% endif %}">{% if qty == 1 %}Buy 1{% elsif qty == 2 %}Buy 2 Get 1 FREE{% else %}Buy 3 Get 2 FREE{% endif %}</strong>
+                  <span data-av-cb-bundle-subtitle data-one-time-subtitle="{% if qty == 1 %}30-Day Supply{% elsif qty == 2 %}60-Day Supply{% else %}90-Day Supply{% endif %}" data-subscription-subtitle="{% if qty == 1 %}30-Day Supply{% elsif qty == 2 %}3 Bottles · 90-Day Supply{% else %}5 Bottles · 150-Day Supply{% endif %}">{% if qty == 1 %}30-Day Supply{% elsif qty == 2 %}3 Bottles · 90-Day Supply{% else %}5 Bottles · 150-Day Supply{% endif %}</span>
                 </span>
                 <span class="av-cb__bundle-price">
                   <strong data-av-cb-bundle-price="{{ qty }}">{{ av_cb_bundle_sub_total | money }}</strong>
@@ -1066,7 +1066,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
                     {% if qty == 3 %}
                       <span class="av-cb__bundle-unlock-row">
                         <span class="av-cb__bundle-unlock-check" aria-hidden="true">✓</span>
-                        <span class="av-cb__bundle-unlock-copy">FREE E-Book <strong>($29.99 Value)</strong><small>Digital metabolic-support guide</small></span>
+                        <span class="av-cb__bundle-unlock-copy">FREE E-Book <strong>($24.99 Value)</strong><small>Digital metabolic-support guide</small></span>
                       </span>
                     {% endif %}
                   </span>
@@ -1681,6 +1681,9 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       const purchaseToggle = root.querySelector('[data-av-cb-purchase-toggle]');
       const purchaseToggleText = root.querySelector('[data-av-cb-purchase-toggle-text]');
       const purchaseHeading = root.querySelector('[data-av-cb-purchase-heading]');
+      const productForm = root.querySelector('form[data-type="add-to-cart-form"]');
+      const variantInput = root.querySelector('input[ref="variantId"]');
+      const bonusVariantId = Number(root.dataset.bonusVariantId || 0);
       const bundleButtons = Array.from(root.querySelectorAll('[data-av-cb-bundle]'));
       const subscriptionPerks = Array.from(root.querySelectorAll('[data-av-cb-subscription-perk]'));
       const bundleUnlocks = Array.from(root.querySelectorAll('[data-av-cb-bundle-unlock]'));
@@ -1717,8 +1720,12 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
           const values = valuesFor(btn);
           const priceEl = btn.querySelector('[data-av-cb-bundle-price]');
           const compareEl = btn.querySelector('[data-av-cb-bundle-compare]');
+          const titleEl = btn.querySelector('[data-av-cb-bundle-title]');
+          const subtitleEl = btn.querySelector('[data-av-cb-bundle-subtitle]');
           if (priceEl) priceEl.textContent = money(values.price);
           setCompare(compareEl, values.compare, values.price);
+          if (titleEl) titleEl.textContent = isSubscription ? titleEl.dataset.subscriptionTitle : titleEl.dataset.oneTimeTitle;
+          if (subtitleEl) subtitleEl.textContent = isSubscription ? subtitleEl.dataset.subscriptionSubtitle : subtitleEl.dataset.oneTimeSubtitle;
         });
 
         const active = selectedBundle();
@@ -1752,6 +1759,54 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         purchaseMode = purchaseMode === 'subscription' ? 'one-time' : 'subscription';
         renderMode();
       });
+
+      productForm?.addEventListener('submit', async (event) => {
+        const isSubscription = purchaseMode === 'subscription' && sellingPlanInput && !sellingPlanInput.disabled;
+        const values = valuesFor(selectedBundle());
+        const bonusQty = values.qty === 2 ? 1 : (values.qty === 3 ? 2 : 0);
+        if (!isSubscription || bonusQty === 0 || !bonusVariantId) return;
+
+        event.preventDefault();
+        event.stopImmediatePropagation();
+
+        const submitButton = productForm.querySelector('button[type="submit"]');
+        const variantId = Number(variantInput?.value || 0);
+        const sellingPlanId = sellingPlanInput?.value || sellingPlanInput?.dataset.planId || root.dataset.subscriptionPlanId || '';
+        if (!variantId || !sellingPlanId) return;
+
+        if (submitButton) submitButton.disabled = true;
+        try {
+          const response = await fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({
+              items: [
+                {
+                  id: variantId,
+                  quantity: values.qty,
+                  selling_plan: sellingPlanId,
+                  properties: { '_Avonent bundle': values.qty === 2 ? 'Buy 2 Get 1 Free' : 'Buy 3 Get 2 Free' }
+                },
+                {
+                  id: bonusVariantId,
+                  quantity: bonusQty,
+                  properties: { '_Avonent bonus': 'First order free bottle' }
+                }
+              ]
+            })
+          });
+          if (!response.ok) {
+            const error = await response.json().catch(() => ({}));
+            throw new Error(error.description || 'Unable to add bundle to cart.');
+          }
+          window.location.assign('/cart');
+        } catch (error) {
+          console.error('Avonent bundle add failed:', error);
+          if (submitButton) submitButton.disabled = false;
+          alert(error.message || 'Unable to add bundle to cart. Please try again.');
+        }
+      });
+
       renderMode();
 
       const deliveryDate = root.querySelector('[data-av-cb-delivery-date]');
