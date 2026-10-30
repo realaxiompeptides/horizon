@@ -122,7 +122,6 @@
             {% if section.settings.offer_secondary_image != blank %}
               {{ section.settings.offer_secondary_image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '240, 420, 700', sizes: '(min-width: 850px) 24vw, 52vw', class: 'avl-offer__secondary-image', alt: section.settings.offer_secondary_image_alt }}
             {% endif %}
-            <span class="avl-offer__image-tag">{{ section.settings.offer_image_label | escape }}</span>
           </div>
           <div class="avl-offer__details">
             <p class="avl-offer__cta-heading">Choose Your Bundle &amp; Unlock Up to 70% OFF</p>
@@ -1083,6 +1082,10 @@
       "default": "SAVE UP TO 70% ON SELECT BUNDLES"
     },
     {
+      "type": "header",
+      "content": "Countdown Timer"
+    },
+    {
       "type": "text",
       "id": "timer_label",
       "label": "Countdown headline",
@@ -1117,7 +1120,8 @@
     {
       "type": "checkbox",
       "id": "timer_repeat",
-      "label": "Repeat countdown after it ends",
+      "label": "Keep countdown repeating continuously",
+      "info": "When enabled, the timer automatically restarts when it reaches 00:00.",
       "default": true
     },
     {
