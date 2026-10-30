@@ -1036,10 +1036,22 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
                 {% assign av_cb_bundle_title = av_cb_bundle_3_title %}
                 {% assign av_cb_bundle_subtitle = av_cb_bundle_3_subtitle %}
               {% endif %}
-              {% assign av_cb_bundle_sub_total = av_cb_subscription_unit_price | times: qty %}
+              {% if qty == 1 %}
+                {% assign av_cb_bundle_sub_total = 2999 %}
+                {% assign av_cb_bundle_subscription_compare = av_cb_one_time_unit_price %}
+                {% assign av_cb_bundle_savings_text = 'You save 50%' %}
+              {% elsif qty == 2 %}
+                {% assign av_cb_bundle_sub_total = 5999 %}
+                {% assign av_cb_bundle_subscription_compare = av_cb_one_time_unit_price | times: 3 %}
+                {% assign av_cb_bundle_savings_text = 'You save 67%' %}
+              {% else %}
+                {% assign av_cb_bundle_sub_total = 8999 %}
+                {% assign av_cb_bundle_subscription_compare = av_cb_one_time_unit_price | times: 5 %}
+                {% assign av_cb_bundle_savings_text = 'You save 70%' %}
+              {% endif %}
               {% assign av_cb_bundle_one_time_total = av_cb_one_time_unit_price | times: qty %}
               {% assign av_cb_bundle_one_time_compare_total = av_cb_one_time_compare_unit | times: qty %}
-              <button class="av-cb__bundle{% if qty == 1 %} is-active{% endif %}" type="button" data-av-cb-bundle="{{ qty }}" data-subscription-price="{{ av_cb_bundle_sub_total }}" data-subscription-compare="{{ av_cb_bundle_one_time_total }}" data-one-time-price="{{ av_cb_bundle_one_time_total }}" data-one-time-compare="{{ av_cb_bundle_one_time_compare_total }}">
+              <button class="av-cb__bundle{% if qty == 1 %} is-active{% endif %}" type="button" data-av-cb-bundle="{{ qty }}" data-subscription-price="{{ av_cb_bundle_sub_total }}" data-subscription-compare="{{ av_cb_bundle_subscription_compare }}" data-one-time-price="{{ av_cb_bundle_one_time_total }}" data-one-time-compare="{{ av_cb_bundle_one_time_compare_total }}">
                 {% if qty == 2 and av_cb_bundle_2_badge != blank %}<span class="av-cb__badge" data-av-cb-subscription-perk>{{ av_cb_bundle_2_badge }}</span>{% endif %}
                 {% if qty == 3 and av_cb_bundle_3_badge != blank %}<span class="av-cb__badge" data-av-cb-subscription-perk>{{ av_cb_bundle_3_badge }}</span>{% endif %}
                 <span class="av-cb__bundle-thumb">
@@ -1051,11 +1063,11 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
                 </span>
                 <span class="av-cb__bundle-copy">
                   <strong data-av-cb-bundle-title data-one-time-title="{% if qty == 1 %}Buy 1{% elsif qty == 2 %}Buy 2{% else %}Buy 3{% endif %}" data-subscription-title="{% if qty == 1 %}Buy 1{% elsif qty == 2 %}Buy 2 Get 1 FREE{% else %}Buy 3 Get 2 FREE{% endif %}">{% if qty == 1 %}Buy 1{% elsif qty == 2 %}Buy 2 Get 1 FREE{% else %}Buy 3 Get 2 FREE{% endif %}</strong>
-                  <span data-av-cb-bundle-subtitle data-one-time-subtitle="{% if qty == 1 %}30-Day Supply{% elsif qty == 2 %}60-Day Supply{% else %}90-Day Supply{% endif %}" data-subscription-subtitle="{% if qty == 1 %}30-Day Supply{% elsif qty == 2 %}3 Bottles · 90-Day Supply{% else %}5 Bottles · 150-Day Supply{% endif %}">{% if qty == 1 %}30-Day Supply{% elsif qty == 2 %}3 Bottles · 90-Day Supply{% else %}5 Bottles · 150-Day Supply{% endif %}</span>
+                  <span data-av-cb-bundle-subtitle data-one-time-subtitle="" data-subscription-subtitle="{{ av_cb_bundle_savings_text }}">{{ av_cb_bundle_savings_text }}</span>
                 </span>
                 <span class="av-cb__bundle-price">
                   <strong data-av-cb-bundle-price="{{ qty }}">{{ av_cb_bundle_sub_total | money }}</strong>
-                  <s data-av-cb-bundle-compare="{{ qty }}"{% if av_cb_subscription == blank %} hidden{% endif %}>{% if av_cb_subscription != blank %}{{ av_cb_bundle_one_time_total | money }}{% endif %}</s>
+                  <s data-av-cb-bundle-compare="{{ qty }}"{% if av_cb_subscription == blank %} hidden{% endif %}>{% if av_cb_subscription != blank %}{{ av_cb_bundle_subscription_compare | money }}{% endif %}</s>
                 </span>
                 {% if qty >= 2 %}
                   <span class="av-cb__bundle-unlock" data-av-cb-bundle-unlock hidden>
@@ -1726,7 +1738,11 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
           if (priceEl) priceEl.textContent = money(values.price);
           setCompare(compareEl, values.compare, values.price);
           if (titleEl) titleEl.textContent = isSubscription ? titleEl.dataset.subscriptionTitle : titleEl.dataset.oneTimeTitle;
-          if (subtitleEl) subtitleEl.textContent = isSubscription ? subtitleEl.dataset.subscriptionSubtitle : subtitleEl.dataset.oneTimeSubtitle;
+          if (subtitleEl) {
+            const subtitle = isSubscription ? subtitleEl.dataset.subscriptionSubtitle : subtitleEl.dataset.oneTimeSubtitle;
+            subtitleEl.textContent = subtitle || '';
+            subtitleEl.hidden = !subtitle;
+          }
         });
 
         const active = selectedBundle();
@@ -1746,7 +1762,10 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
 
         if (purchaseToggleText) {
           if (isSubscription) purchaseToggleText.innerHTML = 'One-Time Purchase <strong>' + money(oneTimeUnit * values.qty) + '</strong> + $4.95 Shipping';
-          else purchaseToggleText.innerHTML = 'Switch back to Subscribe & Save — <strong>' + money(subscriptionUnit * values.qty) + '</strong>';
+          else {
+            const subscriptionDisplayPrice = Number(active?.dataset.subscriptionPrice || 0);
+            purchaseToggleText.innerHTML = 'Switch back to Subscribe & Save — <strong>' + money(subscriptionDisplayPrice) + '</strong>';
+          }
         }
       };
 
