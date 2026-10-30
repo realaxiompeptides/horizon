@@ -355,6 +355,9 @@
   },
   "shopify": {
     "checkout": {
+      "general": {
+        "pay_now_button_label": "Secure My Order"
+      },
       "alternative_payment_method_banner": {
         "or": "↓ OR CONTINUE BELOW ↓"
       },
