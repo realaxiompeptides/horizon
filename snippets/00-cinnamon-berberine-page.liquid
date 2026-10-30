@@ -1817,24 +1817,52 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
 
         if (submitButton) submitButton.disabled = true;
         try {
+          // Build the whole finished cart state before opening the drawer so the
+          // customer never sees a paid-only cart followed by a second refresh.
+          const currentCartResponse = await fetch('/cart.js', {
+            headers: { 'Accept': 'application/json' },
+            credentials: 'same-origin'
+          });
+          const currentCart = currentCartResponse.ok ? await currentCartResponse.json() : { items: [] };
+
+          const cartDrawerComponent = document.querySelector('#cart-drawer cart-drawer-component');
+          const protectionVariantId = Number(cartDrawerComponent?.dataset.protectionVariantId || 0);
+          const wantsProtection = sessionStorage.getItem('avonentShippingProtectionEnabled') !== 'false';
+          const alreadyHasProtection = Array.isArray(currentCart.items) && currentCart.items.some((item) =>
+            Number(item.variant_id) === protectionVariantId || item.handle === 'shipping-protection'
+          );
+
+          // Shopify renders newly-added lines in reverse insertion order.
+          // Add protection first (hidden in the line-item list), then the free
+          // bonus, then the paid subscription so the paid line appears first.
+          const bundleItems = [];
+
+          if (wantsProtection && protectionVariantId && !alreadyHasProtection) {
+            bundleItems.push({
+              id: protectionVariantId,
+              quantity: 1
+            });
+          }
+
+          bundleItems.push({
+            id: bonusVariantId,
+            quantity: bonusQty,
+            properties: { '_Avonent bonus': 'First order free bottle' }
+          });
+
+          bundleItems.push({
+            id: variantId,
+            quantity: values.qty,
+            selling_plan: sellingPlanId,
+            properties: { '_Avonent bundle': values.qty === 2 ? 'Buy 2 Get 1 Free' : 'Buy 3 Get 2 Free' }
+          });
+
           const response = await fetch('/cart/add.js', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
             credentials: 'same-origin',
             body: JSON.stringify({
-              items: [
-                {
-                  id: variantId,
-                  quantity: values.qty,
-                  selling_plan: sellingPlanId,
-                  properties: { '_Avonent bundle': values.qty === 2 ? 'Buy 2 Get 1 Free' : 'Buy 3 Get 2 Free' }
-                },
-                {
-                  id: bonusVariantId,
-                  quantity: bonusQty,
-                  properties: { '_Avonent bonus': 'First order free bottle' }
-                }
-              ],
+              items: bundleItems,
               sections: 'cart-drawer-section',
               sections_url: window.location.pathname
             })
@@ -1861,7 +1889,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         } finally {
           enableBundleSubmit();
         }
-      });
+      }, { capture: true });
 
       renderMode();
       enableBundleSubmit();
