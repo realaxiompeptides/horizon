@@ -394,7 +394,7 @@
   .avl-benefit__copy{grid-area:head;align-self:end}
   .avl-benefit__body-wrap{grid-area:body;align-self:start}
   .avl-benefit__visual{grid-area:visual;align-self:center;order:0}
-  .avl-offer{padding:96px 0;background:linear-gradient(134deg,#f8eadf 0%,#efe0d3 55%,#e5c9b4 100%);border-block:1px solid #e5d0bd}
+  .avl-offer{padding:96px 0;background:#fff;border-block:1px solid #e5d0bd}
   .avl-offer__grid{display:grid;grid-template-columns:minmax(0, .95fr) minmax(0,1.05fr);gap:80px;align-items:center}
   .avl-offer__visual{position:relative;align-self:stretch;min-width:0;display:grid;place-items:center}
   .avl-offer__image{width:100%;max-height:580px;aspect-ratio:1/1.1;object-fit:contain;padding:20px;filter:drop-shadow(0 20px 27px rgba(92,47,22,.13))}
@@ -584,19 +584,20 @@
   .avl-offer__details{text-align:center}
   .avl-offer__button{display:flex;width:min(480px,100%);margin:12px auto 0;justify-content:center}
   .avl-offer__timer{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;width:100%;max-width:none;margin:15px auto 0!important;padding:0!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important}
-  .avl-offer__timer-label{font-size:13px;color:#24201d!important;letter-spacing:.045em;line-height:1.3;font-weight:850}
-  .avl-offer__clock{font-size:23px!important;letter-spacing:0!important;gap:3px!important;line-height:1.2;margin:0!important;color:#bf2d25!important;font-weight:900}
+  .avl-offer__timer-label{font-size:15px;color:#24201d!important;letter-spacing:.045em;line-height:1.3;font-weight:850}
+  .avl-offer__clock{font-size:28px!important;letter-spacing:0!important;gap:4px!important;line-height:1.2;margin:0!important;color:#bf2d25!important;font-weight:900}
   .avl-offer__clock [data-avl-minutes],.avl-offer__clock [data-avl-seconds]{min-width:1.35em}
   .avl-offer__colon{transform:none;color:#bf2d25}
   .avl-offer__timer-context{flex-basis:100%}
-  .avl-offer__perks{justify-content:center;margin:18px 0 13px}
+  .avl-offer__perks{justify-content:center;margin:18px auto 13px;padding:10px 14px;background:#f8eadf;border:1px solid #e5d0bd;border-radius:12px;width:fit-content;max-width:100%}
+  .avl-offer__risk,.avl-offer__ebook{background:transparent;border:0;border-radius:0}
   .avl-offer__guarantee{margin:0 auto}
   @media(max-width:700px){
     .avl-offer__button{width:100%;margin-top:8px}
     .avl-offer__timer{gap:7px;margin-top:13px!important}
-    .avl-offer__timer-label{font-size:11px;letter-spacing:.035em}
-    .avl-offer__clock{font-size:20px!important}
-    .avl-offer__perks{margin:15px 0 12px}
+    .avl-offer__timer-label{font-size:13px;letter-spacing:.035em}
+    .avl-offer__clock{font-size:25px!important}
+    .avl-offer__perks{margin:15px auto 12px;padding:9px 11px}
   }
 </style>
 <script>
