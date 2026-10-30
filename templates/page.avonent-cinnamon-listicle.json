@@ -99,6 +99,7 @@
         "review_1": {
           "type": "review",
           "settings": {
+            "image_alt": "",
             "review_title": "Blood sugar finally steady, energy back",
             "review_text": "<p>My blood sugar was jumping around after meals and I felt drained by mid-afternoon. After two months on Avonent my numbers are more stable, my energy lasts longer, and I’m not crashing like before.</p>",
             "rating": 5,
@@ -109,6 +110,7 @@
         "review_2": {
           "type": "review",
           "settings": {
+            "image_alt": "",
             "review_title": "No more 3pm crashes",
             "review_text": "<p>I used to hit a wall every afternoon and reach for sugar. Since starting Avonent my energy stays more even and I’m not dealing with the same brain fog. My fasting numbers have improved too.</p>",
             "rating": 5,
@@ -119,6 +121,7 @@
         "review_3": {
           "type": "review",
           "settings": {
+            "image_alt": "",
             "review_title": "A1C came down, doctor noticed",
             "review_text": "<p>My A1C was climbing even though I was trying to eat better. Three months on Avonent and my doctor said my numbers looked better. I feel clearer and less dependent on constant snacks.</p>",
             "rating": 5,
@@ -129,6 +132,7 @@
         "review_4": {
           "type": "review",
           "settings": {
+            "image_alt": "",
             "review_title": "Cravings under control",
             "review_text": "<p>The sugar cravings were constant and my blood sugar never stayed steady. After using Avonent consistently the cravings dropped and my readings are more consistent throughout the day.</p>",
             "rating": 5,
@@ -139,6 +143,7 @@
         "review_5": {
           "type": "review",
           "settings": {
+            "image_alt": "",
             "review_title": "Steadier numbers without the side effects",
             "review_text": "<p>I wanted something natural that didn’t wreck my stomach. Avonent has helped keep my blood sugar more stable and I haven’t had the digestive issues I got from other supplements. Energy is better too.</p>",
             "rating": 5,
@@ -173,7 +178,7 @@
         "hero_eyebrow": "Why Avonent is different",
         "hero_title": "7 Benefits Everyone’s Talking About With Avonent Ceylon Cinnamon",
         "hero_subtitle": "(Beyond the Quest to Tackle Stubborn Blood Sugar)",
-        "hero_intro": "<p><strong>Fed up with stubborn blood-sugar numbers?</strong> Whether you’re tired of trying one wellness routine after another or you’re searching for a more thoughtful daily supplement, there’s a reason Avonent Ceylon Cinnamon is getting attention. Here are seven standout details behind our Ceylon cinnamon, berberine HCl and MCT oil blend.</p>",
+        "hero_intro": "<p><strong>Struggling with stubborn blood sugar that won’t stay down?</strong> Most people try one routine after another and still end up frustrated. Avonent Ceylon Cinnamon is getting attention because it pairs real Ceylon cinnamon with berberine HCl and MCT oil to address the root issue instead of just masking symptoms. Here are seven reasons people are switching.</p>",
         "hero_cta": "Save Up to 70% OFF",
         "show_social_proof": true,
         "social_proof_text": "10,000+ Reviews | 100,000+ Happy Customers",
