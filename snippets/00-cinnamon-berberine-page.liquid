@@ -1760,6 +1760,44 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         renderMode();
       });
 
+      const enableBundleSubmit = () => {
+        const submitButton = productForm?.querySelector('button[type="submit"]');
+        if (submitButton) submitButton.disabled = false;
+      };
+
+      // Safari/iOS can restore the page from the back-forward cache with the
+      // button state exactly as it was before navigation. Always restore it.
+      window.addEventListener('pageshow', enableBundleSubmit);
+
+      const openUpdatedCartDrawer = async (sectionHtml, itemCount) => {
+        if (sectionHtml) {
+          const parsed = new DOMParser().parseFromString(sectionHtml, 'text/html');
+          const nextSection = parsed.querySelector('#shopify-section-cart-drawer-section');
+          const currentSection = document.querySelector('#shopify-section-cart-drawer-section');
+
+          if (currentSection && nextSection) {
+            currentSection.replaceWith(nextSection);
+          } else if (currentSection) {
+            currentSection.innerHTML = sectionHtml;
+          }
+        }
+
+        if (Number.isFinite(itemCount)) {
+          await customElements.whenDefined('cart-icon');
+          document.querySelectorAll('cart-icon').forEach((icon) => {
+            if (typeof icon.renderCartBubble === 'function') icon.renderCartBubble(itemCount, true);
+          });
+        }
+
+        await customElements.whenDefined('theme-drawer');
+        const drawer = document.querySelector('#cart-drawer');
+        if (drawer && typeof drawer.open === 'function') {
+          drawer.open();
+        } else {
+          document.querySelector('[data-testid="cart-drawer-trigger"]')?.click();
+        }
+      };
+
       productForm?.addEventListener('submit', async (event) => {
         const isSubscription = purchaseMode === 'subscription' && sellingPlanInput && !sellingPlanInput.disabled;
         const values = valuesFor(selectedBundle());
@@ -1772,13 +1810,17 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         const submitButton = productForm.querySelector('button[type="submit"]');
         const variantId = Number(variantInput?.value || 0);
         const sellingPlanId = sellingPlanInput?.value || sellingPlanInput?.dataset.planId || root.dataset.subscriptionPlanId || '';
-        if (!variantId || !sellingPlanId) return;
+        if (!variantId || !sellingPlanId) {
+          enableBundleSubmit();
+          return;
+        }
 
         if (submitButton) submitButton.disabled = true;
         try {
           const response = await fetch('/cart/add.js', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            credentials: 'same-origin',
             body: JSON.stringify({
               items: [
                 {
@@ -1792,22 +1834,37 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
                   quantity: bonusQty,
                   properties: { '_Avonent bonus': 'First order free bottle' }
                 }
-              ]
+              ],
+              sections: 'cart-drawer-section',
+              sections_url: window.location.pathname
             })
           });
-          if (!response.ok) {
-            const error = await response.json().catch(() => ({}));
-            throw new Error(error.description || 'Unable to add bundle to cart.');
+
+          const result = await response.json().catch(() => ({}));
+          if (!response.ok || result.status || result.errors) {
+            throw new Error(result.description || result.message || 'Unable to add bundle to cart.');
           }
-          window.location.assign('/cart');
+
+          const cartResponse = await fetch('/cart.js', {
+            headers: { 'Accept': 'application/json' },
+            credentials: 'same-origin'
+          });
+          const cart = cartResponse.ok ? await cartResponse.json() : null;
+
+          await openUpdatedCartDrawer(
+            result.sections?.['cart-drawer-section'] || '',
+            cart ? Number(cart.item_count || 0) : NaN
+          );
         } catch (error) {
           console.error('Avonent bundle add failed:', error);
-          if (submitButton) submitButton.disabled = false;
           alert(error.message || 'Unable to add bundle to cart. Please try again.');
+        } finally {
+          enableBundleSubmit();
         }
       });
 
       renderMode();
+      enableBundleSubmit();
 
       const deliveryDate = root.querySelector('[data-av-cb-delivery-date]');
       if (deliveryDate) {
