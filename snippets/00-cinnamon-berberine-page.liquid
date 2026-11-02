@@ -2121,7 +2121,8 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       const stickyAdd = root.querySelector('[data-av-cb-sticky-add]');
       if (stickyAdd) {
         stickyAdd.addEventListener('click', () => {
-          firstAddToCart?.click();
+          const top = root.querySelector('#av-cb-top');
+          top?.scrollIntoView({behavior:'smooth', block:'start'});
         });
       }
 
