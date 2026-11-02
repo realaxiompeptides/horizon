@@ -212,6 +212,24 @@
                         mode: 'trigger'
                       %}
                     </div>
+
+                    {% if context == 'drawer' and item.product.handle == 'ceylon-cinnamon-berberine-capsules' %}
+                      <div class="avonent-cinnamon-cart-benefits" aria-label="Ceylon cinnamon product benefits">
+                        <div class="avonent-cinnamon-cart-benefit">
+                          <span class="avonent-cinnamon-cart-benefit__check" aria-hidden="true">✓</span>
+                          <span><strong>Authentic Ceylon Cinnamon</strong> (<em>Cinnamomum verum</em>) sourced from Sri Lanka — not common Cassia</span>
+                        </div>
+                        <div class="avonent-cinnamon-cart-benefit">
+                          <span class="avonent-cinnamon-cart-benefit__check" aria-hidden="true">✓</span>
+                          <span><strong>12:1 concentrated liquid extract</strong> with MCT oil delivery for maximum absorption</span>
+                        </div>
+                        <div class="avonent-cinnamon-cart-benefit">
+                          <span class="avonent-cinnamon-cart-benefit__check" aria-hidden="true">✓</span>
+                          <span>Supports <strong>healthy blood sugar</strong>, metabolism, and circulation</span>
+                        </div>
+                      </div>
+                    {% endif %}
+
                     {% if item.product.vendor and block_settings.vendor %}
                       <p>
                         {{ item.product.vendor }}
@@ -1257,6 +1275,45 @@
       font-size: 13px !important;
       font-weight: 800 !important;
       line-height: 1.2 !important;
+    }
+
+    #cart-drawer .avonent-cinnamon-cart-benefits {
+      display: grid !important;
+      gap: 9px !important;
+      margin: 12px 0 2px !important;
+      color: #292725 !important;
+      font-size: 13.5px !important;
+      line-height: 1.32 !important;
+    }
+
+    #cart-drawer .avonent-cinnamon-cart-benefit {
+      display: grid !important;
+      grid-template-columns: 22px minmax(0, 1fr) !important;
+      gap: 8px !important;
+      align-items: start !important;
+    }
+
+    #cart-drawer .avonent-cinnamon-cart-benefit__check {
+      width: 22px !important;
+      height: 22px !important;
+      border-radius: 50% !important;
+      display: grid !important;
+      place-items: center !important;
+      flex: 0 0 22px !important;
+      background: #4D8A64 !important;
+      color: #ffffff !important;
+      font-size: 14px !important;
+      font-weight: 800 !important;
+      line-height: 1 !important;
+      margin-top: 1px !important;
+    }
+
+    #cart-drawer .avonent-cinnamon-cart-benefit strong {
+      font-weight: 800 !important;
+    }
+
+    #cart-drawer .avonent-cinnamon-cart-benefit em {
+      font-style: italic !important;
     }
 
     #cart-drawer .cart-drawer__summary .cart-totals {
