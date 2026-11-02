@@ -228,7 +228,6 @@
                           <span>Supports <strong>healthy blood sugar</strong>, metabolism, and circulation</span>
                         </div>
                       </div>
-                      <div class="avonent-cinnamon-cart-pack-price">$18.00 per pack</div>
                     {% endif %}
 
                     {% if item.product.vendor and block_settings.vendor %}
@@ -252,6 +251,7 @@
                   </div>
 
                   <div class="cart-items__variants-wrapper">
+                    {%- unless context == 'drawer' and item.product.handle == 'ceylon-cinnamon-berberine-capsules' -%}
                     {%- if item.product.has_only_default_variant == false
                       or item.properties.size != 0
                       or item.selling_plan_allocation != null
@@ -315,9 +315,30 @@
                         </ul>
                       {%- endif -%}
                     {%- endif -%}
+                    {%- endunless -%}
                   </div>
 
                   <div class="cart-items__unit-price-wrapper">
+                    {%- if context == 'drawer' and item.product.handle == 'ceylon-cinnamon-berberine-capsules' -%}
+                      {%- liquid
+                        assign avonent_effective_pack_count = item.quantity
+                        if item.selling_plan_allocation != blank
+                          if item.quantity == 2
+                            assign avonent_effective_pack_count = 3
+                          elsif item.quantity == 3
+                            assign avonent_effective_pack_count = 5
+                          endif
+                        endif
+
+                        if avonent_effective_pack_count > item.quantity
+                          assign avonent_pack_price_dollars = item.final_line_price | divided_by: 100.0 | divided_by: avonent_effective_pack_count | round
+                          assign avonent_pack_price = avonent_pack_price_dollars | times: 100
+                        else
+                          assign avonent_pack_price = item.final_line_price | divided_by: item.quantity
+                        endif
+                      -%}
+                      <div class="avonent-cinnamon-cart-pack-price">{{ avonent_pack_price | money }} per pack</div>
+                    {%- else -%}
                     <div>
                       {% if item.original_price != item.final_price %}
                         <span class="visually-hidden">{{ 'content.price_sale' | t }}</span>
@@ -359,6 +380,8 @@
                           You save {{ avonent_line_savings | money }}
                         </p>
                       {%- endif -%}
+                    {%- endif -%}
+
                     {%- endif -%}
                   </div>
                 </td>
@@ -1205,6 +1228,28 @@
       line-height: 1.25 !important;
     }
 
+    #cart-drawer tr.cart-items__table-row--full-width-variants[data-product-handle="ceylon-cinnamon-berberine-capsules"] {
+      grid-template-rows: auto auto auto auto !important;
+      grid-template-areas:
+        "media details empty"
+        "media quantity price"
+        "media pack_price pack_price"
+        "media error error" !important;
+    }
+
+    #cart-drawer tr.cart-items__table-row--full-width-variants[data-product-handle="ceylon-cinnamon-berberine-capsules"] .cart-items__variants-wrapper {
+      display: none !important;
+    }
+
+    #cart-drawer tr.cart-items__table-row--full-width-variants[data-product-handle="ceylon-cinnamon-berberine-capsules"] .cart-items__unit-price-wrapper {
+      grid-area: pack_price !important;
+      justify-self: end !important;
+      align-items: flex-end !important;
+      margin-top: 5px !important;
+      color: #8A817B !important;
+      font-weight: 500 !important;
+    }
+
     #cart-drawer tr.cart-items__table-row--full-width-variants .cart-items__quantity {
       grid-area: quantity !important;
       margin-block-start: 7px !important;
@@ -1324,11 +1369,13 @@
     }
 
     #cart-drawer .avonent-cinnamon-cart-pack-price {
-      margin: 10px 0 2px 30px !important;
+      margin: 0 !important;
       color: #8A817B !important;
       font-size: 13.5px !important;
       font-weight: 500 !important;
       line-height: 1.2 !important;
+      text-align: right !important;
+      white-space: nowrap !important;
     }
 
     #cart-drawer .cart-drawer__summary .cart-totals {
