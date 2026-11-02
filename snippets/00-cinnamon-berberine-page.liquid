@@ -24,10 +24,10 @@
   assign av_cb_display_title = av_cb_product.metafields.custom.av_cb_display_title.value | default: 'Berberine + True Ceylon Cinnamon'
   assign av_cb_hero_description = av_cb_product.metafields.custom.av_cb_hero_description.value | default: 'Avonent Ceylon Cinnamon + Berberine supports healthy blood sugar, glucose metabolism, and everyday metabolic balance — helping support steadier days around meals and throughout the day.*\n\nFour daily softgels combine true Sri Lankan Ceylon cinnamon with Berberine HCl in one concentrated formula built for consistent daily use.*'
   assign av_cb_rating_text = av_cb_product.metafields.custom.av_cb_rating_text.value | default: 'Rated 4.9 • 10,000+ Reviews'
-  assign av_cb_benefit_1 = av_cb_product.metafields.custom.av_cb_benefit_1.value | default: 'Supports Healthy Glucose Metabolism*'
-  assign av_cb_benefit_2 = av_cb_product.metafields.custom.av_cb_benefit_2.value | default: 'Supports Healthy Insulin Sensitivity*'
-  assign av_cb_benefit_3 = av_cb_product.metafields.custom.av_cb_benefit_3.value | default: 'Supports Healthy Circulation & Metabolic Function*'
-  assign av_cb_benefit_4 = av_cb_product.metafields.custom.av_cb_benefit_4.value | default: 'Supports Steady Everyday Metabolic Wellness*'
+  assign av_cb_benefit_1 = av_cb_product.metafields.custom.av_cb_benefit_1.value | default: 'Supports Healthy Insulin Sensitivity*'
+  assign av_cb_benefit_2 = av_cb_product.metafields.custom.av_cb_benefit_2.value | default: 'Supports Healthy Blood Sugar Levels*'
+  assign av_cb_benefit_3 = av_cb_product.metafields.custom.av_cb_benefit_3.value | default: 'Supports Healthy Blood Pressure & Circulation*'
+  assign av_cb_benefit_4 = av_cb_product.metafields.custom.av_cb_benefit_4.value | default: 'Supports Steady Energy Throughout the Day*'
   assign av_cb_sold_percent = av_cb_product.metafields.custom.av_cb_sold_percent.value | default: 93
   assign av_cb_sale_badge = av_cb_product.metafields.custom.av_cb_sale_badge.value | default: 'Fall Sale – Save 65%'
   assign av_cb_compare_price = av_cb_product.metafields.custom.av_cb_compare_price.value
@@ -683,6 +683,22 @@
     .av-cb__hero-grid{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(360px,.98fr);gap:48px;align-items:center}
     .av-cb__media{min-height:0;border:0;border-radius:0;background:transparent;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:0}
     .av-cb__media img{display:block;width:100%;max-width:100%;height:auto;max-height:none;object-fit:contain;filter:none}
+    /* AVONENT PRODUCT GALLERY */
+    .av-cb__product-gallery{width:100%;min-width:0}
+    .av-cb__gallery-main{position:relative;width:100%;overflow:hidden}
+    .av-cb__gallery-track{display:flex;width:100%;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;-ms-overflow-style:none;overscroll-behavior-x:contain}
+    .av-cb__gallery-track::-webkit-scrollbar{display:none}
+    .av-cb__gallery-slide{flex:0 0 100%;width:100%;scroll-snap-align:start;scroll-snap-stop:always;display:flex;align-items:center;justify-content:center}
+    .av-cb__gallery-slide img{display:block;width:100%;height:auto;object-fit:contain}
+    .av-cb__gallery-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:4;width:46px;height:46px;border-radius:50%;border:1px solid rgba(45,35,29,.12);background:rgba(255,255,255,.94);color:#2b231f;display:grid;place-items:center;cursor:pointer;box-shadow:0 4px 18px rgba(0,0,0,.09);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+    .av-cb__gallery-arrow--prev{left:14px}.av-cb__gallery-arrow--next{right:14px}
+    .av-cb__gallery-arrow svg{width:22px;height:22px}
+    .av-cb__gallery-thumbs{display:flex;gap:10px;margin-top:12px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;padding:2px}
+    .av-cb__gallery-thumbs::-webkit-scrollbar{display:none}
+    .av-cb__gallery-thumb{width:82px;height:82px;flex:0 0 82px;padding:0;border:2px solid transparent;border-radius:8px;background:#fff;overflow:hidden;cursor:pointer;transition:border-color .18s ease,box-shadow .18s ease}
+    .av-cb__gallery-thumb.is-active{border-color:var(--blue);box-shadow:0 0 0 1px rgba(168,79,27,.12)}
+    .av-cb__gallery-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    @media(max-width:600px){.av-cb__gallery-arrow{width:42px;height:42px}.av-cb__gallery-arrow--prev{left:10px}.av-cb__gallery-arrow--next{right:10px}.av-cb__gallery-thumb{width:68px;height:68px;flex-basis:68px}.av-cb__gallery-thumbs{gap:8px;margin-top:10px}}
     .av-cb__formula-bottle{width:min(330px,85%);aspect-ratio:4/5;border-radius:28px;background:#fff;border:1px solid #d8edf2;box-shadow:0 28px 70px rgba(5,103,128,.13);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:34px}
     .av-cb__formula-bottle b{font-size:38px;line-height:1}.av-cb__formula-bottle span{font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin-top:10px;color:var(--deep)}.av-cb__formula-bottle small{margin-top:16px;color:var(--muted)}
     .av-cb__eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--deep);margin-bottom:12px}
@@ -962,8 +978,37 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
   <section class="av-cb__hero" id="av-cb-top">
     <div class="av-cb__wrap av-cb__hero-grid">
       <div class="av-cb__media">
-        {% if av_cb_hero_image %}
-          {{ av_cb_hero_image | image_url: width: 1200 | image_tag: loading: 'eager', widths: '500,700,900,1200', sizes: '(min-width: 900px) 48vw, 92vw', alt: 'Avonent Berberine + Ceylon Cinnamon softgels' }}
+        {% if av_cb_product.images.size > 0 %}
+          <div class="av-cb__product-gallery" data-av-cb-gallery>
+            <div class="av-cb__gallery-main">
+              <div class="av-cb__gallery-track" data-av-cb-gallery-track>
+                {% for image in av_cb_product.images limit: 8 %}
+                  <div class="av-cb__gallery-slide" data-av-cb-gallery-slide>
+                    {{ image | image_url: width: 1400 | image_tag: loading: 'eager', widths: '500,700,900,1200,1400', sizes: '(min-width: 900px) 48vw, 92vw', alt: image.alt | default: av_cb_display_title }}
+                  </div>
+                {% endfor %}
+              </div>
+
+              {% if av_cb_product.images.size > 1 %}
+                <button class="av-cb__gallery-arrow av-cb__gallery-arrow--prev" type="button" data-av-cb-gallery-prev aria-label="Previous product image">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m14.5 6-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <button class="av-cb__gallery-arrow av-cb__gallery-arrow--next" type="button" data-av-cb-gallery-next aria-label="Next product image">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9.5 6 6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+              {% endif %}
+            </div>
+
+            {% if av_cb_product.images.size > 1 %}
+              <div class="av-cb__gallery-thumbs" aria-label="Product images">
+                {% for image in av_cb_product.images limit: 8 %}
+                  <button class="av-cb__gallery-thumb{% if forloop.first %} is-active{% endif %}" type="button" data-av-cb-gallery-thumb data-index="{{ forloop.index0 }}" aria-label="View product image {{ forloop.index }}">
+                    {{ image | image_url: width: 180 | image_tag: loading: 'lazy', widths: '90,120,180', alt: image.alt | default: av_cb_display_title }}
+                  </button>
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
         {% else %}
           <div class="av-cb__formula-bottle">
             <b>AVONENT</b>
@@ -980,7 +1025,6 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         </div>
 
         <h1 class="av-cb__title">{{ av_cb_display_title }}</h1>
-        <div class="av-cb__hero-description">{{ av_cb_hero_description | newline_to_br }}</div>
 
         <div class="av-cb__benefits">
           {% assign av_cb_benefits = av_cb_benefit_1 | append: '||' | append: av_cb_benefit_2 | append: '||' | append: av_cb_benefit_3 | append: '||' | append: av_cb_benefit_4 | split: '||' %}
@@ -2085,3 +2129,57 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
     })();
   </script>
 </div>
+
+
+<script>
+/* AVONENT GALLERY BEHAVIOR */
+(() => {
+  const init = (gallery) => {
+    if (!gallery || gallery.dataset.avCbGalleryReady === 'true') return;
+    gallery.dataset.avCbGalleryReady = 'true';
+
+    const track = gallery.querySelector('[data-av-cb-gallery-track]');
+    const slides = Array.from(gallery.querySelectorAll('[data-av-cb-gallery-slide]'));
+    const thumbs = Array.from(gallery.querySelectorAll('[data-av-cb-gallery-thumb]'));
+    const prev = gallery.querySelector('[data-av-cb-gallery-prev]');
+    const next = gallery.querySelector('[data-av-cb-gallery-next]');
+    if (!track || slides.length < 1) return;
+
+    let activeIndex = 0;
+    let scrollTimer;
+
+    const setActive = (index) => {
+      activeIndex = ((index % slides.length) + slides.length) % slides.length;
+      thumbs.forEach((thumb, i) => thumb.classList.toggle('is-active', i === activeIndex));
+    };
+
+    const goTo = (index) => {
+      const nextIndex = ((index % slides.length) + slides.length) % slides.length;
+      track.scrollTo({ left: slides[nextIndex].offsetLeft, behavior: 'smooth' });
+      setActive(nextIndex);
+    };
+
+    prev?.addEventListener('click', () => goTo(activeIndex - 1));
+    next?.addEventListener('click', () => goTo(activeIndex + 1));
+    thumbs.forEach((thumb, i) => thumb.addEventListener('click', () => goTo(i)));
+
+    track.addEventListener('scroll', () => {
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(() => {
+        const left = track.scrollLeft;
+        let closest = 0;
+        let distance = Infinity;
+        slides.forEach((slide, i) => {
+          const d = Math.abs(slide.offsetLeft - left);
+          if (d < distance) { distance = d; closest = i; }
+        });
+        setActive(closest);
+      }, 70);
+    }, { passive: true });
+  };
+
+  const run = () => document.querySelectorAll('[data-av-cb-gallery]').forEach(init);
+  run();
+  document.addEventListener('shopify:section:load', run);
+})();
+</script>
