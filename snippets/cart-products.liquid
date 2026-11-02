@@ -216,15 +216,15 @@
                     {% if context == 'drawer' and item.product.handle == 'ceylon-cinnamon-berberine-capsules' %}
                       <div class="avonent-cinnamon-cart-benefits" aria-label="Ceylon cinnamon product benefits">
                         <div class="avonent-cinnamon-cart-benefit">
-                          <span class="avonent-cinnamon-cart-benefit__check" aria-hidden="true">✓</span>
+                          <span class="avonent-cinnamon-cart-benefit__check" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none"><path d="M4.4 10.2 8 13.6 15.6 6" stroke="currentColor" stroke-width="2.35" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
                           <span><strong>Authentic Ceylon Cinnamon</strong> (<em>Cinnamomum verum</em>) sourced from Sri Lanka — not common Cassia</span>
                         </div>
                         <div class="avonent-cinnamon-cart-benefit">
-                          <span class="avonent-cinnamon-cart-benefit__check" aria-hidden="true">✓</span>
+                          <span class="avonent-cinnamon-cart-benefit__check" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none"><path d="M4.4 10.2 8 13.6 15.6 6" stroke="currentColor" stroke-width="2.35" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
                           <span><strong>12:1 concentrated liquid extract</strong> with MCT oil delivery for maximum absorption</span>
                         </div>
                         <div class="avonent-cinnamon-cart-benefit">
-                          <span class="avonent-cinnamon-cart-benefit__check" aria-hidden="true">✓</span>
+                          <span class="avonent-cinnamon-cart-benefit__check" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none"><path d="M4.4 10.2 8 13.6 15.6 6" stroke="currentColor" stroke-width="2.35" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
                           <span>Supports <strong>healthy blood sugar</strong>, metabolism, and circulation</span>
                         </div>
                       </div>
@@ -1279,8 +1279,8 @@
 
     #cart-drawer .avonent-cinnamon-cart-benefits {
       display: grid !important;
-      gap: 9px !important;
-      margin: 12px 0 2px !important;
+      gap: 11px !important;
+      margin: 16px 0 8px !important;
       color: #292725 !important;
       font-size: 13.5px !important;
       line-height: 1.32 !important;
@@ -1306,6 +1306,12 @@
       font-weight: 800 !important;
       line-height: 1 !important;
       margin-top: 1px !important;
+    }
+
+    #cart-drawer .avonent-cinnamon-cart-benefit__check svg {
+      width: 13px !important;
+      height: 13px !important;
+      display: block !important;
     }
 
     #cart-drawer .avonent-cinnamon-cart-benefit strong {
