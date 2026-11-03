@@ -27,12 +27,31 @@
         {% if product != blank %}
           {% assign selected_variant = product.selected_or_first_available_variant %}
 
+          {% if product.handle == 'aged-garlic-capsules' %}
+            {% assign av_card_title = 'Avonent Aged Garlic' %}
+            {% assign av_card_subtitle = 'Odorless aged garlic made for simple daily heart and circulation support.' %}
+            {% assign av_card_button = 'Shop Aged Garlic' %}
+            {% assign av_card_benefit_1 = 'Heart & circulation support' %}
+            {% assign av_card_benefit_2 = 'Aged for 24 months' %}
+            {% assign av_card_benefit_3 = 'Odorless daily softgel' %}
+          {% elsif product.handle == 'ceylon-cinnamon-berberine-capsules' %}
+            {% assign av_card_title = 'Avonent Ceylon Cinnamon + Berberine' %}
+            {% assign av_card_subtitle = 'True Ceylon cinnamon with Berberine HCl for everyday metabolic support.' %}
+            {% assign av_card_button = 'Shop Ceylon Cinnamon' %}
+            {% assign av_card_benefit_1 = 'True Ceylon cinnamon from Sri Lanka' %}
+            {% assign av_card_benefit_2 = '14,400 mg equivalent' %}
+            {% assign av_card_benefit_3 = 'Berberine HCl + MCT oil' %}
+          {% else %}
+            {% assign av_card_title = product.title %}
+            {% assign av_card_subtitle = block.settings.subtitle %}
+            {% assign av_card_button = block.settings.button_text | default: 'Shop Now' %}
+            {% assign av_card_benefit_1 = av_card_benefit_1 %}
+            {% assign av_card_benefit_2 = av_card_benefit_2 %}
+            {% assign av_card_benefit_3 = av_card_benefit_3 %}
+          {% endif %}
+
           <article class="avonent-featured-card" {{ block.shopify_attributes }}>
-            {% if block.settings.title_override != blank %}
-              <h2 class="avonent-featured-card__name">{{ block.settings.title_override }}</h2>
-            {% else %}
-              <h2 class="avonent-featured-card__name">{{ product.title }}</h2>
-            {% endif %}
+            <h2 class="avonent-featured-card__name">{{ av_card_title }}</h2>
 
             <a
               href="{{ product.url }}"
@@ -55,12 +74,12 @@
               {% endif %}
             </a>
 
-            {% if block.settings.subtitle != blank %}
-              <div class="avonent-featured-card__subtitle">{{ block.settings.subtitle }}</div>
+            {% if av_card_subtitle != blank %}
+              <div class="avonent-featured-card__subtitle">{{ av_card_subtitle }}</div>
             {% endif %}
 
             <a href="{{ product.url }}" class="avonent-featured-card__button">
-              <span>{{ block.settings.button_text }}</span>
+              <span>{{ av_card_button }}</span>
             </a>
 
             <div class="avonent-featured-card__price-row">
@@ -79,30 +98,30 @@
             </div>
 
             <div class="avonent-featured-card__benefits">
-              {% if block.settings.benefit_1 != blank %}
+              {% if av_card_benefit_1 != blank %}
                 <div class="avonent-featured-card__benefit">
                   <span class="avonent-featured-card__check" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="none"><path d="m5 12.5 4.2 4.1L19 7" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </span>
-                  <span>{{ block.settings.benefit_1 }}</span>
+                  <span>{{ av_card_benefit_1 }}</span>
                 </div>
               {% endif %}
 
-              {% if block.settings.benefit_2 != blank %}
+              {% if av_card_benefit_2 != blank %}
                 <div class="avonent-featured-card__benefit">
                   <span class="avonent-featured-card__check" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="none"><path d="m5 12.5 4.2 4.1L19 7" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </span>
-                  <span>{{ block.settings.benefit_2 }}</span>
+                  <span>{{ av_card_benefit_2 }}</span>
                 </div>
               {% endif %}
 
-              {% if block.settings.benefit_3 != blank %}
+              {% if av_card_benefit_3 != blank %}
                 <div class="avonent-featured-card__benefit">
                   <span class="avonent-featured-card__check" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="none"><path d="m5 12.5 4.2 4.1L19 7" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </span>
-                  <span>{{ block.settings.benefit_3 }}</span>
+                  <span>{{ av_card_benefit_3 }}</span>
                 </div>
               {% endif %}
             </div>
@@ -118,7 +137,7 @@
     position:relative;
     width:100%;
     padding:52px 0 70px;
-    background-color:var(--av-featured-bg);
+    background-color:#052F3B;
     background-image:
       linear-gradient(rgba(3,40,51,var(--av-featured-overlay)),rgba(3,40,51,var(--av-featured-overlay))),
       var(--av-featured-bg-image);
