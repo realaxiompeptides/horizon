@@ -148,16 +148,16 @@
       {% endfor %}
     </div>
   </div>
-  {% if section.settings.bottom_image != blank %}
-    <div
-      class="avonent-featured-products__bottom-image"
-      data-av-home-bottom-image
-      style="
-        --av-home-bottom-overlay: {{ section.settings.bottom_image_overlay | divided_by: 100.0 }};
-        --av-home-bottom-desktop: {{ section.settings.bottom_image_height_desktop }}px;
-        --av-home-bottom-mobile: {{ section.settings.bottom_image_height_mobile }}px;
-      "
-    >
+  <div
+    class="avonent-featured-products__bottom-image"
+    data-av-home-bottom-image
+    style="
+      --av-home-bottom-overlay: {{ section.settings.bottom_image_overlay | divided_by: 100.0 }};
+      --av-home-bottom-desktop: {{ section.settings.bottom_image_height_desktop }}px;
+      --av-home-bottom-mobile: {{ section.settings.bottom_image_height_mobile }}px;
+    "
+  >
+    {% if section.settings.bottom_image != blank %}
       {{
         section.settings.bottom_image
         | image_url: width: 2400
@@ -168,19 +168,27 @@
           class: 'avonent-featured-products__bottom-image-img',
           alt: section.settings.bottom_image_heading
       }}
+    {% else %}
+      <img
+        class="avonent-featured-products__bottom-image-img"
+        src="https://cdn.shopify.com/s/files/1/0759/3525/2646/files/avonent-homepage-bottom-lifestyle.jpg?v=1793742297"
+        alt="Couple in a bright kitchen holding Avonent Ceylon Cinnamon"
+        loading="lazy"
+      >
+    {% endif %}
+
+    {% if section.settings.bottom_image_heading != blank or section.settings.bottom_image_text != blank %}
       <div class="avonent-featured-products__bottom-image-shade"></div>
-      {% if section.settings.bottom_image_heading != blank or section.settings.bottom_image_text != blank %}
-        <div class="avonent-featured-products__bottom-image-copy">
-          {% if section.settings.bottom_image_heading != blank %}
-            <h2>{{ section.settings.bottom_image_heading }}</h2>
-          {% endif %}
-          {% if section.settings.bottom_image_text != blank %}
-            <p>{{ section.settings.bottom_image_text }}</p>
-          {% endif %}
-        </div>
-      {% endif %}
-    </div>
-  {% endif %}
+      <div class="avonent-featured-products__bottom-image-copy">
+        {% if section.settings.bottom_image_heading != blank %}
+          <h2>{{ section.settings.bottom_image_heading }}</h2>
+        {% endif %}
+        {% if section.settings.bottom_image_text != blank %}
+          <p>{{ section.settings.bottom_image_text }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
 </section>
 
 <script>
