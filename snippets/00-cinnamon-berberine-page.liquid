@@ -747,18 +747,6 @@
     @media(max-width:900px){.av-cb__hero-grid{grid-template-columns:1fr;gap:24px}.av-cb__media{min-height:390px}.av-cb__trust-grid{grid-template-columns:repeat(2,1fr)}.av-cb__trust-item:nth-child(2){border-right:0}.av-cb__formula,.av-cb__timeline{grid-template-columns:1fr 1fr}.av-cb__education,.av-cb__compare{grid-template-columns:1fr}.av-cb__guarantee{grid-template-columns:auto 1fr}.av-cb__guarantee .av-cb__cta{grid-column:1/-1}.av-cb__title{font-size:40px}}
     @media(max-width:600px){.av-cb__wrap{width:min(100% - 22px,1200px)}.av-cb__hero{padding-top:0}.av-cb__media{width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);min-height:0;border-radius:0}.av-cb__formula-bottle{width:75%;padding:22px}.av-cb__formula-bottle b{font-size:30px}.av-cb__rating{margin-bottom:10px;font-size:12.5px;gap:7px}.av-cb__stars{font-size:16px}.av-cb__title{font-size:28px;line-height:1.03;letter-spacing:-.03em;margin-bottom:10px}.av-cb__hero-description{font-size:14px;line-height:1.48;margin-bottom:15px}.av-cb__hero-description br+br{margin-top:6px}.av-cb__subtitle{font-size:15px}.av-cb__benefit{font-size:13.5px;line-height:1.38;gap:9px}.av-cb__benefits{gap:10px;margin:14px 0 18px}.av-cb__benefit-check{width:17px;height:17px;flex-basis:17px}.av-cb__sold{padding:13px 15px;margin-bottom:14px}.av-cb__sold-text{font-size:14px}.av-cb__bundles{grid-template-columns:1fr}.av-cb__bundle{padding:13px 14px}.av-cb__trust-grid{grid-template-columns:1fr 1fr}.av-cb__trust-item{padding:14px 8px}.av-cb__section{padding:50px 0}.av-cb__formula,.av-cb__timeline{grid-template-columns:1fr}.av-cb__guarantee{grid-template-columns:1fr;text-align:center}.av-cb__seal{margin:auto}.av-cb__sticky{position:fixed;display:grid;grid-template-columns:48px minmax(0,1fr) auto;z-index:40;left:10px;right:10px;bottom:max(10px,env(safe-area-inset-bottom));background:rgba(255,255,255,.97);backdrop-filter:blur(14px);border:1px solid #E8D5C8;box-shadow:0 14px 38px rgba(43,24,14,.16);border-radius:16px;padding:9px;align-items:center;gap:10px;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(14px);transition:opacity .2s ease,transform .2s ease,visibility .2s ease}.av-cb__sticky.is-visible{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0)}.av-cb__sticky-img{width:48px;height:48px;border-radius:11px;overflow:hidden;background:#fff5ef;border:1px solid #ead3c4;display:grid;place-items:center}.av-cb__sticky-img img{width:100%;height:100%;object-fit:contain}.av-cb__sticky-copy{min-width:0;display:grid;gap:2px}.av-cb__sticky-title{font-size:12px;line-height:1.2;font-weight:750;color:#1D1916;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.av-cb__sticky-price{font-size:14px;line-height:1.1;font-weight:850;color:var(--blue)}.av-cb__sticky-add{border:0;background:var(--blue);color:#fff;min-height:46px;padding:0 17px;border-radius:12px;font-size:12px;font-weight:850;letter-spacing:.01em;cursor:pointer}.av-cb{padding-bottom:86px}}
 
-    /* SIMPLE STICKY CART BAR */
-    @media(max-width:600px){
-      .av-cb__sticky{grid-template-columns:1fr!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important;border-radius:14px!important;gap:0!important}
-      .av-cb__sticky-img,.av-cb__sticky-copy{display:none!important}
-      .av-cb__sticky-add{width:100%;min-height:54px;border-radius:14px;padding:0 14px;font-size:15px;display:flex;align-items:baseline;justify-content:center;gap:9px;box-shadow:0 10px 26px rgba(125,54,18,.24)}
-      .av-cb__sticky-add-label{font-weight:850;letter-spacing:.01em}
-      .av-cb__sticky-divider{opacity:.6;font-weight:400}
-      .av-cb__sticky-current{font-size:17px;font-weight:850}
-      .av-cb__sticky-compare{font-size:14px;font-weight:500;text-decoration:line-through;text-decoration-thickness:1.4px;opacity:.68}
-      .av-cb{padding-bottom:74px}
-    }
-
     .av-cb__delivery-estimate{display:flex;align-items:center;justify-content:center;gap:9px;margin:14px 0 12px;padding:11px 14px;border-radius:12px;background:#f2f3ed;color:#34312e;font-size:13px;line-height:1.25}.av-cb__delivery-estimate strong{color:var(--deep);font-weight:800;text-decoration:underline;text-underline-offset:2px}.av-cb__delivery-icon{width:24px;height:24px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;flex:0 0 24px}.av-cb__delivery-icon svg{width:15px;height:15px}
     .av-cb__refill-row{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:13px;color:#4f5e65;font-size:12px}
     .av-cb__refill-row[hidden]{display:none!important}
@@ -1676,12 +1664,16 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
 
 
   <div class="av-cb__sticky" aria-label="Quick add to cart">
-    <button class="av-cb__sticky-add" type="button" data-av-cb-sticky-add>
-      <span class="av-cb__sticky-add-label">ADD TO CART</span>
-      <span class="av-cb__sticky-divider" aria-hidden="true">|</span>
-      <span class="av-cb__sticky-current" data-av-cb-sticky-price>{{ av_cb_subscription_unit_price | money }}</span>
-      <s class="av-cb__sticky-compare" data-av-cb-sticky-compare{% if av_cb_subscription == blank and av_cb_one_time_compare_unit == 0 %} hidden{% endif %}>{% if av_cb_subscription != blank %}{{ av_cb_one_time_unit_price | money }}{% elsif av_cb_one_time_compare_unit > 0 %}{{ av_cb_one_time_compare_unit | money }}{% endif %}</s>
-    </button>
+    <span class="av-cb__sticky-img">
+      {% if av_cb_product.featured_image %}
+        {{ av_cb_product.featured_image | image_url: width: 120 | image_tag: loading: 'lazy', widths: '60,90,120', alt: av_cb_product.title }}
+      {% endif %}
+    </span>
+    <span class="av-cb__sticky-copy">
+      <span class="av-cb__sticky-title">Ceylon Cinnamon + Berberine HCl</span>
+      <span class="av-cb__sticky-price" data-av-cb-sticky-price>{{ av_cb_subscription_unit_price | money }}</span>
+    </span>
+    <button class="av-cb__sticky-add" type="button" data-av-cb-sticky-add>Add to Cart</button>
   </div>
 
 
@@ -1746,7 +1738,6 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       const btnTotal = root.querySelector('[data-av-cb-button-price]');
       const btnCompare = root.querySelector('[data-av-cb-button-compare]');
       const stickyPrice = root.querySelector('[data-av-cb-sticky-price]');
-      const stickyCompare = root.querySelector('[data-av-cb-sticky-compare]');
       const refillRow = root.querySelector('.av-cb__refill-row');
       const purchaseToggle = root.querySelector('[data-av-cb-purchase-toggle]');
       const purchaseToggleText = root.querySelector('[data-av-cb-purchase-toggle-text]');
@@ -1808,7 +1799,6 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         if (total) total.textContent = money(values.price);
         if (btnTotal) btnTotal.textContent = money(values.price);
         if (stickyPrice) stickyPrice.textContent = money(values.price);
-        setCompare(stickyCompare, values.compare, values.price);
         setCompare(topCompare, values.compare, values.price);
         setCompare(btnCompare, values.compare, values.price);
 
