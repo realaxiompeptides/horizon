@@ -16,10 +16,11 @@
         "mobile_image": "shopify://shop_images/ChatGPT_Image_Aug_24_2026_12_28_21_AM.png",
         "eyebrow": "",
         "heading": "Feel Better. Live Sharper.",
-        "description": "<p>Premium everyday supplements made to fit naturally into your routine.</p>",
+        "description": "<p>Avonent brings time-tested botanicals like aged garlic and true Ceylon cinnamon into clean, easy-to-take daily softgels. Centuries of traditional use. Modern research. No fillers, no harsh burn, no marketing tricks.</p>",
         "button_text": "Shop Avonent Now",
         "button_link": "shopify://collections/all",
         "show_button_arrow": false,
+        "guarantee_text": "90-Day Money-Back Guarantee",
         "show_social_proof": true,
         "star_rating": 5,
         "counter_start": 100000,
@@ -28,15 +29,54 @@
         "customer_text": "customers",
         "counter_duration": 2000,
         "text_color": "#111111",
-        "button_background": "#02C6EA",
-        "button_text_color": "#FFFFFF",
-        "star_color": "#F4B000",
+        "button_background": "#02c6ea",
+        "button_text_color": "#ffffff",
+        "star_color": "#f4b000",
         "overlay_opacity": 0,
         "content_alignment": "center",
         "vertical_position": "top",
         "desktop_height": 720,
-        "mobile_height": 720,
-        "guarantee_text": "90-Day Money-Back Guarantee"
+        "mobile_height": 720
+      }
+    },
+    "00_avonent_trust_strip_Bj7dMJ": {
+      "type": "00-avonent-trust-strip",
+      "blocks": {
+        "trust_item_BwDW9U": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "shield",
+            "text": "90-Day Money-Back Guarantee"
+          }
+        },
+        "trust_item_KQPpPn": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "lab",
+            "text": "Third-Party Lab Tested"
+          }
+        },
+        "trust_item_cgyceP": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "flag",
+            "text": "Ships from USA"
+          }
+        }
+      },
+      "block_order": [
+        "trust_item_BwDW9U",
+        "trust_item_KQPpPn",
+        "trust_item_cgyceP"
+      ],
+      "name": "00 Avonent Trust Carousel",
+      "settings": {
+        "background_color": "#02c6ea",
+        "text_color": "#ffffff",
+        "accent_color": "#ffffff",
+        "speed": 18,
+        "padding_top": 16,
+        "padding_bottom": 16
       }
     },
     "00_avonent_featured_products_VTU4KW": {
@@ -93,13 +133,13 @@
         "padding_bottom_mobile": 64,
         "header_to_products_gap": 36,
         "products_to_bottom_button_gap": 28,
-        "background_color": "#F7FCFE",
+        "background_color": "#f7fcfe",
         "text_color": "#111111",
         "card_background": "#ffffff",
         "card_text_color": "#111111",
-        "accent_color": "#02C6EA",
-        "star_color": "#F4B000",
-        "border_color": "#D9EEF4",
+        "accent_color": "#02c6ea",
+        "star_color": "#f4b000",
+        "border_color": "#d9eef4",
         "card_radius": 22
       }
     },
@@ -163,53 +203,13 @@
         "summary_rating": 5,
         "summary_bold_text": "5.0",
         "summary_text": "from verified customers",
-        "background_color": "#FBF7F2",
+        "background_color": "#fbf7f2",
         "text_color": "#171513",
-        "card_background": "#FFFFFF",
+        "card_background": "#ffffff",
         "card_text_color": "#171513",
-        "star_color": "#F4B000",
-        "border_color": "#E6DCD2",
+        "star_color": "#f4b000",
+        "border_color": "#e6dcd2",
         "card_radius": 22
-      }
-    },
-    "00_avonent_trust_strip_Bj7dMJ": {
-      "type": "00-avonent-trust-strip",
-      "blocks": {
-        "trust_item_BwDW9U": {
-          "type": "trust_item",
-          "settings": {
-            "icon": "shield",
-            "text": "90-Day Money-Back Guarantee"
-          }
-        },
-        "trust_item_KQPpPn": {
-          "type": "trust_item",
-          "settings": {
-            "icon": "lab",
-            "text": "Third-Party Lab Tested"
-          }
-        },
-        "trust_item_cgyceP": {
-          "type": "trust_item",
-          "settings": {
-            "icon": "flag",
-            "text": "Ships from USA"
-          }
-        }
-      },
-      "block_order": [
-        "trust_item_BwDW9U",
-        "trust_item_KQPpPn",
-        "trust_item_cgyceP"
-      ],
-      "name": "00 Avonent Trust Carousel",
-      "settings": {
-        "background_color": "#02C6EA",
-        "text_color": "#FFFFFF",
-        "accent_color": "#FFFFFF",
-        "speed": 18,
-        "padding_top": 16,
-        "padding_bottom": 16
       }
     }
   },
