@@ -1,5 +1,10 @@
 {% liquid
   assign footer_id = 'avonent-footer-' | append: section.id
+  assign avonent_home_footer = false
+  if template.name == 'index'
+    assign avonent_home_footer = true
+  endif
+
   assign avonent_cinnamon_footer = false
   if template.name == 'product' and product.template_suffix == 'cinnamon-berberine'
     assign avonent_cinnamon_footer = true
@@ -13,17 +18,17 @@
 
 <section
   id="{{ footer_id }}"
-  class="avonent-footer{% if avonent_cinnamon_footer %} avonent-footer--cinnamon{% endif %}"
+  class="avonent-footer{% if avonent_home_footer %} avonent-footer--home{% endif %}{% if avonent_cinnamon_footer %} avonent-footer--cinnamon{% endif %}"
   style="
-    --av-footer-bg: {% if avonent_cinnamon_footer %}#2B180F{% else %}{{ section.settings.background_color }}{% endif %};
-    --av-footer-text: {% if avonent_cinnamon_footer %}#FFF8F2{% else %}{{ section.settings.text_color }}{% endif %};
-    --av-footer-muted: {% if avonent_cinnamon_footer %}#D8C7BA{% else %}{{ section.settings.muted_text_color }}{% endif %};
-    --av-footer-accent: {% if avonent_cinnamon_footer %}#C86F3A{% else %}{{ section.settings.accent_color }}{% endif %};
-    --av-footer-border: {% if avonent_cinnamon_footer %}#5B3828{% else %}{{ section.settings.border_color }}{% endif %};
-    --av-footer-input-bg: {% if avonent_cinnamon_footer %}#FFFDFC{% else %}{{ section.settings.input_background }}{% endif %};
-    --av-footer-input-text: {% if avonent_cinnamon_footer %}#2B180F{% else %}{{ section.settings.input_text_color }}{% endif %};
-    --av-footer-button-bg: {% if avonent_cinnamon_footer %}#C86F3A{% else %}{{ section.settings.button_background }}{% endif %};
-    --av-footer-button-text: {% if avonent_cinnamon_footer %}#FFFFFF{% else %}{{ section.settings.button_text_color }}{% endif %};
+    --av-footer-bg: {% if avonent_home_footer %}#071B22{% elsif avonent_cinnamon_footer %}#2B180F{% else %}{{ section.settings.background_color }}{% endif %};
+    --av-footer-text: {% if avonent_home_footer %}#F4FCFE{% elsif avonent_cinnamon_footer %}#FFF8F2{% else %}{{ section.settings.text_color }}{% endif %};
+    --av-footer-muted: {% if avonent_home_footer %}#A9C7D0{% elsif avonent_cinnamon_footer %}#D8C7BA{% else %}{{ section.settings.muted_text_color }}{% endif %};
+    --av-footer-accent: {% if avonent_home_footer %}#02C6EA{% elsif avonent_cinnamon_footer %}#C86F3A{% else %}{{ section.settings.accent_color }}{% endif %};
+    --av-footer-border: {% if avonent_home_footer %}#17404A{% elsif avonent_cinnamon_footer %}#5B3828{% else %}{{ section.settings.border_color }}{% endif %};
+    --av-footer-input-bg: {% if avonent_home_footer %}#FFFFFF{% elsif avonent_cinnamon_footer %}#FFFDFC{% else %}{{ section.settings.input_background }}{% endif %};
+    --av-footer-input-text: {% if avonent_home_footer %}#071B22{% elsif avonent_cinnamon_footer %}#2B180F{% else %}{{ section.settings.input_text_color }}{% endif %};
+    --av-footer-button-bg: {% if avonent_home_footer %}#02C6EA{% elsif avonent_cinnamon_footer %}#C86F3A{% else %}{{ section.settings.button_background }}{% endif %};
+    --av-footer-button-text: {% if avonent_home_footer %}#071B22{% elsif avonent_cinnamon_footer %}#FFFFFF{% else %}{{ section.settings.button_text_color }}{% endif %};
     --av-footer-radius: {{ section.settings.corner_radius }}px;
     --av-footer-padding-top: {{ section.settings.padding_top }}px;
     --av-footer-padding-bottom: {{ section.settings.padding_bottom }}px;
@@ -32,7 +37,90 @@
 
   <div class="avonent-footer__container">
 
-    {% if avonent_cinnamon_footer %}
+    {% if avonent_home_footer %}
+      <div class="avonent-footer__home-grid">
+        <div class="avonent-footer__home-brand">
+          <a href="{{ routes.root_url }}" class="avonent-footer__home-logo-link" aria-label="{{ shop.name | escape }}">
+            {% if section.settings.logo != blank %}
+              {{
+                section.settings.logo
+                | image_url: width: 600
+                | image_tag:
+                  class: 'avonent-footer__home-logo',
+                  loading: 'lazy',
+                  widths: '160,240,320,480,600',
+                  sizes: '(max-width: 749px) 200px, 230px'
+              }}
+            {% else %}
+              <span class="avonent-footer__home-logo-text">{{ section.settings.brand_name }}</span>
+            {% endif %}
+          </a>
+          <div class="avonent-footer__home-tagline">Premium daily wellness, made simple.</div>
+          <div class="avonent-footer__home-description">Focused formulas, clearly presented, built to fit naturally into everyday routines.</div>
+          <div class="avonent-footer__home-support">
+            <a href="{% if pages['contact'] != blank %}{{ pages['contact'].url }}{% else %}/pages/contact{% endif %}">Contact support</a>
+            <a href="{% if pages['track-your-order'] != blank %}{{ pages['track-your-order'].url }}{% else %}/pages/track-your-order{% endif %}">Track your order</a>
+          </div>
+        </div>
+
+        <nav class="avonent-footer__home-column" aria-label="Shop Avonent">
+          <h3>SHOP</h3>
+          <ul>
+            <li><a href="/products/aged-garlic-capsules">Aged Garlic Extract</a></li>
+            <li><a href="/products/ceylon-cinnamon-berberine-capsules">Ceylon Cinnamon + Berberine</a></li>
+          </ul>
+        </nav>
+
+        <nav class="avonent-footer__home-column" aria-label="Policies">
+          <h3>LEGAL</h3>
+          <ul>
+            {% if shop.privacy_policy != blank %}<li><a href="{{ shop.privacy_policy.url }}">Privacy Policy</a></li>{% endif %}
+            {% if shop.terms_of_service != blank %}<li><a href="{{ shop.terms_of_service.url }}">Terms of Service</a></li>{% endif %}
+            {% if shop.refund_policy != blank %}<li><a href="{{ shop.refund_policy.url }}">Refund Policy</a></li>{% endif %}
+            {% if shop.shipping_policy != blank %}<li><a href="{{ shop.shipping_policy.url }}">Shipping Policy</a></li>{% endif %}
+          </ul>
+        </nav>
+
+        {% if section.settings.show_newsletter %}
+          <div class="avonent-footer__home-newsletter">
+            <div class="avonent-footer__home-eyebrow">{{ section.settings.newsletter_eyebrow }}</div>
+            <h3>{{ section.settings.newsletter_heading }}</h3>
+            <div class="avonent-footer__home-newsletter-copy">{{ section.settings.newsletter_text }}</div>
+            {% form 'customer', class: 'avonent-footer__home-form' %}
+              <input type="hidden" name="contact[tags]" value="newsletter">
+              <label class="visually-hidden" for="AvonentHomeFooterEmail-{{ section.id }}">Email address</label>
+              <div class="avonent-footer__home-form-row">
+                <input id="AvonentHomeFooterEmail-{{ section.id }}" class="avonent-footer__home-input" type="email" name="contact[email]" placeholder="{{ section.settings.email_placeholder }}" autocomplete="email" required>
+                <button class="avonent-footer__home-submit" type="submit">{{ section.settings.button_label }} <span aria-hidden="true">→</span></button>
+              </div>
+              {% if form.posted_successfully? %}<div class="avonent-footer__form-message">{{ section.settings.success_text }}</div>{% endif %}
+              {% if form.errors %}<div class="avonent-footer__form-message avonent-footer__form-message--error">{{ form.errors | default_errors }}</div>{% endif %}
+            {% endform %}
+          </div>
+        {% endif %}
+      </div>
+
+      {% if section.settings.show_disclaimer %}
+        <div class="avonent-footer__home-disclaimer">
+          {% if section.settings.disclaimer_heading != blank %}<strong>{{ section.settings.disclaimer_heading }}</strong>{% endif %}
+          <div>{{ section.settings.fda_disclaimer }}</div>
+          <div>{{ section.settings.additional_disclaimer }}</div>
+        </div>
+      {% endif %}
+
+      <div class="avonent-footer__home-meta">
+        {% if section.settings.show_payment_icons %}
+          <div class="avonent-footer__home-payment">
+            <span>{{ section.settings.payment_heading }}</span>
+            <div class="avonent-footer__home-payment-icons" aria-label="Accepted payment methods">
+              {% for type in shop.enabled_payment_types %}<span>{{ type | payment_type_svg_tag }}</span>{% endfor %}
+            </div>
+          </div>
+        {% endif %}
+        <div class="avonent-footer__home-bottom">© {{ 'now' | date: '%Y' }} {{ section.settings.brand_name }}. {{ section.settings.copyright_text }}</div>
+      </div>
+
+    {% elsif avonent_cinnamon_footer %}
       <div class="avonent-footer__cinnamon-grid">
         <div class="avonent-footer__cinnamon-brand">
           <a href="{{ routes.root_url }}" class="avonent-footer__cinnamon-logo-link" aria-label="{{ shop.name | escape }}">
@@ -1498,6 +1586,56 @@
   .avonent-footer__input{font-size:16px}
   .avonent-footer :is(input,button,a,summary):focus-visible{outline:2px solid currentColor;outline-offset:4px}
 
+
+  /* Homepage footer: Avonent blue identity only. */
+  .avonent-footer--home{background:linear-gradient(180deg,#071B22 0%,#06161C 100%);color:var(--av-footer-text)}
+  .avonent-footer--home .avonent-footer__container{width:min(calc(100% - 56px),1380px)}
+  .avonent-footer__home-grid{display:grid;grid-template-columns:minmax(280px,1.2fr) minmax(150px,.55fr) minmax(160px,.6fr) minmax(300px,1fr);gap:clamp(34px,4vw,68px);align-items:start;padding-bottom:44px;border-bottom:1px solid var(--av-footer-border)}
+  .avonent-footer__home-logo-link{display:inline-flex;color:#fff;text-decoration:none}
+  .avonent-footer__home-logo{width:auto;max-width:230px;max-height:72px;object-fit:contain;object-position:left center}
+  .avonent-footer__home-logo-text{font-size:clamp(42px,4vw,58px);font-weight:800;line-height:.95;letter-spacing:-.04em;color:#fff}
+  .avonent-footer__home-tagline{margin-top:20px;color:#fff;font-size:17px;font-weight:650;line-height:1.4}
+  .avonent-footer__home-description{margin-top:10px;max-width:430px;color:var(--av-footer-muted);font-size:14px;line-height:1.65}
+  .avonent-footer__home-support{display:flex;flex-wrap:wrap;gap:10px 18px;margin-top:24px;padding-top:20px;border-top:1px solid var(--av-footer-border)}
+  .avonent-footer__home-support a{color:#C9E9F0;text-decoration:none;font-size:13px}
+  .avonent-footer__home-support a:hover{color:var(--av-footer-accent)}
+  .avonent-footer__home-column h3,.avonent-footer__home-eyebrow{margin:0;color:#fff;font-size:12px;font-weight:800;letter-spacing:.09em;text-transform:uppercase}
+  .avonent-footer__home-eyebrow{color:var(--av-footer-accent)}
+  .avonent-footer__home-column ul{display:grid;gap:13px;list-style:none;margin:22px 0 0;padding:0}
+  .avonent-footer__home-column a{color:#B9D5DD;text-decoration:none;font-size:14px;line-height:1.4;transition:color 160ms ease,transform 160ms ease}
+  .avonent-footer__home-column a:hover{color:#fff;transform:translateX(2px)}
+  .avonent-footer__home-newsletter h3{margin:10px 0 0;color:#fff;font-size:24px;line-height:1.1;letter-spacing:-.02em}
+  .avonent-footer__home-newsletter-copy{margin-top:11px;color:var(--av-footer-muted);font-size:13.5px;line-height:1.55}
+  .avonent-footer__home-newsletter-copy p,.avonent-footer__home-disclaimer p{margin:0}
+  .avonent-footer__home-form{margin-top:20px}
+  .avonent-footer__home-form-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;padding:6px;border:1px solid #20515D;border-radius:14px;background:#0A242C}
+  .avonent-footer__home-input{min-width:0;height:48px;padding:0 14px;border:0;border-radius:10px;background:#fff;color:#071B22;font-size:14px;outline:none}
+  .avonent-footer__home-submit{min-height:48px;padding:0 18px;border:0;border-radius:10px;background:var(--av-footer-accent);color:#041B22;font-size:12px;font-weight:850;letter-spacing:.05em;cursor:pointer}
+  .avonent-footer__home-disclaimer{display:grid;gap:8px;padding:26px 0;border-bottom:1px solid var(--av-footer-border);color:#8FB0B9;font-size:10.5px;line-height:1.55}
+  .avonent-footer__home-disclaimer strong{color:#C6E1E7;font-size:11px;letter-spacing:.05em;text-transform:uppercase}
+  .avonent-footer__home-meta{display:grid;gap:18px;padding-top:22px}
+  .avonent-footer__home-payment{display:flex;align-items:center;justify-content:space-between;gap:18px;color:#C6E1E7;font-size:11px;font-weight:800;letter-spacing:.06em}
+  .avonent-footer__home-payment-icons{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:7px}
+  .avonent-footer__home-payment-icons span{display:inline-flex;align-items:center;justify-content:center;min-width:42px;height:28px;padding:3px 6px;border-radius:6px;background:#fff}
+  .avonent-footer__home-payment-icons svg{max-height:22px;width:auto}
+  .avonent-footer__home-bottom{color:#789AA3;font-size:11px}
+  @media(max-width:980px){.avonent-footer__home-grid{grid-template-columns:1.2fr .7fr .7fr}.avonent-footer__home-newsletter{grid-column:1/-1;max-width:650px}}
+  @media(max-width:700px){
+    .avonent-footer--home{padding-top:48px;padding-bottom:calc(34px + env(safe-area-inset-bottom))}
+    .avonent-footer--home .avonent-footer__container{width:min(calc(100% - 36px),1380px)}
+    .avonent-footer__home-grid{grid-template-columns:1fr 1fr;gap:32px 24px;padding-bottom:34px}
+    .avonent-footer__home-brand,.avonent-footer__home-newsletter{grid-column:1/-1}
+    .avonent-footer__home-logo{max-width:205px;max-height:66px}
+    .avonent-footer__home-logo-text{font-size:46px}
+    .avonent-footer__home-tagline{font-size:16px}
+    .avonent-footer__home-description{font-size:13.5px}
+    .avonent-footer__home-column ul{gap:12px;margin-top:15px}
+    .avonent-footer__home-column a{font-size:13.5px}
+    .avonent-footer__home-form-row{grid-template-columns:1fr auto}
+    .avonent-footer__home-submit{padding-inline:15px}
+    .avonent-footer__home-payment{align-items:flex-start;flex-direction:column}
+    .avonent-footer__home-payment-icons{justify-content:flex-start}
+  }
 
   /* Cinnamon product footer only. */
   .avonent-footer--cinnamon{background:var(--av-footer-bg);color:var(--av-footer-text)}
