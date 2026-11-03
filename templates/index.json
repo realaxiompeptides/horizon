@@ -86,32 +86,28 @@
           "type": "product",
           "settings": {
             "product": "aged-garlic-capsules",
-            "badge_text": "DAILY FAVORITE",
+            "title_override": "Avonent Aged Garlic",
+            "subtitle": "A clean, odorless garlic softgel made for everyday heart and circulation support.",
+            "button_text": "Shop Aged Garlic",
+            "price_prefix": "Starting from",
             "show_sale_badge": true,
-            "category_text": "CARDIOVASCULAR SUPPORT",
-            "benefit": "Aged garlic extract in an odorless softgel made for simple daily use.",
-            "benefit_2": "7,500 mg equivalent",
-            "show_rating": true,
-            "rating": 5,
-            "rating_text": "5.0",
-            "price_note": "One-time purchase",
-            "button_text": "SHOP GARLIC"
+            "benefit_1": "Heart & circulation support",
+            "benefit_2": "Aged for 24 months",
+            "benefit_3": "Odorless daily softgel"
           }
         },
         "product_cinnamon": {
           "type": "product",
           "settings": {
             "product": "ceylon-cinnamon-berberine-capsules",
-            "badge_text": "BEST SELLER",
+            "title_override": "Avonent Ceylon Cinnamon + Berberine",
+            "subtitle": "True Ceylon cinnamon paired with Berberine HCl for simple daily metabolic support.",
+            "button_text": "Shop Ceylon Cinnamon",
+            "price_prefix": "Starting from",
             "show_sale_badge": true,
-            "category_text": "METABOLIC SUPPORT",
-            "benefit": "True Ceylon cinnamon + Berberine HCl with MCT oil delivery.",
+            "benefit_1": "True Ceylon cinnamon from Sri Lanka",
             "benefit_2": "14,400 mg equivalent",
-            "show_rating": true,
-            "rating": 5,
-            "rating_text": "4.9 • 10,000+ reviews",
-            "price_note": "Subscription & one-time options",
-            "button_text": "SHOP CINNAMON"
+            "benefit_3": "Berberine HCl + MCT oil"
           }
         }
       },
@@ -121,26 +117,12 @@
       ],
       "name": "00 Avonent Featured",
       "settings": {
-        "eyebrow": "SHOP AVONENT",
-        "heading": "Two focused formulas. Built for everyday consistency.",
-        "subheading": "<p>Start with the support that fits your routine. Only our core Garlic and Ceylon Cinnamon formulas are featured here.</p>",
-        "button_behavior": "product",
-        "bottom_button_text": "",
-        "bottom_button_link": "",
-        "padding_top_desktop": 88,
-        "padding_bottom_desktop": 96,
-        "padding_top_mobile": 52,
-        "padding_bottom_mobile": 64,
-        "header_to_products_gap": 36,
-        "products_to_bottom_button_gap": 28,
-        "background_color": "#f7fcfe",
-        "text_color": "#111111",
-        "card_background": "#ffffff",
-        "card_text_color": "#111111",
-        "accent_color": "#02c6ea",
-        "star_color": "#f4b000",
-        "border_color": "#d9eef4",
-        "card_radius": 22
+        "background_color": "#EAFBFF",
+        "accent_color": "#02C6EA",
+        "card_background": "#062B34",
+        "card_text_color": "#FFFFFF",
+        "muted_text_color": "#D4EDF2",
+        "card_radius": 24
       }
     },
     "00_avonent_testimonials_NVx8W4": {
