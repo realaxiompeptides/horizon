@@ -1645,7 +1645,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
 
       <div class="av-cb__post-risk-read-more-wrap">
         <button class="av-cb__post-risk-read-more" type="button" data-av-cb-review-read-more aria-expanded="false">
-          Read More
+          Read More Reviews
         </button>
       </div>
     </div>
@@ -1747,9 +1747,15 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       const reviewReadMore = root.querySelector('[data-av-cb-review-read-more]');
       if (extraReview && reviewReadMore) {
         reviewReadMore.addEventListener('click', () => {
-          extraReview.hidden = false;
-          reviewReadMore.setAttribute('aria-expanded', 'true');
-          reviewReadMore.hidden = true;
+          const isOpen = reviewReadMore.getAttribute('aria-expanded') === 'true';
+
+          extraReview.hidden = isOpen;
+          reviewReadMore.setAttribute('aria-expanded', String(!isOpen));
+          reviewReadMore.textContent = isOpen ? 'Read More Reviews' : 'Read Less Reviews';
+
+          if (isOpen) {
+            reviewReadMore.scrollIntoView({behavior:'smooth', block:'center'});
+          }
         });
       }
 
