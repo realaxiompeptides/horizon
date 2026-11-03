@@ -576,33 +576,46 @@
         if content_block.settings.accent != blank
           assign av_cb_five_reasons_accent = content_block.settings.accent
         endif
-        {% for reason_i in (1..5) %}
-          {% assign image_key = 'reason_' | append: reason_i | append: '_image' %}
-          {% assign title_key = 'reason_' | append: reason_i | append: '_title' %}
-          {% assign body_key = 'reason_' | append: reason_i | append: '_body' %}
-          {% case reason_i %}
-            {% when 1 %}
-              {% assign av_cb_five_reasons_1_image = content_block.settings[image_key] %}
-              {% if content_block.settings[title_key] != blank %}{% assign av_cb_five_reasons_1_title = content_block.settings[title_key] %}{% endif %}
-              {% if content_block.settings[body_key] != blank %}{% assign av_cb_five_reasons_1_body = content_block.settings[body_key] %}{% endif %}
-            {% when 2 %}
-              {% assign av_cb_five_reasons_2_image = content_block.settings[image_key] %}
-              {% if content_block.settings[title_key] != blank %}{% assign av_cb_five_reasons_2_title = content_block.settings[title_key] %}{% endif %}
-              {% if content_block.settings[body_key] != blank %}{% assign av_cb_five_reasons_2_body = content_block.settings[body_key] %}{% endif %}
-            {% when 3 %}
-              {% assign av_cb_five_reasons_3_image = content_block.settings[image_key] %}
-              {% if content_block.settings[title_key] != blank %}{% assign av_cb_five_reasons_3_title = content_block.settings[title_key] %}{% endif %}
-              {% if content_block.settings[body_key] != blank %}{% assign av_cb_five_reasons_3_body = content_block.settings[body_key] %}{% endif %}
-            {% when 4 %}
-              {% assign av_cb_five_reasons_4_image = content_block.settings[image_key] %}
-              {% if content_block.settings[title_key] != blank %}{% assign av_cb_five_reasons_4_title = content_block.settings[title_key] %}{% endif %}
-              {% if content_block.settings[body_key] != blank %}{% assign av_cb_five_reasons_4_body = content_block.settings[body_key] %}{% endif %}
-            {% else %}
-              {% assign av_cb_five_reasons_5_image = content_block.settings[image_key] %}
-              {% if content_block.settings[title_key] != blank %}{% assign av_cb_five_reasons_5_title = content_block.settings[title_key] %}{% endif %}
-              {% if content_block.settings[body_key] != blank %}{% assign av_cb_five_reasons_5_body = content_block.settings[body_key] %}{% endif %}
-          {% endcase %}
-        {% endfor %}
+
+        assign av_cb_five_reasons_1_image = content_block.settings.reason_1_image
+        if content_block.settings.reason_1_title != blank
+          assign av_cb_five_reasons_1_title = content_block.settings.reason_1_title
+        endif
+        if content_block.settings.reason_1_body != blank
+          assign av_cb_five_reasons_1_body = content_block.settings.reason_1_body
+        endif
+
+        assign av_cb_five_reasons_2_image = content_block.settings.reason_2_image
+        if content_block.settings.reason_2_title != blank
+          assign av_cb_five_reasons_2_title = content_block.settings.reason_2_title
+        endif
+        if content_block.settings.reason_2_body != blank
+          assign av_cb_five_reasons_2_body = content_block.settings.reason_2_body
+        endif
+
+        assign av_cb_five_reasons_3_image = content_block.settings.reason_3_image
+        if content_block.settings.reason_3_title != blank
+          assign av_cb_five_reasons_3_title = content_block.settings.reason_3_title
+        endif
+        if content_block.settings.reason_3_body != blank
+          assign av_cb_five_reasons_3_body = content_block.settings.reason_3_body
+        endif
+
+        assign av_cb_five_reasons_4_image = content_block.settings.reason_4_image
+        if content_block.settings.reason_4_title != blank
+          assign av_cb_five_reasons_4_title = content_block.settings.reason_4_title
+        endif
+        if content_block.settings.reason_4_body != blank
+          assign av_cb_five_reasons_4_body = content_block.settings.reason_4_body
+        endif
+
+        assign av_cb_five_reasons_5_image = content_block.settings.reason_5_image
+        if content_block.settings.reason_5_title != blank
+          assign av_cb_five_reasons_5_title = content_block.settings.reason_5_title
+        endif
+        if content_block.settings.reason_5_body != blank
+          assign av_cb_five_reasons_5_body = content_block.settings.reason_5_body
+        endif
       when 'risk_free'
         assign av_cb_risk_block = content_block
         if content_block.settings.image != blank
