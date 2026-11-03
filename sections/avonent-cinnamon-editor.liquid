@@ -23,6 +23,31 @@
 #shopify-section-{{ section.id }} .av-cb__review-arrows{display:flex;gap:12px}
 #shopify-section-{{ section.id }} .av-cb__review-arrow{width:46px;height:46px;border:1px solid #e5cbbb;border-radius:50%;background:#fff7f2;color:#A84F1B;display:grid;place-items:center;cursor:pointer}
 #shopify-section-{{ section.id }} .av-cb__review-arrow svg{width:21px;height:21px}
+
+/* Auto-moving customer photo strip above reviews */
+#shopify-section-{{ section.id }} .av-cb__photo-track{
+  gap:10px!important;
+  overflow:hidden!important;
+  scroll-snap-type:none!important;
+  scrollbar-width:none!important;
+  -ms-overflow-style:none!important;
+  padding:10px 0 16px!important;
+  pointer-events:none!important;
+  touch-action:pan-y!important;
+}
+#shopify-section-{{ section.id }} .av-cb__photo-track::-webkit-scrollbar{display:none!important}
+#shopify-section-{{ section.id }} .av-cb__photo-track figure{
+  flex:0 0 116px!important;
+  width:116px!important;
+  height:138px!important;
+  border-radius:10px!important;
+  scroll-snap-align:none!important;
+}
+#shopify-section-{{ section.id }} .av-cb__photo-track img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+}
 @media(max-width:600px){
   #shopify-section-{{ section.id }} .av-cb__review-card{flex:0 0 100%;padding:17px}
   #shopify-section-{{ section.id }} .av-cb__review-card h3{font-size:19px;margin:15px 0 9px}
@@ -30,6 +55,8 @@
   #shopify-section-{{ section.id }} .av-cb__review-card footer{padding-top:16px}
   #shopify-section-{{ section.id }} .av-cb__review-tags{margin-top:13px}
   #shopify-section-{{ section.id }} .av-cb__reviews{padding:24px 0 24px}
+  #shopify-section-{{ section.id }} .av-cb__photo-track{gap:9px!important;padding:8px 0 14px!important}
+  #shopify-section-{{ section.id }} .av-cb__photo-track figure{flex-basis:96px!important;width:96px!important;height:118px!important;border-radius:9px!important}
 }
 </style>
 <script>
@@ -40,6 +67,53 @@
   if (!root) return;
 
   const reviews = root.querySelector('.av-cb__reviews');
+
+  const photoTrack = reviews?.querySelector('.av-cb__photo-track');
+  if (photoTrack && !photoTrack.dataset.avCbPhotoAutoReady) {
+    photoTrack.dataset.avCbPhotoAutoReady = 'true';
+    photoTrack.removeAttribute('tabindex');
+
+    const originals = Array.from(photoTrack.querySelectorAll('figure'));
+    if (originals.length > 1) {
+      originals.forEach((figure) => {
+        const clone = figure.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        clone.removeAttribute('block.shopify_attributes');
+        photoTrack.appendChild(clone);
+      });
+
+      const firstClone = photoTrack.querySelectorAll('figure')[originals.length];
+      const loopWidth = firstClone ? firstClone.offsetLeft - originals[0].offsetLeft : 0;
+      let rafId = null;
+      let lastTime = 0;
+      const speed = 24; // pixels per second
+
+      const animatePhotos = (time) => {
+        if (!lastTime) lastTime = time;
+        const delta = Math.min((time - lastTime) / 1000, 0.05);
+        lastTime = time;
+
+        if (!document.hidden && loopWidth > 0) {
+          photoTrack.scrollLeft += speed * delta;
+          if (photoTrack.scrollLeft >= loopWidth) {
+            photoTrack.scrollLeft -= loopWidth;
+          }
+        }
+
+        rafId = requestAnimationFrame(animatePhotos);
+      };
+
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      if (!reduceMotion.matches) {
+        rafId = requestAnimationFrame(animatePhotos);
+      }
+
+      document.addEventListener('visibilitychange', () => {
+        lastTime = 0;
+      }, {passive:true});
+    }
+  }
+
   const reviewHead = reviews?.querySelector('.av-cb__reviews-head');
   if (reviewHead) {
     const h2 = reviewHead.querySelector('h2');
@@ -1109,7 +1183,7 @@
     {
       "type": "review",
       "name": "Customer photo and review",
-      "limit": 12,
+      "limit": 10,
       "settings": [
         {
           "type": "image_picker",
