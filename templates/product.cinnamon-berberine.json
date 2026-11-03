@@ -306,6 +306,29 @@
             "tag_2": "Afternoon Balance",
             "verified": true
           }
+        },
+        "five_reasons": {
+          "type": "five_reasons",
+          "settings": {
+            "show_section": false,
+            "eyebrow": "5 REASONS WHY",
+            "heading": "Why Avonent Ceylon Cinnamon Is Different",
+            "intro": "Five details that make this formula easier to understand—and easier to use consistently.",
+            "button_text": "Try Risk-Free Today",
+            "guarantee_text": "90-Day Money-Back Guarantee",
+            "background": "#FFF4EC",
+            "accent": "#A84F1B",
+            "reason_1_title": "12:1 Concentrated True Ceylon Cinnamon",
+            "reason_1_body": "Avonent uses Cinnamomum verum sourced from Sri Lanka—not common Cassia. A concentrated 12:1 extract provides the equivalent of 14,400 mg of raw cinnamon in a single daily softgel.",
+            "reason_2_title": "Berberine HCl Included",
+            "reason_2_body": "Instead of making you buy a separate bottle, Avonent combines Berberine HCl with Ceylon cinnamon in the same daily formula for a simpler metabolic-support routine.*",
+            "reason_3_title": "MCT Oil Softgel Delivery",
+            "reason_3_body": "The concentrated cinnamon extract is suspended in MCT oil inside a smooth softgel—no loose powder, gritty drinks, or extra mixing.",
+            "reason_4_title": "One Softgel Per Day",
+            "reason_4_body": "A simple one-softgel daily serving makes it easier to stay consistent without carrying around multiple bottles or taking a handful of capsules.",
+            "reason_5_title": "Clear Formula. 90-Day Guarantee.",
+            "reason_5_body": "You can see what is in the formula, how much you are taking, and try it with the protection of Avonent’s 90-Day Money-Back Guarantee."
+          }
         }
       },
       "block_order": [
@@ -316,6 +339,7 @@
         "journey",
         "compare",
         "benefits",
+        "five_reasons",
         "risk_free",
         "faq",
         "details",
