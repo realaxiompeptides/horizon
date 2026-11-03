@@ -16,651 +16,329 @@
   "
 >
   <div class="avonent-testimonials__container">
-
     <h2 class="avonent-testimonials__heading">
       <span>Real Stories,</span> <span class="avonent-testimonials__heading-accent">Real Results</span>
     </h2>
 
     {% if section.settings.subheading != blank %}
-      <div class="avonent-testimonials__subheading">
-        {{ section.settings.subheading }}
-      </div>
+      <div class="avonent-testimonials__subheading">{{ section.settings.subheading }}</div>
     {% endif %}
 
-    <div class="avonent-testimonials__grid">
-
-      {% for block in section.blocks %}
-        <article
-          class="avonent-testimonial-card"
-          {{ block.shopify_attributes }}
-        >
-
-          <div class="avonent-testimonial-card__rating-row">
-            <strong class="avonent-testimonial-card__rating-number">5.0</strong>
-            <div
-              class="avonent-testimonial-card__stars"
-              aria-label="{{ block.settings.rating }} out of 5 stars"
-            >
-              {% for i in (1..5) %}
-                <span
-                  class="{% if i > block.settings.rating %}is-empty{% endif %}"
-                  aria-hidden="true"
-                >
-                  ★
-                </span>
-              {% endfor %}
-            </div>
-          </div>
-
-          {% if block.settings.title != blank %}
-            <h3 class="avonent-testimonial-card__title">
-              {{ block.settings.title }}
-            </h3>
-          {% endif %}
-
-          {% if block.settings.review != blank %}
-            <div class="avonent-testimonial-card__review">
-              {{ block.settings.review }}
-            </div>
-          {% endif %}
-
-          <div class="avonent-testimonial-card__footer">
-            {% if block.settings.customer_name != blank %}
-              <div class="avonent-testimonial-card__name">
-                {{ block.settings.customer_name }}
+    <div class="avonent-testimonials__viewport" data-av-testimonials-viewport>
+      <div class="avonent-testimonials__track">
+        {% for block in section.blocks %}
+          <article class="avonent-testimonial-card" data-av-testimonial-card {{ block.shopify_attributes }}>
+            <div class="avonent-testimonial-card__rating-row">
+              <strong class="avonent-testimonial-card__rating-number">5.0</strong>
+              <div class="avonent-testimonial-card__stars" aria-label="{{ block.settings.rating }} out of 5 stars">
+                {% for i in (1..5) %}
+                  <span class="{% if i > block.settings.rating %}is-empty{% endif %}" aria-hidden="true">★</span>
+                {% endfor %}
               </div>
+            </div>
+
+            {% if block.settings.title != blank %}
+              <h3 class="avonent-testimonial-card__title">{{ block.settings.title }}</h3>
             {% endif %}
 
-            {% if block.settings.show_verified %}
-              <div class="avonent-testimonial-card__verified">
-                <span class="avonent-testimonial-card__verified-icon" aria-hidden="true">
-                  <svg viewBox="0 0 20 20" fill="none"><path d="M4.4 10.2 8 13.6 15.6 6" stroke="currentColor" stroke-width="2.35" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </span>
-                {{ block.settings.verified_text }}
-              </div>
+            {% if block.settings.review != blank %}
+              <div class="avonent-testimonial-card__review">{{ block.settings.review }}</div>
             {% endif %}
-          </div>
 
-          {% if block.settings.show_product %}
-            <div class="avonent-testimonial-card__product">
-
-              {% if block.settings.product_image != blank %}
-                <div class="avonent-testimonial-card__product-image">
-                  {{
-                    block.settings.product_image
-                    | image_url: width: 180
-                    | image_tag:
-                      loading: 'lazy',
-                      widths: '90, 140, 180',
-                      sizes: '58px'
-                  }}
+            <div class="avonent-testimonial-card__footer">
+              {% if block.settings.customer_name != blank %}
+                <div class="avonent-testimonial-card__name">{{ block.settings.customer_name }}</div>
+              {% endif %}
+              {% if block.settings.show_verified %}
+                <div class="avonent-testimonial-card__verified">
+                  <span class="avonent-testimonial-card__verified-icon" aria-hidden="true">
+                    <svg viewBox="0 0 20 20" fill="none"><path d="M4.4 10.2 8 13.6 15.6 6" stroke="currentColor" stroke-width="2.35" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  {{ block.settings.verified_text }}
                 </div>
               {% endif %}
-
-              <div class="avonent-testimonial-card__product-copy">
-
-                {% if block.settings.product_label != blank %}
-                  <span class="avonent-testimonial-card__product-label">
-                    {{ block.settings.product_label }}
-                  </span>
-                {% endif %}
-
-                {% if block.settings.product_name != blank %}
-                  <strong class="avonent-testimonial-card__product-name">
-                    {{ block.settings.product_name }}
-                  </strong>
-                {% endif %}
-
-              </div>
-
             </div>
-          {% endif %}
-
-        </article>
-      {% endfor %}
-
+          </article>
+        {% endfor %}
+      </div>
     </div>
 
+    {% if section.blocks.size > 1 %}
+      <div class="avonent-testimonials__dots" data-av-testimonials-dots>
+        {% for block in section.blocks %}
+          <button
+            type="button"
+            class="avonent-testimonials__dot{% if forloop.first %} is-active{% endif %}"
+            data-av-testimonials-dot="{{ forloop.index0 }}"
+            aria-label="Go to review {{ forloop.index }}"
+          ></button>
+        {% endfor %}
+      </div>
+
+      <div class="avonent-testimonials__arrows">
+        <button type="button" class="avonent-testimonials__arrow" data-av-testimonials-prev aria-label="Previous review">
+          <svg viewBox="0 0 24 24" fill="none"><path d="m14.5 6-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="avonent-testimonials__arrow" data-av-testimonials-next aria-label="Next review">
+          <svg viewBox="0 0 24 24" fill="none"><path d="m9.5 6 6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    {% endif %}
   </div>
 </section>
 
+<script>
+  (() => {
+    const root = document.getElementById('{{ section_id }}');
+    if (!root || root.dataset.carouselReady === 'true') return;
+    root.dataset.carouselReady = 'true';
+
+    const viewport = root.querySelector('[data-av-testimonials-viewport]');
+    const cards = Array.from(root.querySelectorAll('[data-av-testimonial-card]'));
+    const dots = Array.from(root.querySelectorAll('[data-av-testimonials-dot]'));
+    const prev = root.querySelector('[data-av-testimonials-prev]');
+    const next = root.querySelector('[data-av-testimonials-next]');
+    if (!viewport || !cards.length) return;
+
+    let index = 0;
+    let scrollTimer;
+
+    const setActive = (newIndex, behavior = 'smooth') => {
+      index = Math.max(0, Math.min(cards.length - 1, newIndex));
+      viewport.scrollTo({left: cards[index].offsetLeft - viewport.offsetLeft, behavior});
+      dots.forEach((dot, i) => dot.classList.toggle('is-active', i === index));
+    };
+
+    prev?.addEventListener('click', () => setActive(index <= 0 ? cards.length - 1 : index - 1));
+    next?.addEventListener('click', () => setActive(index >= cards.length - 1 ? 0 : index + 1));
+    dots.forEach((dot, i) => dot.addEventListener('click', () => setActive(i)));
+
+    viewport.addEventListener('scroll', () => {
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(() => {
+        const viewportLeft = viewport.scrollLeft;
+        let closest = 0;
+        let closestDistance = Infinity;
+        cards.forEach((card, i) => {
+          const distance = Math.abs(card.offsetLeft - viewport.offsetLeft - viewportLeft);
+          if (distance < closestDistance) {
+            closestDistance = distance;
+            closest = i;
+          }
+        });
+        index = closest;
+        dots.forEach((dot, i) => dot.classList.toggle('is-active', i === index));
+      }, 80);
+    }, {passive:true});
+  })();
+</script>
+
 {% stylesheet %}
-
-  /*
-   * AVONENT TESTIMONIALS
-   */
-
-  .avonent-testimonials {
-    width: 100%;
-    padding: 88px 0 96px;
-    background: #FBF7F2;
-    color: #171513;
+  .avonent-testimonials{
+    width:100%;
+    padding:72px 0 82px;
+    background:var(--av-testimonials-bg);
+    color:var(--av-testimonials-text);
   }
-
-  .avonent-testimonials__container {
-    width:
-      min(
-        calc(100% - 48px),
-        1380px
-      );
-
-    margin:
-      0
-      auto;
+  .avonent-testimonials__container{
+    width:min(calc(100% - 40px),980px);
+    margin:0 auto;
   }
-
-
-  /*
-   * SECTION HEADER
-   */
-
-  .avonent-testimonials__eyebrow {
-    margin-bottom: 10px;
-
-    font-family:
-      var(--font-body--family);
-
-    font-size: 12px;
-    font-weight: 650;
-
-    letter-spacing: 0.08em;
-
-    text-align: center;
-    text-transform: uppercase;
-
-    opacity: 0.82;
+  .avonent-testimonials__heading{
+    max-width:760px;
+    margin:0 auto;
+    font-family:var(--font-heading--family);
+    font-size:clamp(36px,4vw,54px);
+    font-weight:650;
+    line-height:1.04;
+    letter-spacing:-.025em;
+    text-align:center;
+    color:inherit;
   }
-
-  .avonent-testimonials__heading {
-    max-width: 760px;
-
-    margin:
-      0
-      auto;
-
-    font-family:
-      var(--font-heading--family);
-
-    font-size:
-      clamp(
-        36px,
-        4vw,
-        54px
-      );
-
-    font-weight: 600;
-
-    line-height: 1.04;
-
-    letter-spacing: -0.025em;
-
-    text-align: center;
-
-    color: inherit;
+  .avonent-testimonials__heading-accent{color:#02C6EA}
+  .avonent-testimonials__subheading{
+    max-width:660px;
+    margin:15px auto 0;
+    font-family:var(--font-body--family);
+    font-size:16px;
+    line-height:1.5;
+    text-align:center;
+    opacity:.84;
   }
-
-  .avonent-testimonials__heading-accent {
-    color: #02C6EA;
+  .avonent-testimonials__subheading p{margin:0}
+  .avonent-testimonials__viewport{
+    width:100%;
+    margin-top:34px;
+    overflow-x:auto;
+    overflow-y:hidden;
+    scroll-snap-type:x mandatory;
+    scroll-behavior:smooth;
+    scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
   }
-
-  .avonent-testimonials__subheading {
-    max-width: 660px;
-
-    margin:
-      16px
-      auto
-      0;
-
-    font-family:
-      var(--font-body--family);
-
-    font-size: 16px;
-    font-weight: 400;
-
-    line-height: 1.5;
-
-    text-align: center;
-
-    opacity: 0.88;
+  .avonent-testimonials__viewport::-webkit-scrollbar{display:none}
+  .avonent-testimonials__track{
+    display:flex;
+    gap:18px;
   }
-
-  .avonent-testimonials__subheading p {
-    margin: 0;
+  .avonent-testimonial-card{
+    flex:0 0 100%;
+    scroll-snap-align:start;
+    scroll-snap-stop:always;
+    display:flex;
+    flex-direction:column;
+    min-width:0;
+    padding:34px 34px 30px;
+    border:1px solid var(--av-testimonials-border);
+    border-radius:var(--av-testimonials-radius);
+    background:var(--av-testimonials-card-bg);
+    color:var(--av-testimonials-card-text);
+    box-shadow:0 12px 34px rgba(33,28,22,.055);
   }
-
-
-  /*
-   * SUMMARY
-   */
-
-  .avonent-testimonials__summary {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    flex-wrap: wrap;
-
-    gap: 12px;
-
-    margin-top: 24px;
+  .avonent-testimonial-card__rating-row{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    margin-bottom:24px;
   }
-
-  .avonent-testimonials__summary-stars {
-    display: flex;
-    align-items: center;
-
-    gap: 2px;
-
-    color: #F4B000;
-
-    font-size: 20px;
-
-    line-height: 1;
+  .avonent-testimonial-card__rating-number{
+    color:#171513;
+    font-family:var(--font-body--family);
+    font-size:20px;
+    font-weight:800;
+    line-height:1;
   }
-
-  .avonent-testimonials__summary-copy {
-    display: flex;
-    align-items: baseline;
-
-    gap: 5px;
-
-    font-family:
-      var(--font-body--family);
-
-    font-size: 15px;
-
-    line-height: 1.2;
+  .avonent-testimonial-card__stars{
+    display:flex;
+    gap:2px;
+    color:var(--av-testimonials-star);
+    font-size:23px;
+    line-height:1;
   }
-
-  .avonent-testimonials__summary-copy strong {
-    font-weight: 700;
+  .avonent-testimonial-card__stars .is-empty{opacity:.2}
+  .avonent-testimonial-card__title{
+    margin:0;
+    font-family:var(--font-heading--family);
+    font-size:28px;
+    font-weight:750;
+    line-height:1.12;
+    letter-spacing:-.025em;
+    color:inherit;
   }
-
-
-  /*
-   * GRID
-   */
-
-  .avonent-testimonials__grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 22px;
-    margin-top: 42px;
+  .avonent-testimonial-card__review{
+    margin-top:16px;
+    font-family:var(--font-body--family);
+    font-size:17px;
+    line-height:1.62;
+    opacity:.92;
   }
-
-
-  /*
-   * REVIEW CARD
-   */
-
-  .avonent-testimonial-card {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-    padding: 30px;
-    border: 1px solid var(--av-testimonials-border);
-    border-radius: var(--av-testimonials-radius);
-    background: var(--av-testimonials-card-bg);
-    color: var(--av-testimonials-card-text);
-    box-shadow: 0 12px 34px rgba(33, 28, 22, 0.055);
+  .avonent-testimonial-card__review p{margin:0}
+  .avonent-testimonial-card__footer{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    margin-top:28px;
+    padding-top:22px;
+    border-top:1px solid var(--av-testimonials-border);
   }
-
-
-  /*
-   * STARS
-   */
-
-  .avonent-testimonial-card__rating-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 20px;
+  .avonent-testimonial-card__name{
+    font-family:var(--font-body--family);
+    font-size:16px;
+    font-weight:800;
   }
-
-  .avonent-testimonial-card__rating-number {
-    color: #171513;
-    font-family: var(--font-body--family);
-    font-size: 18px;
-    font-weight: 800;
-    line-height: 1;
+  .avonent-testimonial-card__verified{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    font-family:var(--font-body--family);
+    font-size:13px;
+    font-weight:700;
   }
-
-  .avonent-testimonial-card__stars {
-    display: flex;
-    gap: 2px;
-    margin-bottom: 0;
-    color: var(--av-testimonials-star);
-    font-size: 21px;
-    line-height: 1;
+  .avonent-testimonial-card__verified-icon{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:19px;
+    height:19px;
+    border-radius:50%;
+    background:#4D8A64;
+    color:#fff;
   }
-
-  .avonent-testimonial-card__stars
-    .is-empty {
-    opacity: 0.2;
+  .avonent-testimonial-card__verified-icon svg{width:12px;height:12px}
+  .avonent-testimonials__dots{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:9px;
+    margin-top:24px;
   }
-
-
-  /*
-   * TITLE
-   */
-
-  .avonent-testimonial-card__title {
-    margin: 0;
-    font-family: var(--font-heading--family);
-    font-size: 24px;
-    font-weight: 700;
-    line-height: 1.14;
-    letter-spacing: -0.02em;
-    color: inherit;
+  .avonent-testimonials__dot{
+    width:10px;
+    height:10px;
+    padding:0;
+    border:0;
+    border-radius:999px;
+    background:#D2D0CE;
+    cursor:pointer;
+    transition:width .2s ease,background .2s ease;
   }
-
-
-  /*
-   * REVIEW BODY
-   */
-
-  .avonent-testimonial-card__review {
-    margin-top: 16px;
-    font-family: var(--font-body--family);
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 1.62;
-    opacity: 0.92;
+  .avonent-testimonials__dot.is-active{
+    width:42px;
+    background:#02C6EA;
   }
-
-  .avonent-testimonial-card__review p {
-    margin: 0;
+  .avonent-testimonials__arrows{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    margin-top:18px;
   }
-
-
-  /*
-   * CUSTOMER
-   */
-
-  .avonent-testimonial-card__footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    margin-top: auto;
-    padding-top: 22px;
-    border-top: 1px solid var(--av-testimonials-border);
+  .avonent-testimonials__arrow{
+    display:grid;
+    place-items:center;
+    width:54px;
+    height:54px;
+    padding:0;
+    border:1px solid #DCE5E8;
+    border-radius:50%;
+    background:#fff;
+    color:#161616;
+    cursor:pointer;
   }
-
-  .avonent-testimonial-card__avatar {
-    flex:
-      0
-      0
-      44px;
-
-    width: 44px;
-    height: 44px;
-
-    overflow: hidden;
-
-    border-radius: 50%;
-
-    background: #f3f5f6;
-  }
-
-  .avonent-testimonial-card__avatar img {
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-  }
-
-  .avonent-testimonial-card__customer {
-    min-width: 0;
-  }
-
-  .avonent-testimonial-card__name {
-    font-family: var(--font-body--family);
-    font-size: 15px;
-    font-weight: 750;
-    line-height: 1.2;
-  }
-
-  .avonent-testimonial-card__verified {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: 5px;
-    font-family: var(--font-body--family);
-    font-size: 12px;
-    font-weight: 650;
-    line-height: 1;
-    opacity: 0.82;
-  }
-
-  .avonent-testimonial-card__verified-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 15px;
-    height: 15px;
-
-    border-radius: 50%;
-
-    background: #4D8A64;
-    color: #ffffff;
-    font-size: 9px;
-    font-weight: 700;
-  }
-
-
-  /*
-   * PRODUCT
-   */
-
-  .avonent-testimonial-card__verified-icon svg {
-    width: 10px;
-    height: 10px;
-    display: block;
-  }
-
-  .avonent-testimonial-card__product {
-    display: flex;
-    align-items: center;
-
-    gap: 13px;
-
-    margin-top: 22px;
-
-    padding: 12px;
-
-    border-radius:
-      calc(
-        var(--av-testimonials-radius)
-        - 6px
-      );
-
-    background:
-      rgba(0, 0, 0, 0.035);
-  }
-
-  .avonent-testimonial-card__product-image {
-    flex:
-      0
-      0
-      54px;
-
-    width: 54px;
-    height: 54px;
-
-    overflow: hidden;
-
-    border-radius: 10px;
-
-    background: #ffffff;
-  }
-
-  .avonent-testimonial-card__product-image img {
-    width: 100%;
-    height: 100%;
-
-    object-fit: contain;
-  }
-
-  .avonent-testimonial-card__product-copy {
-    display: flex;
-    flex-direction: column;
-
-    min-width: 0;
-  }
-
-  .avonent-testimonial-card__product-label {
-    margin-bottom: 3px;
-
-    font-family:
-      var(--font-body--family);
-
-    font-size: 10px;
-    font-weight: 500;
-
-    line-height: 1;
-
-    opacity: 0.58;
-
-    text-transform: uppercase;
-
-    letter-spacing: 0.05em;
-  }
-
-  .avonent-testimonial-card__product-name {
-    font-family:
-      var(--font-body--family);
-
-    font-size: 14px;
-    font-weight: 650;
-
-    line-height: 1.2;
-  }
-
-
-  /*
-   * TABLET
-   */
-
-  @media screen and (max-width: 989px) {
-    .avonent-testimonials__grid {
-      grid-template-columns:
-        repeat(
-          2,
-          minmax(0, 1fr)
-        );
+  .avonent-testimonials__arrow svg{width:25px;height:25px}
+  @media(max-width:749px){
+    .avonent-testimonials{padding:54px 0 62px}
+    .avonent-testimonials__container{width:calc(100% - 28px)}
+    .avonent-testimonials__heading{
+      max-width:350px;
+      font-size:clamp(32px,9vw,40px);
     }
+    .avonent-testimonials__subheading{
+      max-width:330px;
+      margin-top:12px;
+      font-size:14px;
+    }
+    .avonent-testimonials__viewport{margin-top:28px}
+    .avonent-testimonials__track{gap:12px}
+    .avonent-testimonial-card{
+      padding:25px 22px 22px;
+      border-radius:min(var(--av-testimonials-radius),22px);
+    }
+    .avonent-testimonial-card__rating-row{margin-bottom:19px}
+    .avonent-testimonial-card__rating-number{font-size:19px}
+    .avonent-testimonial-card__stars{font-size:20px}
+    .avonent-testimonial-card__title{font-size:23px}
+    .avonent-testimonial-card__review{font-size:15px;line-height:1.58}
+    .avonent-testimonial-card__footer{
+      margin-top:22px;
+      padding-top:19px;
+    }
+    .avonent-testimonial-card__name{font-size:14px}
+    .avonent-testimonial-card__verified{font-size:11.5px}
+    .avonent-testimonial-card__verified-icon{width:18px;height:18px}
+    .avonent-testimonials__dots{margin-top:20px}
+    .avonent-testimonials__arrow{width:48px;height:48px}
   }
-
-
-  /*
-   * MOBILE
-   */
-
-  @media screen and (max-width: 749px) {
-
-    .avonent-testimonials {
-      padding: 56px 0 66px;
-    }
-
-    .avonent-testimonials__container {
-      width: calc(100% - 28px);
-    }
-
-    .avonent-testimonials__eyebrow {
-      margin-bottom: 9px;
-      font-size: 11px;
-    }
-
-    .avonent-testimonials__heading {
-      max-width: 340px;
-      font-size: clamp(31px, 8.8vw, 39px);
-      line-height: 1.05;
-    }
-
-    .avonent-testimonials__subheading {
-      max-width: 330px;
-      margin-top: 13px;
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    .avonent-testimonials__summary {
-      margin-top: 20px;
-      gap: 8px;
-    }
-
-    .avonent-testimonials__summary-stars {
-      font-size: 19px;
-    }
-
-    .avonent-testimonials__summary-copy {
-      font-size: 13px;
-    }
-
-    .avonent-testimonials__grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      width: 100%;
-      gap: 16px;
-      margin-top: 30px;
-      padding: 0;
-      overflow: visible;
-    }
-
-    .avonent-testimonial-card {
-      width: 100%;
-      min-width: 0;
-      padding: 24px 22px 22px;
-      border-radius: min(var(--av-testimonials-radius), 22px);
-      scroll-snap-align: none;
-    }
-
-    .avonent-testimonial-card__rating-row {
-      margin-bottom: 18px;
-    }
-
-    .avonent-testimonial-card__stars {
-      margin-bottom: 0;
-      font-size: 20px;
-    }
-
-    .avonent-testimonial-card__rating-number {
-      font-size: 18px;
-    }
-
-    .avonent-testimonial-card__title {
-      font-size: 22px;
-      line-height: 1.15;
-    }
-
-    .avonent-testimonial-card__review {
-      margin-top: 14px;
-      font-size: 15px;
-      line-height: 1.58;
-    }
-
-    .avonent-testimonial-card__footer {
-      padding-top: 20px;
-    }
-
-    .avonent-testimonial-card__avatar {
-      flex-basis: 42px;
-      width: 42px;
-      height: 42px;
-    }
-
-    .avonent-testimonial-card__name {
-      font-size: 14px;
-    }
-
-    .avonent-testimonial-card__verified {
-      font-size: 11.5px;
-    }
-
-  }
-
 {% endstylesheet %}
 
 {% schema %}
@@ -668,7 +346,6 @@
   "name": "00 Avonent Testimonials",
   "tag": "section",
   "class": "avonent-testimonials-section",
-
   "settings": [
     {
       "type": "header",
@@ -692,7 +369,6 @@
       "label": "Subheading",
       "default": "<p>See what customers are saying about making Avonent part of their routine.</p>"
     },
-
     {
       "type": "header",
       "content": "Review summary"
@@ -724,7 +400,6 @@
       "label": "Summary text",
       "default": "from verified customers"
     },
-
     {
       "type": "header",
       "content": "Colors"
@@ -765,7 +440,6 @@
       "label": "Card border",
       "default": "#E7EEF0"
     },
-
     {
       "type": "header",
       "content": "Card styling"
@@ -781,7 +455,6 @@
       "default": 18
     }
   ],
-
   "blocks": [
     {
       "type": "review",
@@ -808,7 +481,6 @@
           "label": "Review",
           "default": "<p>Easy to work into my day and the whole experience feels much more premium than other supplements I've tried.</p>"
         },
-
         {
           "type": "header",
           "content": "Customer"
@@ -836,7 +508,6 @@
           "label": "Verified text",
           "default": "Verified Customer"
         },
-
         {
           "type": "header",
           "content": "Reviewed product"
@@ -867,7 +538,6 @@
       ]
     }
   ],
-
   "presets": [
     {
       "name": "00 Avonent Testimonials",
