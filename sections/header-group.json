@@ -17,13 +17,13 @@
         "00_avonent_sale_announcement_QcfEEx": {
           "type": "00-avonent-sale-announcement",
           "settings": {
-            "heading": "BLACK FRIDAY SALE",
+            "heading": "FALL SALE",
             "subheading": "Shop Now and Get Up To 70% Off",
             "link": "",
             "show_countdown": true,
             "timer_minutes": 120,
-            "background_color": "#02c6ea",
-            "text_color": "#ffffff",
+            "background_color": "#C86F3A",
+            "text_color": "#FFFFFF",
             "bar_height": 52
           },
           "blocks": {}
@@ -160,52 +160,11 @@
     "avonent_header_cleanup": {
       "type": "avonent-header-cleanup",
       "settings": {}
-    },
-    "avonent_global_trust_strip": {
-      "type": "00-avonent-trust-strip",
-      "blocks": {
-        "trust_global_1": {
-          "type": "trust_item",
-          "settings": {
-            "icon": "shield",
-            "text": "30-Day Risk-Free Trial"
-          }
-        },
-        "trust_global_2": {
-          "type": "trust_item",
-          "settings": {
-            "icon": "lab",
-            "text": "Third-Party Lab Tested"
-          }
-        },
-        "trust_global_3": {
-          "type": "trust_item",
-          "settings": {
-            "icon": "flag",
-            "text": "Ships from USA"
-          }
-        }
-      },
-      "block_order": [
-        "trust_global_1",
-        "trust_global_2",
-        "trust_global_3"
-      ],
-      "name": "Avonent Global Trust Carousel",
-      "settings": {
-        "background_color": "#ffffff",
-        "text_color": "#111111",
-        "accent_color": "#02c6ea",
-        "speed": 18,
-        "padding_top": 18,
-        "padding_bottom": 18
-      }
     }
   },
   "order": [
     "header_announcements_9jGBFp",
     "header_section",
-    "avonent_global_trust_strip",
     "avonent_moringa_header_benefits",
     "avonent_header_cleanup"
   ]
