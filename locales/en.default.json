@@ -368,6 +368,9 @@
         "delivery_title": "Shipping Address (Step 2/3)",
         "shipping_method_first_shipment_group_title": {
           "one": "Express Shipment"
+        },
+        "shipping_method_recurring_shipments_group_title": {
+          "one": "Standard Shipment"
         }
       },
       "payment": {
