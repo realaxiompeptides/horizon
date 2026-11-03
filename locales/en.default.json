@@ -370,7 +370,8 @@
           "one": "Express Shipment"
         },
         "shipping_method_recurring_shipments_group_title": {
-          "one": "Standard Shipment"
+          "one": "Standard Shipment",
+          "other": "Standard Shipment"
         }
       },
       "payment": {
