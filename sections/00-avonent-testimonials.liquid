@@ -189,16 +189,9 @@
 
   .avonent-testimonials {
     width: 100%;
-
-    padding:
-      84px
-      0;
-
-    background:
-      var(--av-testimonials-bg);
-
-    color:
-      var(--av-testimonials-text);
+    padding: 88px 0 96px;
+    background: var(--av-testimonials-bg);
+    color: var(--av-testimonials-text);
   }
 
   .avonent-testimonials__container {
@@ -344,12 +337,8 @@
 
   .avonent-testimonials__grid {
     display: grid;
-
-    grid-template-columns:
-      repeat(3, minmax(0, 1fr));
-
-    gap: 18px;
-
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
     margin-top: 42px;
   }
 
@@ -361,29 +350,13 @@
   .avonent-testimonial-card {
     display: flex;
     flex-direction: column;
-
     min-width: 0;
-
-    padding: 28px;
-
-    border:
-      1px solid
-      var(--av-testimonials-border);
-
-    border-radius:
-      var(--av-testimonials-radius);
-
-    background:
-      var(--av-testimonials-card-bg);
-
-    color:
-      var(--av-testimonials-card-text);
-
-    box-shadow:
-      0
-      8px
-      30px
-      rgba(0, 0, 0, 0.035);
+    padding: 30px;
+    border: 1px solid var(--av-testimonials-border);
+    border-radius: var(--av-testimonials-radius);
+    background: var(--av-testimonials-card-bg);
+    color: var(--av-testimonials-card-text);
+    box-shadow: 0 12px 34px rgba(33, 28, 22, 0.055);
   }
 
 
@@ -393,16 +366,10 @@
 
   .avonent-testimonial-card__stars {
     display: flex;
-
-    gap: 1px;
-
-    margin-bottom: 18px;
-
-    color:
-      var(--av-testimonials-star);
-
-    font-size: 19px;
-
+    gap: 2px;
+    margin-bottom: 20px;
+    color: var(--av-testimonials-star);
+    font-size: 21px;
     line-height: 1;
   }
 
@@ -418,17 +385,11 @@
 
   .avonent-testimonial-card__title {
     margin: 0;
-
-    font-family:
-      var(--font-heading--family);
-
-    font-size: 22px;
-    font-weight: 600;
-
-    line-height: 1.15;
-
-    letter-spacing: -0.015em;
-
+    font-family: var(--font-heading--family);
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.14;
+    letter-spacing: -0.02em;
     color: inherit;
   }
 
@@ -438,17 +399,12 @@
    */
 
   .avonent-testimonial-card__review {
-    margin-top: 13px;
-
-    font-family:
-      var(--font-body--family);
-
-    font-size: 15px;
+    margin-top: 16px;
+    font-family: var(--font-body--family);
+    font-size: 16px;
     font-weight: 400;
-
-    line-height: 1.55;
-
-    opacity: 0.9;
+    line-height: 1.62;
+    opacity: 0.92;
   }
 
   .avonent-testimonial-card__review p {
@@ -463,11 +419,11 @@
   .avonent-testimonial-card__footer {
     display: flex;
     align-items: center;
-
-    gap: 12px;
-
+    justify-content: space-between;
+    gap: 16px;
     margin-top: auto;
-    padding-top: 26px;
+    padding-top: 24px;
+    border-top: 1px solid var(--av-testimonials-border);
   }
 
   .avonent-testimonial-card__avatar {
@@ -498,32 +454,22 @@
   }
 
   .avonent-testimonial-card__name {
-    font-family:
-      var(--font-body--family);
-
-    font-size: 14px;
-    font-weight: 650;
-
+    font-family: var(--font-body--family);
+    font-size: 15px;
+    font-weight: 750;
     line-height: 1.2;
   }
 
   .avonent-testimonial-card__verified {
     display: flex;
     align-items: center;
-
-    gap: 5px;
-
-    margin-top: 4px;
-
-    font-family:
-      var(--font-body--family);
-
-    font-size: 11px;
-    font-weight: 500;
-
+    gap: 6px;
+    margin-top: 5px;
+    font-family: var(--font-body--family);
+    font-size: 12px;
+    font-weight: 650;
     line-height: 1;
-
-    opacity: 0.66;
+    opacity: 0.82;
   }
 
   .avonent-testimonial-card__verified-icon {
@@ -651,108 +597,94 @@
   @media screen and (max-width: 749px) {
 
     .avonent-testimonials {
-      padding:
-        58px
-        0;
+      padding: 56px 0 66px;
     }
 
     .avonent-testimonials__container {
-      width:
-        calc(100% - 32px);
+      width: calc(100% - 28px);
+    }
+
+    .avonent-testimonials__eyebrow {
+      margin-bottom: 9px;
+      font-size: 11px;
     }
 
     .avonent-testimonials__heading {
-      font-size:
-        clamp(
-          31px,
-          9vw,
-          40px
-        );
-
-      line-height: 1.08;
+      max-width: 340px;
+      font-size: clamp(31px, 8.8vw, 39px);
+      line-height: 1.05;
     }
 
     .avonent-testimonials__subheading {
+      max-width: 330px;
       margin-top: 13px;
-
       font-size: 14px;
+      line-height: 1.5;
     }
 
     .avonent-testimonials__summary {
       margin-top: 20px;
-
       gap: 8px;
     }
 
     .avonent-testimonials__summary-stars {
-      font-size: 18px;
+      font-size: 19px;
     }
 
     .avonent-testimonials__summary-copy {
       font-size: 13px;
     }
 
-    /*
-     * Horizontal swipe on mobile.
-     */
-
     .avonent-testimonials__grid {
-      display: flex;
-
-      width:
-        calc(
-          100% + 16px
-        );
-
-      gap: 12px;
-
+      display: grid;
+      grid-template-columns: 1fr;
+      width: 100%;
+      gap: 16px;
       margin-top: 30px;
-
-      padding:
-        0
-        16px
-        8px
-        0;
-
-      overflow-x: auto;
-
-      scroll-snap-type:
-        x
-        mandatory;
-
-      scrollbar-width: none;
-
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .avonent-testimonials__grid::-webkit-scrollbar {
-      display: none;
+      padding: 0;
+      overflow: visible;
     }
 
     .avonent-testimonial-card {
-      flex:
-        0
-        0
-        min(
-          86vw,
-          360px
-        );
-
-      scroll-snap-align: start;
-
-      padding: 23px;
-    }
-
-    .avonent-testimonial-card__title {
-      font-size: 20px;
-    }
-
-    .avonent-testimonial-card__review {
-      font-size: 14px;
+      width: 100%;
+      min-width: 0;
+      padding: 24px 22px 22px;
+      border-radius: min(var(--av-testimonials-radius), 22px);
+      scroll-snap-align: none;
     }
 
     .avonent-testimonial-card__stars {
-      font-size: 18px;
+      margin-bottom: 18px;
+      font-size: 20px;
+    }
+
+    .avonent-testimonial-card__title {
+      font-size: 22px;
+      line-height: 1.15;
+    }
+
+    .avonent-testimonial-card__review {
+      margin-top: 14px;
+      font-size: 15px;
+      line-height: 1.58;
+    }
+
+    .avonent-testimonial-card__footer {
+      padding-top: 20px;
+    }
+
+    .avonent-testimonial-card__avatar {
+      flex-basis: 42px;
+      width: 42px;
+      height: 42px;
+    }
+
+    .avonent-testimonial-card__name {
+      font-size: 14px;
+    }
+
+    .avonent-testimonial-card__verified {
+      font-size: 11.5px;
     }
 
   }
