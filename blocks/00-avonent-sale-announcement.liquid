@@ -1,5 +1,9 @@
 {% liquid
   assign block_id = 'avonent-sale-' | append: block.id
+  assign av_sale_background = block.settings.background_color
+  if template.name == 'index'
+    assign av_sale_background = '#02C6EA'
+  endif
 %}
 
 <slideshow-slide
@@ -12,7 +16,7 @@
     id="{{ block_id }}"
     class="avonent-sale-bar__inner"
     style="
-      --av-sale-bg: {{ block.settings.background_color }};
+      --av-sale-bg: {{ av_sale_background }};
       --av-sale-color: {{ block.settings.text_color }};
       --av-sale-height: {{ block.settings.bar_height }}px;
     "
