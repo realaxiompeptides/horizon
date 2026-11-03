@@ -20,6 +20,24 @@
     {% endif %}
   "
 >
+  <div class="avonent-featured-products__trust" data-av-home-trust-replacement aria-label="Avonent store benefits">
+    <div class="avonent-featured-products__trust-track">
+      {% assign av_home_benefits = '90-Day Money-Back Guarantee|Third-Party Lab Tested|Ships from the USA|No Fillers or Junk|Made in a GMP Facility' | split: '|' %}
+      {% for repeat_i in (1..2) %}
+        <div class="avonent-featured-products__trust-group"{% if repeat_i == 2 %} aria-hidden="true"{% endif %}>
+          {% for benefit_text in av_home_benefits %}
+            <div class="avonent-featured-products__trust-item">
+              <span class="avonent-featured-products__trust-check" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M8.3 12.1 10.7 14.5 15.8 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <span>{{ benefit_text }}</span>
+            </div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
   <div class="avonent-featured-products__container">
     <div class="avonent-featured-products__grid">
       {% for block in section.blocks %}
@@ -130,7 +148,57 @@
       {% endfor %}
     </div>
   </div>
+  {% if section.settings.bottom_image != blank %}
+    <div
+      class="avonent-featured-products__bottom-image"
+      data-av-home-bottom-image
+      style="
+        --av-home-bottom-overlay: {{ section.settings.bottom_image_overlay | divided_by: 100.0 }};
+        --av-home-bottom-desktop: {{ section.settings.bottom_image_height_desktop }}px;
+        --av-home-bottom-mobile: {{ section.settings.bottom_image_height_mobile }}px;
+      "
+    >
+      {{
+        section.settings.bottom_image
+        | image_url: width: 2400
+        | image_tag:
+          loading: 'lazy',
+          widths: '750,1100,1500,2000,2400',
+          sizes: '100vw',
+          class: 'avonent-featured-products__bottom-image-img',
+          alt: section.settings.bottom_image_heading
+      }}
+      <div class="avonent-featured-products__bottom-image-shade"></div>
+      {% if section.settings.bottom_image_heading != blank or section.settings.bottom_image_text != blank %}
+        <div class="avonent-featured-products__bottom-image-copy">
+          {% if section.settings.bottom_image_heading != blank %}
+            <h2>{{ section.settings.bottom_image_heading }}</h2>
+          {% endif %}
+          {% if section.settings.bottom_image_text != blank %}
+            <p>{{ section.settings.bottom_image_text }}</p>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
 </section>
+
+<script>
+  (() => {
+    const root = document.getElementById('{{ section_id }}');
+    if (!root || root.dataset.homeEnhancementsReady === 'true') return;
+    root.dataset.homeEnhancementsReady = 'true';
+
+    const oldTrust = document.querySelector('.avonent-trust-strip-section');
+    if (oldTrust) oldTrust.style.display = 'none';
+
+    const bottomImage = root.querySelector('[data-av-home-bottom-image]');
+    const main = document.querySelector('main#MainContent') || document.querySelector('main');
+    if (bottomImage && main) {
+      main.appendChild(bottomImage);
+    }
+  })();
+</script>
 
 {% stylesheet %}
   .avonent-featured-products{
@@ -144,6 +212,113 @@
     background-size:cover;
     background-position:center;
     background-repeat:no-repeat;
+  }
+
+  .avonent-featured-products__trust{
+    width:100%;
+    overflow:hidden;
+    margin:-52px 0 42px;
+    padding:14px 0;
+    background:#02C6EA;
+    color:#fff;
+  }
+
+  .avonent-featured-products__trust-track{
+    display:flex;
+    width:max-content;
+    animation:avonent-home-trust-move 18s linear infinite;
+    will-change:transform;
+  }
+
+  .avonent-featured-products__trust-group{
+    display:flex;
+    align-items:center;
+    gap:22px;
+    padding-right:22px;
+    flex:0 0 auto;
+  }
+
+  .avonent-featured-products__trust-item{
+    display:flex;
+    align-items:center;
+    justify-content:flex-start;
+    gap:8px;
+    flex:0 0 auto;
+    white-space:nowrap;
+    text-align:left;
+    font-family:var(--font-body--family);
+    font-size:14px;
+    font-weight:700;
+    line-height:1.1;
+  }
+
+  .avonent-featured-products__trust-check{
+    display:grid;
+    place-items:center;
+    flex:0 0 22px;
+    width:22px;
+    height:22px;
+    color:#fff;
+  }
+
+  .avonent-featured-products__trust-check svg{width:22px;height:22px}
+
+  @keyframes avonent-home-trust-move{
+    from{transform:translate3d(0,0,0)}
+    to{transform:translate3d(-50%,0,0)}
+  }
+
+  .avonent-featured-products__bottom-image{
+    position:relative;
+    width:100%;
+    height:var(--av-home-bottom-desktop);
+    overflow:hidden;
+    margin:0;
+  }
+
+  .avonent-featured-products__bottom-image-img{
+    display:block;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center;
+  }
+
+  .avonent-featured-products__bottom-image-shade{
+    position:absolute;
+    inset:0;
+    background:rgba(0,31,39,var(--av-home-bottom-overlay));
+    pointer-events:none;
+  }
+
+  .avonent-featured-products__bottom-image-copy{
+    position:absolute;
+    left:50%;
+    bottom:0;
+    transform:translateX(-50%);
+    width:min(900px,calc(100% - 40px));
+    padding:0 0 38px;
+    color:#fff;
+    text-align:left;
+  }
+
+  .avonent-featured-products__bottom-image-copy h2{
+    max-width:700px;
+    margin:0;
+    color:#fff;
+    font-family:var(--font-heading--family,var(--font-body--family));
+    font-size:clamp(34px,5vw,58px);
+    line-height:1.03;
+    letter-spacing:-.035em;
+  }
+
+  .avonent-featured-products__bottom-image-copy p{
+    max-width:640px;
+    margin:14px 0 0;
+    color:rgba(255,255,255,.92);
+    font-family:var(--font-body--family);
+    font-size:17px;
+    line-height:1.5;
   }
 
   .avonent-featured-products *{box-sizing:border-box}
@@ -316,6 +491,32 @@
   }
 
   @media(max-width:749px){
+    .avonent-featured-products__trust{
+      margin:-34px 0 30px;
+      padding:12px 0;
+    }
+    .avonent-featured-products__trust-group{
+      gap:16px;
+      padding-right:16px;
+    }
+    .avonent-featured-products__trust-item{
+      gap:7px;
+      font-size:12.5px;
+    }
+    .avonent-featured-products__trust-check{
+      flex-basis:20px;
+      width:20px;
+      height:20px;
+    }
+    .avonent-featured-products__trust-check svg{width:20px;height:20px}
+    .avonent-featured-products__bottom-image{height:var(--av-home-bottom-mobile)}
+    .avonent-featured-products__bottom-image-copy{
+      width:calc(100% - 32px);
+      padding-bottom:24px;
+    }
+    .avonent-featured-products__bottom-image-copy h2{font-size:34px}
+    .avonent-featured-products__bottom-image-copy p{font-size:14.5px}
+
     .avonent-featured-products{
       padding:34px 0 52px;
     }
@@ -449,6 +650,57 @@
       "step": 1,
       "unit": "px",
       "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Bottom image above footer"
+    },
+    {
+      "type": "image_picker",
+      "id": "bottom_image",
+      "label": "Bottom image"
+    },
+    {
+      "type": "text",
+      "id": "bottom_image_heading",
+      "label": "Optional image heading",
+      "default": ""
+    },
+    {
+      "type": "textarea",
+      "id": "bottom_image_text",
+      "label": "Optional image text",
+      "default": ""
+    },
+    {
+      "type": "range",
+      "id": "bottom_image_overlay",
+      "label": "Bottom image dark overlay",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "bottom_image_height_mobile",
+      "label": "Bottom image mobile height",
+      "min": 240,
+      "max": 700,
+      "step": 20,
+      "unit": "px",
+      "default": 380
+    },
+    {
+      "type": "range",
+      "id": "bottom_image_height_desktop",
+      "label": "Bottom image desktop height",
+      "min": 280,
+      "max": 800,
+      "step": 20,
+      "unit": "px",
+      "default": 460
     }
   ],
   "blocks": [
