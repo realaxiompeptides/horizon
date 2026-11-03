@@ -13,7 +13,7 @@
       "type": "00-avonent-home-hero",
       "name": "00 Avonent Home Hero",
       "settings": {
-        "mobile_image": "shopify://shop_images/ChatGPT_Image_Aug_24_2026_12_28_21_AM.png",
+        "mobile_image": "shopify://shop_images/4F83536B-2F43-4E45-A78D-45DE2FA625B4.png",
         "eyebrow": "",
         "heading": "Feel Better. Live Sharper.",
         "description": "<p>Avonent brings time-tested botanicals like aged garlic and true Ceylon cinnamon into clean, easy-to-take daily softgels. Centuries of traditional use. Modern research. No fillers, no harsh burn, no marketing tricks.</p>",
@@ -86,28 +86,18 @@
           "type": "product",
           "settings": {
             "product": "aged-garlic-capsules",
-            "title_override": "Avonent Aged Garlic",
-            "subtitle": "A clean, odorless garlic softgel made for everyday heart and circulation support.",
-            "button_text": "Shop Aged Garlic",
-            "price_prefix": "Starting from",
+            "button_text": "SHOP GARLIC",
             "show_sale_badge": true,
-            "benefit_1": "Heart & circulation support",
-            "benefit_2": "Aged for 24 months",
-            "benefit_3": "Odorless daily softgel"
+            "benefit_2": "7,500 mg equivalent"
           }
         },
         "product_cinnamon": {
           "type": "product",
           "settings": {
             "product": "ceylon-cinnamon-berberine-capsules",
-            "title_override": "Avonent Ceylon Cinnamon + Berberine",
-            "subtitle": "True Ceylon cinnamon paired with Berberine HCl for simple daily metabolic support.",
-            "button_text": "Shop Ceylon Cinnamon",
-            "price_prefix": "Starting from",
+            "button_text": "SHOP CINNAMON",
             "show_sale_badge": true,
-            "benefit_1": "True Ceylon cinnamon from Sri Lanka",
-            "benefit_2": "14,400 mg equivalent",
-            "benefit_3": "Berberine HCl + MCT oil"
+            "benefit_2": "14,400 mg equivalent"
           }
         }
       },
@@ -117,12 +107,11 @@
       ],
       "name": "00 Avonent Featured",
       "settings": {
-        "background_color": "#EAFBFF",
-        "accent_color": "#02C6EA",
-        "card_background": "#062B34",
-        "card_text_color": "#FFFFFF",
-        "muted_text_color": "#D4EDF2",
-        "card_radius": 24
+        "background_color": "#f7fcfe",
+        "accent_color": "#02c6ea",
+        "card_background": "#ffffff",
+        "card_text_color": "#111111",
+        "card_radius": 22
       }
     },
     "00_avonent_testimonials_NVx8W4": {
