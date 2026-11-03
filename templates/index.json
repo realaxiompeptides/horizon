@@ -80,65 +80,65 @@
     "00_avonent_featured_products_VTU4KW": {
       "type": "00-avonent-featured-products",
       "blocks": {
-        "product_m3tCFa": {
+        "product_garlic": {
           "type": "product",
           "settings": {
-            "product": "pure-moringa-capsules",
-            "badge_text": "POPULAR",
+            "product": "aged-garlic-capsules",
+            "badge_text": "DAILY FAVORITE",
             "show_sale_badge": true,
-            "category_text": "DAILY SUPPORT",
-            "benefit": "An easy addition to your everyday routine.",
-            "benefit_2": "Easy daily use",
+            "category_text": "CARDIOVASCULAR SUPPORT",
+            "benefit": "Aged garlic extract in an odorless softgel made for simple daily use.",
+            "benefit_2": "7,500 mg equivalent",
             "show_rating": true,
             "rating": 5,
             "rating_text": "5.0",
             "price_note": "One-time purchase",
-            "button_text": "SHOP NOW"
+            "button_text": "SHOP GARLIC"
           }
         },
-        "product_RkNjry": {
+        "product_cinnamon": {
           "type": "product",
           "settings": {
-            "product": "10-in-1-advanced-digestive-complex",
+            "product": "ceylon-cinnamon-berberine-capsules",
             "badge_text": "BEST SELLER",
             "show_sale_badge": true,
-            "category_text": "DAILY WELLNESS",
-            "benefit": "Premium daily support made simple.",
-            "benefit_2": "Premium formula",
+            "category_text": "METABOLIC SUPPORT",
+            "benefit": "True Ceylon cinnamon + Berberine HCl with MCT oil delivery.",
+            "benefit_2": "14,400 mg equivalent",
             "show_rating": true,
             "rating": 5,
-            "rating_text": "5.0",
-            "price_note": "One-time purchase",
-            "button_text": "SHOP NOW"
+            "rating_text": "4.9 • 10,000+ reviews",
+            "price_note": "Subscription & one-time options",
+            "button_text": "SHOP CINNAMON"
           }
         }
       },
       "block_order": [
-        "product_m3tCFa",
-        "product_RkNjry"
+        "product_garlic",
+        "product_cinnamon"
       ],
       "name": "00 Avonent Featured",
       "settings": {
-        "eyebrow": "HOT NOW",
-        "heading": "Meet the formulas everyone is talking about.",
-        "subheading": "<p>Premium everyday supplements made to fit naturally into your routine.</p>",
+        "eyebrow": "SHOP AVONENT",
+        "heading": "Two focused formulas. Built for everyday consistency.",
+        "subheading": "<p>Start with the support that fits your routine. Only our core Garlic and Ceylon Cinnamon formulas are featured here.</p>",
         "button_behavior": "product",
-        "bottom_button_text": "Shop All Products",
-        "bottom_button_link": "shopify://collections/all",
-        "padding_top_desktop": 80,
-        "padding_bottom_desktop": 80,
-        "padding_top_mobile": 24,
-        "padding_bottom_mobile": 24,
-        "header_to_products_gap": 32,
+        "bottom_button_text": "",
+        "bottom_button_link": "",
+        "padding_top_desktop": 88,
+        "padding_bottom_desktop": 96,
+        "padding_top_mobile": 52,
+        "padding_bottom_mobile": 64,
+        "header_to_products_gap": 36,
         "products_to_bottom_button_gap": 28,
-        "background_color": "#ffffff",
+        "background_color": "#F7FCFE",
         "text_color": "#111111",
         "card_background": "#ffffff",
         "card_text_color": "#111111",
-        "accent_color": "#02c6ea",
-        "star_color": "#02c6ea",
-        "border_color": "#e7eef0",
-        "card_radius": 16
+        "accent_color": "#02C6EA",
+        "star_color": "#F4B000",
+        "border_color": "#D9EEF4",
+        "card_radius": 22
       }
     },
     "00_avonent_testimonials_NVx8W4": {
