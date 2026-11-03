@@ -176,6 +176,7 @@
         },
         "five_reasons": {
           "type": "five_reasons",
+          "disabled": true,
           "settings": {
             "show_section": true,
             "eyebrow": "5 REASONS WHY",
