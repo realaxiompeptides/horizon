@@ -42,57 +42,41 @@
     "00_avonent_trust_strip_Bj7dMJ": {
       "type": "00-avonent-trust-strip",
       "blocks": {
-        "trust_1": {
+        "trust_item_BwDW9U": {
           "type": "trust_item",
           "settings": {
-            "icon": "check",
+            "icon": "shield",
             "text": "90-Day Money-Back Guarantee"
           }
         },
-        "trust_2": {
+        "trust_item_KQPpPn": {
           "type": "trust_item",
           "settings": {
-            "icon": "check",
+            "icon": "lab",
             "text": "Third-Party Lab Tested"
           }
         },
-        "trust_3": {
+        "trust_item_cgyceP": {
           "type": "trust_item",
           "settings": {
-            "icon": "check",
-            "text": "Ships from the USA"
-          }
-        },
-        "trust_4": {
-          "type": "trust_item",
-          "settings": {
-            "icon": "check",
-            "text": "No Fillers or Junk"
-          }
-        },
-        "trust_5": {
-          "type": "trust_item",
-          "settings": {
-            "icon": "check",
-            "text": "Made in a GMP Facility"
+            "icon": "flag",
+            "text": "Ships from USA"
           }
         }
       },
       "block_order": [
-        "trust_1",
-        "trust_2",
-        "trust_3",
-        "trust_4",
-        "trust_5"
+        "trust_item_BwDW9U",
+        "trust_item_KQPpPn",
+        "trust_item_cgyceP"
       ],
       "name": "00 Avonent Trust Carousel",
       "settings": {
-        "background_color": "#02C6EA",
-        "text_color": "#FFFFFF",
-        "accent_color": "#FFFFFF",
+        "background_color": "#02c6ea",
+        "text_color": "#ffffff",
+        "accent_color": "#ffffff",
         "speed": 18,
-        "padding_top": 14,
-        "padding_bottom": 14
+        "padding_top": 16,
+        "padding_bottom": 16
       }
     },
     "00_avonent_featured_products_VTU4KW": {
@@ -102,28 +86,18 @@
           "type": "product",
           "settings": {
             "product": "aged-garlic-capsules",
-            "title_override": "Avonent Aged Garlic",
-            "subtitle": "Odorless aged garlic made for simple daily heart and circulation support.",
-            "button_text": "Shop Aged Garlic",
-            "price_prefix": "Starting from",
+            "button_text": "SHOP GARLIC",
             "show_sale_badge": true,
-            "benefit_1": "Heart & circulation support",
-            "benefit_2": "Aged for 24 months",
-            "benefit_3": "Odorless daily softgel"
+            "benefit_2": "7,500 mg equivalent"
           }
         },
         "product_cinnamon": {
           "type": "product",
           "settings": {
             "product": "ceylon-cinnamon-berberine-capsules",
-            "title_override": "Avonent Ceylon Cinnamon + Berberine",
-            "subtitle": "True Ceylon cinnamon with Berberine HCl for everyday metabolic support.",
-            "button_text": "Shop Ceylon Cinnamon",
-            "price_prefix": "Starting from",
+            "button_text": "SHOP CINNAMON",
             "show_sale_badge": true,
-            "benefit_1": "True Ceylon cinnamon from Sri Lanka",
-            "benefit_2": "14,400 mg equivalent",
-            "benefit_3": "Berberine HCl + MCT oil"
+            "benefit_2": "14,400 mg equivalent"
           }
         }
       },
@@ -133,14 +107,11 @@
       ],
       "name": "00 Avonent Featured",
       "settings": {
-        "background_image": "",
-        "background_overlay": 55,
-        "background_color": "#052F3B",
-        "accent_color": "#02C6EA",
-        "card_background": "#063B47",
-        "card_text_color": "#FFFFFF",
-        "muted_text_color": "#D4EDF2",
-        "card_radius": 24
+        "background_color": "#f7fcfe",
+        "accent_color": "#02c6ea",
+        "card_background": "#ffffff",
+        "card_text_color": "#111111",
+        "card_radius": 22
       }
     },
     "00_avonent_testimonials_NVx8W4": {
