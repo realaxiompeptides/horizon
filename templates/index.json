@@ -211,25 +211,12 @@
         "border_color": "#e6dcd2",
         "card_radius": 22
       }
-    },
-    "avonent_footer_image": {
-      "type": "00-avonent-footer-image",
-      "name": "Avonent Footer Image",
-      "settings": {
-        "image": "",
-        "heading": "",
-        "text": "",
-        "overlay": 20,
-        "height_desktop": 460,
-        "height_mobile": 380
-      }
     }
   },
   "order": [
     "00_avonent_home_hero_BbUK9F",
     "00_avonent_trust_strip_Bj7dMJ",
     "00_avonent_featured_products_VTU4KW",
-    "00_avonent_testimonials_NVx8W4",
-    "avonent_footer_image"
+    "00_avonent_testimonials_NVx8W4"
   ]
 }
