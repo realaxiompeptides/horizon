@@ -1587,6 +1587,34 @@
   .avonent-footer :is(input,button,a,summary):focus-visible{outline:2px solid currentColor;outline-offset:4px}
 
 
+  /* Homepage storefront layout safeguard. */
+  body:has(.avonent-footer--home) .avonent-featured-products__grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:24px!important;
+  }
+  body:has(.avonent-footer--home) .avonent-featured-card{
+    box-shadow:0 14px 36px rgba(7,74,91,.07)!important;
+  }
+  body:has(.avonent-footer--home) .avonent-featured-card__media{
+    background:linear-gradient(180deg,#fff 0%,#f1fbfe 100%)!important;
+  }
+  body:has(.avonent-footer--home) .avonent-featured-card__button{
+    background:#02C6EA!important;
+    color:#061A21!important;
+  }
+  @media(max-width:749px){
+    body:has(.avonent-footer--home) .avonent-featured-products__grid{
+      grid-template-columns:1fr!important;
+      gap:18px!important;
+    }
+    body:has(.avonent-footer--home) .avonent-featured-card__content{padding:20px 18px 18px!important}
+    body:has(.avonent-footer--home) .avonent-featured-card__title{font-size:22px!important;line-height:1.12!important}
+    body:has(.avonent-footer--home) .avonent-featured-card__benefit{font-size:14px!important;line-height:1.45!important}
+    body:has(.avonent-footer--home) .avonent-featured-card__mini-benefit{font-size:12px!important}
+    body:has(.avonent-footer--home) .avonent-featured-card__current-price{font-size:20px!important}
+    body:has(.avonent-footer--home) .avonent-featured-card__button{min-height:52px!important;font-size:13px!important}
+  }
+
   /* Homepage footer: Avonent blue identity only. */
   .avonent-footer--home{background:linear-gradient(180deg,#071B22 0%,#06161C 100%);color:var(--av-footer-text)}
   .avonent-footer--home .avonent-footer__container{width:min(calc(100% - 56px),1380px)}
