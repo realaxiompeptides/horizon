@@ -201,13 +201,13 @@
         "summary_rating": 5,
         "summary_bold_text": "5.0",
         "summary_text": "from verified customers",
-        "background_color": "#02c6ea",
-        "text_color": "#ffffff",
-        "card_background": "#ffffff",
-        "card_text_color": "#111111",
-        "star_color": "#02c6ea",
-        "border_color": "#e7eef0",
-        "card_radius": 18
+        "background_color": "#FBF7F2",
+        "text_color": "#171513",
+        "card_background": "#FFFFFF",
+        "card_text_color": "#171513",
+        "star_color": "#F4B000",
+        "border_color": "#E6DCD2",
+        "card_radius": 22
       }
     }
   },
