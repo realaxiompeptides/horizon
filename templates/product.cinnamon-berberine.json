@@ -177,7 +177,7 @@
         "five_reasons": {
           "type": "five_reasons",
           "settings": {
-            "show_section": false,
+            "show_section": true,
             "eyebrow": "5 REASONS WHY",
             "heading": "Why Avonent Ceylon Cinnamon Is Different",
             "intro": "",
