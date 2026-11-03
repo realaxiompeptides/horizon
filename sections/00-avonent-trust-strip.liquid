@@ -11,58 +11,18 @@
 >
   <div class="avonent-trust-strip__viewport" aria-label="Avonent store benefits">
     <div class="avonent-trust-strip__track">
+      {% assign av_fixed_benefits = '90-Day Money-Back Guarantee|Third-Party Lab Tested|Ships from the USA|No Fillers or Junk|Made in a GMP Facility' | split: '|' %}
       {% for repeat_i in (1..2) %}
         <div class="avonent-trust-strip__group"{% if repeat_i == 2 %} aria-hidden="true"{% endif %}>
-          {% for block in section.blocks %}
-            <div
-              class="avonent-trust-strip__item"
-              {% if repeat_i == 1 %}{{ block.shopify_attributes }}{% endif %}
-            >
+          {% for benefit_text in av_fixed_benefits %}
+            <div class="avonent-trust-strip__item">
               <div class="avonent-trust-strip__icon">
-                {% case block.settings.icon %}
-                  {% when 'check' %}
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                      <circle cx="12" cy="12" r="9"></circle>
-                      <path d="M8.3 12.1 10.7 14.5 15.8 9.5"></path>
-                    </svg>
-                  {% when 'shield' %}
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M12 3 19 6v5c0 4.8-2.8 8.2-7 10-4.2-1.8-7-5.2-7-10V6z"></path>
-                      <path d="M9 12.1 11.1 14.2 15.3 10"></path>
-                    </svg>
-                  {% when 'lab' %}
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M9 3h6"></path>
-                      <path d="M10 3v6l-5 8.2A2.4 2.4 0 0 0 7 21h10a2.4 2.4 0 0 0 2-3.8L14 9V3"></path>
-                      <path d="M8.5 14h7"></path>
-                    </svg>
-                  {% when 'flag' %}
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M6 3v18"></path>
-                      <path d="M6 4h10l-2 3 2 3H6"></path>
-                    </svg>
-                  {% when 'truck' %}
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M3 6h11v9H3z"></path>
-                      <path d="M14 10h3.5L21 13v2h-7z"></path>
-                      <circle cx="8" cy="17" r="1.7"></circle>
-                      <circle cx="18" cy="17" r="1.7"></circle>
-                    </svg>
-                  {% when 'star' %}
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="m12 3 2.7 5.5 6 .9-4.4 4.2 1 6-5.3-2.8-5.3 2.8 1-6-4.4-4.2 6-.9z"></path>
-                    </svg>
-                  {% else %}
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                      <circle cx="12" cy="12" r="9"></circle>
-                      <path d="M8.3 12.1 10.7 14.5 15.8 9.5"></path>
-                    </svg>
-                {% endcase %}
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="12" cy="12" r="9"></circle>
+                  <path d="M8.3 12.1 10.7 14.5 15.8 9.5"></path>
+                </svg>
               </div>
-
-              <div class="avonent-trust-strip__text">
-                {{ block.settings.text }}
-              </div>
+              <div class="avonent-trust-strip__text">{{ benefit_text }}</div>
             </div>
           {% endfor %}
         </div>
@@ -99,8 +59,8 @@
     display: flex;
     align-items: center;
     flex: 0 0 auto;
-    gap: 28px;
-    padding-right: 28px;
+    gap: 22px;
+    padding-right: 22px;
   }
 
   .avonent-trust-strip__item {
@@ -160,8 +120,8 @@
     }
 
     .avonent-trust-strip__group {
-      gap: 20px;
-      padding-right: 20px;
+      gap: 16px;
+      padding-right: 16px;
     }
 
     .avonent-trust-strip__item {
