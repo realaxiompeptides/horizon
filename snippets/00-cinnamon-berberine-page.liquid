@@ -148,6 +148,30 @@
   assign av_cb_compare_subheading = av_cb_product.metafields.custom.av_cb_compare_subheading.value | default: 'True Sri Lankan Ceylon. A full-strength 12:1 extract. Berberine HCl. A clearly disclosed softgel formula built with intention.'
   assign av_cb_compare_cta = av_cb_product.metafields.custom.av_cb_compare_cta.value | default: 'Try Avonent Risk-Free'
   assign av_cb_compare_guarantee = av_cb_product.metafields.custom.av_cb_compare_guarantee.value | default: '90-Day Money-Back Guarantee'
+  assign av_cb_five_reasons_show = false
+  assign av_cb_five_reasons_block = blank
+  assign av_cb_five_reasons_eyebrow = '5 REASONS WHY'
+  assign av_cb_five_reasons_heading = 'Why Avonent Ceylon Cinnamon Is Different'
+  assign av_cb_five_reasons_intro = 'Five details that make this formula easier to understand—and easier to use consistently.'
+  assign av_cb_five_reasons_button = 'Try Risk-Free Today'
+  assign av_cb_five_reasons_guarantee = '90-Day Money-Back Guarantee'
+  assign av_cb_five_reasons_bg = '#FFF4EC'
+  assign av_cb_five_reasons_accent = '#A84F1B'
+  assign av_cb_five_reasons_1_image = blank
+  assign av_cb_five_reasons_1_title = '12:1 Concentrated True Ceylon Cinnamon'
+  assign av_cb_five_reasons_1_body = 'Avonent uses Cinnamomum verum sourced from Sri Lanka—not common Cassia. A concentrated 12:1 extract provides the equivalent of 14,400 mg of raw cinnamon in a single daily softgel.'
+  assign av_cb_five_reasons_2_image = blank
+  assign av_cb_five_reasons_2_title = 'Berberine HCl Included'
+  assign av_cb_five_reasons_2_body = 'Instead of making you buy a separate bottle, Avonent combines Berberine HCl with Ceylon cinnamon in the same daily formula for a simpler metabolic-support routine.*'
+  assign av_cb_five_reasons_3_image = blank
+  assign av_cb_five_reasons_3_title = 'MCT Oil Softgel Delivery'
+  assign av_cb_five_reasons_3_body = 'The concentrated cinnamon extract is suspended in MCT oil inside a smooth softgel—no loose powder, gritty drinks, or extra mixing.'
+  assign av_cb_five_reasons_4_image = blank
+  assign av_cb_five_reasons_4_title = 'One Softgel Per Day'
+  assign av_cb_five_reasons_4_body = 'A simple one-softgel daily serving makes it easier to stay consistent without carrying around multiple bottles or taking a handful of capsules.'
+  assign av_cb_five_reasons_5_image = blank
+  assign av_cb_five_reasons_5_title = 'Clear Formula. 90-Day Guarantee.'
+  assign av_cb_five_reasons_5_body = 'You can see what is in the formula, how much you are taking, and try it with the protection of Avonent’s 90-Day Money-Back Guarantee.'
   assign av_cb_risk_image = blank
   assign av_cb_risk_eyebrow = 'FEEL THE DIFFERENCE'
   assign av_cb_risk_heading = '90-Day Risk-Free Trial'
@@ -528,6 +552,57 @@
         if content_block.settings.benefits_disclaimer != blank
           assign av_cb_benefits_disclaimer = content_block.settings.benefits_disclaimer
         endif
+      when 'five_reasons'
+        assign av_cb_five_reasons_block = content_block
+        assign av_cb_five_reasons_show = content_block.settings.show_section
+        if content_block.settings.eyebrow != blank
+          assign av_cb_five_reasons_eyebrow = content_block.settings.eyebrow
+        endif
+        if content_block.settings.heading != blank
+          assign av_cb_five_reasons_heading = content_block.settings.heading
+        endif
+        if content_block.settings.intro != blank
+          assign av_cb_five_reasons_intro = content_block.settings.intro
+        endif
+        if content_block.settings.button_text != blank
+          assign av_cb_five_reasons_button = content_block.settings.button_text
+        endif
+        if content_block.settings.guarantee_text != blank
+          assign av_cb_five_reasons_guarantee = content_block.settings.guarantee_text
+        endif
+        if content_block.settings.background != blank
+          assign av_cb_five_reasons_bg = content_block.settings.background
+        endif
+        if content_block.settings.accent != blank
+          assign av_cb_five_reasons_accent = content_block.settings.accent
+        endif
+        {% for reason_i in (1..5) %}
+          {% assign image_key = 'reason_' | append: reason_i | append: '_image' %}
+          {% assign title_key = 'reason_' | append: reason_i | append: '_title' %}
+          {% assign body_key = 'reason_' | append: reason_i | append: '_body' %}
+          {% case reason_i %}
+            {% when 1 %}
+              {% assign av_cb_five_reasons_1_image = content_block.settings[image_key] %}
+              {% if content_block.settings[title_key] != blank %}{% assign av_cb_five_reasons_1_title = content_block.settings[title_key] %}{% endif %}
+              {% if content_block.settings[body_key] != blank %}{% assign av_cb_five_reasons_1_body = content_block.settings[body_key] %}{% endif %}
+            {% when 2 %}
+              {% assign av_cb_five_reasons_2_image = content_block.settings[image_key] %}
+              {% if content_block.settings[title_key] != blank %}{% assign av_cb_five_reasons_2_title = content_block.settings[title_key] %}{% endif %}
+              {% if content_block.settings[body_key] != blank %}{% assign av_cb_five_reasons_2_body = content_block.settings[body_key] %}{% endif %}
+            {% when 3 %}
+              {% assign av_cb_five_reasons_3_image = content_block.settings[image_key] %}
+              {% if content_block.settings[title_key] != blank %}{% assign av_cb_five_reasons_3_title = content_block.settings[title_key] %}{% endif %}
+              {% if content_block.settings[body_key] != blank %}{% assign av_cb_five_reasons_3_body = content_block.settings[body_key] %}{% endif %}
+            {% when 4 %}
+              {% assign av_cb_five_reasons_4_image = content_block.settings[image_key] %}
+              {% if content_block.settings[title_key] != blank %}{% assign av_cb_five_reasons_4_title = content_block.settings[title_key] %}{% endif %}
+              {% if content_block.settings[body_key] != blank %}{% assign av_cb_five_reasons_4_body = content_block.settings[body_key] %}{% endif %}
+            {% else %}
+              {% assign av_cb_five_reasons_5_image = content_block.settings[image_key] %}
+              {% if content_block.settings[title_key] != blank %}{% assign av_cb_five_reasons_5_title = content_block.settings[title_key] %}{% endif %}
+              {% if content_block.settings[body_key] != blank %}{% assign av_cb_five_reasons_5_body = content_block.settings[body_key] %}{% endif %}
+          {% endcase %}
+        {% endfor %}
       when 'risk_free'
         assign av_cb_risk_block = content_block
         if content_block.settings.image != blank
@@ -897,6 +972,33 @@
     .av-cb__risk-image-wrap{width:min(760px,100%);margin:34px auto 0;display:flex;justify-content:center;align-items:flex-end;min-height:260px}
     .av-cb__risk-image{display:block;width:100%;height:auto;max-height:560px;object-fit:contain;object-position:center bottom}.av-cb__risk-image--fallback{width:min(440px,76%)}
     @media(max-width:600px){.av-cb__risk-section{padding-top:46px}.av-cb__risk-inner{width:min(100% - 24px,880px)}.av-cb__risk-seal{width:92px;height:92px;margin-bottom:22px}.av-cb__risk-seal strong{font-size:36px}.av-cb__risk-seal-top,.av-cb__risk-seal-bottom{font-size:14px}.av-cb__risk-section h2{font-size:34px}.av-cb__risk-section p{font-size:15px}.av-cb__risk-button{min-height:56px;font-size:16px;margin-top:24px}.av-cb__risk-image-wrap{margin-top:28px;min-height:210px}}
+    .av-cb__five-reasons{background:var(--five-bg,#FFF4EC);padding:58px 0 62px;color:#171310;overflow:hidden}
+    .av-cb__five-reasons-inner{width:min(900px,calc(100% - 32px));margin:0 auto}
+    .av-cb__five-reasons-head{text-align:center;max-width:760px;margin:0 auto 34px}
+    .av-cb__five-reasons-badge{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 24px;border-radius:10px;background:var(--five-accent,#A84F1B);color:#fff;font-size:14px;font-weight:850;letter-spacing:.04em}
+    .av-cb__five-reasons-head h2{margin:20px auto 0;font-size:clamp(30px,4.2vw,46px);line-height:1.08;letter-spacing:-.035em;color:#111;font-weight:650}
+    .av-cb__five-reasons-head p{max-width:650px;margin:14px auto 0;color:#5F554F;font-size:16px;line-height:1.55}
+    .av-cb__five-reasons-viewport{overflow:hidden}
+    .av-cb__five-reasons-track{display:flex;gap:18px;transition:transform .42s cubic-bezier(.22,.61,.36,1);will-change:transform}
+    .av-cb__five-reason-card{flex:0 0 100%;overflow:hidden;border:1.5px solid color-mix(in srgb,var(--five-accent,#A84F1B) 80%,#fff);border-radius:18px;background:#fff;box-shadow:0 14px 34px rgba(90,49,26,.07)}
+    .av-cb__five-reason-image{aspect-ratio:16/10;background:#F3E3D8;overflow:hidden}
+    .av-cb__five-reason-image img{display:block;width:100%;height:100%;object-fit:cover}
+    .av-cb__five-reason-placeholder{width:100%;height:100%;display:grid;place-items:center;background:linear-gradient(135deg,#EAD3C3,#FFF8F3);color:var(--five-accent,#A84F1B)}
+    .av-cb__five-reason-placeholder span{display:grid;place-items:center;width:88px;height:88px;border:2px solid currentColor;border-radius:50%;font-size:36px;font-weight:800}
+    .av-cb__five-reason-copy{padding:30px 34px 34px}
+    .av-cb__five-reason-label{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 16px;border-radius:8px;background:var(--five-accent,#A84F1B);color:#fff;font-size:12px;font-weight:850;letter-spacing:.035em}
+    .av-cb__five-reason-copy h3{margin:18px 0 0;color:#111;font-size:26px;line-height:1.15;letter-spacing:-.02em}
+    .av-cb__five-reason-copy p{margin:16px 0 0;color:#514A46;font-size:17px;line-height:1.58}
+    .av-cb__five-reasons-dots{display:flex;align-items:center;justify-content:center;gap:9px;margin-top:24px}
+    .av-cb__five-reasons-dot{width:9px;height:9px;padding:0;border:0;border-radius:999px;background:#CDC7C3;cursor:pointer;transition:width .2s ease,background .2s ease}
+    .av-cb__five-reasons-dot.is-active{width:42px;background:var(--five-accent,#A84F1B)}
+    .av-cb__five-reasons-arrows{display:flex;justify-content:center;gap:12px;margin-top:20px}
+    .av-cb__five-reasons-arrow{display:grid;place-items:center;width:54px;height:54px;padding:0;border:0;border-radius:50%;background:#F0ECE9;color:#2A2623;cursor:pointer}
+    .av-cb__five-reasons-arrow svg{width:24px;height:24px}
+    .av-cb__five-reasons-cta{display:flex;align-items:center;justify-content:center;width:min(420px,100%);min-height:58px;margin:30px auto 0;padding:0 24px;border-radius:999px;background:var(--five-accent,#A84F1B);color:#fff;text-decoration:none;font-size:17px;font-weight:850;box-shadow:0 12px 24px rgba(115,56,24,.12)}
+    .av-cb__five-reasons-guarantee{display:flex;align-items:center;justify-content:center;gap:9px;margin-top:18px;color:#5C514A;font-size:15px}
+    .av-cb__five-reasons-guarantee svg{width:21px;height:21px;color:var(--five-accent,#A84F1B)}
+    @media(max-width:600px){.av-cb__five-reasons{padding:42px 0 48px}.av-cb__five-reasons-inner{width:min(100% - 22px,900px)}.av-cb__five-reasons-head{margin-bottom:26px}.av-cb__five-reasons-badge{min-height:40px;padding:0 20px;font-size:12px}.av-cb__five-reasons-head h2{font-size:28px;margin-top:17px}.av-cb__five-reasons-head p{font-size:13.5px;margin-top:11px}.av-cb__five-reasons-track{gap:12px}.av-cb__five-reason-card{border-radius:14px}.av-cb__five-reason-image{aspect-ratio:1.22/1}.av-cb__five-reason-copy{padding:22px 20px 26px}.av-cb__five-reason-label{min-height:34px;padding:0 13px;font-size:11px}.av-cb__five-reason-copy h3{font-size:22px;margin-top:15px}.av-cb__five-reason-copy p{font-size:14px;line-height:1.55;margin-top:12px}.av-cb__five-reasons-dots{margin-top:19px}.av-cb__five-reasons-arrows{margin-top:17px}.av-cb__five-reasons-arrow{width:48px;height:48px}.av-cb__five-reasons-cta{min-height:54px;margin-top:24px;font-size:15px}.av-cb__five-reasons-guarantee{font-size:13px;margin-top:14px}}
     .av-cb__post-risk-reviews{background:#fff;padding:54px 0 62px;color:#181411}
     .av-cb__post-risk-reviews-wrap{width:min(900px,calc(100% - 32px));margin:0 auto}
     .av-cb__post-risk-reviews-head{text-align:center;margin:0 auto 30px}
@@ -1594,6 +1696,68 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
   </section>
 
 
+  {% if av_cb_five_reasons_show %}
+  <section class="av-cb__five-reasons" data-av-cb-five-reasons style="--five-bg:{{ av_cb_five_reasons_bg }};--five-accent:{{ av_cb_five_reasons_accent }};"{% if av_cb_five_reasons_block != blank %} {{ av_cb_five_reasons_block.shopify_attributes }}{% endif %}>
+    <div class="av-cb__five-reasons-inner">
+      <header class="av-cb__five-reasons-head">
+        <div class="av-cb__five-reasons-badge">{{ av_cb_five_reasons_eyebrow }}</div>
+        <h2>{{ av_cb_five_reasons_heading }}</h2>
+        <p>{{ av_cb_five_reasons_intro | newline_to_br }}</p>
+      </header>
+
+      <div class="av-cb__five-reasons-viewport">
+        <div class="av-cb__five-reasons-track" data-av-cb-five-track>
+          {% for reason_i in (1..5) %}
+            {% case reason_i %}
+              {% when 1 %}{% assign reason_image = av_cb_five_reasons_1_image %}{% assign reason_title = av_cb_five_reasons_1_title %}{% assign reason_body = av_cb_five_reasons_1_body %}
+              {% when 2 %}{% assign reason_image = av_cb_five_reasons_2_image %}{% assign reason_title = av_cb_five_reasons_2_title %}{% assign reason_body = av_cb_five_reasons_2_body %}
+              {% when 3 %}{% assign reason_image = av_cb_five_reasons_3_image %}{% assign reason_title = av_cb_five_reasons_3_title %}{% assign reason_body = av_cb_five_reasons_3_body %}
+              {% when 4 %}{% assign reason_image = av_cb_five_reasons_4_image %}{% assign reason_title = av_cb_five_reasons_4_title %}{% assign reason_body = av_cb_five_reasons_4_body %}
+              {% else %}{% assign reason_image = av_cb_five_reasons_5_image %}{% assign reason_title = av_cb_five_reasons_5_title %}{% assign reason_body = av_cb_five_reasons_5_body %}
+            {% endcase %}
+            <article class="av-cb__five-reason-card" data-av-cb-five-card>
+              <div class="av-cb__five-reason-image">
+                {% if reason_image != blank %}
+                  {{ reason_image | image_url: width: 1500 | image_tag: loading: 'lazy', widths: '480,720,960,1200,1500', sizes: '(min-width:900px) 760px, calc(100vw - 32px)', alt: reason_title }}
+                {% else %}
+                  <div class="av-cb__five-reason-placeholder" aria-hidden="true"><span>{{ reason_i }}</span></div>
+                {% endif %}
+              </div>
+              <div class="av-cb__five-reason-copy">
+                <div class="av-cb__five-reason-label">REASON {{ reason_i }}</div>
+                <h3>{{ reason_title }}</h3>
+                <p>{{ reason_body | newline_to_br }}</p>
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="av-cb__five-reasons-dots" data-av-cb-five-dots aria-label="Choose a reason">
+        {% for reason_i in (1..5) %}
+          <button type="button" class="av-cb__five-reasons-dot{% if reason_i == 1 %} is-active{% endif %}" data-av-cb-five-dot="{{ reason_i | minus: 1 }}" aria-label="Go to reason {{ reason_i }}"></button>
+        {% endfor %}
+      </div>
+
+      <div class="av-cb__five-reasons-arrows">
+        <button type="button" class="av-cb__five-reasons-arrow" data-av-cb-five-prev aria-label="Previous reason">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m14.5 6-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="av-cb__five-reasons-arrow" data-av-cb-five-next aria-label="Next reason">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9.5 6 6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+
+      <a class="av-cb__five-reasons-cta" href="#av-cb-top">{{ av_cb_five_reasons_button }}</a>
+      <div class="av-cb__five-reasons-guarantee">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 19 6v5c0 5-2.8 8.4-7 10-4.2-1.6-7-5-7-10V6l7-3Z" stroke="currentColor" stroke-width="1.8"/><path d="m8.8 12 2 2 4.4-4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>{{ av_cb_five_reasons_guarantee }}</span>
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+
   <section class="av-cb__risk-section" style="--risk-bg:{{ av_cb_risk_bg }};--risk-accent:{{ av_cb_risk_accent }};"{% if av_cb_risk_block != blank %} {{ av_cb_risk_block.shopify_attributes }}{% endif %}>
     <div class="av-cb__risk-inner">
       <div class="av-cb__risk-seal" aria-label="90 day risk-free guarantee">
@@ -1747,6 +1911,35 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       });
 
       if (!root) return;
+
+      const fiveReasons = root.querySelector('[data-av-cb-five-reasons]');
+      if (fiveReasons) {
+        const fiveTrack = fiveReasons.querySelector('[data-av-cb-five-track]');
+        const fiveCards = Array.from(fiveReasons.querySelectorAll('[data-av-cb-five-card]'));
+        const fiveDots = Array.from(fiveReasons.querySelectorAll('[data-av-cb-five-dot]'));
+        const fivePrev = fiveReasons.querySelector('[data-av-cb-five-prev]');
+        const fiveNext = fiveReasons.querySelector('[data-av-cb-five-next]');
+        let fiveIndex = 0;
+
+        const renderFiveReasons = () => {
+          if (!fiveTrack || !fiveCards.length) return;
+          const cardWidth = fiveCards[0].getBoundingClientRect().width;
+          const gap = parseFloat(getComputedStyle(fiveTrack).gap || '0');
+          fiveTrack.style.transform = 'translate3d(' + (-(cardWidth + gap) * fiveIndex) + 'px,0,0)';
+          fiveDots.forEach((dot, index) => dot.classList.toggle('is-active', index === fiveIndex));
+        };
+
+        const goFive = (index) => {
+          fiveIndex = ((index % fiveCards.length) + fiveCards.length) % fiveCards.length;
+          renderFiveReasons();
+        };
+
+        fivePrev?.addEventListener('click', () => goFive(fiveIndex - 1));
+        fiveNext?.addEventListener('click', () => goFive(fiveIndex + 1));
+        fiveDots.forEach((dot, index) => dot.addEventListener('click', () => goFive(index)));
+        window.addEventListener('resize', renderFiveReasons, {passive:true});
+        requestAnimationFrame(renderFiveReasons);
+      }
 
       const extraReview = root.querySelector('[data-av-cb-extra-review]');
       const reviewReadMore = root.querySelector('[data-av-cb-review-read-more]');
