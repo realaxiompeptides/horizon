@@ -12,6 +12,12 @@
     --av-featured-card-text: {{ section.settings.card_text_color }};
     --av-featured-muted: {{ section.settings.muted_text_color }};
     --av-featured-radius: {{ section.settings.card_radius }}px;
+    --av-featured-overlay: {{ section.settings.background_overlay | divided_by: 100.0 }};
+    {% if section.settings.background_image != blank %}
+      --av-featured-bg-image: url('{{ section.settings.background_image | image_url: width: 2400 }}');
+    {% else %}
+      --av-featured-bg-image: none;
+    {% endif %}
   "
 >
   <div class="avonent-featured-products__container">
@@ -109,11 +115,16 @@
 
 {% stylesheet %}
   .avonent-featured-products{
+    position:relative;
     width:100%;
     padding:52px 0 70px;
-    background:
-      radial-gradient(circle at 50% 0%,rgba(2,198,234,.12),transparent 34rem),
-      var(--av-featured-bg);
+    background-color:var(--av-featured-bg);
+    background-image:
+      linear-gradient(rgba(3,40,51,var(--av-featured-overlay)),rgba(3,40,51,var(--av-featured-overlay))),
+      var(--av-featured-bg-image);
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
   }
 
   .avonent-featured-products *{box-sizing:border-box}
@@ -134,19 +145,18 @@
     overflow:hidden;
     min-width:0;
     padding:34px 28px 30px;
-    border:1px solid rgba(2,198,234,.22);
+    border:1px solid rgba(255,255,255,.13);
     border-radius:var(--av-featured-radius);
-    background:
-      radial-gradient(circle at 50% 30%,rgba(2,198,234,.17),transparent 48%),
-      linear-gradient(180deg,#073943 0%,var(--av-featured-card-bg) 100%);
+    background:rgba(4,45,56,.92);
     color:var(--av-featured-card-text);
-    box-shadow:0 20px 46px rgba(0,70,82,.16);
+    box-shadow:0 20px 46px rgba(0,20,28,.22);
+    backdrop-filter:blur(3px);
   }
 
   .avonent-featured-card__name{
     max-width:420px;
     margin:0 auto 22px;
-    color:inherit;
+    color:#fff;
     font-family:var(--font-heading--family,var(--font-body--family));
     font-size:clamp(25px,2.8vw,34px);
     font-weight:550;
@@ -367,10 +377,25 @@
   "name": "00 Avonent Featured",
   "settings": [
     {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Section background image"
+    },
+    {
+      "type": "range",
+      "id": "background_overlay",
+      "label": "Background dark overlay",
+      "min": 0,
+      "max": 90,
+      "step": 5,
+      "unit": "%",
+      "default": 55
+    },
+    {
       "type": "color",
       "id": "background_color",
       "label": "Section background",
-      "default": "#EAFBFF"
+      "default": "#052F3B"
     },
     {
       "type": "color",
@@ -382,7 +407,7 @@
       "type": "color",
       "id": "card_background",
       "label": "Card background",
-      "default": "#062B34"
+      "default": "#063B47"
     },
     {
       "type": "color",
