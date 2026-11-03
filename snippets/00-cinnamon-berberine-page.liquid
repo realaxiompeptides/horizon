@@ -1188,11 +1188,13 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
   <div class="av-cb__top-stack">
     <div class="av-cb__guarantee-card" style="--guarantee-highlight: {{ av_cb_guarantee_color }}; --guarantee-text: #171717;">
       <div class="av-cb__guarantee-image">
-        {% if av_cb_guarantee_image != blank %}
-          {{ av_cb_guarantee_image | image_url: width: 240 | image_tag: loading: 'lazy', widths: '120,180,240', alt: 'Avonent 90-Day Money-Back Guarantee' }}
-        {% else %}
-          <div class="av-cb__guarantee-seal"><span>90<br><small>DAYS</small></span></div>
-        {% endif %}
+        <img
+          src="https://cdn.shopify.com/s/files/1/0759/3525/2646/files/avonent-90-day-money-back-guarantee.png?v=1793736254"
+          width="240"
+          height="240"
+          loading="lazy"
+          alt="90-Day Money-Back Guarantee"
+        >
       </div>
       <div class="av-cb__guarantee-copy">
         <h3>{{ av_cb_guarantee_heading }}</h3>
