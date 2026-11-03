@@ -1041,10 +1041,10 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
           {% endfor %}
         </div>
 
-        <div class="av-cb__sold" style="--sold: {{ av_cb_sold_percent }}%;">
+        <div class="av-cb__sold" data-av-cb-sold data-sold-start="12" data-sold-target="{{ av_cb_sold_percent }}" style="--sold: {{ av_cb_sold_percent }}%;">
           <div class="av-cb__sold-row">
-            <div class="av-cb__sold-track" aria-hidden="true"><div class="av-cb__sold-fill"></div></div>
-            <div class="av-cb__sold-text">{{ av_cb_sold_percent }}% Sold</div>
+            <div class="av-cb__sold-track" aria-hidden="true"><div class="av-cb__sold-fill" data-av-cb-sold-fill></div></div>
+            <div class="av-cb__sold-text" data-av-cb-sold-text>{{ av_cb_sold_percent }}% Sold</div>
           </div>
         </div>
 
@@ -1998,6 +1998,80 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         const suffix = mod100 >= 11 && mod100 <= 13 ? 'th' : ({1:'st',2:'nd',3:'rd'}[day % 10] || 'th');
         deliveryDate.textContent = date.toLocaleDateString(document.documentElement.lang || 'en-US', {month:'long'}) + ' ' + day + suffix;
       }
+      const soldBar = root.querySelector('[data-av-cb-sold]');
+      if (soldBar && soldBar.dataset.avCbSoldReady !== 'true') {
+        soldBar.dataset.avCbSoldReady = 'true';
+
+        const soldFill = soldBar.querySelector('[data-av-cb-sold-fill]');
+        const soldText = soldBar.querySelector('[data-av-cb-sold-text]');
+        const soldStart = Math.max(0, Math.min(100, Number(soldBar.dataset.soldStart || 12)));
+        const soldTarget = Math.max(soldStart, Math.min(100, Number(soldBar.dataset.soldTarget || 93)));
+
+        let soldHasRun = false;
+
+        const renderSold = (value) => {
+          const clamped = Math.max(0, Math.min(100, value));
+          soldBar.style.setProperty('--sold', clamped + '%');
+          if (soldText) soldText.textContent = Math.round(clamped) + '% Sold';
+        };
+
+        const runSold = () => {
+          if (soldHasRun) return;
+          soldHasRun = true;
+          soldBar.dataset.avCbSoldAnimated = 'true';
+
+          const duration = 1800;
+          const started = performance.now();
+
+          const tick = (now) => {
+            const progress = Math.min(1, (now - started) / duration);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            const value = soldStart + ((soldTarget - soldStart) * eased);
+            renderSold(value);
+
+            if (progress < 1) {
+              requestAnimationFrame(tick);
+            } else {
+              renderSold(soldTarget);
+            }
+          };
+
+          requestAnimationFrame(tick);
+        };
+
+        renderSold(soldStart);
+
+        if ('IntersectionObserver' in window) {
+          const soldObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting && !soldHasRun) {
+                runSold();
+                soldObserver.disconnect();
+              }
+            });
+          }, {threshold: 0.2});
+
+          soldObserver.observe(soldBar);
+
+          if (soldBar.getBoundingClientRect().top < window.innerHeight && soldBar.getBoundingClientRect().bottom > 0) {
+            requestAnimationFrame(runSold);
+            soldObserver.disconnect();
+          }
+        } else {
+          const onSoldScroll = () => {
+            if (soldHasRun) return;
+            const rect = soldBar.getBoundingClientRect();
+            if (rect.top <= window.innerHeight * 0.9) {
+              runSold();
+              window.removeEventListener('scroll', onSoldScroll);
+            }
+          };
+
+          window.addEventListener('scroll', onSoldScroll, {passive:true});
+          onSoldScroll();
+        }
+      }
+
       const statsSections = root.querySelectorAll('[data-av-cb-stats]');
       const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       statsSections.forEach(section => {
