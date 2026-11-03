@@ -376,11 +376,11 @@
 
     grid-template-columns:
       repeat(
-        4,
+        2,
         minmax(0, 1fr)
       );
 
-    gap: 18px;
+    gap: 24px;
 
     margin-top:
       var(--av-featured-header-gap);
@@ -415,8 +415,8 @@
       var(--av-featured-card-text);
 
     box-shadow:
-      0 8px 28px
-      rgba(0, 0, 0, 0.035);
+      0 14px 36px
+      rgba(7, 74, 91, 0.07);
 
     transition:
       transform 180ms ease,
@@ -449,7 +449,7 @@
     overflow: hidden;
 
     background:
-      #f4fbfd;
+      linear-gradient(180deg,#ffffff 0%,#f1fbfe 100%);
   }
 
   .avonent-featured-card__image-link {
@@ -466,7 +466,7 @@
     width: 100%;
     height: 100%;
 
-    padding: 9%;
+    padding: 8%;
 
     object-fit: contain;
 
@@ -585,7 +585,7 @@
     font-family:
       var(--font-heading--family);
 
-    font-size: 21px;
+    font-size: 24px;
     font-weight: 600;
 
     line-height: 1.15;
@@ -755,7 +755,7 @@
     border-radius: 10px;
 
     background:
-      #111111;
+      var(--av-featured-blue);
 
     color:
       #ffffff;
@@ -784,7 +784,7 @@
   @media (hover: hover) {
     .avonent-featured-card__button:hover {
       background:
-        var(--av-featured-blue);
+        #079fc0;
 
       transform:
         translateY(-1px);
@@ -891,16 +891,9 @@
     }
 
     .avonent-featured-products__grid {
-      grid-template-columns:
-        repeat(
-          2,
-          minmax(0, 1fr)
-        );
-
-      gap: 10px;
-
-      margin-top:
-        var(--av-featured-header-gap);
+      grid-template-columns: 1fr;
+      gap: 18px;
+      margin-top: var(--av-featured-header-gap);
     }
 
     .avonent-featured-card {
@@ -936,10 +929,7 @@
     }
 
     .avonent-featured-card__content {
-      padding:
-        13px
-        11px
-        12px;
+      padding: 20px 18px 18px;
     }
 
     .avonent-featured-card__category {
@@ -949,9 +939,8 @@
     }
 
     .avonent-featured-card__title {
-      font-size: 15px;
-
-      line-height: 1.15;
+      font-size: 22px;
+      line-height: 1.12;
     }
 
     .avonent-featured-card__rating {
@@ -969,19 +958,15 @@
     }
 
     .avonent-featured-card__benefit {
-      margin-top: 8px;
-
-      font-size: 11px;
-
-      line-height: 1.35;
+      margin-top: 10px;
+      font-size: 14px;
+      line-height: 1.45;
     }
 
     .avonent-featured-card__mini-benefit {
-      gap: 4px;
-
-      margin-top: 7px;
-
-      font-size: 9px;
+      gap: 6px;
+      margin-top: 9px;
+      font-size: 12px;
     }
 
     .avonent-featured-card__bottom {
@@ -989,7 +974,7 @@
     }
 
     .avonent-featured-card__current-price {
-      font-size: 15px;
+      font-size: 20px;
     }
 
     .avonent-featured-card__compare-price {
@@ -1001,18 +986,11 @@
     }
 
     .avonent-featured-card__button {
-      min-height: 43px;
-
-      margin-top: 11px;
-
-      padding:
-        9px
-        7px;
-
-      border-radius: 8px;
-
-      font-size: 10px;
-
+      min-height: 52px;
+      margin-top: 14px;
+      padding: 12px 16px;
+      border-radius: 11px;
+      font-size: 13px;
       letter-spacing: 0.025em;
     }
 
