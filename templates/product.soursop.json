@@ -64,6 +64,7 @@
         },
         "results": {
           "type": "results",
+          "disabled": true,
           "settings": {
             "stats_show": true,
             "stats_position": "after_compare",
