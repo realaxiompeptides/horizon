@@ -49,11 +49,11 @@
             "low_stock_line": "Low Stock – Selling Fast",
             "delivery_label": "Order now for delivery by:",
             "sub_title_1": "Buy 1",
-            "sub_title_2": "Buy 2 Get 1 FREE",
-            "sub_title_3": "Buy 3 Get 2 FREE",
-            "sub_savings_1": "You save 50%",
-            "sub_savings_2": "You save 67%",
-            "sub_savings_3": "You save 70%",
+            "sub_title_2": "Buy 2",
+            "sub_title_3": "Buy 3",
+            "sub_savings_1": "You save 42%",
+            "sub_savings_2": "You save 42%",
+            "sub_savings_3": "You save 42%",
             "gift_header": "Gifts Unlocked",
             "gift_shipping": "FREE Shipping",
             "gift_ebook": "FREE E-Book",
@@ -66,7 +66,7 @@
           "type": "results",
           "disabled": true,
           "settings": {
-            "stats_show": true,
+            "stats_show": false,
             "stats_position": "after_compare",
             "stats_heading": "Avonent by the Numbers",
             "stats_bg": "shopify://shop_images/IMG_3463.jpg",
@@ -243,7 +243,8 @@
             "benefits_image": "shopify://shop_images/ED1263F2-4494-45ED-9415-6D549E6348EA.png",
             "benefits_bg": "",
             "benefits_text": "",
-            "benefits_disclaimer": ""
+            "benefits_disclaimer": "",
+            "show_section": false
           }
         },
         "five_reasons": {
