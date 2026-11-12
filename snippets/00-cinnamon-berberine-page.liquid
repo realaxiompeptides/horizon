@@ -1380,6 +1380,10 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
                   {% assign av_cb_bundle_onetime_subtitle = av_cb_one_time_subtitle_3 %}
                 {% endif %}
               {% endif %}
+              {% if av_cb_product.template_suffix == 'soursop' %}
+                {% assign av_cb_bundle_sub_total = av_cb_subscription_unit_price | times: qty %}
+                {% assign av_cb_bundle_subscription_compare = av_cb_one_time_unit_price | times: qty %}
+              {% endif %}
               {% assign av_cb_bundle_one_time_total = av_cb_one_time_unit_price | times: qty %}
               {% assign av_cb_bundle_one_time_compare_total = av_cb_one_time_compare_unit | times: qty %}
               <button class="av-cb__bundle{% if qty == 1 %} is-active{% endif %}" type="button" data-av-cb-bundle="{{ qty }}" data-subscription-price="{{ av_cb_bundle_sub_total }}" data-subscription-compare="{{ av_cb_bundle_subscription_compare }}" data-one-time-price="{{ av_cb_bundle_one_time_total }}" data-one-time-compare="{{ av_cb_bundle_one_time_compare_total }}">
@@ -1890,6 +1894,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
   {% if av_cb_stats_position == 'after_compare' %}{{ av_cb_stats_markup }}{% endif %}
   {% if av_cb_doctor_position == 'after_compare' %}{{ av_cb_doctor_markup }}{% endif %}
 {% if av_cb_story_two_position == 'after_compare' %}{{ av_cb_story_two_markup }}{% endif %}
+  {% if av_cb_benefits_block.settings.show_section != false %}
   <section class="av-cb__benefits-section" style="--benefits-bg:{{ av_cb_benefits_bg }};--benefits-text:{{ av_cb_benefits_text }};"{% if av_cb_benefits_block != blank %} {{ av_cb_benefits_block.shopify_attributes }}{% endif %}>
     <div class="av-cb__benefits-inner">
       <header class="av-cb__benefits-head">
@@ -1949,6 +1954,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       {% endif %}
     </div>
   </section>
+  {% endif %}
 
 
   {% for five_block in editor.blocks %}
