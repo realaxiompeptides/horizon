@@ -375,11 +375,24 @@
             "show_section": true,
             "position": "after_trust",
             "image": "shopify://shop_images/IMG_3463.jpg",
-            "eyebrow": "HERBAL HISTORY",
+            "eyebrow": "PART 01 · HERBAL HISTORY",
             "heading": "Dr. Sebi and the Soursop Tradition",
-            "body": "Dr. Sebi included soursop fruit on his plant-based food list. Soursop leaves have a separate history in herbal teas, and scientists continue to study the plant compounds they contain.",
-            "background": "#F5F8F1",
-            "accent": "#557D4D"
+            "body": "Dr. Sebi included soursop fruit on his plant-based food list. Long before soursop became popular online, people across the Caribbean were using its leaves in herbal teas. The interest is new to many, but the plant is not.",
+            "background": "#F2F7EF",
+            "accent": "#4F7847"
+          }
+        },
+        "story_continuation": {
+          "type": "story_continuation",
+          "settings": {
+            "show_section": true,
+            "position": "after_trust",
+            "image": "shopify://shop_images/10ACC725-945E-4C0B-94FF-77D93AEB7466.png",
+            "eyebrow": "PART 02 · MODERN RESEARCH",
+            "heading": "From Herbal Tea to Modern Research",
+            "body": "Today, scientists study soursop leaves for their natural plant compounds and antioxidant activity in lab tests. What began as a long-held herbal tradition is now being explored in the lab. The research is still growing, and the leaves remain the heart of the story.",
+            "background": "#FBFCF7",
+            "accent": "#4F7847"
           }
         }
       },
@@ -387,6 +400,7 @@
         "hero",
         "results",
         "doctor_story",
+        "story_continuation",
         "carousel",
         "science",
         "journey",
