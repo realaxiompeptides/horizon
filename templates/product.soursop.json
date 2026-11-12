@@ -23,10 +23,6 @@
             "story_heading": "Soursop Leaf, Made Simple",
             "hero_description": "Soursop leaves have been used in herbal teas for generations. Our vegetable capsules make them easy to add to your day without brewing tea or measuring bitter liquids.",
             "rating_text": "",
-            "benefit_1": "<p>Increase Cancer Killer Cells</p>",
-            "benefit_2": "<p><strong>Inflammation Research:</strong> Animal studies show effects on pathways linked to inflammation.</p>",
-            "benefit_3": "<p><strong>Blood Sugar Research:</strong> Researchers have studied how soursop extracts affect blood sugar in animals.</p>",
-            "benefit_4": "<p><strong>Traditional Herbal Use:</strong> Soursop leaves have been used in herbal teas for generations.</p>",
             "sold_percent": "",
             "sale_badge": "",
             "bundle_2_badge": "Free Shipping",
@@ -59,7 +55,11 @@
             "gift_ebook": "FREE E-Book",
             "gift_ebook_note": "Digital soursop guide",
             "announcement_heading": "FALL SALE",
-            "announcement_subheading": "Save up to 65% today"
+            "announcement_subheading": "Save up to 65% today",
+            "benefit_1_formatted": "Increase Cancer Killer Cells",
+            "benefit_2_formatted": "<strong>Inflammation Research:</strong> Animal studies show effects on pathways linked to inflammation.",
+            "benefit_3_formatted": "<strong>Blood Sugar Research:</strong> Researchers have studied how soursop extracts affect blood sugar in animals.",
+            "benefit_4_formatted": "<strong>Traditional Herbal Use:</strong> Soursop leaves have been used in herbal teas for generations."
           }
         },
         "results": {
