@@ -2233,6 +2233,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       const productForm = root.querySelector('form[data-type="add-to-cart-form"]');
       const variantInput = root.querySelector('input[ref="variantId"]');
       const bonusVariantId = Number(root.dataset.bonusVariantId || 0);
+      const isSoursopProduct = {% if av_cb_product.template_suffix == 'soursop' %}true{% else %}false{% endif %};
       const bundleButtons = Array.from(root.querySelectorAll('[data-av-cb-bundle]'));
       const subscriptionPerks = Array.from(root.querySelectorAll('[data-av-cb-subscription-perk]'));
       const bundleUnlocks = Array.from(root.querySelectorAll('[data-av-cb-bundle-unlock]'));
@@ -2363,7 +2364,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
 
         const isSubscription = purchaseMode === 'subscription' && sellingPlanInput && !sellingPlanInput.disabled;
         const values = valuesFor(selectedBundle());
-        const bonusQty = isSubscription ? (values.qty === 2 ? 1 : (values.qty === 3 ? 2 : 0)) : 0;
+        const bonusQty = (isSubscription && !isSoursopProduct) ? (values.qty === 2 ? 1 : (values.qty === 3 ? 2 : 0)) : 0;
 
         const submitButton = productForm.querySelector('button[type="submit"]');
         const variantId = Number(variantInput?.value || 0);
@@ -2415,7 +2416,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
           // The Shopify automatic BXGY discount makes this $24.99 item free
           // only when three paid cinnamon subscription units qualify.
           const ebookVariantId = Number(root.dataset.ebookVariantId || 0);
-          if (isSubscription && values.qty === 3 && ebookVariantId) {
+          if (!isSoursopProduct && isSubscription && values.qty === 3 && ebookVariantId) {
             items.push({
               id: ebookVariantId,
               quantity: 1,
