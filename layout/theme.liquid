@@ -86,6 +86,12 @@ html.av-cb-cinnamon-page #header-component header-actions{gap:0}
     {% endif %}
 
     {{ content_for_header }}
+    {% if template.name == 'product' %}
+      {% if template.suffix == 'soursop' or product.handle == 'soursop-softgels' %}
+      <script>document.documentElement.classList.add('av-soursop-page');</script>
+      {{ 'avonent-soursop-colors.css' | asset_url | stylesheet_tag }}
+      {% endif %}
+    {% endif %}
   </head>
 
   <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
