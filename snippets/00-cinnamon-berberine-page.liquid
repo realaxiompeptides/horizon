@@ -1520,7 +1520,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
     </div>
 
     {% capture av_cb_stats_markup %}
-    {% unless av_cb_stats_show == false %}
+    {% unless av_cb_stats_show == false or av_cb_product.handle == 'soursop-softgels' %}
       {% assign av_cb_stats_opacity = av_cb_stats_overlay_opacity | divided_by: 100.0 %}
       <section
         class="av-cb__stats-section"
