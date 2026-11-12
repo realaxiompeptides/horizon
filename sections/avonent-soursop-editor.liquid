@@ -721,7 +721,7 @@
     },
     {
       "type": "doctor_story",
-      "name": "Doctor / Herbal Story",
+      "name": "Story 1 · Herbal Roots",
       "limit": 1,
       "settings": [
         {
@@ -781,6 +781,78 @@
           "type": "color",
           "id": "background",
           "label": "Story background",
+          "default": "#F5F8F1"
+        },
+        {
+          "type": "color",
+          "id": "accent",
+          "label": "Accent color",
+          "default": "#557D4D"
+        }
+      ]
+    },
+    {
+      "type": "story_continuation",
+      "name": "Story 2 · Leaf Research",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_section",
+          "label": "Show second story",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "position",
+          "label": "Second story position",
+          "options": [
+            {
+              "value": "after_trust",
+              "label": "After Why Trust Avonent"
+            },
+            {
+              "value": "after_carousel",
+              "label": "After soursop carousel"
+            },
+            {
+              "value": "after_compare",
+              "label": "After comparison chart"
+            },
+            {
+              "value": "after_faq",
+              "label": "After FAQs"
+            }
+          ],
+          "default": "after_trust"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Story image (above text)"
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Small label",
+          "default": "PART 02 · LEAF RESEARCH"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Story headline",
+          "default": "From Herbal Tea to Modern Research"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Story paragraph",
+          "default": "For generations, people have brewed soursop leaves in herbal teas. Today, scientists are studying the natural compounds in these leaves, including their antioxidant activity in lab tests."
+        },
+        {
+          "type": "color",
+          "id": "background",
+          "label": "Card background",
           "default": "#F5F8F1"
         },
         {
@@ -865,7 +937,7 @@
     },
     {
       "type": "science",
-      "name": "Science section (show/hide)",
+      "name": "Science (show/hide)",
       "limit": 1,
       "settings": [
         {
