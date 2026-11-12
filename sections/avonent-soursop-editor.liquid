@@ -316,6 +316,11 @@
         },
         {
           "type": "textarea",
+          "id": "story_heading",
+          "label": "Heading above benefit checkmarks"
+        },
+        {
+          "type": "textarea",
           "id": "hero_description",
           "label": "Product description (optional)"
         },
@@ -550,9 +555,39 @@
     },
     {
       "type": "results",
-      "name": "Results content",
+      "name": "Avonent by the Numbers",
       "limit": 1,
       "settings": [
+        {
+          "type": "checkbox",
+          "id": "stats_show",
+          "label": "Show numbers section",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "stats_position",
+          "label": "Numbers section position",
+          "options": [
+            {
+              "value": "before_carousel",
+              "label": "Before soursop carousel"
+            },
+            {
+              "value": "after_carousel",
+              "label": "After soursop carousel"
+            },
+            {
+              "value": "after_compare",
+              "label": "After comparison chart"
+            },
+            {
+              "value": "after_faq",
+              "label": "After FAQs"
+            }
+          ],
+          "default": "after_compare"
+        },
         {
           "type": "textarea",
           "id": "stats_heading",
@@ -589,6 +624,12 @@
           "label": "Stat 1 end"
         },
         {
+          "type": "text",
+          "id": "stat_1_suffix",
+          "label": "Number 1 suffix (e.g. mg, days, %)",
+          "default": "%"
+        },
+        {
           "type": "textarea",
           "id": "stat_1_label",
           "label": "Stat 1 label"
@@ -602,6 +643,12 @@
           "type": "textarea",
           "id": "stat_2_end",
           "label": "Stat 2 end"
+        },
+        {
+          "type": "text",
+          "id": "stat_2_suffix",
+          "label": "Number 2 suffix (e.g. mg, days, %)",
+          "default": "%"
         },
         {
           "type": "textarea",
@@ -619,6 +666,12 @@
           "label": "Stat 3 end"
         },
         {
+          "type": "text",
+          "id": "stat_3_suffix",
+          "label": "Number 3 suffix (e.g. mg, days, %)",
+          "default": "%"
+        },
+        {
           "type": "textarea",
           "id": "stat_3_label",
           "label": "Stat 3 label"
@@ -632,6 +685,12 @@
           "type": "textarea",
           "id": "stat_4_end",
           "label": "Stat 4 end"
+        },
+        {
+          "type": "text",
+          "id": "stat_4_suffix",
+          "label": "Number 4 suffix (e.g. mg, days, %)",
+          "default": "%"
         },
         {
           "type": "textarea",
@@ -657,12 +716,78 @@
           "type": "color",
           "id": "stats_text_color",
           "label": "Stats text color"
-        },
+        }
+      ]
+    },
+    {
+      "type": "doctor_story",
+      "name": "Doctor / Herbal Story",
+      "limit": 1,
+      "settings": [
         {
           "type": "checkbox",
-          "id": "stats_show",
-          "label": "Stats show",
+          "id": "show_section",
+          "label": "Show doctor story",
           "default": true
+        },
+        {
+          "type": "select",
+          "id": "position",
+          "label": "Doctor story position",
+          "options": [
+            {
+              "value": "after_trust",
+              "label": "After Why Trust Avonent"
+            },
+            {
+              "value": "after_carousel",
+              "label": "After soursop carousel"
+            },
+            {
+              "value": "after_compare",
+              "label": "After comparison chart"
+            },
+            {
+              "value": "after_faq",
+              "label": "After FAQs"
+            }
+          ],
+          "default": "after_trust"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Story image above headline"
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Small label above headline",
+          "default": "HERBAL HISTORY"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Story headline",
+          "default": "Dr. Sebi and the Soursop Tradition"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Story text",
+          "default": "Dr. Sebi included soursop fruit on his plant-based food list. Soursop leaves also have a long history in herbal teas and are studied for their natural plant compounds."
+        },
+        {
+          "type": "color",
+          "id": "background",
+          "label": "Story background",
+          "default": "#F5F8F1"
+        },
+        {
+          "type": "color",
+          "id": "accent",
+          "label": "Accent color",
+          "default": "#557D4D"
         }
       ]
     },
@@ -740,9 +865,15 @@
     },
     {
       "type": "science",
-      "name": "Science content",
+      "name": "Science section (show/hide)",
       "limit": 1,
       "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_section",
+          "label": "Show science section",
+          "default": true
+        },
         {
           "type": "textarea",
           "id": "science_heading",

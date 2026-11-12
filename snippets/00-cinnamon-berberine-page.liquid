@@ -46,6 +46,7 @@
   assign av_cb_gift_ebook_note = 'Digital metabolic-support guide'
   assign av_cb_show_low_stock = true
   assign av_cb_hero_description = av_cb_product.metafields.custom.av_cb_hero_description.value | default: 'Avonent Ceylon Cinnamon + Berberine supports healthy blood sugar, glucose metabolism, and everyday metabolic balance — helping support steadier days around meals and throughout the day.*\n\nTake 1 softgel per day. Each serving combines true Sri Lankan Ceylon cinnamon with Berberine HCl in one concentrated formula built for consistent daily use.*'
+  assign av_cb_soursop_story_title = 'Soursop Leaf, Made Simple'
   assign av_cb_rating_text = av_cb_product.metafields.custom.av_cb_rating_text.value | default: 'Rated 4.9 • 10,000+ Reviews'
   assign av_cb_benefit_1 = av_cb_product.metafields.custom.av_cb_benefit_1.value | default: 'Restores Insulin Sensitivity'
   assign av_cb_benefit_2 = av_cb_product.metafields.custom.av_cb_benefit_2.value | default: 'Stabilizes Blood Sugar Levels'
@@ -98,6 +99,14 @@
   assign av_cb_stats_guarantee_icon = av_cb_product.metafields.custom.av_cb_stats_guarantee_icon.value
   assign av_cb_stats_text_color = av_cb_product.metafields.custom.av_cb_stats_text_color.value | default: '#FFFFFF'
   assign av_cb_stats_show = av_cb_product.metafields.custom.av_cb_stats_show.value
+  assign av_cb_stats_position = 'before_carousel'
+  assign av_cb_science_show = true
+  assign av_cb_doctor_block = blank
+  assign av_cb_doctor_position = 'after_trust'
+  assign av_cb_stat_1_suffix = '%'
+  assign av_cb_stat_2_suffix = '%'
+  assign av_cb_stat_3_suffix = '%'
+  assign av_cb_stat_4_suffix = '%'
   assign av_cb_carousel_heading = av_cb_product.metafields.custom.av_cb_carousel_heading.value | default: 'Why This Ceylon Cinnamon Formula Is Built Differently'
   assign av_cb_carousel_1_image = av_cb_product.metafields.custom.av_cb_carousel_1_image.value
   assign av_cb_carousel_1_title = av_cb_product.metafields.custom.av_cb_carousel_1_title.value | default: 'Sri Lankan Ceylon With a Centuries-Old Heritage'
@@ -280,6 +289,9 @@
         if content_block.settings.hero_description != blank
           assign av_cb_hero_description = content_block.settings.hero_description
         endif
+        if content_block.settings.story_heading != blank
+          assign av_cb_soursop_story_title = content_block.settings.story_heading
+        endif
         if content_block.settings.rating_text != blank
           assign av_cb_rating_text = content_block.settings.rating_text
         endif
@@ -335,6 +347,9 @@
           assign av_cb_cancel_text = content_block.settings.cancel_text
         endif
       when 'results'
+        if content_block.settings.stats_position != blank
+          assign av_cb_stats_position = content_block.settings.stats_position
+        endif
         if content_block.settings.stats_heading != blank
           assign av_cb_stats_heading = content_block.settings.stats_heading
         endif
@@ -356,6 +371,9 @@
         if content_block.settings.stat_1_end != blank
           assign av_cb_stat_1_end = content_block.settings.stat_1_end
         endif
+        if content_block.settings.stat_1_suffix != blank
+          assign av_cb_stat_1_suffix = content_block.settings.stat_1_suffix
+        endif
         if content_block.settings.stat_1_label != blank
           assign av_cb_stat_1_label = content_block.settings.stat_1_label
         endif
@@ -364,6 +382,9 @@
         endif
         if content_block.settings.stat_2_end != blank
           assign av_cb_stat_2_end = content_block.settings.stat_2_end
+        endif
+        if content_block.settings.stat_2_suffix != blank
+          assign av_cb_stat_2_suffix = content_block.settings.stat_2_suffix
         endif
         if content_block.settings.stat_2_label != blank
           assign av_cb_stat_2_label = content_block.settings.stat_2_label
@@ -374,6 +395,9 @@
         if content_block.settings.stat_3_end != blank
           assign av_cb_stat_3_end = content_block.settings.stat_3_end
         endif
+        if content_block.settings.stat_3_suffix != blank
+          assign av_cb_stat_3_suffix = content_block.settings.stat_3_suffix
+        endif
         if content_block.settings.stat_3_label != blank
           assign av_cb_stat_3_label = content_block.settings.stat_3_label
         endif
@@ -382,6 +406,9 @@
         endif
         if content_block.settings.stat_4_end != blank
           assign av_cb_stat_4_end = content_block.settings.stat_4_end
+        endif
+        if content_block.settings.stat_4_suffix != blank
+          assign av_cb_stat_4_suffix = content_block.settings.stat_4_suffix
         endif
         if content_block.settings.stat_4_label != blank
           assign av_cb_stat_4_label = content_block.settings.stat_4_label
@@ -398,8 +425,11 @@
         if content_block.settings.stats_text_color != blank
           assign av_cb_stats_text_color = content_block.settings.stats_text_color
         endif
-        if content_block.settings.stats_show != blank
-          assign av_cb_stats_show = content_block.settings.stats_show
+        assign av_cb_stats_show = content_block.settings.stats_show
+      when 'doctor_story'
+        assign av_cb_doctor_block = content_block
+        if content_block.settings.position != blank
+          assign av_cb_doctor_position = content_block.settings.position
         endif
       when 'carousel'
         if content_block.settings.carousel_heading != blank
@@ -442,6 +472,7 @@
           assign av_cb_carousel_4_body = content_block.settings.carousel_4_body
         endif
       when 'science'
+        assign av_cb_science_show = content_block.settings.show_section
         if content_block.settings.science_heading != blank
           assign av_cb_science_heading = content_block.settings.science_heading
         endif
@@ -831,6 +862,10 @@
     .av-cb__bundle strong{display:block;font-size:16px}.av-cb__bundle span{display:block;font-size:12px;color:var(--muted);margin-top:3px}.av-cb__badge{position:absolute!important;top:-9px;right:9px;background:var(--blue);color:#fff!important;border-radius:999px;padding:3px 7px;font-size:9px!important;font-weight:800;text-transform:uppercase;letter-spacing:.05em}
 
     .av-cb__hero-badges{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 10px}.av-cb__hero-badge{display:inline-flex;align-items:center;justify-content:center;min-height:30px;padding:5px 12px;border-radius:999px;font-size:12px;font-weight:800;line-height:1.1}.av-cb__hero-badge--best{background:#B75522;color:#fff}.av-cb__hero-badge--choice{background:#fff;color:#171513;border:2px solid #171513}.av-cb__rating{display:flex;align-items:center;gap:10px;margin:0 0 14px;font-size:14px;color:#26343a}.av-cb__stars{display:inline-flex;gap:2px;color:#F4B000;font-size:18px;letter-spacing:1px}.av-cb__rating-text{font-weight:650}
+    .av-cb__soursop-story{margin:14px 0 17px}
+    .av-cb__soursop-story h2{font-size:clamp(22px,2.8vw,30px);font-weight:800;letter-spacing:-.025em;line-height:1.17;color:#171513;margin:0 0 9px}
+    .av-cb__soursop-story p{font-size:15px;line-height:1.52;color:#45413e;margin:0}
+    .av-cb__benefit strong{font-weight:780;color:#171513}
     .av-cb__benefits{display:grid;gap:15px;margin:20px 0 25px}.av-cb__benefit{display:flex;align-items:flex-start;gap:11px;font-size:15.5px;line-height:1.45;color:#45413E;font-weight:500}.av-cb__benefit-check{width:18px;height:18px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;flex:0 0 18px;margin-top:2px;box-shadow:0 2px 7px rgba(168,79,27,.18)}.av-cb__benefit-check svg{width:10px;height:10px}
     .av-cb__sold{background:#fff;border:1px solid #e2eef1;border-radius:16px;padding:16px 18px;margin:0 0 18px;box-shadow:0 10px 30px rgba(7,74,91,.06)}.av-cb__sold-row{display:flex;align-items:center;gap:14px}.av-cb__sold-track{height:10px;background:#e9eef0;border-radius:999px;overflow:hidden;flex:1}.av-cb__sold-fill{height:100%;width:var(--sold);background:var(--blue);border-radius:inherit}.av-cb__sold-text{font-size:16px;font-weight:850;color:var(--deep);white-space:nowrap}
     .av-cb__pricing{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 14px}.av-cb__pricing--purchase-mode{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px 18px;padding:16px 0 17px;border-top:1px solid #eadfd8;border-bottom:1px solid #eadfd8}.av-cb__pricing-values{display:flex;align-items:center;justify-content:flex-end;gap:9px;flex-wrap:wrap}.av-cb__purchase-heading{margin:0;color:var(--deep);font-size:21px;font-weight:850;line-height:1.15;letter-spacing:-.02em}.av-cb__sale-price{font-size:27px;font-weight:850;color:var(--blue)}.av-cb__compare-price{font-size:20px;font-weight:650;color:#111;text-decoration:line-through;text-decoration-thickness:1.5px;opacity:.82}.av-cb__sale-badge{display:inline-flex;align-items:center;min-height:31px;padding:0 11px;border-radius:9px;background:var(--blue);color:#fff;font-size:12px;font-weight:850}
@@ -879,6 +914,15 @@
     .av-cb__trust-image-section{margin-top:10px}
     .av-cb__trust-image-section img{display:block;width:100%;height:auto;border-radius:18px}
 
+    .av-cb__doctor-story{background:var(--doctor-bg,#F5F8F1);border-radius:20px;overflow:hidden;margin:26px auto 38px;max-width:1100px;color:#18281a;border:1px solid rgba(60,92,52,.12)}
+    .av-cb__doctor-media{width:100%;max-height:420px;overflow:hidden}
+    .av-cb__doctor-media img{display:block;width:100%;height:auto;max-height:420px;object-fit:cover;object-position:center 35%}
+    .av-cb__doctor-image-placeholder{min-height:230px;display:flex;align-items:center;justify-content:center;text-align:center;padding:25px;color:#406441;background:linear-gradient(120deg,#c0d2b9,#e4ebe0)}
+    .av-cb__doctor-content{padding:28px clamp(20px,5vw,52px) 36px}
+    .av-cb__doctor-eyebrow{font-size:12px!important;letter-spacing:.12em!important;font-weight:800!important;color:var(--doctor-accent,#557D4D)!important;margin:0 0 10px!important}
+    .av-cb__doctor-content h2{font-size:clamp(28px,4vw,42px);line-height:1.12;font-weight:780;letter-spacing:-.03em;margin:0 0 14px;color:#192c1b}
+    .av-cb__doctor-content>p:last-child{font-size:16px;line-height:1.6;margin:0;color:#404b40}
+    @media(max-width:600px){.av-cb__doctor-story{margin:18px 12px 28px;border-radius:14px}.av-cb__doctor-media img{max-height:300px}.av-cb__doctor-content{padding:20px 20px 24px}.av-cb__doctor-content>p:last-child{font-size:14.5px}}
     .av-cb__stats-section{position:relative;isolation:isolate;overflow:hidden;width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);border-radius:0;padding:48px max(28px,calc((100vw - 1100px)/2)) 30px;color:var(--stats-text,#fff);background-image:var(--stats-bg,linear-gradient(145deg,#7d3612,#a84f1b));background-size:cover;background-position:center;box-shadow:none}
     .av-cb__stats-section:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,color-mix(in srgb,var(--stats-overlay,#7d3612) 92%,transparent) 0%,color-mix(in srgb,var(--stats-overlay,#7d3612) 80%,transparent) 54%,color-mix(in srgb,var(--stats-overlay,#7d3612) 62%,transparent) 100%);opacity:var(--stats-opacity,.72);z-index:-1}
     .av-cb__stats-heading{text-align:center;font-size:clamp(28px,4vw,42px);line-height:1.1;margin:0 auto 30px;font-weight:500;letter-spacing:-.025em;max-width:760px;text-shadow:0 2px 18px rgba(0,0,0,.14)}
@@ -1190,12 +1234,19 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
 
         <h1 class="av-cb__title">{{ av_cb_display_title }}</h1>
 
+        {% if av_cb_product.handle == 'soursop-softgels' %}
+          <div class="av-cb__soursop-story">
+            <h2>{{ av_cb_soursop_story_title | escape }}</h2>
+            <p>{{ av_cb_hero_description | escape | newline_to_br }}</p>
+          </div>
+        {% endif %}
+
         <div class="av-cb__benefits">
           {% assign av_cb_benefits = av_cb_benefit_1 | append: '||' | append: av_cb_benefit_2 | append: '||' | append: av_cb_benefit_3 | append: '||' | append: av_cb_benefit_4 | split: '||' %}
           {% for benefit in av_cb_benefits %}
             <div class="av-cb__benefit">
               <span class="av-cb__benefit-check" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none"><path d="m4.2 10.2 3.4 3.4 8.2-8.2" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-              <span>{{ benefit }}</span>
+              <span>{% if av_cb_product.handle == 'soursop-softgels' and benefit contains ':' %}{% assign benefit_label = benefit | split: ':' | first %}<strong>{{ benefit_label | escape }}:</strong> {{ benefit | remove_first: benefit_label | remove_first: ':' | strip | escape }}{% else %}{{ benefit }}{% endif %}</span>
             </div>
           {% endfor %}
         </div>
@@ -1409,6 +1460,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       {% endif %}
     </div>
 
+    {% capture av_cb_stats_markup %}
     {% unless av_cb_stats_show == false %}
       {% assign av_cb_stats_opacity = av_cb_stats_overlay_opacity | divided_by: 100.0 %}
       <section
@@ -1424,25 +1476,29 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
                 {% assign av_cb_stat_start = av_cb_stat_1_start %}
                 {% assign av_cb_stat_end = av_cb_stat_1_end %}
                 {% assign av_cb_stat_label = av_cb_stat_1_label %}
+                {% assign av_cb_stat_suffix = av_cb_stat_1_suffix %}
               {% when 2 %}
                 {% assign av_cb_stat_start = av_cb_stat_2_start %}
                 {% assign av_cb_stat_end = av_cb_stat_2_end %}
                 {% assign av_cb_stat_label = av_cb_stat_2_label %}
+                {% assign av_cb_stat_suffix = av_cb_stat_2_suffix %}
               {% when 3 %}
                 {% assign av_cb_stat_start = av_cb_stat_3_start %}
                 {% assign av_cb_stat_end = av_cb_stat_3_end %}
                 {% assign av_cb_stat_label = av_cb_stat_3_label %}
+                {% assign av_cb_stat_suffix = av_cb_stat_3_suffix %}
               {% else %}
                 {% assign av_cb_stat_start = av_cb_stat_4_start %}
                 {% assign av_cb_stat_end = av_cb_stat_4_end %}
                 {% assign av_cb_stat_label = av_cb_stat_4_label %}
+                {% assign av_cb_stat_suffix = av_cb_stat_4_suffix %}
             {% endcase %}
             {% if av_cb_stat_label != blank %}
               <div class="av-cb__stat">
                 {% if av_cb_stat_end != blank %}
-                  <span class="av-cb__stat-number" data-start="{{ av_cb_stat_start }}" data-end="{{ av_cb_stat_end }}" data-duration="{{ av_cb_stats_duration }}">{{ av_cb_stat_start }}%</span>
+                  <span class="av-cb__stat-number" data-start="{{ av_cb_stat_start }}" data-end="{{ av_cb_stat_end }}" data-duration="{{ av_cb_stats_duration }}" data-suffix="{{ av_cb_stat_suffix | escape }}">{{ av_cb_stat_start }}{{ av_cb_stat_suffix }}</span>
                 {% else %}
-                  <span class="av-cb__stat-number" aria-label="Add a verified percentage in Shopify">—%</span>
+                  <span class="av-cb__stat-number" aria-label="Add a verified number in Shopify">—{{ av_cb_stat_suffix }}</span>
                 {% endif %}
                 <div class="av-cb__stat-label">{{ av_cb_stat_label | newline_to_br }}</div>
               </div>
@@ -1461,7 +1517,29 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
           <span>{{ av_cb_stats_guarantee }}</span>
         </div>
       </section>
+
     {% endunless %}
+    {% endcapture %}
+    {% capture av_cb_doctor_markup %}
+      {% if av_cb_product.handle == 'soursop-softgels' and av_cb_doctor_block != blank %}
+        {% if av_cb_doctor_block.settings.show_section %}
+          <section class="av-cb__doctor-story" style="--doctor-bg:{{ av_cb_doctor_block.settings.background }};--doctor-accent:{{ av_cb_doctor_block.settings.accent }};" {{ av_cb_doctor_block.shopify_attributes }}>
+            {% if av_cb_doctor_block.settings.image != blank %}
+              <div class="av-cb__doctor-media">{{ av_cb_doctor_block.settings.image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '500,800,1200,1600', sizes: '(min-width:900px) 1000px, calc(100vw - 36px)', alt: av_cb_doctor_block.settings.heading }}</div>
+            {% elsif request.design_mode %}
+              <div class="av-cb__doctor-image-placeholder">Select an image for the doctor and herbal story</div>
+            {% endif %}
+            <div class="av-cb__doctor-content">
+              {% if av_cb_doctor_block.settings.eyebrow != blank %}<p class="av-cb__doctor-eyebrow">{{ av_cb_doctor_block.settings.eyebrow | escape }}</p>{% endif %}
+              <h2>{{ av_cb_doctor_block.settings.heading | escape }}</h2>
+              <p>{{ av_cb_doctor_block.settings.body | escape | newline_to_br }}</p>
+            </div>
+          </section>
+        {% endif %}
+      {% endif %}
+    {% endcapture %}
+    {% if av_cb_stats_position == 'before_carousel' %}{{ av_cb_stats_markup }}{% endif %}
+    {% if av_cb_doctor_position == 'after_trust' %}{{ av_cb_doctor_markup }}{% endif %}
   </div>
 
   <section class="av-cb__carousel-section" data-av-cb-carousel>
@@ -1520,6 +1598,8 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
     </div>
   </section>
 
+{% if av_cb_stats_position == 'after_carousel' %}{{ av_cb_stats_markup }}{% endif %}
+{% if av_cb_doctor_position == 'after_carousel' %}{{ av_cb_doctor_markup }}{% endif %}
 <section class="av-cb__reviews">
     <div class="av-cb__wrap">
       <div class="av-cb__reviews-head">
@@ -1575,6 +1655,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       </div>
     </div>
   </section>
+  {% unless av_cb_science_show == false %}
   <section class="av-cb__science-section" data-av-cb-science style="--science-bg:{{ av_cb_science_bg }};--science-accent:{{ av_cb_science_accent }};">
     <div class="av-cb__science-wrap">
       <header class="av-cb__science-head">
@@ -1665,6 +1746,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       </div>
     </div>
   </section>
+  {% endunless %}
 
 
   <section class="av-cb__journey">
@@ -1704,6 +1786,8 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
 {% for side in (1..2) %}<article class="av-cb__comparison-card{% if side == 1 %} av-cb__comparison-card--ours{% endif %}">{% if side == 1 %}{% assign column_image = comparison.settings.ours_image | default: av_cb_product.featured_image %}{% assign column_name = comparison.settings.ours_name %}{% else %}{% assign column_image = comparison.settings.other_image %}{% assign column_name = comparison.settings.other_name %}{% endif %}<div class="av-cb__comparison-image">{% if column_image != blank %}{{ column_image | image_url: width: 500 | image_tag: loading: 'lazy', widths: '180,300,500', alt: column_name }}{% else %}<svg viewBox="0 0 48 48" width="80" height="80" fill="none" aria-hidden="true"><rect x="13" y="7" width="22" height="34" rx="11" stroke="currentColor" stroke-width="2"/><path d="M13 24h22" stroke="currentColor" stroke-width="2"/></svg>{% endif %}</div><h3>{{ column_name | escape }}</h3>{% for i in (1..6) %}{% if side == 1 %}{% assign row_key = 'ours_' | append: i %}{% else %}{% assign row_key = 'other_' | append: i %}{% endif %}<div class="av-cb__comparison-row"><span class="av-cb__comparison-icon" aria-hidden="true">{% if side == 1 %}<svg viewBox="0 0 512 512"><path d="M173.9 439.4 7.5 273c-10-10-10-26.2 0-36.2l36.2-36.2c10-10 26.2-10 36.2 0L192 312.7 432.1 72.6c10-10 26.2-10 36.2 0l36.2 36.2c10 10 10 26.2 0 36.2L210.1 439.4c-10 10-26.2 10-36.2 0Z"/></svg>{% else %}<svg viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3l105.4 105.3c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256l105.3-105.4Z"/></svg>{% endif %}</span><span>{{ comparison.settings[row_key] | escape }}</span></div>{% endfor %}</article>{% endfor %}</div>{% endif %}{% endfor %}<a class="av-cb__compare-cta" href="#av-cb-top">{{ av_cb_compare_cta }}</a><div class="av-cb__compare-guarantee">{{ av_cb_compare_guarantee }}</div></div></section>
 
 
+  {% if av_cb_stats_position == 'after_compare' %}{{ av_cb_stats_markup }}{% endif %}
+  {% if av_cb_doctor_position == 'after_compare' %}{{ av_cb_doctor_markup }}{% endif %}
   <section class="av-cb__benefits-section" style="--benefits-bg:{{ av_cb_benefits_bg }};--benefits-text:{{ av_cb_benefits_text }};"{% if av_cb_benefits_block != blank %} {{ av_cb_benefits_block.shopify_attributes }}{% endif %}>
     <div class="av-cb__benefits-inner">
       <header class="av-cb__benefits-head">
@@ -1916,6 +2000,8 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
   </section>
 
 
+  {% if av_cb_stats_position == 'after_faq' %}{{ av_cb_stats_markup }}{% endif %}
+  {% if av_cb_doctor_position == 'after_faq' %}{{ av_cb_doctor_markup }}{% endif %}
   <div class="av-cb__sticky" aria-label="Quick add to cart">
     <span class="av-cb__sticky-img">
       {% if av_cb_product.featured_image %}
@@ -1923,7 +2009,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       {% endif %}
     </span>
     <span class="av-cb__sticky-copy">
-      <span class="av-cb__sticky-title">Ceylon Cinnamon + Berberine HCl</span>
+      <span class="av-cb__sticky-title">{% if av_cb_product.handle == 'soursop-softgels' %}{{ av_cb_display_title | escape }}{% else %}Ceylon Cinnamon + Berberine HCl{% endif %}</span>
       <span class="av-cb__sticky-price" data-av-cb-sticky-price>{{ av_cb_subscription_unit_price | money }}</span>
     </span>
     <button class="av-cb__sticky-add" type="button" data-av-cb-sticky-add>Add to Cart</button>
@@ -2383,7 +2469,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
             const end = Number(el.dataset.end || 0);
             const duration = Math.max(150, Number(el.dataset.duration || 1200));
             if (reduceMotion || start === end) {
-              el.textContent = Math.round(end) + '%';
+              el.textContent = Math.round(end) + (el.dataset.suffix || '%');
               return;
             }
             const started = performance.now();
@@ -2391,7 +2477,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
               const progress = Math.min(1, (now - started) / duration);
               const eased = 1 - Math.pow(1 - progress, 3);
               const value = Math.round(start + (end - start) * eased);
-              el.textContent = value + '%';
+              el.textContent = value + (el.dataset.suffix || '%');
               if (progress < 1) requestAnimationFrame(tick);
             };
             requestAnimationFrame(tick);
