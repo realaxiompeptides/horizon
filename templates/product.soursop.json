@@ -271,6 +271,13 @@
             "trust_image_alt": ""
           }
         },
+        "trust_image": {
+          "type": "trust",
+          "settings": {
+            "image": "shopify://shop_images/1FA0CA01-7E0B-48B4-BA27-C66E6A6F100B.png",
+            "alt": "Why Trust Avonent"
+          }
+        },
         "review_1": {
           "type": "review",
           "settings": {
@@ -368,6 +375,7 @@
         "risk_free",
         "faq",
         "details",
+        "trust_image",
         "review_1",
         "review_2",
         "review_3",
