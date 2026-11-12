@@ -2298,7 +2298,10 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         });
 
         if (purchaseToggleText) {
-          if (isSubscription) purchaseToggleText.innerHTML = 'One-Time Purchase <strong>' + money(oneTimeUnit * values.qty) + '</strong> + $4.95 Shipping';
+          if (isSubscription) {
+            const shippingNote = isSoursopProduct && values.qty >= 2 ? ' + FREE Shipping' : ' + $4.95 Shipping';
+            purchaseToggleText.innerHTML = 'One-Time Purchase <strong>' + money(oneTimeUnit * values.qty) + '</strong>' + shippingNote;
+          }
           else {
             const subscriptionDisplayPrice = Number(active?.dataset.subscriptionPrice || 0);
             purchaseToggleText.innerHTML = 'Switch back to Subscribe & Save — <strong>' + money(subscriptionDisplayPrice) + '</strong>';
