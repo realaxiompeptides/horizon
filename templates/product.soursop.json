@@ -68,7 +68,7 @@
           "settings": {
             "carousel_heading": "Why This Ceylon Cinnamon Formula Is Different",
             "carousel_1_image": "shopify://shop_images/FD7231F1-01ED-4B52-8882-17A475D74AA1.png",
-            "carousel_1_title": "Real Ceylon From Sri Lanka",
+            "carousel_1_title": "Real Soursop From Jamaica",
             "carousel_1_body": "Most cinnamon supplements use Cassia. Avonent uses real Ceylon cinnamon from Sri Lanka. We concentrate it 12:1 to equal 14,400 mg of raw cinnamon per dose. True Ceylon is naturally low in coumarin. That matters if you are over 50 and plan to take it every day for years, not just a few weeks.",
             "carousel_2_image": "shopify://shop_images/B45AFB74-F056-4B81-AB95-AE7BA910FFFA.png",
             "carousel_2_title": "400 mg Berberine HCl",
@@ -184,8 +184,8 @@
             "intro": "",
             "button_text": "Try Risk-Free Today",
             "guarantee_text": "90-Day Money-Back Guarantee",
-            "background": "#EFF6EA",
-            "accent": "#557D4B",
+            "background": "#fff4ec",
+            "accent": "#a84f1b",
             "reason_1_title": "12:1 Concentrated True Ceylon Cinnamon",
             "reason_1_body": "Avonent uses Cinnamomum verum sourced from Sri Lanka—not common Cassia. A concentrated 12:1 extract provides the equivalent of 14,400 mg of raw cinnamon in a single daily softgel.",
             "reason_2_title": "Berberine HCl Included",
@@ -206,8 +206,8 @@
             "heading": "90-Day Risk-Free Trial",
             "body": "Try Avonent for 90 days. If it is not right for you, contact us within 90 days and we will help with the next steps under our refund policy.",
             "button_text": "Try Risk-Free Today",
-            "background": "#EFF6EA",
-            "accent": "#557D4B"
+            "background": "#fff4ec",
+            "accent": "#a84f1b"
           }
         },
         "faq": {
