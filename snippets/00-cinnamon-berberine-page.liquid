@@ -882,7 +882,7 @@
     .av-cb__hero-badges{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 10px}.av-cb__hero-badge{display:inline-flex;align-items:center;justify-content:center;min-height:30px;padding:5px 12px;border-radius:999px;font-size:12px;font-weight:800;line-height:1.1}.av-cb__hero-badge--best{background:#B75522;color:#fff}.av-cb__hero-badge--choice{background:#fff;color:#171513;border:2px solid #171513}.av-cb__rating{display:flex;align-items:center;gap:10px;margin:0 0 14px;font-size:14px;color:#26343a}.av-cb__stars{display:inline-flex;gap:2px;color:#F4B000;font-size:18px;letter-spacing:1px}.av-cb__rating-text{font-weight:650}
     .av-cb__soursop-story{margin:14px 0 17px}
     .av-cb__soursop-story h2{font-size:clamp(22px,2.8vw,30px);font-weight:800;letter-spacing:-.025em;line-height:1.17;color:#171513;margin:0 0 9px}
-    .av-cb__soursop-story p{font-size:15px;line-height:1.52;color:#45413e;margin:0}
+    .av-cb__soursop-story p{font-size:15px;line-height:1.52;color:#45413e;margin:0;font-weight:800}
     .av-cb__benefit strong{font-weight:780;color:#171513}
     .av-cb__benefit-richtext{min-width:0}
     .av-cb__benefit-richtext p{margin:0;font:inherit;line-height:inherit}
@@ -1282,7 +1282,6 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
 
         {% if av_cb_product.handle == 'soursop-softgels' %}
           <div class="av-cb__soursop-story">
-            <h2>{{ av_cb_soursop_story_title | escape }}</h2>
             <p>{{ av_cb_hero_description | escape | newline_to_br }}</p>
           </div>
         {% endif %}
