@@ -10,7 +10,7 @@
 {
   "sections": {
     "cinnamon": {
-      "type": "avonent-cinnamon-editor",
+      "type": "avonent-soursop-editor",
       "blocks": {
         "hero": {
           "type": "hero",
