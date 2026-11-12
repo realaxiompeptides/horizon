@@ -3,6 +3,8 @@
   assign av_sale_background = block.settings.background_color
   if template.name == 'index'
     assign av_sale_background = '#02C6EA'
+  elsif template.suffix == 'soursop' or product.handle == 'soursop-softgels'
+    assign av_sale_background = '#557D4B'
   endif
 %}
 
