@@ -297,16 +297,24 @@
         if content_block.settings.rating_text != blank
           assign av_cb_rating_text = content_block.settings.rating_text
         endif
-        if content_block.settings.benefit_1 != blank
+        if content_block.settings.benefit_1_formatted != blank
+          assign av_cb_benefit_1 = content_block.settings.benefit_1_formatted
+        elsif content_block.settings.benefit_1 != blank
           assign av_cb_benefit_1 = content_block.settings.benefit_1
         endif
-        if content_block.settings.benefit_2 != blank
+        if content_block.settings.benefit_2_formatted != blank
+          assign av_cb_benefit_2 = content_block.settings.benefit_2_formatted
+        elsif content_block.settings.benefit_2 != blank
           assign av_cb_benefit_2 = content_block.settings.benefit_2
         endif
-        if content_block.settings.benefit_3 != blank
+        if content_block.settings.benefit_3_formatted != blank
+          assign av_cb_benefit_3 = content_block.settings.benefit_3_formatted
+        elsif content_block.settings.benefit_3 != blank
           assign av_cb_benefit_3 = content_block.settings.benefit_3
         endif
-        if content_block.settings.benefit_4 != blank
+        if content_block.settings.benefit_4_formatted != blank
+          assign av_cb_benefit_4 = content_block.settings.benefit_4_formatted
+        elsif content_block.settings.benefit_4 != blank
           assign av_cb_benefit_4 = content_block.settings.benefit_4
         endif
         if content_block.settings.sold_percent != blank
