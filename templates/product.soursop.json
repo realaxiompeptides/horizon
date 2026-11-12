@@ -394,6 +394,16 @@
             "tag_2": "Afternoon Balance",
             "verified": true
           }
+        },
+        "story_image_text": {
+          "type": "story_image_text",
+          "settings": {
+            "show_section": true,
+            "text_position": "below",
+            "align": "center",
+            "background": "#F5F8F1",
+            "text_color": "#1D3022"
+          }
         }
       },
       "block_order": [
@@ -401,6 +411,7 @@
         "results",
         "doctor_story",
         "story_continuation",
+        "story_image_text",
         "carousel",
         "science",
         "journey",
