@@ -6,8 +6,13 @@
   endif
 
   assign avonent_cinnamon_footer = false
-  if template.name == 'product' and product.template_suffix == 'cinnamon-berberine'
-    assign avonent_cinnamon_footer = true
+  assign avonent_soursop_footer = false
+  if template.name == 'product'
+    if product.template_suffix == 'cinnamon-berberine'
+      assign avonent_cinnamon_footer = true
+    elsif product.template_suffix == 'soursop' or product.handle == 'soursop-softgels'
+      assign avonent_soursop_footer = true
+    endif
   endif
 
   assign avonent_footer_logo = section.settings.logo
@@ -18,17 +23,17 @@
 
 <section
   id="{{ footer_id }}"
-  class="avonent-footer{% if avonent_home_footer %} avonent-footer--home{% endif %}{% if avonent_cinnamon_footer %} avonent-footer--cinnamon{% endif %}"
+  class="avonent-footer{% if avonent_home_footer %} avonent-footer--home{% endif %}{% if avonent_cinnamon_footer or avonent_soursop_footer %} avonent-footer--cinnamon{% endif %}{% if avonent_soursop_footer %} avonent-footer--soursop{% endif %}"
   style="
-    --av-footer-bg: {% if avonent_home_footer %}#071B22{% elsif avonent_cinnamon_footer %}#2B180F{% else %}{{ section.settings.background_color }}{% endif %};
-    --av-footer-text: {% if avonent_home_footer %}#F4FCFE{% elsif avonent_cinnamon_footer %}#FFF8F2{% else %}{{ section.settings.text_color }}{% endif %};
-    --av-footer-muted: {% if avonent_home_footer %}#A9C7D0{% elsif avonent_cinnamon_footer %}#D8C7BA{% else %}{{ section.settings.muted_text_color }}{% endif %};
-    --av-footer-accent: {% if avonent_home_footer %}#02C6EA{% elsif avonent_cinnamon_footer %}#C86F3A{% else %}{{ section.settings.accent_color }}{% endif %};
-    --av-footer-border: {% if avonent_home_footer %}#17404A{% elsif avonent_cinnamon_footer %}#5B3828{% else %}{{ section.settings.border_color }}{% endif %};
-    --av-footer-input-bg: {% if avonent_home_footer %}#FFFFFF{% elsif avonent_cinnamon_footer %}#FFFDFC{% else %}{{ section.settings.input_background }}{% endif %};
-    --av-footer-input-text: {% if avonent_home_footer %}#071B22{% elsif avonent_cinnamon_footer %}#2B180F{% else %}{{ section.settings.input_text_color }}{% endif %};
-    --av-footer-button-bg: {% if avonent_home_footer %}#02C6EA{% elsif avonent_cinnamon_footer %}#C86F3A{% else %}{{ section.settings.button_background }}{% endif %};
-    --av-footer-button-text: {% if avonent_home_footer %}#071B22{% elsif avonent_cinnamon_footer %}#FFFFFF{% else %}{{ section.settings.button_text_color }}{% endif %};
+    --av-footer-bg: {% if avonent_home_footer %}#071B22{% elsif avonent_soursop_footer %}#213C2A{% elsif avonent_cinnamon_footer %}#2B180F{% else %}{{ section.settings.background_color }}{% endif %};
+    --av-footer-text: {% if avonent_home_footer %}#F4FCFE{% elsif avonent_soursop_footer %}#F7FBF4{% elsif avonent_cinnamon_footer %}#FFF8F2{% else %}{{ section.settings.text_color }}{% endif %};
+    --av-footer-muted: {% if avonent_home_footer %}#A9C7D0{% elsif avonent_soursop_footer %}#C6D9C4{% elsif avonent_cinnamon_footer %}#D8C7BA{% else %}{{ section.settings.muted_text_color }}{% endif %};
+    --av-footer-accent: {% if avonent_home_footer %}#02C6EA{% elsif avonent_soursop_footer %}#96BE8A{% elsif avonent_cinnamon_footer %}#C86F3A{% else %}{{ section.settings.accent_color }}{% endif %};
+    --av-footer-border: {% if avonent_home_footer %}#17404A{% elsif avonent_soursop_footer %}#476A4B{% elsif avonent_cinnamon_footer %}#5B3828{% else %}{{ section.settings.border_color }}{% endif %};
+    --av-footer-input-bg: {% if avonent_home_footer %}#FFFFFF{% elsif avonent_soursop_footer %}#FFFFFF{% elsif avonent_cinnamon_footer %}#FFFDFC{% else %}{{ section.settings.input_background }}{% endif %};
+    --av-footer-input-text: {% if avonent_home_footer %}#071B22{% elsif avonent_soursop_footer %}#213C2A{% elsif avonent_cinnamon_footer %}#2B180F{% else %}{{ section.settings.input_text_color }}{% endif %};
+    --av-footer-button-bg: {% if avonent_home_footer %}#02C6EA{% elsif avonent_soursop_footer %}#557D4B{% elsif avonent_cinnamon_footer %}#C86F3A{% else %}{{ section.settings.button_background }}{% endif %};
+    --av-footer-button-text: {% if avonent_home_footer %}#071B22{% elsif avonent_soursop_footer %}#FFFFFF{% elsif avonent_cinnamon_footer %}#FFFFFF{% else %}{{ section.settings.button_text_color }}{% endif %};
     --av-footer-radius: {{ section.settings.corner_radius }}px;
     --av-footer-padding-top: {{ section.settings.padding_top }}px;
     --av-footer-padding-bottom: {{ section.settings.padding_bottom }}px;
@@ -120,7 +125,7 @@
         <div class="avonent-footer__home-bottom">© {{ 'now' | date: '%Y' }} {{ section.settings.brand_name }}. {{ section.settings.copyright_text }}</div>
       </div>
 
-    {% elsif avonent_cinnamon_footer %}
+    {% elsif avonent_cinnamon_footer or avonent_soursop_footer %}
       <div class="avonent-footer__cinnamon-grid">
         <div class="avonent-footer__cinnamon-brand">
           <a href="{{ routes.root_url }}" class="avonent-footer__cinnamon-logo-link" aria-label="{{ shop.name | escape }}">
@@ -139,8 +144,8 @@
             {% endif %}
           </a>
 
-          <div class="avonent-footer__cinnamon-tagline">{{ section.settings.cinnamon_tagline }}</div>
-          <div class="avonent-footer__cinnamon-description">{{ section.settings.cinnamon_description }}</div>
+          <div class="avonent-footer__cinnamon-tagline">{% if avonent_soursop_footer %}{{ section.settings.soursop_tagline | default: 'Soursop softgels. Simple daily wellness.' }}{% else %}{{ section.settings.cinnamon_tagline }}{% endif %}</div>
+          <div class="avonent-footer__cinnamon-description">{% if avonent_soursop_footer %}{{ section.settings.soursop_description | default: '<p>Our soursop softgels are made for a straightforward daily routine.</p>' }}{% else %}{{ section.settings.cinnamon_description }}{% endif %}</div>
 
           <div class="avonent-footer__support-list">
             <a class="avonent-footer__support-row" href="{% if pages['contact'] != blank %}{{ pages['contact'].url }}{% else %}/pages/contact{% endif %}">
@@ -1717,6 +1722,21 @@
     .avonent-footer__cinnamon-payment-icons{justify-content:flex-start}
   }
 
+
+  /* Soursop uses the existing cinnamon footer layout with its own green palette. */
+  .avonent-footer--soursop .avonent-footer__cinnamon-logo-text{color:#F7FBF4}
+  .avonent-footer--soursop .avonent-footer__cinnamon-tagline,
+  .avonent-footer--soursop .avonent-footer__cinnamon-disclaimer strong,
+  .avonent-footer--soursop .avonent-footer__cinnamon-payment{color:#DDEAD8}
+  .avonent-footer--soursop .avonent-footer__support-row{color:#C6D9C4}
+  .avonent-footer--soursop .avonent-footer__support-row:hover,
+  .avonent-footer--soursop .avonent-footer__cinnamon-column a:hover{color:#FFFFFF}
+  .avonent-footer--soursop .avonent-footer__cinnamon-column h3,
+  .avonent-footer--soursop .avonent-footer__cinnamon-newsletter h3{color:#F7FBF4}
+  .avonent-footer--soursop .avonent-footer__cinnamon-column a{color:#C6D9C4}
+  .avonent-footer--soursop .avonent-footer__cinnamon-disclaimer,
+  .avonent-footer--soursop .avonent-footer__cinnamon-bottom{color:#B5CDAF}
+
 </style>
 
 
@@ -1799,6 +1819,23 @@
       "default": "Here for you 24/7 — evenings and weekends too."
     },
 
+
+    {
+      "type": "header",
+      "content": "Soursop product footer"
+    },
+    {
+      "type": "text",
+      "id": "soursop_tagline",
+      "label": "Soursop footer tagline",
+      "default": "Soursop softgels. Simple daily wellness."
+    },
+    {
+      "type": "richtext",
+      "id": "soursop_description",
+      "label": "Soursop footer description",
+      "default": "<p>Our soursop softgels are made for a straightforward daily routine.</p>"
+    },
 
     {
       "type": "header",
