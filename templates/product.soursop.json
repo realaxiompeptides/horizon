@@ -119,6 +119,20 @@
             "accent": "#4f7847"
           }
         },
+        "story_image_text": {
+          "type": "story_image_text",
+          "settings": {
+            "show_section": true,
+            "image": "shopify://shop_images/329ECBA9-86DD-44B7-B948-FC59453491EB.png",
+            "image_alt": "",
+            "heading": "",
+            "body": "",
+            "text_position": "below",
+            "align": "center",
+            "background": "#f5f8f1",
+            "text_color": "#1d3022"
+          }
+        },
         "carousel": {
           "type": "carousel",
           "settings": {
@@ -393,16 +407,6 @@
             "tag_1": "Quality Formula",
             "tag_2": "Afternoon Balance",
             "verified": true
-          }
-        },
-        "story_image_text": {
-          "type": "story_image_text",
-          "settings": {
-            "show_section": true,
-            "text_position": "below",
-            "align": "center",
-            "background": "#F5F8F1",
-            "text_color": "#1D3022"
           }
         }
       },
