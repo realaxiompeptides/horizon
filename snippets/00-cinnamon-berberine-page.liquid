@@ -105,6 +105,7 @@
   assign av_cb_doctor_position = 'after_trust'
   assign av_cb_story_two_block = blank
   assign av_cb_story_two_position = 'after_trust'
+  assign av_cb_story_image_text_block = blank
   assign av_cb_stat_1_suffix = '%'
   assign av_cb_stat_2_suffix = '%'
   assign av_cb_stat_3_suffix = '%'
@@ -446,6 +447,8 @@
         if content_block.settings.position != blank
           assign av_cb_story_two_position = content_block.settings.position
         endif
+      when 'story_image_text'
+        assign av_cb_story_image_text_block = content_block
       when 'carousel'
         if content_block.settings.carousel_heading != blank
           assign av_cb_carousel_heading = content_block.settings.carousel_heading
@@ -932,6 +935,20 @@
     .av-cb__trust-image-section{margin-top:10px}
     .av-cb__trust-image-section img{display:block;width:100%;height:auto;border-radius:18px}
 
+
+    .av-cb__story-image-text{position:relative;max-width:960px;margin:26px auto 42px;overflow:hidden;border-radius:20px;background:var(--sit-bg,#F5F8F1);color:var(--sit-color,#1D3022);box-shadow:0 12px 32px rgba(31,66,31,.07)}
+    .av-cb__story-image-text-media{width:100%;line-height:0}
+    .av-cb__story-image-text-media img{display:block;width:100%;height:auto}
+    .av-cb__story-image-text-copy{padding:25px clamp(22px,5vw,46px) 29px}
+    .av-cb__story-image-text--center .av-cb__story-image-text-copy{text-align:center}
+    .av-cb__story-image-text-copy h2{font-size:clamp(24px,3.5vw,34px);line-height:1.16;letter-spacing:-.025em;font-weight:800;color:inherit;margin:0 0 12px}
+    .av-cb__story-image-text-body{font-size:16px;line-height:1.65}
+    .av-cb__story-image-text-body p{margin:0 0 12px}
+    .av-cb__story-image-text-body p:last-child{margin-bottom:0}
+    .av-cb__story-image-text--overlay .av-cb__story-image-text-copy{position:absolute;bottom:0;left:0;right:0;z-index:1;background:linear-gradient(0deg,rgba(10,33,17,.89),rgba(10,33,17,.5) 78%,transparent);color:#fff;padding-top:65px}
+    .av-cb__story-image-text-placeholder{min-height:280px;display:flex;flex-direction:column;gap:10px;align-items:center;justify-content:center;background:linear-gradient(135deg,#E7F0DF,#D5E6CB);color:#41653A;font-size:15px;font-weight:650;text-align:center;padding:22px}
+    .av-cb__story-image-text-placeholder-icon{display:flex;width:52px;height:52px;align-items:center;justify-content:center;border:2px dashed #73946C;border-radius:15px;font-size:30px;font-weight:400}
+    @media(max-width:600px){.av-cb__story-image-text{margin:24px 12px 34px;border-radius:16px}.av-cb__story-image-text-copy{padding:20px}.av-cb__story-image-text-body{font-size:15px}.av-cb__story-image-text--overlay .av-cb__story-image-text-copy{padding:50px 20px 20px}}
     .av-cb__doctor-story{position:relative;background:var(--doctor-bg,#F5F8F1);border-radius:20px;overflow:hidden;margin:26px auto 38px;max-width:1100px;color:#18281a;border:1px solid rgba(60,92,52,.12)}
     .av-cb__doctor-story::after{content:"";position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--doctor-accent,#557D4D),#A7C49B);z-index:2}
     .av-cb__doctor-story--part-two{background:#FBFCF7}
@@ -1584,6 +1601,31 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
     {% if av_cb_stats_position == 'before_carousel' %}{{ av_cb_stats_markup }}{% endif %}
     {% if av_cb_doctor_position == 'after_trust' %}{{ av_cb_doctor_markup }}{% endif %}
 {% if av_cb_story_two_position == 'after_trust' %}{{ av_cb_story_two_markup }}{% endif %}
+
+    {% if av_cb_product.handle == 'soursop-softgels' and av_cb_story_image_text_block != blank %}
+      {% if av_cb_story_image_text_block.settings.show_section %}
+        {% assign av_cb_bridge_image = av_cb_story_image_text_block.settings.image %}
+        {% assign av_cb_bridge_heading = av_cb_story_image_text_block.settings.heading %}
+        {% assign av_cb_bridge_body = av_cb_story_image_text_block.settings.body %}
+        {% if av_cb_bridge_image != blank or av_cb_bridge_heading != blank or av_cb_bridge_body != blank or request.design_mode %}
+          <section class="av-cb__story-image-text{% if av_cb_story_image_text_block.settings.text_position == 'overlay' %} av-cb__story-image-text--overlay{% endif %} av-cb__story-image-text--{{ av_cb_story_image_text_block.settings.align }}" style="--sit-bg:{{ av_cb_story_image_text_block.settings.background }};--sit-color:{{ av_cb_story_image_text_block.settings.text_color }};" {{ av_cb_story_image_text_block.shopify_attributes }}>
+            {% if av_cb_bridge_image != blank %}
+              <div class="av-cb__story-image-text-media">
+                {{ av_cb_bridge_image | image_url: width: 1800 | image_tag: loading: 'lazy', widths: '375,550,750,990,1320,1800', sizes: '(min-width: 1000px) 960px, calc(100vw - 36px)', alt: av_cb_story_image_text_block.settings.image_alt }}
+              </div>
+            {% elsif request.design_mode %}
+              <div class="av-cb__story-image-text-placeholder"><span class="av-cb__story-image-text-placeholder-icon" aria-hidden="true">+</span><span>Choose an image here</span></div>
+            {% endif %}
+            {% if av_cb_bridge_heading != blank or av_cb_bridge_body != blank %}
+              <div class="av-cb__story-image-text-copy">
+                {% if av_cb_bridge_heading != blank %}<h2>{{ av_cb_bridge_heading | escape }}</h2>{% endif %}
+                {% if av_cb_bridge_body != blank %}<div class="av-cb__story-image-text-body">{{ av_cb_bridge_body }}</div>{% endif %}
+              </div>
+            {% endif %}
+          </section>
+        {% endif %}
+      {% endif %}
+    {% endif %}
   </div>
 
   <section class="av-cb__carousel-section" data-av-cb-carousel>

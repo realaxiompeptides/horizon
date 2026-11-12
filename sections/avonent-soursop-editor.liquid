@@ -864,6 +864,83 @@
       ]
     },
     {
+      "type": "story_image_text",
+      "name": "Image + Text",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_section",
+          "label": "Show section",
+          "default": true
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Upload image"
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Image description"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Optional heading"
+        },
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Optional text (formatting enabled)"
+        },
+        {
+          "type": "select",
+          "id": "text_position",
+          "label": "Text placement",
+          "options": [
+            {
+              "value": "below",
+              "label": "Below image"
+            },
+            {
+              "value": "overlay",
+              "label": "On image"
+            }
+          ],
+          "default": "below"
+        },
+        {
+          "type": "select",
+          "id": "align",
+          "label": "Text alignment",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            }
+          ],
+          "default": "center"
+        },
+        {
+          "type": "color",
+          "id": "background",
+          "label": "Background color",
+          "default": "#F5F8F1"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text color",
+          "default": "#1D3022"
+        }
+      ]
+    },
+    {
       "type": "carousel",
       "name": "Carousel content",
       "limit": 1,
