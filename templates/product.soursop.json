@@ -20,6 +20,7 @@
             "show_choice_badge": true,
             "choice_badge_text": "Clinicians Choice",
             "display_title": "Soursop Softgels",
+            "story_heading": "Soursop Leaf, Made Simple",
             "hero_description": "Soursop leaves have been used in herbal teas for generations. Our vegetable capsules make them easy to add to your day without brewing tea or measuring bitter liquids.",
             "rating_text": "",
             "benefit_1": "Antioxidant Activity: Leaf extracts fight free radicals in laboratory tests.",
@@ -58,39 +59,64 @@
             "gift_ebook": "FREE E-Book",
             "gift_ebook_note": "Digital soursop guide",
             "announcement_heading": "FALL SALE",
-            "announcement_subheading": "Save up to 65% today",
-            "story_heading": "Soursop Leaf, Made Simple"
+            "announcement_subheading": "Save up to 65% today"
           }
         },
         "results": {
           "type": "results",
           "settings": {
+            "stats_show": true,
+            "stats_position": "after_compare",
             "stats_heading": "Avonent by the Numbers",
             "stats_bg": "shopify://shop_images/IMG_3463.jpg",
-            "stats_overlay_color": "#285D31",
+            "stats_overlay_color": "#285d31",
             "stats_overlay_opacity": "78",
             "stats_duration": "",
             "stat_1_start": "0",
             "stat_1_end": "365",
+            "stat_1_suffix": "days",
             "stat_1_label": "Our soursop leaf fermentation process",
             "stat_2_start": "0",
             "stat_2_end": "1000",
+            "stat_2_suffix": "mg",
             "stat_2_label": "Soursop leaf in each daily serving",
             "stat_3_start": "0",
             "stat_3_end": "30",
+            "stat_3_suffix": "servings",
             "stat_3_label": "Daily servings in each bottle",
             "stat_4_start": "0",
             "stat_4_end": "2",
+            "stat_4_suffix": "capsules",
             "stat_4_label": "Easy-to-take capsules per day",
             "stats_cta": "",
             "stats_guarantee": "",
-            "stats_text_color": "",
-            "stats_show": true,
-            "stats_position": "after_compare",
-            "stat_1_suffix": " days",
-            "stat_2_suffix": " mg",
-            "stat_3_suffix": " servings",
-            "stat_4_suffix": " capsules"
+            "stats_text_color": ""
+          }
+        },
+        "doctor_story": {
+          "type": "doctor_story",
+          "settings": {
+            "show_section": true,
+            "position": "after_trust",
+            "image": "shopify://shop_images/IMG_3463.jpg",
+            "eyebrow": "PART 01 · HERBAL HISTORY",
+            "heading": "Dr. Sebi and the Soursop Tradition",
+            "body": "In the early 1900s, John D. Rockefeller, also known as the \"Father of Western Medicine\", saw a way to make billions from medicine. But there was one problem. Natural remedies like soursop leaves had been used to treat illness for hundreds of years, and they were his biggest competition. Rockefeller used his oil money to replace natural medicine with drugs made from petroleum. He paid schools to teach doctors about drugs instead of natural treatments. Doctors who refused to follow the new rules lost their licenses, and some were even sent to jail. He then helped fund the American Cancer Society to control what people knew about cancer and hide natural remedies like soursop. Natural medicine wasn't forgotten. It was pushed aside for profit.",
+            "background": "#f2f7ef",
+            "accent": "#4f7847"
+          }
+        },
+        "story_continuation": {
+          "type": "story_continuation",
+          "settings": {
+            "show_section": true,
+            "position": "after_trust",
+            "image": "shopify://shop_images/10ACC725-945E-4C0B-94FF-77D93AEB7466.png",
+            "eyebrow": "PART 02 · MODERN RESEARCH",
+            "heading": "From Herbal Tea to Modern Research",
+            "body": "Today, scientists study soursop leaves for their natural plant compounds and antioxidant activity in lab tests. What began as a long-held herbal tradition is now being explored in the lab. The research is still growing, and the leaves remain the heart of the story.",
+            "background": "#fbfcf7",
+            "accent": "#4f7847"
           }
         },
         "carousel": {
@@ -114,6 +140,7 @@
         "science": {
           "type": "science",
           "settings": {
+            "show_section": false,
             "science_heading": "Real Support. Backed by Science.",
             "science_intro": "Your body deserves more than empty promises. Ceylon cinnamon extract supports healthy blood sugar, liver function, and daily metabolic balance with research-backed ingredients and a bioavailable MCT oil delivery system.",
             "science_1_image": "shopify://shop_images/6EECC4C1-1B6B-425F-A348-533E76E53580.png",
@@ -139,8 +166,7 @@
             "science_ticker_3": "",
             "science_ticker_4": "",
             "science_bg": "",
-            "science_accent": "",
-            "show_section": false
+            "science_accent": ""
           }
         },
         "journey": {
@@ -215,8 +241,8 @@
             "intro": "",
             "button_text": "Try Risk-Free Today",
             "guarantee_text": "90-Day Money-Back Guarantee",
-            "background": "#F4F8EF",
-            "accent": "#4E7A44",
+            "background": "#f4f8ef",
+            "accent": "#4e7a44",
             "reason_1_title": "Jamaican Soursop Sourcing",
             "reason_1_body": "We source our soursop from Jamaica, where the plant has long been part of local herbal traditions.",
             "reason_2_title": "365-Day Fermentation Process",
@@ -237,8 +263,8 @@
             "heading": "90-Day Risk-Free Trial",
             "body": "Try Avonent for 90 days. If it is not right for you, contact us within 90 days and we will help with the next steps under our refund policy.",
             "button_text": "Try Risk-Free Today",
-            "background": "#F4F8EF",
-            "accent": "#4E7A44"
+            "background": "#f4f8ef",
+            "accent": "#4e7a44"
           }
         },
         "faq": {
@@ -367,32 +393,6 @@
             "tag_1": "Quality Formula",
             "tag_2": "Afternoon Balance",
             "verified": true
-          }
-        },
-        "doctor_story": {
-          "type": "doctor_story",
-          "settings": {
-            "show_section": true,
-            "position": "after_trust",
-            "image": "shopify://shop_images/IMG_3463.jpg",
-            "eyebrow": "PART 01 · HERBAL HISTORY",
-            "heading": "Dr. Sebi and the Soursop Tradition",
-            "body": "Dr. Sebi included soursop fruit on his plant-based food list. Long before soursop became popular online, people across the Caribbean were using its leaves in herbal teas. The interest is new to many, but the plant is not.",
-            "background": "#F2F7EF",
-            "accent": "#4F7847"
-          }
-        },
-        "story_continuation": {
-          "type": "story_continuation",
-          "settings": {
-            "show_section": true,
-            "position": "after_trust",
-            "image": "shopify://shop_images/10ACC725-945E-4C0B-94FF-77D93AEB7466.png",
-            "eyebrow": "PART 02 · MODERN RESEARCH",
-            "heading": "From Herbal Tea to Modern Research",
-            "body": "Today, scientists study soursop leaves for their natural plant compounds and antioxidant activity in lab tests. What began as a long-held herbal tradition is now being explored in the lab. The research is still growing, and the leaves remain the heart of the story.",
-            "background": "#FBFCF7",
-            "accent": "#4F7847"
           }
         }
       },
