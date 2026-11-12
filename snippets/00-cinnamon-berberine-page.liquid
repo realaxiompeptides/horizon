@@ -751,6 +751,22 @@
     assign av_cb_trust_image_alt = editor.settings.trust_image_alt
   endif
 
+  # A dedicated Soursop "Why Trust" block takes priority over the legacy
+  # section setting, so its image picker reliably controls the visible image.
+  if av_cb_product.template_suffix == 'soursop'
+    for trust_block in editor.blocks
+      if trust_block.type == 'trust'
+        assign av_cb_active_trust_block = trust_block
+        if trust_block.settings.image != blank
+          assign av_cb_trust_image = trust_block.settings.image
+        endif
+        if trust_block.settings.alt != blank
+          assign av_cb_trust_image_alt = trust_block.settings.alt
+        endif
+      endif
+    endfor
+  endif
+
   assign av_cb_guarantee_highlight = 'Less than 1%'
   assign av_cb_guarantee_color = '#A84F1B'
   assign av_cb_guarantee_heading = '90-Day Money-Back Guarantee'
@@ -1385,7 +1401,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       </details>
     </div>
 
-    <div class="av-cb__trust-image-section" style="margin-top:10px;">
+    <div class="av-cb__trust-image-section" style="margin-top:10px;"{% if av_cb_active_trust_block != blank %} {{ av_cb_active_trust_block.shopify_attributes }}{% endif %}>
       {% if av_cb_trust_image != blank %}
         <span style="display:block;width:100%;">{{ av_cb_trust_image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '600,900,1200,1600', sizes: '(min-width: 900px) 1200px, calc(100vw - 22px)', alt: av_cb_trust_image_alt, style: 'display:block;width:100%;height:auto;border-radius:18px;' }}</span>
       {% else %}
