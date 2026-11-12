@@ -23,6 +23,10 @@
             "story_heading": "Soursop Leaf, Made Simple",
             "hero_description": "Soursop leaves have been used in herbal teas for generations. Our vegetable capsules make them easy to add to your day without brewing tea or measuring bitter liquids.",
             "rating_text": "",
+            "benefit_1_formatted": "Increase Cancer Killer Cells",
+            "benefit_2_formatted": "<strong>Inflammation Research:</strong> Animal studies show effects on pathways linked to inflammation.",
+            "benefit_3_formatted": "<strong>Blood Sugar Research:</strong> Researchers have studied how soursop extracts affect blood sugar in animals.",
+            "benefit_4_formatted": "<strong>Traditional Herbal Use:</strong> Soursop leaves have been used in herbal teas for generations.",
             "sold_percent": "",
             "sale_badge": "",
             "bundle_2_badge": "Free Shipping",
@@ -55,11 +59,7 @@
             "gift_ebook": "FREE E-Book",
             "gift_ebook_note": "Digital soursop guide",
             "announcement_heading": "FALL SALE",
-            "announcement_subheading": "Save up to 65% today",
-            "benefit_1_formatted": "Increase Cancer Killer Cells",
-            "benefit_2_formatted": "<strong>Inflammation Research:</strong> Animal studies show effects on pathways linked to inflammation.",
-            "benefit_3_formatted": "<strong>Blood Sugar Research:</strong> Researchers have studied how soursop extracts affect blood sugar in animals.",
-            "benefit_4_formatted": "<strong>Traditional Herbal Use:</strong> Soursop leaves have been used in herbal teas for generations."
+            "announcement_subheading": "Save up to 65% today"
           }
         },
         "results": {
@@ -96,12 +96,12 @@
         "doctor_story": {
           "type": "doctor_story",
           "settings": {
-            "show_section": true,
+            "show_section": false,
             "position": "after_trust",
             "image": "shopify://shop_images/GEBHarvardSummerCourseRuralSchoolAgents_RAC_001-1024x799.jpg",
             "eyebrow": "",
             "heading": "The Cancer Medicine They Tried to Hide.",
-            "body": "<p>In the early 1900s, John D. Rockefeller, also known as the \"Father of Western Medicine\", saw a way to make billions from medicine.</p><p>But there was one problem.</p><p>Natural remedies like soursop leaves had been used to treat illness for hundreds of years, and they were his biggest competition.</p><p>Rockefeller used his oil money to replace natural medicine with drugs made from petroleum. </p><p>He paid schools to teach doctors about drugs instead of natural treatments.</p><p>Doctors who refused to follow the new rules lost their licenses, and some were even sent to jail.</p><p>He then helped fund the American Cancer Society to control what people knew about cancer and hide natural remedies like soursop.</p><p><strong>Natural medicine wasn't forgotten.</strong></p><p><strong>It was pushed aside for profit.</strong></p>",
+            "body": "<p>In the early 1900s, John D. Rockefeller, also known as the \"Father of Western Medicine\", saw a way to make billions from medicine.</p><p>But there was one problem.</p><p>Natural remedies like soursop leaves had been used to treat illness for hundreds of years, and they were his biggest competition.</p><p>Rockefeller used his oil money to replace natural medicine with drugs made from petroleum.&nbsp;</p><p>He paid schools to teach doctors about drugs instead of natural treatments.</p><p>Doctors who refused to follow the new rules lost their licenses, and some were even sent to jail.</p><p>He then helped fund the American Cancer Society to control what people knew about cancer and hide natural remedies like soursop.</p><p><strong>Natural medicine wasn't forgotten.</strong></p><p><strong>It was pushed aside for profit.</strong></p>",
             "background": "#f2f7ef",
             "accent": "#4f7847"
           }
