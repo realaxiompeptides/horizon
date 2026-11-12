@@ -192,9 +192,9 @@
             "journey_heading": "What You Might Expect from Daily Use of Avonent",
             "journey_intro": "Consistency matters. Here is a simple look at how a steady daily routine with Avonent may feel over time.*",
             "journey_1_label": "1 Week",
-            "journey_1_body": "Nothing dramatic yet. The ingredients are becoming part of your daily routine, and the afternoon may begin to feel a little more even.*",
+            "journey_1_body": "You’re getting used to your new routine. Just 2 capsules a day, with no need to boil leaves or prepare tea.",
             "journey_2_label": "1 Month",
-            "journey_2_body": "Meals may feel a little easier to move through, with less of an afternoon dip and more steadiness across the day.*",
+            "journey_2_body": "Taking soursop has become a daily habit\\. You’re giving your wellness routine more care and attention\\.",
             "journey_3_label": "2 Months",
             "journey_3_body": "You may notice steadier energy, fewer cravings, and less pull toward late-night snacking as consistency builds.*",
             "journey_4_label": "3 Months",
@@ -234,6 +234,7 @@
         "benefits": {
           "type": "benefits",
           "settings": {
+            "show_section": false,
             "benefits_heading": "",
             "benefits_subheading": "",
             "benefits_item_1": "1,000 mg Per Serving",
@@ -243,8 +244,7 @@
             "benefits_image": "shopify://shop_images/ED1263F2-4494-45ED-9415-6D549E6348EA.png",
             "benefits_bg": "",
             "benefits_text": "",
-            "benefits_disclaimer": "",
-            "show_section": false
+            "benefits_disclaimer": ""
           }
         },
         "five_reasons": {
