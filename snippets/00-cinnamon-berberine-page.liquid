@@ -22,6 +22,29 @@
   assign av_cb_stock_title = av_cb_product.metafields.custom.av_cb_low_stock_title.value | default: 'WARNING: Low Stock Notice'
   assign av_cb_stock_text = av_cb_product.metafields.custom.av_cb_low_stock_text.value | default: 'Inventory can move quickly during promotions. If Avonent fits your routine, ordering while stock is available can help avoid interruptions.'
   assign av_cb_display_title = av_cb_product.metafields.custom.av_cb_display_title.value | default: 'Ceylon Cinnamon 14,400mg Equivalent + Berberine HCl'
+  assign av_cb_best_seller_text = 'Best Seller'
+  assign av_cb_choice_badge_text = '#1 Choice for Doctors & Practitioners'
+  assign av_cb_show_best_seller = true
+  assign av_cb_show_choice_badge = true
+  assign av_cb_rating_stars_count = 5
+  assign av_cb_sold_suffix = 'Sold'
+  assign av_cb_show_sold = true
+  assign av_cb_one_time_heading = 'One-Time Purchase'
+  assign av_cb_subscription_heading = 'Subscribe & Save'
+  assign av_cb_delivery_label = 'Order now for delivery by:'
+  assign av_cb_sub_title_1 = 'Buy 1'
+  assign av_cb_sub_title_2 = 'Buy 2 Get 1 FREE'
+  assign av_cb_sub_title_3 = 'Buy 3 Get 2 FREE'
+  assign av_cb_sub_savings_1 = 'You save 50%'
+  assign av_cb_sub_savings_2 = 'You save 67%'
+  assign av_cb_sub_savings_3 = 'You save 70%'
+  assign av_cb_announcement_heading = 'FALL SALE'
+  assign av_cb_announcement_subheading = 'Save up to 65% today'
+  assign av_cb_gift_header = 'Gifts Unlocked'
+  assign av_cb_gift_shipping = 'FREE Shipping'
+  assign av_cb_gift_ebook = 'FREE E-Book'
+  assign av_cb_gift_ebook_note = 'Digital metabolic-support guide'
+  assign av_cb_show_low_stock = true
   assign av_cb_hero_description = av_cb_product.metafields.custom.av_cb_hero_description.value | default: 'Avonent Ceylon Cinnamon + Berberine supports healthy blood sugar, glucose metabolism, and everyday metabolic balance — helping support steadier days around meals and throughout the day.*\n\nTake 1 softgel per day. Each serving combines true Sri Lankan Ceylon cinnamon with Berberine HCl in one concentrated formula built for consistent daily use.*'
   assign av_cb_rating_text = av_cb_product.metafields.custom.av_cb_rating_text.value | default: 'Rated 4.9 • 10,000+ Reviews'
   assign av_cb_benefit_1 = av_cb_product.metafields.custom.av_cb_benefit_1.value | default: 'Restores Insulin Sensitivity'
@@ -172,7 +195,85 @@
   for content_block in editor.blocks
     case content_block.type
       when 'hero'
+        assign av_cb_editor_hero_block = content_block
         assign av_cb_hero_image = content_block.settings.hero_image | default: product.featured_image
+        if content_block.settings.best_seller_text != blank
+          assign av_cb_best_seller_text = content_block.settings.best_seller_text
+        endif
+        if content_block.settings.choice_badge_text != blank
+          assign av_cb_choice_badge_text = content_block.settings.choice_badge_text
+        endif
+        if content_block.settings.show_best_seller == false
+          assign av_cb_show_best_seller = false
+        endif
+        if content_block.settings.show_choice_badge == false
+          assign av_cb_show_choice_badge = false
+        endif
+        if content_block.settings.rating_stars_count != blank
+          assign av_cb_rating_stars_count = content_block.settings.rating_stars_count
+        endif
+        if content_block.settings.sold_suffix != blank
+          assign av_cb_sold_suffix = content_block.settings.sold_suffix
+        endif
+        if content_block.settings.show_sold == false
+          assign av_cb_show_sold = false
+        endif
+        if content_block.settings.one_time_heading != blank
+          assign av_cb_one_time_heading = content_block.settings.one_time_heading
+        endif
+        if content_block.settings.subscription_heading != blank
+          assign av_cb_subscription_heading = content_block.settings.subscription_heading
+        endif
+        if content_block.settings.low_stock_line != blank
+          assign av_cb_low_stock_line = content_block.settings.low_stock_line
+        endif
+        if content_block.settings.show_low_stock == false
+          assign av_cb_show_low_stock = false
+        endif
+        if content_block.settings.delivery_label != blank
+          assign av_cb_delivery_label = content_block.settings.delivery_label
+        endif
+        if content_block.settings.sub_title_1 != blank
+          assign av_cb_sub_title_1 = content_block.settings.sub_title_1
+        endif
+        if content_block.settings.sub_title_2 != blank
+          assign av_cb_sub_title_2 = content_block.settings.sub_title_2
+        endif
+        if content_block.settings.sub_title_3 != blank
+          assign av_cb_sub_title_3 = content_block.settings.sub_title_3
+        endif
+        if content_block.settings.sub_savings_1 != blank
+          assign av_cb_sub_savings_1 = content_block.settings.sub_savings_1
+        endif
+        if content_block.settings.sub_savings_2 != blank
+          assign av_cb_sub_savings_2 = content_block.settings.sub_savings_2
+        endif
+        if content_block.settings.sub_savings_3 != blank
+          assign av_cb_sub_savings_3 = content_block.settings.sub_savings_3
+        endif
+        if content_block.settings.announcement_heading != blank
+          assign av_cb_announcement_heading = content_block.settings.announcement_heading
+        endif
+        if content_block.settings.announcement_subheading != blank
+          assign av_cb_announcement_subheading = content_block.settings.announcement_subheading
+        endif
+        if content_block.settings.gift_header != blank
+          assign av_cb_gift_header = content_block.settings.gift_header
+        endif
+        if content_block.settings.gift_shipping != blank
+          assign av_cb_gift_shipping = content_block.settings.gift_shipping
+        endif
+        if content_block.settings.gift_ebook != blank
+          assign av_cb_gift_ebook = content_block.settings.gift_ebook
+        endif
+        if content_block.settings.gift_ebook_note != blank
+          assign av_cb_gift_ebook_note = content_block.settings.gift_ebook_note
+        endif
+        if av_cb_product.template_suffix == 'soursop'
+          assign av_cb_one_time_subtitle_1 = content_block.settings.bundle_1_subtitle
+          assign av_cb_one_time_subtitle_2 = content_block.settings.bundle_2_subtitle
+          assign av_cb_one_time_subtitle_3 = content_block.settings.bundle_3_subtitle
+        endif
         if content_block.settings.display_title != blank
           assign av_cb_display_title = content_block.settings.display_title
         endif
@@ -1007,7 +1108,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
 
   </style>
 
-  <section class="av-cb__hero" id="av-cb-top">
+  <section class="av-cb__hero" id="av-cb-top"{% if av_cb_product.template_suffix == 'soursop' %} {{ av_cb_editor_hero_block.shopify_attributes }}{% endif %}>
     <div class="av-cb__wrap av-cb__hero-grid">
       <div class="av-cb__media">
         {% if av_cb_product.images.size > 0 %}
@@ -1016,7 +1117,11 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
               <div class="av-cb__gallery-track" data-av-cb-gallery-track>
                 {% for image in av_cb_product.images limit: 8 %}
                   <div class="av-cb__gallery-slide" data-av-cb-gallery-slide>
-                    {{ image | image_url: width: 1400 | image_tag: loading: 'eager', widths: '500,700,900,1200,1400', sizes: '(min-width: 900px) 48vw, 92vw', alt: image.alt | default: av_cb_display_title }}
+                    {% if forloop.first and av_cb_product.template_suffix == 'soursop' and av_cb_editor_hero_block.settings.hero_image != blank %}
+                      {{ av_cb_hero_image | image_url: width: 1400 | image_tag: loading: 'eager', widths: '500,700,900,1200,1400', sizes: '(min-width: 900px) 48vw, 92vw', alt: av_cb_display_title }}
+                    {% else %}
+                      {{ image | image_url: width: 1400 | image_tag: loading: 'eager', widths: '500,700,900,1200,1400', sizes: '(min-width: 900px) 48vw, 92vw', alt: image.alt | default: av_cb_display_title }}
+                    {% endif %}
                   </div>
                 {% endfor %}
               </div>
@@ -1035,7 +1140,11 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
               <div class="av-cb__gallery-thumbs" aria-label="Product images">
                 {% for image in av_cb_product.images limit: 8 %}
                   <button class="av-cb__gallery-thumb{% if forloop.first %} is-active{% endif %}" type="button" data-av-cb-gallery-thumb data-index="{{ forloop.index0 }}" aria-label="View product image {{ forloop.index }}">
-                    {{ image | image_url: width: 180 | image_tag: loading: 'lazy', widths: '90,120,180', alt: image.alt | default: av_cb_display_title }}
+                    {% if forloop.first and av_cb_product.template_suffix == 'soursop' and av_cb_editor_hero_block.settings.hero_image != blank %}
+                      {{ av_cb_hero_image | image_url: width: 180 | image_tag: loading: 'lazy', widths: '90,120,180', alt: av_cb_display_title }}
+                    {% else %}
+                      {{ image | image_url: width: 180 | image_tag: loading: 'lazy', widths: '90,120,180', alt: image.alt | default: av_cb_display_title }}
+                    {% endif %}
                   </button>
                 {% endfor %}
               </div>
@@ -1051,13 +1160,15 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       </div>
 
       <div>
-        <div class="av-cb__hero-badges" aria-label="Product highlights">
-          <span class="av-cb__hero-badge av-cb__hero-badge--best">Best Seller</span>
-          <span class="av-cb__hero-badge av-cb__hero-badge--choice">#1 Choice for Doctors &amp; Practitioners</span>
-        </div>
+        {% if av_cb_show_best_seller or av_cb_show_choice_badge %}
+          <div class="av-cb__hero-badges" aria-label="Product highlights">
+            {% if av_cb_show_best_seller %}<span class="av-cb__hero-badge av-cb__hero-badge--best">{{ av_cb_best_seller_text | escape }}</span>{% endif %}
+            {% if av_cb_show_choice_badge %}<span class="av-cb__hero-badge av-cb__hero-badge--choice">{{ av_cb_choice_badge_text | escape }}</span>{% endif %}
+          </div>
+        {% endif %}
 
         <div class="av-cb__rating">
-          <span class="av-cb__stars" aria-hidden="true">★★★★★</span>
+          <span class="av-cb__stars" aria-hidden="true">{%- for star in (1..5) -%}{%- if star <= av_cb_rating_stars_count -%}★{%- else -%}☆{%- endif -%}{%- endfor -%}</span>
           <span class="av-cb__rating-text">{{ av_cb_rating_text }}</span>
         </div>
 
@@ -1073,15 +1184,17 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
           {% endfor %}
         </div>
 
-        <div class="av-cb__sold" data-av-cb-sold data-sold-start="12" data-sold-target="{{ av_cb_sold_percent }}" style="--sold: {{ av_cb_sold_percent }}%;">
+        {% if av_cb_show_sold %}<div class="av-cb__sold" data-av-cb-sold data-sold-start="12" data-sold-target="{{ av_cb_sold_percent }}" data-sold-suffix="{{ av_cb_sold_suffix | escape }}" style="--sold: {{ av_cb_sold_percent }}%;">
           <div class="av-cb__sold-row">
             <div class="av-cb__sold-track" aria-hidden="true"><div class="av-cb__sold-fill" data-av-cb-sold-fill></div></div>
-            <div class="av-cb__sold-text" data-av-cb-sold-text>{{ av_cb_sold_percent }}% Sold</div>
+            <div class="av-cb__sold-text" data-av-cb-sold-text>{{ av_cb_sold_percent }}% {{ av_cb_sold_suffix | escape }}</div>
           </div>
         </div>
 
+        {% endif %}
+
         <div class="av-cb__pricing av-cb__pricing--purchase-mode">
-          <span class="av-cb__purchase-heading" data-av-cb-purchase-heading>{% if av_cb_subscription != blank %}Subscribe &amp; Save{% else %}One-Time Purchase{% endif %}</span>
+          <span class="av-cb__purchase-heading" data-av-cb-purchase-heading data-one-time-heading="{{ av_cb_one_time_heading | escape }}" data-subscription-heading="{{ av_cb_subscription_heading | escape }}">{% if av_cb_subscription != blank %}{{ av_cb_subscription_heading | escape }}{% else %}{{ av_cb_one_time_heading | escape }}{% endif %}</span>
           <span class="av-cb__pricing-values">
             <span class="av-cb__sale-price" data-av-cb-price>{{ av_cb_subscription_unit_price | money }}</span>
             <span class="av-cb__compare-price" data-av-cb-compare-price{% if av_cb_subscription == blank and av_cb_one_time_compare_unit == 0 %} hidden{% endif %}>{% if av_cb_subscription != blank %}{{ av_cb_one_time_unit_price | money }}{% elsif av_cb_one_time_compare_unit > 0 %}{{ av_cb_one_time_compare_unit | money }}{% endif %}</span>
@@ -1089,7 +1202,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
           </span>
         </div>
 
-        <div class="av-cb__low-stock-line"><span>{{ av_cb_low_stock_line }}</span></div>
+        {% if av_cb_show_low_stock %}<div class="av-cb__low-stock-line"><span>{{ av_cb_low_stock_line | escape }}</span></div>{% endif %}
 
         <product-form-component
           data-section-id="{{ editor.id }}"
@@ -1121,14 +1234,29 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
                 {% assign av_cb_bundle_sub_total = 2999 %}
                 {% assign av_cb_bundle_subscription_compare = av_cb_one_time_unit_price %}
                 {% assign av_cb_bundle_savings_text = 'You save 50%' %}
+                {% assign av_cb_sub_bundle_title = av_cb_sub_title_1 %}
+                {% if av_cb_product.template_suffix == 'soursop' %}
+                  {% assign av_cb_bundle_savings_text = av_cb_sub_savings_1 %}
+                  {% assign av_cb_bundle_onetime_subtitle = av_cb_one_time_subtitle_1 %}
+                {% endif %}
               {% elsif qty == 2 %}
                 {% assign av_cb_bundle_sub_total = 5999 %}
                 {% assign av_cb_bundle_subscription_compare = av_cb_one_time_unit_price | times: 3 %}
                 {% assign av_cb_bundle_savings_text = 'You save 67%' %}
+                {% assign av_cb_sub_bundle_title = av_cb_sub_title_2 %}
+                {% if av_cb_product.template_suffix == 'soursop' %}
+                  {% assign av_cb_bundle_savings_text = av_cb_sub_savings_2 %}
+                  {% assign av_cb_bundle_onetime_subtitle = av_cb_one_time_subtitle_2 %}
+                {% endif %}
               {% else %}
                 {% assign av_cb_bundle_sub_total = 8999 %}
                 {% assign av_cb_bundle_subscription_compare = av_cb_one_time_unit_price | times: 5 %}
                 {% assign av_cb_bundle_savings_text = 'You save 70%' %}
+                {% assign av_cb_sub_bundle_title = av_cb_sub_title_3 %}
+                {% if av_cb_product.template_suffix == 'soursop' %}
+                  {% assign av_cb_bundle_savings_text = av_cb_sub_savings_3 %}
+                  {% assign av_cb_bundle_onetime_subtitle = av_cb_one_time_subtitle_3 %}
+                {% endif %}
               {% endif %}
               {% assign av_cb_bundle_one_time_total = av_cb_one_time_unit_price | times: qty %}
               {% assign av_cb_bundle_one_time_compare_total = av_cb_one_time_compare_unit | times: qty %}
@@ -1143,8 +1271,8 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
                   {% endif %}
                 </span>
                 <span class="av-cb__bundle-copy">
-                  <strong data-av-cb-bundle-title data-one-time-title="{% if qty == 1 %}Buy 1{% elsif qty == 2 %}Buy 2{% else %}Buy 3{% endif %}" data-subscription-title="{% if qty == 1 %}Buy 1{% elsif qty == 2 %}Buy 2 Get 1 FREE{% else %}Buy 3 Get 2 FREE{% endif %}">{% if qty == 1 %}Buy 1{% elsif qty == 2 %}Buy 2 Get 1 FREE{% else %}Buy 3 Get 2 FREE{% endif %}</strong>
-                  <span data-av-cb-bundle-subtitle data-one-time-subtitle="" data-subscription-subtitle="{{ av_cb_bundle_savings_text }}">{{ av_cb_bundle_savings_text }}</span>
+                  <strong data-av-cb-bundle-title data-one-time-title="{% if av_cb_product.template_suffix == 'soursop' %}{{ av_cb_bundle_title | escape }}{% elsif qty == 1 %}Buy 1{% elsif qty == 2 %}Buy 2{% else %}Buy 3{% endif %}" data-subscription-title="{% if av_cb_product.template_suffix == 'soursop' %}{{ av_cb_sub_bundle_title | escape }}{% elsif qty == 1 %}Buy 1{% elsif qty == 2 %}Buy 2 Get 1 FREE{% else %}Buy 3 Get 2 FREE{% endif %}">{% if av_cb_product.template_suffix == 'soursop' %}{{ av_cb_sub_bundle_title | escape }}{% elsif qty == 1 %}Buy 1{% elsif qty == 2 %}Buy 2 Get 1 FREE{% else %}Buy 3 Get 2 FREE{% endif %}</strong>
+                  <span data-av-cb-bundle-subtitle data-one-time-subtitle="{% if av_cb_product.template_suffix == 'soursop' %}{{ av_cb_bundle_onetime_subtitle | escape }}{% endif %}" data-subscription-subtitle="{{ av_cb_bundle_savings_text | escape }}">{{ av_cb_bundle_savings_text | escape }}</span>
                 </span>
                 <span class="av-cb__bundle-price">
                   <strong data-av-cb-bundle-price="{{ qty }}">{{ av_cb_bundle_sub_total | money }}</strong>
@@ -1152,15 +1280,15 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
                 </span>
                 {% if qty >= 2 %}
                   <span class="av-cb__bundle-unlock" data-av-cb-bundle-unlock hidden>
-                    <span class="av-cb__bundle-unlock-title">Gifts Unlocked</span>
+                    <span class="av-cb__bundle-unlock-title">{% if av_cb_product.template_suffix == 'soursop' %}{{ av_cb_gift_header | escape }}{% else %}Gifts Unlocked{% endif %}</span>
                     <span class="av-cb__bundle-unlock-row">
                       <span class="av-cb__bundle-unlock-check" aria-hidden="true">✓</span>
-                      <span class="av-cb__bundle-unlock-copy">FREE Shipping</span>
+                      <span class="av-cb__bundle-unlock-copy">{% if av_cb_product.template_suffix == 'soursop' %}{{ av_cb_gift_shipping | escape }}{% else %}FREE Shipping{% endif %}</span>
                     </span>
                     {% if qty == 3 %}
                       <span class="av-cb__bundle-unlock-row">
                         <span class="av-cb__bundle-unlock-check" aria-hidden="true">✓</span>
-                        <span class="av-cb__bundle-unlock-copy">FREE E-Book <strong>($24.99 Value)</strong><small>Digital metabolic-support guide</small></span>
+                        <span class="av-cb__bundle-unlock-copy">{% if av_cb_product.template_suffix == 'soursop' %}{{ av_cb_gift_ebook | escape }}{% else %}FREE E-Book{% endif %} <strong>($24.99 Value)</strong><small>{% if av_cb_product.template_suffix == 'soursop' %}{{ av_cb_gift_ebook_note | escape }}{% else %}Digital metabolic-support guide{% endif %}</small></span>
                       </span>
                     {% endif %}
                   </span>
@@ -1173,7 +1301,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
             <span class="av-cb__delivery-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/><path d="M12 7.5V12l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </span>
-            <span>Order now for delivery by: <strong data-av-cb-delivery-date></strong></span>
+            <span>{{ av_cb_delivery_label | escape }} <strong data-av-cb-delivery-date></strong></span>
           </div>
 
           <button class="av-cb__buy" type="submit" {% unless av_cb_variant.available %}disabled{% endunless %}>
@@ -1811,9 +1939,9 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         headerLogo.innerHTML = '<span class="av-cb-header-logo" aria-label="Avonent"><svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><circle cx="24" cy="24" r="20.5" stroke="currentColor" stroke-width="2.8"/><path d="M26.8 8.8 15.9 25h8.1l-2.7 14.2L33.5 21h-8.2l1.5-12.2Z" stroke="currentColor" stroke-width="2.8" stroke-linejoin="round"/></svg><span>Avonent</span></span>';
       }
       const saleHeading = document.querySelector('.avonent-sale-bar__heading');
-      if (saleHeading) saleHeading.textContent = 'FALL SALE';
+      if (saleHeading) saleHeading.textContent = {% if av_cb_product.template_suffix == 'soursop' %}{{ av_cb_announcement_heading | json }}{% else %}'FALL SALE'{% endif %};
       const saleSubheading = document.querySelector('.avonent-sale-bar__subheading');
-      if (saleSubheading) saleSubheading.textContent = 'Save up to 65% today';
+      if (saleSubheading) saleSubheading.textContent = {% if av_cb_product.template_suffix == 'soursop' %}{{ av_cb_announcement_subheading | json }}{% else %}'Save up to 65% today'{% endif %};
       const saleBar = document.querySelector('.avonent-sale-bar__inner');
       if (saleBar) {
         saleBar.style.setProperty('--av-sale-bg', '#A84F1B');
@@ -1930,7 +2058,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         }
         if (refillRow) refillRow.hidden = !isSubscription;
         if (purchaseToggle) purchaseToggle.setAttribute('aria-pressed', String(!isSubscription));
-        if (purchaseHeading) purchaseHeading.textContent = isSubscription ? 'Subscribe & Save' : 'One-Time Purchase';
+        if (purchaseHeading) purchaseHeading.textContent = isSubscription ? (purchaseHeading.dataset.subscriptionHeading || 'Subscribe & Save') : (purchaseHeading.dataset.oneTimeHeading || 'One-Time Purchase');
 
         bundleButtons.forEach((btn) => {
           const values = valuesFor(btn);
@@ -2167,7 +2295,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         const renderSold = (value) => {
           const clamped = Math.max(0, Math.min(100, value));
           soldBar.style.setProperty('--sold', clamped + '%');
-          if (soldText) soldText.textContent = Math.round(clamped) + '% Sold';
+          if (soldText) soldText.textContent = Math.round(clamped) + '% ' + (soldBar.dataset.soldSuffix || 'Sold');
         };
 
         const runSold = () => {
