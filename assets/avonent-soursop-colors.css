@@ -191,3 +191,69 @@ html.av-soursop-page #cart-drawer .avonent-shipping-protection__toggle:focus-vis
 html.av-soursop-page #cart-drawer .cart-drawer__summary .avonent-cart-checkout { background:#557D4B !important; border-color:#557D4B !important; }
 html.av-soursop-page #cart-drawer .cart-drawer__summary .avonent-cart-checkout:hover { background:#355A38 !important; border-color:#355A38 !important; }
 html.av-soursop-page #cart-drawer .avonent-cart-trusted-stars { color:#557D4B !important; }
+
+
+/* Soursop wins over the cinnamon class set by the shared product snippet.
+   Both classes appear on soursop pages, and those cinnamon rules load later. */
+html.av-soursop-page.av-cb-cinnamon-page .avonent-sale-bar,
+html.av-soursop-page.av-cb-cinnamon-page .avonent-sale-bar__inner,
+html.av-soursop-page .announcement-bar:has(.avonent-sale-bar) .avonent-sale-bar,
+html.av-soursop-page .announcement-bar:has(.avonent-sale-bar) .avonent-sale-bar__inner {
+  --av-sale-bg: #557D4B !important;
+  --av-sale-color: #FFFFFF !important;
+  background: #557D4B !important;
+  color: #FFFFFF !important;
+}
+html.av-soursop-page.av-cb-cinnamon-page #cart-drawer .theme-drawer__badge {
+  background: #EFF6EA !important;
+  color: #355A38 !important;
+}
+html.av-soursop-page.av-cb-cinnamon-page #cart-drawer .theme-drawer__close-button:hover {
+  border-color: #CEDFC7 !important;
+  background: #EFF6EA !important;
+  color: #355A38 !important;
+}
+html.av-soursop-page.av-cb-cinnamon-page #cart-drawer .avonent-cart-reservation {
+  background: linear-gradient(135deg,#557D4B,#355A38) !important;
+  color: #FFFFFF !important;
+}
+html.av-soursop-page.av-cb-cinnamon-page #cart-drawer .avonent-shipping-protection {
+  border-color: #CCDFC5 !important;
+  background: linear-gradient(135deg,#F7FBF4,#EFF6EA) !important;
+}
+html.av-soursop-page.av-cb-cinnamon-page #cart-drawer .avonent-shipping-protection__icon {
+  color: #557D4B !important;
+  box-shadow: 0 5px 18px rgba(85,125,75,.14) !important;
+}
+html.av-soursop-page.av-cb-cinnamon-page #cart-drawer .avonent-shipping-protection__heading span,
+html.av-soursop-page.av-cb-cinnamon-page #cart-drawer .avonent-cart-line__savings,
+html.av-soursop-page.av-cb-cinnamon-page #cart-drawer .avonent-cart-trusted-stars {
+  color: #557D4B !important;
+}
+html.av-soursop-page.av-cb-cinnamon-page #cart-drawer .avonent-shipping-protection__toggle[aria-checked='true'] {
+  background: #557D4B !important;
+}
+html.av-soursop-page.av-cb-cinnamon-page #cart-drawer .avonent-shipping-protection__toggle:focus-visible {
+  outline-color: rgba(85,125,75,.3) !important;
+}
+html.av-soursop-page.av-cb-cinnamon-page #cart-drawer .cart-drawer__summary .avonent-cart-checkout {
+  background: #557D4B !important;
+  border-color: #557D4B !important;
+  color: #FFFFFF !important;
+}
+html.av-soursop-page.av-cb-cinnamon-page #cart-drawer .cart-drawer__summary .avonent-cart-checkout:hover {
+  background: #355A38 !important;
+  border-color: #355A38 !important;
+}
+html.av-soursop-page .av-cb__post-risk-reviews .av-cb__post-risk-stars,
+html.av-soursop-page .av-cb__post-risk-reviews .av-cb__post-risk-review-rating span {
+  color: #557D4B !important;
+}
+html.av-soursop-page .av-cb__post-risk-reviews .av-cb__post-risk-tags span {
+  color: #355A38 !important;
+  border-color: #557D4B !important;
+}
+html.av-soursop-page .av-cb__post-risk-reviews .av-cb__post-risk-read-more {
+  border-color: #557D4B !important;
+}
+/* Do not recolor the rating stars at the top of the product page. */
