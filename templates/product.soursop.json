@@ -15,7 +15,11 @@
         "hero": {
           "type": "hero",
           "settings": {
-            "display_title": "Ceylon Cinnamon 14,400mg Equivalent + Berberine HCl",
+            "show_best_seller": true,
+            "best_seller_text": "Best Seller",
+            "show_choice_badge": true,
+            "choice_badge_text": "Clinicians Choice",
+            "display_title": "Soursop Softgels",
             "hero_description": "Avonent Ceylon Cinnamon + Berberine supports healthy blood sugar, glucose metabolism, and everyday metabolic balance — helping support steadier days around meals and throughout the day.*\n\nFour daily softgels combine true Sri Lankan Ceylon cinnamon with Berberine HCl in one concentrated formula built for consistent daily use.*",
             "rating_text": "",
             "benefit_1": "Restores Insulin Sensitivity",
@@ -34,7 +38,27 @@
             "bundle_3_subtitle": "",
             "add_to_cart_text": "",
             "refill_text": "",
-            "cancel_text": ""
+            "cancel_text": "",
+            "rating_stars_count": 5,
+            "show_sold": true,
+            "sold_suffix": "Sold",
+            "one_time_heading": "One-Time Purchase",
+            "subscription_heading": "Subscribe & Save",
+            "show_low_stock": true,
+            "low_stock_line": "Low Stock – Selling Fast",
+            "delivery_label": "Order now for delivery by:",
+            "sub_title_1": "Buy 1",
+            "sub_title_2": "Buy 2 Get 1 FREE",
+            "sub_title_3": "Buy 3 Get 2 FREE",
+            "sub_savings_1": "You save 50%",
+            "sub_savings_2": "You save 67%",
+            "sub_savings_3": "You save 70%",
+            "gift_header": "Gifts Unlocked",
+            "gift_shipping": "FREE Shipping",
+            "gift_ebook": "FREE E-Book",
+            "gift_ebook_note": "Digital metabolic-support guide",
+            "announcement_heading": "FALL SALE",
+            "announcement_subheading": "Save up to 65% today"
           }
         },
         "results": {
