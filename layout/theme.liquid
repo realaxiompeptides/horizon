@@ -255,6 +255,17 @@ html.av-cb-cinnamon-page #header-component header-actions{gap:0}
     {% if garlic_ebook_variant != blank and garlic_ebook_variant.price == 0 %}
       <script src="{{ 'avonent-garlic-gift-cart.js' | asset_url }}" data-ebook-variant-id="{{ garlic_ebook_variant.id }}" defer></script>
     {% endif %}
+    {% comment %}Reconcile only the Soursop Buy 3 digital gift at cart and checkout.{% endcomment %}
+    {% liquid
+      assign avonent_soursop_in_cart = false
+      for avonent_cart_line in cart.items
+        if avonent_cart_line.variant.id == 58145310376102
+          assign avonent_soursop_in_cart = true
+          break
+        endif
+      endfor
+    %}
+    <script src="{{ 'avonent-soursop-buy3-gift-cart.js' | asset_url }}" data-soursop-in-cart="{{ avonent_soursop_in_cart }}" defer></script>
     {% if template.suffix == 'moringa' %}
       <script src="{{ 'avonent-moringa-price-sync.js' | asset_url }}" defer></script>
       <script src="{{ 'avonent-moringa-overrides.js' | asset_url }}" defer></script>
