@@ -106,6 +106,7 @@
   assign av_cb_story_two_block = blank
   assign av_cb_story_two_position = 'after_trust'
   assign av_cb_story_image_text_block = blank
+  assign av_cb_extra_image_text_block = blank
   assign av_cb_stat_1_suffix = '%'
   assign av_cb_stat_2_suffix = '%'
   assign av_cb_stat_3_suffix = '%'
@@ -449,6 +450,8 @@
         endif
       when 'story_image_text'
         assign av_cb_story_image_text_block = content_block
+      when 'story_image_text_extra'
+        assign av_cb_extra_image_text_block = content_block
       when 'carousel'
         if content_block.settings.carousel_heading != blank
           assign av_cb_carousel_heading = content_block.settings.carousel_heading
@@ -1653,6 +1656,31 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
     {% if av_cb_stats_position == 'before_carousel' %}{{ av_cb_stats_markup }}{% endif %}
     {% if av_cb_doctor_position == 'after_trust' %}{{ av_cb_doctor_markup }}{% endif %}
 {% if av_cb_story_two_position == 'after_trust' %}{{ av_cb_story_two_markup }}{% endif %}
+
+    {% if av_cb_product.handle == 'soursop-softgels' and av_cb_extra_image_text_block != blank %}
+      {% if av_cb_extra_image_text_block.settings.show_section %}
+        {% assign av_cb_extra_bridge_image = av_cb_extra_image_text_block.settings.image %}
+        {% assign av_cb_extra_bridge_heading = av_cb_extra_image_text_block.settings.heading %}
+        {% assign av_cb_extra_bridge_body = av_cb_extra_image_text_block.settings.body %}
+        {% if av_cb_extra_bridge_image != blank or av_cb_extra_bridge_heading != blank or av_cb_extra_bridge_body != blank or request.design_mode %}
+          <section class="av-cb__story-image-text{% if av_cb_extra_image_text_block.settings.text_position == 'overlay' %} av-cb__story-image-text--overlay{% endif %} av-cb__story-image-text--{{ av_cb_extra_image_text_block.settings.align }}" style="--sit-bg:{{ av_cb_extra_image_text_block.settings.background }};--sit-color:{{ av_cb_extra_image_text_block.settings.text_color }};" {{ av_cb_extra_image_text_block.shopify_attributes }}>
+            {% if av_cb_extra_bridge_image != blank %}
+              <div class="av-cb__story-image-text-media">
+                {{ av_cb_extra_bridge_image | image_url: width: 1800 | image_tag: loading: 'lazy', widths: '375,550,750,990,1320,1800', sizes: '(min-width: 1000px) 960px, calc(100vw - 36px)', alt: av_cb_extra_image_text_block.settings.image_alt }}
+              </div>
+            {% elsif request.design_mode %}
+              <div class="av-cb__story-image-text-placeholder"><span class="av-cb__story-image-text-placeholder-icon" aria-hidden="true">+</span><span>Choose an image here</span></div>
+            {% endif %}
+            {% if av_cb_extra_bridge_heading != blank or av_cb_extra_bridge_body != blank %}
+              <div class="av-cb__story-image-text-copy">
+                {% if av_cb_extra_bridge_heading != blank %}<h2>{{ av_cb_extra_bridge_heading | escape }}</h2>{% endif %}
+                {% if av_cb_extra_bridge_body != blank %}<div class="av-cb__story-image-text-body">{{ av_cb_extra_bridge_body }}</div>{% endif %}
+              </div>
+            {% endif %}
+          </section>
+        {% endif %}
+      {% endif %}
+    {% endif %}
 
     {% if av_cb_product.handle == 'soursop-softgels' and av_cb_story_image_text_block != blank %}
       {% if av_cb_story_image_text_block.settings.show_section %}
