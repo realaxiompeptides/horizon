@@ -304,7 +304,7 @@
                         <p>{{ item.selling_plan_allocation.selling_plan.name }}</p>
                       {%- endif -%}
 
-                      {%- if item.line_level_discount_allocations.size > 0 -%}
+                      {%- if context != 'drawer' and item.line_level_discount_allocations.size > 0 -%}
                         <ul
                           class="list-unstyled"
                           role="list"
@@ -1192,7 +1192,7 @@
       position: relative !important;
       display: grid !important;
       grid-template-columns: 88px minmax(0, 1fr) 76px !important;
-      grid-template-rows: auto auto auto auto auto !important;
+      grid-template-rows: minmax(36px, auto) auto auto auto auto !important;
       grid-template-areas:
         "media details empty"
         "media variants price"
@@ -1229,7 +1229,7 @@
     }
 
     #cart-drawer tr.cart-items__table-row--full-width-variants[data-product-handle="ceylon-cinnamon-berberine-capsules"] {
-      grid-template-rows: auto auto auto auto !important;
+      grid-template-rows: minmax(36px, auto) auto auto auto !important;
       grid-template-areas:
         "media details empty"
         "media quantity price"
