@@ -213,6 +213,13 @@
                       %}
                     </div>
 
+                    {% if context == 'drawer' and item.product.handle == 'soursop-softgels' %}
+                      <div class="avonent-soursop-cart-rating">
+                        <span class="avonent-soursop-cart-stars" role="img" aria-label="4.8 out of 5 stars"><span aria-hidden="true">★★★★★</span><span class="avonent-soursop-cart-stars-fill" aria-hidden="true">★★★★★</span></span>
+                        <span><strong>4.8</strong> · 15,233 reviews</span>
+                      </div>
+                    {% endif %}
+
                     {% if context == 'drawer' and item.product.handle == 'ceylon-cinnamon-berberine-capsules' %}
                       <div class="avonent-cinnamon-cart-benefits" aria-label="Ceylon cinnamon product benefits">
                         <div class="avonent-cinnamon-cart-benefit">
@@ -1199,6 +1206,11 @@
 {% if context == 'drawer' %}
   <!-- AVONENT CART LINE FORCE OVERRIDES -->
   <style>
+    #cart-drawer .avonent-soursop-cart-rating { display:flex; flex-wrap:wrap; align-items:center; gap:5px 8px; margin-top:8px; color:#596269; font-size:12px; line-height:1.4; }
+    #cart-drawer .avonent-soursop-cart-rating strong { color:#355A38; }
+    #cart-drawer .avonent-soursop-cart-stars { position:relative; display:inline-block; flex:none; color:#DBE8D4; font-size:16px; letter-spacing:1px; white-space:nowrap; line-height:1; }
+    #cart-drawer .avonent-soursop-cart-stars-fill { position:absolute; inset:0 auto 0 0; width:96%; overflow:hidden; color:#557D4B; }
+
     #cart-drawer tr.cart-items__table-row--full-width-variants[data-product-handle="soursop-softgels"] {
       grid-template-columns: 88px minmax(0, 1fr) 36px !important;
       grid-template-areas: "media details empty" "media variants variants" "media quantity quantity" "media unit_price unit_price" "media error error" !important;
