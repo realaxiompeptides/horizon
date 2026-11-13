@@ -1147,6 +1147,8 @@
     .av-cb__post-risk-review-rating strong{font-size:22px;color:#111}
     .av-cb__post-risk-review-rating span{font-size:22px}
     .av-cb__post-risk-review-card p{margin:0;color:#28231f;font-size:17px;line-height:1.62}
+    .av-cb__post-risk-review-title{font-size:21px;line-height:1.25;letter-spacing:-.015em;color:#171513;font-weight:750;margin:0 0 12px}
+    .av-cb__post-risk-review-author{font-size:14px;color:#3b3834;font-weight:750;margin-top:16px}
     .av-cb__post-risk-tags{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
     .av-cb__post-risk-tags span{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:0 16px;border:1.5px solid #C86F3A;border-radius:999px;color:#B6551B;font-size:13px}
     .av-cb__post-risk-review-card--extra[hidden]{display:none!important}
@@ -2061,6 +2063,31 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       </header>
 
       <div class="av-cb__post-risk-review-list">
+        {% if av_cb_product.template_suffix == 'soursop' %}
+        <article class="av-cb__post-risk-review-card">
+          <div class="av-cb__post-risk-review-rating"><strong>5.0</strong><span aria-hidden="true">★★★★★</span></div>
+          <h3 class="av-cb__post-risk-review-title">I was sick of everyone telling me to stay positive</h3>
+          <p>Every time I told someone about my cancer, they had advice for me. Try this, eat that, stay positive. I was tired of hearing it. I wanted to make my own choices for once. I read about soursop, talked with my doctor, and decided to add it to my routine. I don’t expect a bottle to fix everything. But I like knowing I’m doing something I chose for myself.</p>
+          <div class="av-cb__post-risk-review-author">Denise W.</div>
+          <div class="av-cb__post-risk-tags"><span>My Own Choices</span><span>Daily Confidence</span></div>
+        </article>
+
+        <article class="av-cb__post-risk-review-card">
+          <div class="av-cb__post-risk-review-rating"><strong>5.0</strong><span aria-hidden="true">★★★★★</span></div>
+          <h3 class="av-cb__post-risk-review-title">No tea, no mess. Just two capsules.</h3>
+          <p>I work long hours, and I’m terrible at keeping up with stuff. My neighbor used to make soursop tea, but I knew I’d never take the time to do all that. These capsules are much easier. I keep them next to my coffee maker and take them with breakfast. Nothing fancy. That’s what I like about them.</p>
+          <div class="av-cb__post-risk-review-author">Gary L.</div>
+          <div class="av-cb__post-risk-tags"><span>Easy to Take</span><span>No Preparation</span></div>
+        </article>
+
+        <article class="av-cb__post-risk-review-card av-cb__post-risk-review-card--extra" data-av-cb-extra-review hidden>
+          <div class="av-cb__post-risk-review-rating"><strong>5.0</strong><span aria-hidden="true">★★★★★</span></div>
+          <h3 class="av-cb__post-risk-review-title">I stopped putting my whole life on hold</h3>
+          <p>When I got my diagnosis, I canceled a trip I’d been planning for almost two years. Then I started canceling everything else too. One day I looked at my calendar and realized there was nothing on it but doctor visits. That really got to me. I’ve since started making plans again, even small ones. Soursop is part of my morning routine now. I still have hard days, but I’m not going to spend every good day waiting for something bad to happen.</p>
+          <div class="av-cb__post-risk-review-author">Elaine F.</div>
+          <div class="av-cb__post-risk-tags"><span>Living Again</span><span>Enjoying Life</span></div>
+        </article>
+        {% else %}
         <article class="av-cb__post-risk-review-card">
           <div class="av-cb__post-risk-review-rating"><strong>4.9</strong><span aria-hidden="true">★★★★★</span></div>
           <p>I've been consistent with my daily serving every morning for almost two months now, and my blood sugar readings have never been steadier. The first few weeks I didn't notice much, but by week 6 the difference was clear. Sticking with it daily is what made it work.</p>
@@ -2078,6 +2105,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
           <p>The key for me was just not missing days. Once I made it part of my morning routine alongside breakfast, my energy leveled out and my blood sugar readings became a lot more predictable week to week. Small habit, real difference.</p>
           <div class="av-cb__post-risk-tags"><span>Daily Support</span><span>Blood Sugar Support</span></div>
         </article>
+        {% endif %}
       </div>
 
       <div class="av-cb__post-risk-read-more-wrap">
