@@ -11,6 +11,9 @@
   const SOURSOP_ID = 58145310376102;
   const EBOOK_ID = 58170079510694;
   const MARKER = '_avonent_soursop_gift';
+  const script = document.currentScript;
+  let cartHasSoursop = script?.dataset.soursopInCart === 'true';
+  const soursopProductPage = window.location.pathname.includes('/products/soursop-softgels');
   const root = () => window.Shopify?.routes?.root || '/';
   let inFlight = null;
   let timer = null;
@@ -54,6 +57,7 @@
     inFlight = (async () => {
       let cart = await getCart();
       const qualifies = paidQty(cart) >= 3;
+      cartHasSoursop = paidQty(cart) > 0;
       const allEbooks = (cart.items || []).filter(isEbook);
       const gifts = allEbooks.filter(isGift);
       let changed = false;
@@ -150,7 +154,8 @@
 
   document.addEventListener('click', (event) => {
     const button = checkoutButton(event.target);
-    if (button && !button.disabled && !event.defaultPrevented) {
+    if (button && (cartHasSoursop || soursopProductPage) &&
+        !button.disabled && !event.defaultPrevented) {
       // Check the latest cart before handing over to Shopify checkout.
       event.preventDefault();
       event.stopImmediatePropagation();
@@ -167,7 +172,8 @@
 
   document.addEventListener('submit', (event) => {
     const submitter = event.submitter;
-    if (submitter && checkoutButton(submitter)) {
+    if (submitter && (cartHasSoursop || soursopProductPage) &&
+        checkoutButton(submitter)) {
       event.preventDefault();
       event.stopImmediatePropagation();
       void goToVerifiedCheckout();
