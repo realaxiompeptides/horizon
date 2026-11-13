@@ -120,6 +120,19 @@
             "accent": "#4f7847"
           }
         },
+        "story_image_text_extra": {
+          "type": "story_image_text_extra",
+          "settings": {
+            "show_section": true,
+            "image_alt": "",
+            "heading": "",
+            "body": "",
+            "text_position": "below",
+            "align": "center",
+            "background": "#f5f8f1",
+            "text_color": "#1d3022"
+          }
+        },
         "story_image_text": {
           "type": "story_image_text",
           "settings": {
@@ -417,6 +430,7 @@
         "results",
         "doctor_story",
         "story_continuation",
+        "story_image_text_extra",
         "story_image_text",
         "carousel",
         "science",
