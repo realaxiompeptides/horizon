@@ -358,6 +358,36 @@ html.av-soursop-copy-guard [contenteditable] * {
           "label": "Product description (optional)"
         },
         {
+          "type": "header",
+          "content": "Soursop hero: text or image"
+        },
+        {
+          "type": "select",
+          "id": "hero_content_mode",
+          "label": "Headline, description and benefits",
+          "options": [
+            {"value": "text", "label": "Editable text and icons"},
+            {"value": "image", "label": "One uploaded image"}
+          ],
+          "default": "text"
+        },
+        {
+          "type": "image_picker",
+          "id": "hero_content_image",
+          "label": "Replacement image for hero copy"
+        },
+        {
+          "type": "text",
+          "id": "hero_content_image_alt",
+          "label": "Replacement image description"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_default_benefits",
+          "label": "Show four original benefit lines",
+          "default": true
+        },
+        {
           "type": "textarea",
           "id": "rating_text",
           "label": "Rating text (e.g. Rated 4.9 · 10,000+ Reviews)"
@@ -583,6 +613,23 @@ html.av-soursop-copy-guard [contenteditable] * {
           "id": "announcement_subheading",
           "label": "Soursop announcement subheading",
           "default": "Save up to 65% today"
+        }
+      ]
+    },
+    {
+      "type": "hero_benefit",
+      "name": "Hero icon + text",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Custom icon (optional)"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Benefit text",
+          "default": "New benefit"
         }
       ]
     },
