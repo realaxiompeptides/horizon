@@ -1,4 +1,37 @@
 {% render '00-cinnamon-berberine-page', product: product, editor: section %}
+{% if product.template_suffix == 'soursop' and request.design_mode == false %}
+<style>
+/* Soursop page only: discourage ordinary selection and copying without disabling form fields. */
+html.av-soursop-copy-guard body,
+html.av-soursop-copy-guard body *:not(input):not(textarea):not(select):not(option):not([contenteditable]):not([contenteditable] *) {
+  -webkit-user-select: none !important;
+  user-select: none !important;
+  -webkit-touch-callout: none !important;
+}
+html.av-soursop-copy-guard input,
+html.av-soursop-copy-guard textarea,
+html.av-soursop-copy-guard select,
+html.av-soursop-copy-guard [contenteditable],
+html.av-soursop-copy-guard [contenteditable] * {
+  -webkit-user-select: text !important;
+  user-select: text !important;
+  -webkit-touch-callout: default !important;
+}
+</style>
+<script>
+(() => {
+  if (document.documentElement.classList.contains('av-soursop-copy-guard')) return;
+  document.documentElement.classList.add('av-soursop-copy-guard');
+  const editable = (target) => target instanceof Element && !!target.closest('input, textarea, select, [contenteditable], [role="textbox"]');
+  document.addEventListener('copy', (event) => {
+    if (!editable(event.target)) event.preventDefault();
+  }, true);
+  document.addEventListener('contextmenu', (event) => {
+    if (!editable(event.target)) event.preventDefault();
+  }, true);
+})();
+</script>
+{% endif %}
 <style>
 /* Cinnamon page: review compactness + controls. Scoped to this section only. */
 #shopify-section-{{ section.id }} .av-cb__reviews{padding:30px 0 28px}
