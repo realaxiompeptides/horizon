@@ -1242,6 +1242,13 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
     .av-cb .av-cb__bundles .av-cb__bundle.is-active .av-cb__bundle-copy strong{color:#234D22!important}
     .av-cb .av-cb__bundles .av-cb__bundle:focus-visible{outline:3px solid #3E7139;outline-offset:3px}
     {% endif %}
+    {% if av_cb_product.template_suffix == 'soursop' %}
+    /* Only the Soursop hero's optional image/extra icon rows. */
+    .av-cb .av-cb__hero-copy-image{width:100%;max-width:760px;margin:0 0 24px}
+    .av-cb .av-cb__hero-copy-image img{display:block;width:100%;height:auto;border-radius:12px}
+    .av-cb .av-cb__benefit-check--custom-image{background:transparent;box-shadow:none;border-radius:0}
+    .av-cb .av-cb__benefit-check--custom-image img{display:block;width:100%;height:100%;object-fit:contain}
+    {% endif %}
   </style>
 
   <section class="av-cb__hero" id="av-cb-top"{% if av_cb_product.template_suffix == 'soursop' %} {{ av_cb_editor_hero_block.shopify_attributes }}{% endif %}>
@@ -1308,6 +1315,17 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
           <span class="av-cb__rating-text">{{ av_cb_rating_text }}</span>
         </div>
 
+        {% assign av_cb_use_hero_content_image = false %}
+        {% if av_cb_product.template_suffix == 'soursop' and av_cb_editor_hero_block.settings.hero_content_mode == 'image' and av_cb_editor_hero_block.settings.hero_content_image != blank %}
+          {% assign av_cb_use_hero_content_image = true %}
+        {% endif %}
+        {% if av_cb_use_hero_content_image %}
+          <h1 class="visually-hidden">{{ av_cb_display_title | escape }}</h1>
+          {% assign av_cb_hero_content_image_alt = av_cb_editor_hero_block.settings.hero_content_image_alt | default: av_cb_display_title %}
+          <div class="av-cb__hero-copy-image">
+            {{ av_cb_editor_hero_block.settings.hero_content_image | image_url: width: 1800 | image_tag: loading: 'eager', widths: '375,550,750,990,1320,1800', sizes: '(min-width: 1100px) 760px, (min-width: 750px) 48vw, calc(100vw - 36px)', alt: av_cb_hero_content_image_alt }}
+          </div>
+        {% else %}
         <h1 class="av-cb__title">{{ av_cb_display_title }}</h1>
 
         {% if av_cb_product.handle == 'soursop-softgels' %}
@@ -1325,6 +1343,11 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         {% endif %}
 
         <div class="av-cb__benefits">
+          {% assign av_cb_show_default_benefits = true %}
+          {% if av_cb_product.template_suffix == 'soursop' and av_cb_editor_hero_block.settings.show_default_benefits == false %}
+            {% assign av_cb_show_default_benefits = false %}
+          {% endif %}
+          {% if av_cb_show_default_benefits %}
           {% assign av_cb_benefits = av_cb_benefit_1 | append: '||' | append: av_cb_benefit_2 | append: '||' | append: av_cb_benefit_3 | append: '||' | append: av_cb_benefit_4 | split: '||' %}
           {% for benefit in av_cb_benefits %}
             <div class="av-cb__benefit">
@@ -1332,7 +1355,25 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
               {% if av_cb_product.handle == 'soursop-softgels' %}<div class="av-cb__benefit-richtext">{{ benefit }}</div>{% else %}<span>{{ benefit }}</span>{% endif %}
             </div>
           {% endfor %}
+          {% endif %}
+          {% if av_cb_product.template_suffix == 'soursop' %}
+            {% for benefit_block in editor.blocks %}
+              {% if benefit_block.type == 'hero_benefit' and benefit_block.settings.text != blank %}
+                <div class="av-cb__benefit" {{ benefit_block.shopify_attributes }}>
+                  {% if benefit_block.settings.icon != blank %}
+                    <span class="av-cb__benefit-check av-cb__benefit-check--custom-image" aria-hidden="true">
+                      {{ benefit_block.settings.icon | image_url: width: 96 | image_tag: loading: 'lazy', widths: '32,64,96', alt: '' }}
+                    </span>
+                  {% else %}
+                    <span class="av-cb__benefit-check" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none"><path d="m4.2 10.2 3.4 3.4 8.2-8.2" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                  {% endif %}
+                  <div class="av-cb__benefit-richtext">{{ benefit_block.settings.text }}</div>
+                </div>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
         </div>
+        {% endif %}
 
         {% if av_cb_show_sold %}<div class="av-cb__sold" data-av-cb-sold data-sold-start="12" data-sold-target="{{ av_cb_sold_percent }}" data-sold-suffix="{{ av_cb_sold_suffix | escape }}" style="--sold: {{ av_cb_sold_percent }}%;">
           <div class="av-cb__sold-row">
