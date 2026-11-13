@@ -948,6 +948,7 @@
 
 
     .av-cb__story-image-text{position:relative;max-width:960px;margin:26px auto 42px;overflow:hidden;border-radius:20px;background:var(--sit-bg,#F5F8F1);color:var(--sit-color,#1D3022);box-shadow:0 12px 32px rgba(31,66,31,.07)}
+    .av-cb__story-image-text--extra{max-width:1100px}
     .av-cb__story-image-text-media{width:100%;line-height:0}
     .av-cb__story-image-text-media img{display:block;width:100%;height:auto}
     .av-cb__story-image-text-copy{padding:25px clamp(22px,5vw,46px) 29px}
@@ -1663,7 +1664,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         {% assign av_cb_extra_bridge_heading = av_cb_extra_image_text_block.settings.heading %}
         {% assign av_cb_extra_bridge_body = av_cb_extra_image_text_block.settings.body %}
         {% if av_cb_extra_bridge_image != blank or av_cb_extra_bridge_heading != blank or av_cb_extra_bridge_body != blank or request.design_mode %}
-          <section class="av-cb__story-image-text{% if av_cb_extra_image_text_block.settings.text_position == 'overlay' %} av-cb__story-image-text--overlay{% endif %} av-cb__story-image-text--{{ av_cb_extra_image_text_block.settings.align }}" style="--sit-bg:{{ av_cb_extra_image_text_block.settings.background }};--sit-color:{{ av_cb_extra_image_text_block.settings.text_color }};" {{ av_cb_extra_image_text_block.shopify_attributes }}>
+          <section class="av-cb__story-image-text av-cb__story-image-text--extra{% if av_cb_extra_image_text_block.settings.text_position == 'overlay' %} av-cb__story-image-text--overlay{% endif %} av-cb__story-image-text--{{ av_cb_extra_image_text_block.settings.align }}" style="--sit-bg:{{ av_cb_extra_image_text_block.settings.background }};--sit-color:{{ av_cb_extra_image_text_block.settings.text_color }};" {{ av_cb_extra_image_text_block.shopify_attributes }}>
             {% if av_cb_extra_bridge_image != blank %}
               <div class="av-cb__story-image-text-media">
                 {{ av_cb_extra_bridge_image | image_url: width: 1800 | image_tag: loading: 'lazy', widths: '375,550,750,990,1320,1800', sizes: '(min-width: 1000px) 960px, calc(100vw - 36px)', alt: av_cb_extra_image_text_block.settings.image_alt }}
