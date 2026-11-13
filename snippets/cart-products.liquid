@@ -151,7 +151,7 @@
                 ref="cartItemRows[]"
                 data-parent-key="{{ item.parent_relationship.parent.key }}"
                 data-key="{{ item.key }}"
-                data-product-handle="{{ item.product.handle }}"
+                data-product-handle="{{ item.product.handle }}" data-av-ebook="{% if item.variant_id == 58170079510694 %}true{% else %}false{% endif %}"
               >
                 <td
                   class="cart-items__media"
@@ -326,7 +326,9 @@
                   </div>
 
                   <div class="cart-items__unit-price-wrapper">
-                    {%- if context == 'drawer' and item.product.handle == 'soursop-softgels' -%}
+                    {%- if context == 'drawer' and item.variant_id == 58170079510694 -%}
+                      <div class="avonent-ebook-cart-price">{% if item.final_line_price == 0 %}<strong>Free</strong> <s>{{ item.original_price | money }}</s>{% else %}{{ item.final_price | money }}{% endif %}</div>
+                    {%- elsif context == 'drawer' and item.product.handle == 'soursop-softgels' -%}
                       {%- liquid
                         assign av_pack_count = item.quantity
                         if item.selling_plan_allocation
@@ -1206,6 +1208,11 @@
 {% if context == 'drawer' %}
   <!-- AVONENT CART LINE FORCE OVERRIDES -->
   <style>
+    #cart-drawer tr.cart-items__table-row--full-width-variants[data-av-ebook="true"] { grid-template-areas:"media details empty" "media variants variants" "media quantity quantity" "media unit_price unit_price" "media error error" !important; }
+    #cart-drawer tr.cart-items__table-row--full-width-variants[data-av-ebook="true"] .cart-items__unit-price-wrapper { justify-self:end !important; margin-top:8px !important; }
+    #cart-drawer .avonent-ebook-cart-price strong { color:#355A38; }
+    #cart-drawer .avonent-ebook-cart-price s { color:#645c57; font-weight:400; }
+
     #cart-drawer .avonent-soursop-cart-rating { display:flex; flex-wrap:wrap; align-items:center; gap:5px 8px; margin-top:8px; color:#596269; font-size:12px; line-height:1.4; }
     #cart-drawer .avonent-soursop-cart-rating strong { color:#355A38; }
     #cart-drawer .avonent-soursop-cart-stars { position:relative; display:inline-block; flex:none; color:#DBE8D4; font-size:16px; letter-spacing:1px; white-space:nowrap; line-height:1; }
@@ -1216,7 +1223,7 @@
       grid-template-areas: "media details empty" "media variants variants" "media quantity quantity" "media unit_price unit_price" "media error error" !important;
     }
     #cart-drawer .cart-items__price { display: none !important; }
-    #cart-drawer tr.cart-items__table-row:not([data-product-handle="soursop-softgels"]):not([data-product-handle="ceylon-cinnamon-berberine-capsules"]) .cart-items__unit-price-wrapper { display: none !important; }
+    #cart-drawer tr.cart-items__table-row:not([data-product-handle="soursop-softgels"]):not([data-product-handle="ceylon-cinnamon-berberine-capsules"]):not([data-av-ebook="true"]) .cart-items__unit-price-wrapper { display: none !important; }
     #cart-drawer tr.cart-items__table-row--full-width-variants[data-product-handle="soursop-softgels"] .cart-items__unit-price-wrapper {
       justify-self: end !important;
       margin-top: 8px !important;
