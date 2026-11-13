@@ -1212,6 +1212,12 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
 .av-cb__photo-track figure{flex:0 0 180px;height:190px;margin:0;border-radius:14px;overflow:hidden;scroll-snap-align:start}.av-cb__photo-track img{width:100%;height:100%;object-fit:cover}
 .av-cb__review-card{flex:0 0 calc(50% - 8px);min-width:0;scroll-snap-align:start;background:white;border:1px solid #ddd;border-radius:18px;padding:28px;display:flex;flex-direction:column}
 .av-cb__review-rating{display:flex;align-items:center;gap:12px}.av-cb__review-score{font-size:19px;font-weight:800;color:#171513}.av-cb__review-stars{color:#ab531f;font-size:23px;letter-spacing:1px}.av-cb__review-card h3{font-size:23px;margin:20px 0 12px}.av-cb__review-card p{font-size:17px;line-height:1.65;white-space:normal}.av-cb__review-card footer{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;margin-top:auto;padding-top:22px;border-top:1px solid #eee;font-size:13px}.av-cb__review-card footer span{color:#ab531f;font-weight:700}.av-cb__review-tags{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}.av-cb__review-tag{display:flex;align-items:center;justify-content:center;min-height:38px;padding:7px 10px;border:1px solid #c86731;border-radius:999px;color:#b35421;background:#fff8f3;font-size:12px;font-weight:650;text-align:center}.av-cb__review-placeholder{display:grid;place-items:center;background:#e9dfd6;color:#65574d}
+{% if av_cb_product.template_suffix == 'soursop' %}
+.av-cb__reviews .av-cb__reviews-head>span,
+.av-cb__reviews .av-cb__review-stars{color:#557D4D}
+.av-cb__reviews .av-cb__review-tag{border-color:#557D4D;color:#557D4D;background:#F4F8F0}
+{% endif %}
+
 @media(max-width:600px){.av-cb__comparison{gap:12px;margin-top:76px}.av-cb__comparison-card{padding-top:86px;border-radius:14px}.av-cb__comparison-image{width:92px;height:108px;top:-56px}.av-cb__comparison-card h3{font-size:20px;padding:12px 8px 20px}.av-cb__comparison-row{font-size:13px;min-height:115px;padding:15px 8px}.av-cb__review-card{flex-basis:90%;padding:22px}.av-cb__photo-track figure{flex-basis:140px;height:155px}}
 
   </style>
