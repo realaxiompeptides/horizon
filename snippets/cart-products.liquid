@@ -300,7 +300,7 @@
                         </dl>
                       {%- endif -%}
 
-                      {%- if item.selling_plan_allocation -%}
+                      {%- if item.selling_plan_allocation and context != 'drawer' -%}
                         <p>{{ item.selling_plan_allocation.selling_plan.name }}</p>
                       {%- endif -%}
 
@@ -319,6 +319,20 @@
                   </div>
 
                   <div class="cart-items__unit-price-wrapper">
+                    {%- if context == 'drawer' and item.product.handle == 'soursop-softgels' -%}
+                      {%- liquid
+                        assign av_pack_count = item.quantity
+                        if item.selling_plan_allocation
+                          for bonus_item in cart.items
+                            if bonus_item.variant_id == 58243205922982 and bonus_item.final_line_price == 0
+                              assign av_pack_count = av_pack_count | plus: bonus_item.quantity
+                            endif
+                          endfor
+                        endif
+                        assign av_pack_price = item.final_line_price | times: 1.0 | divided_by: av_pack_count | round
+                      -%}
+                      <div>{{ av_pack_price | money }} per pack</div>
+                    {%- else -%}
                     {%- if context == 'drawer' and item.product.handle == 'ceylon-cinnamon-berberine-capsules' -%}
                       {%- liquid
                         assign avonent_effective_pack_count = item.quantity
@@ -382,6 +396,7 @@
                       {%- endif -%}
                     {%- endif -%}
 
+                    {%- endif -%}
                     {%- endif -%}
                   </div>
                 </td>
@@ -1184,6 +1199,19 @@
 {% if context == 'drawer' %}
   <!-- AVONENT CART LINE FORCE OVERRIDES -->
   <style>
+    #cart-drawer tr.cart-items__table-row--full-width-variants[data-product-handle="soursop-softgels"] {
+      grid-template-columns: 88px minmax(0, 1fr) 36px !important;
+      grid-template-areas: "media details empty" "media variants variants" "media quantity quantity" "media unit_price unit_price" "media error error" !important;
+    }
+    #cart-drawer .cart-items__price { display: none !important; }
+    #cart-drawer tr.cart-items__table-row:not([data-product-handle="soursop-softgels"]):not([data-product-handle="ceylon-cinnamon-berberine-capsules"]) .cart-items__unit-price-wrapper { display: none !important; }
+    #cart-drawer tr.cart-items__table-row--full-width-variants[data-product-handle="soursop-softgels"] .cart-items__unit-price-wrapper {
+      justify-self: end !important;
+      margin-top: 8px !important;
+      color: #645c57 !important;
+      font-weight: 400 !important;
+    }
+
     #cart-drawer tr.cart-items__table-row[data-product-handle="shipping-protection"] {
       display: none !important;
     }
