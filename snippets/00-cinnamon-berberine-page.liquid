@@ -1222,6 +1222,16 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
 
 @media(max-width:600px){.av-cb__comparison{gap:12px;margin-top:76px}.av-cb__comparison-card{padding-top:86px;border-radius:14px}.av-cb__comparison-image{width:92px;height:108px;top:-56px}.av-cb__comparison-card h3{font-size:20px;padding:12px 8px 20px}.av-cb__comparison-row{font-size:13px;min-height:115px;padding:15px 8px}.av-cb__review-card{flex-basis:90%;padding:22px}.av-cb__photo-track figure{flex-basis:140px;height:155px}}
 
+    {% if av_cb_product.template_suffix == 'soursop' %}
+    /* Only the chosen Soursop bundle uses the stronger active state. */
+    .av-cb .av-cb__bundles .av-cb__bundle.is-active{
+      background:#D7E9D0!important;
+      border:2.5px solid #3E7139!important;
+      box-shadow:0 0 0 3px rgba(62,113,57,.22),0 8px 20px rgba(37,79,36,.09)!important;
+    }
+    .av-cb .av-cb__bundles .av-cb__bundle.is-active .av-cb__bundle-copy strong{color:#234D22!important}
+    .av-cb .av-cb__bundles .av-cb__bundle:focus-visible{outline:3px solid #3E7139;outline-offset:3px}
+    {% endif %}
   </style>
 
   <section class="av-cb__hero" id="av-cb-top"{% if av_cb_product.template_suffix == 'soursop' %} {{ av_cb_editor_hero_block.shopify_attributes }}{% endif %}>
@@ -1338,12 +1348,12 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
           data-section-id="{{ editor.id }}"
           data-product-id="{{ av_cb_product.id }}"
           data-product-url="{{ av_cb_product.url }}"
-          data-quantity-default="1"
+          data-quantity-default="{% if av_cb_product.template_suffix == 'soursop' %}2{% else %}1{% endif %}"
         >
           <div class="visually-hidden" aria-live="assertive" role="status" aria-atomic="true" ref="liveRegion"></div>
         {% form 'product', av_cb_product, id: av_cb_form_id, class: 'av-cb__form', data-type: 'add-to-cart-form' %}
           <input type="hidden" name="id" ref="variantId" value="{{ av_cb_variant.id }}">
-          <input type="hidden" name="quantity" value="1" data-av-cb-quantity>
+          <input type="hidden" name="quantity" value="{% if av_cb_product.template_suffix == 'soursop' %}2{% else %}1{% endif %}" data-av-cb-quantity>
           {% if av_cb_subscription != blank %}
             <input type="hidden" name="selling_plan" value="{{ av_cb_subscription_plan_id }}" data-av-cb-selling-plan data-plan-id="{{ av_cb_subscription_plan_id }}">
           {% endif %}
@@ -1394,7 +1404,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
               {% endif %}
               {% assign av_cb_bundle_one_time_total = av_cb_one_time_unit_price | times: qty %}
               {% assign av_cb_bundle_one_time_compare_total = av_cb_one_time_compare_unit | times: qty %}
-              <button class="av-cb__bundle{% if qty == 1 %} is-active{% endif %}" type="button" data-av-cb-bundle="{{ qty }}" data-subscription-price="{{ av_cb_bundle_sub_total }}" data-subscription-compare="{{ av_cb_bundle_subscription_compare }}" data-one-time-price="{{ av_cb_bundle_one_time_total }}" data-one-time-compare="{{ av_cb_bundle_one_time_compare_total }}">
+              <button class="av-cb__bundle{% if av_cb_product.template_suffix == 'soursop' %}{% if qty == 2 %} is-active{% endif %}{% elsif qty == 1 %} is-active{% endif %}" type="button"{% if av_cb_product.template_suffix == 'soursop' %} aria-pressed="{% if qty == 2 %}true{% else %}false{% endif %}"{% endif %} data-av-cb-bundle="{{ qty }}" data-subscription-price="{{ av_cb_bundle_sub_total }}" data-subscription-compare="{{ av_cb_bundle_subscription_compare }}" data-one-time-price="{{ av_cb_bundle_one_time_total }}" data-one-time-compare="{{ av_cb_bundle_one_time_compare_total }}">
                 {% if qty == 2 and av_cb_bundle_2_badge != blank %}<span class="av-cb__badge" data-av-cb-subscription-perk>{{ av_cb_bundle_2_badge }}</span>{% endif %}
                 {% if qty == 3 and av_cb_bundle_3_badge != blank %}<span class="av-cb__badge" data-av-cb-subscription-perk>{{ av_cb_bundle_3_badge }}</span>{% endif %}
                 <span class="av-cb__bundle-thumb">
@@ -2308,6 +2318,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
 
         bundleButtons.forEach((btn) => {
           const values = valuesFor(btn);
+          if (isSoursopProduct) btn.setAttribute('aria-pressed', String(btn.classList.contains('is-active')));
           const priceEl = btn.querySelector('[data-av-cb-bundle-price]');
           const compareEl = btn.querySelector('[data-av-cb-bundle-compare]');
           const titleEl = btn.querySelector('[data-av-cb-bundle-title]');
