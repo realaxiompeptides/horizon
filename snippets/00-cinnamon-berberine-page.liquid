@@ -904,9 +904,9 @@
     .av-cb__bundle-unlock-check{width:21px;height:21px;border-radius:50%;background:#A84F1B;color:#fff!important;display:grid!important;place-items:center;flex:0 0 21px;font-size:12px!important;font-weight:900}
     .av-cb__bundle-unlock-copy{display:block!important;color:#211d1a!important;margin:0!important}
     .av-cb__bundle-unlock-copy small{display:block;color:#786d66;font-size:11px;font-weight:500;margin-top:2px}
-    /* Soursop Buy 3: compact actual e-book cover, title, and value on one row. */
+    /* Soursop bundle: shipping and e-book values on the right, without a cover thumbnail. */
     .av-cb__bundle-unlock-row--soursop-ebook{display:flex!important;align-items:center!important;gap:8px!important;flex-wrap:nowrap!important}
-    .av-cb__bundle-ebook-thumb{display:block!important;width:39px!important;height:52px!important;flex:0 0 39px!important;object-fit:cover;border-radius:5px;border:1px solid #c7dbc1;background:#fff}
+    .av-cb__bundle-unlock-row--soursop-shipping .av-cb__bundle-unlock-copy{flex:1 1 auto;min-width:0}
     .av-cb__bundle-ebook-name{display:block!important;min-width:0;flex:1 1 auto;color:#20351e;font-size:13px!important;font-weight:800!important;line-height:1.25!important}
     .av-cb__bundle-ebook-value{display:block!important;flex:0 0 auto;margin-left:auto;color:#527b4e;font-size:12px!important;font-weight:750!important;white-space:nowrap}
 
@@ -1431,18 +1431,16 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
                 {% if qty >= 2 %}
                   <span class="av-cb__bundle-unlock" data-av-cb-bundle-unlock hidden>
                     <span class="av-cb__bundle-unlock-title">{% if av_cb_product.template_suffix == 'soursop' %}{{ av_cb_gift_header | escape }}{% else %}Gifts Unlocked{% endif %}</span>
-                    <span class="av-cb__bundle-unlock-row">
+                    <span class="av-cb__bundle-unlock-row{% if av_cb_product.template_suffix == 'soursop' %} av-cb__bundle-unlock-row--soursop-shipping{% endif %}">
                       <span class="av-cb__bundle-unlock-check" aria-hidden="true">✓</span>
                       <span class="av-cb__bundle-unlock-copy">{% if av_cb_product.template_suffix == 'soursop' %}{{ av_cb_gift_shipping | escape }}{% else %}FREE Shipping{% endif %}</span>
+                      {% if av_cb_product.template_suffix == 'soursop' %}<span class="av-cb__bundle-ebook-value">$4.95 value</span>{% endif %}
                     </span>
                     {% if qty == 3 %}
                       {% if av_cb_product.template_suffix == 'soursop' %}
                         {% assign av_cb_soursop_ebook_product = all_products['natures-forgotten-remedies'] %}
                         <span class="av-cb__bundle-unlock-row av-cb__bundle-unlock-row--soursop-ebook">
                           <span class="av-cb__bundle-unlock-check" aria-hidden="true">✓</span>
-                          {% if av_cb_soursop_ebook_product.featured_image != blank %}
-                            {{ av_cb_soursop_ebook_product.featured_image | image_url: width: 120 | image_tag: class: 'av-cb__bundle-ebook-thumb', loading: 'lazy', alt: 'Nature’s Forgotten Remedies e-book cover' }}
-                          {% endif %}
                           <span class="av-cb__bundle-ebook-name">Nature’s Forgotten Remedies</span>
                           <span class="av-cb__bundle-ebook-value">{{ av_cb_soursop_ebook_product.price | money }} value</span>
                         </span>
