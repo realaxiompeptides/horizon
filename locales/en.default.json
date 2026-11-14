@@ -372,6 +372,13 @@
         "shipping_method_recurring_shipments_group_title": {
           "one": "Standard Shipment",
           "other": "Standard Shipment"
+        },
+        "subscription_delivery_description": {
+          "subscription_delivery_frequency": {
+            "month": {
+              "one": "per delivery"
+            }
+          }
         }
       },
       "payment": {
