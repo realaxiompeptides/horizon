@@ -151,7 +151,7 @@
                 ref="cartItemRows[]"
                 data-parent-key="{{ item.parent_relationship.parent.key }}"
                 data-key="{{ item.key }}"
-                data-product-handle="{{ item.product.handle }}" data-av-ebook="{% if item.variant_id == 58170079510694 %}true{% else %}false{% endif %}"
+                data-product-handle="{{ item.product.handle }}" data-av-ebook="{% if item.variant_id == 58170079510694 or item.variant_id == 58243205922982 %}true{% else %}false{% endif %}"
               >
                 <td
                   class="cart-items__media"
@@ -327,7 +327,7 @@
                   </div>
 
                   <div class="cart-items__unit-price-wrapper">
-                    {%- if context == 'drawer' and item.variant_id == 58170079510694 -%}
+                    {%- if context == 'drawer' and item.variant_id == 58170079510694 or item.variant_id == 58243205922982 -%}
                       <div class="avonent-ebook-cart-price">{% if item.final_line_price == 0 %}<strong>Free</strong> <s>{{ item.original_price | money }}</s>{% else %}{{ item.final_price | money }}{% endif %}</div>
                     {%- elsif context == 'drawer' and item.product.handle == 'soursop-softgels' -%}
                       {%- liquid
