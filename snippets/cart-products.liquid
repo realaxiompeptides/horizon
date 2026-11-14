@@ -328,7 +328,7 @@
 
                   <div class="cart-items__unit-price-wrapper">
                     {%- if context == 'drawer' and item.variant_id == 58170079510694 or item.variant_id == 58243205922982 -%}
-                      <div class="avonent-ebook-cart-price">{% if item.final_line_price == 0 %}<strong>Free</strong> <s>{{ item.original_price | money }}</s>{% else %}{{ item.final_price | money }}{% endif %}</div>
+                      <div class="avonent-ebook-cart-price">{% if item.final_line_price == 0 %}<strong>Free</strong> <s>{% if item.variant_id == 58243205922982 %}{{ item.original_line_price | money }}{% else %}{{ item.original_price | money }}{% endif %}</s>{% else %}{{ item.final_price | money }}{% endif %}</div>
                     {%- elsif context == 'drawer' and item.product.handle == 'soursop-softgels' -%}
                       {%- liquid
                         assign av_pack_count = item.quantity
