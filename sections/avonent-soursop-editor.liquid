@@ -348,6 +348,58 @@ html.av-soursop-copy-guard [contenteditable] * {
           "label": "Product name / main headline"
         },
         {
+          "type": "header",
+          "content": "Product title image"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_title_image",
+          "label": "Replace product name with an image",
+          "default": false
+        },
+        {
+          "type": "image_picker",
+          "id": "title_image",
+          "label": "Product name image",
+          "info": "Use a wide, tightly cropped PNG or WebP, ideally around 1600 × 160 px. Avoid blank padding inside the image."
+        },
+        {
+          "type": "text",
+          "id": "title_image_alt",
+          "label": "Image description",
+          "info": "Enter the product name shown in the image. Defaults to the product headline."
+        },
+        {
+          "type": "range",
+          "id": "title_image_width",
+          "label": "Image width",
+          "min": 30,
+          "max": 100,
+          "step": 5,
+          "unit": "%",
+          "default": 100
+        },
+        {
+          "type": "range",
+          "id": "title_image_height",
+          "label": "Maximum image height — desktop",
+          "min": 20,
+          "max": 160,
+          "step": 5,
+          "unit": "px",
+          "default": 60
+        },
+        {
+          "type": "range",
+          "id": "title_image_height_mobile",
+          "label": "Maximum image height — mobile",
+          "min": 20,
+          "max": 100,
+          "step": 5,
+          "unit": "px",
+          "default": 40
+        },
+        {
           "type": "textarea",
           "id": "story_heading",
           "label": "Heading above benefit checkmarks"

@@ -872,6 +872,9 @@
     .av-cb__formula-bottle b{font-size:38px;line-height:1}.av-cb__formula-bottle span{font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin-top:10px;color:var(--deep)}.av-cb__formula-bottle small{margin-top:16px;color:var(--muted)}
     .av-cb__eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--deep);margin-bottom:12px}
     .av-cb__eyebrow:before{content:"";width:28px;height:3px;border-radius:99px;background:var(--blue)}
+    .av-cb__title.av-cb__title--image{line-height:0}
+    .av-cb__title-image{display:block;width:var(--title-image-width);height:auto;max-height:var(--title-image-height);object-fit:contain;object-position:left center}
+    @media(max-width:600px){.av-cb__title-image{max-height:var(--title-image-height-mobile)}}
     .av-cb__title{font-size:clamp(32px,4vw,50px);line-height:1.02;letter-spacing:-.035em;margin:0 0 13px;font-weight:760;color:#171513;max-width:760px}.av-cb__hero-description{max-width:680px;margin:0 0 20px;color:#57504b;font-size:16px;line-height:1.58;font-weight:450}.av-cb__hero-description br+br{display:block;content:"";margin-top:9px}
     .av-cb__subtitle{font-size:18px;line-height:1.55;color:var(--muted);margin:0 0 22px;max-width:650px}
     .av-cb__chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px}.av-cb__chip{padding:9px 12px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:12px;font-weight:700}
@@ -1326,7 +1329,14 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
             {{ av_cb_editor_hero_block.settings.hero_content_image | image_url: width: 1800 | image_tag: loading: 'eager', widths: '375,550,750,990,1320,1800', sizes: '(min-width: 1100px) 760px, (min-width: 750px) 48vw, calc(100vw - 36px)', alt: av_cb_hero_content_image_alt }}
           </div>
         {% else %}
-        <h1 class="av-cb__title">{{ av_cb_display_title }}</h1>
+        {% if av_cb_product.template_suffix == 'soursop' and av_cb_editor_hero_block.settings.use_title_image and av_cb_editor_hero_block.settings.title_image != blank %}
+          {% assign av_cb_title_image_alt = av_cb_editor_hero_block.settings.title_image_alt | default: av_cb_display_title %}
+          <h1 class="av-cb__title av-cb__title--image" style="--title-image-width: {{ av_cb_editor_hero_block.settings.title_image_width | default: 100 }}%; --title-image-height: {{ av_cb_editor_hero_block.settings.title_image_height | default: 60 }}px; --title-image-height-mobile: {{ av_cb_editor_hero_block.settings.title_image_height_mobile | default: 40 }}px;">
+            {{ av_cb_editor_hero_block.settings.title_image | image_url: width: 1800 | image_tag: class: 'av-cb__title-image', loading: 'eager', widths: '375,550,750,1100,1500,1800', sizes: '(min-width: 900px) 50vw, 100vw', alt: av_cb_title_image_alt }}
+          </h1>
+        {% else %}
+          <h1 class="av-cb__title">{{ av_cb_display_title }}</h1>
+        {% endif %}
 
         {% if av_cb_product.handle == 'soursop-softgels' %}
           <div class="av-cb__soursop-story">
