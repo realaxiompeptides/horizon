@@ -271,6 +271,16 @@ html.av-soursop-copy-guard [contenteditable] * {
   }
 </style>
 
+{% assign bundle_style_block = section.blocks | where: 'type', 'hero' | first %}
+<style>
+#shopify-section-{{ section.id }} .av-cb__bundle-copy{min-width:0}
+#shopify-section-{{ section.id }} .av-cb__bundle-copy strong{font-size:{{ bundle_style_block.settings.bundle_title_size }}px;line-height:1.25;font-weight:750;overflow-wrap:anywhere}
+#shopify-section-{{ section.id }} .av-cb__bundle-copy .av-cb__bundle-description{font-size:{{ bundle_style_block.settings.bundle_description_size }}px;line-height:1.4;font-weight:500;color:#333;margin-top:5px;white-space:normal}
+#shopify-section-{{ section.id }} [data-av-cb-bundle-subtitle]{font-size:{{ bundle_style_block.settings.bundle_savings_size }}px;line-height:1.35;margin-top:4px}
+#shopify-section-{{ section.id }} .av-cb__bundle-price strong{font-size:{{ bundle_style_block.settings.bundle_price_size }}px;line-height:1.25}
+#shopify-section-{{ section.id }} .av-cb__bundle{font-family:inherit}
+</style>
+
 {% schema %}
 {
   "name": "Soursop product editor",
@@ -631,6 +641,71 @@ html.av-soursop-copy-guard [contenteditable] * {
           "id": "sub_savings_3",
           "label": "Subscription bundle 3 savings",
           "default": "You save 70%"
+        },
+        {
+          "type": "header",
+          "content": "Bundle descriptions and font sizes"
+        },
+        {
+          "type": "text",
+          "id": "bundle_description_1",
+          "label": "Bundle 1 description",
+          "default": "Start your daily routine.",
+          "info": "Shown under the quantity. Clear this field to hide the description."
+        },
+        {
+          "type": "text",
+          "id": "bundle_description_2",
+          "label": "Bundle 2 description",
+          "default": "Stock up and stay consistent.",
+          "info": "Shown under the quantity. Clear this field to hide the description."
+        },
+        {
+          "type": "text",
+          "id": "bundle_description_3",
+          "label": "Bundle 3 description",
+          "default": "Our best-value bundle.",
+          "info": "Shown under the quantity. Clear this field to hide the description."
+        },
+        {
+          "type": "range",
+          "id": "bundle_title_size",
+          "label": "Quantity font size",
+          "min": 14,
+          "max": 26,
+          "step": 1,
+          "unit": "px",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "bundle_description_size",
+          "label": "Description font size",
+          "min": 12,
+          "max": 20,
+          "step": 1,
+          "unit": "px",
+          "default": 15
+        },
+        {
+          "type": "range",
+          "id": "bundle_savings_size",
+          "label": "Savings font size",
+          "min": 11,
+          "max": 18,
+          "step": 1,
+          "unit": "px",
+          "default": 13
+        },
+        {
+          "type": "range",
+          "id": "bundle_price_size",
+          "label": "Price font size",
+          "min": 16,
+          "max": 28,
+          "step": 1,
+          "unit": "px",
+          "default": 21
         },
         {
           "type": "text",

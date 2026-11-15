@@ -1478,6 +1478,13 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
                 </span>
                 <span class="av-cb__bundle-copy">
                   <strong data-av-cb-bundle-title data-one-time-title="{% if av_cb_product.template_suffix == 'soursop' %}{{ av_cb_bundle_title | escape }}{% elsif qty == 1 %}Buy 1{% elsif qty == 2 %}Buy 2{% else %}Buy 3{% endif %}" data-subscription-title="{% if av_cb_product.template_suffix == 'soursop' %}{{ av_cb_sub_bundle_title | escape }}{% elsif qty == 1 %}Buy 1{% elsif qty == 2 %}Buy 2 Get 1 FREE{% else %}Buy 3 Get 2 FREE{% endif %}">{% if av_cb_product.template_suffix == 'soursop' %}{{ av_cb_sub_bundle_title | escape }}{% elsif qty == 1 %}Buy 1{% elsif qty == 2 %}Buy 2 Get 1 FREE{% else %}Buy 3 Get 2 FREE{% endif %}</strong>
+                  {% if av_cb_product.template_suffix == 'soursop' %}
+                    {% assign av_cb_description_key = 'bundle_description_' | append: qty %}
+                    {% assign av_cb_bundle_description = av_cb_editor_hero_block.settings[av_cb_description_key] | strip %}
+                    {% if av_cb_bundle_description != blank %}
+                      <span class="av-cb__bundle-description">{{ av_cb_bundle_description | escape }}</span>
+                    {% endif %}
+                  {% endif %}
                   <span data-av-cb-bundle-subtitle data-one-time-subtitle="{% if av_cb_product.template_suffix == 'soursop' %}{{ av_cb_bundle_onetime_subtitle | escape }}{% endif %}" data-subscription-subtitle="{{ av_cb_bundle_savings_text | escape }}">{{ av_cb_bundle_savings_text | escape }}</span>
                 </span>
                 <span class="av-cb__bundle-price">
