@@ -255,13 +255,13 @@
         if content_block.settings.sub_title_3 != blank
           assign av_cb_sub_title_3 = content_block.settings.sub_title_3
         endif
-        if content_block.settings.sub_savings_1 != blank
+        if content_block.settings.sub_savings_1 != blank or av_cb_product.template_suffix == 'soursop'
           assign av_cb_sub_savings_1 = content_block.settings.sub_savings_1
         endif
-        if content_block.settings.sub_savings_2 != blank
+        if content_block.settings.sub_savings_2 != blank or av_cb_product.template_suffix == 'soursop'
           assign av_cb_sub_savings_2 = content_block.settings.sub_savings_2
         endif
-        if content_block.settings.sub_savings_3 != blank
+        if content_block.settings.sub_savings_3 != blank or av_cb_product.template_suffix == 'soursop'
           assign av_cb_sub_savings_3 = content_block.settings.sub_savings_3
         endif
         if content_block.settings.announcement_heading != blank
@@ -1485,7 +1485,9 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
                       <span class="av-cb__bundle-description">{{ av_cb_bundle_description | escape }}</span>
                     {% endif %}
                   {% endif %}
+                  {% if av_cb_product.template_suffix != 'soursop' or av_cb_editor_hero_block.settings.show_bundle_savings %}
                   <span data-av-cb-bundle-subtitle data-one-time-subtitle="{% if av_cb_product.template_suffix == 'soursop' %}{{ av_cb_bundle_onetime_subtitle | escape }}{% endif %}" data-subscription-subtitle="{{ av_cb_bundle_savings_text | escape }}">{{ av_cb_bundle_savings_text | escape }}</span>
+                  {% endif %}
                 </span>
                 <span class="av-cb__bundle-price">
                   <strong data-av-cb-bundle-price="{{ qty }}">{{ av_cb_bundle_sub_total | money }}</strong>

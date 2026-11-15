@@ -66,16 +66,17 @@
             "bundle_description_1": "Kickstart cancer killer cells",
             "bundle_description_2": "Stack up for steady levels.",
             "bundle_description_3": "Perfect for long term reversal.",
-            "bundle_title_size": 20,
-            "bundle_description_size": 15,
+            "bundle_title_size": 17,
+            "bundle_description_size": 13,
             "bundle_savings_size": 13,
-            "bundle_price_size": 21,
+            "bundle_price_size": 18,
             "gift_header": "Gifts Unlocked",
             "gift_shipping": "FREE Shipping",
             "gift_ebook": "FREE E-Book",
             "gift_ebook_note": "Digital soursop guide",
             "announcement_heading": "FALL SALE",
-            "announcement_subheading": "Save up to 65% today"
+            "announcement_subheading": "Save up to 65% today",
+            "show_bundle_savings": false
           }
         },
         "results": {
