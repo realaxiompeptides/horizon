@@ -2220,6 +2220,20 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
     <div class="av-cb__faq-wrap">
       <h2 class="av-cb__faq-heading">{{ av_cb_faq_heading }}</h2>
       <div class="av-cb__faq-list">
+        {% if av_cb_product.template_suffix == 'soursop' and editor != blank %}
+          {% for faq_block in editor.blocks %}
+            {% if faq_block.type == 'faq_item' and faq_block.settings.show_item %}
+              {% assign faq_q = faq_block.settings.heading | strip %}
+              {% assign faq_a = faq_block.settings.answer | strip %}
+              {% if faq_q != blank and faq_a != blank %}
+                <details class="av-cb__faq-item" {{ faq_block.shopify_attributes }}>
+                  <summary><span>{{ faq_q | escape }}</span><span class="av-cb__faq-plus" aria-hidden="true"></span></summary>
+                  <div class="av-cb__faq-answer">{{ faq_a | escape | newline_to_br }}</div>
+                </details>
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+        {% else %}
         {% for i in (1..6) %}
           {% case i %}
             {% when 1 %}{% assign faq_q = av_cb_faq_1_q %}{% assign faq_a = av_cb_faq_1_a %}
@@ -2236,6 +2250,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
             </details>
           {% endif %}
         {% endfor %}
+        {% endif %}
       </div>
     </div>
   </section>
