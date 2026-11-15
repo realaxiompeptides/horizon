@@ -20,6 +20,12 @@
             "show_choice_badge": true,
             "choice_badge_text": "#1 Choice for Holistic Practitioners",
             "display_title": "Soursop Cancer Softgels",
+            "use_title_image": false,
+            "title_image": "shopify://shop_images/IMG_3695.jpg",
+            "title_image_alt": "",
+            "title_image_width": 100,
+            "title_image_height": 60,
+            "title_image_height_mobile": 40,
             "story_heading": "",
             "hero_description": "Have cancer? Has chemo weakened your immune system? Constantly afraid the cancer will return?\n\nJust 2 softgels a day to support your body’s natural ability to fight microscopic cancer cells, using the power of soursop leaves that Jamaican families have trusted for generations.",
             "hero_content_mode": "text",
@@ -307,6 +313,30 @@
             "faq_heading": "Frequently Asked Questions"
           }
         },
+        "faq_item_medication": {
+          "type": "faq_item",
+          "settings": {
+            "heading": "Should I stop my medication?",
+            "answer": "No. If you're on prescription medication, we recommend speaking with your doctor before making any changes. These capsules are designed to support your body naturally, not replace medical treatment.",
+            "show_item": true
+          }
+        },
+        "faq_item_supplements": {
+          "type": "faq_item",
+          "settings": {
+            "heading": "Can I take it with other supplements?",
+            "answer": "Yes. Avonent Soursop Leaf can be used alongside your existing supplement routine. Just check with your doctor if you’re taking blood pressure medications, diabetes medications, or blood thinners.",
+            "show_item": true
+          }
+        },
+        "faq_item_guarantee": {
+          "type": "faq_item",
+          "settings": {
+            "heading": "What if it doesn’t work for me?",
+            "answer": "We stand behind our formula with a 90-day money-back guarantee. Try it for yourself, and if you’re not satisfied, simply email us within 90 days for a full refund. No complicated returns, no endless questions, and no hassle. Your purchase is protected.",
+            "show_item": true
+          }
+        },
         "details": {
           "type": "details",
           "settings": {
@@ -415,30 +445,6 @@
             "tag_1": "Taking Control",
             "tag_2": "Peace of Mind",
             "verified": true
-          }
-        },
-        "faq_item_medication": {
-          "type": "faq_item",
-          "settings": {
-            "heading": "Should I stop my medication?",
-            "answer": "No. If you're on prescription medication, we recommend speaking with your doctor before making any changes. These capsules are designed to support your body naturally, not replace medical treatment.",
-            "show_item": true
-          }
-        },
-        "faq_item_supplements": {
-          "type": "faq_item",
-          "settings": {
-            "heading": "Can I take it with other supplements?",
-            "answer": "Yes. Avonent Soursop Leaf can be used alongside your existing supplement routine. Just check with your doctor if you’re taking blood pressure medications, diabetes medications, or blood thinners.",
-            "show_item": true
-          }
-        },
-        "faq_item_guarantee": {
-          "type": "faq_item",
-          "settings": {
-            "heading": "What if it doesn’t work for me?",
-            "answer": "We stand behind our formula with a 90-day money-back guarantee. Try it for yourself, and if you’re not satisfied, simply email us within 90 days for a full refund. No complicated returns, no endless questions, and no hassle. Your purchase is protected.",
-            "show_item": true
           }
         }
       },
