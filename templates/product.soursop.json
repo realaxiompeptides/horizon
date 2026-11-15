@@ -60,6 +60,7 @@
             "sub_title_1": "Buy 1",
             "sub_title_2": "Buy 2 Get 1 FREE",
             "sub_title_3": "Buy 3 Get 2 FREE",
+            "show_bundle_savings": false,
             "sub_savings_1": "",
             "sub_savings_2": "",
             "sub_savings_3": "",
@@ -75,8 +76,7 @@
             "gift_ebook": "FREE E-Book",
             "gift_ebook_note": "Digital soursop guide",
             "announcement_heading": "FALL SALE",
-            "announcement_subheading": "Save up to 65% today",
-            "show_bundle_savings": false
+            "announcement_subheading": "Save up to 65% today"
           }
         },
         "results": {
@@ -171,11 +171,11 @@
           "settings": {
             "carousel_heading": "Why Our Soursop Is Different",
             "carousel_1_image": "shopify://shop_images/IMG_3463.jpg",
-            "carousel_1_title": "Real Jamaican Soursop",
-            "carousel_1_body": "Many brands get their soursop from mass produced farms in Vietnam and the Philippines, where years of heavy farming can drain the soil of key minerals and nutrients. At Avonent, we take a different approach by harvesting our soursop leaves from trees over 50 years old, growing in the rich, natural soil of the Jamaican rainforest.",
+            "carousel_1_title": "A Simpler Daily Routine",
+            "carousel_1_body": "Cancer treatment can mean hours in the hospital, exhausting appointments, and difficult recovery days. Avonent takes just two softgels with water each day. No needles, infusions, or extra appointments to take your supplement.",
             "carousel_2_image": "shopify://shop_images/10ACC725-945E-4C0B-94FF-77D93AEB7466.png",
             "carousel_2_title": "365 Day Fermentation Process",
-            "carousel_2_body": "Most brands simply dry their soursop leaves and put them into softgels. At Avonent, we take a different approach. Our leaves undergo 365 days of fermentation to help break down plant fibers and release natural compounds, including antioxidants. Because your health deserves more than basic leaf powder.",
+            "carousel_2_body": "Most brands simply dry their soursop leaves and put them into softgels. At Avonent, we take a different approach. Our leaves undergo 365 days of fermentation to help break down plant fibers and release natural compounds, including antioxidants.Because your health deserves more than basic leaf powder.",
             "carousel_3_image": "shopify://shop_images/F5977AE3-91AC-4299-B448-A313AA47E548.png",
             "carousel_3_title": "One Plant. Nothing Unnecessary.",
             "carousel_3_body": "Many soursop products are mixed with sweeteners, flavors, preservatives, or extra herbs. Ours keeps it simple with pure soursop leaf in easy daily softgels. Nothing extra. Nothing your body does not need.",
