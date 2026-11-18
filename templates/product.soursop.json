@@ -128,7 +128,7 @@
           "type": "story_continuation",
           "disabled": true,
           "settings": {
-            "show_section": true,
+            "show_section": false,
             "position": "after_trust",
             "image": "shopify://shop_images/1201E8CB-A8BB-449C-8717-E3F0A3B6C76D.png",
             "eyebrow": "",
@@ -141,7 +141,7 @@
         "story_image_text_extra": {
           "type": "story_image_text_extra",
           "settings": {
-            "show_section": true,
+            "show_section": false,
             "image": "shopify://shop_images/avonent-soursop-story-full-width.png",
             "image_alt": "Vintage soursop story with illustrated photograph and text",
             "heading": "",
@@ -484,6 +484,8 @@
         "review_5"
       ],
       "settings": {
+        "sr_heading": "Soursop Leaf Softgels",
+        "sr_intro": "Two softgels provide 1,000 mg of soursop leaf per serving.",
         "reviews_heading": "Real stories. Everyday routines.",
         "reviews_intro": "Experiences shared by Avonent customers.",
         "trust_image": "shopify://shop_images/1FA0CA01-7E0B-48B4-BA27-C66E6A6F100B.png",
