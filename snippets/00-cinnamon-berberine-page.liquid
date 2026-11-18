@@ -1,5 +1,11 @@
 {% liquid
   assign av_cb_product = product
+  assign av_cb_international_soursop_shipping = false
+  if av_cb_product.template_suffix == 'soursop'
+    if localization.country.iso_code == 'CA' or localization.country.iso_code == 'GB'
+      assign av_cb_international_soursop_shipping = true
+    endif
+  endif
   assign av_cb_hero_image = product.featured_image
   assign av_cb_variant = av_cb_product.selected_or_first_available_variant
   assign av_cb_form_id = 'AvonentCinnamonBerberineForm-' | append: av_cb_product.id
@@ -902,7 +908,7 @@
     .av-cb__low-stock-line{display:flex;align-items:center;gap:12px;margin:7px 0 18px;color:var(--deep);font-size:16px;font-weight:850}.av-cb__low-stock-line:before,.av-cb__low-stock-line:after{content:"";height:2px;background:#e7c2aa;flex:1}.av-cb__low-stock-line span{white-space:nowrap}
     .av-cb__bundles{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:14px}.av-cb__bundle{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;position:relative;border:1.5px solid #e4c8b7;border-radius:16px;padding:15px 16px;background:#fff;cursor:pointer;text-align:left;transition:.18s ease}.av-cb__bundle:hover,.av-cb__bundle.is-active{border-color:var(--blue);box-shadow:0 0 0 2px rgba(168,79,27,.10)}.av-cb__bundle.is-active{background:#fff8f3}.av-cb__bundle-thumb{width:54px;height:54px;border-radius:10px;background:#fff4ec;border:1px solid #ead3c4;display:grid;place-items:center;overflow:hidden}.av-cb__bundle-thumb img{width:100%;height:100%;object-fit:contain}.av-cb__bundle-thumb-fallback{font-size:9px;font-weight:900;color:var(--deep);letter-spacing:.05em;text-align:center;line-height:1.1}.av-cb__bundle-copy strong{display:block;font-size:17px;color:#111}.av-cb__bundle-copy span{display:block;font-size:12px;color:var(--muted);margin-top:3px}.av-cb__bundle-price{text-align:right}.av-cb__bundle-price strong{display:block;color:var(--blue);font-size:18px}.av-cb__bundle-price s{display:block;color:#111;font-size:13px;margin-top:2px;opacity:.78}.av-cb__badge{position:absolute!important;top:-11px;right:14px;background:var(--blue);color:#fff!important;border-radius:999px;padding:4px 10px;font-size:10px!important;font-weight:850;text-transform:uppercase;letter-spacing:.04em}
     .av-cb__bundle-unlock{display:none!important;grid-column:1/-1;border-top:1px solid #eadfd8;margin-top:2px;padding-top:12px}
-    .av-cb__bundle-unlock[hidden]{display:none!important}
+    .av-cb__bundle-unlock[hidden],.av-cb__bundle-unlock-row[hidden],.av-cb__badge[hidden]{display:none!important}
     .av-cb__bundle.is-active .av-cb__bundle-unlock:not([hidden]){display:block!important}
     .av-cb__bundle-unlock-title{display:block!important;font-size:10.5px!important;font-weight:850!important;letter-spacing:.09em;text-transform:uppercase;color:#7D3612!important;margin:0 0 5px!important}
     .av-cb__bundle-unlock-row{display:flex!important;align-items:center;gap:9px;color:#211d1a!important;font-size:13px!important;line-height:1.3;font-weight:750;margin:0!important;padding:6px 0}
@@ -1496,10 +1502,10 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
                 {% if qty >= 2 %}
                   <span class="av-cb__bundle-unlock" data-av-cb-bundle-unlock hidden>
                     <span class="av-cb__bundle-unlock-title">{% if av_cb_product.template_suffix == 'soursop' %}{{ av_cb_gift_header | escape }}{% else %}Gifts Unlocked{% endif %}</span>
-                    <span class="av-cb__bundle-unlock-row{% if av_cb_product.template_suffix == 'soursop' %} av-cb__bundle-unlock-row--soursop-shipping{% endif %}">
+                    <span class="av-cb__bundle-unlock-row{% if av_cb_product.template_suffix == 'soursop' %} av-cb__bundle-unlock-row--soursop-shipping{% endif %}" data-av-cb-shipping-perk>
                       <span class="av-cb__bundle-unlock-check" aria-hidden="true">✓</span>
                       <span class="av-cb__bundle-unlock-copy">{% if av_cb_product.template_suffix == 'soursop' %}{{ av_cb_gift_shipping | escape }}{% else %}FREE Shipping{% endif %}</span>
-                      {% if av_cb_product.template_suffix == 'soursop' %}<span class="av-cb__bundle-ebook-value">$4.95 value</span>{% endif %}
+                      {% if av_cb_product.template_suffix == 'soursop' and av_cb_international_soursop_shipping == false %}<span class="av-cb__bundle-ebook-value">$4.95 value</span>{% endif %}
                     </span>
                     {% if qty == 3 %}
                       {% if av_cb_product.template_suffix == 'soursop' %}
@@ -1562,7 +1568,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
 
         {% if av_cb_subscription != blank %}
           <button class="av-cb__purchase-toggle" type="button" data-av-cb-purchase-toggle aria-pressed="false">
-            <span data-av-cb-purchase-toggle-text>One-Time Purchase <strong data-av-cb-one-time-toggle-price>{{ av_cb_one_time_unit_price | money }}</strong> + $4.95 Shipping</span>
+            <span data-av-cb-purchase-toggle-text>One-Time Purchase <strong data-av-cb-one-time-toggle-price>{{ av_cb_one_time_unit_price | money }}</strong>{% if av_cb_international_soursop_shipping %} + Shipping at checkout{% else %} + $4.95 Shipping{% endif %}</span>
           </button>
         {% endif %}
       </div>
@@ -2408,6 +2414,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       const variantInput = root.querySelector('input[ref="variantId"]');
       const bonusVariantId = Number(root.dataset.bonusVariantId || 0);
       const isSoursopProduct = {% if av_cb_product.template_suffix == 'soursop' %}true{% else %}false{% endif %};
+      const isInternationalSoursopShipping = {{ av_cb_international_soursop_shipping | json }};
       const bundleButtons = Array.from(root.querySelectorAll('[data-av-cb-bundle]'));
       const subscriptionPerks = Array.from(root.querySelectorAll('[data-av-cb-subscription-perk]'));
       const bundleUnlocks = Array.from(root.querySelectorAll('[data-av-cb-bundle-unlock]'));
@@ -2466,15 +2473,24 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         setCompare(topCompare, values.compare, values.price);
         setCompare(btnCompare, values.compare, values.price);
 
-        subscriptionPerks.forEach(perk => { perk.hidden = !(isSubscription || isSoursopProduct); });
+        const showShippingPerks = isSubscription || (isSoursopProduct && !isInternationalSoursopShipping);
+        subscriptionPerks.forEach(perk => { perk.hidden = !showShippingPerks; });
         bundleUnlocks.forEach(unlock => {
           const card = unlock.closest('[data-av-cb-bundle]');
-          unlock.hidden = !(card && card.classList.contains('is-active') && (isSubscription || isSoursopProduct));
+          const showEbook = isInternationalSoursopShipping && card?.dataset.avCbBundle === '3';
+          const shippingPerk = unlock.querySelector('[data-av-cb-shipping-perk]');
+          if (shippingPerk) shippingPerk.hidden = !showShippingPerks;
+          unlock.hidden = !(card?.classList.contains('is-active') && (showShippingPerks || showEbook));
         });
 
         if (purchaseToggleText) {
           if (isSubscription) {
-            const shippingNote = isSoursopProduct && values.qty >= 2 ? ' + FREE Shipping' : ' + $4.95 Shipping';
+            let shippingNote = ' + $4.95 Shipping';
+            if (isInternationalSoursopShipping) {
+              shippingNote = ' + Shipping at checkout';
+            } else if (isSoursopProduct && values.qty >= 2) {
+              shippingNote = ' + FREE Shipping';
+            }
             purchaseToggleText.innerHTML = 'One-Time Purchase <strong>' + money(oneTimeUnit * values.qty) + '</strong>' + shippingNote;
           }
           else {
