@@ -10,13 +10,13 @@
 {% endcapture %}
 {% assign survivor_rows = survivor_rows | strip %}
 {% capture survivor_results %}
-  {% if section.settings.sr_image != blank or survivor_rows != blank %}
+  {% if section.settings.sr_image != blank or survivor_rows != blank or section.settings.sr_intro != blank %}
     <section class="av-survivor-results">
       {% if section.settings.sr_image != blank %}
         {{ section.settings.sr_image | image_url: width: 1800 | image_tag: loading: 'lazy', widths: '400,750,1100,1800' }}
       {% else %}
         <h2>{{ section.settings.sr_heading | escape }}</h2>
-        <ul>{{ survivor_rows }}</ul>
+        {% if survivor_rows != blank %}<ul>{{ survivor_rows }}</ul>{% else %}<p>{{ section.settings.sr_intro | escape }}</p>{% endif %}
       {% endif %}
     </section>
   {% endif %}
@@ -316,6 +316,7 @@ html.av-soursop-copy-guard [contenteditable] * {
 {
   "name": "Soursop product editor",
   "settings": [{"type":"header","content":"Survivor results"},
+{"type":"textarea","id":"sr_intro","label":"Text when no percentage rows are filled"},
 {"type":"text","id":"sr_heading","label":"Results heading","default":"Real Results from Real Survivors"},
 {"type":"image_picker","id":"sr_image","label":"Replace results with an image"},
 {"type":"color","id":"sr_heading_color","label":"heading color","default":"#74418A"},
