@@ -22,8 +22,8 @@
             "link": "",
             "show_countdown": true,
             "timer_minutes": 120,
-            "background_color": "#C86F3A",
-            "text_color": "#FFFFFF",
+            "background_color": "#c86f3a",
+            "text_color": "#ffffff",
             "bar_height": 52
           },
           "blocks": {}
@@ -95,8 +95,8 @@
         "show_search": true,
         "search_position": "right",
         "search_row": "top",
-        "show_country": false,
-        "country_selector_style": false,
+        "show_country": true,
+        "country_selector_style": true,
         "show_language": false,
         "localization_font": "heading",
         "localization_font_size": "0.875rem",
