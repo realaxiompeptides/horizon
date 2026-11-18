@@ -1,4 +1,35 @@
-{% render '00-cinnamon-berberine-page', product: product, editor: section %}
+{% capture survivor_rows %}
+  {% for index in (1..4) %}
+    {% assign percent_key = 'sr_pct_' | append: index %}
+    {% assign label_key = 'sr_label_' | append: index %}
+    {% assign percent = section.settings[percent_key] %}
+    {% if section.settings[label_key] != blank and percent != blank and percent >= 0 and percent <= 100 %}
+      <li><strong>{{ percent | round }}%</strong><span>{{ section.settings[label_key] | escape }}</span></li>
+    {% endif %}
+  {% endfor %}
+{% endcapture %}
+{% assign survivor_rows = survivor_rows | strip %}
+{% capture survivor_results %}
+  {% if section.settings.sr_image != blank or survivor_rows != blank %}
+    <section class="av-survivor-results">
+      {% if section.settings.sr_image != blank %}
+        {{ section.settings.sr_image | image_url: width: 1800 | image_tag: loading: 'lazy', widths: '400,750,1100,1800' }}
+      {% else %}
+        <h2>{{ section.settings.sr_heading | escape }}</h2>
+        <ul>{{ survivor_rows }}</ul>
+      {% endif %}
+    </section>
+  {% endif %}
+{% endcapture %}
+{% render '00-cinnamon-berberine-page', product: product, editor: section, survivor_results: survivor_results %}
+<style>
+.av-survivor-results {box-sizing:border-box;max-width:960px;margin:20px auto;padding:0 12px}
+.av-survivor-results img {display:block;width:100%;height:auto}
+.av-survivor-results h2 {color:{{ section.settings.sr_heading_color }};line-height:1.15;margin:0 0 18px}
+.av-survivor-results ul {list-style:none;padding:0;margin:0;display:grid;gap:14px}
+.av-survivor-results li {display:grid;grid-template-columns:78px minmax(0,1fr);gap:12px;align-items:center;color:{{ section.settings.sr_text_color }};font-size:18px;line-height:1.3}
+.av-survivor-results strong {box-sizing:border-box;display:grid;place-items:center;width:78px;height:78px;border:4px solid {{ section.settings.sr_circle_color }};border-radius:50%;font-size:23px}
+</style>
 {% if product.template_suffix == 'soursop' and request.design_mode == false %}
 <style>
 /* Soursop page only: discourage ordinary selection and copying without disabling form fields. */
@@ -284,7 +315,21 @@ html.av-soursop-copy-guard [contenteditable] * {
 {% schema %}
 {
   "name": "Soursop product editor",
-  "settings": [
+  "settings": [{"type":"header","content":"Survivor results"},
+{"type":"text","id":"sr_heading","label":"Results heading","default":"Real Results from Real Survivors"},
+{"type":"image_picker","id":"sr_image","label":"Replace results with an image"},
+{"type":"color","id":"sr_heading_color","label":"heading color","default":"#74418A"},
+{"type":"color","id":"sr_text_color","label":"text color","default":"#111111"},
+{"type":"color","id":"sr_circle_color","label":"circle color","default":"#58C31A"},
+{"type":"number","id":"sr_pct_1","label":"Row 1 percentage","default":98},
+{"type":"text","id":"sr_label_1","label":"Row 1 description"},
+{"type":"number","id":"sr_pct_2","label":"Row 2 percentage","default":97},
+{"type":"text","id":"sr_label_2","label":"Row 2 description"},
+{"type":"number","id":"sr_pct_3","label":"Row 3 percentage","default":91},
+{"type":"text","id":"sr_label_3","label":"Row 3 description"},
+{"type":"number","id":"sr_pct_4","label":"Row 4 percentage"},
+{"type":"text","id":"sr_label_4","label":"Row 4 description"},
+
     {
       "type": "text",
       "id": "reviews_heading",
