@@ -4,7 +4,16 @@
     {% assign label_key = 'sr_label_' | append: index %}
     {% assign percent = section.settings[percent_key] %}
     {% if section.settings[label_key] != blank and percent != blank and percent >= 0 and percent <= 100 %}
-      <li><strong>{{ percent | round }}%</strong><span>{{ section.settings[label_key] | escape }}</span></li>
+      {% assign display_percent = percent | round %}
+      <li>
+        <div class="av-survivor-results__ring">
+          <svg viewBox="0 0 80 80" aria-hidden="true" focusable="false">
+            <circle cx="40" cy="40" r="36" pathLength="100" transform="rotate(-90 40 40)" stroke-dasharray="{{ display_percent }} {{ 100 | minus: display_percent }}" />
+          </svg>
+          <strong>{{ display_percent }}%</strong>
+        </div>
+        <span>{{ section.settings[label_key] | escape }}</span>
+      </li>
     {% endif %}
   {% endfor %}
 {% endcapture %}
@@ -25,10 +34,48 @@
 <style>
 .av-survivor-results {box-sizing:border-box;max-width:960px;margin:20px auto;padding:0 12px}
 .av-survivor-results img {display:block;width:100%;height:auto}
-.av-survivor-results h2 {color:{{ section.settings.sr_heading_color }};line-height:1.15;margin:0 0 18px}
-.av-survivor-results ul {list-style:none;padding:0;margin:0;display:grid;gap:14px}
-.av-survivor-results li {display:grid;grid-template-columns:78px minmax(0,1fr);gap:12px;align-items:center;color:{{ section.settings.sr_text_color }};font-size:18px;line-height:1.3}
-.av-survivor-results strong {box-sizing:border-box;display:grid;place-items:center;width:78px;height:78px;border:4px solid {{ section.settings.sr_circle_color }};border-radius:50%;font-size:23px}
+#shopify-section-{{ section.id }} .av-survivor-results h2 {
+  color:{{ section.settings.sr_heading_color }};
+  font-size:{{ section.settings.sr_heading_size | default: 30 }}px;
+  line-height:1.15;
+  margin:0 0 22px;
+  text-align:center;
+  text-wrap:balance;
+}
+.av-survivor-results ul {
+  list-style:none;
+  padding:0;
+  margin:0;
+  border-top:1px solid #e8e8e8;
+}
+.av-survivor-results li {
+  display:grid;
+  grid-template-columns:var(--result-ring-size) minmax(0,1fr);
+  gap:clamp(12px,4vw,24px);
+  align-items:center;
+  padding:12px 0;
+  border-bottom:1px solid #e8e8e8;
+  color:{{ section.settings.sr_text_color }};
+  font-size:18px;
+  line-height:1.3;
+  --result-ring-size:clamp(62px,18vw,82px);
+}
+#shopify-section-{{ section.id }} .av-survivor-results__ring {
+  position:relative;
+  display:grid;
+  place-items:center;
+  width:var(--result-ring-size);
+  aspect-ratio:1;
+  color:{{ section.settings.sr_circle_color }};
+}
+.av-survivor-results__ring svg {position:absolute;inset:0;display:block;width:100%;height:100%}
+.av-survivor-results__ring circle {fill:none;stroke:currentColor;stroke-width:8;stroke-linecap:butt}
+#shopify-section-{{ section.id }} .av-survivor-results__ring strong {
+  color:inherit;
+  font-size:clamp(19px,5vw,24px);
+  font-weight:800;
+  line-height:1;
+}
 </style>
 {% if product.template_suffix == 'soursop' and request.design_mode == false %}
 <style>
@@ -319,6 +366,7 @@ html.av-soursop-copy-guard [contenteditable] * {
 {"type":"textarea","id":"sr_intro","label":"Text when no percentage rows are filled"},
 {"type":"text","id":"sr_heading","label":"Results heading","default":"Real Results from Real Survivors"},
 {"type":"image_picker","id":"sr_image","label":"Replace results with an image"},
+{"type":"range","id":"sr_heading_size","label":"Results heading size","min":16,"max":48,"step":1,"unit":"px","default":30},
 {"type":"color","id":"sr_heading_color","label":"heading color","default":"#74418A"},
 {"type":"color","id":"sr_text_color","label":"text color","default":"#111111"},
 {"type":"color","id":"sr_circle_color","label":"circle color","default":"#58C31A"},
