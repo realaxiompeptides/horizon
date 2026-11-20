@@ -1,0 +1,76 @@
+<section id="AvonentHomeFaq-{{ section.id }}" class="av-home-faq" aria-labelledby="AvonentHomeFaqTitle-{{ section.id }}">
+  <div class="av-home-faq__inner">
+    <div class="av-home-faq__intro">
+      <div class="av-home-faq__accent" aria-hidden="true"></div>
+      <h2 id="AvonentHomeFaqTitle-{{ section.id }}">Frequently Asked Questions</h2>
+      <p>Find answers to common questions about orders, payments, shipping, and returns.</p>
+    </div>
+    <div class="av-home-faq__items">
+      <details class="av-home-faq__item">
+        <summary><span>{{ section.settings.question_1 | escape }}</span><span class="av-home-faq__plus" aria-hidden="true"></span></summary>
+        <div class="av-home-faq__answer rte">{{ section.settings.answer_1 }}</div>
+      </details>
+      <details class="av-home-faq__item">
+        <summary><span>{{ section.settings.question_2 | escape }}</span><span class="av-home-faq__plus" aria-hidden="true"></span></summary>
+        <div class="av-home-faq__answer rte">{{ section.settings.answer_2 }}</div>
+      </details>
+      <details class="av-home-faq__item">
+        <summary><span>{{ section.settings.question_3 | escape }}</span><span class="av-home-faq__plus" aria-hidden="true"></span></summary>
+        <div class="av-home-faq__answer rte">{{ section.settings.answer_3 }}</div>
+      </details>
+      <details class="av-home-faq__item">
+        <summary><span>{{ section.settings.question_4 | escape }}</span><span class="av-home-faq__plus" aria-hidden="true"></span></summary>
+        <div class="av-home-faq__answer rte">{{ section.settings.answer_4 }}</div>
+      </details>
+    </div>
+  </div>
+</section>
+<style>
+  #AvonentHomeFaq-{{ section.id }}{position:relative;width:100%;background:#fff;color:#102337;padding:clamp(65px,8vw,115px) 0;overflow:hidden}
+  #AvonentHomeFaq-{{ section.id }} *,#AvonentHomeFaq-{{ section.id }} *::before,#AvonentHomeFaq-{{ section.id }} *::after{box-sizing:border-box}
+  #AvonentHomeFaq-{{ section.id }} .av-home-faq__inner{width:min(100% - 48px,1140px);margin:0 auto;display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(40px,6vw,100px);align-items:start}
+  #AvonentHomeFaq-{{ section.id }} .av-home-faq__accent{width:48px;height:5px;background:#02C6EA;border-radius:20px;margin-bottom:22px}
+  #AvonentHomeFaq-{{ section.id }} h2{font-size:clamp(36px,3.7vw,57px);font-weight:750;line-height:1.11;letter-spacing:-.043em;margin:0;color:#102337}
+  #AvonentHomeFaq-{{ section.id }} .av-home-faq__intro p{font-size:15px;line-height:1.7;color:#53697C;max-width:410px;margin:19px 0 0}
+  #AvonentHomeFaq-{{ section.id }} .av-home-faq__items{display:flex;flex-direction:column;gap:12px}
+  #AvonentHomeFaq-{{ section.id }} .av-home-faq__item{border:1px solid #DEEDF3;background:#F9FCFD;border-radius:13px;overflow:hidden;transition:border-color .2s,background-color .2s}
+  #AvonentHomeFaq-{{ section.id }} .av-home-faq__item[open]{background:#F2FBFF;border-color:#BAE6F5}
+  #AvonentHomeFaq-{{ section.id }} .av-home-faq__item summary{display:flex;justify-content:space-between;align-items:center;gap:22px;min-height:68px;padding:19px 23px;cursor:pointer;list-style:none;outline-offset:2px;font-size:15px;font-weight:670;color:#172C42;line-height:1.45}
+  #AvonentHomeFaq-{{ section.id }} .av-home-faq__item summary::-webkit-details-marker{display:none}
+  #AvonentHomeFaq-{{ section.id }} .av-home-faq__item summary::marker{content:""}
+  #AvonentHomeFaq-{{ section.id }} .av-home-faq__item summary:focus-visible{outline:2px solid #039FC6;outline-offset:-2px}
+  #AvonentHomeFaq-{{ section.id }} .av-home-faq__plus{position:relative;display:block;flex:0 0 19px;width:19px;height:19px}
+  #AvonentHomeFaq-{{ section.id }} .av-home-faq__plus::before,#AvonentHomeFaq-{{ section.id }} .av-home-faq__plus::after{content:"";display:block;position:absolute;background:#0B8FB4;left:50%;top:50%;border-radius:2px;transform:translate(-50%,-50%);transition:transform .2s}
+  #AvonentHomeFaq-{{ section.id }} .av-home-faq__plus::before{width:13px;height:2px}
+  #AvonentHomeFaq-{{ section.id }} .av-home-faq__plus::after{width:2px;height:13px}
+  #AvonentHomeFaq-{{ section.id }} .av-home-faq__item[open] .av-home-faq__plus::after{transform:translate(-50%,-50%) rotate(90deg)}
+  #AvonentHomeFaq-{{ section.id }} .av-home-faq__answer{padding:0 23px 22px;color:#526779;font-size:14px;line-height:1.75}
+  #AvonentHomeFaq-{{ section.id }} .av-home-faq__answer p{margin:0 0 10px;color:inherit;line-height:inherit}
+  #AvonentHomeFaq-{{ section.id }} .av-home-faq__answer p:last-child{margin-bottom:0}
+  #AvonentHomeFaq-{{ section.id }} .av-home-faq__answer a{color:#007D9F;text-decoration:underline;text-underline-offset:3px}
+  @media(max-width:850px){#AvonentHomeFaq-{{ section.id }} .av-home-faq__inner{grid-template-columns:1fr;gap:32px}#AvonentHomeFaq-{{ section.id }} .av-home-faq__intro p{max-width:650px}}
+  @media(max-width:520px){#AvonentHomeFaq-{{ section.id }}{padding:66px 0 75px}#AvonentHomeFaq-{{ section.id }} .av-home-faq__inner{width:min(100% - 38px,560px)}#AvonentHomeFaq-{{ section.id }} h2{font-size:39px}#AvonentHomeFaq-{{ section.id }} .av-home-faq__item summary{min-height:62px;padding:17px;font-size:14px}#AvonentHomeFaq-{{ section.id }} .av-home-faq__answer{padding:0 17px 18px}}
+  @media(prefers-reduced-motion:reduce){#AvonentHomeFaq-{{ section.id }} .av-home-faq__item,#AvonentHomeFaq-{{ section.id }} .av-home-faq__plus::before,#AvonentHomeFaq-{{ section.id }} .av-home-faq__plus::after{transition:none}}
+</style>
+{% schema %}
+{
+  "name":"Avonent Homepage FAQ",
+  "tag":"section",
+  "class":"avonent-home-faq-section",
+  "settings":[
+    {"type":"header","content":"Question 1"},
+    {"type":"text","id":"question_1","label":"Question","default":"How do I place an order?"},
+    {"type":"richtext","id":"answer_1","label":"Answer","default":"<p>When products are available, select an item and follow the steps at checkout. For assistance, visit our contact page.</p>"},
+    {"type":"header","content":"Question 2"},
+    {"type":"text","id":"question_2","label":"Question","default":"What payment methods do you accept?"},
+    {"type":"richtext","id":"answer_2","label":"Answer","default":"<p>Available payment methods are displayed during checkout before you place an order.</p>"},
+    {"type":"header","content":"Question 3"},
+    {"type":"text","id":"question_3","label":"Question","default":"How long does shipping take?"},
+    {"type":"richtext","id":"answer_3","label":"Answer","default":"<p>Delivery times vary by destination and shipping method. Available options and estimated delivery details are shown during checkout. Once shipped, check your confirmation email for tracking.</p>"},
+    {"type":"header","content":"Question 4"},
+    {"type":"text","id":"question_4","label":"Question","default":"What is your return policy?"},
+    {"type":"richtext","id":"answer_4","label":"Answer","default":"<p>Please contact our support team with your order number for return assistance and applicable terms.</p>"}
+  ],
+  "presets":[{"name":"Avonent Homepage FAQ"}]
+}
+{% endschema %}
