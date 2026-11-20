@@ -13,15 +13,15 @@
       "type": "00-avonent-home-hero",
       "name": "00 Avonent Home Hero",
       "settings": {
-        "mobile_image": "shopify://shop_images/4F83536B-2F43-4E45-A78D-45DE2FA625B4.png",
+        "mobile_image": "shopify://shop_images/4F83536B-2F43-4E45-A78D-45DE2FA625B4.jpg",
         "eyebrow": "",
         "heading": "Feel Better. Live Sharper.",
-        "description": "<p>Avonent brings time-tested botanicals like aged garlic and true Ceylon cinnamon into clean, easy-to-take daily softgels. Centuries of traditional use. Modern research. No fillers, no harsh burn, no marketing tricks.</p>",
-        "button_text": "Shop Avonent Now",
-        "button_link": "shopify://collections/all",
+        "description": "<p>Thoughtfully selected botanicals and straightforward daily wellness essentials. Simple routines, grounded in nature.</p>",
+        "button_text": "Contact Avonent",
+        "button_link": "/pages/contact",
         "show_button_arrow": false,
         "guarantee_text": "90-Day Money-Back Guarantee",
-        "show_social_proof": true,
+        "show_social_proof": false,
         "star_rating": 5,
         "counter_start": 100000,
         "counter_end": 100000,
@@ -29,8 +29,8 @@
         "customer_text": "customers",
         "counter_duration": 2000,
         "text_color": "#111111",
-        "button_background": "#02c6ea",
-        "button_text_color": "#ffffff",
+        "button_background": "#2D7A55",
+        "button_text_color": "#FFFFFF",
         "star_color": "#f4b000",
         "overlay_opacity": 0,
         "content_alignment": "center",
@@ -71,123 +71,17 @@
       ],
       "name": "00 Avonent Trust Carousel",
       "settings": {
-        "background_color": "#02c6ea",
-        "text_color": "#ffffff",
-        "accent_color": "#ffffff",
+        "background_color": "#174F37",
+        "text_color": "#FFFFFF",
+        "accent_color": "#CDE8BE",
         "speed": 18,
         "padding_top": 16,
         "padding_bottom": 16
-      }
-    },
-    "00_avonent_featured_products_VTU4KW": {
-      "type": "00-avonent-featured-products",
-      "blocks": {
-        "product_garlic": {
-          "type": "product",
-          "settings": {
-            "product": "aged-garlic-capsules",
-            "button_text": "SHOP GARLIC",
-            "show_sale_badge": true,
-            "benefit_2": "7,500 mg equivalent"
-          }
-        },
-        "product_cinnamon": {
-          "type": "product",
-          "settings": {
-            "product": "ceylon-cinnamon-berberine-capsules",
-            "button_text": "SHOP CINNAMON",
-            "show_sale_badge": true,
-            "benefit_2": "14,400 mg equivalent"
-          }
-        }
-      },
-      "block_order": [
-        "product_garlic",
-        "product_cinnamon"
-      ],
-      "name": "00 Avonent Featured",
-      "settings": {
-        "background_color": "#f7fcfe",
-        "accent_color": "#02c6ea",
-        "card_background": "#ffffff",
-        "card_text_color": "#111111",
-        "card_radius": 22
-      }
-    },
-    "00_avonent_testimonials_NVx8W4": {
-      "type": "00-avonent-testimonials",
-      "blocks": {
-        "review_H8F4gL": {
-          "type": "review",
-          "settings": {
-            "rating": 5,
-            "title": "Simple, easy, and premium.",
-            "review": "<p>I wanted something easy to stay consistent with. The packaging, routine, and overall experience have been great.</p>",
-            "customer_name": "Emily R.",
-            "show_verified": true,
-            "verified_text": "Verified Customer",
-            "show_product": false,
-            "product_label": "Reviewing",
-            "product_name": "Avonent Daily Formula"
-          }
-        },
-        "review_k8UhBt": {
-          "type": "review",
-          "settings": {
-            "rating": 5,
-            "title": "Exactly what I wanted.",
-            "review": "<p>It fits naturally into my routine and feels like a product that was actually designed with quality in mind.</p>",
-            "customer_name": "Jordan T.",
-            "show_verified": true,
-            "verified_text": "Verified Customer",
-            "show_product": false,
-            "product_label": "Reviewing",
-            "product_name": "Avonent Daily Formula"
-          }
-        },
-        "review_9GrVUf": {
-          "type": "review",
-          "settings": {
-            "rating": 5,
-            "title": "Definitely ordering again.",
-            "review": "<p>The experience has been excellent from ordering through delivery. I'm very happy with Avonent so far.</p>",
-            "customer_name": "Michael C.",
-            "show_verified": true,
-            "verified_text": "Verified Customer",
-            "show_product": false,
-            "product_label": "Reviewing",
-            "product_name": "Avonent Daily Formula"
-          }
-        }
-      },
-      "block_order": [
-        "review_H8F4gL",
-        "review_k8UhBt",
-        "review_9GrVUf"
-      ],
-      "name": "00 Avonent Testimonials",
-      "settings": {
-        "eyebrow": "",
-        "heading": "Real Stories, Real Results",
-        "subheading": "<p>Honest experiences from Avonent customers.</p>",
-        "show_summary": false,
-        "summary_rating": 5,
-        "summary_bold_text": "5.0",
-        "summary_text": "from verified customers",
-        "background_color": "#fbf7f2",
-        "text_color": "#171513",
-        "card_background": "#ffffff",
-        "card_text_color": "#171513",
-        "star_color": "#f4b000",
-        "border_color": "#e6dcd2",
-        "card_radius": 22
       }
     }
   },
   "order": [
     "00_avonent_home_hero_BbUK9F",
-    "00_avonent_trust_strip_Bj7dMJ",
-    "00_avonent_featured_products_VTU4KW",
-    "00_avonent_testimonials_NVx8W4"
+    "00_avonent_trust_strip_Bj7dMJ"
   ]
 }
