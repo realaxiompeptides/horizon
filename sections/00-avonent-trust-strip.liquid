@@ -11,8 +11,8 @@
 >
   <div class="avonent-trust-strip__viewport" aria-label="Avonent store benefits">
     <div class="avonent-trust-strip__track">
-      {% for repeat_i in (1..2) %}
-        <div class="avonent-trust-strip__group"{% if repeat_i == 2 %} aria-hidden="true"{% endif %}>
+      {% for repeat_i in (1..6) %}
+        <div class="avonent-trust-strip__group"{% if repeat_i != 1 %} aria-hidden="true"{% endif %}>
           {% for block in section.blocks %}
             <div
               class="avonent-trust-strip__item"
@@ -73,114 +73,119 @@
 
 {% stylesheet %}
   .avonent-trust-strip {
+    position: relative;
     width: 100%;
+    max-width: 100%;
+    min-width: 0;
     overflow: hidden;
-    padding-top: var(--av-trust-padding-top);
-    padding-bottom: var(--av-trust-padding-bottom);
+    padding-block: var(--av-trust-padding-top) var(--av-trust-padding-bottom);
     background: var(--av-trust-bg);
     color: var(--av-trust-text);
+    border-block: 1px solid rgba(4, 52, 76, .10);
+    isolation: isolate;
   }
-
+  .avonent-trust-strip,
+  .avonent-trust-strip * {
+    box-sizing: border-box;
+  }
   .avonent-trust-strip__viewport {
     width: 100%;
+    max-width: 100%;
     overflow: hidden;
-    -webkit-mask-image: linear-gradient(90deg,transparent 0,#000 4%,#000 96%,transparent 100%);
-    mask-image: linear-gradient(90deg,transparent 0,#000 4%,#000 96%,transparent 100%);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 2.5%, #000 97.5%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 2.5%, #000 97.5%, transparent);
   }
-
   .avonent-trust-strip__track {
     display: flex;
+    align-items: center;
     width: max-content;
+    min-width: max-content;
+    max-width: none;
+    gap: 0;
+    transform: translate3d(0,0,0);
     will-change: transform;
     animation: avonent-trust-strip-marquee var(--av-trust-speed) linear infinite;
   }
-
   .avonent-trust-strip__group {
     display: flex;
     align-items: center;
     flex: 0 0 auto;
-    gap: 28px;
-    padding-right: 28px;
+    width: max-content;
+    min-width: max-content;
+    gap: 0;
+    padding: 0;
   }
-
   .avonent-trust-strip__item {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 9px;
     flex: 0 0 auto;
-    min-width: 0;
+    width: max-content;
+    min-width: max-content;
+    gap: 10px;
+    padding-inline: clamp(24px, 3vw, 52px);
     color: var(--av-trust-text);
     white-space: nowrap;
-    text-align:left;
-    justify-content:flex-start;
+    text-align: left;
   }
-
   .avonent-trust-strip__icon {
-    flex: 0 0 23px;
-    width: 23px;
-    height: 23px;
-    display: flex;
-    align-items: center;
+    display: inline-flex;
     justify-content: center;
+    align-items: center;
+    flex: 0 0 22px;
+    width: 22px;
+    height: 22px;
     color: var(--av-trust-accent);
   }
-
   .avonent-trust-strip__icon svg {
     display: block;
     width: 100%;
     height: 100%;
     fill: none;
     stroke: currentColor;
-    stroke-width: 1.8;
+    stroke-width: 1.75;
     stroke-linecap: round;
     stroke-linejoin: round;
   }
-
   .avonent-trust-strip__text {
+    display: block;
     font-family: var(--font-body--family);
-    font-size: 15px;
-    font-weight: 600;
-    line-height: 1.2;
+    font-size: 14px;
+    font-weight: 650;
+    letter-spacing: .005em;
+    line-height: 1.35;
     color: inherit;
+    white-space: nowrap;
   }
-
-  .avonent-trust-strip:hover .avonent-trust-strip__track {
+  .avonent-trust-strip:hover .avonent-trust-strip__track,
+  .avonent-trust-strip:focus-within .avonent-trust-strip__track {
     animation-play-state: paused;
   }
-
   @keyframes avonent-trust-strip-marquee {
     from { transform: translate3d(0,0,0); }
-    to { transform: translate3d(-50%,0,0); }
+    to { transform: translate3d(-16.6666667%,0,0); }
   }
-
-  @media screen and (max-width: 749px) {
+  @media (max-width: 749px) {
     .avonent-trust-strip__viewport {
-      -webkit-mask-image: linear-gradient(90deg,transparent 0,#000 7%,#000 93%,transparent 100%);
-      mask-image: linear-gradient(90deg,transparent 0,#000 7%,#000 93%,transparent 100%);
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+      mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
     }
-
-    .avonent-trust-strip__group {
-      gap: 20px;
-      padding-right: 20px;
+    .avonent-trust-strip__track {
+      animation-duration: calc(var(--av-trust-speed) * 1.4);
     }
-
     .avonent-trust-strip__item {
-      min-width: 0;
       gap: 8px;
+      padding-inline: 22px;
     }
-
     .avonent-trust-strip__icon {
-      flex-basis: 21px;
-      width: 21px;
-      height: 21px;
+      flex-basis: 20px;
+      width: 20px;
+      height: 20px;
     }
-
     .avonent-trust-strip__text {
-      font-size: 13px;
-      font-weight: 600;
+      font-size: 12.5px;
+      font-weight: 650;
     }
   }
-
   @media (prefers-reduced-motion: reduce) {
     .avonent-trust-strip__viewport {
       overflow-x: auto;
@@ -188,18 +193,9 @@
       -webkit-mask-image: none;
       mask-image: none;
     }
-
-    .avonent-trust-strip__viewport::-webkit-scrollbar {
-      display: none;
-    }
-
-    .avonent-trust-strip__track {
-      animation: none;
-    }
-
-    .avonent-trust-strip__group[aria-hidden="true"] {
-      display: none;
-    }
+    .avonent-trust-strip__viewport::-webkit-scrollbar { display: none; }
+    .avonent-trust-strip__track { animation: none; will-change: auto; }
+    .avonent-trust-strip__group[aria-hidden="true"] { display: none; }
   }
 {% endstylesheet %}
 
