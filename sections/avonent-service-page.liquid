@@ -1,0 +1,113 @@
+{% liquid
+  assign service_type = section.settings.service_type
+  assign account_href = routes.account_url
+  assign contact_href = pages['contact'].url | default: '/pages/contact'
+%}
+<section id="AvonentService-{{ section.id }}" class="av-service" aria-labelledby="AvonentServiceTitle-{{ section.id }}">
+  <div class="av-service__glow" aria-hidden="true"></div>
+  <div class="av-service__container">
+    <nav class="av-service__breadcrumbs" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a><span aria-hidden="true">/</span>
+      <span>{% if service_type == 'subscription' %}Manage Subscription{% else %}Track Order{% endif %}</span>
+    </nav>
+    <div class="av-service__layout">
+      <div class="av-service__intro">
+        <span class="av-service__eyebrow"><span aria-hidden="true"></span> AVONENT SUPPORT</span>
+        {% if service_type == 'subscription' %}
+          <h1 id="AvonentServiceTitle-{{ section.id }}">Manage Your Subscription</h1>
+          <p class="av-service__lead">Need to update, pause, or cancel a recurring order? Our support team can help you with your subscription request.</p>
+          <div class="av-service__actions">
+            <a class="av-service__primary" href="mailto:avonentbusiness@gmail.com?subject=Avonent%20subscription%20request">Request a change <span aria-hidden="true">↗</span></a>
+            <a class="av-service__secondary" href="{{ account_href }}">My account <span aria-hidden="true">→</span></a>
+          </div>
+          <p class="av-service__fine">You can also <a href="{{ contact_href }}">contact Avonent support</a> directly.</p>
+        {% else %}
+          <h1 id="AvonentServiceTitle-{{ section.id }}">Track Your Order</h1>
+          <p class="av-service__lead">Looking for your order? Open the tracking link from your shipping confirmation email, or sign in to review your order status.</p>
+          <div class="av-service__actions">
+            <a class="av-service__primary" href="{{ account_href }}">View my orders <span aria-hidden="true">→</span></a>
+            <a class="av-service__secondary" href="{{ contact_href }}">Contact support <span aria-hidden="true">↗</span></a>
+          </div>
+          <p class="av-service__fine">Your shipping confirmation email contains the tracking link once it's available.</p>
+        {% endif %}
+      </div>
+      <aside class="av-service__card" aria-label="{% if service_type == 'subscription' %}Subscription help{% else %}Tracking help{% endif %}">
+        {% if service_type == 'subscription' %}
+          <div class="av-service__card-mark" aria-hidden="true">↻</div>
+          <h2>How to request a change</h2>
+          <ol class="av-service__steps">
+            <li><span class="av-service__step-num">01</span><div><strong>Find your order details</strong><p>Have your order number or the email used at checkout ready.</p></div></li>
+            <li><span class="av-service__step-num">02</span><div><strong>Tell us what you need</strong><p>Let us know whether you want to update, pause, or cancel.</p></div></li>
+            <li><span class="av-service__step-num">03</span><div><strong>Contact our team</strong><p>Email support and we'll help with the next steps.</p></div></li>
+          </ol>
+        {% else %}
+          <div class="av-service__card-mark" aria-hidden="true">↗</div>
+          <h2>Where to find tracking</h2>
+          <ol class="av-service__steps">
+            <li><span class="av-service__step-num">01</span><div><strong>Check your inbox</strong><p>Look for your Avonent shipping confirmation email.</p></div></li>
+            <li><span class="av-service__step-num">02</span><div><strong>Open the tracking link</strong><p>It takes you to your carrier's latest tracking information.</p></div></li>
+            <li><span class="av-service__step-num">03</span><div><strong>Need assistance?</strong><p>Contact support and include your order number.</p></div></li>
+          </ol>
+        {% endif %}
+        <div class="av-service__card-footer">
+          <span>Support email</span>
+          <a href="mailto:avonentbusiness@gmail.com">support@avonent.com <span aria-hidden="true">↗</span></a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+<style>
+  #AvonentService-{{ section.id }} {
+    --av-blue: #02C6EA; --av-ink: #102337; --av-muted: #50657A;
+    position: relative; isolation: isolate; overflow: hidden;
+    width: 100%; background: linear-gradient(145deg,#FFFFFF 0%,#F3FBFF 58%,#E9F8FF 100%);
+    color: var(--av-ink);
+  }
+  #AvonentService-{{ section.id }} *,#AvonentService-{{ section.id }} *::before,#AvonentService-{{ section.id }} *::after{box-sizing:border-box}
+  #AvonentService-{{ section.id }} .av-service__glow{position:absolute;z-index:-1;right:-180px;top:-310px;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(2,198,234,.12),transparent 70%);pointer-events:none}
+  #AvonentService-{{ section.id }} .av-service__container{width:min(100% - 48px,1180px);margin:0 auto;padding:42px 0 clamp(65px,8vw,120px)}
+  #AvonentService-{{ section.id }} .av-service__breadcrumbs{display:flex;gap:13px;align-items:center;color:var(--av-muted);font-size:13px;margin-bottom:clamp(45px,6vw,95px)}
+  #AvonentService-{{ section.id }} a{color:inherit;text-decoration:none}
+  #AvonentService-{{ section.id }} a:hover{color:#007F9E}
+  #AvonentService-{{ section.id }} a:focus-visible{outline:2px solid #007F9E;outline-offset:4px}
+  #AvonentService-{{ section.id }} .av-service__layout{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:clamp(32px,7vw,105px);align-items:center}
+  #AvonentService-{{ section.id }} .av-service__eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:11px;font-weight:800;letter-spacing:.16em;color:#007D9F}
+  #AvonentService-{{ section.id }} .av-service__eyebrow span{width:8px;height:8px;border-radius:50%;background:var(--av-blue)}
+  #AvonentService-{{ section.id }} h1{margin:23px 0 22px;font-size:clamp(40px,4.8vw,72px);font-weight:760;line-height:1.04;letter-spacing:-.047em;color:var(--av-ink);max-width:680px}
+  #AvonentService-{{ section.id }} .av-service__lead{margin:0;max-width:550px;font-size:clamp(16px,1.45vw,19px);line-height:1.7;color:var(--av-muted)}
+  #AvonentService-{{ section.id }} .av-service__actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+  #AvonentService-{{ section.id }} .av-service__actions a{display:inline-flex;align-items:center;justify-content:center;gap:14px;min-height:53px;padding:13px 22px;border-radius:11px;font-size:14px;font-weight:760;transition:transform .15s ease,background .15s ease}
+  #AvonentService-{{ section.id }} .av-service__actions a:hover{transform:translateY(-2px)}
+  #AvonentService-{{ section.id }} .av-service__primary{background:var(--av-blue);color:#092532;border:1px solid var(--av-blue)}
+  #AvonentService-{{ section.id }} .av-service__primary:hover{background:#1ED4F4;color:#092532}
+  #AvonentService-{{ section.id }} .av-service__secondary{background:#FFF;border:1px solid #C4DEE9;color:var(--av-ink)}
+  #AvonentService-{{ section.id }} .av-service__fine{margin:23px 0 0;font-size:13px;line-height:1.65;color:var(--av-muted)}
+  #AvonentService-{{ section.id }} .av-service__fine a{text-decoration:underline;text-underline-offset:3px}
+  #AvonentService-{{ section.id }} .av-service__card{border:1px solid #D2E8F1;border-radius:23px;padding:clamp(25px,3vw,43px);background:rgba(255,255,255,.94);box-shadow:0 22px 75px rgba(16,69,98,.07)}
+  #AvonentService-{{ section.id }} .av-service__card-mark{display:flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:13px;background:#E4F9FF;color:#0784A9;font-size:28px;margin-bottom:22px}
+  #AvonentService-{{ section.id }} .av-service__card h2{font-size:clamp(23px,2.2vw,29px);letter-spacing:-.03em;line-height:1.2;margin:0 0 25px;color:var(--av-ink);font-weight:740}
+  #AvonentService-{{ section.id }} .av-service__steps{list-style:none;padding:0;margin:0}
+  #AvonentService-{{ section.id }} .av-service__steps li{display:flex;gap:15px;align-items:flex-start;margin:0;padding:0 0 23px}
+  #AvonentService-{{ section.id }} .av-service__steps li:last-child{padding-bottom:0}
+  #AvonentService-{{ section.id }} .av-service__step-num{display:inline-flex;flex:0 0 34px;height:34px;border-radius:50%;background:#E9F8FD;color:#067FA1;font-size:11px;font-weight:800;align-items:center;justify-content:center}
+  #AvonentService-{{ section.id }} .av-service__steps strong{display:block;font-size:14px;font-weight:740;line-height:1.5}
+  #AvonentService-{{ section.id }} .av-service__steps p{margin:4px 0 0;font-size:13px;color:var(--av-muted);line-height:1.65}
+  #AvonentService-{{ section.id }} .av-service__card-footer{display:flex;flex-direction:column;gap:5px;margin-top:26px;padding-top:20px;border-top:1px solid #E5EEF2}
+  #AvonentService-{{ section.id }} .av-service__card-footer>span{font-size:11px;font-weight:750;text-transform:uppercase;letter-spacing:.1em;color:var(--av-muted)}
+  #AvonentService-{{ section.id }} .av-service__card-footer a{font-size:14px;color:#007F9F;font-weight:700;overflow-wrap:anywhere}
+  @media(max-width:830px){#AvonentService-{{ section.id }} .av-service__layout{grid-template-columns:1fr;gap:39px}#AvonentService-{{ section.id }} .av-service__container{padding-top:24px;padding-bottom:70px}#AvonentService-{{ section.id }} .av-service__breadcrumbs{margin-bottom:49px}#AvonentService-{{ section.id }} h1{margin-top:18px}}
+  @media(max-width:520px){#AvonentService-{{ section.id }} .av-service__container{width:min(100% - 38px,550px)}#AvonentService-{{ section.id }} .av-service__actions{gap:10px}#AvonentService-{{ section.id }} .av-service__actions a{width:100%}#AvonentService-{{ section.id }} .av-service__card{padding:25px 22px;border-radius:17px}#AvonentService-{{ section.id }} .av-service__breadcrumbs{margin-bottom:40px}#AvonentService-{{ section.id }} h1{font-size:clamp(40px,10.1vw,54px)}}
+  @media(prefers-reduced-motion:reduce){#AvonentService-{{ section.id }} .av-service__actions a{transition:none}#AvonentService-{{ section.id }} .av-service__actions a:hover{transform:none}}
+</style>
+{% schema %}
+{
+  "name": "Avonent Service Page",
+  "tag": "section",
+  "class": "avonent-service-section",
+  "settings": [
+    {"type":"select","id":"service_type","label":"Page type","options":[{"value":"tracking","label":"Order tracking"},{"value":"subscription","label":"Manage subscription"}],"default":"tracking"}
+  ],
+  "presets": [{"name":"Avonent Service Page"}]
+}
+{% endschema %}
