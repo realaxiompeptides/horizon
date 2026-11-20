@@ -1,11 +1,6 @@
 {% liquid
   assign block_id = 'avonent-sale-' | append: block.id
-  assign av_sale_background = block.settings.background_color
-  if template.name == 'index'
-    assign av_sale_background = '#02C6EA'
-  elsif template.suffix == 'soursop' or product.handle == 'soursop-softgels'
-    assign av_sale_background = '#557D4B'
-  endif
+  assign av_sale_background = '#02C6EA'
 %}
 
 <slideshow-slide
@@ -422,7 +417,7 @@
 
 {% schema %}
 {
-  "name": "Avonent Summer Sale",
+  "name": "Avonent Announcement",
   "tag": null,
   "settings": [
     {
@@ -433,13 +428,13 @@
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "SUMMER SALE"
+      "default": "FREE STANDARD SHIPPING"
     },
     {
       "type": "text",
       "id": "subheading",
       "label": "Text under heading",
-      "default": "Shop Now and Get Up To 50% Off"
+      "default": "On orders $69.98+"
     },
     {
       "type": "url",
@@ -454,7 +449,7 @@
       "type": "checkbox",
       "id": "show_countdown",
       "label": "Show countdown",
-      "default": true
+      "default": false
     },
     {
       "type": "range",
@@ -499,7 +494,7 @@
   ],
   "presets": [
     {
-      "name": "Avonent Summer Sale"
+      "name": "Avonent Announcement"
     }
   ]
 }
