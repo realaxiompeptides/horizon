@@ -23,7 +23,7 @@
             "show_countdown": false,
             "timer_minutes": 120,
             "background_color": "#02C6EA",
-            "text_color": "#0A1720",
+            "text_color": "#061E29",
             "bar_height": 52
           },
           "blocks": {}
