@@ -17,13 +17,13 @@
         "00_avonent_sale_announcement_QcfEEx": {
           "type": "00-avonent-sale-announcement",
           "settings": {
-            "heading": "FALL SALE",
-            "subheading": "Shop Now and Get Up To 70% Off",
+            "heading": "FREE STANDARD SHIPPING",
+            "subheading": "On orders $69.98+",
             "link": "",
-            "show_countdown": true,
+            "show_countdown": false,
             "timer_minutes": 120,
-            "background_color": "#c86f3a",
-            "text_color": "#ffffff",
+            "background_color": "#02C6EA",
+            "text_color": "#0A1720",
             "bar_height": 52
           },
           "blocks": {}
@@ -79,8 +79,8 @@
             "drawer_dividers": false,
             "avonent_drawer_width": 390,
             "avonent_drawer_link_size": 18,
-            "avonent_drawer_accent_color": "#02c6ea",
-            "avonent_drawer_show_support": false,
+            "avonent_drawer_accent_color": "#02C6EA",
+            "avonent_drawer_show_support": true,
             "avonent_drawer_support_label": "Customer Support",
             "avonent_drawer_support_email": "avonentbusiness@gmail.com"
           },
@@ -155,7 +155,8 @@
         "text_color": "#078aa5",
         "border_color": "#d7ebf0",
         "speed": 30
-      }
+      },
+      "disabled": true
     },
     "avonent_header_cleanup": {
       "type": "avonent-header-cleanup",
@@ -165,7 +166,6 @@
   "order": [
     "header_announcements_9jGBFp",
     "header_section",
-    "avonent_moringa_header_benefits",
     "avonent_header_cleanup"
   ]
 }
