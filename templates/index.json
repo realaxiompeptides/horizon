@@ -78,10 +78,25 @@
         "padding_top": 16,
         "padding_bottom": 16
       }
+    },
+    "avonent_faq_home": {
+      "type": "avonent-home-faq",
+      "name": "Avonent Homepage FAQ",
+      "settings": {
+        "question_1": "How do I place an order?",
+        "answer_1": "<p>When products are available, select an item and follow the steps at checkout. For assistance, visit our <a href=\"/pages/contact\">contact page</a>.</p>",
+        "question_2": "What payment methods do you accept?",
+        "answer_2": "<p>Available payment methods are displayed during checkout before you place an order.</p>",
+        "question_3": "How long does shipping take?",
+        "answer_3": "<p>Delivery times vary by destination and shipping method. Available options and estimated delivery details are shown during checkout. Once shipped, check your confirmation email for tracking.</p>",
+        "question_4": "What is your return policy?",
+        "answer_4": "<p>Please <a href=\"/pages/contact\">contact Avonent support</a> with your order number for return assistance and applicable terms.</p>"
+      }
     }
   },
   "order": [
     "00_avonent_home_hero_BbUK9F",
-    "00_avonent_trust_strip_Bj7dMJ"
+    "00_avonent_trust_strip_Bj7dMJ",
+    "avonent_faq_home"
   ]
 }
