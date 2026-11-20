@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "avonent-service-page",
+      "settings": {
+        "service_type": "tracking"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
