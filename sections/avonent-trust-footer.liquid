@@ -1,190 +1,56 @@
-{% comment %}
-  Avonent editorial footer: brand, verified policy routes, support and company information.
-  All public-facing details and optional destinations are editable in the theme editor.
-{% endcomment %}
 {% liquid
-  assign af_logo = section.settings.logo | default: settings.logo
-  assign af_contact = pages['contact'].url | default: '/pages/contact'
-  assign af_track = section.settings.track_url
-  if af_track == blank
-    assign af_track = pages['track-your-order'].url
+  assign logo = section.settings.logo | default: settings.logo
+  assign contact_link = pages['contact'].url | default: '/pages/contact'
+  assign tracking_link = section.settings.track_url | default: pages['track-your-order'].url
+  assign subscription_link = section.settings.subscription_url | default: pages['manage-your-subscription'].url
+  if tracking_link == blank
+    assign tracking_link = routes.account_url
   endif
-  if af_track == blank
-    assign af_track = routes.account_url
-  endif
-  assign af_subscription = section.settings.subscription_url
-  if af_subscription == blank
-    assign af_subscription = pages['manage-subscription'].url
-  endif
-  if af_subscription == blank
-    assign af_subscription = af_contact
+  if subscription_link == blank
+    assign subscription_link = contact_link
   endif
 %}
-<footer
-  id="AvonentEditorialFooter-{{ section.id }}"
-  class="af-ed"
-  style="
-    --af-bg: {{ section.settings.background_color }};
-    --af-accent: {{ section.settings.accent_color }};
-    --af-text: {{ section.settings.text_color }};
-    --af-muted: {{ section.settings.muted_color }};
-  "
->
-  <div class="af-ed__glow" aria-hidden="true"></div>
-  <div class="af-ed__inner">
-    {% if section.settings.show_newsletter %}
-      <div class="af-ed__newsletter">
-        <div class="af-ed__newsletter-copy">
-          <span class="af-ed__eyebrow">A LITTLE MORE GOOD IN YOUR DAY</span>
-          <h2>{{ section.settings.newsletter_title | escape }}</h2>
-          <p>{{ section.settings.newsletter_description | escape }}</p>
-        </div>
-        {% form 'customer', id: 'AvonentFooterNewsletter', class: 'af-ed__newsletter-form' %}
-          <input type="hidden" name="contact[tags]" value="newsletter">
-          <label for="AfFooterEmail-{{ section.id }}" class="af-ed__sr-only">Email address</label>
-          <div class="af-ed__signup">
-            <input id="AfFooterEmail-{{ section.id }}" type="email" name="contact[email]" placeholder="Your email address" autocomplete="email" required>
-            <button type="submit">Join the list <span aria-hidden="true">↗</span></button>
-          </div>
-          {% if form.posted_successfully? %}
-            <p class="af-ed__form-notice" role="status">Thanks for subscribing.</p>
-          {% endif %}
-          {% if form.errors %}
-            <div class="af-ed__form-notice" role="alert">{{ form.errors | default_errors }}</div>
-          {% endif %}
-        {% endform %}
-      </div>
-    {% endif %}
-
-    <div class="af-ed__main">
-      <div class="af-ed__brand">
-        <a class="af-ed__brand-link" href="{{ routes.root_url }}" aria-label="{{ section.settings.brand_name | escape }} home">
-          {% if af_logo != blank %}
-            {{ af_logo | image_url: width: 560 | image_tag: class: 'af-ed__logo-image', loading: 'lazy', widths: '200,320,420,560', alt: section.settings.brand_name }}
+<footer id="AvonentTrustFooter-{{ section.id }}" class="avf">
+  <div class="avf__wrap">
+    <div class="avf__main">
+      <div class="avf__brand">
+        <a href="{{ routes.root_url }}" class="avf__logo-link" aria-label="Avonent home">
+          {% if logo != blank %}
+            {{ logo | image_url: width: 680 | image_tag: class: 'avf__logo', widths: '200,320,480,680', loading: 'lazy', alt: 'Avonent logo' }}
           {% else %}
-            <span class="af-ed__wordmark">{{ section.settings.brand_name | escape }}</span>
+            <span class="avf__wordmark">Avonent</span>
           {% endif %}
         </a>
-        <p class="af-ed__brand-statement">{{ section.settings.brand_statement | escape }}</p>
-        <p class="af-ed__brand-description">{{ section.settings.brand_description | escape }}</p>
-
-        <div class="af-ed__details">
-          <div class="af-ed__detail">
-            <span class="af-ed__detail-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M12 21s7-6.1 7-12A7 7 0 0 0 5 9c0 5.9 7 12 7 12Z" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="9" r="2.3" stroke="currentColor" stroke-width="1.7"/></svg>
-            </span>
-            <div>
-              <strong>Business mailing address</strong>
-              <span>{{ section.settings.business_address | escape | newline_to_br }}</span>
-            </div>
-          </div>
-          <div class="af-ed__detail">
-            <span class="af-ed__detail-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.7"/><path d="M12 7.5v5l3.3 2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-            </span>
-            <div>
-              <strong>Working hours</strong>
-              {% if section.settings.support_hours != blank %}
-                <span>{{ section.settings.support_hours | escape }}</span>
-              {% else %}
-                <span>Contact us for current support hours.</span>
-              {% endif %}
-            </div>
-          </div>
-          {% if section.settings.support_email != blank %}
-            <div class="af-ed__detail">
-              <span class="af-ed__detail-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.7"/></svg>
-              </span>
-              <div>
-                <strong>Email</strong>
-                <a href="mailto:{{ section.settings.support_email | escape }}">{{ section.settings.support_email | escape }}</a>
-              </div>
-            </div>
-          {% endif %}
-          {% if section.settings.support_phone != blank %}
-            <div class="af-ed__detail">
-              <span class="af-ed__detail-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none"><path d="M6.2 3.8 9.1 3l2 4.8-2.1 1.4a15 15 0 0 0 5.7 5.7l1.4-2.1 4.8 2-.8 2.9a2 2 0 0 1-2.2 1.5A17.4 17.4 0 0 1 4.7 6a2 2 0 0 1 1.5-2.2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
-              </span>
-              <div>
-                <strong>Phone</strong>
-                <a href="tel:{{ section.settings.support_phone | remove: ' ' | remove: '-' | remove: '(' | remove: ')' }}">{{ section.settings.support_phone | escape }}</a>
-              </div>
-            </div>
-          {% endif %}
+        <div class="avf__details">
+          <div><strong>Working Hours</strong><span>{{ section.settings.support_hours | escape }}</span></div>
+          <div><strong>Business Address</strong><span>{{ section.settings.business_address | escape | newline_to_br }}</span></div>
+          <div><strong>Email</strong><a href="mailto:{{ section.settings.email_to | escape }}">{{ section.settings.email_display | escape }}</a></div>
         </div>
-
-        {% if section.settings.instagram_url != blank or section.settings.facebook_url != blank or section.settings.tiktok_url != blank %}
-          <div class="af-ed__social" aria-label="Follow Avonent">
-            {% if section.settings.instagram_url != blank %}
-              <a href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener noreferrer">Instagram <span aria-hidden="true">↗</span></a>
-            {% endif %}
-            {% if section.settings.facebook_url != blank %}
-              <a href="{{ section.settings.facebook_url }}" target="_blank" rel="noopener noreferrer">Facebook <span aria-hidden="true">↗</span></a>
-            {% endif %}
-            {% if section.settings.tiktok_url != blank %}
-              <a href="{{ section.settings.tiktok_url }}" target="_blank" rel="noopener noreferrer">TikTok <span aria-hidden="true">↗</span></a>
-            {% endif %}
-          </div>
-        {% endif %}
       </div>
-
-      <nav class="af-ed__links" aria-label="Company">
-        <h3>Company</h3>
+      <nav class="avf__column" aria-label="Company">
+        <h2>Company</h2>
         <ul>
-          <li><a href="{{ routes.root_url }}">Home</a></li>
-          {% if pages['about-us'] != blank %}<li><a href="{{ pages['about-us'].url }}">About us</a></li>{% endif %}
-          {% if section.settings.company_menu != blank %}
-            {% for link in section.settings.company_menu.links %}
-              <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
-            {% endfor %}
-          {% endif %}
-          <li><a href="{{ af_contact }}">Contact us</a></li>
+          {% if pages['about-us'] != blank %}<li><a href="{{ pages['about-us'].url }}">About Us</a></li>{% endif %}
+          <li><a href="{{ contact_link }}">Contact Us</a></li>
+          {% if pages['faq'] != blank %}<li><a href="{{ pages['faq'].url }}">FAQ</a></li>{% endif %}
+          <li><a href="{{ tracking_link }}">Track Order</a></li>
         </ul>
       </nav>
-
-      <nav class="af-ed__links" aria-label="Help and support">
-        <h3>Customer care</h3>
+      <nav class="avf__column" aria-label="Policies">
+        <h2>Policies</h2>
         <ul>
-          <li><a href="{{ af_track }}">Track your order</a></li>
-          {% if pages['faq'] != blank %}<li><a href="{{ pages['faq'].url }}">FAQs</a></li>{% endif %}
-          <li><a href="{{ af_subscription }}">Subscription &amp; cancellation</a></li>
-          <li><a href="{{ af_contact }}">Get in touch</a></li>
-          {% if section.settings.help_menu != blank %}
-            {% for link in section.settings.help_menu.links %}
-              <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
-            {% endfor %}
-          {% endif %}
-        </ul>
-      </nav>
-
-      <nav class="af-ed__links" aria-label="Policies">
-        <h3>Policies</h3>
-        <ul>
-          {% if shop.terms_of_service != blank %}
-            <li><a href="{{ shop.terms_of_service.url }}">Terms of service</a></li>
-          {% endif %}
-          {% if shop.privacy_policy != blank %}
-            <li><a href="{{ shop.privacy_policy.url }}">Privacy policy</a></li>
-          {% endif %}
-          {% if shop.refund_policy != blank %}
-            <li><a href="{{ shop.refund_policy.url }}">Returns &amp; refunds</a></li>
-          {% endif %}
-          {% if shop.shipping_policy != blank %}
-            <li><a href="{{ shop.shipping_policy.url }}">Shipping policy</a></li>
-          {% endif %}
-          {% if section.settings.payment_policy_url != blank %}
-            <li><a href="{{ section.settings.payment_policy_url }}">Payment policy</a></li>
-          {% endif %}
-          <li><a href="{{ af_subscription }}">Subscription &amp; cancellation policy</a></li>
+          {% if shop.terms_of_service != blank %}<li><a href="{{ shop.terms_of_service.url }}">Terms of Service</a></li>{% endif %}
+          {% if shop.privacy_policy != blank %}<li><a href="{{ shop.privacy_policy.url }}">Privacy Policy</a></li>{% endif %}
+          {% if shop.refund_policy != blank %}<li><a href="{{ shop.refund_policy.url }}">Return &amp; Refund Policy</a></li>{% endif %}
+          {% if shop.shipping_policy != blank %}<li><a href="{{ shop.shipping_policy.url }}">Shipping Policy</a></li>{% endif %}
+          {% if section.settings.payment_policy_url != blank %}<li><a href="{{ section.settings.payment_policy_url }}">Payment Policy</a></li>{% endif %}
+          <li><a href="{{ subscription_link }}">Subscription &amp; Cancellation Policy</a></li>
         </ul>
       </nav>
     </div>
 
     {% if section.settings.show_disclaimer %}
-      <div class="af-ed__compliance">
-        <span class="af-ed__compliance-heading">Important information</span>
+      <div class="avf__disclaimer">
         <div>{{ section.settings.fda_disclaimer }}</div>
         {% if section.settings.additional_disclaimer != blank %}
           <div>{{ section.settings.additional_disclaimer }}</div>
@@ -192,189 +58,113 @@
       </div>
     {% endif %}
 
-    <div class="af-ed__bottom">
-      <div class="af-ed__bottom-left">
-        <span>© {{ 'now' | date: '%Y' }} {{ section.settings.brand_name | escape }}. All rights reserved.</span>
-        <span class="af-ed__bottom-divider" aria-hidden="true">·</span>
-        <span>Wellness, with intention.</span>
-      </div>
-      {% if section.settings.show_payment_icons %}
-        <div class="af-ed__payments" aria-label="Available payment methods">
+    <div class="avf__localization">
+      {% form 'localization', id: 'AvonentCountryLocalization' %}
+        <label for="AvonentFooterCountry-{{ section.id }}">Country/region</label>
+        <div class="avf__select">
+          <select id="AvonentFooterCountry-{{ section.id }}" name="country_code" onchange="this.form.submit()">
+            {% for country in localization.available_countries %}
+              <option value="{{ country.iso_code }}" {% if country.iso_code == localization.country.iso_code %}selected{% endif %}>{{ country.name }} ({{ country.currency.iso_code }})</option>
+            {% endfor %}
+          </select>
+          <span aria-hidden="true">⌄</span>
+        </div>
+      {% endform %}
+      {% form 'localization', id: 'AvonentLanguageLocalization' %}
+        <label for="AvonentFooterLanguage-{{ section.id }}">Language</label>
+        <div class="avf__select">
+          <select id="AvonentFooterLanguage-{{ section.id }}" name="language_code" onchange="this.form.submit()">
+            {% for language in localization.available_languages %}
+              <option value="{{ language.iso_code }}" {% if language.iso_code == localization.language.iso_code %}selected{% endif %}>{{ language.endonym_name | capitalize }}</option>
+            {% endfor %}
+          </select>
+          <span aria-hidden="true">⌄</span>
+        </div>
+      {% endform %}
+    </div>
+
+    <div class="avf__bottom">
+      <span>© {{ 'now' | date: '%Y' }} Avonent. All rights reserved.</span>
+      {% if section.settings.show_payment_icons and shop.enabled_payment_types.size > 0 %}
+        <div class="avf__payments" aria-label="Accepted payment methods">
           {% for type in shop.enabled_payment_types %}
-            <span class="af-ed__payment-icon">{{ type | payment_type_svg_tag }}</span>
+            <span class="avf__payment">{{ type | payment_type_svg_tag }}</span>
           {% endfor %}
         </div>
       {% endif %}
     </div>
   </div>
 </footer>
-
 <style>
-  #AvonentEditorialFooter-{{ section.id }} {
-    position: relative; isolation: isolate; overflow: hidden; width: 100%;
-    background: var(--af-bg); color: var(--af-text);
-    font-family: inherit;
+  #AvonentTrustFooter-{{ section.id }} {
+    --avf-blue: {{ section.settings.accent_color }};
+    --avf-ink: #101820; --avf-muted: #485D69; --avf-line: rgba(8,102,133,.18);
+    isolation: isolate; position: relative; overflow: hidden; width: 100%;
+    background: linear-gradient(130deg,#F9FDFF 0%,#EAF9FF 47%,#CDEFFC 100%);
+    border-top: 5px solid var(--avf-blue); color: var(--avf-ink);
   }
-  #AvonentEditorialFooter-{{ section.id }} *,
-  #AvonentEditorialFooter-{{ section.id }} *::before,
-  #AvonentEditorialFooter-{{ section.id }} *::after { box-sizing: border-box; }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__glow {
-    position: absolute; z-index: -1; pointer-events: none; inset: 0;
-    background: radial-gradient(ellipse at 82% -20%, rgba(2,198,234,.09),transparent 50%), radial-gradient(ellipse at -20% 110%,rgba(2,198,234,.05),transparent 52%);
+  #AvonentTrustFooter-{{ section.id }}::before {
+    content: ""; position: absolute; z-index: -1; pointer-events: none;
+    border: 65px solid rgba(2,198,234,.085); width: 525px; height: 525px;
+    right: -165px; top: -240px; border-radius: 50%;
   }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__inner {
-    width: min(100% - 48px, 1320px); margin-inline: auto;
+  #AvonentTrustFooter-{{ section.id }} *,
+  #AvonentTrustFooter-{{ section.id }} *::before,
+  #AvonentTrustFooter-{{ section.id }} *::after { box-sizing: border-box; }
+  #AvonentTrustFooter-{{ section.id }} a { text-decoration: none; color: inherit; }
+  #AvonentTrustFooter-{{ section.id }} a:hover { color: #007A9F; }
+  #AvonentTrustFooter-{{ section.id }} a:focus-visible,
+  #AvonentTrustFooter-{{ section.id }} select:focus-visible { outline: 2px solid #007A9F; outline-offset: 3px; }
+  #AvonentTrustFooter-{{ section.id }} .avf__wrap { width: min(100% - 44px,1280px); margin-inline: auto; }
+  #AvonentTrustFooter-{{ section.id }} .avf__main {
+    display: grid; grid-template-columns: minmax(0,1.45fr) minmax(0,.92fr) minmax(0,1.13fr);
+    gap: clamp(28px,5vw,95px); padding: clamp(45px,5vw,76px) 0 49px;
   }
-  #AvonentEditorialFooter-{{ section.id }} a { color: inherit; text-decoration: none; }
-  #AvonentEditorialFooter-{{ section.id }} a:hover,
-  #AvonentEditorialFooter-{{ section.id }} a:focus-visible { color: #047D9C; }
-  #AvonentEditorialFooter-{{ section.id }} a:focus-visible,
-  #AvonentEditorialFooter-{{ section.id }} button:focus-visible,
-  #AvonentEditorialFooter-{{ section.id }} input:focus-visible { outline: 2px solid var(--af-accent); outline-offset: 4px; }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__sr-only {
-    position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden;
-    clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+  #AvonentTrustFooter-{{ section.id }} .avf__brand { min-width: 0; }
+  #AvonentTrustFooter-{{ section.id }} .avf__logo-link { display: inline-flex; align-items: center; max-width: 100%; margin-bottom: 29px; }
+  #AvonentTrustFooter-{{ section.id }} .avf__logo { display: block; width: min(100%,272px); max-height: 99px; height: auto; object-fit: contain; object-position: left; filter: none; }
+  #AvonentTrustFooter-{{ section.id }} .avf__wordmark { font-size: 38px; font-weight: 780; letter-spacing: -.05em; }
+  #AvonentTrustFooter-{{ section.id }} .avf__details { display: flex; flex-direction: column; gap: 16px; }
+  #AvonentTrustFooter-{{ section.id }} .avf__details > div { display: flex; flex-direction: column; gap: 4px; }
+  #AvonentTrustFooter-{{ section.id }} .avf__details strong { font-size: 13px; font-weight: 750; line-height: 1.4; }
+  #AvonentTrustFooter-{{ section.id }} .avf__details span,
+  #AvonentTrustFooter-{{ section.id }} .avf__details a { font-size: 13px; line-height: 1.6; color: var(--avf-muted); overflow-wrap: anywhere; }
+  #AvonentTrustFooter-{{ section.id }} .avf__column h2 { font-size: 18px; font-weight: 760; margin: 5px 0 23px; color: var(--avf-ink); }
+  #AvonentTrustFooter-{{ section.id }} .avf__column ul { display: flex; flex-direction: column; gap: 16px; list-style: none; padding: 0; margin: 0; }
+  #AvonentTrustFooter-{{ section.id }} .avf__column li { margin: 0; }
+  #AvonentTrustFooter-{{ section.id }} .avf__column a { display: inline-block; font-size: 14px; line-height: 1.52; color: var(--avf-muted); overflow-wrap: anywhere; }
+  #AvonentTrustFooter-{{ section.id }} .avf__disclaimer { border-top: 1px solid var(--avf-line); padding: 22px 0 18px; }
+  #AvonentTrustFooter-{{ section.id }} .avf__disclaimer div,
+  #AvonentTrustFooter-{{ section.id }} .avf__disclaimer p { font-size: 11.5px; line-height: 1.72; color: var(--avf-muted); margin: 0 0 7px; }
+  #AvonentTrustFooter-{{ section.id }} .avf__localization { border-top: 1px solid var(--avf-line); display: flex; flex-wrap: wrap; gap: 18px; padding: 25px 0 28px; }
+  #AvonentTrustFooter-{{ section.id }} .avf__localization form { width: min(100%,280px); }
+  #AvonentTrustFooter-{{ section.id }} .avf__localization label { display: block; margin-bottom: 10px; font-weight: 750; font-size: 13px; }
+  #AvonentTrustFooter-{{ section.id }} .avf__select { position: relative; border: 1px solid rgba(8,101,137,.26); background: rgba(255,255,255,.67); border-radius: 8px; }
+  #AvonentTrustFooter-{{ section.id }} .avf__select select { display: block; appearance: none; -webkit-appearance: none; width: 100%; min-height: 48px; border: 0; border-radius: 8px; background: transparent; color: var(--avf-ink); font: inherit; font-size: 13px; padding: 10px 34px 10px 12px; cursor: pointer; }
+  #AvonentTrustFooter-{{ section.id }} .avf__select span { position: absolute; right: 13px; top: 50%; transform: translateY(-53%); pointer-events: none; color: #007A9F; font-size: 22px; }
+  #AvonentTrustFooter-{{ section.id }} .avf__bottom { border-top: 1px solid var(--avf-line); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; padding: 23px 0 29px; }
+  #AvonentTrustFooter-{{ section.id }} .avf__bottom > span { color: var(--avf-muted); font-size: 12.5px; }
+  #AvonentTrustFooter-{{ section.id }} .avf__payments { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; }
+  #AvonentTrustFooter-{{ section.id }} .avf__payment { width: 47px; height: 31px; background: #FFF; border: 1px solid rgba(11,88,120,.11); border-radius: 5px; padding: 4px; display: flex; align-items: center; justify-content: center; }
+  #AvonentTrustFooter-{{ section.id }} .avf__payment svg { width: 40px; max-width: 100%; height: 22px; }
+  @media(max-width: 900px) {
+    #AvonentTrustFooter-{{ section.id }} .avf__main { grid-template-columns: repeat(2,minmax(0,1fr)); row-gap: 38px; column-gap: 26px; }
+    #AvonentTrustFooter-{{ section.id }} .avf__brand { grid-column: 1 / -1; }
   }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__newsletter {
-    display: grid; grid-template-columns: 1fr 0.95fr; align-items: center; gap: clamp(32px,5vw,80px);
-    padding: clamp(34px,5vw,72px) 0; border-bottom: 1px solid rgba(13,37,48,.14);
-  }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__eyebrow {
-    color: var(--af-accent); font-size: 10px; font-weight: 800; letter-spacing: .20em;
-  }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__newsletter h2 {
-    margin: 9px 0 9px; color: var(--af-text); font-size: clamp(27px,3.1vw,42px); line-height: 1.13;
-    font-weight: 700; letter-spacing: -.035em;
-  }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__newsletter p {
-    max-width: 460px; margin: 0; color: var(--af-muted); font-size: 14px; line-height: 1.65;
-  }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__signup {
-    display: flex; width: 100%; gap: 8px; background: rgba(255,255,255,.94); padding: 7px;
-    border: 1px solid rgba(13,37,48,.18); border-radius: 12px;
-  }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__signup input {
-    min-width: 0; flex: 1; font: inherit; font-size: 14px; padding: 15px 15px; color: var(--af-text);
-    background: transparent; border: 0; box-shadow: none;
-  }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__signup input::placeholder { color: var(--af-muted); opacity: 1; }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__signup button {
-    border: 0; background: var(--af-accent); color: #081923; padding: 12px 20px; border-radius: 8px;
-    font: inherit; font-size: 13px; font-weight: 800; white-space: nowrap; cursor: pointer; transition: filter .2s;
-  }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__signup button:hover { filter: brightness(1.08); }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__signup button span { margin-left: 9px; }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__form-notice { margin-top: 10px; color: var(--af-accent); font-size: 13px; }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__main {
-    display: grid; grid-template-columns: minmax(0,1.55fr) repeat(3,minmax(0,.85fr));
-    gap: clamp(25px,3.7vw,70px); padding: clamp(44px,6vw,88px) 0 clamp(44px,5vw,70px);
-  }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__brand { min-width: 0; padding-right: 10px; }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__brand-link { display: inline-flex; align-items: center; margin-bottom: 20px; }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__logo-image {
-    width: min(100%,220px); height: auto; max-height: 72px; object-fit: contain; object-position: left;
-    filter: none;
-  }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__wordmark {
-    font-size: clamp(29px,3.1vw,42px); line-height: 1; letter-spacing: -.055em; font-weight: 800; color: var(--af-text);
-  }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__brand-statement {
-    margin: 0 0 8px; font-size: 18px; font-weight: 650; line-height: 1.4; color: var(--af-text);
-  }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__brand-description {
-    margin: 0; max-width: 355px; font-size: 13px; line-height: 1.75; color: var(--af-muted);
-  }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__details {
-    margin-top: 26px; display: flex; flex-direction: column; gap: 20px;
-  }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__detail { display: flex; align-items: flex-start; gap: 13px; }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__detail-icon {
-    width: 34px; height: 34px; flex: none; border-radius: 9px; background: rgba(2,198,234,.12);
-    color: var(--af-accent); display: inline-flex; align-items: center; justify-content: center;
-  }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__detail-icon svg { width: 19px; height: 19px; }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__detail div { display: flex; flex-direction: column; min-width: 0; gap: 3px; }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__detail strong {
-    font-size: 12px; font-weight: 750; color: var(--af-text);
-  }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__detail span:not(.af-ed__detail-icon),
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__detail a {
-    color: var(--af-muted); font-size: 12.5px; line-height: 1.6; overflow-wrap: anywhere;
-  }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__social { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 25px; }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__social a {
-    padding: 9px 11px; border-radius: 7px; border: 1px solid rgba(13,37,48,.2);
-    color: var(--af-text); font-size: 12px;
-  }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__social a span { margin-left: 4px; color: var(--af-accent); }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__links h3 {
-    color: var(--af-text); font-size: 14px; font-weight: 800; margin: 7px 0 23px; letter-spacing: .01em;
-  }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__links ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 17px; }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__links li { margin: 0; line-height: 1.45; }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__links a {
-    font-size: 13px; font-weight: 450; line-height: 1.5; color: var(--af-muted);
-    transition: color .16s ease; overflow-wrap: anywhere;
-  }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__compliance {
-    padding: 24px 0 24px; border-top: 1px solid rgba(13,37,48,.14); color: var(--af-muted);
-  }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__compliance-heading {
-    display: block; margin-bottom: 10px; font-size: 11px; font-weight: 750; color: var(--af-text); letter-spacing: .08em; text-transform: uppercase;
-  }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__compliance div,
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__compliance p {
-    color: var(--af-muted); font-size: 11.5px; line-height: 1.68; margin: 0 0 8px;
-  }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__bottom {
-    display: flex; align-items: center; justify-content: space-between; gap: 22px; padding: 23px 0 29px;
-    border-top: 1px solid rgba(13,37,48,.14);
-  }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__bottom-left {
-    display: flex; align-items: center; gap: 10px; flex-wrap: wrap; color: var(--af-muted); font-size: 12px;
-  }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__bottom-divider { color: var(--af-accent); }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__payments {
-    display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 6px;
-  }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__payment-icon {
-    display: inline-flex; align-items: center; justify-content: center; background: white;
-    border-radius: 5px; min-width: 39px; min-height: 26px; padding: 4px;
-  }
-  #AvonentEditorialFooter-{{ section.id }} .af-ed__payment-icon svg { width: 35px; height: 22px; }
-  @media (max-width: 1090px) {
-    #AvonentEditorialFooter-{{ section.id }} .af-ed__main {
-      grid-template-columns: minmax(0,1.3fr) repeat(2,minmax(0,1fr)); row-gap: 40px;
-    }
-    #AvonentEditorialFooter-{{ section.id }} .af-ed__links:last-child { grid-column: 2 / 4; }
-  }
-  @media (max-width: 749px) {
-    #AvonentEditorialFooter-{{ section.id }} .af-ed__inner { width: min(100% - 38px,560px); }
-    #AvonentEditorialFooter-{{ section.id }} .af-ed__newsletter {
-      padding: 35px 0 38px; grid-template-columns: 1fr; gap: 22px;
-    }
-    #AvonentEditorialFooter-{{ section.id }} .af-ed__newsletter h2 { font-size: 29px; }
-    #AvonentEditorialFooter-{{ section.id }} .af-ed__newsletter p { font-size: 13px; }
-    #AvonentEditorialFooter-{{ section.id }} .af-ed__signup button { padding-inline: 13px; }
-    #AvonentEditorialFooter-{{ section.id }} .af-ed__main {
-      grid-template-columns: repeat(2,minmax(0,1fr)); column-gap: 25px; row-gap: 37px;
-      padding: 42px 0 42px;
-    }
-    #AvonentEditorialFooter-{{ section.id }} .af-ed__brand { grid-column: 1 / -1; padding-right: 0; }
-    #AvonentEditorialFooter-{{ section.id }} .af-ed__brand-description { max-width: 440px; }
-    #AvonentEditorialFooter-{{ section.id }} .af-ed__details { display: grid; grid-template-columns: 1fr; gap: 15px; }
-    #AvonentEditorialFooter-{{ section.id }} .af-ed__links h3 { margin: 0 0 17px; font-size: 15px; }
-    #AvonentEditorialFooter-{{ section.id }} .af-ed__links ul { gap: 14px; }
-    #AvonentEditorialFooter-{{ section.id }} .af-ed__links a { font-size: 13px; }
-    #AvonentEditorialFooter-{{ section.id }} .af-ed__links:last-child { grid-column: 1 / -1; }
-    #AvonentEditorialFooter-{{ section.id }} .af-ed__bottom { align-items: flex-start; flex-direction: column; }
-    #AvonentEditorialFooter-{{ section.id }} .af-ed__payments { justify-content: flex-start; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    #AvonentEditorialFooter-{{ section.id }} .af-ed__signup button,
-    #AvonentEditorialFooter-{{ section.id }} .af-ed__links a { transition: none; }
+  @media(max-width: 480px) {
+    #AvonentTrustFooter-{{ section.id }} .avf__wrap { width: min(100% - 38px,560px); }
+    #AvonentTrustFooter-{{ section.id }} .avf__main { padding-top: 42px; padding-bottom: 40px; gap: 29px 23px; }
+    #AvonentTrustFooter-{{ section.id }} .avf__logo { width: min(100%,250px); }
+    #AvonentTrustFooter-{{ section.id }} .avf__column h2 { font-size: 16px; margin-bottom: 16px; }
+    #AvonentTrustFooter-{{ section.id }} .avf__column a { font-size: 13px; }
+    #AvonentTrustFooter-{{ section.id }} .avf__column ul { gap: 15px; }
+    #AvonentTrustFooter-{{ section.id }} .avf__localization { gap: 12px; }
+    #AvonentTrustFooter-{{ section.id }} .avf__localization form { width: calc(50% - 6px); }
+    #AvonentTrustFooter-{{ section.id }} .avf__select select { font-size: 12px; padding-left: 8px; }
+    #AvonentTrustFooter-{{ section.id }} .avf__bottom { flex-direction: column; align-items: flex-start; }
   }
 </style>
+
 {% schema %}
 {
   "name": "Avonent Trust Footer",
@@ -397,116 +187,50 @@
     },
     {
       "type": "text",
-      "id": "brand_name",
-      "label": "Brand name",
-      "default": "Avonent"
-    },
-    {
-      "type": "text",
-      "id": "brand_statement",
-      "label": "Short brand statement",
-      "default": "Better daily rituals, naturally."
-    },
-    {
-      "type": "textarea",
-      "id": "brand_description",
-      "label": "Brand description",
-      "default": "Carefully selected botanicals and straightforward wellness essentials for everyday life."
+      "id": "support_hours",
+      "label": "Working hours",
+      "default": "9 AM – 5 PM, Monday – Friday"
     },
     {
       "type": "textarea",
       "id": "business_address",
-      "label": "Business mailing address",
+      "label": "Business address",
       "default": "30 N Gould St\nSheridan, WY 82801\nUnited States"
     },
     {
       "type": "text",
-      "id": "support_hours",
-      "label": "Working hours (leave blank if unconfirmed)"
+      "id": "email_display",
+      "label": "Email displayed to customers",
+      "default": "support@avonent.com"
     },
     {
       "type": "text",
-      "id": "support_email",
-      "label": "Public customer support email"
-    },
-    {
-      "type": "text",
-      "id": "support_phone",
-      "label": "Public support phone"
+      "id": "email_to",
+      "label": "Email address opened when clicked",
+      "default": "avonentbusiness@gmail.com"
     },
     {
       "type": "header",
-      "content": "Links and navigation"
-    },
-    {
-      "type": "link_list",
-      "id": "company_menu",
-      "label": "Extra company links"
-    },
-    {
-      "type": "link_list",
-      "id": "help_menu",
-      "label": "Extra customer care links"
+      "content": "Customer links"
     },
     {
       "type": "url",
       "id": "track_url",
-      "label": "Order tracking URL (defaults to account orders)"
+      "label": "Track order page"
     },
     {
       "type": "url",
       "id": "subscription_url",
-      "label": "Subscription cancellation page (defaults to contact)"
+      "label": "Subscription and cancellation page"
     },
     {
       "type": "url",
       "id": "payment_policy_url",
-      "label": "Payment policy URL"
+      "label": "Payment policy page"
     },
     {
       "type": "header",
-      "content": "Newsletter"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_newsletter",
-      "label": "Show newsletter signup",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "newsletter_title",
-      "label": "Newsletter heading",
-      "default": "Good things, straight to your inbox."
-    },
-    {
-      "type": "textarea",
-      "id": "newsletter_description",
-      "label": "Newsletter description",
-      "default": "Get new releases, thoughtful wellness tips and Avonent updates."
-    },
-    {
-      "type": "header",
-      "content": "Social media"
-    },
-    {
-      "type": "url",
-      "id": "instagram_url",
-      "label": "Instagram URL"
-    },
-    {
-      "type": "url",
-      "id": "facebook_url",
-      "label": "Facebook URL"
-    },
-    {
-      "type": "url",
-      "id": "tiktok_url",
-      "label": "TikTok URL"
-    },
-    {
-      "type": "header",
-      "content": "Compliance and payments"
+      "content": "Disclaimers and payment icons"
     },
     {
       "type": "checkbox",
@@ -524,41 +248,23 @@
       "type": "richtext",
       "id": "additional_disclaimer",
       "label": "Additional disclaimer",
-      "default": "<p>Individual results vary. Consult a qualified healthcare professional before starting a new dietary supplement.</p>"
+      "default": "<p>* Individual results may vary. Testimonials and reviews reflect individual experiences and are not guaranteed outcomes. Consult a qualified healthcare professional before starting a new dietary supplement, especially if you are pregnant, nursing, taking medication, or have a medical condition.</p>"
     },
     {
       "type": "checkbox",
       "id": "show_payment_icons",
-      "label": "Show enabled payment methods",
+      "label": "Show enabled payment icons",
       "default": true
     },
     {
       "type": "header",
-      "content": "Colors"
-    },
-    {
-      "type": "color",
-      "id": "background_color",
-      "label": "Footer background",
-      "default": "#F7FCFF"
+      "content": "Color"
     },
     {
       "type": "color",
       "id": "accent_color",
-      "label": "Accent",
+      "label": "Avonent blue",
       "default": "#02C6EA"
-    },
-    {
-      "type": "color",
-      "id": "text_color",
-      "label": "Main text",
-      "default": "#101820"
-    },
-    {
-      "type": "color",
-      "id": "muted_color",
-      "label": "Secondary text",
-      "default": "#53646D"
     }
   ],
   "presets": [
