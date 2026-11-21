@@ -1,10 +1,20 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "00_avonent_home_hero_BbUK9F": {
       "type": "00-avonent-home-hero",
       "name": "00 Avonent Home Hero",
       "settings": {
-        "mobile_image": "shopify://shop_images/avonent-botanical-slide-3.jpg",
+        "desktop_image": "shopify://shop_images/avonent-botanical-slide-1.jpg",
+        "mobile_image": "shopify://shop_images/F6A0E980-016A-40EC-BCE5-6C5CA7048B11.png",
         "eyebrow": "",
         "heading": "Feel Better. Live Sharper.",
         "description": "<p>Thoughtfully selected botanicals and straightforward daily wellness essentials. Simple routines, grounded in nature.</p>",
@@ -19,16 +29,15 @@
         "counter_suffix": "+",
         "customer_text": "Over 24,000 satisfied customers",
         "counter_duration": 2000,
-        "text_color": "#FFFFFF",
-        "button_background": "#02C6EA",
-        "button_text_color": "#06243A",
+        "text_color": "#ffffff",
+        "button_background": "#02c6ea",
+        "button_text_color": "#06243a",
         "star_color": "#f4b000",
         "overlay_opacity": 0,
         "content_alignment": "center",
         "vertical_position": "top",
         "desktop_height": 650,
         "mobile_height": 720,
-        "desktop_image": "shopify://shop_images/avonent-botanical-slide-1.jpg",
         "show_guarantee_line": false,
         "background_position": "center center"
       }
@@ -60,25 +69,29 @@
         "product_soursop": {
           "type": "product_card",
           "settings": {
+            "product": "",
+            "pack_style": "soursop",
             "image_alt": "Illustration of Avonent Soursop Softgels packaging",
             "title": "Avonent Soursop Softgels",
             "description": "Premium soursop leaf softgels for an easy daily botanical wellness routine.",
             "example_price": "$39.00",
             "rating": "4.9",
             "button_text": "Explore Soursop",
-            "pack_style": "soursop"
+            "button_link": ""
           }
         },
         "product_garlic": {
           "type": "product_card",
           "settings": {
+            "product": "",
+            "pack_style": "garlic",
             "image_alt": "Illustration of Avonent Garlic Softgels packaging",
             "title": "Avonent Garlic Softgels",
             "description": "Odorless aged garlic softgels for everyday heart and circulation support.",
             "example_price": "$40.00",
             "rating": "4.9",
             "button_text": "Explore Garlic",
-            "pack_style": "garlic"
+            "button_link": ""
           }
         }
       },
@@ -91,14 +104,19 @@
       ],
       "name": "00 Avonent Trust Carousel",
       "settings": {
-        "background_color": "#02C6EA",
-        "text_color": "#0A1720",
-        "accent_color": "#0A1720",
+        "gallery_heading": "Two Ways We Support Your Health",
+        "gallery_eyebrow": "OUR PRODUCTS",
+        "gallery_description": "Each formula does a different job. Together, they cover more ground.",
+        "rating_prefix": "Rated",
+        "gallery_background_color": "#f7fbfd",
+        "background_color": "#02c6ea",
+        "text_color": "#0a1720",
+        "accent_color": "#0a1720",
         "speed": 18,
         "padding_top": 16,
         "padding_bottom": 16,
         "guarantee_badge_image": "shopify://shop_images/avonent-90-day-money-back-badge.png",
-        "guarantee_accent_color": "#02C6EA",
+        "guarantee_accent_color": "#02c6ea",
         "guarantee_heading": "No Rush, No Risk, No Catch",
         "guarantee_description": "<p>Real results don’t happen overnight, and you deserve the time to see the difference. That’s why we give you a full 90 days to try it, completely risk-free. If you’re not satisfied, we’ll give you every penny back. No pressure, no hassle, no catch.</p>",
         "guarantee_chip_1": "90 days to decide",
@@ -106,10 +124,20 @@
         "guarantee_chip_3": "3–5 Day USA Shipping",
         "guarantee_button_label": "Find Your Formula",
         "guarantee_button_url": "/collections/all",
-        "gallery_heading": "Two Ways We Support Your Health",
-        "gallery_eyebrow": "OUR PRODUCTS",
-        "gallery_description": "Each formula does a different job. Together, they cover more ground.",
-        "gallery_background_color": "#F7FBFD"
+        "faq_title": "Frequently Asked Questions",
+        "faq_description": "Find answers to common questions about orders, payments, shipping, and returns.",
+        "faq_q1": "How do I place an order?",
+        "faq_a1": "<p>When products are available, select an item and follow the steps at checkout. For assistance, visit our contact page.</p>",
+        "faq_q2": "What payment methods do you accept?",
+        "faq_a2": "<p>Available payment methods are shown during checkout before you place an order.</p>",
+        "faq_q3": "How long does shipping take?",
+        "faq_a3": "<p>Delivery times vary by destination and shipping method. Check your shipping confirmation email for tracking details once your order ships.</p>",
+        "faq_q4": "What is your return policy?",
+        "faq_a4": "<p>Contact Avonent support with your order number to request return assistance and applicable terms.</p>",
+        "proof_1": "FDA-Registered Facility",
+        "proof_2": "3rd-Party Lab Tested",
+        "proof_3": "Secure Checkout",
+        "proof_4": "Ships in 24 hours"
       }
     }
   },
