@@ -257,3 +257,16 @@ html.av-soursop-page .av-cb__post-risk-reviews .av-cb__post-risk-read-more {
   border-color: #557D4B !important;
 }
 /* Do not recolor the rating stars at the top of the product page. */
+
+@media (min-width: 990px) {
+  html.av-soursop-page .av-cb__hero-grid {
+    zoom: .85;
+    width: min(1200px, calc(100% - 48px));
+  }
+
+  html.av-soursop-page .announcement-bar:has(.avonent-sale-bar) .avonent-sale-bar__inner {
+    min-height: 40px !important;
+    padding-block: 4px !important;
+    background: #819f73 !important;
+  }
+}
