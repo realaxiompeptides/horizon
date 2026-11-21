@@ -79,7 +79,12 @@
     <div class="avonent-health-gallery__head">
       <div class="avonent-health-gallery__copy">
         {% if section.settings.gallery_eyebrow != blank %}<p class="avonent-health-gallery__eyebrow">{{ section.settings.gallery_eyebrow | escape }}</p>{% endif %}
-        <h2 id="AvonentHealthGalleryHeading-{{ section.id }}">{{ section.settings.gallery_heading | escape }}</h2>
+        {% liquid
+          assign av_gallery_heading = section.settings.gallery_heading
+          assign av_gallery_accent = section.settings.gallery_heading_accent | default: 'Support Your Health'
+          assign av_gallery_parts = av_gallery_heading | split: av_gallery_accent
+        %}
+        <h2 id="AvonentHealthGalleryHeading-{{ section.id }}">{% if av_gallery_heading contains av_gallery_accent %}{{ av_gallery_parts.first | escape }}<span class="avonent-health-gallery__accent">{{ av_gallery_accent | escape }}</span>{{ av_gallery_parts.last | escape }}{% else %}{{ av_gallery_heading | escape }}{% endif %}</h2>
         <p class="avonent-health-gallery__description">{{ section.settings.gallery_description | escape }}</p>
       </div>
       <div class="avonent-health-gallery__controls">
@@ -645,6 +650,7 @@
   .avonent-health-gallery__copy{min-width:0}
   .avonent-health-gallery__eyebrow{margin:0 0 10px;font-size:12px;font-weight:700;letter-spacing:.12em;color:#0A8EB2;text-transform:uppercase}
   .avonent-health-gallery__head h2{margin:0;color:#0A2942;font-size:clamp(37px,4.6vw,62px);font-weight:770;letter-spacing:-.048em;line-height:1.06;text-wrap:balance}
+  .avonent-health-gallery__head h2 .avonent-health-gallery__accent{display:block;color:#02C6EA;}
   .avonent-health-gallery__description{margin:8px 0 0;color:#466175;font-size:clamp(17px,2vw,23px);line-height:1.4;max-width:650px}
   .avonent-health-gallery__controls{display:flex;align-items:center;gap:10px;flex:none;padding-bottom:6px}
   .avonent-health-gallery__arrow{display:inline-flex;align-items:center;justify-content:center;width:47px;height:47px;border-radius:50%;background:#fff;border:1px solid #B9D9E7;color:#0A314A;cursor:pointer;transition:transform .15s cubic-bezier(.16,1,.3,1),background-color .15s cubic-bezier(.16,1,.3,1)}
@@ -723,6 +729,12 @@
       "type": "text",
       "id": "gallery_heading",
       "label": "Carousel heading",
+      "default": "Support Your Health"
+    },
+    {
+      "type": "text",
+      "id": "gallery_heading_accent",
+      "label": "Blue highlighted heading text",
       "default": "Support Your Health"
     },
     {
