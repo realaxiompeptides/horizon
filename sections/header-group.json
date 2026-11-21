@@ -17,14 +17,14 @@
         "00_avonent_sale_announcement_QcfEEx": {
           "type": "00-avonent-sale-announcement",
           "settings": {
-            "heading": "FREE STANDARD SHIPPING",
-            "subheading": "On orders $69.98+",
+            "heading": "Winter Sale",
+            "subheading": "1 Bottle Free",
             "link": "",
-            "show_countdown": false,
+            "show_countdown": true,
             "timer_minutes": 120,
             "background_color": "#02C6EA",
             "text_color": "#0A1720",
-            "bar_height": 52
+            "bar_height": 40
           },
           "blocks": {}
         }
