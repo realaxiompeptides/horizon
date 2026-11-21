@@ -14,6 +14,7 @@
       {% for repeat_i in (1..6) %}
         <div class="avonent-trust-strip__group"{% if repeat_i != 1 %} aria-hidden="true"{% endif %}>
           {% for block in section.blocks %}
+            {% if block.type == 'trust_item' %}
             <div
               class="avonent-trust-strip__item"
               {% if repeat_i == 1 %}{{ block.shopify_attributes }}{% endif %}
@@ -64,6 +65,7 @@
                 {{ block.settings.text }}
               </div>
             </div>
+            {% endif %}
           {% endfor %}
         </div>
       {% endfor %}
@@ -71,6 +73,74 @@
   </div>
 </section>
 
+
+<section id="AvonentHealthGallery-{{ section.id }}" class="avonent-health-gallery" aria-labelledby="AvonentHealthGalleryHeading-{{ section.id }}" style="--av-gallery-bg:{{ section.settings.gallery_background_color }};">
+  <div class="avonent-health-gallery__inner">
+    <div class="avonent-health-gallery__head">
+      <div class="avonent-health-gallery__copy">
+        {% if section.settings.gallery_eyebrow != blank %}<p class="avonent-health-gallery__eyebrow">{{ section.settings.gallery_eyebrow | escape }}</p>{% endif %}
+        <h2 id="AvonentHealthGalleryHeading-{{ section.id }}">{{ section.settings.gallery_heading | escape }}</h2>
+        <p class="avonent-health-gallery__description">{{ section.settings.gallery_description | escape }}</p>
+      </div>
+      <div class="avonent-health-gallery__controls">
+        <button type="button" class="avonent-health-gallery__arrow" data-av-gallery-back aria-label="Previous image"><svg width="23" height="23" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 12H5M11 5l-7 7 7 7"/></svg></button>
+        <button type="button" class="avonent-health-gallery__arrow" data-av-gallery-next aria-label="Next image"><svg width="23" height="23" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-6-7 7 7-7 7"/></svg></button>
+      </div>
+    </div>
+    <div class="avonent-health-gallery__rail" data-av-gallery-rail tabindex="0" aria-label="Swipe or use arrows to browse Avonent botanical images">
+      {% for block in section.blocks %}
+        {% if block.type == 'health_slide' %}
+          <div class="avonent-health-gallery__slide" {{ block.shopify_attributes }}>
+            {% if block.settings.slide_image != blank %}
+              {{ block.settings.slide_image | image_url: width: 1200 | image_tag: class: 'avonent-health-gallery__image', loading: 'lazy', widths: '400,600,800,1000,1200', sizes: '(max-width: 749px) 80vw, 40vw', alt: block.settings.alt_text }}
+            {% else %}
+              <div class="avonent-health-gallery__placeholder">{{ 'lifestyle-1' | placeholder_svg_tag }}</div>
+            {% endif %}
+            {% if block.settings.caption != blank %}
+              <div class="avonent-health-gallery__caption">{{ block.settings.caption | escape }}</div>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    <div class="avonent-health-gallery__hint" aria-hidden="true"><span>SWIPE TO EXPLORE</span><span class="avonent-health-gallery__progress" data-av-gallery-progress>1 / 3</span></div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var root=document.getElementById('AvonentHealthGallery-{{ section.id }}');
+  if(!root||root.dataset.galleryReady==='yes')return;
+  root.dataset.galleryReady='yes';
+  var rail=root.querySelector('[data-av-gallery-rail]');
+  var slides=Array.prototype.slice.call(rail.querySelectorAll('.avonent-health-gallery__slide'));
+  var back=root.querySelector('[data-av-gallery-back]');
+  var next=root.querySelector('[data-av-gallery-next]');
+  var progress=root.querySelector('[data-av-gallery-progress]');
+  if(!slides.length){back.disabled=true;next.disabled=true;if(progress)progress.textContent='0 / 0';return;}
+  function currentIndex(){
+    var best=0,dist=Infinity;
+    slides.forEach(function(el,idx){var delta=Math.abs(el.offsetLeft-rail.offsetLeft-rail.scrollLeft);if(delta<dist){dist=delta;best=idx;}});
+    return best;
+  }
+  function update(){
+    var i=currentIndex();
+    back.disabled=i===0;
+    next.disabled=i===slides.length-1;
+    if(progress)progress.textContent=(i+1)+' / '+slides.length;
+  }
+  function move(direction){
+    var index=Math.max(0,Math.min(slides.length-1,currentIndex()+direction));
+    var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    rail.scrollTo({left:slides[index].offsetLeft-rail.offsetLeft,behavior:reduce?'auto':'smooth'});
+  }
+  back.addEventListener('click',function(){move(-1);});
+  next.addEventListener('click',function(){move(1);});
+  rail.addEventListener('scroll',update,{passive:true});
+  window.addEventListener('resize',update);
+  update();
+})();
+</script>
 
 <div class="avonent-faq-proofs" id="AvonentFaqProofs-{{ section.id }}">
   <div class="avonent-faq-proofs__inner">
@@ -536,6 +606,46 @@
     .avonent-guarantee__button:hover { transform: none; }
   }
 
+
+  .avonent-health-gallery {width:100%;overflow:hidden;background:var(--av-gallery-bg,#F7FBFD);padding:clamp(63px,7vw,100px) 0 clamp(60px,7vw,97px);color:#102A41;}
+  .avonent-health-gallery *{box-sizing:border-box}
+  .avonent-health-gallery__inner{width:min(100% - 52px,1220px);margin:0 auto}
+  .avonent-health-gallery__head{display:flex;align-items:flex-end;justify-content:space-between;gap:25px;margin-bottom:34px}
+  .avonent-health-gallery__copy{min-width:0}
+  .avonent-health-gallery__eyebrow{margin:0 0 10px;font-size:12px;font-weight:700;letter-spacing:.12em;color:#0A8EB2;text-transform:uppercase}
+  .avonent-health-gallery__head h2{margin:0;color:#0A2942;font-size:clamp(37px,4.6vw,62px);font-weight:770;letter-spacing:-.048em;line-height:1.06;text-wrap:balance}
+  .avonent-health-gallery__description{margin:17px 0 0;color:#466175;font-size:clamp(17px,2vw,23px);line-height:1.4;max-width:650px}
+  .avonent-health-gallery__controls{display:flex;align-items:center;gap:10px;flex:none;padding-bottom:6px}
+  .avonent-health-gallery__arrow{display:inline-flex;align-items:center;justify-content:center;width:47px;height:47px;border-radius:50%;background:#fff;border:1px solid #B9D9E7;color:#0A314A;cursor:pointer;transition:transform .15s cubic-bezier(.16,1,.3,1),background-color .15s cubic-bezier(.16,1,.3,1)}
+  .avonent-health-gallery__arrow:hover:not(:disabled){background:#C7F5FF}
+  .avonent-health-gallery__arrow:active:not(:disabled){transform:scale(.93)}
+  .avonent-health-gallery__arrow:disabled{opacity:.4;cursor:default}
+  .avonent-health-gallery__arrow:focus-visible{outline:3px solid #02C6EA;outline-offset:2px}
+  .avonent-health-gallery__rail{display:flex;align-items:stretch;gap:18px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-padding-left:0;scroll-behavior:smooth;overscroll-behavior-inline:contain;scrollbar-width:none;padding:0 0 10px;touch-action:pan-x pan-y}
+  .avonent-health-gallery__rail::-webkit-scrollbar{display:none}
+  .avonent-health-gallery__slide{flex:0 0 clamp(310px,42%,530px);scroll-snap-align:start;scroll-snap-stop:always;min-width:0;background:#D9F2F9;border-radius:17px;overflow:hidden;box-shadow:0 7px 24px rgba(6,62,99,.07);border:1px solid #D6EBF4}
+  .avonent-health-gallery__image,.avonent-health-gallery__placeholder{display:block;width:100%;height:auto;aspect-ratio:1.27/1;object-fit:cover}
+  .avonent-health-gallery__placeholder{background:linear-gradient(135deg,#DAF6FF,#C8EDF7)}
+  .avonent-health-gallery__placeholder svg{width:100%;height:100%}
+  .avonent-health-gallery__caption{padding:17px 22px 20px;color:#15354C;font-size:16px;font-weight:710}
+  .avonent-health-gallery__hint{display:flex;align-items:center;justify-content:space-between;margin-top:14px;color:#6C8595;font-size:11px;font-weight:750;letter-spacing:.1em}
+  .avonent-health-gallery__progress{color:#097B9C;font-size:12px;letter-spacing:.06em}
+  @media(max-width:749px){
+    .avonent-health-gallery{padding:68px 0 72px}
+    .avonent-health-gallery__inner{width:min(100% - 36px,600px)}
+    .avonent-health-gallery__head{align-items:flex-end;gap:12px;margin-bottom:25px}
+    .avonent-health-gallery__head h2{font-size:clamp(37px,9.5vw,52px)}
+    .avonent-health-gallery__description{font-size:17px;line-height:1.48;margin-top:13px}
+    .avonent-health-gallery__controls{gap:7px}
+    .avonent-health-gallery__arrow{width:38px;height:38px}
+    .avonent-health-gallery__arrow svg{width:20px;height:20px}
+    .avonent-health-gallery__rail{gap:12px}
+    .avonent-health-gallery__slide{flex:0 0 min(83vw,420px);border-radius:13px}
+    .avonent-health-gallery__image,.avonent-health-gallery__placeholder{aspect-ratio:1.02/1}
+    .avonent-health-gallery__caption{font-size:14px;padding:14px}
+  }
+  @media(prefers-reduced-motion:reduce){.avonent-health-gallery__rail{scroll-behavior:auto}.avonent-health-gallery__arrow{transition:none}}
+
 {% endstylesheet %}
 
 {% schema %}
@@ -544,6 +654,34 @@
   "tag": "section",
   "class": "avonent-trust-strip-section",
   "settings": [
+    {
+      "type": "header",
+      "content": "Image carousel below moving bar"
+    },
+    {
+      "type": "text",
+      "id": "gallery_heading",
+      "label": "Carousel heading",
+      "default": "Support Your Health"
+    },
+    {
+      "type": "text",
+      "id": "gallery_eyebrow",
+      "label": "Small carousel heading",
+      "default": "OUR PRODUCTS"
+    },
+    {
+      "type": "textarea",
+      "id": "gallery_description",
+      "label": "Carousel description",
+      "default": "Each formula does a different job. Together, they cover more ground."
+    },
+    {
+      "type": "color",
+      "id": "gallery_background_color",
+      "label": "Carousel background",
+      "default": "#F7FBFD"
+    },
     {
       "type": "header",
       "content": "Colors"
@@ -800,6 +938,28 @@
           "id": "text",
           "label": "Text",
           "default": "30-Day Risk-Free Trial"
+        }
+      ]
+    },
+    {
+      "type": "health_slide",
+      "name": "Image carousel slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "slide_image",
+          "label": "Slide image"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Optional caption"
+        },
+        {
+          "type": "text",
+          "id": "alt_text",
+          "label": "Image description",
+          "default": "Avonent botanical ingredients"
         }
       ]
     }
