@@ -23,7 +23,7 @@
             "show_countdown": false,
             "timer_minutes": 120,
             "background_color": "#02C6EA",
-            "text_color": "#061E29",
+            "text_color": "#0A1720",
             "bar_height": 52
           },
           "blocks": {}
@@ -36,7 +36,7 @@
       "settings": {
         "speed": 5,
         "section_width": "full-width",
-        "background_color": "#02C6EA",
+        "background_color": "",
         "divider_width": 0,
         "divider_color": "{{ settings.color_palette.color3 }}",
         "padding-block-start": 0,
