@@ -72,7 +72,7 @@
 </section>
 
 
-<section class="avonent-guarantee-section" id="AvonentGuarantee-{{ section.id }}" aria-labelledby="AvonentGuaranteeTitle-{{ section.id }}">
+<section class="avonent-guarantee-section" id="AvonentGuarantee-{{ section.id }}" aria-labelledby="AvonentGuaranteeTitle-{{ section.id }}" style="--av-guarantee-accent: {{ section.settings.guarantee_accent_color }};">
   <div class="avonent-guarantee__inner">
     <div class="avonent-guarantee__panel">
       {% if section.settings.guarantee_background_image != blank %}
@@ -363,7 +363,6 @@
     margin: 0 auto;
   }
   .avonent-guarantee__panel {
-    --av-guarantee-accent: {{ section.settings.guarantee_accent_color }};
     position: relative;
     isolation: isolate;
     border-radius: 22px;
