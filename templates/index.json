@@ -65,12 +65,39 @@
             "icon": "flag",
             "text": "Ships from USA"
           }
+        },
+        "health_slide_botanicals": {
+          "type": "health_slide",
+          "settings": {
+            "slide_image": "shopify://shop_images/avonent-botanical-slide-2.jpg",
+            "caption": "",
+            "alt_text": "Garlic, herbs and fresh leaves beside sparkling turquoise water"
+          }
+        },
+        "health_slide_soursop": {
+          "type": "health_slide",
+          "settings": {
+            "slide_image": "shopify://shop_images/avonent-botanical-slide-3.jpg",
+            "caption": "",
+            "alt_text": "Soursop fruit, turmeric and botanical leaves"
+          }
+        },
+        "health_slide_ingredients": {
+          "type": "health_slide",
+          "settings": {
+            "slide_image": "shopify://shop_images/avonent-botanical-slide-1.jpg",
+            "caption": "",
+            "alt_text": "Garlic, soursop, turmeric and botanicals"
+          }
         }
       },
       "block_order": [
         "trust_item_BwDW9U",
         "trust_item_KQPpPn",
-        "trust_item_cgyceP"
+        "trust_item_cgyceP",
+        "health_slide_botanicals",
+        "health_slide_soursop",
+        "health_slide_ingredients"
       ],
       "name": "00 Avonent Trust Carousel",
       "settings": {
@@ -88,7 +115,11 @@
         "guarantee_chip_2": "Every Batch Tested",
         "guarantee_chip_3": "3–5 Day USA Shipping",
         "guarantee_button_label": "Find Your Formula",
-        "guarantee_button_url": "/collections/all"
+        "guarantee_button_url": "/collections/all",
+        "gallery_heading": "Support Your Health",
+        "gallery_eyebrow": "OUR PRODUCTS",
+        "gallery_description": "Each formula does a different job. Together, they cover more ground.",
+        "gallery_background_color": "#F7FBFD"
       }
     }
   },
