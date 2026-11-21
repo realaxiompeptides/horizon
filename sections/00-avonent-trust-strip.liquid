@@ -293,14 +293,6 @@
   }
   .avonent-proof-grid__icon { display:flex; align-items:center; justify-content:center; width:56px; height:56px; background:#FFF; border:1px solid #D9EBF4; border-radius:50%; color:#078CAF;}
   .avonent-proof-grid__icon svg {width:30px; height:30px;display:block;}
-  /* Compact desktop FAQ and trust cards; retain the responsive mobile layout. */
-  @media (min-width: 921px) {
-    .avonent-faq-proofs__inner { max-width: 1120px; }
-    .avonent-faq-proofs__faq { gap: clamp(32px, 4vw, 65px); }
-    .avonent-faq-proofs__heading h2 { font-size: clamp(34px, 3vw, 44px); }
-    .avonent-proof-grid__card { min-height: 142px; font-size: 14px; }
-    .avonent-proof-grid__icon { width: 50px; height: 50px; }
-  }
   @media(max-width:920px) {
     .avonent-faq-proofs__faq {grid-template-columns:1fr; gap:30px;}
     .avonent-faq-proofs__heading h2 {max-width:700px;}
