@@ -87,23 +87,54 @@
         <button type="button" class="avonent-health-gallery__arrow" data-av-gallery-next aria-label="Next image"><svg width="23" height="23" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-6-7 7 7-7 7"/></svg></button>
       </div>
     </div>
-    <div class="avonent-health-gallery__rail" data-av-gallery-rail tabindex="0" aria-label="Swipe or use arrows to browse Avonent botanical images">
+    <div class="avonent-health-gallery__rail" data-av-gallery-rail tabindex="0" aria-label="Swipe or use arrows to browse Avonent products">
       {% for block in section.blocks %}
-        {% if block.type == 'health_slide' %}
-          <div class="avonent-health-gallery__slide" {{ block.shopify_attributes }}>
-            {% if block.settings.slide_image != blank %}
-              {{ block.settings.slide_image | image_url: width: 1200 | image_tag: class: 'avonent-health-gallery__image', loading: 'lazy', widths: '400,600,800,1000,1200', sizes: '(max-width: 749px) 80vw, 40vw', alt: block.settings.alt_text }}
-            {% else %}
-              <div class="avonent-health-gallery__placeholder">{{ 'lifestyle-1' | placeholder_svg_tag }}</div>
-            {% endif %}
-            {% if block.settings.caption != blank %}
-              <div class="avonent-health-gallery__caption">{{ block.settings.caption | escape }}</div>
-            {% endif %}
-          </div>
+        {% if block.type == 'product_card' %}
+          {% liquid
+            assign av_card_product = block.settings.product
+            assign av_card_image = block.settings.card_image
+            if av_card_product != blank and av_card_product.featured_image != blank
+              assign av_card_image = av_card_product.featured_image
+            endif
+            assign av_card_url = block.settings.button_link
+            if av_card_product != blank
+              assign av_card_url = av_card_product.url
+            endif
+            if av_card_url == blank
+              assign av_card_url = '/collections/all'
+            endif
+          %}
+          <article class="avonent-health-gallery__slide avonent-health-gallery__product" {{ block.shopify_attributes }}>
+            <a class="avonent-health-gallery__media-link" href="{{ av_card_url }}" tabindex="-1" aria-hidden="true">
+              {% if av_card_image != blank %}
+                {{ av_card_image | image_url: width: 1000 | image_tag: class: 'avonent-health-gallery__image', loading: 'lazy', widths: '360,520,720,1000', sizes: '(max-width: 749px) 82vw, 44vw', alt: block.settings.image_alt }}
+              {% else %}
+                <div class="avonent-health-gallery__placeholder">{{ 'product-1' | placeholder_svg_tag }}</div>
+              {% endif %}
+            </a>
+            <div class="avonent-health-gallery__product-body">
+              <div class="avonent-health-gallery__rating">
+                <span class="avonent-health-gallery__stars" aria-label="Five gold stars">
+                  {% for star_i in (1..5) %}{% render 'avonent-fa-star' %}{% endfor %}
+                </span>
+                <span>{{ section.settings.rating_prefix | escape }} <strong>{{ block.settings.rating | escape }} / 5.0</strong></span>
+              </div>
+              <h3 class="avonent-health-gallery__product-title">{% if av_card_product != blank %}{{ av_card_product.title | escape }}{% else %}{{ block.settings.title | escape }}{% endif %}</h3>
+              {% if block.settings.description != blank %}<p class="avonent-health-gallery__product-description">{{ block.settings.description | escape }}</p>{% endif %}
+              <div class="avonent-health-gallery__product-price">
+                {% if av_card_product != blank %}
+                  {{ av_card_product.price | money }}
+                {% else %}
+                  {{ block.settings.example_price | escape }}
+                {% endif %}
+              </div>
+              <a class="avonent-health-gallery__product-cta" href="{{ av_card_url }}"><span>{{ block.settings.button_text | escape }}</span><span aria-hidden="true">→</span></a>
+            </div>
+          </article>
         {% endif %}
       {% endfor %}
     </div>
-    <div class="avonent-health-gallery__hint" aria-hidden="true"><span>SWIPE TO EXPLORE</span><span class="avonent-health-gallery__progress" data-av-gallery-progress>1 / 3</span></div>
+    <div class="avonent-health-gallery__hint" aria-hidden="true"><span>SWIPE TO EXPLORE</span><span class="avonent-health-gallery__progress" data-av-gallery-progress>1 / 2</span></div>
   </div>
 </section>
 
@@ -646,6 +677,35 @@
   }
   @media(prefers-reduced-motion:reduce){.avonent-health-gallery__rail{scroll-behavior:auto}.avonent-health-gallery__arrow{transition:none}}
 
+  /* Product carousel: storefront cards with editable Shopify blocks. */
+  .avonent-health-gallery__slide.avonent-health-gallery__product{display:flex;flex-direction:column;background:#fff;border:1px solid #DCEBF2;border-radius:18px;box-shadow:0 12px 38px rgba(4,44,73,.10);overflow:hidden}
+  .avonent-health-gallery__product .avonent-health-gallery__media-link{display:block;overflow:hidden;background:#E7F5F8;line-height:0}
+  .avonent-health-gallery__product .avonent-health-gallery__image{width:100%;height:auto;aspect-ratio:1.18/1;object-fit:cover}
+  .avonent-health-gallery__product-body{display:flex;flex-direction:column;align-items:stretch;flex:1;padding:22px 24px 24px}
+  .avonent-health-gallery__rating{display:flex;align-items:center;flex-wrap:wrap;gap:12px;color:#183C51;font-size:15px;line-height:1.25;margin:0 0 14px}
+  .avonent-health-gallery__rating strong{color:#073754;font-weight:800}
+  .avonent-health-gallery__stars{display:inline-flex;align-items:center;gap:2px;color:#E8A200}
+  .avonent-health-gallery__stars svg{display:block;width:16px;height:16px;flex:none}
+  .avonent-health-gallery__product-title{font-family:var(--font-heading--family);font-size:clamp(22px,2.2vw,29px);font-weight:760;letter-spacing:-.028em;line-height:1.16;color:#092D46;margin:0}
+  .avonent-health-gallery__product-description{color:#4A6170;font-size:16px;line-height:1.5;margin:11px 0 18px;min-height:48px}
+  .avonent-health-gallery__product-price{color:#092D46;font-size:24px;font-weight:820;margin-top:auto}
+  .avonent-health-gallery__product-cta,.avonent-health-gallery__product-cta:visited{display:flex;align-items:center;justify-content:center;gap:10px;min-height:45px;margin-top:18px;padding:9px 16px;border:1.5px solid #078EB3;border-radius:8px;background:#02C6EA;color:#052D42!important;-webkit-text-fill-color:#052D42;font-size:16px;font-weight:760;line-height:1.25;text-decoration:none!important;transition:background-color .15s cubic-bezier(.16,1,.3,1),transform .15s cubic-bezier(.16,1,.3,1)}
+  .avonent-health-gallery__product-cta:hover{background:#7AE5F5}
+  .avonent-health-gallery__product-cta:active{transform:scale(.97)}
+  .avonent-health-gallery__product-cta:focus-visible{outline:3px solid #075A7A;outline-offset:3px}
+  .avonent-health-gallery__product .avonent-health-gallery__media-link:focus-visible{outline:3px solid #075A7A;outline-offset:-3px}
+  @media(max-width:749px){
+    .avonent-health-gallery__slide.avonent-health-gallery__product{flex:0 0 min(83vw,420px);border-radius:15px}
+    .avonent-health-gallery__product .avonent-health-gallery__image{aspect-ratio:1.1/1}
+    .avonent-health-gallery__product-body{padding:18px 18px 20px}
+    .avonent-health-gallery__rating{font-size:13px;gap:9px;margin-bottom:12px}
+    .avonent-health-gallery__stars svg{width:15px;height:15px}
+    .avonent-health-gallery__product-title{font-size:23px}
+    .avonent-health-gallery__product-description{font-size:14px;line-height:1.44;margin:9px 0 14px}
+    .avonent-health-gallery__product-price{font-size:22px}
+    .avonent-health-gallery__product-cta{min-height:44px;font-size:15px;margin-top:15px}
+  }
+  @media(prefers-reduced-motion:reduce){.avonent-health-gallery__product-cta{transition:none}}
 {% endstylesheet %}
 
 {% schema %}
@@ -676,6 +736,7 @@
       "label": "Carousel description",
       "default": "Each formula does a different job. Together, they cover more ground."
     },
+    {"type":"text","id":"rating_prefix","label":"Rating label","default":"Rated"},
     {
       "type": "color",
       "id": "gallery_background_color",
@@ -939,6 +1000,21 @@
           "label": "Text",
           "default": "30-Day Risk-Free Trial"
         }
+      ]
+    },
+    {
+      "type": "product_card",
+      "name": "Product carousel card",
+      "settings": [
+        {"type":"product","id":"product","label":"Link real product (overrides example title/price/image)"},
+        {"type":"image_picker","id":"card_image","label":"Example card image"},
+        {"type":"text","id":"image_alt","label":"Image description","default":"Avonent botanical supplement"},
+        {"type":"text","id":"title","label":"Example product name","default":"Avonent Soursop Softgels"},
+        {"type":"textarea","id":"description","label":"Card description","default":"Premium softgels made for an easy daily wellness routine."},
+        {"type":"text","id":"example_price","label":"Example price until product is selected","default":"$39.00"},
+        {"type":"text","id":"rating","label":"Displayed rating out of 5","default":"4.9"},
+        {"type":"text","id":"button_text","label":"Explore button text","default":"Explore Soursop"},
+        {"type":"url","id":"button_link","label":"Explore button link when no product selected"}
       ]
     },
     {
