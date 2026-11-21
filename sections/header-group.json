@@ -17,14 +17,14 @@
         "00_avonent_sale_announcement_QcfEEx": {
           "type": "00-avonent-sale-announcement",
           "settings": {
-            "heading": "Winter Sale",
-            "subheading": "Shop Now and Get 70% Off",
+            "heading": "WINTER SALE",
+            "subheading": "Shop Now and Get Up To 70% Off",
             "link": "",
             "show_countdown": true,
             "timer_minutes": 120,
-            "background_color": "#02C6EA",
-            "text_color": "#0A1720",
-            "bar_height": 40
+            "background_color": "#02c6ea",
+            "text_color": "#0a1720",
+            "bar_height": 52
           },
           "blocks": {}
         }
@@ -79,7 +79,7 @@
             "drawer_dividers": false,
             "avonent_drawer_width": 390,
             "avonent_drawer_link_size": 18,
-            "avonent_drawer_accent_color": "#02C6EA",
+            "avonent_drawer_accent_color": "#02c6ea",
             "avonent_drawer_show_support": true,
             "avonent_drawer_support_label": "Customer Support",
             "avonent_drawer_support_email": "avonentbusiness@gmail.com"
@@ -134,6 +134,7 @@
     },
     "avonent_moringa_header_benefits": {
       "type": "00-avonent-moringa-header-benefits",
+      "disabled": true,
       "settings": {
         "benefit_1": "92+ Nutrients in One Leaf†",
         "icon_1": "leaf",
@@ -155,8 +156,7 @@
         "text_color": "#078aa5",
         "border_color": "#d7ebf0",
         "speed": 30
-      },
-      "disabled": true
+      }
     },
     "avonent_header_cleanup": {
       "type": "avonent-header-cleanup",
