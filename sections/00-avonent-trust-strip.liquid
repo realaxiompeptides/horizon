@@ -71,6 +71,41 @@
   </div>
 </section>
 
+
+<section class="avonent-guarantee-section" id="AvonentGuarantee-{{ section.id }}" aria-labelledby="AvonentGuaranteeTitle-{{ section.id }}">
+  <div class="avonent-guarantee__inner">
+    <div class="avonent-guarantee__panel">
+      {% if section.settings.guarantee_background_image != blank %}
+        <div class="avonent-guarantee__background" style="background-image: url('{{ section.settings.guarantee_background_image | image_url: width: 2200 }}');" aria-hidden="true"></div>
+      {% endif %}
+      <div class="avonent-guarantee__badge">
+        {% if section.settings.guarantee_badge_image != blank %}
+          {{ section.settings.guarantee_badge_image | image_url: width: 600 | image_tag: class: 'avonent-guarantee__badge-image', loading: 'lazy', widths: '140,200,300,400,600', alt: '90-day money-back guarantee' }}
+        {% else %}
+          <div class="avonent-guarantee__badge-fallback"><strong>90-DAY</strong><span>MONEY-BACK GUARANTEE</span></div>
+        {% endif %}
+      </div>
+      <div class="avonent-guarantee__content">
+        <h2 id="AvonentGuaranteeTitle-{{ section.id }}">{{ section.settings.guarantee_heading | escape }}</h2>
+        <div class="avonent-guarantee__description rte">{{ section.settings.guarantee_description }}</div>
+        <div class="avonent-guarantee__features" aria-label="Guarantee highlights">
+          {% if section.settings.guarantee_chip_1 != blank %}
+            <span class="avonent-guarantee__chip"><span aria-hidden="true">✓</span>{{ section.settings.guarantee_chip_1 | escape }}</span>
+          {% endif %}
+          {% if section.settings.guarantee_chip_2 != blank %}
+            <span class="avonent-guarantee__chip"><span aria-hidden="true">✓</span>{{ section.settings.guarantee_chip_2 | escape }}</span>
+          {% endif %}
+          {% if section.settings.guarantee_chip_3 != blank %}
+            <span class="avonent-guarantee__chip"><span aria-hidden="true">✓</span>{{ section.settings.guarantee_chip_3 | escape }}</span>
+          {% endif %}
+        </div>
+        {% assign avonent_guarantee_url = section.settings.guarantee_button_url | default: pages['contact'].url | default: '/pages/contact' %}
+        <a class="avonent-guarantee__button" href="{{ avonent_guarantee_url }}">{{ section.settings.guarantee_button_label | escape }} <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <div class="avonent-faq-proofs" id="AvonentFaqProofs-{{ section.id }}">
   <div class="avonent-faq-proofs__inner">
     <div class="avonent-faq-proofs__faq">
@@ -254,7 +289,7 @@
   }
 
   .avonent-faq-proofs {
-    width:100%; background:#FFFFFF; color:#12273B; padding:clamp(60px,7vw,102px) 0 clamp(65px,8vw,110px);
+    width:100%; background:#FFFFFF; color:#12273B; padding:clamp(55px,6vw,88px) 0 clamp(22px,2.7vw,34px);
   }
   .avonent-faq-proofs, .avonent-faq-proofs * { box-sizing:border-box; }
   .avonent-faq-proofs__inner { width:min(100% - 48px,1200px); margin-inline:auto; }
@@ -301,7 +336,7 @@
   }
   @media(max-width:530px) {
     .avonent-faq-proofs__inner {width:min(100% - 36px,560px);}
-    .avonent-faq-proofs {padding:60px 0 70px;}
+    .avonent-faq-proofs {padding:55px 0 25px;}
     .avonent-faq-proofs__heading h2 {font-size:clamp(33px,9vw,44px);}
     .avonent-faq-proofs__heading p {font-size:14px;}
     .avonent-faq-proofs__question summary {padding:18px 17px; font-size:14px;}
@@ -310,6 +345,182 @@
     .avonent-proof-grid__card {min-height:143px; padding:20px 9px; font-size:13px; gap:10px;}
     .avonent-proof-grid__icon {width:49px;height:49px;}
     .avonent-proof-grid__icon svg {width:27px;height:27px;}
+  }
+
+
+  /* 90-day money-back guarantee card — editable background image and image badge. */
+  .avonent-guarantee-section {
+    position: relative;
+    padding: clamp(108px, 11vw, 156px) 0 28px;
+    background: #FFFFFF;
+    width: 100%;
+  }
+  .avonent-guarantee-section, .avonent-guarantee-section * {
+    box-sizing: border-box;
+  }
+  .avonent-guarantee__inner {
+    width: min(100% - 48px, 1100px);
+    margin: 0 auto;
+  }
+  .avonent-guarantee__panel {
+    --av-guarantee-accent: {{ section.settings.guarantee_accent_color }};
+    position: relative;
+    isolation: isolate;
+    border-radius: 22px;
+    padding: clamp(92px, 10vw, 132px) clamp(24px, 7vw, 90px) clamp(35px, 6vw, 72px);
+    color: #FFFFFF;
+    text-align: center;
+    background:
+      radial-gradient(ellipse at 104% -20%, rgba(2,198,234,.30), transparent 47%),
+      radial-gradient(ellipse at 0% 100%, rgba(7,117,177,.24), transparent 48%),
+      linear-gradient(135deg, #07182E 0%, #092E50 55%, #061A34 100%);
+    border: 1px solid rgba(56,193,243,.24);
+    box-shadow: 0 23px 65px rgba(4, 35, 66, .14);
+  }
+  .avonent-guarantee__background {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    border-radius: inherit;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    opacity: .46;
+  }
+  .avonent-guarantee__panel::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(180deg, rgba(3,14,29,.22) 0%, rgba(2,16,35,.62) 100%);
+    pointer-events: none;
+  }
+  .avonent-guarantee__badge {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -54%);
+    width: clamp(160px, 18vw, 230px);
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0 12px 14px rgba(0,14,35,.2));
+  }
+  .avonent-guarantee__badge-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 100%;
+    object-fit: contain;
+  }
+  .avonent-guarantee__badge-fallback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding: 15px;
+    border-radius: 50%;
+    border: 8px solid #02C6EA;
+    box-shadow: inset 0 0 0 3px rgba(255,255,255,.6);
+    background: #071C35;
+    color: #fff;
+    line-height: 1.2;
+    text-align: center;
+  }
+  .avonent-guarantee__badge-fallback strong { font-size: clamp(23px,3vw,35px); }
+  .avonent-guarantee__badge-fallback span { font-size: clamp(10px,1.2vw,13px); font-weight: 700; }
+  .avonent-guarantee__content { position: relative; z-index: 1; }
+  .avonent-guarantee__content h2 {
+    max-width: 770px;
+    margin: 0 auto 23px;
+    color: #FFFFFF;
+    font-size: clamp(37px, 5vw, 67px);
+    font-weight: 740;
+    line-height: 1.09;
+    letter-spacing: -.04em;
+    text-wrap: balance;
+  }
+  .avonent-guarantee__description {
+    max-width: 780px;
+    margin: 0 auto;
+    color: rgba(242,250,255,.91);
+    font-size: clamp(16px,1.8vw,21px);
+    line-height: 1.65;
+  }
+  .avonent-guarantee__description p { margin: 0; line-height: inherit; color: inherit; }
+  .avonent-guarantee__features {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 11px;
+    margin: 29px auto 37px;
+    max-width: 850px;
+  }
+  .avonent-guarantee__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 42px;
+    padding: 11px 15px;
+    border-radius: 9px;
+    background: rgba(226,249,255,.13);
+    color: #FFFFFF;
+    font-size: clamp(13px, 1.35vw, 16px);
+    line-height: 1.35;
+    border: 1px solid rgba(189,238,255,.13);
+  }
+  .avonent-guarantee__chip > span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #071C35;
+    background: var(--av-guarantee-accent);
+    font-weight: 800;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    font-size: 12px;
+    flex: 0 0 18px;
+  }
+  .avonent-guarantee__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    width: min(100%, 650px);
+    margin: 0 auto;
+    padding: 17px 24px;
+    min-height: 61px;
+    border-radius: 12px;
+    font-size: clamp(17px,2vw,23px);
+    line-height: 1.3;
+    font-weight: 780;
+    text-decoration: none;
+    background: var(--av-guarantee-accent);
+    color: #06253A;
+    transition: background-color .2s ease, transform .2s ease;
+  }
+  .avonent-guarantee__button:hover { background: #5DEAFF; color: #06253A; transform: translateY(-2px); }
+  .avonent-guarantee__button:focus-visible { outline: 3px solid #FFFFFF; outline-offset: 3px; }
+  @media (max-width: 749px) {
+    .avonent-guarantee-section { padding: 108px 0 10px; }
+    .avonent-guarantee__inner { width: min(100% - 32px, 570px); }
+    .avonent-guarantee__panel { border-radius: 16px; padding: 91px 20px 31px; }
+    .avonent-guarantee__badge { width: 170px; transform: translate(-50%,-50%); }
+    .avonent-guarantee__content h2 { font-size: clamp(34px,8vw,46px); margin-bottom: 17px; }
+    .avonent-guarantee__description { font-size: 15px; line-height: 1.6; }
+    .avonent-guarantee__features { gap: 8px; margin: 24px auto 27px; }
+    .avonent-guarantee__chip { min-height: 38px; padding: 9px 11px; font-size: 12px; }
+    .avonent-guarantee__button { min-height: 56px; padding: 14px; font-size: 17px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .avonent-guarantee__button { transition: none; }
+    .avonent-guarantee__button:hover { transform: none; }
   }
 
 {% endstylesheet %}
@@ -379,6 +590,67 @@
       "step": 2,
       "unit": "px",
       "default": 22
+    },
+    {
+      "type": "header",
+      "content": "90-day guarantee card"
+    },
+    {
+      "type": "image_picker",
+      "id": "guarantee_badge_image",
+      "label": "90-day guarantee badge image"
+    },
+    {
+      "type": "image_picker",
+      "id": "guarantee_background_image",
+      "label": "Background image (optional)"
+    },
+    {
+      "type": "color",
+      "id": "guarantee_accent_color",
+      "label": "Button and badge accents",
+      "default": "#02C6EA"
+    },
+    {
+      "type": "text",
+      "id": "guarantee_heading",
+      "label": "Guarantee headline",
+      "default": "No Rush, No Risk, No Catch"
+    },
+    {
+      "type": "richtext",
+      "id": "guarantee_description",
+      "label": "Guarantee description",
+      "default": "<p>We want you to feel confident in your purchase. Take a full 90 days to decide if Avonent is right for you. If it isn't, contact us about our money-back guarantee.</p>"
+    },
+    {
+      "type": "text",
+      "id": "guarantee_chip_1",
+      "label": "Highlight 1",
+      "default": "90 days to decide"
+    },
+    {
+      "type": "text",
+      "id": "guarantee_chip_2",
+      "label": "Highlight 2",
+      "default": "Money-back guarantee"
+    },
+    {
+      "type": "text",
+      "id": "guarantee_chip_3",
+      "label": "Highlight 3",
+      "default": "We're here to help"
+    },
+    {
+      "type": "text",
+      "id": "guarantee_button_label",
+      "label": "Button text",
+      "default": "Contact Avonent"
+    },
+    {
+      "type": "url",
+      "id": "guarantee_button_url",
+      "label": "Button link"
     },
     {
       "type": "header",
