@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "00_avonent_home_hero_BbUK9F": {
@@ -21,12 +12,12 @@
         "button_link": "/collections/all",
         "show_button_arrow": true,
         "guarantee_text": "90-Day Money-Back Guarantee",
-        "show_social_proof": false,
+        "show_social_proof": true,
         "star_rating": 5,
         "counter_start": 100000,
         "counter_end": 100000,
         "counter_suffix": "+",
-        "customer_text": "customers",
+        "customer_text": "Over 24,000 satisfied customers",
         "counter_duration": 2000,
         "text_color": "#FFFFFF",
         "button_background": "#02C6EA",
@@ -89,15 +80,38 @@
             "caption": "",
             "alt_text": "Garlic, soursop, turmeric and botanicals"
           }
+        },
+        "product_soursop": {
+          "type": "product_card",
+          "settings": {
+            "card_image": "shopify://shop_images/avonent-botanical-slide-3.jpg",
+            "image_alt": "Soursop fruit and botanical ingredients",
+            "title": "Avonent Soursop Softgels",
+            "description": "Premium soursop leaf softgels for an easy daily botanical wellness routine.",
+            "example_price": "$39.00",
+            "rating": "4.9",
+            "button_text": "Explore Soursop"
+          }
+        },
+        "product_garlic": {
+          "type": "product_card",
+          "settings": {
+            "card_image": "shopify://shop_images/avonent-botanical-slide-2.jpg",
+            "image_alt": "Garlic and fresh botanical ingredients",
+            "title": "Avonent Garlic Softgels",
+            "description": "Odorless aged garlic softgels for everyday heart and circulation support.",
+            "example_price": "$40.00",
+            "rating": "4.9",
+            "button_text": "Explore Garlic"
+          }
         }
       },
       "block_order": [
         "trust_item_BwDW9U",
         "trust_item_KQPpPn",
         "trust_item_cgyceP",
-        "health_slide_botanicals",
-        "health_slide_soursop",
-        "health_slide_ingredients"
+        "product_soursop",
+        "product_garlic"
       ],
       "name": "00 Avonent Trust Carousel",
       "settings": {
@@ -116,9 +130,9 @@
         "guarantee_chip_3": "3–5 Day USA Shipping",
         "guarantee_button_label": "Find Your Formula",
         "guarantee_button_url": "/collections/all",
-        "gallery_heading": "Support Your Health",
+        "gallery_heading": "Two Formulas Our Customers Love",
         "gallery_eyebrow": "OUR PRODUCTS",
-        "gallery_description": "Each formula does a different job. Together, they cover more ground.",
+        "gallery_description": "Swipe to explore the collection.",
         "gallery_background_color": "#F7FBFD"
       }
     }
