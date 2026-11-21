@@ -163,6 +163,62 @@
     #AvonentTrustFooter-{{ section.id }} .avf__select select { font-size: 12px; padding-left: 8px; }
     #AvonentTrustFooter-{{ section.id }} .avf__bottom { flex-direction: column; align-items: flex-start; }
   }
+
+  /* AVONENT DEEP BLUE FOOTER — colors only, original layout intact. */
+  #AvonentTrustFooter-{{ section.id }} {
+    --avf-ink: #F5FBFF;
+    --avf-muted: #B9D1E1;
+    --avf-line: rgba(193,225,245,.21);
+    background: linear-gradient(125deg,#07182B 0%,#0A2745 56%,#103D60 100%);
+    color: var(--avf-ink);
+    border-top-color: var(--avf-blue);
+  }
+  #AvonentTrustFooter-{{ section.id }}::before { display: none; }
+  #AvonentTrustFooter-{{ section.id }}::after {
+    content:""; position:absolute; z-index:-1; inset:0; pointer-events:none;
+    background:radial-gradient(ellipse at 100% 5%,rgba(2,198,234,.11),transparent 42%);
+  }
+  #AvonentTrustFooter-{{ section.id }} .avf__logo-link {
+    background:#FFFFFF; padding:12px 17px; border:1px solid rgba(202,241,250,.35);
+    border-radius:14px; box-shadow:0 8px 26px rgba(0,9,22,.16);
+  }
+  #AvonentTrustFooter-{{ section.id }} .avf__logo {
+    width:min(100%,255px); max-height:80px; filter:none;
+  }
+  #AvonentTrustFooter-{{ section.id }} .avf__wordmark { color:#101820; }
+  #AvonentTrustFooter-{{ section.id }} .avf__details strong,
+  #AvonentTrustFooter-{{ section.id }} .avf__column h2,
+  #AvonentTrustFooter-{{ section.id }} .avf__localization label {color:#F5FBFF;}
+  #AvonentTrustFooter-{{ section.id }} .avf__details span,
+  #AvonentTrustFooter-{{ section.id }} .avf__details a,
+  #AvonentTrustFooter-{{ section.id }} .avf__column a,
+  #AvonentTrustFooter-{{ section.id }} .avf__disclaimer,
+  #AvonentTrustFooter-{{ section.id }} .avf__disclaimer div,
+  #AvonentTrustFooter-{{ section.id }} .avf__disclaimer p,
+  #AvonentTrustFooter-{{ section.id }} .avf__bottom > span {color:var(--avf-muted);}
+  #AvonentTrustFooter-{{ section.id }} a:hover,
+  #AvonentTrustFooter-{{ section.id }} .avf__column a:hover,
+  #AvonentTrustFooter-{{ section.id }} .avf__details a:hover {color:#43E1FF;}
+  #AvonentTrustFooter-{{ section.id }} a:focus-visible,
+  #AvonentTrustFooter-{{ section.id }} select:focus-visible {outline-color:#43E1FF;}
+  #AvonentTrustFooter-{{ section.id }} .avf__select {
+    background:rgba(255,255,255,.07);border-color:rgba(187,228,244,.32);
+  }
+  #AvonentTrustFooter-{{ section.id }} .avf__select select {
+    color:#F5FBFF;background:transparent;color-scheme:dark;
+  }
+  #AvonentTrustFooter-{{ section.id }} .avf__select select option {
+    color:#102337;background:#FFFFFF;
+  }
+  #AvonentTrustFooter-{{ section.id }} .avf__select span {color:#43E1FF;}
+  #AvonentTrustFooter-{{ section.id }} .avf__payment {
+    background:#FFFFFF;border-color:rgba(202,241,250,.24);
+  }
+  @media(max-width:480px) {
+    #AvonentTrustFooter-{{ section.id }} .avf__logo-link {padding:10px 13px;}
+    #AvonentTrustFooter-{{ section.id }} .avf__logo {width:min(100%,220px);}
+  }
+
 </style>
 
 {% schema %}
