@@ -76,7 +76,16 @@
         "accent_color": "#0A1720",
         "speed": 18,
         "padding_top": 16,
-        "padding_bottom": 16
+        "padding_bottom": 16,
+        "guarantee_badge_image": "shopify://shop_images/avonent-90-day-money-back-badge.png",
+        "guarantee_accent_color": "#02C6EA",
+        "guarantee_heading": "No Rush, No Risk, No Catch",
+        "guarantee_description": "<p>We want you to feel confident in your purchase. Take a full 90 days to decide if Avonent is right for you. If it isn't, contact us about our money-back guarantee.</p>",
+        "guarantee_chip_1": "90 days to decide",
+        "guarantee_chip_2": "Money-back guarantee",
+        "guarantee_chip_3": "We're here to help",
+        "guarantee_button_label": "Contact Avonent",
+        "guarantee_button_url": "/pages/contact"
       }
     }
   },
