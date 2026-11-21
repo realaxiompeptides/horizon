@@ -196,6 +196,41 @@
     font-size:15px;
   }
   .avonent-home-hero__guarantee svg{width:21px;height:21px;color:#02C6EA;flex:0 0 21px}
+  /* Keep the original hero image fully visible rather than enlarged/cropped on desktop. */
+  @media (min-width: 750px) {
+    .avonent-home-hero__media {
+      max-width: 1380px;
+      margin-inline: auto;
+    }
+    .avonent-home-hero__image, .avonent-home-hero__placeholder {
+      width: 100%;
+      height: min(34vw, 505px);
+      max-height: 505px;
+      object-fit: contain;
+      object-position: center;
+    }
+    .avonent-home-hero__content {
+      max-width: 780px;
+      padding-top: 24px;
+      padding-bottom: 39px;
+    }
+    .avonent-home-hero__heading {
+      font-size: clamp(36px, 3.7vw, 50px);
+      line-height: 1.1;
+      margin-top: 15px;
+    }
+    .avonent-home-hero__description {
+      max-width: 660px;
+      font-size: 16px;
+      margin-top: 13px;
+    }
+    .avonent-home-hero__button {
+      width: min(100%, 350px);
+      min-height: 54px;
+      margin-top: 21px;
+      font-size: 15px;
+    }
+  }
   @media(max-width:749px){
     .avonent-home-hero__image--desktop{display:none}
     .avonent-home-hero__image--mobile{display:block}
