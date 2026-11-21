@@ -71,6 +71,61 @@
   </div>
 </section>
 
+<div class="avonent-faq-proofs" id="AvonentFaqProofs-{{ section.id }}">
+  <div class="avonent-faq-proofs__inner">
+    <div class="avonent-faq-proofs__faq">
+      <div class="avonent-faq-proofs__heading">
+        <h2>{{ section.settings.faq_title | escape }}</h2>
+        <p>{{ section.settings.faq_description | escape }}</p>
+      </div>
+      <div class="avonent-faq-proofs__questions">
+        <details class="avonent-faq-proofs__question">
+          <summary><span>{{ section.settings.faq_q1 | escape }}</span><span class="avonent-faq-proofs__toggle" aria-hidden="true"></span></summary>
+          <div class="avonent-faq-proofs__answer rte">{{ section.settings.faq_a1 }}</div>
+        </details>
+        <details class="avonent-faq-proofs__question">
+          <summary><span>{{ section.settings.faq_q2 | escape }}</span><span class="avonent-faq-proofs__toggle" aria-hidden="true"></span></summary>
+          <div class="avonent-faq-proofs__answer rte">{{ section.settings.faq_a2 }}</div>
+        </details>
+        <details class="avonent-faq-proofs__question">
+          <summary><span>{{ section.settings.faq_q3 | escape }}</span><span class="avonent-faq-proofs__toggle" aria-hidden="true"></span></summary>
+          <div class="avonent-faq-proofs__answer rte">{{ section.settings.faq_a3 }}</div>
+        </details>
+        <details class="avonent-faq-proofs__question">
+          <summary><span>{{ section.settings.faq_q4 | escape }}</span><span class="avonent-faq-proofs__toggle" aria-hidden="true"></span></summary>
+          <div class="avonent-faq-proofs__answer rte">{{ section.settings.faq_a4 }}</div>
+        </details>
+      </div>
+    </div>
+    <div class="avonent-proof-grid" aria-label="Avonent trust information">
+      <div class="avonent-proof-grid__card">
+        <span class="avonent-proof-grid__icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none"><path d="M9 39V16L24 6l15 10v23H9Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M17 23h4v5h-4zm10 0h4v5h-4zM17 31h4v5h-4zm10 0h4v5h-4z" fill="currentColor"/><path d="M21 39v-5h6v5" stroke="currentColor" stroke-width="2.5"/></svg>
+        </span>
+        <span>{{ section.settings.proof_1 | escape }}</span>
+      </div>
+      <div class="avonent-proof-grid__card">
+        <span class="avonent-proof-grid__icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none"><path d="m21 10 7 7m-11 5 10-10m-8 10 5 5m4-14 5 5M16 28l8-8m-1 8a10 10 0 0 1-10 10H9m19-11a10 10 0 0 1-10 11h19M8 41h32" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="14" r="2" fill="currentColor"/></svg>
+        </span>
+        <span>{{ section.settings.proof_2 | escape }}</span>
+      </div>
+      <div class="avonent-proof-grid__card">
+        <span class="avonent-proof-grid__icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none"><rect x="6" y="10" width="32" height="23" rx="4" stroke="currentColor" stroke-width="2.5"/><path d="M7 17h30" stroke="currentColor" stroke-width="2.5"/><path d="m29 26 6-2 6 2v6c0 4-2.5 6.5-6 8-3.5-1.5-6-4-6-8v-6Z" fill="#E7F9FF" stroke="currentColor" stroke-width="2.5"/><path d="m32.5 32 2 2 3.5-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <span>{{ section.settings.proof_3 | escape }}</span>
+      </div>
+      <div class="avonent-proof-grid__card">
+        <span class="avonent-proof-grid__icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none"><path d="M5 16h23v17H5zM28 22h7l7 8v3H28" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><circle cx="14" cy="35" r="3" fill="#E7F9FF" stroke="currentColor" stroke-width="2.5"/><circle cx="35" cy="35" r="3" fill="#E7F9FF" stroke="currentColor" stroke-width="2.5"/><path d="M8 11h9m-12 4h7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M31 11v5m0-5a6 6 0 1 1 0 12" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/></svg>
+        </span>
+        <span>{{ section.settings.proof_4 | escape }}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% stylesheet %}
   .avonent-trust-strip {
     position: relative;
@@ -197,6 +252,66 @@
     .avonent-trust-strip__track { animation: none; will-change: auto; }
     .avonent-trust-strip__group[aria-hidden="true"] { display: none; }
   }
+
+  .avonent-faq-proofs {
+    width:100%; background:#FFFFFF; color:#12273B; padding:clamp(60px,7vw,102px) 0 clamp(65px,8vw,110px);
+  }
+  .avonent-faq-proofs, .avonent-faq-proofs * { box-sizing:border-box; }
+  .avonent-faq-proofs__inner { width:min(100% - 48px,1200px); margin-inline:auto; }
+  .avonent-faq-proofs__faq { display:grid; grid-template-columns:minmax(0,.84fr) minmax(0,1.16fr); gap:clamp(30px,6vw,85px); align-items:start; }
+  .avonent-faq-proofs__heading h2 {
+    font-size:clamp(35px,3.6vw,55px); font-weight:730; letter-spacing:-.035em;
+    line-height:1.13; color:#102B43; margin:0 0 16px; max-width:480px;
+  }
+  .avonent-faq-proofs__heading p { margin:0; color:#526779; max-width:455px; font-size:15px; line-height:1.65; }
+  .avonent-faq-proofs__questions { display:flex; flex-direction:column; border:1px solid #DFE8EF; border-radius:14px; overflow:hidden; background:#FAFCFF; }
+  .avonent-faq-proofs__question + .avonent-faq-proofs__question { border-top:1px solid #DFE8EF; }
+  .avonent-faq-proofs__question[open] { background:#F1FAFE; }
+  .avonent-faq-proofs__question summary { 
+    list-style:none; display:flex; gap:18px; align-items:center; justify-content:space-between;
+    padding:22px 24px; min-height:65px; font-size:15px; font-weight:630; line-height:1.45;
+    color:#18334A; cursor:pointer; outline-offset:-3px;
+  }
+  .avonent-faq-proofs__question summary::-webkit-details-marker {display:none;}
+  .avonent-faq-proofs__question summary::marker {content:"";}
+  .avonent-faq-proofs__question summary:focus-visible {outline:2px solid #028EB7;}
+  .avonent-faq-proofs__toggle {width:20px; height:20px; position:relative; flex:none;}
+  .avonent-faq-proofs__toggle::before,
+  .avonent-faq-proofs__toggle::after {content:""; position:absolute; top:50%; left:50%; background:#058FB4; transform:translate(-50%,-50%); border-radius:2px;}
+  .avonent-faq-proofs__toggle::before {width:13px;height:2px;}
+  .avonent-faq-proofs__toggle::after {height:13px;width:2px;}
+  .avonent-faq-proofs__question[open] .avonent-faq-proofs__toggle::after {display:none;}
+  .avonent-faq-proofs__answer {padding:0 24px 22px; font-size:14px; color:#526779; line-height:1.7;}
+  .avonent-faq-proofs__answer p {margin:0 0 10px;color:inherit;line-height:inherit;}
+  .avonent-faq-proofs__answer p:last-child {margin-bottom:0;}
+  .avonent-faq-proofs__answer a {color:#007EA4;text-decoration:underline;text-underline-offset:3px;}
+  .avonent-proof-grid {display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; margin-top:clamp(53px,6vw,88px);}
+  .avonent-proof-grid__card {
+    display:flex; flex-direction:column; gap:13px; align-items:center; justify-content:center;
+    min-height:165px; padding:26px 16px; background:#F0FAFE; border:1px solid #E2F1F8;
+    border-radius:9px; color:#113149; font-size:16px; line-height:1.35; font-weight:640; text-align:center;
+  }
+  .avonent-proof-grid__icon { display:flex; align-items:center; justify-content:center; width:56px; height:56px; background:#FFF; border:1px solid #D9EBF4; border-radius:50%; color:#078CAF;}
+  .avonent-proof-grid__icon svg {width:30px; height:30px;display:block;}
+  @media(max-width:920px) {
+    .avonent-faq-proofs__faq {grid-template-columns:1fr; gap:30px;}
+    .avonent-faq-proofs__heading h2 {max-width:700px;}
+    .avonent-faq-proofs__heading p {max-width:700px;}
+    .avonent-proof-grid {grid-template-columns:repeat(2,minmax(0,1fr));}
+  }
+  @media(max-width:530px) {
+    .avonent-faq-proofs__inner {width:min(100% - 36px,560px);}
+    .avonent-faq-proofs {padding:60px 0 70px;}
+    .avonent-faq-proofs__heading h2 {font-size:clamp(33px,9vw,44px);}
+    .avonent-faq-proofs__heading p {font-size:14px;}
+    .avonent-faq-proofs__question summary {padding:18px 17px; font-size:14px;}
+    .avonent-faq-proofs__answer {padding:0 17px 19px; font-size:13px;}
+    .avonent-proof-grid {gap:10px; margin-top:50px;}
+    .avonent-proof-grid__card {min-height:143px; padding:20px 9px; font-size:13px; gap:10px;}
+    .avonent-proof-grid__icon {width:49px;height:49px;}
+    .avonent-proof-grid__icon svg {width:27px;height:27px;}
+  }
+
 {% endstylesheet %}
 
 {% schema %}
@@ -264,6 +379,98 @@
       "step": 2,
       "unit": "px",
       "default": 22
+    },
+    {
+      "type": "header",
+      "content": "Homepage FAQ"
+    },
+    {
+      "type": "text",
+      "id": "faq_title",
+      "label": "FAQ heading",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_description",
+      "label": "FAQ description",
+      "default": "Find answers to common questions about orders, payments, shipping, and returns."
+    },
+    {
+      "type": "text",
+      "id": "faq_q1",
+      "label": "Question 1",
+      "default": "How do I place an order?"
+    },
+    {
+      "type": "richtext",
+      "id": "faq_a1",
+      "label": "Answer 1",
+      "default": "<p>When products are available, select an item and follow the steps at checkout. For assistance, visit our contact page.</p>"
+    },
+    {
+      "type": "text",
+      "id": "faq_q2",
+      "label": "Question 2",
+      "default": "What payment methods do you accept?"
+    },
+    {
+      "type": "richtext",
+      "id": "faq_a2",
+      "label": "Answer 2",
+      "default": "<p>Available payment methods are shown during checkout before you place an order.</p>"
+    },
+    {
+      "type": "text",
+      "id": "faq_q3",
+      "label": "Question 3",
+      "default": "How long does shipping take?"
+    },
+    {
+      "type": "richtext",
+      "id": "faq_a3",
+      "label": "Answer 3",
+      "default": "<p>Delivery times vary by destination and shipping method. Check your shipping confirmation email for tracking details once your order ships.</p>"
+    },
+    {
+      "type": "text",
+      "id": "faq_q4",
+      "label": "Question 4",
+      "default": "What is your return policy?"
+    },
+    {
+      "type": "richtext",
+      "id": "faq_a4",
+      "label": "Answer 4",
+      "default": "<p>Contact Avonent support with your order number to request return assistance and applicable terms.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Four trust cards"
+    },
+    {
+      "type": "text",
+      "id": "proof_1",
+      "label": "Trust card 1",
+      "default": "FDA-Registered Facility"
+    },
+    {
+      "type": "text",
+      "id": "proof_2",
+      "label": "Trust card 2",
+      "default": "3rd-Party Lab Tested"
+    },
+    {
+      "type": "text",
+      "id": "proof_3",
+      "label": "Trust card 3",
+      "default": "Secure Checkout"
+    },
+    {
+      "type": "text",
+      "id": "proof_4",
+      "label": "Trust card 4",
+      "default": "Ships in 24 hours"
     }
   ],
   "blocks": [
