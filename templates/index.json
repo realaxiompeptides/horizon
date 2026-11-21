@@ -57,52 +57,28 @@
             "text": "Ships from USA"
           }
         },
-        "health_slide_botanicals": {
-          "type": "health_slide",
-          "settings": {
-            "slide_image": "shopify://shop_images/avonent-botanical-slide-2.jpg",
-            "caption": "",
-            "alt_text": "Garlic, herbs and fresh leaves beside sparkling turquoise water"
-          }
-        },
-        "health_slide_soursop": {
-          "type": "health_slide",
-          "settings": {
-            "slide_image": "shopify://shop_images/avonent-botanical-slide-3.jpg",
-            "caption": "",
-            "alt_text": "Soursop fruit, turmeric and botanical leaves"
-          }
-        },
-        "health_slide_ingredients": {
-          "type": "health_slide",
-          "settings": {
-            "slide_image": "shopify://shop_images/avonent-botanical-slide-1.jpg",
-            "caption": "",
-            "alt_text": "Garlic, soursop, turmeric and botanicals"
-          }
-        },
         "product_soursop": {
           "type": "product_card",
           "settings": {
-            "card_image": "shopify://shop_images/avonent-botanical-slide-3.jpg",
-            "image_alt": "Soursop fruit and botanical ingredients",
+            "image_alt": "Illustration of Avonent Soursop Softgels packaging",
             "title": "Avonent Soursop Softgels",
             "description": "Premium soursop leaf softgels for an easy daily botanical wellness routine.",
             "example_price": "$39.00",
             "rating": "4.9",
-            "button_text": "Explore Soursop"
+            "button_text": "Explore Soursop",
+            "pack_style": "soursop"
           }
         },
         "product_garlic": {
           "type": "product_card",
           "settings": {
-            "card_image": "shopify://shop_images/avonent-botanical-slide-2.jpg",
-            "image_alt": "Garlic and fresh botanical ingredients",
+            "image_alt": "Illustration of Avonent Garlic Softgels packaging",
             "title": "Avonent Garlic Softgels",
             "description": "Odorless aged garlic softgels for everyday heart and circulation support.",
             "example_price": "$40.00",
             "rating": "4.9",
-            "button_text": "Explore Garlic"
+            "button_text": "Explore Garlic",
+            "pack_style": "garlic"
           }
         }
       },
@@ -132,7 +108,7 @@
         "guarantee_button_url": "/collections/all",
         "gallery_heading": "Two Formulas Our Customers Love",
         "gallery_eyebrow": "OUR PRODUCTS",
-        "gallery_description": "Swipe to explore the collection.",
+        "gallery_description": "Each formula does a different job. Swipe to find yours.",
         "gallery_background_color": "#F7FBFD"
       }
     }
