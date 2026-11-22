@@ -128,10 +128,10 @@
         "walnut_review_slot_5": {
           "type": "walnut_review",
           "settings": {
-            "name": "",
+            "name": "Michael T.",
             "title": "",
-            "quote": "",
-            "show_walnut_review": false,
+            "quote": "My doctor was surprised at how well I was holding up during treatment. I credit these Aged Black Walnut Extract Drops for helping support my immune system when I needed it most. Feeling much better than ! expected.",
+            "show_walnut_review": true,
             "rating": 5
           }
         },
