@@ -355,8 +355,8 @@
           "type": "review",
           "settings": {
             "name": "Jennifer L.",
-            "title": "I wanted to do something for myself",
-            "quote": "Chemo really took a toll on me. I had days when I barely wanted to leave the house. A friend told me about soursop, and I decided to give it a try. I’m still following my doctor’s treatment plan, but having a daily routine of my own has helped me feel more in control.",
+            "title": "Fogginess went away",
+            "quote": "Chemo side effects had me drained and foggy. These drops helped me feel clearer and more energized. I've been using them daily alongside treatment and I can actually keep up with my grandkids again.\nThis stuff really works.",
             "rating": 5,
             "rating_display": "5.0",
             "tag_1": "Daily Confidence",
@@ -389,19 +389,6 @@
             "tag_2": "Family Time",
             "verified": true
           }
-        },
-        "review_5": {
-          "type": "review",
-          "settings": {
-            "name": "Patricia M.",
-            "title": "I was tired of cancer taking everything from me",
-            "quote": "After months of chemo, I barely recognized myself. I was exhausted, scared, and tired of watching my family worry about me. I hated feeling like cancer controlled every part of my life. When I learned about soursop, I decided to add it to my daily routine. It gave me something simple I could do for myself. I’m still taking things one day at a time, but I’m not letting fear control every decision anymore.",
-            "rating": 5,
-            "rating_display": "5.0",
-            "tag_1": "Taking Control",
-            "tag_2": "Peace of Mind",
-            "verified": true
-          }
         }
       },
       "block_order": [
@@ -426,8 +413,7 @@
         "review_2",
         "review_3",
         "review_6",
-        "review_4",
-        "review_5"
+        "review_4"
       ],
       "settings": {
         "sr_intro": "",
