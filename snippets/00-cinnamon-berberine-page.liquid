@@ -1777,6 +1777,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
     {% endif %}
   </div>
 
+  {% unless template.suffix == 'black-walnut-2' %}
   <section class="av-cb__carousel-section" data-av-cb-carousel>
     <h2 class="av-cb__carousel-heading">{{ av_cb_carousel_heading }}</h2>
     <div class="av-cb__carousel-shell">
@@ -1832,6 +1833,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       </div>
     </div>
   </section>
+  {% endunless %}
 
 {% if av_cb_stats_position == 'after_carousel' %}{{ av_cb_stats_markup }}{% endif %}
 {% if av_cb_doctor_position == 'after_carousel' %}{{ av_cb_doctor_markup }}{% endif %}
