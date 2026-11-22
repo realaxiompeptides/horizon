@@ -1442,24 +1442,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
 
         {% if av_cb_show_low_stock %}<div class="av-cb__low-stock-line"><span>{{ av_cb_low_stock_line | escape }}</span></div>{% endif %}
 
-        {% if template.suffix == 'black-walnut-2' %}
-        <div class="av-cb__form" data-av-cb-walnut-order data-variant-id="{{ av_cb_variant.id }}">
-        {% else %}
-        <product-form-component
-          data-section-id="{{ editor.id }}"
-          data-product-id="{{ av_cb_product.id }}"
-          data-product-url="{{ av_cb_product.url }}"
-          data-quantity-default="{% if av_cb_product.template_suffix == 'soursop' %}2{% else %}1{% endif %}"
-        >
-          <div class="visually-hidden" aria-live="assertive" role="status" aria-atomic="true" ref="liveRegion"></div>
-        {% form 'product', av_cb_product, id: av_cb_form_id, class: 'av-cb__form', data-type: 'add-to-cart-form' %}
-          <input type="hidden" name="id" ref="variantId" value="{{ av_cb_variant.id }}">
-          <input type="hidden" name="quantity" value="{% if av_cb_product.template_suffix == 'soursop' %}2{% else %}1{% endif %}" data-av-cb-quantity>
-          {% if av_cb_subscription != blank %}
-            <input type="hidden" name="selling_plan" value="{{ av_cb_subscription_plan_id }}" data-av-cb-selling-plan data-plan-id="{{ av_cb_subscription_plan_id }}">
-          {% endif %}
-        {% endif %}
-
+        {% capture av_cb_purchase_controls %}
           <div class="av-cb__bundles" role="group" aria-label="Choose supply">
             {% for qty in (1..3) %}
               {% if qty == 1 %}
@@ -1588,9 +1571,26 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
               <span class="av-cb__buy-mainline">Currently Unavailable</span>
             {% endif %}
           </button>
+        {% endcapture %}
         {% if template.suffix == 'black-walnut-2' %}
-        </div>
+          <div class="av-cb__form" data-av-cb-walnut-order data-variant-id="{{ av_cb_variant.id }}">
+            {{ av_cb_purchase_controls }}
+          </div>
         {% else %}
+        <product-form-component
+          data-section-id="{{ editor.id }}"
+          data-product-id="{{ av_cb_product.id }}"
+          data-product-url="{{ av_cb_product.url }}"
+          data-quantity-default="{% if av_cb_product.template_suffix == 'soursop' %}2{% else %}1{% endif %}"
+        >
+          <div class="visually-hidden" aria-live="assertive" role="status" aria-atomic="true" ref="liveRegion"></div>
+        {% form 'product', av_cb_product, id: av_cb_form_id, class: 'av-cb__form', data-type: 'add-to-cart-form' %}
+          <input type="hidden" name="id" ref="variantId" value="{{ av_cb_variant.id }}">
+          <input type="hidden" name="quantity" value="{% if av_cb_product.template_suffix == 'soursop' %}2{% else %}1{% endif %}" data-av-cb-quantity>
+          {% if av_cb_subscription != blank %}
+            <input type="hidden" name="selling_plan" value="{{ av_cb_subscription_plan_id }}" data-av-cb-selling-plan data-plan-id="{{ av_cb_subscription_plan_id }}">
+          {% endif %}
+          {{ av_cb_purchase_controls }}
         {% endform %}
         </product-form-component>
         {% endif %}
