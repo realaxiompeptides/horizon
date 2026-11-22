@@ -27,17 +27,35 @@
 <div class="visually-hidden" aria-live="polite" ref="liveRegion"></div>
 {% form 'product', item, id: form_id %}
 <input type="hidden" name="id" ref="variantId" value="{{ variant.id }}">
-{% assign stock_threshold = section.settings.stock_threshold %}
-{% if variant.inventory_management != blank and variant.inventory_quantity > 0 and variant.inventory_quantity <= stock_threshold %}
-  <p class="walnut-stock">{{ section.settings.stock_label | escape }}</p>
+<div class="walnut-offer-header">
+  <strong>{{ section.settings.subscribe | escape }}</strong>
+  <div class="walnut-offer-values">
+    <span data-walnut-summary>{{ variant.price | money }}</span>
+    <del data-walnut-compare {% unless variant.compare_at_price > variant.price %}hidden{% endunless %}>{{ variant.compare_at_price | money }}</del>
+    <span class="walnut-sale" data-walnut-sale hidden></span>
+  </div>
+  {% if variant.selling_plan_allocations == empty %}
+    <small>{{ section.settings.example_note | escape }}</small>
+  {% endif %}
+</div>
+{% if section.settings.show_stock %}
+  <p class="walnut-stock"><span>{{ section.settings.stock_label | escape }}</span></p>
 {% endif %}
 <fieldset class="walnut-bundles">
-  <legend>{{ section.settings.purchase | escape }}</legend>
+  <legend class="visually-hidden">{{ section.settings.purchase | escape }}</legend>
   {% for pack in item.variants %}
     {% liquid
       assign title = pack.title
       assign subtitle = ''
       assign shipping = false
+      assign gift_ebook = false
+      assign savings = 0
+      if pack.compare_at_price > pack.price
+        assign savings = pack.compare_at_price | minus: pack.price | times: 100.0 | divided_by: pack.compare_at_price | round
+      endif
+      if pack.option1 == '4 bottles' and ebook_url != blank
+        assign gift_ebook = true
+      endif
       case pack.option1
         when '1 bottle', 'Default Title'
           assign title = section.settings.single_title
@@ -53,18 +71,28 @@
       endcase
     %}
     <label class="walnut-bundle">
-      <input type="radio" name="walnut_pack" value="{{ pack.id }}" data-walnut-pack {% if pack.option1 == '4 bottles' %}data-walnut-ebook{% endif %} data-price="{{ pack.price | money | escape }}" {% if pack.id == variant.id %}checked{% endif %} {% unless pack.available %}disabled{% endunless %}>
+      <input type="radio" name="walnut_pack" value="{{ pack.id }}" data-walnut-pack {% if pack.option1 == '4 bottles' %}data-walnut-ebook{% endif %} data-price="{{ pack.price | money | escape }}" data-compare="{% if savings > 0 %}{{ pack.compare_at_price | money | escape }}{% endif %}" data-savings="{{ savings }}" {% if pack.id == variant.id %}checked{% endif %} {% unless pack.available %}disabled{% endunless %}>
+      {% if shipping %}
+        <span class="walnut-ribbon">{{ section.settings.shipping_label | escape }}{% if gift_ebook %} + {{ section.settings.ebook_label | escape }}{% endif %}</span>
+      {% endif %}
       <span class="walnut-bundle__thumb" aria-hidden="true"></span>
       <span class="walnut-bundle__copy">
         <strong>{{ title | escape }}</strong>
         {% if subtitle != blank %}<small>{{ subtitle | escape }}</small>{% endif %}
-        {% if shipping %}<small class="walnut-bundle__gift">{{ section.settings.shipping_label | escape }}{% if pack.option1 == '4 bottles' and ebook_url != blank %} · {{ section.settings.ebook_label | escape }}{% endif %}</small>{% endif %}
+        {% if savings > 0 %}<small>{{ section.settings.savings_prefix | escape }} {{ savings }}%</small>{% endif %}
         {% unless pack.available %}<small>{{ 'products.product.sold_out' | t }}</small>{% endunless %}
       </span>
       <span class="walnut-bundle__price">
         <strong>{{ pack.price | money }}</strong>
         {% if pack.compare_at_price > pack.price %}<del>{{ pack.compare_at_price | money }}</del>{% endif %}
       </span>
+      {% if shipping %}
+        <span class="walnut-unlock">
+          <strong>{{ section.settings.gift_heading | escape }}</strong>
+          <span><i aria-hidden="true">✓</i>{{ section.settings.shipping_label | escape }}</span>
+          {% if gift_ebook %}<span><i aria-hidden="true">✓</i>{{ section.settings.ebook_label | escape }}</span>{% endif %}
+        </span>
+      {% endif %}
     </label>
   {% endfor %}
 </fieldset>
@@ -82,7 +110,7 @@
   {% endif %}
 {% endfor %}
 <div class="hidden" ref="addToCartTextError" role="alert"></div>
-<button class="button" type="submit" {% unless variant.available %}disabled{% endunless %}>{% if variant.available %}{{ section.settings.cta | escape }} <span aria-hidden="true">·</span> <span data-walnut-total>{{ variant.price | money }}</span>{% else %}{{ 'products.product.sold_out' | t }}{% endif %}</button>
+<button class="button" type="submit" {% unless variant.available %}disabled{% endunless %}>{% if variant.available %}{{ section.settings.cta | escape }} <span aria-hidden="true">·</span> <span data-walnut-total>{{ variant.price | money }}</span> <del data-walnut-cta-compare {% unless variant.compare_at_price > variant.price %}hidden{% endunless %}>{{ variant.compare_at_price | money }}</del>{% else %}{{ 'products.product.sold_out' | t }}{% endif %}</button>
 {% if ebook_url != blank %}
   <p class="walnut-ebook" data-walnut-ebook-link {% unless variant.option1 == '4 bottles' %}hidden{% endunless %}>
     <a href="{{ ebook_url | escape }}" target="_blank" rel="noopener">{{ section.settings.ebook_download | escape }}</a>
@@ -97,6 +125,10 @@
     if (!form) return;
     const variantInput = form.querySelector('[name="id"]');
     const total = form.querySelector('[data-walnut-total]');
+    const summary = form.querySelector('[data-walnut-summary]');
+    const sale = form.querySelector('[data-walnut-sale]');
+    const comparePrices = form.querySelectorAll('[data-walnut-compare], [data-walnut-cta-compare]');
+    const savingsPrefix = {{ section.settings.savings_prefix | json }};
     const ebook = form.querySelector('[data-walnut-ebook-link]');
     const modeGroups = [...form.querySelectorAll('[data-walnut-modes]')];
     function selectPack() {
@@ -117,7 +149,15 @@
         const defaultPlan = activeGroup.querySelector('input[value=""]') || activeGroup.querySelector('input');
         if (defaultPlan) defaultPlan.checked = true;
       }
-      if (total) total.textContent = activeGroup?.querySelector('input:checked')?.dataset.price || pack.dataset.price;
+      const price = activeGroup?.querySelector('input:checked')?.dataset.price || pack.dataset.price;
+      if (total) total.textContent = price;
+      summary.textContent = price;
+      for (const compare of comparePrices) {
+        compare.textContent = pack.dataset.compare;
+        compare.hidden = !pack.dataset.compare;
+      }
+      sale.hidden = !pack.dataset.compare;
+      sale.textContent = savingsPrefix + ' ' + pack.dataset.savings + '%';
     }
     form.addEventListener('change', selectPack);
     form.addEventListener('submit', selectPack, { capture: true });
@@ -125,24 +165,44 @@
   })();
 </script>
 <style>
-.walnut-shop .walnut-bundle { display:grid;grid-template-columns:auto 44px minmax(0,1fr) auto;gap:10px;min-height:88px;border-radius:16px;margin:10px 0;background:white }
-.walnut-shop .walnut-bundle:has(:checked) { border-color:#167b9a;box-shadow:0 0 0 2px #d0eff7;background:#e7f8fc }
-.walnut-bundle__thumb { width:44px;aspect-ratio:1;border-radius:8px;background:url('{{ "avonent-black-walnut-gallery.webp" | asset_url }}') 0 0 / 400% 200% }
-.walnut-bundle__copy,.walnut-bundle__price { display:grid;gap:3px;align-content:center;line-height:1.25 }
-.walnut-bundle__copy strong { color:#092d46;font-size:clamp(.98rem,2.5vw,1.25rem) }
-.walnut-bundle__price { text-align:right;color:#09647f;white-space:nowrap }
-.walnut-bundle__price del { font-size:.75rem;color:#536775 }
-.walnut-bundle__gift { color:#145c74;font-weight:700 }
-.walnut-stock { margin-block:12px;color:#126782;text-align:center;font-weight:750 }
-.walnut-ebook { margin-top:12px;text-align:center }
-.walnut-ebook[hidden],.walnut-modes[hidden] { display:none!important }
-@media(max-width:480px){.walnut-shop .walnut-bundle{gap:7px;grid-template-columns:auto 32px minmax(0,1fr) auto;padding-inline:9px}.walnut-bundle__thumb{width:32px}}
+/* Offer header, stock divider, stacked cards and expanded gifts follow the Soursop layout. */
+.walnut-shop { max-width:1180px; margin:auto; padding:clamp(14px,4vw,56px); display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); align-items:start; gap:clamp(22px,5vw,70px); --offer-blue:#167b9a; --offer-dark:#123f54; --offer-border:#c5e3ec; }
+.walnut-shop h1 { font-size:clamp(2.2rem,4vw,3.8rem); letter-spacing:-.045em; color:#092d46; margin:0 0 16px; }
+.walnut-shop li { margin:.45rem 0; }
+.walnut-shop li::marker { color:var(--accent); }
+.walnut-shop fieldset { padding:0; border:0; min-width:0; margin:0 0 14px; }
+.walnut-offer-header { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:9px 14px; border-block:1px solid var(--offer-border); padding:16px 0; margin-top:20px; color:var(--offer-dark); font-size:clamp(18px,4.4vw,23px); }
+.walnut-offer-values { display:flex; flex-wrap:wrap; align-items:center; justify-content:flex-end; gap:6px 9px; }
+.walnut-offer-values > span:first-child { color:var(--offer-blue); font-size:clamp(23px,6vw,33px); font-weight:850; }
+.walnut-offer-values del { color:#3c4b53; font-size:clamp(12px,3.2vw,17px); font-weight:700; }
+.walnut-offer-header > small { grid-column:1/-1; font-size:12px; color:#50616a; }
+.walnut-sale,.walnut-ribbon { background:var(--offer-blue); color:white; border-radius:999px; padding:5px 10px; font-size:11px; line-height:1.25; font-weight:850; letter-spacing:.04em; }
+.walnut-stock { display:flex; align-items:center; gap:10px; margin:13px 0 19px; color:var(--offer-dark); font-size:clamp(14px,3.7vw,17px); font-weight:850; text-align:center; }
+.walnut-stock::before,.walnut-stock::after { content:""; flex:1; height:2px; background:var(--offer-border); }
+.walnut-bundles { display:grid; gap:13px; }
+.walnut-bundle { display:grid; grid-template-columns:46px minmax(0,1fr) auto; align-items:center; gap:11px; min-height:91px; position:relative; margin:0; padding:16px 12px; border:2px solid var(--offer-border); border-radius:17px; background:white; cursor:pointer; }
+.walnut-bundle:has(:checked) { background:#dff3fa; border-color:var(--offer-blue); box-shadow:0 0 0 3px #e5f4f9,0 8px 20px #153f5411; }
+.walnut-bundle:has(:focus-visible) { outline:3px solid var(--offer-dark); outline-offset:3px; }
+.walnut-bundle > input { position:absolute; opacity:0; width:1px; height:1px; }
+.walnut-ribbon { position:absolute; top:-10px; right:11px; white-space:nowrap; text-transform:uppercase; }
+.walnut-bundle__thumb { width:46px; aspect-ratio:1; border-radius:8px; background:url('{{ "avonent-black-walnut-gallery.webp" | asset_url }}') 0 0 / 400% 200%; }
+.walnut-bundle__copy,.walnut-bundle__price { display:grid; gap:4px; line-height:1.25; }
+.walnut-bundle__copy strong { color:var(--offer-dark); font-size:clamp(15px,4vw,20px); }
+.walnut-bundle__copy small,.walnut-bundle__price del { color:#536775; font-size:12px; }
+.walnut-bundle__price { text-align:right; color:var(--offer-blue); white-space:nowrap; font-size:clamp(17px,4.5vw,23px); }
+.walnut-unlock { display:none; grid-column:1/-1; border-top:1px solid #b9dce8; padding-top:10px; color:var(--offer-dark); }
+.walnut-bundle:has(:checked) .walnut-unlock { display:grid; gap:7px; }
+.walnut-unlock > strong { font-size:10px; letter-spacing:.12em; text-transform:uppercase; }
+.walnut-unlock > span { display:flex; gap:8px; align-items:center; font-size:13px; font-weight:750; }
+.walnut-unlock i { color:white; background:var(--offer-blue); width:20px; height:20px; border-radius:50%; display:grid; place-items:center; font-style:normal; }
+.walnut-shop .button { width:100%; min-height:54px; border-radius:13px; background:var(--offer-blue); color:white; font-weight:850; }
+.walnut-shop .button del { opacity:.8; font-size:.85em; }
+.walnut-ebook { margin-top:10px; text-align:center; }
+.walnut-shop [hidden] { display:none!important; }
+.walnut-modes label { display:flex; align-items:center; gap:9px; padding:10px; margin-top:6px; border:1px solid var(--offer-border); border-radius:10px; }
+.walnut-modes b { margin-left:auto; }
+@media(max-width:380px) { .walnut-bundle { grid-template-columns:34px minmax(0,1fr) auto; gap:7px; padding-inline:9px; } .walnut-bundle__thumb { width:34px; } }
 
-.walnut-shop{max-width:1180px;margin:auto;padding:clamp(18px,4vw,56px);display:grid;grid-template-columns:1fr 1fr;align-items:start;gap:clamp(22px,5vw,70px)}
-.walnut-shop h1{font-size:clamp(2.2rem,4vw,3.8rem);letter-spacing:-.045em;color:#092d46;margin:0 0 16px}
-.walnut-shop li{margin:.45rem 0}.walnut-shop li::marker{color:var(--accent)}
-.walnut-shop fieldset{padding:0;border:0;margin:20px 0}.walnut-shop legend{font-weight:bold;margin-bottom:8px}
-.walnut-shop fieldset label{display:flex;gap:12px;align-items:center;padding:16px;border:1px solid #bad6de;border-radius:12px;margin:8px 0;cursor:pointer}.walnut-shop fieldset label:has(:checked){background:#effbfe;border:2px solid var(--accent);padding:15px}.walnut-shop fieldset b{margin-left:auto}.walnut-shop input{accent-color:#087d97}.walnut-shop .button{width:100%;background:#092d46;color:white}
 .walnut-shop__gallery{display:flex;flex-wrap:wrap;gap:6px;position:relative;padding-top:calc(100% + 10px)}.walnut-shop summary{font-size:.8rem;cursor:pointer;border:1px solid #cbdde2;border-radius:20px;padding:5px 10px;list-style:none}.walnut-shop details[open] summary{border-color:var(--accent);background:#edfbff}.walnut-shop__gallery img,.walnut-shop .walnut-art{position:absolute;top:0;left:0;width:100%;aspect-ratio:1;object-fit:cover;border-radius:16px}.walnut-art{background-image:url('{{ "avonent-black-walnut-gallery.webp" | asset_url }}');background-size:400% 200%}
 @media(max-width:749px){.walnut-shop{grid-template-columns:minmax(0,1fr)}}
 </style>
@@ -263,19 +323,34 @@
       "default": "How often would you like it?"
     },
     {
-      "type": "range",
-      "id": "stock_threshold",
-      "label": "Low stock threshold",
-      "min": 1,
-      "max": 30,
-      "step": 1,
-      "default": 10
-    },
-    {
       "type": "text",
       "id": "ebook_download",
       "label": "Ebook download text",
       "default": "Download Nature\u2019s Forgotten Remedies"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_stock",
+      "label": "Show low stock message",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "example_note",
+      "label": "Example offer note",
+      "default": "Subscription offer preview. One-time purchase is available today."
+    },
+    {
+      "type": "text",
+      "id": "savings_prefix",
+      "label": "Savings text",
+      "default": "You save"
+    },
+    {
+      "type": "text",
+      "id": "gift_heading",
+      "label": "Gift heading",
+      "default": "Gifts Unlocked"
     }
   ],
   "blocks": [
