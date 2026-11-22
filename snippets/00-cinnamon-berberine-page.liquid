@@ -2241,6 +2241,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
     {% assign walnut_reviews_editor = editor.blocks | where: 'type', 'walnut_review_settings' | first %}
     {% assign walnut_rating_sum = 0 %}
     {% assign walnut_review_count = 0 %}
+    {% capture walnut_star_icon %}<svg viewBox="0 0 96 96" aria-hidden="true" focusable="false"><path fill="#fff" d="M48,64.7 L62.6,61 L68.7,79.8 L48,64.7 Z M81.6,40.4 L55.9,40.4 L48,16.2 L40.1,40.4 L14.4,40.4 L35.2,55.4 L27.3,79.6 L48.1,64.6 L60.9,55.4 L81.6,40.4 L81.6,40.4 L81.6,40.4 L81.6,40.4 Z"/></svg>{% endcapture %}
     {% capture av_cb_walnut_review_cards %}
       {% for review in editor.blocks %}
         {% unless review.type == 'review' or review.type == 'walnut_review' %}{% continue %}{% endunless %}
@@ -2253,7 +2254,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
             <div class="av-cb__post-risk-review-rating" aria-label="{{ walnut_review_rating }} out of 5 stars">
               <span class="av-walnut-review-stars" aria-hidden="true">
                 {% for star in (1..5) %}
-                  <span{% if star > walnut_review_rating %} class="av-walnut-review-star--empty"{% endif %}></span>
+                  <span{% if star > walnut_review_rating %} class="av-walnut-review-star--empty"{% endif %}>{{ walnut_star_icon }}</span>
                 {% endfor %}
               </span>
             </div>
@@ -2274,23 +2275,19 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       <section class="av-cb__post-risk-reviews av-walnut-review-template" aria-labelledby="av-cb-post-risk-reviews-heading">
         <div class="av-cb__post-risk-reviews-wrap">
           <header class="av-cb__post-risk-reviews-head"{% if walnut_reviews_editor != blank %} {{ walnut_reviews_editor.shopify_attributes }}{% endif %}>
-            <div class="av-walnut-review-heading-row">
-              <h2 id="av-cb-post-risk-reviews-heading">{% if av_cb_walnut_review_cards == blank and request.design_mode %}Trustpilot reviews{% else %}{{ walnut_reviews_editor.settings.heading | default: editor.settings.walnut_reviews_heading | default: 'Customer Reviews' | escape }}{% endif %}</h2>
-              {% if walnut_review_count > 0 %}
-                {% assign walnut_average = walnut_rating_sum | times: 1.0 | divided_by: walnut_review_count %}
-                {% assign walnut_half_stars = walnut_average | times: 2 | round %}
+            <h2 id="av-cb-post-risk-reviews-heading">{% if av_cb_walnut_review_cards == blank and request.design_mode %}Trustpilot reviews{% else %}{{ walnut_reviews_editor.settings.heading | default: editor.settings.walnut_reviews_heading | default: 'Customer Reviews' | escape }}{% endif %}</h2>
+            {% if walnut_review_count > 0 %}
+              {% assign walnut_average = walnut_rating_sum | times: 1.0 | divided_by: walnut_review_count %}
+              {% assign walnut_half_stars = walnut_average | times: 2 | round %}
+              <div class="av-walnut-review-preview-score">
+                <span>{% if walnut_average >= 4.5 %}Excellent {% endif %}<strong>{{ walnut_average | round: 1 }} / 5</strong></span>
                 <span class="av-walnut-review-stars" role="img" aria-label="{{ walnut_average | round: 1 }} out of 5 stars">
                   {% for star in (1..5) %}
                     {% assign star_full = star | times: 2 %}
                     {% assign star_half = star_full | minus: 1 %}
-                    <span{% if walnut_half_stars < star_half %} class="av-walnut-review-star--empty"{% elsif walnut_half_stars == star_half %} class="av-walnut-review-star--half"{% endif %}></span>
+                    <span{% if walnut_half_stars < star_half %} class="av-walnut-review-star--empty"{% elsif walnut_half_stars == star_half %} class="av-walnut-review-star--half"{% endif %}>{{ walnut_star_icon }}</span>
                   {% endfor %}
                 </span>
-              {% endif %}
-            </div>
-            {% if walnut_review_count > 0 %}
-              <div class="av-walnut-review-preview-score">
-                <span>{% if walnut_average >= 4.5 %}Excellent {% endif %}<strong>{{ walnut_average | round: 1 }} / 5</strong></span>
               </div>
             {% elsif request.design_mode %}
               <div class="av-walnut-review-preview-score">
@@ -2323,19 +2320,14 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       <style>
         .av-walnut-review-template { background: #fff; color: #151515; }
         .av-walnut-review-template .av-cb__post-risk-reviews-head { text-align: center; }
-        .av-walnut-review-template .av-cb__post-risk-reviews-head h2 { font-size: clamp(28px, 6vw, 44px); }
+        .av-walnut-review-template .av-cb__post-risk-reviews-head h2 { font-size: clamp(28px, 6vw, 44px); margin: 0; }
         .av-walnut-review-template .av-walnut-trustpilot-stars { display: block; width: 128px; height: 24px; object-fit: contain; }
         .av-walnut-review-preview-caption { margin-top: .5rem; font-size: .8rem; color: #595959; }
         .av-walnut-review-preview-score { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: .6rem; margin-top: 1rem; }
         .av-walnut-review-template .av-cb__post-risk-review-card { background: #f1f1f1; border: 0; box-shadow: none; border-radius: 16px; padding: clamp(18px, 5vw, 32px); }
-        .av-walnut-review-heading-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .5rem .85rem; }
-        .av-walnut-review-template .av-walnut-review-heading-row h2 { margin: 0; }
-        .av-walnut-review-template .av-walnut-review-stars { display: inline-flex; gap: 3px; white-space: nowrap; }
-        .av-walnut-review-template .av-walnut-review-stars > span { display: grid; place-items: center; width: 24px; height: 24px; background: #00b67a; }
-        .av-walnut-review-template .av-walnut-review-stars > span::before {
-          content: ""; width: 77%; height: 77%; background: #fff;
-          clip-path: polygon(50% 0%, 61% 36%, 100% 36%, 69% 58%, 80% 95%, 50% 72%, 20% 95%, 31% 58%, 0% 36%, 39% 36%);
-        }
+        .av-walnut-review-template .av-walnut-review-stars { display: inline-flex; gap: 2px; white-space: nowrap; }
+        .av-walnut-review-template .av-walnut-review-stars > span { display: block; width: 24px; height: 24px; background: #00b67a; }
+        .av-walnut-review-template .av-walnut-review-stars svg { display: block; width: 100%; height: 100%; }
         .av-walnut-review-template .av-walnut-review-stars > .av-walnut-review-star--empty { background: #dcdce5; }
         .av-walnut-review-template .av-walnut-review-stars > .av-walnut-review-star--half { background: linear-gradient(90deg, #00b67a 50%, #dcdce5 50%); }
         .av-walnut-review-template .av-walnut-review-name { margin: 16px 0 0; font-size: 1.25rem; font-weight: 800; color: #151515; }
