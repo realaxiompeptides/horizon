@@ -1373,7 +1373,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
           <h1 class="av-cb__title">{{ av_cb_display_title }}</h1>
         {% endif %}
 
-        {% if av_cb_product.handle == 'soursop-softgels' %}
+        {% if av_cb_product.handle == 'soursop-softgels' or template.suffix == 'black-walnut-2' %}
           <div class="av-cb__soursop-story">
             {% assign av_cb_intro_lines = av_cb_hero_description | newline_to_br | split: '<br />' %}
             {% assign av_cb_intro_first = true %}
