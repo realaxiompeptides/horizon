@@ -80,27 +80,65 @@
         },
         "walnut_reviews_editor": {
           "type": "walnut_review_settings",
-          "settings": {}
+          "settings": {
+            "heading": "Customer Reviews",
+            "preview_rating": 5
+          }
         },
         "walnut_review_slot_1": {
           "type": "walnut_review",
-          "settings": {}
+          "settings": {
+            "name": "",
+            "title": "",
+            "quote": "",
+            "show_walnut_review": false,
+            "walnut_review_source": "",
+            "rating": 5
+          }
         },
         "walnut_review_slot_2": {
           "type": "walnut_review",
-          "settings": {}
+          "settings": {
+            "name": "",
+            "title": "",
+            "quote": "",
+            "show_walnut_review": false,
+            "walnut_review_source": "",
+            "rating": 5
+          }
         },
         "walnut_review_slot_3": {
           "type": "walnut_review",
-          "settings": {}
+          "settings": {
+            "name": "",
+            "title": "",
+            "quote": "",
+            "show_walnut_review": false,
+            "walnut_review_source": "",
+            "rating": 5
+          }
         },
         "walnut_review_slot_4": {
           "type": "walnut_review",
-          "settings": {}
+          "settings": {
+            "name": "",
+            "title": "",
+            "quote": "",
+            "show_walnut_review": false,
+            "walnut_review_source": "",
+            "rating": 5
+          }
         },
         "walnut_review_slot_5": {
           "type": "walnut_review",
-          "settings": {}
+          "settings": {
+            "name": "",
+            "title": "",
+            "quote": "",
+            "show_walnut_review": false,
+            "walnut_review_source": "",
+            "rating": 5
+          }
         },
         "results": {
           "type": "results",
@@ -162,6 +200,7 @@
           "type": "story_image_text_extra",
           "settings": {
             "show_section": true,
+            "image": "shopify://shop_images/5FF5C1E1-81B2-42A3-BD4C-E530EA6B8072.png",
             "image_alt": "",
             "heading": "Your Body's Reset Button, In a Bottle.",
             "body": "<p>This isn't your typical cleanse.</p><p><strong>Aged Black Walnut Extract Drops</strong> deliver the powerful traditional formula used by the Amish for generations to support strong immune defenses.</p><p>Just two droppers a day helps your immune system fight the way it was designed to.</p><p><strong>Reclaim your energy. Support your natural defenses.</strong></p>",
@@ -397,6 +436,8 @@
             "name": "Sarah K.",
             "title": "Slowly getting my energy and my life back",
             "quote": "After going through multiple rounds of chemo, I was exhausted and my immune system felt completely wiped out. Since starting these Aged Black Walnut Extract Drops, my energy is coming back and I feel stronger. It's been a game changer for my daily resilience.",
+            "show_walnut_review": false,
+            "walnut_review_source": "",
             "rating": 5,
             "rating_display": "5.0",
             "tag_1": "Energy Recovery",
@@ -410,6 +451,8 @@
             "name": "David R.",
             "title": "Highly recommend for everyone!!!",
             "quote": "I was skeptical at first, but after hearing Dr.\nAnderson's story I decided to try it. Within a few weeks my energy improved dramatically and I felt like my body was finally fighting back. Highly recommend for anyone dealing with immune challenges.",
+            "show_walnut_review": false,
+            "walnut_review_source": "",
             "rating": 5,
             "rating_display": "5.0",
             "tag_1": "Peace of Mind",
@@ -423,6 +466,8 @@
             "name": "Jennifer L.",
             "title": "Fogginess went away",
             "quote": "Chemo side effects had me drained and foggy. These drops helped me feel clearer and more energized. I've been using them daily alongside treatment and I can actually keep up with my grandkids again.\nThis stuff really works.",
+            "show_walnut_review": false,
+            "walnut_review_source": "",
             "rating": 5,
             "rating_display": "5.0",
             "tag_1": "Daily Confidence",
@@ -436,6 +481,8 @@
             "name": "Robert H.",
             "title": "Great product",
             "quote": "Constant fatigue and weakness after treatment made everything hard. Just two droppers a day and I started noticing real improvements in my energy and overall vitality. I wish I had found this sooner.",
+            "show_walnut_review": false,
+            "walnut_review_source": "",
             "rating": 5,
             "rating_display": "5.0",
             "tag_1": "Easy Routine",
@@ -449,6 +496,8 @@
             "name": "Michael T.",
             "title": "Feeling better than I expected",
             "quote": "My doctor was surprised at how well I was holding up during treatment. I credit these Aged Black Walnut Extract Drops for helping support my immune system when I needed it most. Feeling much better than ! expected.",
+            "show_walnut_review": false,
+            "walnut_review_source": "",
             "rating": 5,
             "rating_display": "4.9",
             "tag_1": "More Energy",
@@ -506,6 +555,8 @@
         "sr_label_3": "Stronger immune system during treatment",
         "sr_label_4": "",
         "reviews_heading": "Real stories. Everyday routines.",
+        "walnut_reviews_heading": "Customer Reviews",
+        "walnut_review_preview_stars": 5,
         "reviews_intro": "Experiences shared by Avonent customers.",
         "trust_image_alt": "Why Trust Avonent"
       }
