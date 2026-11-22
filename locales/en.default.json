@@ -382,10 +382,10 @@
         }
       },
       "payment": {
-        "title": "Payment (Step 3/3)"
+        "title": "Payment (Step 3/3) · 90-Day Money-Back Guarantee"
       },
       "order_summary": {
-        "recurring_subtotal_label": "90-Day Money-Back Guarantee · Recurring subtotal"
+        "recurring_subtotal_label": "Recurring subtotal"
       }
     }
   }
