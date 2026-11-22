@@ -1879,6 +1879,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
 {% if av_cb_stats_position == 'after_carousel' %}{{ av_cb_stats_markup }}{% endif %}
 {% if av_cb_doctor_position == 'after_carousel' %}{{ av_cb_doctor_markup }}{% endif %}
 {% if av_cb_story_two_position == 'after_carousel' %}{{ av_cb_story_two_markup }}{% endif %}
+{% unless template.suffix == 'black-walnut-2' %}
 <section class="av-cb__reviews">
     <div class="av-cb__wrap">
       <div class="av-cb__reviews-head">
@@ -1934,6 +1935,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       </div>
     </div>
   </section>
+  {% endunless %}
   {% unless av_cb_science_show == false %}
   <section class="av-cb__science-section" data-av-cb-science style="--science-bg:{{ av_cb_science_bg }};--science-accent:{{ av_cb_science_accent }};">
     <div class="av-cb__science-wrap">
@@ -2224,6 +2226,47 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
 
   {% endunless %}
 
+  {% if template.suffix == 'black-walnut-2' %}
+    {% capture av_cb_walnut_review_cards %}
+      {% for review in editor.blocks %}
+        {% if review.type == 'review' and review.settings.show_walnut_review and review.settings.walnut_review_source != blank and review.settings.quote != blank %}
+          {% assign walnut_review_rating = review.settings.rating %}
+          <article class="av-cb__post-risk-review-card" {{ review.shopify_attributes }}>
+            <div class="av-cb__post-risk-review-rating" aria-label="{{ walnut_review_rating }} out of 5 stars">
+              <strong>{{ walnut_review_rating }}.0</strong>
+              <span aria-hidden="true">{% for star in (1..5) %}{% if star <= walnut_review_rating %}★{% else %}☆{% endif %}{% endfor %}</span>
+            </div>
+            {% if review.settings.photo != blank %}
+              {{ review.settings.photo | image_url: width: 500 | image_tag: loading: 'lazy', widths: '250,500', alt: '' }}
+            {% endif %}
+            {% if review.settings.title != blank %}
+              <h3 class="av-cb__post-risk-review-title">{{ review.settings.title | escape }}</h3>
+            {% endif %}
+            <p>{{ review.settings.quote | escape | newline_to_br }}</p>
+            <footer class="av-cb__post-risk-review-author">
+              <strong>{{ review.settings.name | escape }}</strong>
+              <a href="{{ review.settings.walnut_review_source | escape }}">View original review</a>
+            </footer>
+          </article>
+        {% endif %}
+      {% endfor %}
+    {% endcapture %}
+    {% assign av_cb_walnut_review_cards = av_cb_walnut_review_cards | strip %}
+    {% if av_cb_walnut_review_cards != blank or request.design_mode %}
+      <section class="av-cb__post-risk-reviews" aria-labelledby="av-cb-post-risk-reviews-heading">
+        <div class="av-cb__post-risk-reviews-wrap">
+          <header class="av-cb__post-risk-reviews-head">
+            <h2 id="av-cb-post-risk-reviews-heading">They Felt the Shift. You Will Too.</h2>
+          </header>
+          {% if av_cb_walnut_review_cards != blank %}
+            <div class="av-cb__post-risk-review-list">{{ av_cb_walnut_review_cards }}</div>
+          {% else %}
+            <p>Add an Avonent customer review and its original link in a Customer photo and review block, then enable it for Black Walnut.</p>
+          {% endif %}
+        </div>
+      </section>
+    {% endif %}
+  {% else %}
   <section class="av-cb__post-risk-reviews" aria-labelledby="av-cb-post-risk-reviews-heading">
     <div class="av-cb__post-risk-reviews-wrap">
       <header class="av-cb__post-risk-reviews-head">
@@ -2290,6 +2333,8 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
     </div>
   </section>
 
+
+  {% endif %}
 
   <section id="av-cb-faq" class="av-cb__faq-section" data-av-cb-faq>
     <div class="av-cb__faq-wrap">
