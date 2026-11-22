@@ -299,20 +299,44 @@
             "show_item": true
           }
         },
+        "faq_item_results": {
+          "type": "faq_item",
+          "settings": {
+            "heading": "How soon will I feel a difference?",
+            "answer": "Most people notice improvements in energy, mental clarity, and reduced fatigue within 2–4 weeks of consistent use. Deeper immune support and lab marker changes often appear after 6–12 weeks of daily use. Results vary based on individual health and consistency.",
+            "show_item": true
+          }
+        },
         "faq_item_supplements": {
           "type": "faq_item",
           "settings": {
             "heading": "Can I take it with other supplements?",
-            "answer": "Yes. Avonent Soursop Leaf can be used alongside your existing supplement routine. Just check with your doctor if you’re taking blood pressure medications, diabetes medications, or blood thinners.",
-            "show_item": false
+            "answer": "Yes. Our formula is natural and generally safe to pair with other supplements. Just check with your doctor if you’re taking medications like blood thinners or anything affecting the liver.",
+            "show_item": true
           }
         },
         "faq_item_guarantee": {
           "type": "faq_item",
           "settings": {
             "heading": "What if it doesn’t work for me?",
-            "answer": "We stand behind our formula with a 90-day money-back guarantee. Try it for yourself, and if you’re not satisfied, simply email us within 90 days for a full refund. No complicated returns, no endless questions, and no hassle. Your purchase is protected.",
-            "show_item": false
+            "answer": "We stand behind our formula. If you don’t feel a difference within 90 days, email us for a full refund—no hassle, no questions.",
+            "show_item": true
+          }
+        },
+        "faq_item_directions": {
+          "type": "faq_item",
+          "settings": {
+            "heading": "What’s the best way to take it?",
+            "answer": "Take 2 full droppers daily. For best absorption, use on an empty stomach or mix with water or juice.",
+            "show_item": true
+          }
+        },
+        "faq_item_taste": {
+          "type": "faq_item",
+          "settings": {
+            "heading": "What does it taste like?",
+            "answer": "It has a bold herbal flavor with natural bitterness from the Black Walnut and Wormwood—balanced by subtle earthiness from clove, garlic, and pumpkin seed. No sugar or sweeteners—just potent plant power.",
+            "show_item": true
           }
         },
         "details": {
@@ -424,8 +448,11 @@
         "risk_free",
         "faq",
         "faq_item_medication",
+        "faq_item_results",
         "faq_item_supplements",
         "faq_item_guarantee",
+        "faq_item_directions",
+        "faq_item_taste",
         "details",
         "trust_image",
         "review_1",
