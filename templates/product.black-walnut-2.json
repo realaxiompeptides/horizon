@@ -125,9 +125,9 @@
           "type": "story_image_text",
           "settings": {
             "show_section": true,
-            "image_alt": "",
-            "heading": "",
-            "body": "",
+            "image_alt": "Avonent Black Walnut Drops",
+            "heading": "A closer look at Black Walnut Drops",
+            "body": "<p>Avonent Black Walnut Drops come in a liquid dropper bottle. See the label for ingredients and directions.</p>",
             "text_position": "below",
             "align": "center",
             "background": "#f5f8f1",

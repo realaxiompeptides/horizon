@@ -1624,6 +1624,39 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       {% endif %}
     </div>
 
+    {% capture av_cb_image_text_markup %}
+    {% if av_cb_story_image_text_block != blank %}
+      {% if av_cb_story_image_text_block.settings.show_section %}
+        {% assign av_cb_bridge_image = av_cb_story_image_text_block.settings.image %}
+        {% if template.suffix == 'black-walnut-2' %}
+          {% assign av_cb_bridge_image = av_cb_bridge_image | default: av_cb_product.featured_image %}
+        {% endif %}
+        {% assign av_cb_bridge_heading = av_cb_story_image_text_block.settings.heading %}
+        {% assign av_cb_bridge_body = av_cb_story_image_text_block.settings.body %}
+        {% if av_cb_bridge_image != blank or av_cb_bridge_heading != blank or av_cb_bridge_body != blank or request.design_mode %}
+          <section class="av-cb__story-image-text{% if av_cb_story_image_text_block.settings.text_position == 'overlay' %} av-cb__story-image-text--overlay{% endif %} av-cb__story-image-text--{{ av_cb_story_image_text_block.settings.align }}" style="--sit-bg:{{ av_cb_story_image_text_block.settings.background }};--sit-color:{{ av_cb_story_image_text_block.settings.text_color }};" {{ av_cb_story_image_text_block.shopify_attributes }}>
+            {% if av_cb_bridge_image != blank %}
+              <div class="av-cb__story-image-text-media">
+                {{ av_cb_bridge_image | image_url: width: 1800 | image_tag: loading: 'lazy', widths: '375,550,750,990,1320,1800', sizes: '(min-width: 1000px) 960px, calc(100vw - 36px)', alt: av_cb_story_image_text_block.settings.image_alt }}
+              </div>
+            {% elsif template.suffix == 'black-walnut-2' %}
+              <div class="av-cb__story-image-text-media" role="img" aria-label="Avonent Black Walnut Drops" style="aspect-ratio:1;background:url('{{ 'avonent-black-walnut-gallery.webp' | asset_url }}') 100% 100% / 400% 200% no-repeat;"></div>
+            {% elsif request.design_mode %}
+              <div class="av-cb__story-image-text-placeholder"><span class="av-cb__story-image-text-placeholder-icon" aria-hidden="true">+</span><span>Choose an image here</span></div>
+            {% endif %}
+            {% if av_cb_bridge_heading != blank or av_cb_bridge_body != blank %}
+              <div class="av-cb__story-image-text-copy">
+                {% if av_cb_bridge_heading != blank %}<h2>{{ av_cb_bridge_heading | escape }}</h2>{% endif %}
+                {% if av_cb_bridge_body != blank %}<div class="av-cb__story-image-text-body">{{ av_cb_bridge_body }}</div>{% endif %}
+              </div>
+            {% endif %}
+          </section>
+        {% endif %}
+      {% endif %}
+    {% endif %}
+    {% endcapture %}
+    {% if template.suffix == 'black-walnut-2' %}{{ av_cb_image_text_markup }}{% endif %}
+
     {% capture av_cb_stats_markup %}
     {% unless av_cb_stats_show == false or av_cb_product.handle == 'soursop-softgels' or template.suffix == 'black-walnut-2' %}
       {% assign av_cb_stats_opacity = av_cb_stats_overlay_opacity | divided_by: 100.0 %}
@@ -1751,30 +1784,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
     {% endif %}
 
     {{ survivor_results }}
-    {% if av_cb_product.handle == 'soursop-softgels' and av_cb_story_image_text_block != blank %}
-      {% if av_cb_story_image_text_block.settings.show_section %}
-        {% assign av_cb_bridge_image = av_cb_story_image_text_block.settings.image %}
-        {% assign av_cb_bridge_heading = av_cb_story_image_text_block.settings.heading %}
-        {% assign av_cb_bridge_body = av_cb_story_image_text_block.settings.body %}
-        {% if av_cb_bridge_image != blank or av_cb_bridge_heading != blank or av_cb_bridge_body != blank or request.design_mode %}
-          <section class="av-cb__story-image-text{% if av_cb_story_image_text_block.settings.text_position == 'overlay' %} av-cb__story-image-text--overlay{% endif %} av-cb__story-image-text--{{ av_cb_story_image_text_block.settings.align }}" style="--sit-bg:{{ av_cb_story_image_text_block.settings.background }};--sit-color:{{ av_cb_story_image_text_block.settings.text_color }};" {{ av_cb_story_image_text_block.shopify_attributes }}>
-            {% if av_cb_bridge_image != blank %}
-              <div class="av-cb__story-image-text-media">
-                {{ av_cb_bridge_image | image_url: width: 1800 | image_tag: loading: 'lazy', widths: '375,550,750,990,1320,1800', sizes: '(min-width: 1000px) 960px, calc(100vw - 36px)', alt: av_cb_story_image_text_block.settings.image_alt }}
-              </div>
-            {% elsif request.design_mode %}
-              <div class="av-cb__story-image-text-placeholder"><span class="av-cb__story-image-text-placeholder-icon" aria-hidden="true">+</span><span>Choose an image here</span></div>
-            {% endif %}
-            {% if av_cb_bridge_heading != blank or av_cb_bridge_body != blank %}
-              <div class="av-cb__story-image-text-copy">
-                {% if av_cb_bridge_heading != blank %}<h2>{{ av_cb_bridge_heading | escape }}</h2>{% endif %}
-                {% if av_cb_bridge_body != blank %}<div class="av-cb__story-image-text-body">{{ av_cb_bridge_body }}</div>{% endif %}
-              </div>
-            {% endif %}
-          </section>
-        {% endif %}
-      {% endif %}
-    {% endif %}
+    {% if av_cb_product.handle == 'soursop-softgels' and template.suffix != 'black-walnut-2' %}{{ av_cb_image_text_markup }}{% endif %}
   </div>
 
   {% unless template.suffix == 'black-walnut-2' %}
@@ -1987,7 +1997,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
   {% endunless %}
 
 
-  {% unless av_cb_product.template_suffix == 'soursop' %}
+  {% unless av_cb_product.template_suffix == 'soursop' or template.suffix == 'black-walnut-2' %}
   <section class="av-cb__journey">
     <div class="av-cb__journey-wrap">
       <header class="av-cb__journey-head">
