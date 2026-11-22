@@ -2147,7 +2147,8 @@ html.av-soursop-copy-guard [contenteditable] * {
         {
           "type": "textarea",
           "id": "acc_1_body",
-          "label": "Acc 1 body (plain text fallback)"
+          "label": "Acc 1 body (plain text fallback)",
+          "visible_if": "{{ block.settings.acc_1_body_formatted == blank }}"
         },
         {
           "type": "richtext",
@@ -2162,7 +2163,8 @@ html.av-soursop-copy-guard [contenteditable] * {
         {
           "type": "textarea",
           "id": "acc_2_body",
-          "label": "Acc 2 body (plain text fallback)"
+          "label": "Acc 2 body (plain text fallback)",
+          "visible_if": "{{ block.settings.acc_2_body_formatted == blank }}"
         },
         {
           "type": "richtext",
@@ -2177,7 +2179,8 @@ html.av-soursop-copy-guard [contenteditable] * {
         {
           "type": "textarea",
           "id": "acc_3_body",
-          "label": "Acc 3 body (plain text fallback)"
+          "label": "Acc 3 body (plain text fallback)",
+          "visible_if": "{{ block.settings.acc_3_body_formatted == blank }}"
         },
         {
           "type": "richtext",
