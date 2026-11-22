@@ -1661,6 +1661,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       </details>
     </div>
 
+    {% unless template.suffix == 'black-walnut-2' %}
     <div class="av-cb__trust-image-section" style="margin-top:10px;"{% if av_cb_active_trust_block != blank %} {{ av_cb_active_trust_block.shopify_attributes }}{% endif %}>
       {% if av_cb_trust_image != blank %}
         <span style="display:block;width:100%;">{{ av_cb_trust_image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '600,900,1200,1600', sizes: '(min-width: 900px) 1200px, calc(100vw - 22px)', alt: av_cb_trust_image_alt, style: 'display:block;width:100%;height:auto;border-radius:18px;' }}</span>
@@ -1668,6 +1669,8 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         <img width="1600" height="900" src="https://cdn.shopify.com/s/files/1/0759/3525/2646/files/avonent-why-trust-avonent.png?v=1793242624" alt="{{ av_cb_trust_image_alt | escape }}" loading="lazy" style="display:block;width:100%;height:auto;border-radius:18px;">
       {% endif %}
     </div>
+
+    {% endunless %}
 
     {% capture av_cb_image_text_markup %}
     {% if av_cb_story_image_text_block != blank %}
@@ -2805,14 +2808,26 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         try {
           const currentCartResponse = await cartFetch('/cart.js', {
             headers: { 'Accept': 'application/json' },
-            credentials: 'same-origin'
+            credentials: 'same-origin',
+            cache: 'no-store'
           });
           const currentCart = currentCartResponse.ok ? await currentCartResponse.json() : { items: [] };
 
+          const isProtection = (item) =>
+            Number(item.variant_id) === protectionVariantId || item.handle === 'shipping-protection';
+          const alreadyHasProtection = currentCart.items?.some(isProtection);
+          {% if template.suffix == 'black-walnut-2' %}
+          const protectionPreferenceKey = 'avonentShippingProtectionEnabled';
+          const startsNewCart = currentCartResponse.ok && !currentCart.items?.some((item) => !isProtection(item));
+          let wantsProtection = true;
+          try {
+            wantsProtection = startsNewCart || sessionStorage.getItem(protectionPreferenceKey) !== 'false';
+          } catch {
+            // The default still applies when the browser blocks storage.
+          }
+          {% else %}
           const wantsProtection = sessionStorage.getItem('avonentShippingProtectionEnabled') !== 'false';
-          const alreadyHasProtection = Array.isArray(currentCart.items) && currentCart.items.some((item) =>
-            Number(item.variant_id) === protectionVariantId || item.handle === 'shipping-protection'
-          );
+          {% endif %}
 
           const items = [];
 
@@ -2904,6 +2919,14 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
           );
           if (!finalCart?.item_count || (isSubscription && !confirmedSubscription)) {
             throw new Error('The cart could not confirm this purchase option. Check your cart before trying again.');
+          }
+
+          if (startsNewCart) {
+            try {
+              sessionStorage.removeItem(protectionPreferenceKey);
+            } catch {
+              // The cart response remains the source of truth for the toggle.
+            }
           }
 
           const hasCartContents = (html) => {
