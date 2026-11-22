@@ -88,10 +88,10 @@
         "walnut_review_slot_1": {
           "type": "walnut_review",
           "settings": {
-            "name": "",
+            "name": "Sarah K.",
             "title": "",
-            "quote": "",
-            "show_walnut_review": false,
+            "quote": "After going through multiple rounds of chemo, I was exhausted and my immune system felt completely wiped out. Since starting these Aged Black Walnut Extract Drops, my energy is coming back and I feel stronger. It's been a game changer for my daily resilience.",
+            "show_walnut_review": true,
             "walnut_review_source": "",
             "rating": 5
           }
