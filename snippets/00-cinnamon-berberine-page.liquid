@@ -778,18 +778,21 @@
         if content_block.settings.acc_1_title != blank
           assign av_cb_acc_1_title = content_block.settings.acc_1_title
         endif
+        assign av_cb_acc_1_formatted = content_block.settings.acc_1_body_formatted
         if content_block.settings.acc_1_body != blank
           assign av_cb_acc_1_body = content_block.settings.acc_1_body
         endif
         if content_block.settings.acc_2_title != blank
           assign av_cb_acc_2_title = content_block.settings.acc_2_title
         endif
+        assign av_cb_acc_2_formatted = content_block.settings.acc_2_body_formatted
         if content_block.settings.acc_2_body != blank
           assign av_cb_acc_2_body = content_block.settings.acc_2_body
         endif
         if content_block.settings.acc_3_title != blank
           assign av_cb_acc_3_title = content_block.settings.acc_3_title
         endif
+        assign av_cb_acc_3_formatted = content_block.settings.acc_3_body_formatted
         if content_block.settings.acc_3_body != blank
           assign av_cb_acc_3_body = content_block.settings.acc_3_body
         endif
@@ -1617,15 +1620,15 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
     <div class="av-cb__accordion-list" data-av-cb-accordion-list>
       <details class="av-cb__accordion">
         <summary><span>{{ av_cb_acc_1_title }}</span><span class="av-cb__accordion-icon" aria-hidden="true"></span></summary>
-        <div class="av-cb__accordion-body rte">{{ av_cb_acc_1_body | newline_to_br }}</div>
+        <div class="av-cb__accordion-body rte">{% if av_cb_acc_1_formatted != blank %}{{ av_cb_acc_1_formatted }}{% else %}{{ av_cb_acc_1_body | newline_to_br }}{% endif %}</div>
       </details>
       <details class="av-cb__accordion">
         <summary><span>{{ av_cb_acc_2_title }}</span><span class="av-cb__accordion-icon" aria-hidden="true"></span></summary>
-        <div class="av-cb__accordion-body rte">{{ av_cb_acc_2_body | newline_to_br }}</div>
+        <div class="av-cb__accordion-body rte">{% if av_cb_acc_2_formatted != blank %}{{ av_cb_acc_2_formatted }}{% else %}{{ av_cb_acc_2_body | newline_to_br }}{% endif %}</div>
       </details>
       <details class="av-cb__accordion">
         <summary><span>{{ av_cb_acc_3_title }}</span><span class="av-cb__accordion-icon" aria-hidden="true"></span></summary>
-        <div class="av-cb__accordion-body rte">{{ av_cb_acc_3_body | newline_to_br }}</div>
+        <div class="av-cb__accordion-body rte">{% if av_cb_acc_3_formatted != blank %}{{ av_cb_acc_3_formatted }}{% else %}{{ av_cb_acc_3_body | newline_to_br }}{% endif %}</div>
       </details>
     </div>
 
