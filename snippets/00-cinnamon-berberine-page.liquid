@@ -2884,8 +2884,15 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
 
           let drawerHtml = result.sections?.['cart-drawer-section'] || '';
           {% if template.suffix == 'black-walnut-2' %}
-          if (!finalCart?.item_count) {
-            throw new Error('The cart could not confirm this add. Please try again.');
+          const confirmedSubscription = finalCart?.items?.some((item) =>
+            Number(item.variant_id) === paidItem.id &&
+            String(item.selling_plan_allocation?.selling_plan?.id) === String(sellingPlanId) &&
+            item.quantity >= paidItem.quantity &&
+            (!paidItem.properties?.['_Avonent bundle'] ||
+              item.properties?.['_Avonent bundle'] === paidItem.properties['_Avonent bundle'])
+          );
+          if (!finalCart?.item_count || (isSubscription && !confirmedSubscription)) {
+            throw new Error('The cart could not confirm this purchase option. Check your cart before trying again.');
           }
 
           const hasCartContents = (html) => {
