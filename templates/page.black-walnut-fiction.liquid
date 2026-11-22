@@ -1,195 +1,202 @@
-{% layout none %}
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex, nofollow">
-<title>Aged Black Walnut Drops | Morrow &amp; Hull</title>
-<style>
-  :root { color-scheme: light; --paper: #f8f5ed; --ink: #252b21; --green: #304738; --rust: #824625; --line: #d9d2c4; }
-  * { box-sizing: border-box; }
-  body { margin: 0; background: var(--paper); color: var(--ink); font: 17px/1.55 system-ui, sans-serif; }
-  a { color: inherit; }
-  button, select { font: inherit; }
-  button { cursor: pointer; }
-  header { border-bottom: 1px solid var(--line); }
-  .notice { margin: 0; background: var(--green); color: white; text-align: center; padding: .5rem 1rem; font-size: .82rem; }
-  nav, main, footer { width: min(1120px, calc(100% - 36px)); margin-inline: auto; }
-  nav { min-height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
-  .brand { font: bold 1.3rem Georgia, serif; text-decoration: none; letter-spacing: .03em; }
-  .links { display: flex; gap: clamp(.65rem, 3vw, 1.75rem); align-items: center; font-size: .9rem; }
-  .links a { text-underline-offset: .25em; }
-  .hero { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(1.5rem, 6vw, 5rem); padding-block: clamp(1.5rem, 5vw, 4.5rem); align-items: start; }
-  .feature, .thumb { background-image: url('{{ "morrow-hull-walnut-gallery.webp" | asset_url }}'); background-size: 400% 200%; background-repeat: no-repeat; background-color: #ded7ca; }
-  .feature { width: 100%; aspect-ratio: 1; }
-  .thumbs { display: grid; grid-template-columns: repeat(8, 1fr); gap: 6px; margin-top: 8px; }
-  .thumb { display: block; aspect-ratio: 1; width: 100%; border: 0; padding: 0; }
-  .thumb[aria-pressed="true"] { outline: 2px solid var(--green); outline-offset: 2px; }
-  h1, h2 { font-family: Georgia, serif; font-weight: 500; line-height: 1.03; margin: 0 0 1rem; }
-  h1 { font-size: clamp(2.7rem, 6vw, 4.7rem); letter-spacing: -.05em; }
-  h2 { font-size: clamp(1.8rem, 3vw, 2.8rem); letter-spacing: -.03em; }
-  .eyebrow { color: var(--rust); font-size: .77rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; margin: 0 0 .65rem; }
-  .description { max-width: 46ch; }
-  fieldset { border: 0; padding: 0; margin: 1.35rem 0 .75rem; }
-  legend { font-weight: 700; margin-bottom: .55rem; }
-  .options { display: grid; grid-template-columns: repeat(3, 1fr); gap: .45rem; }
-  .option { display: flex; align-items: center; gap: .35rem; padding: .5rem .4rem; border: 1px solid var(--line); font-size: .85rem; }
-  .option:has(:checked) { border-color: var(--green); background: #e9ede3; }
-  input { accent-color: var(--green); }
-  .order { display: flex; flex-wrap: wrap; gap: .5rem .75rem; align-items: center; margin: 1rem 0 .8rem; font-size: .9rem; }
-  select { padding: .35rem; color: var(--ink); background: transparent; border: 1px solid #a7a296; max-width: 100%; }
-  .action { width: 100%; border: 0; background: var(--green); color: white; padding: .8rem; font-weight: 700; }
-  .fine { font-size: .84rem; }
-  .story, .bottom { border-top: 1px solid var(--line); display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1rem, 5vw, 4rem); padding-block: clamp(1.75rem, 5vw, 4rem); }
-  .story-art { aspect-ratio: 1; background-position: 66.666% 100%; }
-  .story div:first-child { align-self: center; }
-  details { border-top: 1px solid var(--line); padding: .8rem 0; }
-  details:last-child { border-bottom: 1px solid var(--line); }
-  summary { cursor: pointer; font-weight: 650; }
-  details p { margin: .5rem 0 0; }
-  blockquote { margin: 0 0 1.3rem; font-family: Georgia, serif; font-size: 1.2rem; }
-  cite { display: block; margin-top: .4rem; font: .83rem system-ui, sans-serif; }
-  footer { border-top: 1px solid var(--line); padding-block: 1.5rem 2.5rem; }
-  dialog { color: var(--ink); background: var(--paper); width: min(440px, calc(100% - 36px)); border: 1px solid var(--line); padding: 1.6rem; }
-  dialog::backdrop { background: #151d15a8; }
-  .close { float: right; background: transparent; border: 0; font-weight: 700; }
-  :focus-visible { outline: 3px solid #9f5c34; outline-offset: 3px; }
-  @media (max-width: 720px) {
-    .hero, .story, .bottom { grid-template-columns: 1fr; }
-    .story-art { max-width: 430px; }
-    .links { font-size: .8rem; }
-  }
-</style>
-</head>
-<body>
-<header>
-  <p class="notice">A fictional storefront created for a book</p>
-  <nav aria-label="Store navigation">
-    <a class="brand" href="#top">Morrow &amp; Hull</a>
-    <div class="links"><a href="#orchard">Orchard</a><a href="#faq">FAQ</a><a href="#bag" id="open-bag">Bag (<span id="bag-count">0</span>)</a></div>
-  </nav>
-</header>
-<main id="top">
-  <section class="hero" aria-labelledby="product-name">
-    <div>
-      <div class="feature" id="gallery-image" role="img" aria-label="Amber dropper bottle with a cream label on limestone"></div>
-      <div class="thumbs" id="thumbnails" aria-label="Product photos"></div>
-    </div>
-    <div>
-      <p class="eyebrow">Botanical extract · 1 fl oz</p>
-      <h1 id="product-name">Aged Black Walnut Drops</h1>
-      <p class="description">With the first hard rain, black walnuts start to fall. We gather the green hulls while they’re still firm, then let the extract rest until it darkens to the color of strong tea.</p>
-      <p class="description">Each amber glass bottle comes with a glass dropper and a card dated to the harvest.</p>
-      <form id="order-form">
-        <fieldset>
-          <legend>Choose your order</legend>
-          <div class="options">
-            <label class="option"><input type="radio" name="pack" value="1" data-price="32" checked><span>1 bottle<br>$32</span></label>
-            <label class="option"><input type="radio" name="pack" value="2" data-price="56"><span>2 bottles<br>$56</span></label>
-            <label class="option"><input type="radio" name="pack" value="3" data-price="75"><span>3 bottles<br>$75</span></label>
+{% assign walnut_images = 'Avonent black walnut drops bottle on a blue-gray background|Avonent bottle label and fresh walnut hulls|Glass dropper holding a drop of amber extract|Split green hull of a black walnut|Avonent bottle beside a carton|Avonent bottle on a light kitchen counter' | split: '|' %}
+<div class="av-walnut" id="av-walnut">
+  <div class="av-walnut__container">
+    <section class="av-walnut__hero" aria-labelledby="av-walnut-title">
+      <div class="av-walnut__gallery">
+        <div class="av-walnut__art av-walnut__main-art" data-crop="0" role="img" aria-label="{{ walnut_images.first | escape }}"></div>
+        <div class="av-walnut__thumbnails" aria-label="Product images">
+          {% for caption in walnut_images %}
+            <button type="button" class="av-walnut__art av-walnut__thumbnail" data-crop="{{ forloop.index0 }}" aria-label="{{ caption | escape }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}"></button>
+          {% endfor %}
+        </div>
+      </div>
+      <div>
+        <p class="av-walnut__note">Fictional product preview</p>
+        <p class="av-walnut__rating"><span aria-hidden="true">★★★★★</span> Fictional rating 4.8 / 5</p>
+        <h1 id="av-walnut-title">Aged Black Walnut Drops</h1>
+        <p>A liquid botanical extract made from black walnut hulls. Each amber glass bottle comes with a glass dropper and a card dated to the harvest.</p>
+        <ul class="av-walnut__features" role="list">
+          <li>{{ 'icon-checkmark.svg' | inline_asset_content }} Black walnut hull extract</li>
+          <li>{{ 'icon-checkmark.svg' | inline_asset_content }} Liquid dropper format</li>
+          <li>{{ 'icon-checkmark.svg' | inline_asset_content }} Amber glass bottle</li>
+          <li>{{ 'icon-checkmark.svg' | inline_asset_content }} 1 fl oz per bottle</li>
+        </ul>
+        <form class="av-walnut__order">
+          <fieldset>
+            <legend>Choose your order</legend>
+            <div class="av-walnut__options">
+              <label><input type="radio" name="av-walnut-pack" value="1" data-price="32" checked><span>1 bottle<br>$32</span></label>
+              <label><input type="radio" name="av-walnut-pack" value="2" data-price="56"><span>2 bottles<br>$56</span></label>
+              <label><input type="radio" name="av-walnut-pack" value="3" data-price="75"><span>3 bottles<br>$75</span></label>
+            </div>
+          </fieldset>
+          <div class="av-walnut__frequency">
+            <label for="av-walnut-frequency">Delivery</label>
+            <select id="av-walnut-frequency"><option>One-time order</option><option>Every 60 days</option></select>
           </div>
-        </fieldset>
-        <div class="order"><label for="schedule">Delivery</label><select id="schedule"><option>One-time order</option><option>Every 60 days</option></select></div>
-        <button class="action" type="submit">Add to preview bag</button>
-      </form>
-      <p class="fine">Orders ship Monday through Thursday. Shipping is included on orders of $56 or more.</p>
-    </div>
-  </section>
-  <section class="story" id="orchard" aria-labelledby="orchard-heading">
-    <div>
-      <p class="eyebrow">Field notes</p>
-      <h2 id="orchard-heading">From the orchard</h2>
-      <p>The first cold snap tells us it’s time. The hulls bruise if they sit in a pile, so we spread them on shallow trays the same afternoon. By the time the last leaves are down, the first bottles are ready for labels.</p>
-      <h3>Inside each bottle</h3>
-      <p>Black walnut hull extract, water, and cane alcohol. Contains black walnut. Keep the cap tight and store the bottle away from direct light.</p>
-    </div>
-    <div class="feature story-art" role="img" aria-label="Black walnut hulls drying in shallow wooden trays"></div>
-  </section>
-  <div class="bottom">
-    <section id="faq" aria-labelledby="faq-heading">
-      <h2 id="faq-heading">Frequently asked questions</h2>
-      <details><summary>Why is my bottle a different shade?</summary><p>The harvest varies from year to year. The batch card identifies the one in your bottle.</p></details>
-      <details><summary>Can I change my next delivery?</summary><p>You can skip or cancel a scheduled shipment from your account before it’s packed.</p></details>
-      <details><summary>What if my package arrives damaged?</summary><p>Send us your order number and a photo of the package. We accept returns within 30 days of delivery.</p></details>
+          <button type="submit" class="button av-walnut__action">Add to preview bag</button>
+        </form>
+        <div class="av-walnut__accordions">
+          <details><summary>Description</summary><p>The extract has a sharp, earthy scent. Its color can vary slightly from one harvest to the next.</p></details>
+          <details><summary>What’s inside?</summary><p>Black walnut hull extract, water, and cane alcohol. Contains black walnut.</p></details>
+          <details><summary>How should I store it?</summary><p>Keep the cap tight and store the bottle away from direct light.</p></details>
+          <details><summary>Shipping and returns</summary><p>In this fictional store, orders ship Monday through Thursday. Orders of $56 or more include shipping and returns are accepted within 30 days of delivery.</p></details>
+        </div>
+      </div>
     </section>
-    <section aria-labelledby="guestbook-heading">
-      <h2 id="guestbook-heading">From the guestbook</h2>
-      <blockquote>“I bought it for the bottle. I kept the little card, too. It had the same date as my birthday.”<cite>Nora P. · Fictional customer</cite></blockquote>
-      <blockquote>“The glass arrived cracked. I sent a picture and they mailed a replacement that afternoon.”<cite>Eli R. · Fictional customer</cite></blockquote>
+
+    <section class="av-walnut__story" aria-labelledby="av-walnut-harvest">
+      <div class="av-walnut__art av-walnut__story-art" data-crop="6" role="img" aria-label="Black walnuts and leaves drying in a wooden tray"></div>
+      <div>
+        <h2 id="av-walnut-harvest">From the first fall harvest</h2>
+        <p>With the first hard rain, black walnuts start to fall. The green hulls are gathered while they’re still firm and spread out on shallow trays. Each batch card records when that harvest came in.</p>
+      </div>
+    </section>
+    <section class="av-walnut__story av-walnut__story--reverse" aria-labelledby="av-walnut-bottle">
+      <div class="av-walnut__art av-walnut__story-art" data-crop="7" role="img" aria-label="Avonent black walnut drops with walnuts and leaves on blue limestone"></div>
+      <div>
+        <h2 id="av-walnut-bottle">An amber bottle for an earthy extract</h2>
+        <p>The extract rests until it darkens to the color of strong tea. The amber bottle shields it from direct light, and the glass pipette keeps the earthy liquid easy to see.</p>
+      </div>
+    </section>
+    <section class="av-walnut__specs" aria-labelledby="av-walnut-specs">
+      <h2 id="av-walnut-specs">Product details at a glance</h2>
+      <dl>
+        <div><dt>1 fl oz</dt><dd>Per bottle</dd></div>
+        <div><dt>3</dt><dd>Pack options</dd></div>
+        <div><dt>30 days</dt><dd>Fictional return window</dd></div>
+      </dl>
+    </section>
+    <section class="av-walnut__faq av-walnut__accordions" aria-labelledby="av-walnut-faq">
+      <h2 id="av-walnut-faq">Frequently asked questions</h2>
+      <details><summary>Why is my bottle a different shade?</summary><p>The harvest can vary from year to year. The batch card identifies the harvest in your bottle.</p></details>
+      <details><summary>What does the extract smell like?</summary><p>It has a sharp, earthy scent.</p></details>
+      <details><summary>What comes in the box?</summary><p>An amber glass bottle, a glass dropper, and a dated batch card.</p></details>
+      <details><summary>Can I change my next delivery?</summary><p>The story’s storefront lets customers skip or cancel an order before it’s packed.</p></details>
+      <details><summary>What if the package arrives damaged?</summary><p>In the story, customers send an order number and a photo of the damaged package to ask for a replacement.</p></details>
+      <details><summary>Can I buy this product here?</summary><p>This listing is a book prop. The preview bag demonstrates the order flow without accepting orders or payments.</p></details>
+    </section>
+    <section class="av-walnut__reviews" aria-labelledby="av-walnut-reviews">
+      <h2 id="av-walnut-reviews">From the fictional guestbook</h2>
+      <p class="av-walnut__rating"><span aria-hidden="true">★★★★★</span> Fictional rating 4.8 / 5</p>
+      <div class="av-walnut__review-grid">
+        <blockquote><p>“I bought it for the bottle. I kept the little card, too. It had the same date as my birthday.”</p><cite>Nora P.</cite></blockquote>
+        <blockquote><p>“The glass arrived cracked. I sent a picture and they mailed a replacement that afternoon.”</p><cite>Eli R.</cite></blockquote>
+        <blockquote><p>“The handwritten harvest date felt like a detail someone actually cared about.”</p><cite>Jules A.</cite></blockquote>
+        <blockquote><p>“I ordered the two-bottle pack for the kitchen shelf in the cabin.”</p><cite>Jamie L.</cite></blockquote>
+        <blockquote><p>“Mine was a little darker than the first bottle, just like they said it might be.”</p><cite>Casey T.</cite></blockquote>
+      </div>
+    </section>
+    <section class="av-walnut__newsletter" aria-labelledby="av-walnut-newsletter">
+      <h2 id="av-walnut-newsletter">Avonent updates</h2>
+      <p>Preview the email signup from the story.</p>
+      <form class="av-walnut__newsletter-form">
+        <label for="av-walnut-email" class="visually-hidden">Email address</label>
+        <input id="av-walnut-email" type="email" placeholder="Email address" autocomplete="off" required>
+        <button class="button" type="submit">Preview signup</button>
+      </form>
+      <p class="av-walnut__signup-status" aria-live="polite"></p>
     </section>
   </div>
-</main>
-<footer><span class="brand">Morrow &amp; Hull</span><p class="fine">A fictional product and store. The preview bag is for demonstration.</p></footer>
-<dialog id="bag" aria-labelledby="bag-heading">
-  <form method="dialog"><button class="close" aria-label="Close preview bag">Close</button></form>
-  <h2 id="bag-heading">Preview bag</h2>
-  <ul id="bag-items"></ul>
-  <p id="bag-total"></p>
-  <p class="fine">This fictional store doesn’t accept orders or payments.</p>
-</dialog>
-<script>
-  const captions = [
-    'Amber dropper bottle with a cream label on limestone',
-    'Glass pipette with a suspended amber drop',
-    'Black walnut emerging from its split green hull',
-    'Amber dropper bottle outdoors at dusk',
-    'Dropper bottle beside a cream carton',
-    'Amber dropper bottle in the orchard',
-    'Black walnut hulls drying in shallow wooden trays',
-    'Amber dropper bottle on a rainy windowsill'
-  ];
-  const gallery = document.getElementById('gallery-image');
-  const thumbnails = document.getElementById('thumbnails');
-  const thumbnailButtons = captions.map((caption, index) => {
-    const button = document.createElement('button');
-    const column = index % 4;
-    const row = Math.floor(index / 4);
-    button.className = 'thumb';
-    button.type = 'button';
-    button.style.backgroundPosition = (column * 100 / 3) + '% ' + (row * 100) + '%';
-    button.setAttribute('aria-label', caption);
-    button.setAttribute('aria-pressed', String(index === 0));
-    button.addEventListener('click', () => {
-      thumbnailButtons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
-      gallery.style.backgroundPosition = button.style.backgroundPosition;
-      gallery.setAttribute('aria-label', caption);
-    });
-    thumbnails.append(button);
-    return button;
-  });
+  <dialog class="av-walnut__bag" aria-labelledby="av-walnut-bag-title">
+    <form method="dialog"><button class="button-secondary" type="submit">Close</button></form>
+    <h2 id="av-walnut-bag-title">Preview bag</h2>
+    <p class="av-walnut__bag-selection"></p>
+    <p>This fictional listing does not accept orders or payments.</p>
+  </dialog>
+</div>
 
-  const form = document.getElementById('order-form');
-  const bag = document.getElementById('bag');
-  const items = document.getElementById('bag-items');
-  const count = document.getElementById('bag-count');
-  const totalLabel = document.getElementById('bag-total');
-  let bottles = 0;
-  let total = 0;
-
-  function showBag() {
-    totalLabel.textContent = bottles ? 'Preview total $' + total.toFixed(2) : 'Your preview bag is empty.';
-    bag.showModal();
+<style>
+  .av-walnut { --walnut-accent: #02c6ea; --walnut-ink: #092d46; --walnut-tint: #f1fbfd; --walnut-border: rgb(var(--color-foreground-rgb) / .16); }
+  .av-walnut__container { width: min(calc(100% - 2 * var(--page-margin, 20px)), var(--normal-page-width, 1200px)); margin-inline: auto; }
+  .av-walnut h1, .av-walnut h2 { color: var(--walnut-ink); margin: 0 0 .7rem; }
+  .av-walnut h1 { font-size: clamp(2rem, 4vw, 3.5rem); }
+  .av-walnut h2 { font-size: clamp(1.6rem, 3vw, 2.55rem); }
+  .av-walnut p { margin: 0 0 .8rem; }
+  .av-walnut__hero, .av-walnut__story { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(1.25rem, 5vw, 4.5rem); padding-block: clamp(1.5rem, 5vw, 4rem); }
+  .av-walnut__art { background: #eaf4f8 url('{{ "avonent-black-walnut-gallery.webp" | asset_url }}') 0 0 / 400% 200% no-repeat; aspect-ratio: 1; }
+  .av-walnut__main-art, .av-walnut__story-art { border-radius: 12px; }
+  .av-walnut [data-crop="1"], .av-walnut [data-crop="5"] { background-position-x: 33.333%; }
+  .av-walnut [data-crop="2"], .av-walnut [data-crop="6"] { background-position-x: 66.666%; }
+  .av-walnut [data-crop="3"], .av-walnut [data-crop="7"] { background-position-x: 100%; }
+  .av-walnut [data-crop="4"], .av-walnut [data-crop="5"], .av-walnut [data-crop="6"], .av-walnut [data-crop="7"] { background-position-y: 100%; }
+  .av-walnut__thumbnails { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; margin-top: 10px; }
+  .av-walnut__thumbnail { border: 0; border-radius: 5px; padding: 0; cursor: pointer; }
+  .av-walnut__thumbnail[aria-pressed="true"] { outline: 2px solid var(--walnut-accent); outline-offset: 2px; }
+  .av-walnut__note { font-size: .85rem; font-weight: 700; color: var(--walnut-ink); }
+  .av-walnut__rating { font-size: .94rem; }
+  .av-walnut__rating span { color: #007b97; letter-spacing: .08em; margin-inline-end: .25rem; }
+  .av-walnut__features { list-style: none; margin: .9rem 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .45rem .65rem; }
+  .av-walnut__features li { display: flex; align-items: flex-start; gap: .4rem; font-size: .9rem; }
+  .av-walnut__features svg { flex: none; width: 18px; height: 18px; color: #007b97; }
+  .av-walnut fieldset { padding: 0; margin: 0 0 .7rem; border: 0; min-width: 0; }
+  .av-walnut legend { margin-bottom: .35rem; font-weight: 700; }
+  .av-walnut__options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .45rem; }
+  .av-walnut__options label { display: flex; align-items: center; gap: .35rem; border: 1px solid var(--walnut-border); border-radius: 8px; padding: .55rem .4rem; font-size: .85rem; cursor: pointer; }
+  .av-walnut__options label:has(:checked) { border-color: var(--walnut-ink); background: var(--walnut-tint); }
+  .av-walnut__options input { accent-color: var(--walnut-ink); margin: 0; }
+  .av-walnut__frequency { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin-bottom: .75rem; }
+  .av-walnut select, .av-walnut__newsletter input { border: 1px solid var(--walnut-border); padding: .5rem; }
+  .av-walnut__action { width: 100%; }
+  .av-walnut__accordions { margin-top: 1rem; }
+  .av-walnut details { border-block-start: 1px solid var(--walnut-border); padding-block: .7rem; }
+  .av-walnut details:last-child { border-block-end: 1px solid var(--walnut-border); }
+  .av-walnut summary { cursor: pointer; font-weight: 650; }
+  .av-walnut details p { margin: .5rem 0 0; }
+  .av-walnut__story { align-items: center; border-top: 1px solid var(--walnut-border); }
+  .av-walnut__story--reverse .av-walnut__story-art { grid-column: 2; grid-row: 1; }
+  .av-walnut__story--reverse > div:last-child { grid-column: 1; grid-row: 1; }
+  .av-walnut__specs, .av-walnut__newsletter { padding: clamp(1rem, 4vw, 3rem); text-align: center; background: var(--walnut-tint); border-radius: 12px; }
+  .av-walnut__specs dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .65rem; margin: 0; }
+  .av-walnut__specs dt { color: var(--walnut-ink); font-size: clamp(1.15rem, 3vw, 2.35rem); font-weight: 700; }
+  .av-walnut__specs dd { margin: 0; font-size: .85rem; }
+  .av-walnut__faq, .av-walnut__reviews { margin: clamp(2rem, 6vw, 5rem) auto; }
+  .av-walnut__faq { max-width: 760px; }
+  .av-walnut__review-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: .7rem; }
+  .av-walnut blockquote { margin: 0; padding: 1rem; border: 1px solid var(--walnut-border); border-radius: 8px; }
+  .av-walnut cite { font-style: normal; font-weight: 700; }
+  .av-walnut__newsletter { margin-bottom: clamp(2rem, 6vw, 5rem); }
+  .av-walnut__newsletter-form { display: flex; flex-wrap: wrap; gap: .5rem; justify-content: center; }
+  .av-walnut__signup-status:not(:empty) { margin-top: .65rem; }
+  .av-walnut__bag { width: min(440px, calc(100% - 32px)); background: var(--color-background); color: var(--color-foreground); border: 1px solid var(--walnut-border); border-radius: 12px; padding: 1.25rem; }
+  .av-walnut__bag::backdrop { background: rgb(9 45 70 / .45); }
+  .av-walnut__bag form { margin-bottom: .7rem; }
+  @media (max-width: 749px) {
+    .av-walnut__hero, .av-walnut__story { grid-template-columns: minmax(0, 1fr); }
+    .av-walnut__story--reverse .av-walnut__story-art, .av-walnut__story--reverse > div:last-child { grid-area: auto; }
   }
+</style>
 
-  document.getElementById('open-bag').addEventListener('click', event => {
-    event.preventDefault();
-    showBag();
-  });
-  form.addEventListener('submit', event => {
-    event.preventDefault();
-    const choice = form.querySelector('input[name="pack"]:checked');
-    const quantity = Number(choice.value);
-    const price = Number(choice.dataset.price);
-    const schedule = document.getElementById('schedule').value;
-    const entry = document.createElement('li');
-    entry.textContent = quantity + (quantity === 1 ? ' bottle' : ' bottles') + ' · ' + schedule + ' · $' + price;
-    items.append(entry);
-    bottles += quantity;
-    total += price;
-    count.textContent = String(bottles);
-    showBag();
-  });
+<script>
+  (() => {
+    const section = document.getElementById('av-walnut');
+    const thumbnails = section.querySelectorAll('.av-walnut__thumbnail');
+    const mainImage = section.querySelector('.av-walnut__main-art');
+    for (const thumbnail of thumbnails) {
+      thumbnail.addEventListener('click', () => {
+        for (const item of thumbnails) item.setAttribute('aria-pressed', String(item === thumbnail));
+        mainImage.dataset.crop = thumbnail.dataset.crop;
+        mainImage.setAttribute('aria-label', thumbnail.getAttribute('aria-label'));
+      });
+    }
+
+    const order = section.querySelector('.av-walnut__order');
+    const bag = section.querySelector('.av-walnut__bag');
+    const bagSelection = section.querySelector('.av-walnut__bag-selection');
+    const frequency = section.querySelector('#av-walnut-frequency');
+    order.addEventListener('submit', event => {
+      event.preventDefault();
+      const pack = order.querySelector('input[name="av-walnut-pack"]:checked');
+      const size = pack.value === '1' ? '1 bottle' : pack.value + ' bottles';
+      bagSelection.textContent = size + ' · ' + frequency.value + ' · $' + pack.dataset.price;
+      bag.showModal();
+    });
+
+    const newsletter = section.querySelector('.av-walnut__newsletter-form');
+    newsletter.addEventListener('submit', event => {
+      event.preventDefault();
+      newsletter.reset();
+      section.querySelector('.av-walnut__signup-status').textContent = 'Signup preview complete. No email was submitted.';
+    });
+  })();
 </script>
-</body>
-</html>
