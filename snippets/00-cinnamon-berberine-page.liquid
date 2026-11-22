@@ -2726,6 +2726,16 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       window.addEventListener('pageshow', enableBundleSubmit);
 
       const openUpdatedCartDrawer = async (sectionHtml, itemCount) => {
+        {% if template.suffix == 'black-walnut-2' %}
+        if (sectionHtml) {
+          const { morphSection } = await import('@theme/section-renderer');
+          morphSection('cart-drawer-section', sectionHtml, { mode: 'hydration' });
+        }
+        if (!document.querySelector('#cart-drawer .cart-drawer__summary')) {
+          window.location.assign((window.Shopify?.routes?.root || '/') + 'cart');
+          return;
+        }
+        {% else %}
         if (sectionHtml) {
           const parsed = new DOMParser().parseFromString(sectionHtml, 'text/html');
           const nextSection = parsed.querySelector('#shopify-section-cart-drawer-section');
@@ -2737,6 +2747,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
             currentSection.innerHTML = sectionHtml;
           }
         }
+        {% endif %}
 
         if (Number.isFinite(itemCount)) {
           await customElements.whenDefined('cart-icon');
