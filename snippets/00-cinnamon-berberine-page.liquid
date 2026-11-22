@@ -2768,7 +2768,6 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       {% if template.suffix == 'black-walnut-2' %}
       submitButton?.addEventListener('click', async (event) => {
         if (!canPurchase || submitButton.disabled) return;
-        submitButton.dataset.cartResult = 'adding';
       {% else %}
       productForm?.addEventListener('submit', async (event) => {
       {% endif %}
@@ -2903,7 +2902,6 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
             (!paidItem.properties?.['_Avonent bundle'] ||
               item.properties?.['_Avonent bundle'] === paidItem.properties['_Avonent bundle'])
           );
-          submitButton.dataset.cartResult = finalCart?.item_count ? (confirmedSubscription ? 'subscription-saved' : 'cart-saved') : 'cart-empty';
           if (!finalCart?.item_count || (isSubscription && !confirmedSubscription)) {
             throw new Error('The cart could not confirm this purchase option. Check your cart before trying again.');
           }
@@ -2928,7 +2926,6 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
           {% endif %}
           await openUpdatedCartDrawer(drawerHtml, finalCart ? Number(finalCart.item_count || 0) : NaN);
         } catch (error) {
-          {% if template.suffix == 'black-walnut-2' %}submitButton.dataset.cartResult = 'error';{% endif %}
           console.error('Avonent cinnamon add failed:', error);
           alert(error.message || 'Unable to add to cart. Please try again.');
         } finally {
