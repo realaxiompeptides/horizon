@@ -2242,7 +2242,8 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
     {% capture av_cb_walnut_review_cards %}
       {% for review in editor.blocks %}
         {% unless review.type == 'review' or review.type == 'walnut_review' %}{% continue %}{% endunless %}
-        {% if review.settings.show_walnut_review and review.settings.walnut_review_source != blank and review.settings.quote != blank %}
+        {% if review.type == 'review' and review.settings.walnut_review_source == blank %}{% continue %}{% endif %}
+        {% if review.settings.show_walnut_review and review.settings.quote != blank %}
           {% assign walnut_review_rating = review.settings.rating %}
           <article class="av-cb__post-risk-review-card" {{ review.shopify_attributes }}>
             <div class="av-cb__post-risk-review-rating" aria-label="{{ walnut_review_rating }} out of 5 stars">
@@ -2260,9 +2261,6 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
               <h3 class="av-cb__post-risk-review-title">{{ review.settings.title | escape }}</h3>
             {% endif %}
             <p>{{ review.settings.quote | escape | newline_to_br }}</p>
-            <footer class="av-cb__post-risk-review-author">
-              <a href="{{ review.settings.walnut_review_source | escape }}">View original review</a>
-            </footer>
           </article>
         {% endif %}
       {% endfor %}
