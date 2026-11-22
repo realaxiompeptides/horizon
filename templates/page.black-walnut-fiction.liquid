@@ -14,12 +14,12 @@
         <p class="av-walnut__note">Fictional product preview</p>
         <p class="av-walnut__rating"><span aria-hidden="true">★★★★★</span> Fictional rating 4.8 / 5</p>
         <h1 id="av-walnut-title">Aged Black Walnut Drops</h1>
-        <p>A liquid botanical extract made from black walnut hulls. Each amber glass bottle comes with a glass dropper and a card dated to the harvest.</p>
+        <p>Sample product copy for a liquid black walnut extract. Each bottle comes with a glass dropper and a dated harvest card.</p>
         <ul class="av-walnut__features" role="list">
-          <li>{{ 'icon-checkmark.svg' | inline_asset_content }} Black walnut hull extract</li>
-          <li>{{ 'icon-checkmark.svg' | inline_asset_content }} Liquid dropper format</li>
-          <li>{{ 'icon-checkmark.svg' | inline_asset_content }} Amber glass bottle</li>
-          <li>{{ 'icon-checkmark.svg' | inline_asset_content }} 1 fl oz per bottle</li>
+          <li><span class="av-walnut__check">{{ 'icon-checkmark.svg' | inline_asset_content }}</span><span><strong>Black walnut hull</strong> A botanical extract with an earthy scent.</span></li>
+          <li><span class="av-walnut__check">{{ 'icon-checkmark.svg' | inline_asset_content }}</span><span><strong>Glass pipette</strong> A clear dropper makes the liquid easy to see.</span></li>
+          <li><span class="av-walnut__check">{{ 'icon-checkmark.svg' | inline_asset_content }}</span><span><strong>Amber bottle</strong> Dark glass helps shield the extract from light.</span></li>
+          <li><span class="av-walnut__check">{{ 'icon-checkmark.svg' | inline_asset_content }}</span><span><strong>Dated batch card</strong> See when the walnuts were gathered.</span></li>
         </ul>
         <form class="av-walnut__order">
           <fieldset>
@@ -47,24 +47,26 @@
 
     <section class="av-walnut__story" aria-labelledby="av-walnut-harvest">
       <div class="av-walnut__art av-walnut__story-art" data-crop="6" role="img" aria-label="Black walnuts and leaves drying in a wooden tray"></div>
-      <div>
-        <h2 id="av-walnut-harvest">From the first fall harvest</h2>
-        <p>With the first hard rain, black walnuts start to fall. The green hulls are gathered while they’re still firm and spread out on shallow trays. Each batch card records when that harvest came in.</p>
+      <div class="av-walnut__story-copy">
+        <h2 id="av-walnut-harvest">Gathered after the first fall rain</h2>
+        <p>When the green hulls are still firm, the harvest goes into shallow wooden trays. The date on each card marks the day that batch came in.</p>
+        <p>The color can change slightly between harvests, from amber to the shade of a strong cup of tea.</p>
       </div>
     </section>
-    <section class="av-walnut__story av-walnut__story--reverse" aria-labelledby="av-walnut-bottle">
+    <section class="av-walnut__story av-walnut__story--blue" aria-labelledby="av-walnut-bottle">
       <div class="av-walnut__art av-walnut__story-art" data-crop="7" role="img" aria-label="Avonent black walnut drops with walnuts and leaves on blue limestone"></div>
-      <div>
-        <h2 id="av-walnut-bottle">An amber bottle for an earthy extract</h2>
-        <p>The extract rests until it darkens to the color of strong tea. The amber bottle shields it from direct light, and the glass pipette keeps the earthy liquid easy to see.</p>
+      <div class="av-walnut__story-copy">
+        <h2 id="av-walnut-bottle">A closer look at the bottle</h2>
+        <p>The amber bottle shields the extract from direct light. The clear glass pipette makes it easy to see the color of the liquid.</p>
+        <p>Inside the carton, you’ll find the bottle, the dropper, and the dated card.</p>
       </div>
     </section>
     <section class="av-walnut__specs" aria-labelledby="av-walnut-specs">
       <h2 id="av-walnut-specs">Product details at a glance</h2>
       <dl>
-        <div><dt>1 fl oz</dt><dd>Per bottle</dd></div>
-        <div><dt>3</dt><dd>Pack options</dd></div>
-        <div><dt>30 days</dt><dd>Fictional return window</dd></div>
+        <div><dt>1 fl oz</dt><dd><strong>Fill size</strong><span>One amber glass bottle with a glass dropper.</span></dd></div>
+        <div><dt>3</dt><dd><strong>Pack options</strong><span>Single bottle, two-pack, or three-pack.</span></dd></div>
+        <div><dt>30 days</dt><dd><strong>Sample return window</strong><span>Example terms for this fictional storefront.</span></dd></div>
       </dl>
     </section>
     <section class="av-walnut__faq av-walnut__accordions" aria-labelledby="av-walnut-faq">
@@ -113,9 +115,9 @@
   .av-walnut h1 { font-size: clamp(2rem, 4vw, 3.5rem); }
   .av-walnut h2 { font-size: clamp(1.6rem, 3vw, 2.55rem); }
   .av-walnut p { margin: 0 0 .8rem; }
-  .av-walnut__hero, .av-walnut__story { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(1.25rem, 5vw, 4.5rem); padding-block: clamp(1.5rem, 5vw, 4rem); }
+  .av-walnut__hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(1.25rem, 5vw, 4.5rem); padding-block: clamp(1.5rem, 5vw, 4rem); }
   .av-walnut__art { background: #eaf4f8 url('{{ "avonent-black-walnut-gallery.webp" | asset_url }}') 0 0 / 400% 200% no-repeat; aspect-ratio: 1; }
-  .av-walnut__main-art, .av-walnut__story-art { border-radius: 12px; }
+  .av-walnut__main-art { border-radius: 12px; }
   .av-walnut [data-crop="1"], .av-walnut [data-crop="5"] { background-position-x: 33.333%; }
   .av-walnut [data-crop="2"], .av-walnut [data-crop="6"] { background-position-x: 66.666%; }
   .av-walnut [data-crop="3"], .av-walnut [data-crop="7"] { background-position-x: 100%; }
@@ -126,9 +128,12 @@
   .av-walnut__note { font-size: .85rem; font-weight: 700; color: var(--walnut-ink); }
   .av-walnut__rating { font-size: .94rem; }
   .av-walnut__rating span { color: #007b97; letter-spacing: .08em; margin-inline-end: .25rem; }
-  .av-walnut__features { list-style: none; margin: .9rem 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .45rem .65rem; }
-  .av-walnut__features li { display: flex; align-items: flex-start; gap: .4rem; font-size: .9rem; }
-  .av-walnut__features svg { flex: none; width: 18px; height: 18px; color: #007b97; }
+  .av-walnut__features { list-style: none; margin: 1.1rem 0; padding: .15rem 0; }
+  .av-walnut__features li { display: flex; align-items: flex-start; gap: .6rem; padding: .48rem 0; font-size: .9rem; }
+  .av-walnut__features li + li { border-top: 1px solid var(--walnut-border); }
+  .av-walnut__features strong { display: block; color: var(--walnut-ink); }
+  .av-walnut__check { display: grid; place-items: center; flex: 0 0 24px; height: 24px; border-radius: 50%; background: var(--walnut-tint); color: #007b97; }
+  .av-walnut__check svg { width: 16px; height: 16px; }
   .av-walnut fieldset { padding: 0; margin: 0 0 .7rem; border: 0; min-width: 0; }
   .av-walnut legend { margin-bottom: .35rem; font-weight: 700; }
   .av-walnut__options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .45rem; }
@@ -143,27 +148,32 @@
   .av-walnut details:last-child { border-block-end: 1px solid var(--walnut-border); }
   .av-walnut summary { cursor: pointer; font-weight: 650; }
   .av-walnut details p { margin: .5rem 0 0; }
-  .av-walnut__story { align-items: center; border-top: 1px solid var(--walnut-border); }
-  .av-walnut__story--reverse .av-walnut__story-art { grid-column: 2; grid-row: 1; }
-  .av-walnut__story--reverse > div:last-child { grid-column: 1; grid-row: 1; }
-  .av-walnut__specs, .av-walnut__newsletter { padding: clamp(1rem, 4vw, 3rem); text-align: center; background: var(--walnut-tint); border-radius: 12px; }
-  .av-walnut__specs dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .65rem; margin: 0; }
-  .av-walnut__specs dt { color: var(--walnut-ink); font-size: clamp(1.15rem, 3vw, 2.35rem); font-weight: 700; }
-  .av-walnut__specs dd { margin: 0; font-size: .85rem; }
+  .av-walnut__story { max-width: 760px; margin: 0 auto clamp(1.5rem, 4vw, 3rem); border-radius: 14px; overflow: hidden; background: #f6f8fa; }
+  .av-walnut__story--blue { background: var(--walnut-tint); }
+  .av-walnut__story-copy { padding: clamp(1.3rem, 4vw, 2.75rem); }
+  .av-walnut__story-copy p:last-child { margin-bottom: 0; }
+  .av-walnut__specs { max-width: 760px; margin: clamp(2rem, 5vw, 4rem) auto; }
+  .av-walnut__specs h2, .av-walnut__faq h2, .av-walnut__reviews h2, .av-walnut__reviews > .av-walnut__rating { text-align: center; }
+  .av-walnut__specs dl { margin: 1.2rem 0 0; }
+  .av-walnut__specs dl > div { display: grid; grid-template-columns: 4.5rem minmax(0, 1fr); gap: 1rem; align-items: center; border-top: 1px solid var(--walnut-border); padding: .75rem 0; }
+  .av-walnut__specs dl > div:last-child { border-bottom: 1px solid var(--walnut-border); }
+  .av-walnut__specs dt { display: grid; place-items: center; width: 4rem; aspect-ratio: 1; border: 2px solid var(--walnut-accent); border-radius: 50%; color: var(--walnut-ink); background: var(--walnut-tint); font-weight: 700; }
+  .av-walnut__specs dd { margin: 0; font-size: .9rem; }
+  .av-walnut__specs dd strong { display: block; color: var(--walnut-ink); margin-bottom: .1rem; }
   .av-walnut__faq, .av-walnut__reviews { margin: clamp(2rem, 6vw, 5rem) auto; }
   .av-walnut__faq { max-width: 760px; }
+  .av-walnut__faq h2, .av-walnut__reviews > .av-walnut__rating { margin-bottom: 1.2rem; }
   .av-walnut__review-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: .7rem; }
   .av-walnut blockquote { margin: 0; padding: 1rem; border: 1px solid var(--walnut-border); border-radius: 8px; }
   .av-walnut cite { font-style: normal; font-weight: 700; }
-  .av-walnut__newsletter { margin-bottom: clamp(2rem, 6vw, 5rem); }
+  .av-walnut__newsletter { margin-bottom: clamp(2rem, 6vw, 5rem); padding: clamp(1rem, 4vw, 3rem); text-align: center; background: var(--walnut-tint); border-radius: 12px; }
   .av-walnut__newsletter-form { display: flex; flex-wrap: wrap; gap: .5rem; justify-content: center; }
   .av-walnut__signup-status:not(:empty) { margin-top: .65rem; }
   .av-walnut__bag { width: min(440px, calc(100% - 32px)); background: var(--color-background); color: var(--color-foreground); border: 1px solid var(--walnut-border); border-radius: 12px; padding: 1.25rem; }
   .av-walnut__bag::backdrop { background: rgb(9 45 70 / .45); }
   .av-walnut__bag form { margin-bottom: .7rem; }
   @media (max-width: 749px) {
-    .av-walnut__hero, .av-walnut__story { grid-template-columns: minmax(0, 1fr); }
-    .av-walnut__story--reverse .av-walnut__story-art, .av-walnut__story--reverse > div:last-child { grid-area: auto; }
+    .av-walnut__hero { grid-template-columns: minmax(0, 1fr); }
   }
 </style>
 
