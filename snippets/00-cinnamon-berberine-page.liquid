@@ -1442,6 +1442,9 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
 
         {% if av_cb_show_low_stock %}<div class="av-cb__low-stock-line"><span>{{ av_cb_low_stock_line | escape }}</span></div>{% endif %}
 
+        {% if template.suffix == 'black-walnut-2' %}
+        <div class="av-cb__form" data-av-cb-walnut-order data-variant-id="{{ av_cb_variant.id }}">
+        {% else %}
         <product-form-component
           data-section-id="{{ editor.id }}"
           data-product-id="{{ av_cb_product.id }}"
@@ -1455,6 +1458,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
           {% if av_cb_subscription != blank %}
             <input type="hidden" name="selling_plan" value="{{ av_cb_subscription_plan_id }}" data-av-cb-selling-plan data-plan-id="{{ av_cb_subscription_plan_id }}">
           {% endif %}
+        {% endif %}
 
           <div class="av-cb__bundles" role="group" aria-label="Choose supply">
             {% for qty in (1..3) %}
@@ -1572,7 +1576,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
             <span>{{ av_cb_delivery_label | escape }} <strong data-av-cb-delivery-date></strong></span>
           </div>
 
-          <button class="av-cb__buy" type="submit" {% unless av_cb_variant.available %}disabled{% endunless %}>
+          <button class="av-cb__buy" {% if template.suffix == 'black-walnut-2' %}type="button" data-av-cb-walnut-add disabled{% else %}type="submit" {% unless av_cb_variant.available %}disabled{% endunless %}{% endif %}>
             {% if av_cb_variant.available %}
               <span class="av-cb__buy-mainline">
                 <span>{{ av_cb_add_to_cart_text }}</span>
@@ -1584,8 +1588,12 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
               <span class="av-cb__buy-mainline">Currently Unavailable</span>
             {% endif %}
           </button>
+        {% if template.suffix == 'black-walnut-2' %}
+        </div>
+        {% else %}
         {% endform %}
         </product-form-component>
+        {% endif %}
 
         <div class="av-cb__refill-row" aria-label="Refill details">
           <span class="av-cb__refill-item">
@@ -2581,7 +2589,14 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       const oneTimeUnit = Number(root.dataset.oneTimeUnitPrice || 0);
       const oneTimeCompareUnit = Number(root.dataset.oneTimeCompareUnitPrice || 0);
       const qtyInput = root.querySelector('[data-av-cb-quantity]');
+      {% if template.suffix == 'black-walnut-2' %}
+      const hasSubscriptionPlan = Boolean(root.dataset.subscriptionPlanId);
+      const cartFetch = window.fetch.bind(window);
+      {% else %}
       const sellingPlanInput = root.querySelector('[data-av-cb-selling-plan]');
+      const hasSubscriptionPlan = Boolean(sellingPlanInput);
+      const cartFetch = (...args) => fetch(...args);
+      {% endif %}
       const total = root.querySelector('[data-av-cb-price]');
       const topCompare = root.querySelector('[data-av-cb-compare-price]');
       const btnTotal = root.querySelector('[data-av-cb-button-price]');
@@ -2591,8 +2606,16 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       const purchaseToggle = root.querySelector('[data-av-cb-purchase-toggle]');
       const purchaseToggleText = root.querySelector('[data-av-cb-purchase-toggle-text]');
       const purchaseHeading = root.querySelector('[data-av-cb-purchase-heading]');
+      {% if template.suffix == 'black-walnut-2' %}
+      const productForm = root.querySelector('[data-av-cb-walnut-order]');
+      const submitButton = productForm?.querySelector('[data-av-cb-walnut-add]');
+      const variantId = Number(productForm?.dataset.variantId || 0);
+      const canPurchase = {{ av_cb_variant.available | json }};
+      {% else %}
       const productForm = root.querySelector('form[data-type="add-to-cart-form"]');
+      const submitButton = productForm?.querySelector('button[type="submit"]');
       const variantInput = root.querySelector('input[ref="variantId"]');
+      {% endif %}
       const bonusVariantId = Number(root.dataset.bonusVariantId || 0);
       const isSoursopProduct = {% if av_cb_product.template_suffix == 'soursop' %}true{% else %}false{% endif %};
       const isInternationalSoursopShipping = {{ av_cb_international_soursop_shipping | json }};
@@ -2600,12 +2623,12 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       const subscriptionPerks = Array.from(root.querySelectorAll('[data-av-cb-subscription-perk]'));
       const bundleUnlocks = Array.from(root.querySelectorAll('[data-av-cb-bundle-unlock]'));
       const money = (cents) => new Intl.NumberFormat(document.documentElement.lang || 'en-US', {style:'currency', currency:'USD'}).format(Number(cents || 0) / 100);
-      let purchaseMode = sellingPlanInput ? 'subscription' : 'one-time';
+      let purchaseMode = hasSubscriptionPlan ? 'subscription' : 'one-time';
 
       const selectedBundle = () => root.querySelector('[data-av-cb-bundle].is-active') || bundleButtons[0];
       const valuesFor = (btn) => {
         const qty = Number(btn?.dataset.avCbBundle || 1);
-        const isSubscription = purchaseMode === 'subscription' && sellingPlanInput;
+        const isSubscription = purchaseMode === 'subscription' && hasSubscriptionPlan;
         return {
           qty,
           price: Number(isSubscription ? btn?.dataset.subscriptionPrice : btn?.dataset.oneTimePrice) || 0,
@@ -2619,11 +2642,13 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         el.hidden = !show;
       };
       const renderMode = () => {
-        const isSubscription = purchaseMode === 'subscription' && sellingPlanInput;
+        const isSubscription = purchaseMode === 'subscription' && hasSubscriptionPlan;
+        {% unless template.suffix == 'black-walnut-2' %}
         if (sellingPlanInput) {
           sellingPlanInput.disabled = !isSubscription;
           if (isSubscription) sellingPlanInput.value = sellingPlanInput.dataset.planId || root.dataset.subscriptionPlanId || '';
         }
+        {% endunless %}
         if (refillRow) refillRow.hidden = !isSubscription;
         if (purchaseToggle) purchaseToggle.setAttribute('aria-pressed', String(!isSubscription));
         if (purchaseHeading) purchaseHeading.textContent = isSubscription ? (purchaseHeading.dataset.subscriptionHeading || 'Subscribe & Save') : (purchaseHeading.dataset.oneTimeHeading || 'One-Time Purchase');
@@ -2693,8 +2718,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       });
 
       const enableBundleSubmit = () => {
-        const submitButton = productForm?.querySelector('button[type="submit"]');
-        if (submitButton) submitButton.disabled = false;
+        if (submitButton) submitButton.disabled = {% if template.suffix == 'black-walnut-2' %}!canPurchase{% else %}false{% endif %};
       };
 
       // Safari/iOS can restore the page from the back-forward cache with the
@@ -2730,7 +2754,12 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         }
       };
 
+      {% if template.suffix == 'black-walnut-2' %}
+      submitButton?.addEventListener('click', async (event) => {
+        if (!canPurchase || submitButton.disabled) return;
+      {% else %}
       productForm?.addEventListener('submit', async (event) => {
+      {% endif %}
         // This custom cinnamon form owns the entire add flow. The theme's
         // built-in /handleSubmit binding is intentionally removed above so
         // one click can never add the paid subscription a second time.
@@ -2745,8 +2774,9 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         const values = valuesFor(selectedBundle());
         const bonusQty = (isSubscription && bonusVariantId) ? (values.qty === 2 ? 1 : (values.qty === 3 ? 2 : 0)) : 0;
 
-        const submitButton = productForm.querySelector('button[type="submit"]');
+        {% unless template.suffix == 'black-walnut-2' %}
         const variantId = Number(variantInput?.value || 0);
+        {% endunless %}
         {% if template.suffix == 'black-walnut-2' %}
         const sellingPlanId = root.dataset.subscriptionPlanId || '';
         {% else %}
@@ -2762,7 +2792,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         if (submitButton) submitButton.disabled = true;
 
         try {
-          const currentCartResponse = await fetch('/cart.js', {
+          const currentCartResponse = await cartFetch('/cart.js', {
             headers: { 'Accept': 'application/json' },
             credentials: 'same-origin'
           });
@@ -2829,7 +2859,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
 
           items.push(paidItem);
 
-          const response = await fetch('/cart/add.js', {
+          const response = await cartFetch('/cart/add.js', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
             credentials: 'same-origin',
@@ -2845,17 +2875,38 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
             throw new Error(result.description || result.message || 'Unable to add to cart.');
           }
 
-          const finalCartResponse = await fetch('/cart.js', {
+          const finalCartResponse = await cartFetch('/cart.js', {
             headers: { 'Accept': 'application/json' },
             credentials: 'same-origin',
             cache: 'no-store'
           });
           const finalCart = finalCartResponse.ok ? await finalCartResponse.json() : null;
 
-          await openUpdatedCartDrawer(
-            result.sections?.['cart-drawer-section'] || '',
-            finalCart ? Number(finalCart.item_count || 0) : NaN
-          );
+          let drawerHtml = result.sections?.['cart-drawer-section'] || '';
+          {% if template.suffix == 'black-walnut-2' %}
+          if (!finalCart?.item_count) {
+            throw new Error('The cart could not confirm this add. Please try again.');
+          }
+
+          const hasCartContents = (html) => {
+            const section = new DOMParser().parseFromString(html, 'text/html');
+            return Boolean(section.querySelector('#cart-drawer .cart-drawer__summary'));
+          };
+
+          if (!hasCartContents(drawerHtml)) {
+            const sectionUrl = new URL(window.location.href);
+            sectionUrl.searchParams.set('sections', 'cart-drawer-section');
+            sectionUrl.searchParams.set('_cart', Date.now());
+            const sectionResponse = await cartFetch(sectionUrl, { credentials: 'same-origin', cache: 'no-store' });
+            const sections = sectionResponse.ok ? await sectionResponse.json() : {};
+            drawerHtml = sections['cart-drawer-section'] || '';
+            if (!hasCartContents(drawerHtml)) {
+              window.location.assign(window.Shopify?.routes?.root ? window.Shopify.routes.root + 'cart' : '/cart');
+              return;
+            }
+          }
+          {% endif %}
+          await openUpdatedCartDrawer(drawerHtml, finalCart ? Number(finalCart.item_count || 0) : NaN);
         } catch (error) {
           console.error('Avonent cinnamon add failed:', error);
           alert(error.message || 'Unable to add to cart. Please try again.');
