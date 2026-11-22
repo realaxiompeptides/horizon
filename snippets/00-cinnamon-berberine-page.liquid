@@ -2285,7 +2285,11 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
     <div class="av-cb__faq-wrap">
       <h2 class="av-cb__faq-heading">{{ av_cb_faq_heading }}</h2>
       <div class="av-cb__faq-list">
-        {% if av_cb_product.template_suffix == 'soursop' and editor != blank %}
+        {% assign av_cb_uses_faq_blocks = false %}
+        {% if av_cb_product.template_suffix == 'soursop' or template.suffix == 'black-walnut-2' %}
+          {% assign av_cb_uses_faq_blocks = true %}
+        {% endif %}
+        {% if av_cb_uses_faq_blocks and editor != blank %}
           {% for faq_block in editor.blocks %}
             {% if faq_block.type == 'faq_item' and faq_block.settings.show_item %}
               {% assign faq_q = faq_block.settings.heading | strip %}
