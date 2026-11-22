@@ -1,0 +1,174 @@
+{% liquid
+  assign item = product | default: section.settings.item
+  assign variant = item.selected_or_first_available_variant
+  assign form_id = 'WalnutForm-' | append: section.id
+%}
+<script src="{{ 'product-form.js' | asset_url }}" type="module" fetchpriority="low"></script>
+<div id="Walnut-{{ section.id }}" class="walnut-shop" style="--accent:{{ section.settings.accent }}">
+<div class="walnut-shop__gallery">
+{% assign slides = section.blocks | where: 'type', 'slide' %}
+{% for block in slides %}
+<details name="gallery-{{ section.id }}" {% if forloop.first %}open{% endif %} {{ block.shopify_attributes }}>
+<summary>{{ block.settings.label | escape }}</summary>
+{% if block.settings.image != blank %}{{ block.settings.image | image_url: width: 1100 | image_tag: widths: '400,700,1100' }}{% else %}<div class="walnut-art" role="img" aria-label="{{ block.settings.label | escape }}" style="background-position:{{ block.settings.position }}"></div>{% endif %}
+</details>
+{% endfor %}
+</div>
+<div class="walnut-shop__info"><h1>{{ section.settings.heading | default: item.title | escape }}</h1>
+{{ section.settings.intro }}
+<ul>{% for block in section.blocks %}{% if block.type == 'benefit' %}<li {{ block.shopify_attributes }}>{{ block.settings.text | escape }}</li>{% endif %}{% endfor %}</ul>
+{% if variant %}
+<product-form-component data-section-id="{{ section.id }}" data-product-id="{{ item.id }}" data-product-url="{{ item.url }}" data-quantity-default="1" on:submit="/handleSubmit">
+<div class="visually-hidden" aria-live="polite" ref="liveRegion"></div>
+{% form 'product', item, id: form_id %}
+<input type="hidden" name="id" ref="variantId" value="{{ variant.id }}">
+<fieldset><legend>{{ section.settings.purchase | escape }}</legend>
+{% for allocation in variant.selling_plan_allocations %}
+<label><input type="radio" name="selling_plan" value="{{ allocation.selling_plan.id }}" {% if forloop.first %}checked{% endif %}><span><strong>{{ section.settings.subscribe | escape }}</strong><br>{{ allocation.selling_plan.name | escape }}</span><b>{{ allocation.price | money }}</b></label>
+{% endfor %}
+{% unless item.requires_selling_plan %}<label><input type="radio" name="selling_plan" value="" {% if variant.selling_plan_allocations == empty %}checked{% endif %}><span>{{ section.settings.once | escape }}</span><b>{{ variant.price | money }}</b></label>{% endunless %}
+</fieldset>
+<div class="hidden" ref="addToCartTextError" role="alert"></div>
+<button class="button" type="submit" {% unless variant.available %}disabled{% endunless %}>{% if variant.available %}{{ section.settings.cta | escape }}{% else %}{{ 'products.product.sold_out' | t }}{% endif %}</button>
+{% endform %}
+</product-form-component>
+{% endif %}</div></div>
+<style>
+.walnut-shop{max-width:1180px;margin:auto;padding:clamp(18px,4vw,56px);display:grid;grid-template-columns:1fr 1fr;align-items:start;gap:clamp(22px,5vw,70px)}
+.walnut-shop h1{font-size:clamp(2.2rem,4vw,3.8rem);letter-spacing:-.045em;color:#092d46;margin:0 0 16px}
+.walnut-shop li{margin:.45rem 0}.walnut-shop li::marker{color:var(--accent)}
+.walnut-shop fieldset{padding:0;border:0;margin:20px 0}.walnut-shop legend{font-weight:bold;margin-bottom:8px}
+.walnut-shop fieldset label{display:flex;gap:12px;align-items:center;padding:16px;border:1px solid #bad6de;border-radius:12px;margin:8px 0;cursor:pointer}.walnut-shop fieldset label:has(:checked){background:#effbfe;border:2px solid var(--accent);padding:15px}.walnut-shop fieldset b{margin-left:auto}.walnut-shop input{accent-color:#087d97}.walnut-shop .button{width:100%;background:#092d46;color:white}
+.walnut-shop__gallery{display:flex;flex-wrap:wrap;gap:6px;position:relative;padding-top:calc(100% + 10px)}.walnut-shop summary{font-size:.8rem;cursor:pointer;border:1px solid #cbdde2;border-radius:20px;padding:5px 10px;list-style:none}.walnut-shop details[open] summary{border-color:var(--accent);background:#edfbff}.walnut-shop__gallery img,.walnut-shop .walnut-art{position:absolute;top:0;left:0;width:100%;aspect-ratio:1;object-fit:cover;border-radius:16px}.walnut-art{background-image:url('{{ "avonent-black-walnut-gallery.webp" | asset_url }}');background-size:400% 200%}
+@media(max-width:749px){.walnut-shop{grid-template-columns:minmax(0,1fr)}}
+</style>
+
+{% schema %}
+{
+  "name": "Black walnut product",
+  "settings": [
+    {
+      "type": "product",
+      "id": "item",
+      "label": "Product"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Title override"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Description",
+      "default": "<p>A liquid botanical extract made from black walnut hulls.</p>"
+    },
+    {
+      "type": "text",
+      "id": "purchase",
+      "label": "Purchase heading",
+      "default": "Purchase options"
+    },
+    {
+      "type": "text",
+      "id": "once",
+      "label": "One-time label",
+      "default": "One-time purchase"
+    },
+    {
+      "type": "text",
+      "id": "subscribe",
+      "label": "Subscription label",
+      "default": "Subscribe & Save"
+    },
+    {
+      "type": "text",
+      "id": "cta",
+      "label": "Button label",
+      "default": "Add to cart"
+    },
+    {
+      "type": "color",
+      "id": "accent",
+      "label": "Accent",
+      "default": "#02c6ea"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Gallery image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Caption",
+          "default": "Product image"
+        },
+        {
+          "type": "select",
+          "id": "position",
+          "label": "Default artwork",
+          "default": "0% 0%",
+          "options": [
+            {
+              "value": "0% 0%",
+              "label": "1"
+            },
+            {
+              "value": "33.333% 0%",
+              "label": "2"
+            },
+            {
+              "value": "66.666% 0%",
+              "label": "3"
+            },
+            {
+              "value": "100% 0%",
+              "label": "4"
+            },
+            {
+              "value": "0% 100%",
+              "label": "5"
+            },
+            {
+              "value": "33.333% 100%",
+              "label": "6"
+            },
+            {
+              "value": "66.666% 100%",
+              "label": "7"
+            },
+            {
+              "value": "100% 100%",
+              "label": "8"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Black walnut hull extract"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Black walnut product"
+    }
+  ]
+}
+{% endschema %}

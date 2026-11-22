@@ -1,0 +1,169 @@
+{
+  "sections": {
+    "main": {
+      "type": "walnut-shop",
+      "settings": {
+        "item": "black-walnut-drops"
+      },
+      "blocks": {
+        "image0": {
+          "type": "slide",
+          "settings": {
+            "label": "Bottle",
+            "position": "0% 0%"
+          }
+        },
+        "image1": {
+          "type": "slide",
+          "settings": {
+            "label": "Label",
+            "position": "33.333% 0%"
+          }
+        },
+        "image2": {
+          "type": "slide",
+          "settings": {
+            "label": "Dropper",
+            "position": "66.666% 0%"
+          }
+        },
+        "image3": {
+          "type": "slide",
+          "settings": {
+            "label": "Walnut hull",
+            "position": "100% 0%"
+          }
+        },
+        "image4": {
+          "type": "slide",
+          "settings": {
+            "label": "Packaging",
+            "position": "0% 100%"
+          }
+        },
+        "image5": {
+          "type": "slide",
+          "settings": {
+            "label": "Kitchen",
+            "position": "33.333% 100%"
+          }
+        },
+        "benefit0": {
+          "type": "benefit",
+          "settings": {
+            "text": "Black walnut hull extract"
+          }
+        },
+        "benefit1": {
+          "type": "benefit",
+          "settings": {
+            "text": "Liquid dropper format"
+          }
+        },
+        "benefit2": {
+          "type": "benefit",
+          "settings": {
+            "text": "Amber glass bottle"
+          }
+        }
+      },
+      "block_order": [
+        "image0",
+        "image1",
+        "image2",
+        "image3",
+        "image4",
+        "image5",
+        "benefit0",
+        "benefit1",
+        "benefit2"
+      ]
+    },
+    "story0": {
+      "type": "walnut-story",
+      "settings": {
+        "heading": "Inside the black walnut",
+        "body": "<p>The green outer hull is the botanical ingredient in this liquid extract.</p>",
+        "position": "66.666% 100%",
+        "alt": "Walnuts in a wooden tray"
+      }
+    },
+    "story1": {
+      "type": "walnut-story",
+      "settings": {
+        "heading": "A closer look at the dropper",
+        "body": "<p>The clear glass pipette lets you see the extract as you draw it from the bottle.</p>",
+        "position": "100% 100%",
+        "alt": "Avonent black walnut drops bottle"
+      }
+    },
+    "faq": {
+      "type": "avonent-faq",
+      "settings": {
+        "heading": "Frequently asked questions",
+        "eyebrow": "",
+        "subheading": "",
+        "show_trust_badges": false,
+        "show_support_card": false
+      },
+      "blocks": {
+        "q0": {
+          "type": "faq",
+          "settings": {
+            "question": "Should I change my medication?",
+            "answer": "<p>Ask your prescribing clinician before making any changes.</p>"
+          }
+        },
+        "q1": {
+          "type": "faq",
+          "settings": {
+            "question": "When will I notice a difference?",
+            "answer": "<p>There is no established timeline for health effects from this product.</p>"
+          }
+        },
+        "q2": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I combine it with other supplements?",
+            "answer": "<p>Show your pharmacist or clinician the product label and your supplement list before combining them.</p>"
+          }
+        },
+        "q3": {
+          "type": "faq",
+          "settings": {
+            "question": "How do returns work?",
+            "answer": "<p>Review the store\u2019s <a href=\"/policies/refund-policy\">refund policy</a> for eligibility and instructions.</p>"
+          }
+        },
+        "q4": {
+          "type": "faq",
+          "settings": {
+            "question": "How do I use the drops?",
+            "answer": "<p>Follow the directions on the bottle.</p>"
+          }
+        },
+        "q5": {
+          "type": "faq",
+          "settings": {
+            "question": "What is the flavor like?",
+            "answer": "<p>Contact us for the current formula\u2019s flavor details before ordering.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q0",
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5"
+      ]
+    }
+  },
+  "order": [
+    "main",
+    "story0",
+    "story1",
+    "faq"
+  ]
+}

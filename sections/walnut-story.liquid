@@ -1,0 +1,82 @@
+<div class="walnut-story" style="background:{{ section.settings.color }}">
+{% if section.settings.image != blank %}{{ section.settings.image | image_url: width: 1100 | image_tag: loading: 'lazy' }}{% else %}<div role="img" aria-label="{{ section.settings.alt | escape }}" style="aspect-ratio:1;background:url('{{ 'avonent-black-walnut-gallery.webp' | asset_url }}') {{ section.settings.position }} / 400% 200%"></div>{% endif %}
+<div><h2>{{ section.settings.heading | escape }}</h2>{{ section.settings.body }}</div></div>
+<style>.walnut-story{display:grid;grid-template-columns:1fr 1fr;align-items:center;max-width:1080px;margin:24px auto;border-radius:18px;overflow:hidden}.walnut-story>div:last-child{padding:clamp(24px,5vw,64px)}.walnut-story h2{color:#092d46}@media(max-width:749px){.walnut-story{grid-template-columns:1fr;margin:16px}}</style>
+{% schema %}
+{
+  "name": "Walnut image with text",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "select",
+      "id": "position",
+      "label": "Default artwork",
+      "default": "0% 0%",
+      "options": [
+        {
+          "value": "0% 0%",
+          "label": "1"
+        },
+        {
+          "value": "33.333% 0%",
+          "label": "2"
+        },
+        {
+          "value": "66.666% 0%",
+          "label": "3"
+        },
+        {
+          "value": "100% 0%",
+          "label": "4"
+        },
+        {
+          "value": "0% 100%",
+          "label": "5"
+        },
+        {
+          "value": "33.333% 100%",
+          "label": "6"
+        },
+        {
+          "value": "66.666% 100%",
+          "label": "7"
+        },
+        {
+          "value": "100% 100%",
+          "label": "8"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "alt",
+      "label": "Image description"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Text"
+    },
+    {
+      "type": "color",
+      "id": "color",
+      "label": "Background",
+      "default": "#effbfe"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Walnut image with text"
+    }
+  ]
+}
+{% endschema %}
