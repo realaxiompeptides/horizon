@@ -90,8 +90,8 @@ html.av-cb-cinnamon-page #header-component header-actions{gap:0}
     {% endif %}
     {{ content_for_header }}
     {% if template.name == 'product' %}
-      {% if template.suffix == 'soursop' or product.handle == 'soursop-softgels' %}
-      <script>document.documentElement.classList.add('av-soursop-page');</script>
+      {% if template.suffix == 'soursop' or product.handle == 'soursop-softgels' or template.suffix == 'black-walnut-2' %}
+      <script>document.documentElement.classList.add('av-soursop-page'{% if template.suffix == 'black-walnut-2' %}, 'av-black-walnut-page'{% endif %});</script>
       {{ 'avonent-soursop-colors.css' | asset_url | stylesheet_tag }}
       {% endif %}
     {% endif %}

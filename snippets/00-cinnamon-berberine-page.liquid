@@ -1241,8 +1241,8 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
 
 @media(max-width:600px){.av-cb__comparison{gap:12px;margin-top:76px}.av-cb__comparison-card{padding-top:86px;border-radius:14px}.av-cb__comparison-image{width:92px;height:108px;top:-56px}.av-cb__comparison-card h3{font-size:20px;padding:12px 8px 20px}.av-cb__comparison-row{font-size:13px;min-height:115px;padding:15px 8px}.av-cb__review-card{flex-basis:90%;padding:22px}.av-cb__photo-track figure{flex-basis:140px;height:155px}}
 
-    {% if av_cb_product.template_suffix == 'soursop' %}
-    /* Only the chosen Soursop bundle uses the stronger active state. */
+    {% if av_cb_product.template_suffix == 'soursop' or template.suffix == 'black-walnut-2' %}
+    /* Give the selected bundle a stronger outline on green product pages. */
     .av-cb .av-cb__bundles .av-cb__bundle.is-active{
       background:#D7E9D0!important;
       border:2.5px solid #3E7139!important;
@@ -2155,6 +2155,7 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
   {% endfor %}
 
 
+  {% unless template.suffix == 'black-walnut-2' %}
   <section class="av-cb__risk-section" style="--risk-bg:{{ av_cb_risk_bg }};--risk-accent:{{ av_cb_risk_accent }};"{% if av_cb_risk_block != blank %} {{ av_cb_risk_block.shopify_attributes }}{% endif %}>
     <div class="av-cb__risk-inner">
       <div class="av-cb__risk-seal" aria-label="90 day risk-free guarantee">
@@ -2176,6 +2177,8 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       </div>
     </div>
   </section>
+
+  {% endunless %}
 
   <section class="av-cb__post-risk-reviews" aria-labelledby="av-cb-post-risk-reviews-heading">
     <div class="av-cb__post-risk-reviews-wrap">
