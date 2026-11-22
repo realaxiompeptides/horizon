@@ -974,6 +974,9 @@
     .av-cb__story-image-text-placeholder-icon{display:flex;width:52px;height:52px;align-items:center;justify-content:center;border:2px dashed #73946C;border-radius:15px;font-size:30px;font-weight:400}
     @media(max-width:600px){.av-cb__story-image-text{margin:24px 12px 34px;border-radius:16px}.av-cb__story-image-text-copy{padding:20px}.av-cb__story-image-text-body{font-size:15px}.av-cb__story-image-text--overlay .av-cb__story-image-text-copy{padding:50px 20px 20px}}
     {% if template.suffix == 'black-walnut-2' %}
+    html.av-black-walnut-page :is([id^="appstle_subscription_widget"], .appstle_sub_widget, .appstle_product_widget, #appstle-subscription-widget-placeholder) {
+      display: none !important;
+    }
     .av-cb__faq-list > .av-cb__faq-item > summary {
       font-size: 18px;
     }
@@ -1428,7 +1431,9 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
           <span class="av-cb__pricing-values">
             <span class="av-cb__sale-price" data-av-cb-price>{{ av_cb_subscription_unit_price | money }}</span>
             <span class="av-cb__compare-price" data-av-cb-compare-price{% if av_cb_subscription == blank and av_cb_one_time_compare_unit == 0 %} hidden{% endif %}>{% if av_cb_subscription != blank %}{{ av_cb_one_time_unit_price | money }}{% elsif av_cb_one_time_compare_unit > 0 %}{{ av_cb_one_time_compare_unit | money }}{% endif %}</span>
+            {% unless template.suffix == 'black-walnut-2' %}
             <span class="av-cb__sale-badge">{{ av_cb_sale_badge }}</span>
+            {% endunless %}
           </span>
         </div>
 
@@ -1492,6 +1497,12 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
                 {% assign av_cb_bundle_sub_total = av_cb_subscription_unit_price | times: qty %}
                 {% assign av_cb_soursop_intro_units = qty | times: 2 | minus: 1 %}
                 {% assign av_cb_bundle_subscription_compare = av_cb_one_time_unit_price | times: av_cb_soursop_intro_units %}
+              {% elsif template.suffix == 'black-walnut-2' %}
+                {% assign av_cb_bundle_sub_total = av_cb_subscription_unit_price | times: qty %}
+                {% if qty == 1 and av_cb_bundle_subscription_compare > av_cb_bundle_sub_total %}
+                  {% assign av_cb_bundle_savings_percent = av_cb_bundle_subscription_compare | minus: av_cb_bundle_sub_total | times: 100.0 | divided_by: av_cb_bundle_subscription_compare | round %}
+                  {% assign av_cb_bundle_savings_text = 'You save ' | append: av_cb_bundle_savings_percent | append: '%' %}
+                {% endif %}
               {% endif %}
               {% assign av_cb_bundle_one_time_total = av_cb_one_time_unit_price | times: qty %}
               {% assign av_cb_bundle_one_time_compare_total = av_cb_one_time_compare_unit | times: qty %}
@@ -2694,13 +2705,21 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         event.preventDefault();
         event.stopImmediatePropagation();
 
+        {% if template.suffix == 'black-walnut-2' %}
+        const isSubscription = purchaseMode === 'subscription' && Boolean(root.dataset.subscriptionPlanId);
+        {% else %}
         const isSubscription = purchaseMode === 'subscription' && sellingPlanInput && !sellingPlanInput.disabled;
+        {% endif %}
         const values = valuesFor(selectedBundle());
         const bonusQty = (isSubscription && bonusVariantId) ? (values.qty === 2 ? 1 : (values.qty === 3 ? 2 : 0)) : 0;
 
         const submitButton = productForm.querySelector('button[type="submit"]');
         const variantId = Number(variantInput?.value || 0);
+        {% if template.suffix == 'black-walnut-2' %}
+        const sellingPlanId = root.dataset.subscriptionPlanId || '';
+        {% else %}
         const sellingPlanId = sellingPlanInput?.value || sellingPlanInput?.dataset.planId || root.dataset.subscriptionPlanId || '';
+        {% endif %}
         const protectionVariantId = Number(root.dataset.protectionVariantId || 0);
 
         if (!variantId || (isSubscription && !sellingPlanId)) {
