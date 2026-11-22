@@ -2250,7 +2250,11 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
           {% assign walnut_review_rating = review.settings.rating | default: 5 %}
           {% assign walnut_rating_sum = walnut_rating_sum | plus: walnut_review_rating %}
           {% assign walnut_review_count = walnut_review_count | plus: 1 %}
-          <article class="av-cb__post-risk-review-card" {{ review.shopify_attributes }}>
+          {% assign walnut_extra_review = false %}
+          {% if walnut_review_count > 3 and request.design_mode != true %}
+            {% assign walnut_extra_review = true %}
+          {% endif %}
+          <article class="av-cb__post-risk-review-card{% if walnut_extra_review %} av-cb__post-risk-review-card--extra{% endif %}"{% if walnut_extra_review %} data-av-cb-extra-review hidden{% endif %} {{ review.shopify_attributes }}>
             <div class="av-cb__post-risk-review-rating" aria-label="{{ walnut_review_rating }} out of 5 stars">
               <span class="av-walnut-review-stars" aria-hidden="true">
                 {% for star in (1..5) %}
@@ -2299,7 +2303,14 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
             {% endif %}
           </header>
           {% if av_cb_walnut_review_cards != blank %}
-            <div class="av-cb__post-risk-review-list">{{ av_cb_walnut_review_cards }}</div>
+            <div class="av-cb__post-risk-review-list" id="av-cb-walnut-review-list">{{ av_cb_walnut_review_cards }}</div>
+            {% if walnut_review_count > 3 and request.design_mode != true %}
+              <div class="av-cb__post-risk-read-more-wrap">
+                <button class="av-cb__post-risk-read-more" type="button" data-av-cb-review-read-more aria-expanded="false" aria-controls="av-cb-walnut-review-list">
+                  Read More Reviews
+                </button>
+              </div>
+            {% endif %}
           {% elsif request.design_mode %}
             <div class="av-cb__post-risk-review-list">
               <article class="av-cb__post-risk-review-card">
@@ -2547,13 +2558,13 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         requestAnimationFrame(renderFiveReasons);
       }
 
-      const extraReview = root.querySelector('[data-av-cb-extra-review]');
+      const extraReviews = root.querySelectorAll('[data-av-cb-extra-review]');
       const reviewReadMore = root.querySelector('[data-av-cb-review-read-more]');
-      if (extraReview && reviewReadMore) {
+      if (extraReviews.length && reviewReadMore) {
         reviewReadMore.addEventListener('click', () => {
           const isOpen = reviewReadMore.getAttribute('aria-expanded') === 'true';
 
-          extraReview.hidden = isOpen;
+          extraReviews.forEach((review) => { review.hidden = isOpen; });
           reviewReadMore.setAttribute('aria-expanded', String(!isOpen));
           reviewReadMore.textContent = isOpen ? 'Read More Reviews' : 'Read Less Reviews';
 
