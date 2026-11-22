@@ -2259,11 +2259,13 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
       <section class="av-cb__post-risk-reviews av-walnut-review-template" aria-labelledby="av-cb-post-risk-reviews-heading">
         <div class="av-cb__post-risk-reviews-wrap">
           <header class="av-cb__post-risk-reviews-head">
-            <h2 id="av-cb-post-risk-reviews-heading">{% if av_cb_walnut_review_cards == blank and request.design_mode %}Trustpilot reviews{% else %}They Felt the Shift. You Will Too.{% endif %}</h2>
+            <h2 id="av-cb-post-risk-reviews-heading">{% if av_cb_walnut_review_cards == blank and request.design_mode %}Trustpilot reviews{% else %}{{ editor.settings.walnut_reviews_heading | default: 'Customer Reviews' | escape }}{% endif %}</h2>
             {% if av_cb_walnut_review_cards == blank and request.design_mode %}
               <div class="av-walnut-review-preview-score">
-                <span>Rating summary preview</span>
-                <span class="av-walnut-review-stars" aria-hidden="true">{% for star in (1..5) %}<span>★</span>{% endfor %}</span>
+                <span>Excellent <strong>4.9 / 5</strong></span>
+                <img class="av-walnut-trustpilot-stars" src="https://cdn.trustpilot.net/brand-assets/4.3.0/stars/stars-5.svg" width="128" height="24" alt="">
+              </div>
+              <div class="av-walnut-review-preview-caption">Theme editor preview
               </div>
             {% endif %}
           </header>
@@ -2273,12 +2275,13 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
             <div class="av-cb__post-risk-review-list">
               <article class="av-cb__post-risk-review-card">
                 <div class="av-cb__post-risk-review-rating">
-                  <span class="av-walnut-review-stars" aria-hidden="true">{% for star in (1..5) %}<span>★</span>{% endfor %}</span>
+                  {% assign walnut_preview_stars = editor.settings.walnut_review_preview_stars | default: 5 %}
+                  <img class="av-walnut-trustpilot-stars" src="https://cdn.trustpilot.net/brand-assets/4.3.0/stars/stars-{{ walnut_preview_stars }}.svg" width="128" height="24" alt="{{ walnut_preview_stars }} out of 5 stars, preview">
                 </div>
                 <h3 class="av-walnut-review-name">Customer name</h3>
                 <p>Add the customer’s review in a Customer photo and review block.</p>
                 <footer class="av-cb__post-risk-review-author">
-                  <span>Review source <strong>Shop or Trustpilot</strong></span>
+                  <span>Verified by <strong>shop</strong></span>
                 </footer>
               </article>
             </div>
@@ -2289,6 +2292,8 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
         .av-walnut-review-template { background: #fff; color: #151515; }
         .av-walnut-review-template .av-cb__post-risk-reviews-head { text-align: center; }
         .av-walnut-review-template .av-cb__post-risk-reviews-head h2 { font-size: clamp(28px, 6vw, 44px); }
+        .av-walnut-review-template .av-walnut-trustpilot-stars { display: block; width: 128px; height: 24px; object-fit: contain; }
+        .av-walnut-review-preview-caption { margin-top: .5rem; font-size: .8rem; color: #595959; }
         .av-walnut-review-preview-score { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: .6rem; margin-top: 1rem; }
         .av-walnut-review-template .av-cb__post-risk-review-card { background: #f1f1f1; border: 0; box-shadow: none; border-radius: 16px; padding: clamp(18px, 5vw, 32px); }
         .av-walnut-review-template .av-walnut-review-stars { display: inline-flex; gap: 2px; }
