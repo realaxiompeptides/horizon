@@ -1,0 +1,195 @@
+{% layout none %}
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Aged Black Walnut Drops | Morrow &amp; Hull</title>
+<style>
+  :root { color-scheme: light; --paper: #f8f5ed; --ink: #252b21; --green: #304738; --rust: #824625; --line: #d9d2c4; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 17px/1.55 system-ui, sans-serif; }
+  a { color: inherit; }
+  button, select { font: inherit; }
+  button { cursor: pointer; }
+  header { border-bottom: 1px solid var(--line); }
+  .notice { margin: 0; background: var(--green); color: white; text-align: center; padding: .5rem 1rem; font-size: .82rem; }
+  nav, main, footer { width: min(1120px, calc(100% - 36px)); margin-inline: auto; }
+  nav { min-height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .brand { font: bold 1.3rem Georgia, serif; text-decoration: none; letter-spacing: .03em; }
+  .links { display: flex; gap: clamp(.65rem, 3vw, 1.75rem); align-items: center; font-size: .9rem; }
+  .links a { text-underline-offset: .25em; }
+  .hero { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(1.5rem, 6vw, 5rem); padding-block: clamp(1.5rem, 5vw, 4.5rem); align-items: start; }
+  .feature, .thumb { background-image: url('{{ "morrow-hull-walnut-gallery.webp" | asset_url }}'); background-size: 400% 200%; background-repeat: no-repeat; background-color: #ded7ca; }
+  .feature { width: 100%; aspect-ratio: 1; }
+  .thumbs { display: grid; grid-template-columns: repeat(8, 1fr); gap: 6px; margin-top: 8px; }
+  .thumb { display: block; aspect-ratio: 1; width: 100%; border: 0; padding: 0; }
+  .thumb[aria-pressed="true"] { outline: 2px solid var(--green); outline-offset: 2px; }
+  h1, h2 { font-family: Georgia, serif; font-weight: 500; line-height: 1.03; margin: 0 0 1rem; }
+  h1 { font-size: clamp(2.7rem, 6vw, 4.7rem); letter-spacing: -.05em; }
+  h2 { font-size: clamp(1.8rem, 3vw, 2.8rem); letter-spacing: -.03em; }
+  .eyebrow { color: var(--rust); font-size: .77rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; margin: 0 0 .65rem; }
+  .description { max-width: 46ch; }
+  fieldset { border: 0; padding: 0; margin: 1.35rem 0 .75rem; }
+  legend { font-weight: 700; margin-bottom: .55rem; }
+  .options { display: grid; grid-template-columns: repeat(3, 1fr); gap: .45rem; }
+  .option { display: flex; align-items: center; gap: .35rem; padding: .5rem .4rem; border: 1px solid var(--line); font-size: .85rem; }
+  .option:has(:checked) { border-color: var(--green); background: #e9ede3; }
+  input { accent-color: var(--green); }
+  .order { display: flex; flex-wrap: wrap; gap: .5rem .75rem; align-items: center; margin: 1rem 0 .8rem; font-size: .9rem; }
+  select { padding: .35rem; color: var(--ink); background: transparent; border: 1px solid #a7a296; max-width: 100%; }
+  .action { width: 100%; border: 0; background: var(--green); color: white; padding: .8rem; font-weight: 700; }
+  .fine { font-size: .84rem; }
+  .story, .bottom { border-top: 1px solid var(--line); display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1rem, 5vw, 4rem); padding-block: clamp(1.75rem, 5vw, 4rem); }
+  .story-art { aspect-ratio: 1; background-position: 66.666% 100%; }
+  .story div:first-child { align-self: center; }
+  details { border-top: 1px solid var(--line); padding: .8rem 0; }
+  details:last-child { border-bottom: 1px solid var(--line); }
+  summary { cursor: pointer; font-weight: 650; }
+  details p { margin: .5rem 0 0; }
+  blockquote { margin: 0 0 1.3rem; font-family: Georgia, serif; font-size: 1.2rem; }
+  cite { display: block; margin-top: .4rem; font: .83rem system-ui, sans-serif; }
+  footer { border-top: 1px solid var(--line); padding-block: 1.5rem 2.5rem; }
+  dialog { color: var(--ink); background: var(--paper); width: min(440px, calc(100% - 36px)); border: 1px solid var(--line); padding: 1.6rem; }
+  dialog::backdrop { background: #151d15a8; }
+  .close { float: right; background: transparent; border: 0; font-weight: 700; }
+  :focus-visible { outline: 3px solid #9f5c34; outline-offset: 3px; }
+  @media (max-width: 720px) {
+    .hero, .story, .bottom { grid-template-columns: 1fr; }
+    .story-art { max-width: 430px; }
+    .links { font-size: .8rem; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <p class="notice">A fictional storefront created for a book</p>
+  <nav aria-label="Store navigation">
+    <a class="brand" href="#top">Morrow &amp; Hull</a>
+    <div class="links"><a href="#orchard">Orchard</a><a href="#faq">FAQ</a><a href="#bag" id="open-bag">Bag (<span id="bag-count">0</span>)</a></div>
+  </nav>
+</header>
+<main id="top">
+  <section class="hero" aria-labelledby="product-name">
+    <div>
+      <div class="feature" id="gallery-image" role="img" aria-label="Amber dropper bottle with a cream label on limestone"></div>
+      <div class="thumbs" id="thumbnails" aria-label="Product photos"></div>
+    </div>
+    <div>
+      <p class="eyebrow">Botanical extract · 1 fl oz</p>
+      <h1 id="product-name">Aged Black Walnut Drops</h1>
+      <p class="description">With the first hard rain, black walnuts start to fall. We gather the green hulls while they’re still firm, then let the extract rest until it darkens to the color of strong tea.</p>
+      <p class="description">Each amber glass bottle comes with a glass dropper and a card dated to the harvest.</p>
+      <form id="order-form">
+        <fieldset>
+          <legend>Choose your order</legend>
+          <div class="options">
+            <label class="option"><input type="radio" name="pack" value="1" data-price="32" checked><span>1 bottle<br>$32</span></label>
+            <label class="option"><input type="radio" name="pack" value="2" data-price="56"><span>2 bottles<br>$56</span></label>
+            <label class="option"><input type="radio" name="pack" value="3" data-price="75"><span>3 bottles<br>$75</span></label>
+          </div>
+        </fieldset>
+        <div class="order"><label for="schedule">Delivery</label><select id="schedule"><option>One-time order</option><option>Every 60 days</option></select></div>
+        <button class="action" type="submit">Add to preview bag</button>
+      </form>
+      <p class="fine">Orders ship Monday through Thursday. Shipping is included on orders of $56 or more.</p>
+    </div>
+  </section>
+  <section class="story" id="orchard" aria-labelledby="orchard-heading">
+    <div>
+      <p class="eyebrow">Field notes</p>
+      <h2 id="orchard-heading">From the orchard</h2>
+      <p>The first cold snap tells us it’s time. The hulls bruise if they sit in a pile, so we spread them on shallow trays the same afternoon. By the time the last leaves are down, the first bottles are ready for labels.</p>
+      <h3>Inside each bottle</h3>
+      <p>Black walnut hull extract, water, and cane alcohol. Contains black walnut. Keep the cap tight and store the bottle away from direct light.</p>
+    </div>
+    <div class="feature story-art" role="img" aria-label="Black walnut hulls drying in shallow wooden trays"></div>
+  </section>
+  <div class="bottom">
+    <section id="faq" aria-labelledby="faq-heading">
+      <h2 id="faq-heading">Frequently asked questions</h2>
+      <details><summary>Why is my bottle a different shade?</summary><p>The harvest varies from year to year. The batch card identifies the one in your bottle.</p></details>
+      <details><summary>Can I change my next delivery?</summary><p>You can skip or cancel a scheduled shipment from your account before it’s packed.</p></details>
+      <details><summary>What if my package arrives damaged?</summary><p>Send us your order number and a photo of the package. We accept returns within 30 days of delivery.</p></details>
+    </section>
+    <section aria-labelledby="guestbook-heading">
+      <h2 id="guestbook-heading">From the guestbook</h2>
+      <blockquote>“I bought it for the bottle. I kept the little card, too. It had the same date as my birthday.”<cite>Nora P. · Fictional customer</cite></blockquote>
+      <blockquote>“The glass arrived cracked. I sent a picture and they mailed a replacement that afternoon.”<cite>Eli R. · Fictional customer</cite></blockquote>
+    </section>
+  </div>
+</main>
+<footer><span class="brand">Morrow &amp; Hull</span><p class="fine">A fictional product and store. The preview bag is for demonstration.</p></footer>
+<dialog id="bag" aria-labelledby="bag-heading">
+  <form method="dialog"><button class="close" aria-label="Close preview bag">Close</button></form>
+  <h2 id="bag-heading">Preview bag</h2>
+  <ul id="bag-items"></ul>
+  <p id="bag-total"></p>
+  <p class="fine">This fictional store doesn’t accept orders or payments.</p>
+</dialog>
+<script>
+  const captions = [
+    'Amber dropper bottle with a cream label on limestone',
+    'Glass pipette with a suspended amber drop',
+    'Black walnut emerging from its split green hull',
+    'Amber dropper bottle outdoors at dusk',
+    'Dropper bottle beside a cream carton',
+    'Amber dropper bottle in the orchard',
+    'Black walnut hulls drying in shallow wooden trays',
+    'Amber dropper bottle on a rainy windowsill'
+  ];
+  const gallery = document.getElementById('gallery-image');
+  const thumbnails = document.getElementById('thumbnails');
+  const thumbnailButtons = captions.map((caption, index) => {
+    const button = document.createElement('button');
+    const column = index % 4;
+    const row = Math.floor(index / 4);
+    button.className = 'thumb';
+    button.type = 'button';
+    button.style.backgroundPosition = (column * 100 / 3) + '% ' + (row * 100) + '%';
+    button.setAttribute('aria-label', caption);
+    button.setAttribute('aria-pressed', String(index === 0));
+    button.addEventListener('click', () => {
+      thumbnailButtons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+      gallery.style.backgroundPosition = button.style.backgroundPosition;
+      gallery.setAttribute('aria-label', caption);
+    });
+    thumbnails.append(button);
+    return button;
+  });
+
+  const form = document.getElementById('order-form');
+  const bag = document.getElementById('bag');
+  const items = document.getElementById('bag-items');
+  const count = document.getElementById('bag-count');
+  const totalLabel = document.getElementById('bag-total');
+  let bottles = 0;
+  let total = 0;
+
+  function showBag() {
+    totalLabel.textContent = bottles ? 'Preview total $' + total.toFixed(2) : 'Your preview bag is empty.';
+    bag.showModal();
+  }
+
+  document.getElementById('open-bag').addEventListener('click', event => {
+    event.preventDefault();
+    showBag();
+  });
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    const choice = form.querySelector('input[name="pack"]:checked');
+    const quantity = Number(choice.value);
+    const price = Number(choice.dataset.price);
+    const schedule = document.getElementById('schedule').value;
+    const entry = document.createElement('li');
+    entry.textContent = quantity + (quantity === 1 ? ' bottle' : ' bottles') + ' · ' + schedule + ' · $' + price;
+    items.append(entry);
+    bottles += quantity;
+    total += price;
+    count.textContent = String(bottles);
+    showBag();
+  });
+</script>
+</body>
+</html>
