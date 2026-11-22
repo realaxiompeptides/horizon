@@ -2227,9 +2227,11 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
   {% endunless %}
 
   {% if template.suffix == 'black-walnut-2' %}
+    {% assign walnut_reviews_editor = editor.blocks | where: 'type', 'walnut_review_settings' | first %}
     {% capture av_cb_walnut_review_cards %}
       {% for review in editor.blocks %}
-        {% if review.type == 'review' and review.settings.show_walnut_review and review.settings.walnut_review_source != blank and review.settings.quote != blank %}
+        {% unless review.type == 'review' or review.type == 'walnut_review' %}{% continue %}{% endunless %}
+        {% if review.settings.show_walnut_review and review.settings.walnut_review_source != blank and review.settings.quote != blank %}
           {% assign walnut_review_rating = review.settings.rating %}
           <article class="av-cb__post-risk-review-card" {{ review.shopify_attributes }}>
             <div class="av-cb__post-risk-review-rating" aria-label="{{ walnut_review_rating }} out of 5 stars">
@@ -2258,8 +2260,8 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
     {% if av_cb_walnut_review_cards != blank or request.design_mode %}
       <section class="av-cb__post-risk-reviews av-walnut-review-template" aria-labelledby="av-cb-post-risk-reviews-heading">
         <div class="av-cb__post-risk-reviews-wrap">
-          <header class="av-cb__post-risk-reviews-head">
-            <h2 id="av-cb-post-risk-reviews-heading">{% if av_cb_walnut_review_cards == blank and request.design_mode %}Trustpilot reviews{% else %}{{ editor.settings.walnut_reviews_heading | default: 'Customer Reviews' | escape }}{% endif %}</h2>
+          <header class="av-cb__post-risk-reviews-head"{% if walnut_reviews_editor != blank %} {{ walnut_reviews_editor.shopify_attributes }}{% endif %}>
+            <h2 id="av-cb-post-risk-reviews-heading">{% if av_cb_walnut_review_cards == blank and request.design_mode %}Trustpilot reviews{% else %}{{ walnut_reviews_editor.settings.heading | default: editor.settings.walnut_reviews_heading | default: 'Customer Reviews' | escape }}{% endif %}</h2>
             {% if av_cb_walnut_review_cards == blank and request.design_mode %}
               <div class="av-walnut-review-preview-score">
                 <span>Excellent <strong>4.9 / 5</strong></span>
@@ -2275,11 +2277,11 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
             <div class="av-cb__post-risk-review-list">
               <article class="av-cb__post-risk-review-card">
                 <div class="av-cb__post-risk-review-rating">
-                  {% assign walnut_preview_stars = editor.settings.walnut_review_preview_stars | default: 5 %}
+                  {% assign walnut_preview_stars = walnut_reviews_editor.settings.preview_rating | default: editor.settings.walnut_review_preview_stars | default: 5 %}
                   <img class="av-walnut-trustpilot-stars" src="https://cdn.trustpilot.net/brand-assets/4.3.0/stars/stars-{{ walnut_preview_stars }}.svg" width="128" height="24" alt="{{ walnut_preview_stars }} out of 5 stars, preview">
                 </div>
                 <h3 class="av-walnut-review-name">Customer name</h3>
-                <p>Add the customer’s review in a Customer photo and review block.</p>
+                <p>Add the customer’s review in a Black Walnut review block.</p>
                 <footer class="av-cb__post-risk-review-author">
                   <span>Verified by <strong>shop</strong></span>
                 </footer>

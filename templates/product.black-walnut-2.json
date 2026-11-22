@@ -78,6 +78,30 @@
             "announcement_subheading": "1 Bottle Free"
           }
         },
+        "walnut_reviews_editor": {
+          "type": "walnut_review_settings",
+          "settings": {}
+        },
+        "walnut_review_slot_1": {
+          "type": "walnut_review",
+          "settings": {}
+        },
+        "walnut_review_slot_2": {
+          "type": "walnut_review",
+          "settings": {}
+        },
+        "walnut_review_slot_3": {
+          "type": "walnut_review",
+          "settings": {}
+        },
+        "walnut_review_slot_4": {
+          "type": "walnut_review",
+          "settings": {}
+        },
+        "walnut_review_slot_5": {
+          "type": "walnut_review",
+          "settings": {}
+        },
         "results": {
           "type": "results",
           "disabled": true,
@@ -435,6 +459,12 @@
       },
       "block_order": [
         "hero",
+        "walnut_reviews_editor",
+        "walnut_review_slot_1",
+        "walnut_review_slot_2",
+        "walnut_review_slot_3",
+        "walnut_review_slot_4",
+        "walnut_review_slot_5",
         "results",
         "doctor_story",
         "story_image_text",

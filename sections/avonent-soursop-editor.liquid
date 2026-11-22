@@ -2234,6 +2234,75 @@ html.av-soursop-copy-guard [contenteditable] * {
       "limit": 1
     },
     {
+      "type": "walnut_review_settings",
+      "name": "Black Walnut Reviews",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Public heading",
+          "default": "Customer Reviews"
+        },
+        {
+          "type": "range",
+          "id": "preview_rating",
+          "label": "Preview stars",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        }
+      ]
+    },
+    {
+      "type": "walnut_review",
+      "name": "Black Walnut review",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "photo",
+          "label": "Customer photo"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Customer name"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Review title (optional)"
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Customer review"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_walnut_review",
+          "label": "Show this Avonent review on Black Walnut",
+          "default": false
+        },
+        {
+          "type": "url",
+          "id": "walnut_review_source",
+          "label": "Original review link for Black Walnut",
+          "info": "Use the link to the customer’s original review of this Avonent product."
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        }
+      ]
+    },
+    {
       "type": "review",
       "name": "Customer photo and review",
       "limit": 10,
