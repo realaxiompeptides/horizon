@@ -134,6 +134,19 @@
             "text_color": "#1d3022"
           }
         },
+        "story_image_text_extra": {
+          "type": "story_image_text_extra",
+          "settings": {
+            "show_section": true,
+            "image_alt": "Black walnut hulls in a wooden tray",
+            "heading": "Inside the Black Walnut",
+            "body": "<p>The green outer hull is the botanical ingredient in this liquid extract.</p>",
+            "text_position": "below",
+            "align": "left",
+            "background": "#f5f8f1",
+            "text_color": "#1d3022"
+          }
+        },
         "carousel": {
           "type": "carousel",
           "settings": {
@@ -401,6 +414,7 @@
         "results",
         "doctor_story",
         "story_image_text",
+        "story_image_text_extra",
         "carousel",
         "science",
         "journey",
