@@ -81,7 +81,7 @@
         "walnut_reviews_editor": {
           "type": "walnut_review_settings",
           "settings": {
-            "heading": "Customer Reviews",
+            "heading": "Trustpilot Reviews",
             "preview_rating": 5
           }
         },
