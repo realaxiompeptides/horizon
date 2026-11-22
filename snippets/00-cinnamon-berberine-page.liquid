@@ -2261,7 +2261,20 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
           {% if av_cb_walnut_review_cards != blank %}
             <div class="av-cb__post-risk-review-list">{{ av_cb_walnut_review_cards }}</div>
           {% else %}
-            <p>Add an Avonent customer review and its original link in a Customer photo and review block, then enable it for Black Walnut.</p>
+            <div class="av-cb__post-risk-review-list">
+              <article class="av-cb__post-risk-review-card">
+                <div class="av-cb__post-risk-review-rating">
+                  <span aria-hidden="true">☆☆☆☆☆</span>
+                  <strong>Rating preview</strong>
+                </div>
+                <h3 class="av-cb__post-risk-review-title">Review title</h3>
+                <p>Add the customer’s review in a Customer photo and review block.</p>
+                <footer class="av-cb__post-risk-review-author">
+                  <strong>Customer name</strong>
+                  <span>Original review link</span>
+                </footer>
+              </article>
+            </div>
           {% endif %}
         </div>
       </section>
