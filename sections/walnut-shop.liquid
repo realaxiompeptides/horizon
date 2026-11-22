@@ -1,6 +1,11 @@
 {% liquid
   assign item = product | default: section.settings.item
   assign variant = item.selected_or_first_available_variant
+  assign default_bundle = item.variants | where: 'option1', '3 bottles' | first
+  if item.selected_variant == blank and default_bundle.available
+    assign variant = default_bundle
+  endif
+  assign ebook_url = section.settings.ebook_url | default: 'https://cdn.shopify.com/s/files/1/1074/0488/6176/files/Natures_Forgotten_Remedies_25_Page_Ebook.pdf?v=1795314600'
   assign form_id = 'WalnutForm-' | append: section.id
 %}
 <script src="{{ 'product-form.js' | asset_url }}" type="module" fetchpriority="low"></script>
@@ -22,18 +27,117 @@
 <div class="visually-hidden" aria-live="polite" ref="liveRegion"></div>
 {% form 'product', item, id: form_id %}
 <input type="hidden" name="id" ref="variantId" value="{{ variant.id }}">
-<fieldset><legend>{{ section.settings.purchase | escape }}</legend>
-{% for allocation in variant.selling_plan_allocations %}
-<label><input type="radio" name="selling_plan" value="{{ allocation.selling_plan.id }}" {% if forloop.first %}checked{% endif %}><span><strong>{{ section.settings.subscribe | escape }}</strong><br>{{ allocation.selling_plan.name | escape }}</span><b>{{ allocation.price | money }}</b></label>
-{% endfor %}
-{% unless item.requires_selling_plan %}<label><input type="radio" name="selling_plan" value="" {% if variant.selling_plan_allocations == empty %}checked{% endif %}><span>{{ section.settings.once | escape }}</span><b>{{ variant.price | money }}</b></label>{% endunless %}
+{% assign stock_threshold = section.settings.stock_threshold %}
+{% if variant.inventory_management != blank and variant.inventory_quantity > 0 and variant.inventory_quantity <= stock_threshold %}
+  <p class="walnut-stock">{{ section.settings.stock_label | escape }}</p>
+{% endif %}
+<fieldset class="walnut-bundles">
+  <legend>{{ section.settings.purchase | escape }}</legend>
+  {% for pack in item.variants %}
+    {% liquid
+      assign title = pack.title
+      assign subtitle = ''
+      assign shipping = false
+      case pack.option1
+        when '1 bottle', 'Default Title'
+          assign title = section.settings.single_title
+          assign subtitle = section.settings.single_subtitle
+        when '3 bottles'
+          assign title = section.settings.middle_title
+          assign subtitle = section.settings.middle_subtitle
+          assign shipping = true
+        when '4 bottles'
+          assign title = section.settings.large_title
+          assign subtitle = section.settings.large_subtitle
+          assign shipping = true
+      endcase
+    %}
+    <label class="walnut-bundle">
+      <input type="radio" name="walnut_pack" value="{{ pack.id }}" data-walnut-pack {% if pack.option1 == '4 bottles' %}data-walnut-ebook{% endif %} data-price="{{ pack.price | money | escape }}" {% if pack.id == variant.id %}checked{% endif %} {% unless pack.available %}disabled{% endunless %}>
+      <span class="walnut-bundle__thumb" aria-hidden="true"></span>
+      <span class="walnut-bundle__copy">
+        <strong>{{ title | escape }}</strong>
+        {% if subtitle != blank %}<small>{{ subtitle | escape }}</small>{% endif %}
+        {% if shipping %}<small class="walnut-bundle__gift">{{ section.settings.shipping_label | escape }}{% if pack.option1 == '4 bottles' and ebook_url != blank %} · {{ section.settings.ebook_label | escape }}{% endif %}</small>{% endif %}
+        {% unless pack.available %}<small>{{ 'products.product.sold_out' | t }}</small>{% endunless %}
+      </span>
+      <span class="walnut-bundle__price">
+        <strong>{{ pack.price | money }}</strong>
+        {% if pack.compare_at_price > pack.price %}<del>{{ pack.compare_at_price | money }}</del>{% endif %}
+      </span>
+    </label>
+  {% endfor %}
 </fieldset>
+{% for pack in item.variants %}
+  {% if pack.selling_plan_allocations != empty %}
+    <fieldset class="walnut-modes" data-walnut-modes="{{ pack.id }}" {% unless pack.id == variant.id %}hidden disabled{% endunless %}>
+      <legend>{{ section.settings.mode_heading | escape }}</legend>
+      {% for allocation in pack.selling_plan_allocations %}
+        <label><input type="radio" name="selling_plan" value="{{ allocation.selling_plan.id }}" data-price="{{ allocation.price | money | escape }}" {% if forloop.first and item.requires_selling_plan and pack.id == variant.id %}checked{% endif %}><span><strong>{{ section.settings.subscribe | escape }}</strong><br>{{ allocation.selling_plan.name | escape }}</span><b>{{ allocation.price | money }}</b></label>
+      {% endfor %}
+      {% unless item.requires_selling_plan %}
+        <label><input type="radio" name="selling_plan" value="" data-price="{{ pack.price | money | escape }}" {% if pack.id == variant.id %}checked{% endif %}><span>{{ section.settings.once | escape }}</span><b>{{ pack.price | money }}</b></label>
+      {% endunless %}
+    </fieldset>
+  {% endif %}
+{% endfor %}
 <div class="hidden" ref="addToCartTextError" role="alert"></div>
-<button class="button" type="submit" {% unless variant.available %}disabled{% endunless %}>{% if variant.available %}{{ section.settings.cta | escape }}{% else %}{{ 'products.product.sold_out' | t }}{% endif %}</button>
+<button class="button" type="submit" {% unless variant.available %}disabled{% endunless %}>{% if variant.available %}{{ section.settings.cta | escape }} <span aria-hidden="true">·</span> <span data-walnut-total>{{ variant.price | money }}</span>{% else %}{{ 'products.product.sold_out' | t }}{% endif %}</button>
+{% if ebook_url != blank %}
+  <p class="walnut-ebook" data-walnut-ebook-link {% unless variant.option1 == '4 bottles' %}hidden{% endunless %}>
+    <a href="{{ ebook_url | escape }}" target="_blank" rel="noopener">{{ section.settings.ebook_download | escape }}</a>
+  </p>
+{% endif %}
 {% endform %}
 </product-form-component>
 {% endif %}</div></div>
+<script>
+  (() => {
+    const form = document.getElementById({{ form_id | json }});
+    if (!form) return;
+    const variantInput = form.querySelector('[name="id"]');
+    const total = form.querySelector('[data-walnut-total]');
+    const ebook = form.querySelector('[data-walnut-ebook-link]');
+    const modeGroups = [...form.querySelectorAll('[data-walnut-modes]')];
+    function selectPack() {
+      const pack = form.querySelector('[data-walnut-pack]:checked');
+      if (!pack) return;
+      variantInput.value = pack.value;
+      if (ebook) ebook.hidden = !pack.hasAttribute('data-walnut-ebook');
+      const activeGroup = modeGroups.find(group => group.dataset.walnutModes === pack.value);
+      const selectedPlan = activeGroup?.querySelector('input:checked');
+      for (const group of modeGroups) {
+        group.hidden = group !== activeGroup;
+        group.disabled = group !== activeGroup;
+        for (const option of group.querySelectorAll('input')) {
+          option.checked = option === selectedPlan;
+        }
+      }
+      if (activeGroup && !selectedPlan) {
+        const defaultPlan = activeGroup.querySelector('input[value=""]') || activeGroup.querySelector('input');
+        if (defaultPlan) defaultPlan.checked = true;
+      }
+      if (total) total.textContent = activeGroup?.querySelector('input:checked')?.dataset.price || pack.dataset.price;
+    }
+    form.addEventListener('change', selectPack);
+    form.addEventListener('submit', selectPack, { capture: true });
+    selectPack();
+  })();
+</script>
 <style>
+.walnut-shop .walnut-bundle { display:grid;grid-template-columns:auto 44px minmax(0,1fr) auto;gap:10px;min-height:88px;border-radius:16px;margin:10px 0;background:white }
+.walnut-shop .walnut-bundle:has(:checked) { border-color:#167b9a;box-shadow:0 0 0 2px #d0eff7;background:#e7f8fc }
+.walnut-bundle__thumb { width:44px;aspect-ratio:1;border-radius:8px;background:url('{{ "avonent-black-walnut-gallery.webp" | asset_url }}') 0 0 / 400% 200% }
+.walnut-bundle__copy,.walnut-bundle__price { display:grid;gap:3px;align-content:center;line-height:1.25 }
+.walnut-bundle__copy strong { color:#092d46;font-size:clamp(.98rem,2.5vw,1.25rem) }
+.walnut-bundle__price { text-align:right;color:#09647f;white-space:nowrap }
+.walnut-bundle__price del { font-size:.75rem;color:#536775 }
+.walnut-bundle__gift { color:#145c74;font-weight:700 }
+.walnut-stock { margin-block:12px;color:#126782;text-align:center;font-weight:750 }
+.walnut-ebook { margin-top:12px;text-align:center }
+.walnut-ebook[hidden],.walnut-modes[hidden] { display:none!important }
+@media(max-width:480px){.walnut-shop .walnut-bundle{gap:7px;grid-template-columns:auto 32px minmax(0,1fr) auto;padding-inline:9px}.walnut-bundle__thumb{width:32px}}
+
 .walnut-shop{max-width:1180px;margin:auto;padding:clamp(18px,4vw,56px);display:grid;grid-template-columns:1fr 1fr;align-items:start;gap:clamp(22px,5vw,70px)}
 .walnut-shop h1{font-size:clamp(2.2rem,4vw,3.8rem);letter-spacing:-.045em;color:#092d46;margin:0 0 16px}
 .walnut-shop li{margin:.45rem 0}.walnut-shop li::marker{color:var(--accent)}
@@ -92,6 +196,86 @@
       "id": "accent",
       "label": "Accent",
       "default": "#02c6ea"
+    },
+    {
+      "type": "text",
+      "id": "single_title",
+      "label": "Single offer",
+      "default": "Buy 1"
+    },
+    {
+      "type": "text",
+      "id": "middle_title",
+      "label": "Middle offer",
+      "default": "Buy 2 Get 1 FREE"
+    },
+    {
+      "type": "text",
+      "id": "large_title",
+      "label": "Largest offer",
+      "default": "Buy 3 Get 1 FREE"
+    },
+    {
+      "type": "text",
+      "id": "single_subtitle",
+      "label": "Single offer subtitle",
+      "default": "1 bottle"
+    },
+    {
+      "type": "text",
+      "id": "middle_subtitle",
+      "label": "Middle offer subtitle",
+      "default": "3 bottles total"
+    },
+    {
+      "type": "text",
+      "id": "large_subtitle",
+      "label": "Largest offer subtitle",
+      "default": "4 bottles total"
+    },
+    {
+      "type": "text",
+      "id": "shipping_label",
+      "label": "Shipping label",
+      "default": "Free U.S. shipping"
+    },
+    {
+      "type": "text",
+      "id": "ebook_label",
+      "label": "Ebook gift label",
+      "default": "Free e-book"
+    },
+    {
+      "type": "url",
+      "id": "ebook_url",
+      "label": "Ebook download link"
+    },
+    {
+      "type": "text",
+      "id": "stock_label",
+      "label": "Low stock label",
+      "default": "Low Stock \u2013 Selling Fast"
+    },
+    {
+      "type": "text",
+      "id": "mode_heading",
+      "label": "Purchase frequency heading",
+      "default": "How often would you like it?"
+    },
+    {
+      "type": "range",
+      "id": "stock_threshold",
+      "label": "Low stock threshold",
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "text",
+      "id": "ebook_download",
+      "label": "Ebook download text",
+      "default": "Download Nature\u2019s Forgotten Remedies"
     }
   ],
   "blocks": [
