@@ -2233,18 +2233,21 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
           {% assign walnut_review_rating = review.settings.rating %}
           <article class="av-cb__post-risk-review-card" {{ review.shopify_attributes }}>
             <div class="av-cb__post-risk-review-rating" aria-label="{{ walnut_review_rating }} out of 5 stars">
-              <strong>{{ walnut_review_rating }}.0</strong>
-              <span aria-hidden="true">{% for star in (1..5) %}{% if star <= walnut_review_rating %}★{% else %}☆{% endif %}{% endfor %}</span>
+              <span class="av-walnut-review-stars" aria-hidden="true">
+                {% for star in (1..5) %}
+                  <span{% if star > walnut_review_rating %} class="av-walnut-review-star--empty"{% endif %}>★</span>
+                {% endfor %}
+              </span>
             </div>
             {% if review.settings.photo != blank %}
               {{ review.settings.photo | image_url: width: 500 | image_tag: loading: 'lazy', widths: '250,500', alt: '' }}
             {% endif %}
+            <div class="av-walnut-review-name">{{ review.settings.name | escape }}</div>
             {% if review.settings.title != blank %}
               <h3 class="av-cb__post-risk-review-title">{{ review.settings.title | escape }}</h3>
             {% endif %}
             <p>{{ review.settings.quote | escape | newline_to_br }}</p>
             <footer class="av-cb__post-risk-review-author">
-              <strong>{{ review.settings.name | escape }}</strong>
               <a href="{{ review.settings.walnut_review_source | escape }}">View original review</a>
             </footer>
           </article>
@@ -2253,31 +2256,48 @@ html.av-cb-cinnamon-page .avonent-footer{width:100%;margin:0}
     {% endcapture %}
     {% assign av_cb_walnut_review_cards = av_cb_walnut_review_cards | strip %}
     {% if av_cb_walnut_review_cards != blank or request.design_mode %}
-      <section class="av-cb__post-risk-reviews" aria-labelledby="av-cb-post-risk-reviews-heading">
+      <section class="av-cb__post-risk-reviews av-walnut-review-template" aria-labelledby="av-cb-post-risk-reviews-heading">
         <div class="av-cb__post-risk-reviews-wrap">
           <header class="av-cb__post-risk-reviews-head">
-            <h2 id="av-cb-post-risk-reviews-heading">They Felt the Shift. You Will Too.</h2>
+            <h2 id="av-cb-post-risk-reviews-heading">{% if av_cb_walnut_review_cards == blank and request.design_mode %}Trustpilot reviews{% else %}They Felt the Shift. You Will Too.{% endif %}</h2>
+            {% if av_cb_walnut_review_cards == blank and request.design_mode %}
+              <div class="av-walnut-review-preview-score">
+                <span>Rating summary preview</span>
+                <span class="av-walnut-review-stars" aria-hidden="true">{% for star in (1..5) %}<span>★</span>{% endfor %}</span>
+              </div>
+            {% endif %}
           </header>
           {% if av_cb_walnut_review_cards != blank %}
             <div class="av-cb__post-risk-review-list">{{ av_cb_walnut_review_cards }}</div>
-          {% else %}
+          {% elsif request.design_mode %}
             <div class="av-cb__post-risk-review-list">
               <article class="av-cb__post-risk-review-card">
                 <div class="av-cb__post-risk-review-rating">
-                  <span aria-hidden="true">☆☆☆☆☆</span>
-                  <strong>Rating preview</strong>
+                  <span class="av-walnut-review-stars" aria-hidden="true">{% for star in (1..5) %}<span>★</span>{% endfor %}</span>
                 </div>
-                <h3 class="av-cb__post-risk-review-title">Review title</h3>
+                <h3 class="av-walnut-review-name">Customer name</h3>
                 <p>Add the customer’s review in a Customer photo and review block.</p>
                 <footer class="av-cb__post-risk-review-author">
-                  <strong>Customer name</strong>
-                  <span>Original review link</span>
+                  <span>Review source <strong>Shop or Trustpilot</strong></span>
                 </footer>
               </article>
             </div>
           {% endif %}
         </div>
       </section>
+      <style>
+        .av-walnut-review-template { background: #fff; color: #151515; }
+        .av-walnut-review-template .av-cb__post-risk-reviews-head { text-align: center; }
+        .av-walnut-review-template .av-cb__post-risk-reviews-head h2 { font-size: clamp(28px, 6vw, 44px); }
+        .av-walnut-review-preview-score { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: .6rem; margin-top: 1rem; }
+        .av-walnut-review-template .av-cb__post-risk-review-card { background: #f1f1f1; border: 0; box-shadow: none; border-radius: 16px; padding: clamp(18px, 5vw, 32px); }
+        .av-walnut-review-template .av-walnut-review-stars { display: inline-flex; gap: 2px; }
+        .av-walnut-review-template .av-walnut-review-stars > span { display: grid; place-items: center; width: 22px; height: 22px; background: #00845f; color: #fff !important; font-size: 17px; line-height: 1; }
+        .av-walnut-review-template .av-walnut-review-stars > .av-walnut-review-star--empty { background: #57625e; }
+        .av-walnut-review-template .av-walnut-review-name { margin: 16px 0 0; font-size: 1.25rem; font-weight: 800; color: #151515; }
+        .av-walnut-review-template .av-cb__post-risk-review-card p { margin: 16px 0; font-size: 1rem; line-height: 1.7; }
+        .av-walnut-review-template .av-cb__post-risk-review-author { border-top: 1px solid #dadada; margin-top: 14px; padding-top: 10px; font-weight: 400; }
+      </style>
     {% endif %}
   {% else %}
   <section class="av-cb__post-risk-reviews" aria-labelledby="av-cb-post-risk-reviews-heading">
