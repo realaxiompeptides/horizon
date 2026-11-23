@@ -74,6 +74,7 @@
 </section>
 
 
+{% if section.settings.show_health_gallery %}
 <section id="AvonentHealthGallery-{{ section.id }}" class="avonent-health-gallery" aria-labelledby="AvonentHealthGalleryHeading-{{ section.id }}" style="--av-gallery-bg:{{ section.settings.gallery_background_color }};">
   <div class="avonent-health-gallery__inner">
     <div class="avonent-health-gallery__head">
@@ -176,6 +177,7 @@
   update();
 })();
 </script>
+{% endif %}
 
 <div class="avonent-faq-proofs" id="AvonentFaqProofs-{{ section.id }}">
   <div class="avonent-faq-proofs__inner">
@@ -728,6 +730,12 @@
     {
       "type": "header",
       "content": "Image carousel below moving bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_health_gallery",
+      "label": "Show Our Products carousel",
+      "default": true
     },
     {
       "type": "text",
