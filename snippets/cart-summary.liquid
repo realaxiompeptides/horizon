@@ -28,6 +28,9 @@
         assign av_bundle_subtotal = 0
         for line in cart.items
           assign av_reference_unit = line.variant.price | at_least: line.original_price
+          if line.variant_id == 68655263613088 and line.final_line_price == 0
+            assign av_reference_unit = all_products['natures-forgotten-remedies'].price | default: 2499
+          endif
           assign av_reference_line = av_reference_unit | times: line.quantity
           assign av_bundle_subtotal = av_bundle_subtotal | plus: av_reference_line
         endfor
