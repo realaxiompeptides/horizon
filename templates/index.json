@@ -104,7 +104,8 @@
       ],
       "name": "00 Avonent Trust Carousel",
       "settings": {
-        "gallery_heading": "Two Ways We",
+        "show_health_gallery": false,
+      "gallery_heading": "Two Ways We",
         "gallery_eyebrow": "OUR PRODUCTS",
         "gallery_description": "Each formula does a different job. Together, they cover more ground.",
         "rating_prefix": "Rated",
