@@ -228,6 +228,18 @@
       }
     }
 
+    function confirmAction(title, description, buttonLabel) {
+      const dialog = find('[data-action-dialog]');
+      dialog.querySelector('h2').textContent = title;
+      dialog.querySelector('p').textContent = description;
+      dialog.querySelector('[data-confirm-action]').textContent = buttonLabel;
+      dialog.returnValue = '';
+      return new Promise((resolve) => {
+        dialog.addEventListener('close', () => resolve(dialog.returnValue === 'confirm'), { once: true });
+        dialog.showModal();
+      });
+    }
+
     function openCancellation() {
       const dialog = find('[data-cancel-dialog]');
       const heading = dialog.querySelector('h2');
@@ -301,7 +313,7 @@
           return;
         }
         if (method.instrument?.__typename === 'CustomerShopPayAgreement') return location.assign('https://shop.app/');
-        if (!window.confirm('Email a secure payment update link for this subscription?')) return;
+        if (!await confirmAction('Update payment method', 'Shopify will email a secure link to update the payment method for this subscription.', 'Send secure link')) return;
         await run(async () => {
           await request('subscription-contracts-update-payment-method', params, 'PUT');
           status.textContent = preview ? 'Preview complete. No email was sent.' : 'Check your inbox for Shopify’s payment update link.';
@@ -310,7 +322,7 @@
       }
       if (action === 'skip') {
         const order = nextOrder();
-        if (!order || !window.confirm('Skip the next scheduled order for this subscription?')) return;
+        if (!order || !await confirmAction('Skip your next order?', 'This skips one scheduled order. Your subscription will stay active.', 'Skip next order')) return;
         await run(() => change('subscription-billing-attempts/skip-order/' + order.id, {
           subscriptionContractId: id
         }, 'Next order skipped.'));
@@ -321,7 +333,7 @@
         resume: ['ACTIVE', 'Resume renewals for this subscription?', 'Subscription resumed.']
       };
       const choice = stateActions[action];
-      if (!choice || !window.confirm(choice[1])) return;
+      if (!choice || !await confirmAction(choice[1], action === 'pause' ? 'Scheduled renewals will pause until you resume.' : 'Scheduled renewals will resume for this subscription.', action === 'pause' ? 'Pause subscription' : 'Resume subscription')) return;
       await run(() => change('subscription-contracts-update-status', { ...params, status: choice[0] }, choice[2]));
     }
 
