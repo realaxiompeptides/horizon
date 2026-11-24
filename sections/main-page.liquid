@@ -2,7 +2,7 @@
 <section id="av-membership-{{ section.id }}" class="av-membership" data-membership-preview>
   <div class="av-m__hero">
     <div class="av-m__wrap">
-      <div class="av-m__kicker">AVONENT · MEMBERSHIP</div>
+      <div class="av-m__kicker">AVONENT · MEMBERSHIP · TRAINING SIMULATION</div>
       <h1>Welcome to your<br><span>subscriber dashboard.</span></h1>
       <p>Everything you need to manage your wellness routine, all in one place.</p>
       <div class="av-m__nav"><a href="#av-plan-{{ section.id }}"><i class="av-m__fa" aria-hidden="true">&#xf2bd;</i><span>My subscription</span></a><a href="#av-deliveries-{{ section.id }}"><i class="av-m__fa" aria-hidden="true">&#xf0d1;</i><span>Deliveries</span></a><a href="#av-billing-{{ section.id }}"><i class="av-m__fa" aria-hidden="true">&#xf09d;</i><span>Billing</span></a><a href="#av-benefits-{{ section.id }}"><i class="av-m__fa" aria-hidden="true">&#xf06b;</i><span>My benefits</span></a><a href="#av-help-{{ section.id }}"><i class="av-m__fa" aria-hidden="true">&#xf590;</i><span>Support</span></a></div>
@@ -69,6 +69,19 @@
       <article class="av-m__card"><h3 class="av-m__icon-heading"><i class="av-m__fa" aria-hidden="true">&#xf09d;</i><span>Payment method</span></h3><p data-card-label>Visa ending in 4242</p><p><strong data-payment-status>Ready for next renewal</strong></p><button class="av-m__button av-m__outline" type="button" data-action="payment">Update payment method</button><button class="av-m__button av-m__outline" type="button" data-action="retry" hidden>Retry payment</button></article>
     </div>
     <details class="av-m__card av-m__test-tools"><summary><i class="av-m__fa" aria-hidden="true">&#xf1de;</i> Preview controls</summary><p>Use these controls to explore different account states.</p><button type="button" class="av-m__button av-m__outline" data-action="fail">Simulate failed payment</button><button type="button" class="av-m__text-btn" data-reset>Reset preview</button></details></div>
+    <section class="av-m__card av-m__training" aria-labelledby="av-training-title-{{ section.id }}">
+      <div class="av-m__kicker">CANCELLATION PRACTICES · TRAINING EXAMPLES</div>
+      <h2 id="av-training-title-{{ section.id }}">Recognizing cancellation barriers</h2>
+      <p>These fictional examples are for recognizing problematic designs, not working cancellation controls. All account and billing actions on this page are simulated.</p>
+      <div class="av-m__training-grid">
+        <article><strong>Excessive steps</strong><p>A customer is asked to advance through repeated screens before cancellation is available.</p><small>Look for unnecessary mandatory steps.</small></article>
+        <article><strong>Forced feedback</strong><p>A cancellation request is made conditional on answering a survey.</p><small>Look for a clear way to decline feedback.</small></article>
+        <article><strong>Repeated retention offers</strong><p>A customer declines an offer but is presented with more offers instead of an immediate cancellation option.</p><small>Check whether declining is respected.</small></article>
+        <article><strong>Misleading controls</strong><p>Button labels and visual emphasis make the outcome of a choice unclear.</p><small>Check whether the cancellation option is clear and equally accessible.</small></article>
+        <article><strong>Unnecessary support requirements</strong><p>A customer who enrolled online is directed to another channel without a clear reason.</p><small>Check for an accessible online cancellation path.</small></article>
+        <article><strong>Unclear completion</strong><p>A customer finishes a cancellation process but receives no clear confirmation of future billing.</p><small>Check that the effective date and renewal status are communicated.</small></article>
+      </div>
+    </section>
     <div class="av-m__help" id="av-help-{{ section.id }}"><div><div class="av-m__kicker">WE'RE HERE FOR YOU</div><h2>Need a hand?</h2><p>Get help with your deliveries, subscription or account.</p></div><a class="av-m__button av-m__outline" href="/pages/contact">Contact support</a></div>
   </div>
   <dialog class="av-m__dialog" aria-labelledby="av-m-title-{{ section.id }}"><div class="av-m__modal">
@@ -263,6 +276,12 @@ html:has([data-membership-preview]) #MainContent > .shopify-section:has([data-me
 #av-membership-{{ section.id }} .av-m__cancel-link{background:none;border:0;padding:12px;color:#00647A;font-weight:700;text-decoration:underline;text-underline-offset:3px}
 #av-membership-{{ section.id }} .av-m__review-dialog .av-m__modal-footer{position:sticky;bottom:-1px;background:white;padding-top:8px}
 @media(max-width:760px){#av-membership-{{ section.id }} .av-m__review-dialog{max-height:calc(100dvh - 40px)}#av-membership-{{ section.id }} .av-m__review-dialog .av-m__modal{padding:19px 17px}#av-membership-{{ section.id }} .av-m__review-dialog h2{font-size:25px}#av-membership-{{ section.id }} .av-m__review-dialog [data-modal-content]{gap:7px}#av-membership-{{ section.id }} .av-m__review-dialog .av-m__button{min-height:43px;padding:9px 11px}#av-membership-{{ section.id }} .av-m__review-dialog .av-m__review-progress{letter-spacing:.07em}}
+#av-membership-{{ section.id }} .av-m__training{margin-top:32px}
+#av-membership-{{ section.id }} .av-m__training-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:18px}
+#av-membership-{{ section.id }} .av-m__training-grid article{border:1px solid var(--m-line);border-radius:12px;padding:16px;background:#F5FAFC}
+#av-membership-{{ section.id }} .av-m__training-grid p{margin:8px 0}
+#av-membership-{{ section.id }} .av-m__training-grid small{display:block;color:var(--m-green);font-weight:650}
+@media(max-width:760px){#av-membership-{{ section.id }} .av-m__training-grid{grid-template-columns:1fr}}
 </style>
 <script>
 (function(){
@@ -301,7 +320,7 @@ function renderReview(n){
 reviewStep=Math.min(6,Math.max(0,n));const branch=reviewPaths[reason]||reviewPaths.other;content.replaceChildren();feedback.textContent='';
 dialog.classList.add('av-m__review-dialog');
 const progress=document.createElement('div');progress.className='av-m__review-progress';progress.textContent='MEMBERSHIP REVIEW · '+(reviewStep+1)+' / 7';const bar=document.createElement('progress');bar.max=7;bar.value=reviewStep+1;bar.setAttribute('aria-label','Membership review progress');content.append(progress,bar);
-const screens=[['Before you go','Review your membership benefits and delivery options.'],['Why are you considering leaving?','Select the reason that best fits your situation.'],[branch.question,'Select one answer to continue.'],[branch.heading,branch.copy],['Your exclusive member benefits','Keep your $34.99 recurring price and access to exclusive VIP sales, member offers and free shipping on all subscription deliveries.'],['Need a little more flexibility?','You can pause or change your schedule instead of ending your membership.'],['Confirm cancellation','Your subscription will stop renewing.']];
+const screens=[['Before you go','Review your membership benefits and delivery options, or cancel the test subscription directly.'],['Why are you considering leaving?','Select the reason that best fits your situation.'],[branch.question,'Select one answer to continue.'],[branch.heading,branch.copy],['Your exclusive member benefits','Keep your $34.99 recurring price and access to exclusive VIP sales, member offers and free shipping on all subscription deliveries.'],['Need a little more flexibility?','You can pause or change your schedule instead of ending your membership.'],['Confirm cancellation','Your subscription will stop renewing.']];
 title.textContent=screens[reviewStep][0];desc.textContent=screens[reviewStep][1];
 function choice(label,selected,fn){const b=button(label,fn,true);b.classList.add('av-m__survey-choice');b.setAttribute('aria-pressed',String(selected));const mark=document.createElement('span');mark.className='av-m__choice-mark';mark.setAttribute('aria-hidden','true');b.prepend(mark);return b}
 if(reviewStep===0){const perks=document.createElement('div');perks.className='av-m__review-perks';["Exclusive subscriber pricing","VIP sale access","Special member offers","Free shipping on all recurring orders","Automatic refills","Flexible delivery dates","Your choice of frequency","Skip or pause anytime","Dedicated membership support","Easy account management"].forEach(x=>{const line=document.createElement('p');const mark=document.createElement('i');mark.className='av-m__fa';mark.setAttribute('aria-hidden','true');mark.textContent='\uf058';line.append(mark,document.createTextNode(' '+x));perks.append(line)});content.append(perks)}
@@ -312,6 +331,7 @@ if(reviewStep===4){const comparison=document.createElement('div');comparison.cla
 if(reviewStep===5)content.append(button('Pause my membership',()=>show('pause')),button('Change delivery frequency',()=>show('frequency')));
 if(reviewStep<6){const next=button(reviewStep===0?'Review my membership':'Continue review',()=>renderReview(reviewStep+1),false);next.disabled=(reviewStep===1&&!reason)||(reviewStep===2&&!detail);content.append(next)}else{const summary=document.createElement('div');summary.className='av-m__response';summary.textContent='Future renewals and scheduled subscription deliveries will stop.';content.append(summary,button('Confirm cancellation',()=>{state='Cancelled';title.textContent='Subscription cancelled';desc.textContent='Your subscription will no longer renew.';complete('Cancellation confirmed in this preview.')}))}
 if(reviewStep>0)content.append(button('Back',()=>renderReview(reviewStep-1),true));
+if(reviewStep<6)content.append(button('Cancel test subscription',()=>show('cancel'),true));
 
 if(!dialog.open)dialog.showModal();dialog.scrollTop=0;
 }
