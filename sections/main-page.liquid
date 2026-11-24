@@ -315,16 +315,37 @@ if(reviewStep>0)content.append(button('Back',()=>renderReview(reviewStep-1),true
 
 if(!dialog.open)dialog.showModal();dialog.scrollTop=0;
 }
+function renderDeliveryAction(mode,step=0,selected=null){
+const configs={
+skip:{progress:'SKIP DELIVERY',heading:'Need more time between deliveries?',copy:'Choose how many upcoming shipments you would like to skip.',options:[1,2,3],label:n=>'Skip '+n+(n===1?' shipment':' shipments'),date:n=>addDays(nextDate,frequency*n),confirm:'Confirm skip',done:n=>n===1?'Upcoming shipment skipped.':n+' upcoming shipments skipped.'},
+frequency:{progress:'CHANGE FREQUENCY',heading:'Find your ideal delivery schedule',copy:'Choose how often you would like your orders to arrive.',options:[30,60,90],label:n=>'Every '+n+' days',date:()=>nextDate,confirm:'Confirm frequency change',done:()=> 'Delivery frequency updated.'},
+pause:{progress:'PAUSE MEMBERSHIP',heading:'Take a break from deliveries',copy:'Choose how long you would like to pause your membership.',options:[30,60,90],label:n=>'Pause for '+n+' days',date:n=>addDays(new Date(),n),confirm:'Confirm pause',done:n=>'Membership paused for '+n+' days.'}
+};
+const config=configs[mode];if(!config)return;
+dialog.classList.add('av-m__review-dialog');content.replaceChildren();feedback.textContent='';
+title.textContent=step===0?config.heading:step===1?'Review your changes': 'Changes confirmed';
+desc.textContent=step===0?config.copy:step===1?'Check your selection before confirming.':'Your membership settings have been updated in this test.';
+const progress=document.createElement('div');progress.className='av-m__review-progress';progress.textContent=config.progress+' · '+(step+1)+' / 3';
+const bar=document.createElement('progress');bar.max=3;bar.value=step+1;bar.setAttribute('aria-label',config.progress+' progress');content.append(progress,bar);
+if(step===0){
+config.options.forEach(n=>{const choice=button(config.label(n),()=>renderDeliveryAction(mode,0,n),true);choice.classList.add('av-m__survey-choice');choice.setAttribute('aria-pressed',String(selected===n));const mark=document.createElement('span');mark.className='av-m__choice-mark';mark.setAttribute('aria-hidden','true');choice.prepend(mark);content.append(choice)});
+const next=button('Continue',()=>renderDeliveryAction(mode,1,selected));next.disabled=selected===null;content.append(next);
+}else if(step===1){
+const summary=document.createElement('div');summary.className='av-m__response';const heading=document.createElement('strong');heading.textContent=config.label(selected);const date=document.createElement('p');date.textContent=(mode==='pause'?'Scheduled resume: ':'Next delivery: ')+dateLabel(config.date(selected));summary.append(heading,date);content.append(summary);
+content.append(button(config.confirm,()=>{if(mode==='skip')nextDate=config.date(selected);if(mode==='frequency')frequency=selected;if(mode==='pause'){state='Paused';nextDate=config.date(selected)}update();renderDeliveryAction(mode,2,selected)}),button('Back',()=>renderDeliveryAction(mode,0,selected),true));
+}else{
+const summary=document.createElement('div');summary.className='av-m__response';summary.textContent=config.done(selected);content.append(summary,button('Done',()=>dialog.close()));
+}
+if(!dialog.open)dialog.showModal();dialog.scrollTop=0;
+}
 function show(mode){
+if(['skip','frequency','pause'].includes(mode)){renderDeliveryAction(mode);return}
 if(mode==='review'||mode==='cancel-start'){reviewStep=0;reason='';detail='';renderReview(0);return}
 dialog.classList.remove('av-m__review-dialog');content.replaceChildren();feedback.textContent='';
 const modes={skip:['Skip next order','Skip your upcoming shipment and resume on your regular schedule.'],date:['Reschedule delivery','Choose a new date for your upcoming order.'],frequency:['Change delivery frequency','Choose a schedule that suits your routine.'],pause:['Pause membership','Select how long you would like to pause deliveries.'],resume:['Resume subscription','Resume scheduled deliveries.'],review:['Your membership options','Explore subscriber pricing, shipping benefits and flexible delivery choices.'],cancel:['Confirm cancellation','Your subscription will stop renewing.'],address:['Edit shipping address','Update the address for your future subscription deliveries.'],payment:['Update payment method','Add a fictional test card to simulate updating your payment method. Do not enter real card information.'],retry:['Retry payment','Retry the failed renewal using your updated payment method.']};
 if(mode==='fail'){if(state!=='Cancelled'&&payment==='ready'){payment='failed';history.unshift(['Renewal attempt',dateLabel(new Date())+' · $34.99','Payment failed']);update();show('payment')}return}
 const m=modes[mode];if(!m)return;title.textContent=m[0];desc.textContent=m[1];
-if(mode==='skip')content.append(button('Confirm skip',()=>{nextDate=addDays(nextDate,frequency);complete('Upcoming shipment skipped.')}));
 if(mode==='date'){const label=document.createElement('label');label.textContent='New delivery date';const input=document.createElement('input');input.type='date';const today=new Date();const ymd=d=>[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');input.min=ymd(today);input.value=ymd(nextDate);label.append(input);content.append(label,button('Save delivery date',()=>{if(!input.value||!input.checkValidity()){feedback.textContent='Please select a valid future date.';return}nextDate=new Date(input.value+'T12:00:00');complete('Delivery date updated.')}))}
-if(mode==='frequency')[30,60,90].forEach(n=>content.append(button('Every '+n+' days',()=>{frequency=n;complete('Delivery frequency updated.')})));
-if(mode==='pause')[30,60,90].forEach(n=>content.append(button('Pause for '+n+' days',()=>{state='Paused';nextDate=addDays(new Date(),n);complete('Membership paused for '+n+' days.')})));
 if(mode==='resume')content.append(button('Resume deliveries',()=>{state='Active';complete('Subscription resumed.')}));
 
 if(mode==='cancel')content.append(button('Keep my membership',()=>dialog.close(),true),button('Confirm cancellation',()=>{state='Cancelled';title.textContent='Subscription cancelled';desc.textContent='Your subscription will no longer renew.';complete('Cancellation confirmed in this preview.')}));
