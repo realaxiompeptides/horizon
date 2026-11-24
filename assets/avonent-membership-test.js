@@ -1,6 +1,5 @@
 (() => {
   const base = '/apps/subscriptions/cp/api/';
-  const portal = '/apps/subscriptions';
 
   async function request(path, params = {}, method = 'GET', body) {
     const url = new URL(base + path, location.origin);
@@ -30,30 +29,6 @@
     );
     error.status = response.status;
     throw error;
-  }
-
-  function setupEmail(root) {
-    const form = root.querySelector('[data-appstle-email-link]');
-    if (!form) return;
-    const button = form.querySelector('button');
-    const status = form.querySelector('[data-appstle-email-status]');
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      if (button.disabled || !form.reportValidity()) return;
-      button.disabled = true;
-      status.textContent = 'Requesting your link…';
-      try {
-        await request('subscription-contracts-email-magic-link', {
-          email: form.elements.email.value.trim()
-        });
-        status.textContent = 'If this email is linked to a subscription, check your inbox for a secure link to the Appstle portal.';
-      } catch {
-        status.textContent = 'The request could not be completed. Try again shortly or continue with Shopify sign-in.';
-      } finally {
-        button.disabled = false;
-      }
-    });
-    button.disabled = false;
   }
 
   const contractId = (value) => String(value ?? '').match(/^(?:gid:\/\/shopify\/SubscriptionContract\/)?(\d+)$/)?.[1];
@@ -125,6 +100,7 @@
 
     async function loadContract() {
       contract = undefined;
+      for (const section of root.querySelectorAll('[data-contract-content]')) section.hidden = true;
       upcoming = [];
       renderOrders('upcoming', []);
       renderOrders('past', []);
@@ -154,6 +130,24 @@
       const unit = label(contract.deliveryPolicy?.interval);
       find('[data-contract-frequency]').textContent = interval && unit ? 'Every ' + interval + ' ' + unit + (interval === 1 ? '' : 's') : '—';
       const lines = contract.lines?.nodes || [];
+      const products = find('[data-contract-products]');
+      products.replaceChildren(...lines.map((line) => {
+        const row = document.createElement('li');
+        const imageUrl = line.variantImage?.url;
+        if (typeof imageUrl === 'string' && /^https:\/\//i.test(imageUrl)) {
+          const image = document.createElement('img');
+          image.src = imageUrl;
+          image.alt = '';
+          image.loading = 'lazy';
+          row.append(image);
+        }
+        const name = document.createElement('span');
+        name.textContent = [line.title || 'Subscription item', line.variantTitle === 'Default Title' ? '' : line.variantTitle, line.quantity ? 'Qty ' + line.quantity : ''].filter(Boolean).join(' · ');
+        row.append(name);
+        return row;
+      }));
+      for (const section of root.querySelectorAll('[data-contract-content]')) section.hidden = false;
+
       const price = lines.length === 1 && lines[0].currentPrice;
       if (price?.currencyCode && price.amount != null && Number.isFinite(Number(price.amount))) {
         find('[data-contract-price]').textContent = new Intl.NumberFormat(undefined, {
@@ -222,12 +216,12 @@
             try {
               await loadContract();
             } catch {
-              status.textContent = 'Appstle accepted your request. Open the Appstle portal to verify its status before trying again.';
+              status.textContent = 'Appstle accepted your request. Reload this page to verify its status before trying again.';
               return;
             }
             status.textContent = contract?.status === 'CANCELLED'
               ? 'Subscription canceled. Future renewals have stopped.'
-              : 'Appstle accepted your request. Open the Appstle portal to check when cancellation takes effect.';
+              : 'Appstle accepted your request. Check this dashboard again for the effective cancellation status.';
           });
         }
       }, { once: true });
@@ -250,7 +244,10 @@
       }
       if (action === 'payment') {
         const method = contract.customerPaymentMethod;
-        if (!method) return location.assign(portal);
+        if (!method) {
+          status.textContent = 'There is no saved payment method for this subscription. Contact support for help.';
+          return;
+        }
         if (method.instrument?.__typename === 'CustomerShopPayAgreement') return location.assign('https://shop.app/');
         if (!window.confirm('Email a secure payment update link for this subscription?')) return;
         await run(async () => {
@@ -316,7 +313,9 @@
       settings = portalSettings || {};
       const ids = await request('subscription-customers/valid/' + owner);
       if (!Array.isArray(ids)) throw new Error('Appstle could not list your subscriptions.');
-      for (const id of new Set(ids.map(contractId).filter(Boolean))) {
+      const validIds = ids.map(contractId).filter(Boolean);
+      if (ids.length && validIds.length !== ids.length) throw new Error('Subscription results could not be verified.');
+      for (const id of new Set(validIds)) {
         select.add(new Option('Subscription #' + id, id));
       }
       if (!select.options.length) {
@@ -331,7 +330,6 @@
   }
 
   for (const root of document.querySelectorAll('[data-appstle-membership]')) {
-    setupEmail(root);
     if (root.hasAttribute('data-dashboard')) setupDashboard(root);
   }
 })();
