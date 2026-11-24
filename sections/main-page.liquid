@@ -19,7 +19,7 @@
   </div>
 </section>
 {% else %}
-<section id="av-membership-{{ section.id }}" class="av-membership" data-membership-preview data-appstle-membership data-dashboard data-shop-id="{{ shop.id | default: 107404886176 }}" data-sign-in-url="{{ membership_sign_in_url | escape }}">
+<section id="av-membership-{{ section.id }}" class="av-membership" data-membership-preview data-appstle-membership data-dashboard data-shop-id="{{ shop.id | default: 107404886176 }}" data-price-currency="{{ cart.currency.iso_code | escape }}" data-sign-in-url="{{ membership_sign_in_url | escape }}">
   <div class="av-m__hero">
     <div class="av-m__wrap">
       <div class="av-m__kicker">AVONENT · MEMBERSHIP</div>
@@ -30,8 +30,8 @@
   </div>
   <div class="av-m__wrap av-m__body">
     <div class="av-m__card av-m__preview-banner" data-subscription-preview hidden>
-      <strong>Subscription preview</strong>
-      <p>These are sample subscriptions. Changes reset when you reload this page.</p>
+      <strong>Test mode</strong>
+      <p>No account changes are saved.</p>
       <a href="{{ membership_dashboard_url | escape }}">Return to my real subscriptions</a>
     </div>
     <div class="av-m__heading"><div><div class="av-m__kicker">YOUR MEMBERSHIP</div><h2>My subscription</h2></div></div>
@@ -104,6 +104,17 @@
         </div>
       </form>
     </dialog>
+    <template data-subscription-price-catalog>
+      {% assign comparison_handles = 'black-walnut-drops' | split: ',' %}
+      {% for comparison_handle in comparison_handles %}
+        {% assign comparison_product = all_products[comparison_handle] %}
+        {% for comparison_variant in comparison_product.variants %}
+          {% if comparison_variant.available and comparison_variant.requires_selling_plan == false %}
+            <span data-variant="{{ comparison_variant.id }}" data-price="{{ comparison_variant.price | divided_by: 100.0 }}"></span>
+          {% endif %}
+        {% endfor %}
+      {% endfor %}
+    </template>
     <dialog class="av-m__dialog" data-cancel-dialog aria-labelledby="av-cancel-title-{{ section.id }}">
       <form method="dialog" class="av-m__modal av-m__cancel-panel">
         <div class="av-m__cancel-toolbar">
@@ -131,25 +142,54 @@
           </div>
         </div>
         <div class="av-m__cancel-step" data-cancel-step="questions" hidden>
-          <p>Both questions are optional. Your answers help show delivery options here.</p>
+
           <fieldset class="av-m__cancel-reasons" data-cancel-reason>
-            <legend>What’s the main reason you’re leaving?</legend>
+            <legend class="visually-hidden">Why do you want to cancel?</legend>
             <label><input type="radio" name="cancelReason" value="stock">I have enough product</label>
             <label><input type="radio" name="cancelReason" value="price">It costs too much</label>
             <label><input type="radio" name="cancelReason" value="timing">Orders arrive too often</label>
             <label><input type="radio" name="cancelReason" value="fit">The product isn’t right for me</label>
             <label><input type="radio" name="cancelReason" value="other">Something else</label>
           </fieldset>
-          <label for="av-cancel-delivery-{{ section.id }}">Would skipping an order help?</label>
-          <select id="av-cancel-delivery-{{ section.id }}" data-cancel-delivery>
-            <option value="">Choose an answer</option>
-            <option value="yes">Yes, I need more time</option>
-            <option value="no">No, I want to end future renewals</option>
-          </select>
           <div class="av-m__cancel-actions">
-            <button type="button" class="av-m__button av-m__outline" data-cancel-next="review">See my options</button>
-            <button type="button" class="av-m__button" data-cancel-next="confirm">Continue to cancellation</button>
+            <button type="button" class="av-m__button" data-cancel-next="experience" data-preview-next hidden>Continue</button>
+            <button type="button" class="av-m__button av-m__outline" data-cancel-next="review" data-live-next>See my options</button>
+            <button type="button" class="av-m__button" data-cancel-next="confirm" data-live-next>Continue to cancellation</button>
           </div>
+        </div>
+        <div class="av-m__cancel-step" data-cancel-step="experience" hidden>
+          <fieldset class="av-m__cancel-reasons">
+            <legend class="visually-hidden">What mattered most in your decision?</legend>
+            <label><input type="radio" name="experience" value="value">Price or value</label>
+            <label><input type="radio" name="experience" value="routine">It didn’t fit my routine</label>
+            <label><input type="radio" name="experience" value="other">Something else</label>
+          </fieldset>
+          <button type="button" class="av-m__button" data-cancel-next="timing" data-preview-next>Continue</button>
+        </div>
+        <div class="av-m__cancel-step" data-cancel-step="timing" hidden>
+          <fieldset class="av-m__cancel-reasons">
+            <legend class="visually-hidden">How did the delivery schedule work for you?</legend>
+            <label><input type="radio" name="timing" value="soon">Orders arrived too soon</label>
+            <label><input type="radio" name="timing" value="right">The timing was right</label>
+            <label><input type="radio" name="timing" value="none">Timing wasn’t a factor</label>
+          </fieldset>
+          <button type="button" class="av-m__button" data-cancel-next="delivery" data-preview-next>Continue</button>
+        </div>
+        <div class="av-m__cancel-step" data-cancel-step="delivery" hidden>
+          <fieldset class="av-m__cancel-reasons">
+            <legend class="visually-hidden">Would skipping your next order help?</legend>
+            <label><input type="radio" name="delivery" value="yes">Yes, I need more time</label>
+            <label><input type="radio" name="delivery" value="no">No, I want to stop future renewals</label>
+          </fieldset>
+          <button type="button" class="av-m__button" data-cancel-next="decision" data-preview-next>Continue</button>
+        </div>
+        <div class="av-m__cancel-step" data-cancel-step="decision" hidden>
+          <fieldset class="av-m__cancel-reasons">
+            <legend class="visually-hidden">Are you sure you want to end your subscription?</legend>
+            <label><input type="radio" name="decision" value="end">Yes, I want to end it</label>
+            <label><input type="radio" name="decision" value="options">I’d like to see my delivery options</label>
+          </fieldset>
+          <button type="button" class="av-m__button" data-cancel-next="review" data-preview-next>Continue</button>
         </div>
         <div class="av-m__cancel-step" data-cancel-step="review" hidden>
           <p data-cancel-skip-note hidden></p>
@@ -422,6 +462,13 @@ html:has([data-membership-preview]) #MainContent > .shopify-section:has([data-me
 #av-membership-{{ section.id }} .av-m__cancel-reasons label{display:flex;align-items:center;gap:10px;padding:10px 12px;min-height:44px;border:1px solid var(--m-line);border-radius:10px;font-weight:500;cursor:pointer}
 #av-membership-{{ section.id }} .av-m__cancel-reasons label:has(:checked){border-color:var(--m-green);background:var(--m-sage)}
 #av-membership-{{ section.id }} .av-m__cancel-reasons input{accent-color:var(--m-green)}
+#av-membership-{{ section.id }} [data-cancel-dialog] .av-m__cancel-reasons input[type="radio"]{appearance:auto;-webkit-appearance:radio;inline-size:18px;block-size:18px;width:18px;height:18px;min-width:18px;min-height:18px;max-width:18px;padding:0;margin:0;border:0;box-shadow:none;flex:0 0 18px;accent-color:#176f66}
+#av-membership-{{ section.id }} [data-cancel-dialog] .av-m__cancel-panel{gap:13px;padding:clamp(16px,4vw,26px)}
+#av-membership-{{ section.id }} [data-cancel-dialog] h2{font-size:clamp(23px,4.4vw,32px);line-height:1.16}
+#av-membership-{{ section.id }} [data-cancel-dialog] h2:focus{outline:none}
+#av-membership-{{ section.id }} [data-cancel-dialog] .av-m__cancel-plan{align-items:center;padding:12px 14px}
+#av-membership-{{ section.id }} [data-cancel-dialog] .av-m__cancel-reasons label{font-size:15px;font-weight:600;line-height:1.35}
+#av-membership-{{ section.id }} [data-cancel-dialog] [data-preview-next]{width:100%}
 </style>
 
 {% else %}
