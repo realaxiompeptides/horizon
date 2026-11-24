@@ -275,9 +275,25 @@
             nextRenewal ? 'Skipping moves your next scheduled renewal to ' + formatDate(nextRenewal) + '.' :
               'Skipping leaves your subscription active.';
       }
-      reason.onchange = updateOffer;
-      delivery.onchange = updateOffer;
-      updateOffer();
+      const questionActions = dialog.querySelectorAll('[data-cancel-step="questions"] [data-cancel-next]');
+      if (preview) {
+        const bypass = dialog.querySelector('[data-cancel-step="start"] [data-cancel-next="confirm"]');
+        bypass.hidden = true;
+        bypass.parentElement.style.gridTemplateColumns = '1fr';
+        reason.setAttribute('aria-required', 'true');
+        delivery.setAttribute('aria-required', 'true');
+        dialog.querySelector('[data-cancel-step="questions"] p').textContent =
+          'Answer both questions to continue in this sample subscription.';
+      }
+      function updateQuestions() {
+        updateOffer();
+        for (const button of questionActions) {
+          button.disabled = preview && (!reason.value || !delivery.value);
+        }
+      }
+      reason.onchange = updateQuestions;
+      delivery.onchange = updateQuestions;
+      updateQuestions();
       dialog.returnValue = '';
       dialog.addEventListener('close', async () => {
         if (dialog.returnValue === 'skip') {
