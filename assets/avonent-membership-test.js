@@ -144,6 +144,10 @@
     find('[data-subscription-preview]').hidden = !preview;
     const status = find('[data-appstle-status]');
     const select = find('[data-contract]');
+    const paymentAlert = find('[data-payment-alert]');
+    const paymentUpdateStatus = find('[data-payment-update-status]');
+    const paymentSupport = find('[data-payment-support]');
+    const requestedPaymentLinks = new Set();
     const actions = [...root.querySelectorAll('[data-subscription-action]')];
     const addressDialog = find('[data-address-dialog]');
     const addressForm = find('[data-address-form]');
@@ -202,12 +206,18 @@
         payment: (active || paused) && settings.hidePaymentMethodEdit !== true
       };
       find('[data-cancellation-settings]').hidden = !enabled.cancel;
+      const skip = find('[data-subscription-action="skip"]');
+      skip.hidden = !enabled.skip;
+      const paymentAction = paymentAlert.querySelector('button');
+      paymentAction.hidden = !enabled.payment || !contract?.customerPaymentMethod;
+      paymentSupport.hidden = !paymentAction.hidden;
       for (const button of actions) button.disabled = busy || !enabled[button.dataset.subscriptionAction];
     }
 
     async function loadContract() {
       contract = undefined;
-      find('[data-payment-alert]').hidden = true;
+      paymentAlert.hidden = true;
+      paymentUpdateStatus.textContent = '';
       for (const section of root.querySelectorAll('[data-contract-content]')) section.hidden = true;
       upcoming = [];
       renderOrders('upcoming', []);
@@ -234,7 +244,11 @@
       renderOrders('past', pastOrders, past.status === 'rejected');
       const title = contract.lines?.nodes?.map((line) => line.title).filter(Boolean).join(', ');
       if (title) select.selectedOptions[0].textContent = title + ' · #' + id;
-      find('[data-contract-next-billing]').textContent = (contract.status === 'ACTIVE' && formatDate(contract.nextBillingDate)) || '—';
+      const nextBilling = contract.status === 'ACTIVE' && formatDate(contract.nextBillingDate);
+      find('[data-contract-next-billing]').textContent = nextBilling || '—';
+      const nextOrderMessage = find('[data-next-order-message]');
+      nextOrderMessage.hidden = Boolean(nextBilling);
+      nextOrderMessage.textContent = contract.status === 'ACTIVE' ? 'No billing date is available yet.' : 'No renewal is scheduled while this subscription is ' + label(contract.status) + '.';
       const interval = contract.deliveryPolicy?.intervalCount;
       const unit = label(contract.deliveryPolicy?.interval);
       find('[data-contract-frequency]').textContent = interval && unit ? 'Every ' + interval + ' ' + unit + (interval === 1 ? '' : 's') : '—';
@@ -269,6 +283,7 @@
         : 'See your current rate in Subscription details.';
       const paymentFailed = contract.lastPaymentStatus === 'FAILED';
       find('[data-contract-billing-status]').textContent = paymentFailed ? 'Payment failed' : label(contract.status) || '—';
+      if (!paymentFailed) requestedPaymentLinks.delete(id);
       if (paymentFailed && contract.status === 'ACTIVE') {
         const latestAttempt = [...pastOrders, ...upcoming].filter(order =>
           ['FAILED', 'FAILURE', 'SUCCESS', 'SUCCEEDED'].includes(order.status || order.billingAttemptStatus) &&
@@ -279,7 +294,8 @@
         find('[data-payment-failure]').textContent = insufficient
           ? 'Your card has insufficient funds.'
           : 'We couldn’t process your latest renewal payment.';
-        find('[data-payment-alert]').hidden = false;
+        paymentAlert.hidden = false;
+        if (requestedPaymentLinks.has(id)) showPaymentLinkRequested();
       }
     }
 
@@ -423,6 +439,12 @@
       dialog.showModal();
     }
 
+    function showPaymentLinkRequested() {
+      paymentUpdateStatus.textContent = preview
+        ? 'Secure link requested in test mode. No email was sent.'
+        : 'Secure link requested. Check your inbox to update your payment method.';
+    }
+
     async function act(action) {
       const id = contractId(contract?.id);
       if (!id) return;
@@ -447,8 +469,10 @@
         if (!await confirmAction('Update payment method', 'Shopify will email a secure link to update the payment method for this subscription.', 'Send secure link')) return;
         await run(async () => {
           await request('subscription-contracts-update-payment-method', params, 'PUT');
-          status.textContent = preview ? 'Preview complete. No email was sent.' : 'Check your inbox for Shopify’s payment update link.';
-        });
+          requestedPaymentLinks.add(id);
+          showPaymentLinkRequested();
+          if (paymentAlert.hidden) status.textContent = paymentUpdateStatus.textContent;
+        }, paymentAlert.hidden ? status : paymentUpdateStatus);
         return;
       }
       if (action === 'skip') {

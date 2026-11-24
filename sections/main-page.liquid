@@ -46,24 +46,30 @@
           </div>
         </div>
         <div data-contract-content hidden>
+        <div class="av-m__payment-alert" data-payment-alert hidden>
+          <div><strong>Payment failed</strong><p data-payment-failure></p><p role="status" data-payment-update-status></p>
+            <a href="/pages/contact" data-payment-support hidden>Contact support</a></div>
+          <button type="button" class="av-m__button" data-subscription-action="payment" disabled>Update payment</button>
+        </div>
+        <section class="av-m__next-order" aria-labelledby="av-next-order-title-{{ section.id }}">
+          <div class="av-m__next-order-header">
+            <div><h4 id="av-next-order-title-{{ section.id }}">Next order</h4><p data-next-order-message hidden></p></div>
+            <button type="button" class="av-m__button av-m__outline" data-subscription-action="skip" disabled>Skip next order</button>
+          </div>
+          <ul class="av-m__contract-products" data-contract-products></ul>
+          <div class="av-m__facts">
+            <div><span>Next billing date</span><strong data-contract-next-billing>—</strong></div>
+            <div><span>Delivery frequency</span><strong data-contract-frequency>—</strong></div>
+            <div><span>Subscription item subtotal</span><strong data-contract-price>—</strong></div>
+            <div><span>Billing status</span><strong data-contract-billing-status>—</strong></div>
+          </div>
+        </section>
         <div class="av-m__order-nav">
           <a class="av-m__button av-m__outline" href="#av-scheduled-{{ section.id }}">Scheduled orders</a>
           <a class="av-m__button av-m__outline" href="#av-past-{{ section.id }}">Past orders</a>
         </div>
-        <ul class="av-m__contract-products" data-contract-products></ul>
-        <div class="av-m__facts">
-          <div><span>Next billing date</span><strong data-contract-next-billing>—</strong></div>
-          <div><span>Delivery frequency</span><strong data-contract-frequency>—</strong></div>
-          <div><span>Subscription item subtotal</span><strong data-contract-price>—</strong></div>
-          <div><span>Billing status</span><strong data-contract-billing-status>—</strong></div>
-        </div>
-        <div class="av-m__payment-alert" data-payment-alert hidden>
-          <div><strong>Payment failed</strong><p data-payment-failure></p></div>
-          <button type="button" class="av-m__button" data-subscription-action="payment" disabled>Update payment</button>
-        </div>
         <h4>Manage your next delivery</h4>
         <div class="av-m__actions">
-          <button type="button" data-subscription-action="skip" disabled><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf064;</i></span><strong>Skip next order</strong><small>Skip one shipment</small></button>
           <button type="button" data-subscription-action="reschedule" disabled><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf073;</i></span><strong>Reschedule</strong><small>Unavailable for this test</small></button>
           <button type="button" data-subscription-action="frequency" disabled><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf021;</i></span><strong>Change frequency</strong><small>Unavailable for this test</small></button>
           <button type="button" data-subscription-action="pause" disabled><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf04c;</i></span><strong>Pause membership</strong><small>Take a temporary break</small></button>
@@ -495,6 +501,12 @@ html:has([data-membership-preview]) #MainContent > .shopify-section:has([data-me
 #av-membership-{{ section.id }} .av-m__order-section{scroll-margin-top:calc(var(--header-group-height, 100px) + 20px)}
 #av-membership-{{ section.id }} .av-m__order-list{list-style:none;margin:0;padding:0}
 #av-membership-{{ section.id }} .av-m__order-list li{padding:11px 0;border-top:1px solid var(--m-line);overflow-wrap:anywhere}
+#av-membership-{{ section.id }} .av-m__next-order{padding:16px;border:1px solid var(--m-line);border-radius:14px;margin-top:16px}
+#av-membership-{{ section.id }} .av-m__next-order-header{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:10px}
+#av-membership-{{ section.id }} .av-m__next-order-header h4,#av-membership-{{ section.id }} .av-m__next-order-header p{margin:0}
+#av-membership-{{ section.id }} .av-m__next-order .av-m__facts{margin:0}
+#av-membership-{{ section.id }} .av-m__payment-alert a{color:inherit;text-decoration:underline}
+#av-membership-{{ section.id }} [data-payment-update-status]:empty,#av-membership-{{ section.id }} .av-m__next-order [hidden],#av-membership-{{ section.id }} .av-m__payment-alert [hidden]{display:none!important}
 </style>
 
 {% else %}
