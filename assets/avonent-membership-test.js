@@ -1,17 +1,20 @@
 (() => {
   const base = '/apps/subscriptions/cp/api/';
   const previewRequested = new URLSearchParams(location.search).get('preview-subscription') === '1';
-  const previewProducts = { 101: 'Black Walnut Drops', 102: 'Soursop Softgels' };
+  const previewProducts = { 101: 'Black Walnut Drops', 102: 'Soursop Softgels', 103: 'Black Walnut Drops + Soursop Softgels' };
 
   async function appstleRequest(path, params = {}, method = 'GET', body) {
     const url = new URL(base + path, location.origin);
     url.search = new URLSearchParams(params);
     const options = { method, credentials: 'same-origin', cache: 'no-store', redirect: 'error' };
+    options.signal = AbortSignal.timeout(15000);
     if (body !== undefined) {
       options.headers = { 'Content-Type': 'application/json' };
       options.body = JSON.stringify(body);
     }
-    const response = await fetch(url, options);
+    const response = await fetch(url, options).catch(() => {
+      throw new Error('The subscription service could not be reached. Refresh to check your subscription before retrying.');
+    });
     const raw = await response.text();
     let data;
     try {
@@ -75,6 +78,7 @@
     for (let start = 0; start < ids.length; start += 50) {
       const response = await fetch('/api/2026-04/graphql.json', {
         method: 'POST',
+        signal: AbortSignal.timeout(8000),
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           query: `query OneTimePrices($ids: [ID!]!, $country: CountryCode!) @inContext(country: $country) {
@@ -100,12 +104,16 @@
 
   function createPreviewRequest() {
     const day = (offset) => new Date(Date.now() + offset * 86400000).toISOString();
-    const subscriptions = new Map(['101', '102'].map((id) => [id, {
+    const previewLine = (variantId, quantity = 1) => ({
+      title: previewProducts[variantId], quantity, variantId,
+      currentPrice: { amount: variantId === '101' ? 35 : 34.99, currencyCode: 'USD' }
+    });
+    const subscriptions = new Map(Object.keys(previewProducts).map((id) => [id, {
       id, status: 'ACTIVE', nextBillingDate: day(7), lastPaymentStatus: id === '102' ? 'FAILED' : 'SUCCEEDED',
       deliveryPolicy: { interval: 'MONTH', intervalCount: 1 },
       customerPaymentMethod: { instrument: { __typename: 'CustomerCreditCard' } },
       deliveryMethod: { __typename: 'SubscriptionDeliveryMethodShipping', address: {} },
-      lines: { nodes: [{ title: previewProducts[id], quantity: 1, currentPrice: { amount: id === '101' ? 35 : 34.99, currencyCode: 'USD' }, variantId: id }] }
+      lines: { nodes: id === '103' ? [previewLine('101', 2), previewLine('102')] : [previewLine(id)] }
     }]));
     const orders = new Map([...subscriptions.keys()].map((id) => [id, [7, 37, 67].map((offset, index) => ({
       id: String(index + 1), billingDate: day(offset), status: 'QUEUED'
@@ -149,6 +157,7 @@
     const paymentAlert = find('[data-payment-alert]');
     const paymentUpdateStatus = find('[data-payment-update-status]');
     const paymentSupport = find('[data-payment-support]');
+    const cancellationReceipt = find('[data-cancel-receipt]');
     const requestedPaymentLinks = new Set();
     const actions = [...root.querySelectorAll('[data-subscription-action]')];
     const addressDialog = find('[data-address-dialog]');
@@ -188,9 +197,10 @@
     }
 
     function nextOrder() {
-      return upcoming.find((order) =>
-        /^\d+$/.test(String(order.id)) && ['QUEUED', 'SCHEDULED'].includes(order.status)
-      );
+      return upcoming.filter((order) =>
+        /^\d+$/.test(String(order.id)) && ['QUEUED', 'SCHEDULED'].includes(order.status) &&
+        Number.isFinite(Date.parse(dateOf(order)))
+      ).sort((left, right) => Date.parse(dateOf(left)) - Date.parse(dateOf(right)))[0];
     }
 
     function setControls() {
@@ -220,6 +230,7 @@
     async function loadContract() {
       contract = undefined;
       paymentAlert.hidden = true;
+      cancellationReceipt.hidden = true;
       paymentUpdateStatus.textContent = '';
       for (const section of root.querySelectorAll('[data-contract-content]')) section.hidden = true;
       upcoming = [];
@@ -241,13 +252,16 @@
         contract = undefined;
         throw new Error('Subscription details could not be verified.');
       }
-      upcoming = orderList(next.value);
-      renderOrders('upcoming', upcoming, next.status === 'rejected');
+      const canceled = contract.status === 'CANCELLED';
+      cancellationReceipt.hidden = !canceled;
+      upcoming = canceled ? [] : orderList(next.value);
+      renderOrders('upcoming', upcoming, !canceled && next.status === 'rejected');
       const pastOrders = orderList(past.value);
       renderOrders('past', pastOrders, past.status === 'rejected');
       const title = contract.lines?.nodes?.map((line) => line.title).filter(Boolean).join(', ');
       if (title) select.selectedOptions[0].textContent = title + ' · #' + id;
       const nextBilling = contract.status === 'ACTIVE' && formatDate(contract.nextBillingDate);
+      find('[data-next-order-heading]').textContent = canceled ? 'Subscription items' : 'Next order';
       find('[data-contract-next-billing]').textContent = nextBilling || '—';
       const nextOrderMessage = find('[data-next-order-message]');
       nextOrderMessage.hidden = Boolean(nextBilling);
@@ -277,7 +291,8 @@
       referencePrices = preview
         ? new Map([['101', { amount: 67.99, currencyCode: 'USD' }], ['102', { amount: 44.99, currencyCode: 'USD' }]])
         : await fetchOneTimePrices(lines, root.dataset.priceCountry).catch(() => new Map());
-      const { price, discountPercent } = subscriptionPriceSummary(lines, referencePrices);
+      const { price, discountPercent } = contract.lines?.pageInfo?.hasNextPage ? {} :
+        subscriptionPriceSummary(lines, referencePrices);
       find('[data-contract-price]').textContent = price || '—';
       const discount = discountPercent === 49 ? 'About 50%' : discountPercent + '%';
       find('[data-vip-price-perk]').textContent = discountPercent > 0
@@ -354,7 +369,8 @@
       const back = dialog.querySelector('[data-cancel-back]');
       const history = [];
       const lines = contract.lines?.nodes || [];
-      const { price, savings } = subscriptionPriceSummary(lines, referencePrices);
+      const { price, savings } = contract.lines?.pageInfo?.hasNextPage ? {} :
+        subscriptionPriceSummary(lines, referencePrices);
       const priceTag = dialog.querySelector('[data-cancel-price]');
       const savingsTag = dialog.querySelector('[data-cancel-savings]');
       dialog.querySelector('[data-cancel-product]').textContent = lines.map(line => line.title).filter(Boolean).join(' · ') || 'Your subscription';
@@ -434,11 +450,14 @@
               await loadContract();
             } catch {
               status.textContent = 'Appstle accepted your request. Reload this page to verify its status before trying again.';
+              status.focus();
               return;
             }
-            status.textContent = contract?.status === 'CANCELLED'
-              ? 'Subscription canceled. Future renewals have stopped.'
+            const confirmed = contract?.status === 'CANCELLED';
+            status.textContent = confirmed
+              ? 'Cancellation confirmed.'
               : 'Appstle accepted your request. Check this dashboard again for the effective cancellation status.';
+            (confirmed ? cancellationReceipt.querySelector('h4') : status).focus();
           });
         }
       }, { once: true });

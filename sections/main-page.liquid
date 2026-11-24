@@ -44,10 +44,15 @@
             <h3>Subscription details</h3>
             <label for="av-contract-{{ section.id }}" class="visually-hidden">Subscription</label>
             <select id="av-contract-{{ section.id }}" data-contract hidden></select>
-            <p role="status" data-appstle-status>Loading your subscriptions…</p>
+            <p role="status" tabindex="-1" data-appstle-status>Loading your subscriptions…</p>
           </div>
         </div>
         <div data-contract-content hidden>
+        <div class="av-m__cancel-receipt" data-cancel-receipt hidden>
+          <h4 tabindex="-1">Subscription canceled</h4>
+          <p>Future renewals have stopped for this subscription. Orders already placed are handled separately.</p>
+          <a href="#av-past-{{ section.id }}">View past orders</a>
+        </div>
         <div class="av-m__payment-alert" data-payment-alert hidden>
           <div><strong>Payment failed</strong><p data-payment-failure></p><p role="status" data-payment-update-status></p>
             <a href="/pages/contact" data-payment-support hidden>Contact support</a></div>
@@ -55,7 +60,7 @@
         </div>
         <section class="av-m__next-order" aria-labelledby="av-next-order-title-{{ section.id }}">
           <div class="av-m__next-order-header">
-            <div><h4 id="av-next-order-title-{{ section.id }}">Next order</h4><p data-next-order-message hidden></p></div>
+            <div><h4 id="av-next-order-title-{{ section.id }}" data-next-order-heading>Next order</h4><p data-next-order-message hidden></p></div>
             <button type="button" class="av-m__button av-m__outline" data-subscription-action="skip" disabled>Skip next order</button>
           </div>
           <ul class="av-m__contract-products" data-contract-products></ul>
@@ -499,6 +504,9 @@ html:has([data-membership-preview]) #MainContent > .shopify-section:has([data-me
 #av-membership-{{ section.id }} [data-cancel-dialog] .av-m__cancel-reasons label:has(:checked){box-shadow:inset 3px 0 var(--m-green)}
 #av-membership-{{ section.id }} [data-cancel-dialog] [data-preview-next]{width:100%}
 #av-membership-{{ section.id }} .av-m__payment-alert[hidden],#av-membership-{{ section.id }} .av-m__cancellation-settings[hidden]{display:none!important}
+#av-membership-{{ section.id }} .av-m__cancel-receipt{margin-top:16px;padding:16px;border:1px solid var(--m-line);border-radius:14px;background:var(--m-sage)}
+#av-membership-{{ section.id }} .av-m__cancel-receipt h4,#av-membership-{{ section.id }} .av-m__cancel-receipt p{margin:0 0 6px}
+#av-membership-{{ section.id }} .av-m__cancel-receipt a{color:var(--m-green);font-weight:700}
 #av-membership-{{ section.id }} .av-m__payment-alert{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;background:var(--m-dark);color:white;border-radius:12px;padding:14px 16px;margin-top:18px}
 #av-membership-{{ section.id }} .av-m__payment-alert p,#av-membership-{{ section.id }} .av-m__cancellation-settings p{margin:3px 0 0}
 #av-membership-{{ section.id }} .av-m__payment-alert .av-m__button{background:white;color:var(--m-dark)}
