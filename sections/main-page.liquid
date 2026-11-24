@@ -1,3 +1,168 @@
+{% if request.page_type == 'page' and page.handle == 'membership-test' %}
+<section id="av-membership-{{ section.id }}" class="av-membership" data-membership-preview>
+  <div class="av-m__hero">
+    <div class="av-m__wrap">
+      <div class="av-m__kicker">AVONENT · MEMBERSHIP</div>
+      <h1>Welcome to your<br><span>subscriber dashboard.</span></h1>
+      <p>Everything you need to manage your wellness routine, all in one place.</p>
+      <div class="av-m__nav"><a href="#av-plan-{{ section.id }}">My subscription</a><a href="#av-benefits-{{ section.id }}">My benefits</a><a href="#av-help-{{ section.id }}">Support</a></div>
+      <small class="av-m__notice">Test environment · Example account only. No real billing or account changes.</small>
+    </div>
+  </div>
+  <div class="av-m__wrap av-m__body">
+    <div class="av-m__heading"><div><div class="av-m__kicker">YOUR MEMBERSHIP</div><h2>My subscription</h2></div><button type="button" class="av-m__text-btn" data-reset>Reset preview</button></div>
+    <div class="av-m__layout" id="av-plan-{{ section.id }}">
+      <div class="av-m__card av-m__plan">
+        <div class="av-m__product">
+          {% assign preview_product = all_products['black-walnut-drops'] %}
+          {% if preview_product.featured_image != blank %}
+          {{ preview_product.featured_image | image_url: width: 240 | image_tag: class: 'av-m__product-img', loading: 'lazy', alt: preview_product.title }}
+          {% else %}
+          <div class="av-m__product-placeholder" aria-hidden="true">AVONENT</div>
+          {% endif %}
+          <div><span class="av-m__status" data-status>Active</span><h3>{{ preview_product.title | default: 'Black Walnut Drops' | escape }}</h3><p>Recurring delivery · Every <span data-frequency>30</span> days</p></div>
+        </div>
+        <div class="av-m__facts">
+          <div><span>Next scheduled delivery</span><strong data-date>—</strong></div>
+          <div><span>Delivery frequency</span><strong data-frequency-label>Every 30 days</strong></div>
+          <div><span>Subscription pricing</span><strong data-price>Example plan</strong></div>
+          <div><span>Billing status</span><strong data-billing>Scheduled</strong></div>
+        </div>
+        <h4>Manage your next delivery</h4>
+        <div class="av-m__actions">
+          <button type="button" data-action="skip"><span aria-hidden="true">↷</span><strong>Skip next order</strong><small>Skip one shipment</small></button>
+          <button type="button" data-action="date"><span aria-hidden="true">◷</span><strong>Reschedule</strong><small>Choose a new date</small></button>
+          <button type="button" data-action="frequency"><span aria-hidden="true">↻</span><strong>Change frequency</strong><small>Find your ideal timing</small></button>
+          <button type="button" data-action="pause"><span aria-hidden="true">Ⅱ</span><strong>Pause membership</strong><small>Take a temporary break</small></button>
+        </div>
+        <div class="av-m__manage"><button type="button" data-action="review">Review membership options</button><button type="button" data-action="cancel">Cancel subscription</button></div>
+      </div>
+      <aside class="av-m__card av-m__summary">
+        <div class="av-m__kicker">SUBSCRIBER PERKS</div>
+        <h3>More than a delivery.</h3>
+        <p>Your membership is designed to give you convenience, flexibility and access to subscriber pricing.</p>
+        <ul><li><strong>Subscriber pricing</strong><span>Access the recurring price associated with your plan.</span></li><li><strong>Shipping benefits</strong><span>Eligible plans may include free shipping on qualifying orders.</span></li><li><strong>Flexible deliveries</strong><span>Skip, pause or reschedule when your routine changes.</span></li><li><strong>Personalized support</strong><span>Get help with orders and subscription questions.</span></li></ul>
+      </aside>
+    </div>
+    <div id="av-benefits-{{ section.id }}" class="av-m__benefits">
+      <div class="av-m__kicker">MADE FOR YOUR ROUTINE</div><h2>Make the most of your membership.</h2><p>Your subscription is designed around you. Actual pricing, shipping and promotions depend on your selected plan.</p>
+      <div class="av-m__perks">
+        <article><span aria-hidden="true">%</span><h3>Subscriber savings</h3><p>View your recurring price and eligible offers in your account.</p></article>
+        <article><span aria-hidden="true">↗</span><h3>Shipping perks</h3><p>Enjoy shipping benefits on qualifying subscription orders.</p></article>
+        <article><span aria-hidden="true">↻</span><h3>Convenient refills</h3><p>Receive scheduled deliveries without having to reorder manually.</p></article>
+        <article><span aria-hidden="true">◷</span><h3>Your schedule, your choice</h3><p>Manage your delivery date, pause or skip an order.</p></article>
+        <article><span aria-hidden="true">✓</span><h3>Easy account management</h3><p>Review your plan, delivery schedule and subscription status in one place.</p></article>
+        <article><span aria-hidden="true">♡</span><h3>Here to help</h3><p>Our support team is available to help with your order questions.</p></article>
+      </div>
+    </div>
+    <div class="av-m__account-grid">
+      <article class="av-m__card"><h3>Shipping address</h3><p>Example address · Not connected to a customer account.</p><button class="av-m__button av-m__outline" type="button" data-action="address">Manage shipping address</button></article>
+      <article class="av-m__card"><h3>Payment method</h3><p>No payment information stored in this test environment.</p><button class="av-m__button av-m__outline" type="button" data-action="payment">Manage payment method</button></article>
+    </div>
+    <div class="av-m__help" id="av-help-{{ section.id }}"><div><div class="av-m__kicker">WE'RE HERE FOR YOU</div><h2>Need a hand?</h2><p>Get help with your deliveries, subscription or account.</p></div><a class="av-m__button av-m__outline" href="/pages/contact">Contact support</a></div>
+  </div>
+  <dialog class="av-m__dialog" aria-labelledby="av-m-title-{{ section.id }}"><div class="av-m__modal">
+    <button type="button" class="av-m__close" data-close aria-label="Close">×</button><div class="av-m__kicker">MY MEMBERSHIP</div>
+    <h2 id="av-m-title-{{ section.id }}" data-modal-title></h2><p data-modal-text></p><div data-modal-content></div>
+    <p data-modal-status role="status" class="av-m__feedback"></p><button type="button" class="av-m__button av-m__outline" data-close>Back to my subscription</button>
+    <small class="av-m__fine">Test environment · Changes are simulated.</small>
+  </div></dialog>
+</section>
+<style>
+#av-membership-{{ section.id }}{--m-dark:#243F2B;--m-green:#355A38;--m-accent:#BBD9AD;--m-sage:#EFF6EA;--m-line:#DBE8D4;color:var(--m-dark);background:#f8faf6;line-height:1.5;font-family:inherit}
+#av-membership-{{ section.id }} *{box-sizing:border-box}
+#av-membership-{{ section.id }} .av-m__wrap{width:min(1120px,100% - 40px);margin:auto}
+#av-membership-{{ section.id }} .av-m__hero{background:var(--m-dark);color:white;padding:50px 0 34px}
+#av-membership-{{ section.id }} h1,#av-membership-{{ section.id }} h2,#av-membership-{{ section.id }} h3,#av-membership-{{ section.id }} h4{font-family:inherit;color:inherit;letter-spacing:-.035em;line-height:1.13;margin:0 0 12px;font-weight:800}
+#av-membership-{{ section.id }} h1{font-size:clamp(38px,6vw,68px);max-width:760px}
+#av-membership-{{ section.id }} h1 span{color:var(--m-accent)}
+#av-membership-{{ section.id }} h2{font-size:clamp(28px,4vw,40px)}
+#av-membership-{{ section.id }} h3{font-size:23px}
+#av-membership-{{ section.id }} h4{font-size:19px;margin:24px 0 13px}
+#av-membership-{{ section.id }} p{margin:0 0 15px;font-size:15px;color:inherit}
+#av-membership-{{ section.id }} .av-m__hero p{font-size:18px;color:#e1eddb;max-width:620px}
+#av-membership-{{ section.id }} .av-m__kicker{font-size:11px;font-weight:800;letter-spacing:.15em;color:var(--m-green);margin-bottom:13px}
+#av-membership-{{ section.id }} .av-m__hero .av-m__kicker{color:var(--m-accent)}
+#av-membership-{{ section.id }} .av-m__nav{display:flex;flex-wrap:wrap;gap:8px;margin:25px 0 20px}
+#av-membership-{{ section.id }} .av-m__nav a{color:white;text-decoration:none;border:1px solid #ffffff55;border-radius:7px;padding:10px 15px;font-weight:700;font-size:14px}
+#av-membership-{{ section.id }} .av-m__notice{font-size:12px;color:#e1eddb}
+#av-membership-{{ section.id }} .av-m__body{padding:35px 0 60px}
+#av-membership-{{ section.id }} .av-m__heading{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}
+#av-membership-{{ section.id }} .av-m__layout{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(0,1fr);gap:20px;scroll-margin-top:100px}
+#av-membership-{{ section.id }} .av-m__card{background:#fff;border:1px solid var(--m-line);border-radius:17px;padding:clamp(18px,3vw,28px);min-width:0}
+#av-membership-{{ section.id }} .av-m__product{display:flex;align-items:center;gap:18px}
+#av-membership-{{ section.id }} .av-m__product-img,#av-membership-{{ section.id }} .av-m__product-placeholder{width:88px;height:100px;object-fit:contain;flex:0 0 88px;border-radius:10px;background:var(--m-sage)}
+#av-membership-{{ section.id }} .av-m__product-placeholder{display:grid;place-items:center;font-size:10px;font-weight:800;letter-spacing:.08em}
+#av-membership-{{ section.id }} .av-m__status{display:inline-block;background:var(--m-sage);border-radius:999px;padding:4px 10px;font-size:12px;font-weight:800;margin-bottom:8px}
+#av-membership-{{ section.id }} .av-m__product h3{margin-bottom:5px;font-size:22px}
+#av-membership-{{ section.id }} .av-m__product p{margin:0}
+#av-membership-{{ section.id }} .av-m__facts{display:grid;grid-template-columns:1fr 1fr;gap:15px;background:var(--m-sage);border-radius:12px;margin-top:24px;padding:18px}
+#av-membership-{{ section.id }} .av-m__facts span,#av-membership-{{ section.id }} .av-m__facts strong{display:block}
+#av-membership-{{ section.id }} .av-m__facts span{font-size:12px;margin-bottom:4px;color:#51624c}
+#av-membership-{{ section.id }} .av-m__facts strong{font-size:16px}
+#av-membership-{{ section.id }} .av-m__actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#av-membership-{{ section.id }} button,#av-membership-{{ section.id }} a{font:inherit;cursor:pointer}
+#av-membership-{{ section.id }} .av-m__actions button{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;padding:15px;background:#fff;color:var(--m-dark);border:1px solid #bacfb3;border-radius:10px;min-height:108px}
+#av-membership-{{ section.id }} .av-m__actions button span{font-size:25px;font-weight:700;line-height:1}
+#av-membership-{{ section.id }} .av-m__actions button strong{font-size:15px}
+#av-membership-{{ section.id }} .av-m__actions button small{font-size:12px;color:#53654f}
+#av-membership-{{ section.id }} .av-m__manage{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;border-top:1px solid var(--m-line);padding-top:17px;margin-top:22px}
+#av-membership-{{ section.id }} .av-m__manage button,#av-membership-{{ section.id }} .av-m__text-btn{border:0;background:none;color:var(--m-green);font-size:14px;font-weight:700;text-decoration:underline;text-underline-offset:3px;padding:7px 0}
+#av-membership-{{ section.id }} .av-m__summary{background:var(--m-sage)}
+#av-membership-{{ section.id }} .av-m__summary ul{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:17px}
+#av-membership-{{ section.id }} .av-m__summary li{padding-left:26px;position:relative}
+#av-membership-{{ section.id }} .av-m__summary li:before{content:'✓';position:absolute;left:0;color:var(--m-green);font-weight:900}
+#av-membership-{{ section.id }} .av-m__summary li strong,#av-membership-{{ section.id }} .av-m__summary li span{display:block}
+#av-membership-{{ section.id }} .av-m__summary li span{font-size:13px;margin-top:4px}
+#av-membership-{{ section.id }} .av-m__benefits{padding-top:46px;scroll-margin-top:100px}
+#av-membership-{{ section.id }} .av-m__perks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:23px 0}
+#av-membership-{{ section.id }} .av-m__perks article{background:#fff;padding:22px;border:1px solid var(--m-line);border-radius:13px}
+#av-membership-{{ section.id }} .av-m__perks article>span{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--m-sage);font-size:22px;font-weight:800;color:var(--m-green);margin-bottom:16px}
+#av-membership-{{ section.id }} .av-m__perks h3{font-size:18px}
+#av-membership-{{ section.id }} .av-m__perks p{font-size:14px;margin:0}
+#av-membership-{{ section.id }} .av-m__account-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:30px 0}
+#av-membership-{{ section.id }} .av-m__button{display:flex;align-items:center;justify-content:center;min-height:48px;padding:12px 16px;border:1.5px solid var(--m-green);background:var(--m-green);color:white;border-radius:8px;text-decoration:none;font-size:14px;font-weight:800;text-align:center;width:100%}
+#av-membership-{{ section.id }} .av-m__outline{background:transparent;color:var(--m-green)}
+#av-membership-{{ section.id }} .av-m__help{background:var(--m-dark);color:white;border-radius:16px;padding:28px;display:flex;align-items:center;justify-content:space-between;gap:20px;scroll-margin-top:100px}
+#av-membership-{{ section.id }} .av-m__help .av-m__kicker{color:var(--m-accent)}
+#av-membership-{{ section.id }} .av-m__help a{color:white;border-color:white;width:auto;flex-shrink:0}
+#av-membership-{{ section.id }} .av-m__dialog{border:0;border-radius:18px;background:white;color:var(--m-dark);width:min(540px,100% - 24px);max-height:calc(100dvh - 32px);padding:0;overflow:auto;margin:auto;position:fixed;inset:0}
+#av-membership-{{ section.id }} .av-m__dialog::backdrop{background:#18291fa6;backdrop-filter:blur(4px)}
+#av-membership-{{ section.id }} .av-m__modal{padding:24px;position:relative}
+#av-membership-{{ section.id }} .av-m__modal h2{padding-right:35px;font-size:29px}
+#av-membership-{{ section.id }} .av-m__close{position:absolute;right:12px;top:12px;width:40px;height:40px;border:0;border-radius:8px;background:var(--m-sage);color:var(--m-dark);font-size:25px}
+#av-membership-{{ section.id }} [data-modal-content]{display:grid;gap:8px;margin:15px 0}
+#av-membership-{{ section.id }} .av-m__feedback{font-weight:700;font-size:14px;color:var(--m-green)}
+#av-membership-{{ section.id }} .av-m__fine{display:block;margin-top:12px;font-size:12px;color:#53654f}
+#av-membership-{{ section.id }} input{font:inherit;border:1px solid #bacfb3;border-radius:8px;padding:12px;min-height:48px;width:100%;color:var(--m-dark);background:white}
+#av-membership-{{ section.id }} :focus-visible{outline:3px solid #7ca66d;outline-offset:3px}
+@media(max-width:760px){#av-membership-{{ section.id }} .av-m__wrap{width:calc(100% - 28px)}#av-membership-{{ section.id }} .av-m__hero{padding:37px 0 26px}#av-membership-{{ section.id }} .av-m__layout{grid-template-columns:1fr}#av-membership-{{ section.id }} .av-m__perks{grid-template-columns:1fr 1fr}#av-membership-{{ section.id }} .av-m__perks article{padding:16px}#av-membership-{{ section.id }} .av-m__account-grid{grid-template-columns:1fr}#av-membership-{{ section.id }} .av-m__help{align-items:stretch;flex-direction:column}#av-membership-{{ section.id }} .av-m__help a{width:100%}#av-membership-{{ section.id }} .av-m__facts{padding:14px;gap:12px}#av-membership-{{ section.id }} .av-m__actions button{padding:12px;min-height:105px}}
+</style>
+<script>
+(function(){
+const root=document.getElementById('av-membership-{{ section.id }}');if(!root||root.dataset.ready)return;root.dataset.ready='1';
+const dialog=root.querySelector('dialog'),title=root.querySelector('[data-modal-title]'),desc=root.querySelector('[data-modal-text]'),content=root.querySelector('[data-modal-content]'),feedback=root.querySelector('[data-modal-status]');
+let frequency=30,state='Active',nextDate=addDays(new Date(),30);
+function addDays(date,days){const d=new Date(date);d.setDate(d.getDate()+days);return d}
+function dateLabel(date){return new Intl.DateTimeFormat('en-US',{month:'short',day:'numeric',year:'numeric'}).format(date)}
+function update(){root.querySelector('[data-status]').textContent=state;root.querySelector('[data-frequency]').textContent=frequency;root.querySelector('[data-frequency-label]').textContent='Every '+frequency+' days';root.querySelector('[data-date]').textContent=state==='Cancelled'?'No future deliveries':dateLabel(nextDate);root.querySelector('[data-billing]').textContent=state==='Cancelled'?'No future renewals':state==='Paused'?'Paused':'Scheduled';root.querySelectorAll('.av-m__actions button,[data-action="cancel"],[data-action="review"]').forEach(b=>b.disabled=state==='Cancelled')}
+function button(text,fn,outline=false){const b=document.createElement('button');b.type='button';b.className='av-m__button'+(outline?' av-m__outline':'');b.textContent=text;b.addEventListener('click',fn);return b}
+function complete(text){update();content.replaceChildren();feedback.textContent=text}
+function show(mode){content.replaceChildren();feedback.textContent='';const modes={skip:['Skip next order','Your upcoming shipment will be skipped. Your regular schedule will resume after that.'],date:['Reschedule delivery','Choose a new date for your upcoming order.'],frequency:['Change delivery frequency','Choose a schedule that suits your routine.'],pause:['Pause membership','Select how long you would like to pause your upcoming deliveries.'],review:['Your membership options','Explore subscriber pricing, shipping benefits and flexible delivery choices.'],cancel:['Confirm cancellation','Your subscription will stop renewing. You can keep your membership or confirm cancellation below.'],address:['Shipping address','A live account would securely display your saved shipping address here.'],payment:['Payment method','A live account would open a secure payment update form here. Do not enter payment details in this preview.']};const m=modes[mode];if(!m)return;title.textContent=m[0];desc.textContent=m[1];
+if(mode==='skip')content.append(button('Confirm skip',()=>{nextDate=addDays(nextDate,frequency);state='Active';complete('Upcoming shipment skipped.')}));
+if(mode==='date'){const label=document.createElement('label');label.textContent='New delivery date';const input=document.createElement('input');input.type='date';const today=new Date();const ymd=d=>[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');input.min=ymd(today);input.value=ymd(nextDate);label.append(input);content.append(label,button('Save delivery date',()=>{if(!input.value||!input.checkValidity()){feedback.textContent='Please select a valid future date.';return}nextDate=new Date(input.value+'T12:00:00');state='Active';complete('Delivery date updated.')}))}
+if(mode==='frequency')[30,60,90].forEach(n=>content.append(button('Every '+n+' days',()=>{frequency=n;complete('Delivery frequency updated.')})));
+if(mode==='pause')[30,60,90].forEach(n=>content.append(button('Pause for '+n+' days',()=>{state='Paused';nextDate=addDays(new Date(),n);complete('Membership paused for '+n+' days.')})));
+if(mode==='review')content.append(button('Review delivery frequency',()=>show('frequency')),button('Pause my membership',()=>show('pause')),button('Skip next delivery',()=>show('skip')),button('Cancel subscription',()=>show('cancel'),true));
+if(mode==='cancel')content.append(button('Keep my membership',()=>dialog.close(),true),button('Confirm cancellation',()=>{state='Cancelled';complete('Subscription cancelled in this test account.')}));
+if(!dialog.open)dialog.showModal();dialog.scrollTop=0;
+}
+root.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||!root.contains(b))return;if(b.hasAttribute('data-reset')){frequency=30;state='Active';nextDate=addDays(new Date(),30);update();return}if(b.hasAttribute('data-close')){dialog.close();return}if(b.dataset.action)show(b.dataset.action)});
+update();
+})();
+</script>
+
+{% else %}
 {% liquid
   if section.settings.background_color != blank
     render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
@@ -24,6 +189,8 @@
     {% content_for 'blocks' %}
   </div>
 </div>
+
+{% endif %}
 
 {% schema %}
 {
