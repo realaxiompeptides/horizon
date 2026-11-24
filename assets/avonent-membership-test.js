@@ -1,6 +1,7 @@
 (() => {
   const base = '/apps/subscriptions/cp/api/';
   const previewRequested = new URLSearchParams(location.search).get('preview-subscription') === '1';
+  const previewProducts = { 101: 'Black Walnut Drops', 102: 'Soursop Softgels' };
 
   async function appstleRequest(path, params = {}, method = 'GET', body) {
     const url = new URL(base + path, location.origin);
@@ -104,7 +105,7 @@
       deliveryPolicy: { interval: 'MONTH', intervalCount: 1 },
       customerPaymentMethod: { instrument: { __typename: 'CustomerCreditCard' } },
       deliveryMethod: { __typename: 'SubscriptionDeliveryMethodShipping', address: {} },
-      lines: { nodes: [{ title: id === '101' ? 'Black Walnut Drops' : 'Soursop Softgels', quantity: 1, currentPrice: { amount: id === '101' ? 35 : 34.99, currencyCode: 'USD' }, variantId: id }] }
+      lines: { nodes: [{ title: previewProducts[id], quantity: 1, currentPrice: { amount: id === '101' ? 35 : 34.99, currencyCode: 'USD' }, variantId: id }] }
     }]));
     const orders = new Map([...subscriptions.keys()].map((id) => [id, [7, 37, 67].map((offset, index) => ({
       id: String(index + 1), billingDate: day(offset), status: 'QUEUED'
@@ -207,6 +208,7 @@
         payment: (active || paused) && settings.hidePaymentMethodEdit !== true
       };
       find('[data-cancellation-settings]').hidden = !enabled.cancel;
+      find('[data-resume-controls]').hidden = !enabled.resume;
       const skip = find('[data-subscription-action="skip"]');
       skip.hidden = !enabled.skip;
       const paymentAction = paymentAlert.querySelector('button');
@@ -277,13 +279,16 @@
         : await fetchOneTimePrices(lines, root.dataset.priceCountry).catch(() => new Map());
       const { price, discountPercent } = subscriptionPriceSummary(lines, referencePrices);
       find('[data-contract-price]').textContent = price || '—';
+      const discount = discountPercent === 49 ? 'About 50%' : discountPercent + '%';
       find('[data-vip-price-perk]').textContent = discountPercent > 0
-        ? discountPercent + '% off with your VIP rate' : 'Your special VIP rate';
+        ? discount + ' off with your VIP rate' : 'Your special VIP rate';
       find('[data-vip-price-note]').textContent = discountPercent > 0
         ? 'Compared with buying the same items one time at today’s prices.'
         : 'See your current rate in Subscription details.';
       const paymentFailed = contract.lastPaymentStatus === 'FAILED';
-      find('[data-contract-billing-status]').textContent = paymentFailed ? 'Payment failed' : label(contract.status) || '—';
+      const billingStatus = label(contract.status);
+      find('[data-contract-billing-status]').textContent = paymentFailed ? 'Payment failed' :
+        billingStatus ? billingStatus[0].toUpperCase() + billingStatus.slice(1) : '—';
       if (!paymentFailed) requestedPaymentLinks.delete(id);
       if (paymentFailed && contract.status === 'ACTIVE') {
         const latestAttempt = [...pastOrders, ...upcoming].filter(order =>
@@ -536,7 +541,7 @@
       const validIds = ids.map(contractId).filter(Boolean);
       if (ids.length && validIds.length !== ids.length) throw new Error('Subscription results could not be verified.');
       for (const id of new Set(validIds)) {
-        select.add(new Option('Subscription #' + id, id));
+        select.add(new Option(preview ? previewProducts[id] + ' · #' + id : 'Subscription #' + id, id));
       }
       if (!select.options.length) {
         status.textContent = 'No subscriptions were found for this account.';

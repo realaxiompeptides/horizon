@@ -76,7 +76,7 @@
           <button type="button" data-subscription-action="frequency" disabled><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf021;</i></span><strong>Change frequency</strong><small>Unavailable for this test</small></button>
           <button type="button" data-subscription-action="pause" disabled><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf04c;</i></span><strong>Pause membership</strong><small>Take a temporary break</small></button>
         </div>
-        <div class="av-m__manage"><button type="button" data-subscription-action="resume" disabled>Resume subscription</button></div>
+        <div class="av-m__manage" data-resume-controls hidden><button type="button" data-subscription-action="resume" disabled>Resume subscription</button></div>
       </div>
       </div>
       <aside class="av-m__card av-m__summary" data-contract-content hidden>
@@ -162,13 +162,15 @@
           </div>
         </div>
         <div class="av-m__cancel-step" data-cancel-step="questions" hidden>
-
+          <p class="av-m__survey-hint">Choose the reason that best fits.</p>
           <fieldset class="av-m__cancel-reasons" data-cancel-reason>
             <legend class="visually-hidden">Why do you want to cancel?</legend>
-            <label><input type="radio" name="cancelReason" value="stock">I have enough product</label>
-            <label><input type="radio" name="cancelReason" value="price">It costs too much</label>
-            <label><input type="radio" name="cancelReason" value="timing">Orders arrive too often</label>
+            <label><input type="radio" name="cancelReason" value="stock">I have more than I need</label>
+            <label><input type="radio" name="cancelReason" value="price">It no longer fits my budget</label>
+            <label><input type="radio" name="cancelReason" value="timing">My deliveries come too often</label>
             <label><input type="radio" name="cancelReason" value="fit">The product isn’t right for me</label>
+            <label><input type="radio" name="cancelReason" value="trial">I only wanted to try it once</label>
+            <label><input type="radio" name="cancelReason" value="manage">I had trouble managing my subscription</label>
             <label><input type="radio" name="cancelReason" value="other">Something else</label>
           </fieldset>
           <div class="av-m__cancel-actions">
@@ -312,6 +314,7 @@
 #av-membership-{{ section.id }} .av-m__actions button strong{font-size:15px}
 #av-membership-{{ section.id }} .av-m__actions button small{font-size:12px;color:#47616E}
 #av-membership-{{ section.id }} .av-m__manage{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;border-top:1px solid var(--m-line);padding-top:17px;margin-top:22px}
+#av-membership-{{ section.id }} [data-resume-controls][hidden]{display:none}
 #av-membership-{{ section.id }} .av-m__manage button,#av-membership-{{ section.id }} .av-m__text-btn{border:0;background:none;color:var(--m-green);font-size:14px;font-weight:700;text-decoration:underline;text-underline-offset:3px;padding:7px 0}
 #av-membership-{{ section.id }} .av-m__summary{background:var(--m-sage)}
 #av-membership-{{ section.id }} .av-m__summary ul{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:17px}
@@ -473,8 +476,7 @@ html:has([data-membership-preview]) #MainContent > .shopify-section:has([data-me
 #av-membership-{{ section.id }} .av-m__retention-benefits{list-style:none;padding:14px 16px;margin:0;background:var(--m-sage);border:1px solid var(--m-line);border-radius:12px;display:grid;gap:12px}
 #av-membership-{{ section.id }} .av-m__retention-benefits span{display:block;margin-top:2px;font-size:14px}
 @media(max-width:420px){#av-membership-{{ section.id }} .av-m__cancel-actions{grid-template-columns:minmax(0,1fr)}}
-#av-membership-{{ section.id }} [data-cancel-step="questions"] label{font-weight:700}
-#av-membership-{{ section.id }} [data-cancel-step="questions"] select{width:100%;min-height:46px;border:1px solid var(--m-line);border-radius:9px;padding:8px 12px;background:white;color:inherit;font-size:16px}
+#av-membership-{{ section.id }} .av-m__survey-hint{margin:0;color:var(--m-green);font-size:14px}
 #av-membership-{{ section.id }} .av-m__cancel-toolbar{display:flex;justify-content:space-between;gap:8px}
 #av-membership-{{ section.id }} .av-m__cancel-toolbar button{border:0;background:var(--m-sage);color:var(--m-dark);border-radius:8px;padding:0 14px;min-height:42px;font-weight:700;cursor:pointer}
 #av-membership-{{ section.id }} .av-m__cancel-toolbar button:last-child{margin-inline-start:auto}
@@ -493,6 +495,8 @@ html:has([data-membership-preview]) #MainContent > .shopify-section:has([data-me
 #av-membership-{{ section.id }} [data-cancel-dialog] h2:focus{outline:none}
 #av-membership-{{ section.id }} [data-cancel-dialog] .av-m__cancel-plan{align-items:center;padding:12px 14px}
 #av-membership-{{ section.id }} [data-cancel-dialog] .av-m__cancel-reasons label{font-size:15px;font-weight:600;line-height:1.35}
+#av-membership-{{ section.id }} [data-cancel-dialog] .av-m__cancel-reasons label:focus-within{outline:2px solid var(--m-green);outline-offset:2px}
+#av-membership-{{ section.id }} [data-cancel-dialog] .av-m__cancel-reasons label:has(:checked){box-shadow:inset 3px 0 var(--m-green)}
 #av-membership-{{ section.id }} [data-cancel-dialog] [data-preview-next]{width:100%}
 #av-membership-{{ section.id }} .av-m__payment-alert[hidden],#av-membership-{{ section.id }} .av-m__cancellation-settings[hidden]{display:none!important}
 #av-membership-{{ section.id }} .av-m__payment-alert{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;background:var(--m-dark);color:white;border-radius:12px;padding:14px 16px;margin-top:18px}
