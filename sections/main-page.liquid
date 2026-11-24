@@ -94,11 +94,26 @@
       <article class="av-m__card"><h3 class="av-m__icon-heading"><i class="av-m__fa" aria-hidden="true">&#xf09d;</i><span>Payment method</span></h3><p>Request a secure link to update your payment method.</p><button class="av-m__button av-m__outline" type="button" data-subscription-action="payment" disabled>Update payment method</button></article>
     </div>
     </div>
+    <dialog class="av-m__dialog" data-action-dialog aria-labelledby="av-action-title-{{ section.id }}" aria-describedby="av-action-description-{{ section.id }}">
+      <form method="dialog" class="av-m__modal av-m__cancel-panel">
+        <h2 id="av-action-title-{{ section.id }}" tabindex="-1" autofocus></h2>
+        <p id="av-action-description-{{ section.id }}"></p>
+        <div class="av-m__cancel-actions">
+          <button type="submit" value="dismiss" class="av-m__button av-m__outline">Go back</button>
+          <button type="submit" value="confirm" class="av-m__button" data-confirm-action></button>
+        </div>
+      </form>
+    </dialog>
     <dialog class="av-m__dialog" data-cancel-dialog aria-labelledby="av-cancel-title-{{ section.id }}">
       <form method="dialog" class="av-m__modal av-m__cancel-panel">
         <h2 id="av-cancel-title-{{ section.id }}" tabindex="-1" autofocus>Before you go</h2>
         <div class="av-m__cancel-step" data-cancel-step="start">
-          <p>You can review your delivery options or continue to cancellation.</p>
+          <p>Here’s what comes with your current subscription.</p>
+          <ul class="av-m__retention-benefits">
+            <li><strong>Your current subscriber price</strong><span>Canceling ends your current subscription pricing. If you rejoin, the price available at that time applies.</span></li>
+            <li><strong>VIP sales and special offers</strong><span>Get access to subscriber offers and early promotions.</span></li>
+            <li><strong>Flexible deliveries</strong><span>Skip an eligible order when you already have enough.</span></li>
+          </ul>
           <div class="av-m__cancel-actions">
             <button type="button" class="av-m__button av-m__outline" data-cancel-next="review">Review my options</button>
             <button type="button" class="av-m__button" data-cancel-next="confirm">Continue to cancellation</button>
@@ -359,6 +374,9 @@ html:has([data-membership-preview]) #MainContent > .shopify-section:has([data-me
 #av-membership-{{ section.id }} .av-m__address-form label{min-width:0}
 #av-membership-{{ section.id }} .av-m__address-form input{width:100%;min-width:0;font-size:16px}
 @media(max-width:480px){#av-membership-{{ section.id }} .av-m__address-form{grid-template-columns:minmax(0,1fr)}}
+#av-membership-{{ section.id }} .av-m__retention-benefits{list-style:none;padding:14px 16px;margin:0;background:var(--m-sage);border:1px solid var(--m-line);border-radius:12px;display:grid;gap:12px}
+#av-membership-{{ section.id }} .av-m__retention-benefits span{display:block;margin-top:2px;font-size:14px}
+@media(max-width:420px){#av-membership-{{ section.id }} .av-m__cancel-actions{grid-template-columns:minmax(0,1fr)}}
 </style>
 
 {% else %}
