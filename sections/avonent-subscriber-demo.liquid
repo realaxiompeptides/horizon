@@ -7,7 +7,7 @@
       <div class="av-hub__hero-actions">
         <button class="av-hub__btn av-hub__accent" data-open="manage">Open my demo portal</button>
         <a class="av-hub__btn av-hub__outline" href="#av-options-{{ section.id }}">Need a break?</a>
-        <button class="av-hub__btn av-hub__outline" data-open="cancel">Cancel demo subscription</button>
+        <button class="av-hub__btn av-hub__outline" data-open="guided">Explore cancellation options</button>
       </div>
       <div class="av-hub__checks"><span>✓ &nbsp; Skip a delivery</span><span>✓ &nbsp; Pause deliveries</span><span>✓ &nbsp; Adjust your timing</span><span>✓ &nbsp; Manage your plan</span></div>
       <div class="av-hub__demo-note">Private-data-free demonstration. No purchase, login, email or payment is required. All actions are simulated.</div>
@@ -33,7 +33,7 @@
         <button data-open="skip">Skip next order</button><button data-open="delay">Move to a later date</button><button data-open="frequency">Change my timing</button>
       </div>
       <button class="av-hub__btn av-hub__primary" data-open="manage">Open my demo portal</button>
-      <button class="av-hub__btn av-hub__plain" data-open="cancel">Cancel demo subscription</button>
+      <button class="av-hub__btn av-hub__plain" data-open="guided">Explore cancellation options</button>
     </div>
     <div class="av-hub__info">
       <h3>You're always in control.</h3>
@@ -41,7 +41,7 @@
       <p>✓ &nbsp; Choose a schedule that works for you.</p>
       <p>✓ &nbsp; Cancel whenever you choose.</p>
     </div>
-    <div class="av-hub__bottom"><h3>Ready to cancel?</h3><p>You can cancel without answering any questions or accepting an offer.</p><button class="av-hub__btn av-hub__primary" data-open="cancel">Cancel demo subscription</button><button class="av-hub__btn av-hub__plain" data-reset>Reset demo</button></div>
+    <div class="av-hub__bottom"><h3>Ready to cancel?</h3><p>You can cancel without answering any questions or accepting an offer.</p><button class="av-hub__btn av-hub__primary" data-open="guided">Explore cancellation options</button><button class="av-hub__btn av-hub__plain" data-reset>Reset demo</button></div>
   </div>
   <dialog class="av-hub__dialog" aria-labelledby="av-dialog-title-{{ section.id }}">
     <div class="av-hub__modal">
@@ -109,7 +109,7 @@
 (function(){
 const root=document.getElementById('av-hub-{{ section.id }}');if(!root||root.dataset.ready)return;root.dataset.ready='1';
 const dialog=root.querySelector('dialog'), title=root.querySelector('[data-modal-title]'), desc=root.querySelector('[data-modal-description]'), actions=root.querySelector('[data-modal-actions]'), status=root.querySelector('[data-status]'), message=root.querySelector('[data-message]');
-let current='Active', frequency=30;
+let current='Active', frequency=30, step=0, selected='stock';
 const solutions={
 stock:['Skip a delivery or stretch your timing','Still stocked up? Try skipping your next order or changing your delivery schedule to match your routine.',[['Skip next order','skip'],['Move to a later date','delay'],['Change my timing','frequency']]],
 price:['Review your subscription pricing','Check a sample retention offer and decide whether it would work for your budget.',[['Review demo offer','offer']]],
@@ -119,14 +119,40 @@ results:['Review your options','If the product is not right for you, you can cha
 other:['Manage your plan your way','Review your delivery options or cancel directly.',[['Open demo portal','manage']]]};
 function btn(label,act,style){const el=document.createElement('button');el.type='button';el.className=style||'av-hub__btn av-hub__primary';el.dataset.act=act;el.textContent=label;return el}
 function display(){status.textContent=current+' · Demo only · every '+frequency+' days';root.querySelector('[data-act="cancel"]').hidden=current==='Cancelled'}
+function guided(n){
+if(current==='Cancelled'){show('manage');return}
+step=Math.min(5,Math.max(0,n));actions.replaceChildren();message.textContent='';display();
+const progress=document.createElement('p');progress.className='av-hub__fine';progress.textContent='OPTIONAL REVIEW · STEP '+(step+1)+' OF 6';actions.append(progress);
+const bar=document.createElement('progress');bar.max=6;bar.value=step+1;bar.setAttribute('aria-label','Optional review progress');bar.style.cssText='width:100%;height:8px;accent-color:#557D4B';actions.append(bar);
+const screens=[
+['Why are you considering leaving?','Select a reason or continue without answering.'],
+[solutions[selected][0],solutions[selected][1]],
+['Would a lower price help?','Try a simulated 20% discount on one future delivery.'],
+['Need more flexibility?','Choose a sample pause or adjust the delivery schedule.'],
+['Review your current plan','Your example plan includes Black Walnut Drops, delivered every '+frequency+' days.'],
+['Ready to cancel?','Confirm cancellation of this sample subscription. No actual subscription will be affected.']
+];
+title.textContent=screens[step][0];desc.textContent=screens[step][1];
+const plain='av-hub__btn av-hub__plain';
+if(step===0){Object.entries({stock:'Too much product',price:'Too expensive',break:'Need a break',timing:'Too frequent',results:'Not seeing results',other:'Other'}).forEach(([k,label])=>{const b=btn(label,'reason-'+k,plain);b.setAttribute('aria-pressed',String(selected===k));if(selected===k)b.style.background='#EFF6EA';actions.append(b)})}
+if(step===1)solutions[selected][2].forEach(x=>actions.append(btn(x[0],'view-'+x[1])));
+if(step===2)actions.append(btn('Accept demo discount','offer'));
+if(step===3){actions.append(btn('Pause for 30 days','pause30'),btn('Pause for 60 days','pause60'),btn('Change frequency','view-frequency'))}
+if(step===4)actions.append(btn('Keep demo subscription','keep'));
+if(step<5)actions.append(btn('Continue review','guided-next',plain));else actions.append(btn('Confirm demo cancellation','cancel'));
+if(step>0)actions.append(btn('Back','guided-back',plain));
+if(!dialog.open)dialog.showModal();
+}
 function show(mode){
+if(mode==='guided'){guided(0);return}
+
 message.textContent='';actions.replaceChildren();display();
 const modes={manage:['Open my portal','Your sample subscription is ready. Choose any action below.',[['Skip next order','view-skip'],['Move next delivery','view-delay'],['Pause subscription','view-pause'],['Change delivery frequency','view-frequency'],['Review demo offer','view-offer']]],skip:['Skip next order','Simulate skipping one upcoming shipment.',[['Confirm demo skip','skip']]],delay:['Move next delivery','Choose a sample new delivery date.',[['Move 14 days later','delay']]],pause:['Pause subscription','Choose a sample pause duration.',[['Pause for 30 days','pause30'],['Pause for 60 days','pause60']]],frequency:['Change delivery frequency','Choose how often the demo plan renews.',[['Every 30 days','freq30'],['Every 60 days','freq60'],['Every 90 days','freq90']]],offer:['Review a sample offer','Example: 20% off one future order. This is not an actual offer.',[['Accept demo offer','offer']]],cancel:['Cancel your demo subscription','Cancel immediately without answering any questions.',[]]};
 const m=modes[mode]||modes.manage;title.textContent=m[0];desc.textContent=m[1];
 if(current!=='Cancelled'){m[2].forEach(x=>actions.append(btn(x[0],x[1])))}else{desc.textContent='This sample subscription has been cancelled. Reset it to try another action.'}
 if(!dialog.open)dialog.showModal();
 }
-function apply(act){if(act.startsWith('view-')){show(act.slice(5));return}if(current==='Cancelled')return;
+function apply(act){if(act==='guided-next'){guided(step+1);return}if(act==='guided-back'){guided(step-1);return}if(act.startsWith('reason-')){selected=act.slice(7);guided(0);return}if(act==='keep'){dialog.close();return}if(act.startsWith('view-')){show(act.slice(5));return}if(current==='Cancelled')return;
 if(act==='cancel'){current='Cancelled';title.textContent='Demo subscription cancelled';desc.textContent='The sample plan is cancelled. No real subscription was affected.';actions.replaceChildren()}
 else if(act==='skip')current='Next shipment skipped';
 else if(act==='delay')current='Delivery moved 14 days';
