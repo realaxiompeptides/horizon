@@ -5,13 +5,13 @@
       <div class="av-m__kicker">AVONENT · MEMBERSHIP</div>
       <h1>Welcome to your<br><span>subscriber dashboard.</span></h1>
       <p>Everything you need to manage your wellness routine, all in one place.</p>
-      <div class="av-m__nav"><a href="#av-plan-{{ section.id }}">My subscription</a><a href="#av-deliveries-{{ section.id }}">Deliveries</a><a href="#av-billing-{{ section.id }}">Billing</a><a href="#av-benefits-{{ section.id }}">My benefits</a><a href="#av-help-{{ section.id }}">Support</a></div>
+      <div class="av-m__nav"><a href="#av-plan-{{ section.id }}"><i class="av-m__fa" aria-hidden="true">&#xf2bd;</i><span>My subscription</span></a><a href="#av-deliveries-{{ section.id }}"><i class="av-m__fa" aria-hidden="true">&#xf0d1;</i><span>Deliveries</span></a><a href="#av-billing-{{ section.id }}"><i class="av-m__fa" aria-hidden="true">&#xf09d;</i><span>Billing</span></a><a href="#av-benefits-{{ section.id }}"><i class="av-m__fa" aria-hidden="true">&#xf06b;</i><span>My benefits</span></a><a href="#av-help-{{ section.id }}"><i class="av-m__fa" aria-hidden="true">&#xf590;</i><span>Support</span></a></div>
       <small class="av-m__notice">Private preview · No real billing changes.</small>
     </div>
   </div>
   <div class="av-m__wrap av-m__body">
     <div class="av-m__heading"><div><div class="av-m__kicker">YOUR MEMBERSHIP</div><h2>My subscription</h2></div></div>
-    <div class="av-m__alert" data-payment-alert hidden role="status"><div><strong>Payment unsuccessful</strong><p>We couldn’t process your latest renewal. Update your payment method and retry to restore your delivery.</p></div><button type="button" class="av-m__button" data-action="payment">Update payment method</button></div>
+    <div class="av-m__alert" data-payment-alert hidden role="status"><div><strong><i class="av-m__fa" aria-hidden="true">&#xf071;</i> Payment unsuccessful</strong><p>We couldn’t process your latest renewal. Update your payment method and retry to restore your delivery.</p></div><button type="button" class="av-m__button" data-action="payment">Update payment method</button></div>
     <div class="av-m__layout" id="av-plan-{{ section.id }}">
       <div class="av-m__card av-m__plan">
         <div class="av-m__product">
@@ -31,10 +31,10 @@
         </div>
         <h4>Manage your next delivery</h4>
         <div class="av-m__actions">
-          <button type="button" data-action="skip"><span aria-hidden="true">↷</span><strong>Skip next order</strong><small>Skip one shipment</small></button>
-          <button type="button" data-action="date"><span aria-hidden="true">◷</span><strong>Reschedule</strong><small>Choose a new date</small></button>
-          <button type="button" data-action="frequency"><span aria-hidden="true">↻</span><strong>Change frequency</strong><small>Find your ideal timing</small></button>
-          <button type="button" data-action="pause"><span aria-hidden="true">Ⅱ</span><strong>Pause membership</strong><small>Take a temporary break</small></button>
+          <button type="button" data-action="skip"><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf064;</i></span><strong>Skip next order</strong><small>Skip one shipment</small></button>
+          <button type="button" data-action="date"><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf073;</i></span><strong>Reschedule</strong><small>Choose a new date</small></button>
+          <button type="button" data-action="frequency"><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf021;</i></span><strong>Change frequency</strong><small>Find your ideal timing</small></button>
+          <button type="button" data-action="pause"><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf04c;</i></span><strong>Pause membership</strong><small>Take a temporary break</small></button>
         </div>
         <div class="av-m__manage"><button type="button" data-action="resume" hidden>Resume subscription</button><button type="button" data-action="review">Review membership options</button><button type="button" data-action="cancel-start">Cancel subscription</button></div>
       </div>
@@ -47,29 +47,29 @@
     </div>
     <div class="av-m__deliveries" id="av-deliveries-{{ section.id }}">
       <div class="av-m__kicker">DELIVERY SCHEDULE</div><h2>Your deliveries</h2>
-      <div class="av-m__card"><h3>Upcoming orders</h3><p>Review your next three scheduled renewals and manage your next shipment.</p><div data-upcoming class="av-m__order-list"></div></div>
-      <div class="av-m__card av-m__history"><h3>Order history</h3><p>Review your previous deliveries and renewal history.</p><div data-history class="av-m__order-list"></div></div>
+      <div class="av-m__card"><h3 class="av-m__icon-heading"><i class="av-m__fa" aria-hidden="true">&#xf073;</i><span>Upcoming orders</span></h3><p>Review your next three scheduled renewals and manage your next shipment.</p><div data-upcoming class="av-m__order-list"></div></div>
+      <div class="av-m__card av-m__history"><h3 class="av-m__icon-heading"><i class="av-m__fa" aria-hidden="true">&#xf1da;</i><span>Order history</span></h3><p>Review your previous deliveries and renewal history.</p><div data-history class="av-m__order-list"></div></div>
     </div>
     <div id="av-benefits-{{ section.id }}" class="av-m__benefits">
       <div class="av-m__kicker">MADE FOR YOUR ROUTINE</div><h2>Make the most of your membership.</h2><p>Your subscription is designed around you. Actual pricing, shipping and promotions depend on your selected plan.</p>
       <div class="av-m__perks">
-        <article><span aria-hidden="true">%</span><h3>Subscriber savings</h3><p>View your recurring price and eligible offers in your account.</p></article>
-        <article><span aria-hidden="true">↗</span><h3>Shipping perks</h3><p>Enjoy shipping benefits on qualifying subscription orders.</p></article>
-        <article><span aria-hidden="true">↻</span><h3>Convenient refills</h3><p>Receive scheduled deliveries without having to reorder manually.</p></article>
-        <article><span aria-hidden="true">◷</span><h3>Your schedule, your choice</h3><p>Manage your delivery date, pause or skip an order.</p></article>
-        <article><span aria-hidden="true">✓</span><h3>Easy account management</h3><p>Review your plan, delivery schedule and subscription status in one place.</p></article>
-        <article><span aria-hidden="true">♡</span><h3>Here to help</h3><p>Our support team is available to help with your order questions.</p></article>
+        <article><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf02b;</i></span><h3>Subscriber savings</h3><p>View your recurring price and eligible offers in your account.</p></article>
+        <article><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf0d1;</i></span><h3>Shipping perks</h3><p>Enjoy shipping benefits on qualifying subscription orders.</p></article>
+        <article><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf466;</i></span><h3>Convenient refills</h3><p>Receive scheduled deliveries without having to reorder manually.</p></article>
+        <article><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf017;</i></span><h3>Your schedule, your choice</h3><p>Manage your delivery date, pause or skip an order.</p></article>
+        <article><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf058;</i></span><h3>Easy account management</h3><p>Review your plan, delivery schedule and subscription status in one place.</p></article>
+        <article><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf590;</i></span><h3>Here to help</h3><p>Our support team is available to help with your order questions.</p></article>
       </div>
     </div>
     <div id="av-billing-{{ section.id }}" class="av-m__billing"><div class="av-m__kicker">ACCOUNT SETTINGS</div><h2>Billing &amp; shipping</h2><div class="av-m__account-grid">
-      <article class="av-m__card"><h3>Shipping address</h3><p data-address-label>Roseville, CA</p><button class="av-m__button av-m__outline" type="button" data-action="address">Manage shipping address</button></article>
-      <article class="av-m__card"><h3>Payment method</h3><p data-card-label>Visa ending in 4242</p><p><strong data-payment-status>Ready for next renewal</strong></p><button class="av-m__button av-m__outline" type="button" data-action="payment">Update payment method</button><button class="av-m__button av-m__outline" type="button" data-action="retry" hidden>Retry payment</button></article>
+      <article class="av-m__card"><h3 class="av-m__icon-heading"><i class="av-m__fa" aria-hidden="true">&#xf3c5;</i><span>Shipping address</span></h3><p data-address-label>Roseville, CA</p><button class="av-m__button av-m__outline" type="button" data-action="address">Manage shipping address</button></article>
+      <article class="av-m__card"><h3 class="av-m__icon-heading"><i class="av-m__fa" aria-hidden="true">&#xf09d;</i><span>Payment method</span></h3><p data-card-label>Visa ending in 4242</p><p><strong data-payment-status>Ready for next renewal</strong></p><button class="av-m__button av-m__outline" type="button" data-action="payment">Update payment method</button><button class="av-m__button av-m__outline" type="button" data-action="retry" hidden>Retry payment</button></article>
     </div>
-    <details class="av-m__card av-m__test-tools"><summary>Preview controls</summary><p>Use these controls to explore different account states.</p><button type="button" class="av-m__button av-m__outline" data-action="fail">Simulate failed payment</button><button type="button" class="av-m__button av-m__outline" data-action="recording">Open recording walkthrough</button><button type="button" class="av-m__text-btn" data-reset>Reset preview</button></details></div>
+    <details class="av-m__card av-m__test-tools"><summary><i class="av-m__fa" aria-hidden="true">&#xf1de;</i> Preview controls</summary><p>Use these controls to explore different account states.</p><button type="button" class="av-m__button av-m__outline" data-action="fail">Simulate failed payment</button><button type="button" class="av-m__button av-m__outline" data-action="recording">Open recording walkthrough</button><button type="button" class="av-m__text-btn" data-reset>Reset preview</button></details></div>
     <div class="av-m__help" id="av-help-{{ section.id }}"><div><div class="av-m__kicker">WE'RE HERE FOR YOU</div><h2>Need a hand?</h2><p>Get help with your deliveries, subscription or account.</p></div><a class="av-m__button av-m__outline" href="/pages/contact">Contact support</a></div>
   </div>
   <dialog class="av-m__dialog" aria-labelledby="av-m-title-{{ section.id }}"><div class="av-m__modal">
-    <button type="button" class="av-m__close" data-close aria-label="Close">×</button><div class="av-m__kicker">MY MEMBERSHIP</div>
+    <button type="button" class="av-m__close" data-close aria-label="Close"><i class="av-m__fa" aria-hidden="true">&#xf00d;</i></button><div class="av-m__kicker">MY MEMBERSHIP</div>
     <h2 id="av-m-title-{{ section.id }}" data-modal-title></h2><p data-modal-text></p><div data-modal-content></div>
     <p data-modal-status role="status" class="av-m__feedback"></p><button type="button" class="av-m__button av-m__outline" data-close>Back to my subscription</button>
     
@@ -204,6 +204,38 @@ html:has([data-membership-preview]) #MainContent > .shopify-section:has([data-me
 #av-membership-{{ section.id }} .av-m__review-perks p{margin:6px 0}
 #av-membership-{{ section.id }} .av-m__button[aria-pressed=true]{background:#EAF9FC;box-shadow:inset 0 0 0 1px #00647A}
 #av-membership-{{ section.id }} .av-m__test-tools summary{font-size:13px;cursor:pointer;color:#47616E}
+
+/* Font Awesome Free 6.7.2 solid icons, scoped to this private dashboard. */
+@font-face{font-family:'Avonent Membership Icons';src:url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/webfonts/fa-solid-900.woff2') format('woff2');font-style:normal;font-weight:900;font-display:swap}
+#av-membership-{{ section.id }} .av-m__fa{font-family:'Avonent Membership Icons',sans-serif;font-weight:900;font-style:normal;display:inline-block;line-height:1;text-rendering:auto;flex:none}
+#av-membership-{{ section.id }} .av-m__hero{background:radial-gradient(ellipse at 95% 5%,#09657B 0,transparent 50%),linear-gradient(140deg,#0B2637,#103E52)}
+#av-membership-{{ section.id }} .av-m__nav a{display:inline-flex;align-items:center;gap:8px;border-radius:9px;background:#ffffff0a}
+#av-membership-{{ section.id }} .av-m__nav .av-m__fa{color:#02C6EA;font-size:14px}
+#av-membership-{{ section.id }} .av-m__card{border-radius:18px;box-shadow:0 3px 16px #103E5207}
+#av-membership-{{ section.id }} .av-m__facts{border:1px solid #D7EDF3;border-radius:13px}
+#av-membership-{{ section.id }} .av-m__actions button{padding:17px;gap:7px;min-height:138px;border:1px solid #CBE3EA;border-radius:13px;transition:border-color .15s,background .15s,box-shadow .15s}
+#av-membership-{{ section.id }} .av-m__actions button .av-m__icon-tile,#av-membership-{{ section.id }} .av-m__perks .av-m__icon-tile{display:grid;place-items:center;background:#E3F8FC;color:#00647A;border-radius:12px;width:42px;height:42px;font-size:19px;line-height:1}
+#av-membership-{{ section.id }} .av-m__actions button strong{line-height:1.25}
+#av-membership-{{ section.id }} .av-m__actions button small{line-height:1.4}
+#av-membership-{{ section.id }} .av-m__summary li:before{font-family:'Avonent Membership Icons',sans-serif;content:'\f058';font-size:15px;font-weight:900;top:3px}
+#av-membership-{{ section.id }} .av-m__icon-heading{display:flex;gap:11px;align-items:center}
+#av-membership-{{ section.id }} .av-m__icon-heading .av-m__fa{font-size:19px;color:#00647A}
+#av-membership-{{ section.id }} .av-m__order-row{grid-template-columns:37px minmax(0,1fr) auto}
+#av-membership-{{ section.id }} .av-m__order-icon{display:grid;place-items:center;width:36px;height:36px;border-radius:10px;background:#EAF9FC;color:#00647A;font-size:15px}
+#av-membership-{{ section.id }} .av-m__close{display:grid;place-items:center;font-size:18px;border-radius:10px}
+#av-membership-{{ section.id }} .av-m__button{border-radius:10px;min-height:48px}
+#av-membership-{{ section.id }} .av-m__button:not(.av-m__outline){box-shadow:0 3px 9px #02C6EA20}
+#av-membership-{{ section.id }} .av-m__review-perks .av-m__fa{color:#00647A;margin-right:5px}
+#av-membership-{{ section.id }} .av-m__dialog{border-radius:21px;box-shadow:0 16px 80px #0B263755;overscroll-behavior:contain}
+#av-membership-{{ section.id }} .av-m__modal{padding:28px}
+#av-membership-{{ section.id }} .av-m__modal [data-modal-content]{gap:10px}
+#av-membership-{{ section.id }} progress{border:none;border-radius:99px;overflow:hidden;background:#EAF9FC}
+#av-membership-{{ section.id }} progress::-webkit-progress-bar{background:#EAF9FC;border-radius:99px}
+#av-membership-{{ section.id }} progress::-webkit-progress-value{background:#02C6EA;border-radius:99px}
+#av-membership-{{ section.id }} progress::-moz-progress-bar{background:#02C6EA;border-radius:99px}
+#av-membership-{{ section.id }} .av-m__test-tools .av-m__button{margin-top:10px}
+@media(hover:hover){#av-membership-{{ section.id }} .av-m__actions button:hover:not(:disabled){border-color:#02A6C6;background:#F3FCFE;box-shadow:0 3px 14px #00647A0D}#av-membership-{{ section.id }} .av-m__nav a:hover{background:#ffffff20}}
+@media(max-width:760px){#av-membership-{{ section.id }} .av-m__modal{padding:23px 19px}#av-membership-{{ section.id }} .av-m__actions button{padding:13px;min-height:126px}#av-membership-{{ section.id }} .av-m__nav a{gap:6px;padding:9px 10px}#av-membership-{{ section.id }} .av-m__nav .av-m__fa{font-size:12px}#av-membership-{{ section.id }} .av-m__order-row{grid-template-columns:31px minmax(0,1fr) auto}#av-membership-{{ section.id }} .av-m__order-icon{width:30px;height:30px;font-size:13px}}
 </style>
 <script>
 (function(){
@@ -212,7 +244,7 @@ const q=s=>root.querySelector(s),dialog=q('dialog'),title=q('[data-modal-title]'
 let recording=false,reviewStep=0,reason='stock',detail='',frequency=30,state='Active',nextDate=addDays(new Date(),30),payment='ready',card='4242',address='Roseville, CA',history=[];
 function addDays(date,days){const d=new Date(date);d.setDate(d.getDate()+days);return d}
 function dateLabel(date){return new Intl.DateTimeFormat('en-US',{month:'short',day:'numeric',year:'numeric'}).format(date)}
-function row(parent,name,detail,flag){const el=document.createElement('div');el.className='av-m__order-row';const left=document.createElement('div'),strong=document.createElement('strong'),small=document.createElement('small'),badge=document.createElement('span');strong.textContent=name;small.textContent=detail;badge.className='av-m__status';badge.textContent=flag;if(flag==='Payment failed')badge.dataset.state='failed';left.append(strong,small);el.append(left,badge);parent.append(el)}
+function row(parent,name,detail,flag){const el=document.createElement('div');el.className='av-m__order-row';const left=document.createElement('div'),strong=document.createElement('strong'),small=document.createElement('small'),badge=document.createElement('span');strong.textContent=name;small.textContent=detail;badge.className='av-m__status';badge.textContent=flag;if(flag==='Payment failed')badge.dataset.state='failed';left.append(strong,small);const orderIcon=document.createElement('i');orderIcon.className='av-m__fa av-m__order-icon';orderIcon.setAttribute('aria-hidden','true');orderIcon.textContent=flag==='Delivered'?'\uf058':flag==='Payment failed'?'\uf071':'\uf466';el.append(orderIcon,left,badge);parent.append(el)}
 function update(){
 const cancelled=state==='Cancelled',paused=state==='Paused',failed=payment!=='ready'&&!cancelled;
 q('[data-status]').textContent=cancelled?state:failed?'Payment issue':state;q('[data-status]').dataset.state=cancelled?'cancelled':failed?'failed':'active';
@@ -244,7 +276,7 @@ const progress=document.createElement('div');progress.className='av-m__review-pr
 const screens=[['Before you go','Would you like to review your membership benefits and delivery options before cancelling?'],['Why are you considering leaving?','Choose a reason to see relevant options.'],[branch.question,'Select an answer or continue without one.'],[branch.heading,branch.copy],['Review your subscriber savings','Your recurring price is $34.99 per delivery.'],['Need a little more flexibility?','You can pause or change your schedule instead of ending your membership.'],['Confirm cancellation','Your subscription will stop renewing.']];
 title.textContent=screens[reviewStep][0];desc.textContent=screens[reviewStep][1];
 function choice(label,selected,fn){const b=button(label,fn,true);b.setAttribute('aria-pressed',String(selected));return b}
-if(reviewStep===0){const perks=document.createElement('div');perks.className='av-m__review-perks';['Subscriber pricing','Flexible delivery dates','Eligible shipping benefits','Convenient recurring deliveries'].forEach(x=>{const line=document.createElement('p');line.textContent='✓ '+x;perks.append(line)});content.append(perks)}
+if(reviewStep===0){const perks=document.createElement('div');perks.className='av-m__review-perks';['Subscriber pricing','Flexible delivery dates','Eligible shipping benefits','Convenient recurring deliveries'].forEach(x=>{const line=document.createElement('p');const mark=document.createElement('i');mark.className='av-m__fa';mark.setAttribute('aria-hidden','true');mark.textContent='\uf058';line.append(mark,document.createTextNode(' '+x));perks.append(line)});content.append(perks)}
 if(reviewStep===1)Object.entries(reviewPaths).forEach(([key,val])=>content.append(choice(val.label,reason===key,()=>{reason=key;detail='';renderReview(1)})));
 if(reviewStep===2)branch.answers.forEach(a=>content.append(choice(a,detail===a,()=>{detail=a;renderReview(2)})));
 if(reviewStep===3)branch.options.forEach(([label,mode])=>content.append(button(label,()=>show(mode))));
