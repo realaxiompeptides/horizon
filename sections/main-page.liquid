@@ -1,12 +1,37 @@
-{% if request.page_type == 'page' and page.handle == 'membership-test' %}
-<section id="av-membership-{{ section.id }}" class="av-membership" data-membership-preview>
-  <form id="av-appstle-{{ section.id }}" action="/apps/subscriptions" method="get" hidden></form>
+{% if page.handle == 'membership-test' or page.handle == 'membership-test-sign-in' %}
+{% assign membership_dashboard_url = routes.root_url | append: '/pages/membership-test' | replace: '//pages/', '/pages/' %}
+{% assign membership_sign_in_url = routes.root_url | append: '/pages/membership-test-sign-in' | replace: '//pages/', '/pages/' %}
+{% if page.handle == 'membership-test-sign-in' or customer == blank %}
+<section id="av-membership-{{ section.id }}" class="av-membership av-m__sign-in" data-membership-preview data-appstle-membership>
+  <div class="av-m__wrap">
+    <nav class="av-m__sign-in-nav" aria-label="Customer account">
+      <a href="{{ routes.account_url }}">My account</a>
+    </nav>
+    <div class="av-m__sign-in-panel">
+      <h1>Manage your subscription</h1>
+      {% if customer %}
+        <a class="av-m__button" href="{{ membership_dashboard_url | escape }}">Open your subscription dashboard</a>
+      {% else %}
+        <p>Enter the email you used for your subscription. Appstle will send a secure link to manage it.</p>
+        <form method="post" class="av-m__sign-in-form" data-appstle-email-link>
+          <label for="av-subscription-email-{{ section.id }}">Subscription email</label>
+          <input id="av-subscription-email-{{ section.id }}" name="email" type="email" autocomplete="email" maxlength="254" placeholder="you@example.com" required>
+          <button class="av-m__button" type="submit" disabled>Email me a link</button>
+          <p role="status" data-appstle-email-status></p>
+        </form>
+        <a class="av-m__shopify-sign-in" href="/customer_authentication/login?return_to={{ membership_dashboard_url | url_encode }}">Sign in with Shopify to open your Avonent dashboard</a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% else %}
+<section id="av-membership-{{ section.id }}" class="av-membership" data-membership-preview data-appstle-membership data-dashboard data-shop-id="{{ shop.id | default: 107404886176 }}" data-sign-in-url="{{ membership_sign_in_url | escape }}">
   <div class="av-m__hero">
     <div class="av-m__wrap">
       <div class="av-m__kicker">AVONENT · MEMBERSHIP</div>
       <h1>Welcome to your<br><span>subscriber dashboard.</span></h1>
       <p>Everything you need to manage your wellness routine, all in one place.</p>
-      <div class="av-m__nav"><a href="/apps/subscriptions"><i class="av-m__fa" aria-hidden="true">&#xf2bd;</i><span>My subscription</span></a><a href="/apps/subscriptions"><i class="av-m__fa" aria-hidden="true">&#xf0d1;</i><span>Deliveries</span></a><a href="/apps/subscriptions"><i class="av-m__fa" aria-hidden="true">&#xf09d;</i><span>Billing</span></a><a href="#av-benefits-{{ section.id }}"><i class="av-m__fa" aria-hidden="true">&#xf06b;</i><span>My benefits</span></a><a href="#av-help-{{ section.id }}"><i class="av-m__fa" aria-hidden="true">&#xf590;</i><span>Support</span></a></div>
+      <div class="av-m__nav"><a href="#av-plan-{{ section.id }}"><i class="av-m__fa" aria-hidden="true">&#xf2bd;</i><span>My subscription</span></a><a href="#av-deliveries-{{ section.id }}"><i class="av-m__fa" aria-hidden="true">&#xf0d1;</i><span>Deliveries</span></a><a href="#av-billing-{{ section.id }}"><i class="av-m__fa" aria-hidden="true">&#xf09d;</i><span>Billing</span></a><a href="#av-benefits-{{ section.id }}"><i class="av-m__fa" aria-hidden="true">&#xf06b;</i><span>My benefits</span></a><a href="#av-help-{{ section.id }}"><i class="av-m__fa" aria-hidden="true">&#xf590;</i><span>Support</span></a></div>
     </div>
   </div>
   <div class="av-m__wrap av-m__body">
@@ -20,22 +45,28 @@
           {% else %}
           <div class="av-m__product-placeholder" aria-hidden="true">AVONENT</div>
           {% endif %}
-          <div><h3>Subscription details</h3><p>View your subscription and confirm changes in Appstle.</p></div>
+          <div>
+            <h3>Subscription details</h3>
+            <label for="av-contract-{{ section.id }}" data-contract-label hidden>Choose a subscription</label>
+            <select id="av-contract-{{ section.id }}" data-contract hidden></select>
+            <p role="status" data-appstle-status>Loading your subscriptions…</p>
+            <a href="/apps/subscriptions">Open Appstle portal</a>
+          </div>
         </div>
         <div class="av-m__facts">
-          <div><span>Next scheduled delivery</span><strong>View in Appstle</strong></div>
-          <div><span>Delivery frequency</span><strong>View in Appstle</strong></div>
-          <div><span>Subscription pricing</span><strong>View in Appstle</strong></div>
-          <div><span>Billing status</span><strong>View in Appstle</strong></div>
+          <div><span>Next billing date</span><strong data-contract-next-billing>—</strong></div>
+          <div><span>Delivery frequency</span><strong data-contract-frequency>—</strong></div>
+          <div><span>Subscription pricing</span><strong data-contract-price>—</strong></div>
+          <div><span>Billing status</span><strong data-contract-billing-status>—</strong></div>
         </div>
         <h4>Manage your next delivery</h4>
         <div class="av-m__actions">
-          <button type="submit" form="av-appstle-{{ section.id }}"><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf064;</i></span><strong>Skip next order</strong><small>Skip one shipment</small></button>
-          <button type="submit" form="av-appstle-{{ section.id }}"><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf073;</i></span><strong>Reschedule</strong><small>Choose a new date</small></button>
-          <button type="submit" form="av-appstle-{{ section.id }}"><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf021;</i></span><strong>Change frequency</strong><small>Find your ideal timing</small></button>
-          <button type="submit" form="av-appstle-{{ section.id }}"><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf04c;</i></span><strong>Pause membership</strong><small>Take a temporary break</small></button>
+          <button type="button" data-subscription-action="skip" disabled><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf064;</i></span><strong>Skip next order</strong><small>Skip one shipment</small></button>
+          <button type="button" data-subscription-action="reschedule" disabled><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf073;</i></span><strong>Reschedule</strong><small>Unavailable for this test</small></button>
+          <button type="button" data-subscription-action="frequency" disabled><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf021;</i></span><strong>Change frequency</strong><small>Unavailable for this test</small></button>
+          <button type="button" data-subscription-action="pause" disabled><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf04c;</i></span><strong>Pause membership</strong><small>Take a temporary break</small></button>
         </div>
-        <div class="av-m__manage"><button type="submit" form="av-appstle-{{ section.id }}">Resume subscription</button><button type="submit" form="av-appstle-{{ section.id }}">Cancel subscription</button></div>
+        <div class="av-m__manage"><button type="button" data-subscription-action="resume" disabled>Resume subscription</button><button type="button" data-subscription-action="cancel" disabled>Cancel subscription</button></div>
       </div>
       <aside class="av-m__card av-m__summary">
         <div class="av-m__kicker">SUBSCRIBER PERKS</div>
@@ -46,8 +77,8 @@
     </div>
     <div class="av-m__deliveries" id="av-deliveries-{{ section.id }}">
       <div class="av-m__kicker">DELIVERY SCHEDULE</div><h2>Your deliveries</h2>
-      <div class="av-m__card"><h3 class="av-m__icon-heading"><i class="av-m__fa" aria-hidden="true">&#xf073;</i><span>Upcoming orders</span></h3><p><a href="/apps/subscriptions">Review upcoming orders in Appstle</a>.</p></div>
-      <div class="av-m__card av-m__history"><h3 class="av-m__icon-heading"><i class="av-m__fa" aria-hidden="true">&#xf1da;</i><span>Order history</span></h3><p><a href="/apps/subscriptions">Review order history in Appstle</a>.</p></div>
+      <div class="av-m__card"><h3 class="av-m__icon-heading"><i class="av-m__fa" aria-hidden="true">&#xf073;</i><span>Upcoming orders</span></h3><p><a href="/apps/subscriptions">Review upcoming orders in Appstle</a>.</p><ul data-orders-upcoming></ul></div>
+      <div class="av-m__card av-m__history"><h3 class="av-m__icon-heading"><i class="av-m__fa" aria-hidden="true">&#xf1da;</i><span>Order history</span></h3><p><a href="/apps/subscriptions">Review order history in Appstle</a>.</p><ul data-orders-past></ul></div>
     </div>
     <div id="av-benefits-{{ section.id }}" class="av-m__benefits">
       <div class="av-m__kicker">MADE FOR YOUR ROUTINE</div><h2>Make the most of your membership.</h2><p>Discover the exclusive benefits of your AVONENT membership. </p>
@@ -65,14 +96,58 @@
       </div>
     </div>
     <div id="av-billing-{{ section.id }}" class="av-m__billing"><div class="av-m__kicker">ACCOUNT SETTINGS</div><h2>Billing &amp; shipping</h2><div class="av-m__account-grid">
-      <article class="av-m__card"><h3 class="av-m__icon-heading"><i class="av-m__fa" aria-hidden="true">&#xf3c5;</i><span>Shipping address</span></h3><p>View or edit your shipping address in Appstle.</p><button class="av-m__button av-m__outline" type="submit" form="av-appstle-{{ section.id }}">Manage shipping address</button></article>
-      <article class="av-m__card"><h3 class="av-m__icon-heading"><i class="av-m__fa" aria-hidden="true">&#xf09d;</i><span>Payment method</span></h3><p>Manage payment details and payment recovery in Appstle.</p><button class="av-m__button av-m__outline" type="submit" form="av-appstle-{{ section.id }}">Update payment method</button></article>
+      <article class="av-m__card"><h3 class="av-m__icon-heading"><i class="av-m__fa" aria-hidden="true">&#xf3c5;</i><span>Shipping address</span></h3><p>Update where your subscription ships.</p><button class="av-m__button av-m__outline" type="button" data-subscription-action="address" disabled>Manage shipping address</button></article>
+      <article class="av-m__card"><h3 class="av-m__icon-heading"><i class="av-m__fa" aria-hidden="true">&#xf09d;</i><span>Payment method</span></h3><p>Request a secure link to update your payment method.</p><button class="av-m__button av-m__outline" type="button" data-subscription-action="payment" disabled>Update payment method</button></article>
     </div>
     </div>
+    <dialog class="av-m__dialog" data-cancel-dialog aria-labelledby="av-cancel-title-{{ section.id }}">
+      <form method="dialog" class="av-m__modal av-m__cancel-panel">
+        <h2 id="av-cancel-title-{{ section.id }}">Cancel your subscription?</h2>
+        <p>Cancel to stop future renewals. Orders already placed are handled separately.</p>
+        <p data-cancel-skip-note hidden></p>
+        <div class="av-m__cancel-actions">
+          <button type="submit" value="skip" class="av-m__button av-m__outline" hidden>Skip next order instead</button>
+          <button type="submit" value="cancel" class="av-m__button">Confirm cancellation</button>
+        </div>
+        <button type="submit" value="keep" class="av-m__button av-m__outline" autofocus>Keep subscription</button>
+      </form>
+    </dialog>
+    <dialog class="av-m__dialog" data-address-dialog aria-label="Manage shipping address">
+      <form class="av-m__modal av-m__address-form" method="post" data-address-form>
+        <h2 class="av-m__full">Manage shipping address</h2>
+        <label>First name<input name="firstName" autocomplete="given-name" required></label>
+        <label>Last name<input name="lastName" autocomplete="family-name" required></label>
+        <label class="av-m__full">Street address<input name="address1" autocomplete="address-line1" required></label>
+        <label class="av-m__full">Apartment or unit<input name="address2" autocomplete="address-line2"></label>
+        <label>City<input name="city" autocomplete="address-level2" required></label>
+        <label>State or region code<input name="provinceCode" autocomplete="address-level1"></label>
+        <label>Postal code<input name="zip" autocomplete="postal-code"></label>
+        <label>Country code<input name="countryCode" autocomplete="country" maxlength="2" pattern="[A-Za-z]{2}" required></label>
+        <label>Phone<input name="phone" type="tel" autocomplete="tel"></label>
+        <p role="status" class="av-m__full" data-address-status></p>
+        <button type="submit" class="av-m__button" disabled>Save address</button>
+        <button type="button" class="av-m__button av-m__outline" data-close-address>Close</button>
+      </form>
+    </dialog>
     <div class="av-m__help" id="av-help-{{ section.id }}"><div><div class="av-m__kicker">WE'RE HERE FOR YOU</div><h2>Need a hand?</h2><p>Get help with your deliveries, subscription or account.</p></div><a class="av-m__button av-m__outline" href="/pages/contact">Contact support</a></div>
   </div>
 </section>
+{% endif %}
+<script src="{{ 'avonent-membership-test.js' | asset_url }}" defer></script>
 <style>
+#av-membership-{{ section.id }} .av-m__cancel-panel{display:grid;gap:14px}
+#av-membership-{{ section.id }} .av-m__cancel-panel h2,#av-membership-{{ section.id }} .av-m__cancel-panel p{margin:0}
+#av-membership-{{ section.id }} .av-m__cancel-actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,175px),1fr));gap:10px}
+#av-membership-{{ section.id }}.av-m__sign-in{min-height:64vh;background:#fff;padding:24px 0 64px}
+#av-membership-{{ section.id }} .av-m__sign-in-nav{text-align:right}
+#av-membership-{{ section.id }} .av-m__sign-in-panel{margin:clamp(36px,8vw,88px) auto 0;max-width:520px;padding:clamp(22px,5vw,38px);background:var(--m-sage);border:1px solid var(--m-line);border-radius:18px;text-align:center}
+#av-membership-{{ section.id }} .av-m__sign-in-panel h1{font-size:clamp(29px,5vw,42px);margin-bottom:14px}
+#av-membership-{{ section.id }} .av-m__sign-in-form{display:grid;gap:10px;margin:24px 0 16px;text-align:left}
+#av-membership-{{ section.id }} .av-m__sign-in-form label{font-size:14px;font-weight:700}
+#av-membership-{{ section.id }} .av-m__sign-in-form input{width:100%;min-height:48px;border:1px solid var(--m-line);border-radius:10px;padding:10px 13px;background:#fff;color:var(--m-dark);font:inherit;font-size:16px}
+#av-membership-{{ section.id }} .av-m__sign-in-form .av-m__button{margin-top:4px}
+#av-membership-{{ section.id }} .av-m__sign-in-form [role="status"]{margin:0}
+#av-membership-{{ section.id }} .av-m__shopify-sign-in{color:var(--m-green);font-size:14px;font-weight:700;text-underline-offset:3px}
 #av-membership-{{ section.id }}{--m-dark:#0B2637;--m-green:#00647A;--m-accent:#02C6EA;--m-sage:#EAF9FC;--m-line:#CBE8EF;color:var(--m-dark);background:#F5FAFC;line-height:1.5;font-family:inherit}
 #av-membership-{{ section.id }} *{box-sizing:border-box}
 #av-membership-{{ section.id }} .av-m__wrap{width:min(1120px,100% - 40px);margin:auto}
