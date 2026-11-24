@@ -19,7 +19,7 @@
   </div>
 </section>
 {% else %}
-<section id="av-membership-{{ section.id }}" class="av-membership" data-membership-preview data-appstle-membership data-dashboard data-shop-id="{{ shop.id | default: 107404886176 }}" data-price-currency="{{ cart.currency.iso_code | escape }}" data-sign-in-url="{{ membership_sign_in_url | escape }}">
+<section id="av-membership-{{ section.id }}" class="av-membership" data-membership-preview data-appstle-membership data-dashboard data-shop-id="{{ shop.id | default: 107404886176 }}" data-price-country="{{ localization.country.iso_code | escape }}" data-sign-in-url="{{ membership_sign_in_url | escape }}">
   <div class="av-m__hero">
     <div class="av-m__wrap">
       <div class="av-m__kicker">AVONENT · MEMBERSHIP</div>
@@ -40,16 +40,21 @@
         <div class="av-m__product">
           <div>
             <h3>Subscription details</h3>
-            <label for="av-contract-{{ section.id }}" data-contract-label hidden>Choose a subscription</label>
+            <label for="av-contract-{{ section.id }}" class="visually-hidden">Subscription</label>
             <select id="av-contract-{{ section.id }}" data-contract hidden></select>
             <p role="status" data-appstle-status>Loading your subscriptions…</p>
           </div>
         </div>
-        <div data-contract-content hidden><ul class="av-m__contract-products" data-contract-products></ul>
+        <div data-contract-content hidden>
+        <div class="av-m__order-nav">
+          <a class="av-m__button av-m__outline" href="#av-scheduled-{{ section.id }}">Scheduled orders</a>
+          <a class="av-m__button av-m__outline" href="#av-past-{{ section.id }}">Past orders</a>
+        </div>
+        <ul class="av-m__contract-products" data-contract-products></ul>
         <div class="av-m__facts">
           <div><span>Next billing date</span><strong data-contract-next-billing>—</strong></div>
           <div><span>Delivery frequency</span><strong data-contract-frequency>—</strong></div>
-          <div><span>Subscription pricing</span><strong data-contract-price>—</strong></div>
+          <div><span>Subscription item subtotal</span><strong data-contract-price>—</strong></div>
           <div><span>Billing status</span><strong data-contract-billing-status>—</strong></div>
         </div>
         <div class="av-m__payment-alert" data-payment-alert hidden>
@@ -75,8 +80,15 @@
     </div>
     <div class="av-m__deliveries" data-contract-content hidden id="av-deliveries-{{ section.id }}">
       <div class="av-m__kicker">DELIVERY SCHEDULE</div><h2>Your deliveries</h2>
-      <div class="av-m__card"><h3 class="av-m__icon-heading"><i class="av-m__fa" aria-hidden="true">&#xf073;</i><span>Upcoming orders</span></h3><ul data-orders-upcoming></ul></div>
-      <div class="av-m__card av-m__history"><h3 class="av-m__icon-heading"><i class="av-m__fa" aria-hidden="true">&#xf1da;</i><span>Order history</span></h3><ul data-orders-past></ul></div>
+      <div class="av-m__card av-m__order-section" id="av-scheduled-{{ section.id }}">
+        <h3 class="av-m__icon-heading"><i class="av-m__fa" aria-hidden="true">&#xf073;</i><span>Scheduled orders</span></h3>
+        <p>Taxes and shipping are finalized at billing.</p>
+        <p data-orders-upcoming-status hidden></p><ul class="av-m__order-list" data-orders-upcoming></ul>
+      </div>
+      <div class="av-m__card av-m__history av-m__order-section" id="av-past-{{ section.id }}">
+        <h3 class="av-m__icon-heading"><i class="av-m__fa" aria-hidden="true">&#xf1da;</i><span>Past orders</span></h3>
+        <p data-orders-past-status hidden></p><ul class="av-m__order-list" data-orders-past></ul>
+      </div>
     </div>
     <div id="av-benefits-{{ section.id }}" class="av-m__benefits" data-contract-content hidden>
       <div class="av-m__kicker">MADE FOR YOUR ROUTINE</div><h2>Make the most of your membership.</h2><p>Discover the exclusive benefits of your AVONENT membership. </p>
@@ -108,15 +120,11 @@
         </div>
       </form>
     </dialog>
-    <template data-subscription-price-catalog>
-      {% assign comparison_handles = 'black-walnut-drops' | split: ',' %}
-      {% for comparison_handle in comparison_handles %}
-        {% assign comparison_product = all_products[comparison_handle] %}
-        {% for comparison_variant in comparison_product.variants %}
-          {% if comparison_variant.available and comparison_variant.requires_selling_plan == false %}
-            <span data-variant="{{ comparison_variant.id }}" data-price="{{ comparison_variant.price | divided_by: 100.0 }}"></span>
-          {% endif %}
-        {% endfor %}
+    <template data-subscription-order-taxes>
+      {% for subscription_order in customer.orders limit: 20 %}
+        {% if subscription_order.tax_price != nil %}
+          <span data-order-id="{{ subscription_order.id }}" data-order-tax="{{ subscription_order.tax_price | money_with_currency | escape }}"></span>
+        {% endif %}
       {% endfor %}
     </template>
     <dialog class="av-m__dialog" data-cancel-dialog aria-labelledby="av-cancel-title-{{ section.id }}">
@@ -482,6 +490,11 @@ html:has([data-membership-preview]) #MainContent > .shopify-section:has([data-me
 #av-membership-{{ section.id }} .av-m__payment-alert p,#av-membership-{{ section.id }} .av-m__cancellation-settings p{margin:3px 0 0}
 #av-membership-{{ section.id }} .av-m__payment-alert .av-m__button{background:white;color:var(--m-dark)}
 #av-membership-{{ section.id }} .av-m__cancellation-settings{margin-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
+#av-membership-{{ section.id }} .av-m__order-nav{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 20px}
+#av-membership-{{ section.id }} .av-m__order-nav .av-m__button{min-height:42px;padding:8px 13px}
+#av-membership-{{ section.id }} .av-m__order-section{scroll-margin-top:calc(var(--header-group-height, 100px) + 20px)}
+#av-membership-{{ section.id }} .av-m__order-list{list-style:none;margin:0;padding:0}
+#av-membership-{{ section.id }} .av-m__order-list li{padding:11px 0;border-top:1px solid var(--m-line);overflow-wrap:anywhere}
 </style>
 
 {% else %}

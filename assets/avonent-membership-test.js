@@ -62,7 +62,38 @@
     const money = new Intl.NumberFormat(undefined, { style: 'currency', currency });
     const savings = hasBase && base > total && money.format(base - total) !== money.format(0)
       ? new Intl.NumberFormat('en-US', { style: 'currency', currency, currencyDisplay: 'code' }).format(base - total) : '';
-    return { price: money.format(total), savings, discountPercent: savings ? Math.floor((base - total) / base * 100 + Number.EPSILON) : 0 };
+    return { price: money.format(total), savings, discountPercent: savings ? Math.round((base - total) / base * 100) : 0 };
+  }
+
+  async function fetchOneTimePrices(lines, country) {
+    const ids = [...new Set(lines.map(line => String(line.variantId || '').split('/').pop())
+      .filter(id => /^\d+$/.test(id)))];
+    const prices = new Map();
+    if (!/^[A-Z]{2}$/.test(country || '')) return prices;
+    for (let start = 0; start < ids.length; start += 50) {
+      const response = await fetch('/api/2026-04/graphql.json', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          query: `query OneTimePrices($ids: [ID!]!, $country: CountryCode!) @inContext(country: $country) {
+            nodes(ids: $ids) {
+              ... on ProductVariant {
+                id availableForSale price { amount currencyCode } product { requiresSellingPlan }
+              }
+            }
+          }`,
+          variables: { ids: ids.slice(start, start + 50).map(id => 'gid://shopify/ProductVariant/' + id), country }
+        })
+      });
+      if (!response.ok) return prices;
+      const { data } = await response.json();
+      for (const variant of data?.nodes || []) {
+        if (variant?.availableForSale && variant.product?.requiresSellingPlan === false) {
+          prices.set(variant.id.split('/').pop(), variant.price);
+        }
+      }
+    }
+    return prices;
   }
 
   function createPreviewRequest() {
@@ -72,7 +103,7 @@
       deliveryPolicy: { interval: 'MONTH', intervalCount: 1 },
       customerPaymentMethod: { instrument: { __typename: 'CustomerCreditCard' } },
       deliveryMethod: { __typename: 'SubscriptionDeliveryMethodShipping', address: {} },
-      lines: { nodes: [{ title: id === '101' ? 'Black Walnut Drops' : 'Soursop Softgels', quantity: 1, currentPrice: { amount: 34.99, currencyCode: 'USD' }, variantId: id }] }
+      lines: { nodes: [{ title: id === '101' ? 'Black Walnut Drops' : 'Soursop Softgels', quantity: 1, currentPrice: { amount: id === '101' ? 35 : 34.99, currencyCode: 'USD' }, variantId: id }] }
     }]));
     const orders = new Map([...subscriptions.keys()].map((id) => [id, [7, 37, 67].map((offset, index) => ({
       id: String(index + 1), billingDate: day(offset), status: 'QUEUED'
@@ -107,11 +138,9 @@
     const find = (selector) => root.querySelector(selector);
     const preview = new URLSearchParams(location.search).get('preview-subscription') === '1';
     const request = preview ? createPreviewRequest() : appstleRequest;
-    const catalog = find('[data-subscription-price-catalog]');
-    const referencePrices = preview
-      ? new Map(['101', '102'].map(id => [id, { amount: 44.99, currencyCode: 'USD' }]))
-      : new Map([...catalog.content.querySelectorAll('[data-variant]')].map(({dataset}) =>
-        [dataset.variant, { amount: dataset.price, currencyCode: root.dataset.priceCurrency }]));
+    const orderTaxes = new Map([...find('[data-subscription-order-taxes]').content.querySelectorAll('[data-order-id]')]
+      .map(({ dataset }) => [dataset.orderId, dataset.orderTax]));
+    let referencePrices = new Map();
     find('[data-subscription-preview]').hidden = !preview;
     const status = find('[data-appstle-status]');
     const select = find('[data-contract]');
@@ -136,13 +165,20 @@
       }
     }
 
-    function renderOrders(type, orders) {
+    function renderOrders(type, orders, failed = false) {
       const list = find('[data-orders-' + type + ']');
       list.replaceChildren(...orders.map((order) => {
         const row = document.createElement('li');
-        row.textContent = [order.orderName, formatDate(dateOf(order)), label(order.status || order.billingAttemptStatus)].filter(Boolean).join(' · ');
+        const orderId = String(order.graphOrderId || order.orderId || '').split('/').pop();
+        const tax = type === 'past' && orderTaxes.get(orderId);
+        row.textContent = [order.orderName, formatDate(dateOf(order)), label(order.status || order.billingAttemptStatus), tax ? 'Tax ' + tax : ''].filter(Boolean).join(' · ');
         return row;
       }).filter((row) => row.textContent));
+      const message = find('[data-orders-' + type + '-status]');
+      message.hidden = list.childElementCount > 0;
+      message.textContent = failed ? 'Orders couldn’t be loaded. Refresh to try again.' :
+        type === 'upcoming' ? 'No scheduled orders.' : 'No past orders.';
+
     }
 
     function nextOrder() {
@@ -193,9 +229,9 @@
         throw new Error('Subscription details could not be verified.');
       }
       upcoming = orderList(next.value);
-      renderOrders('upcoming', upcoming);
+      renderOrders('upcoming', upcoming, next.status === 'rejected');
       const pastOrders = orderList(past.value);
-      renderOrders('past', pastOrders);
+      renderOrders('past', pastOrders, past.status === 'rejected');
       const title = contract.lines?.nodes?.map((line) => line.title).filter(Boolean).join(', ');
       if (title) select.selectedOptions[0].textContent = title + ' · #' + id;
       find('[data-contract-next-billing]').textContent = (contract.status === 'ACTIVE' && formatDate(contract.nextBillingDate)) || '—';
@@ -221,13 +257,11 @@
       }));
       for (const section of root.querySelectorAll('[data-contract-content]')) section.hidden = false;
 
-      const price = lines.length === 1 && lines[0].currentPrice;
-      if (price?.currencyCode && price.amount != null && Number.isFinite(Number(price.amount))) {
-        find('[data-contract-price]').textContent = new Intl.NumberFormat(undefined, {
-          style: 'currency', currency: price.currencyCode
-        }).format(Number(price.amount)) + ' per item';
-      }
-      const { discountPercent } = subscriptionPriceSummary(lines, referencePrices);
+      referencePrices = preview
+        ? new Map([['101', { amount: 67.99, currencyCode: 'USD' }], ['102', { amount: 44.99, currencyCode: 'USD' }]])
+        : await fetchOneTimePrices(lines, root.dataset.priceCountry).catch(() => new Map());
+      const { price, discountPercent } = subscriptionPriceSummary(lines, referencePrices);
+      find('[data-contract-price]').textContent = price || '—';
       find('[data-vip-price-perk]').textContent = discountPercent > 0
         ? discountPercent + '% off with your VIP rate' : 'Your special VIP rate';
       find('[data-vip-price-note]').textContent = discountPercent > 0
@@ -483,8 +517,7 @@
         status.textContent = 'No subscriptions were found for this account.';
         return;
       }
-      select.hidden = false;
-      find('[data-contract-label]').hidden = false;
+      select.hidden = select.options.length < 2;
       await loadContract();
       status.textContent = '';
     });
