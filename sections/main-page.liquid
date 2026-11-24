@@ -137,6 +137,35 @@
 #av-membership-{{ section.id }} input{font:inherit;border:1px solid #bacfb3;border-radius:8px;padding:12px;min-height:48px;width:100%;color:var(--m-dark);background:white}
 #av-membership-{{ section.id }} :focus-visible{outline:3px solid #7ca66d;outline-offset:3px}
 @media(max-width:760px){#av-membership-{{ section.id }} .av-m__wrap{width:calc(100% - 28px)}#av-membership-{{ section.id }} .av-m__hero{padding:37px 0 26px}#av-membership-{{ section.id }} .av-m__layout{grid-template-columns:1fr}#av-membership-{{ section.id }} .av-m__perks{grid-template-columns:1fr 1fr}#av-membership-{{ section.id }} .av-m__perks article{padding:16px}#av-membership-{{ section.id }} .av-m__account-grid{grid-template-columns:1fr}#av-membership-{{ section.id }} .av-m__help{align-items:stretch;flex-direction:column}#av-membership-{{ section.id }} .av-m__help a{width:100%}#av-membership-{{ section.id }} .av-m__facts{padding:14px;gap:12px}#av-membership-{{ section.id }} .av-m__actions button{padding:12px;min-height:105px}}
+
+/* Membership Test uses a normal document scroll, including in mobile theme preview. */
+html:has([data-membership-preview]):not([scroll-lock]),
+html:has([data-membership-preview]):not([scroll-lock]) body {
+  height:auto !important; min-height:100% !important; max-height:none !important;
+  overflow-y:visible !important;
+}
+html:has([data-membership-preview]):not([scroll-lock]) .page-wrapper {
+  height:auto !important; max-height:none !important; min-height:100svh;
+  overflow:visible !important; flex-shrink:0;
+}
+html:has([data-membership-preview]) #MainContent,
+html:has([data-membership-preview]) #MainContent > .shopify-section:has([data-membership-preview]),
+#av-membership-{{ section.id }} {
+  display:block; height:auto; max-height:none; min-height:0;
+  overflow:visible; flex-shrink:0;
+}
+#av-membership-{{ section.id }} .av-m__body {display:block;visibility:visible;opacity:1;min-height:0;padding-bottom:calc(64px + env(safe-area-inset-bottom,0px))}
+#av-membership-{{ section.id }} .av-m__layout,
+#av-membership-{{ section.id }} .av-m__benefits,
+#av-membership-{{ section.id }} .av-m__help {scroll-margin-top:calc(var(--header-group-height, 100px) + 20px)}
+@media(max-width:760px){
+  #av-membership-{{ section.id }} .av-m__hero{padding:27px 0 22px}
+  #av-membership-{{ section.id }} .av-m__hero h1{font-size:clamp(30px,8.5vw,42px)}
+  #av-membership-{{ section.id }} .av-m__hero p{font-size:16px;margin-bottom:12px}
+  #av-membership-{{ section.id }} .av-m__nav{margin:16px 0 12px;gap:6px}
+  #av-membership-{{ section.id }} .av-m__nav a{padding:9px 10px;font-size:13px}
+  #av-membership-{{ section.id }} .av-m__body{padding-top:24px}
+}
 </style>
 <script>
 (function(){
