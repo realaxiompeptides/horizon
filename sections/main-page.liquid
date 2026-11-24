@@ -6,7 +6,6 @@
       <h1>Welcome to your<br><span>subscriber dashboard.</span></h1>
       <p>Everything you need to manage your wellness routine, all in one place.</p>
       <div class="av-m__nav"><a href="#av-plan-{{ section.id }}"><i class="av-m__fa" aria-hidden="true">&#xf2bd;</i><span>My subscription</span></a><a href="#av-deliveries-{{ section.id }}"><i class="av-m__fa" aria-hidden="true">&#xf0d1;</i><span>Deliveries</span></a><a href="#av-billing-{{ section.id }}"><i class="av-m__fa" aria-hidden="true">&#xf09d;</i><span>Billing</span></a><a href="#av-benefits-{{ section.id }}"><i class="av-m__fa" aria-hidden="true">&#xf06b;</i><span>My benefits</span></a><a href="#av-help-{{ section.id }}"><i class="av-m__fa" aria-hidden="true">&#xf590;</i><span>Support</span></a></div>
-      <small class="av-m__notice">Private preview · No real billing changes.</small>
     </div>
   </div>
   <div class="av-m__wrap av-m__body">
@@ -36,7 +35,7 @@
           <button type="button" data-action="frequency"><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf021;</i></span><strong>Change frequency</strong><small>Find your ideal timing</small></button>
           <button type="button" data-action="pause"><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf04c;</i></span><strong>Pause membership</strong><small>Take a temporary break</small></button>
         </div>
-        <div class="av-m__manage"><button type="button" data-action="resume" hidden>Resume subscription</button><button type="button" data-action="review">Review membership options</button><button type="button" data-action="cancel-start">Cancel subscription</button></div>
+        <div class="av-m__manage"><button type="button" data-action="resume" hidden>Resume subscription</button><button type="button" data-action="cancel-start">Cancel subscription</button></div>
       </div>
       <aside class="av-m__card av-m__summary">
         <div class="av-m__kicker">SUBSCRIBER PERKS</div>
@@ -319,7 +318,7 @@ if(!dialog.open)dialog.showModal();dialog.scrollTop=0;
 function show(mode){
 if(mode==='review'||mode==='cancel-start'){reviewStep=0;reason='';detail='';renderReview(0);return}
 dialog.classList.remove('av-m__review-dialog');content.replaceChildren();feedback.textContent='';
-const modes={skip:['Skip next order','Skip your upcoming shipment and resume on your regular schedule.'],date:['Reschedule delivery','Choose a new date for your upcoming order.'],frequency:['Change delivery frequency','Choose a schedule that suits your routine.'],pause:['Pause membership','Select how long you would like to pause deliveries.'],resume:['Resume subscription','Resume scheduled deliveries.'],review:['Your membership options','Explore subscriber pricing, shipping benefits and flexible delivery choices.'],cancel:['Confirm cancellation','Your subscription will stop renewing.'],address:['Edit shipping address','Update the address for your future subscription deliveries.'],payment:['Update payment method','Choose a preset payment method. No real card details are required.'],retry:['Retry payment','Retry the failed renewal using your updated payment method.']};
+const modes={skip:['Skip next order','Skip your upcoming shipment and resume on your regular schedule.'],date:['Reschedule delivery','Choose a new date for your upcoming order.'],frequency:['Change delivery frequency','Choose a schedule that suits your routine.'],pause:['Pause membership','Select how long you would like to pause deliveries.'],resume:['Resume subscription','Resume scheduled deliveries.'],review:['Your membership options','Explore subscriber pricing, shipping benefits and flexible delivery choices.'],cancel:['Confirm cancellation','Your subscription will stop renewing.'],address:['Edit shipping address','Update the address for your future subscription deliveries.'],payment:['Update payment method','Add a fictional test card to simulate updating your payment method. Do not enter real card information.'],retry:['Retry payment','Retry the failed renewal using your updated payment method.']};
 if(mode==='fail'){if(state!=='Cancelled'&&payment==='ready'){payment='failed';history.unshift(['Renewal attempt',dateLabel(new Date())+' · $34.99','Payment failed']);update();show('payment')}return}
 const m=modes[mode];if(!m)return;title.textContent=m[0];desc.textContent=m[1];
 if(mode==='skip')content.append(button('Confirm skip',()=>{nextDate=addDays(nextDate,frequency);complete('Upcoming shipment skipped.')}));
@@ -339,7 +338,15 @@ const save=document.createElement('button');save.type='submit';save.className='a
 form.addEventListener('submit',e=>{e.preventDefault();if(!form.reportValidity())return;const next={};fields.forEach(([key])=>next[key]=controls[key].value.trim());if(fields.some(([key,,required])=>required&&!next[key])){feedback.textContent='Please complete the required address fields.';return}address=next;complete('Shipping address updated for future deliveries.')});
 content.append(form);
 }
-if(mode==='payment')['1111','5556'].forEach(n=>content.append(button('Visa ending in '+n,()=>{card=n;if(payment!=='ready')payment='updated';complete('Payment method updated.');if(payment==='updated')content.append(button('Retry payment',()=>show('retry')))})));
+if(mode==='payment'){
+const form=document.createElement('form');form.className='av-m__address-form';form.autocomplete='off';
+const wrap=document.createElement('label');wrap.className='av-m__address-field av-m__full';const caption=document.createElement('span');caption.textContent='Test card ending in (4 fictional digits)';
+const input=document.createElement('input');input.type='text';input.inputMode='numeric';input.pattern='[0-9]{4}';input.maxLength=4;input.required=true;input.autocomplete='off';input.placeholder='1234';wrap.append(caption,input);
+const note=document.createElement('p');note.className='av-m__address-note av-m__full';note.textContent='Simulation only. No card number, expiration date or security code is collected, and no payment is processed.';
+const save=document.createElement('button');save.type='submit';save.className='av-m__button av-m__full';save.textContent='Update payment method';form.append(wrap,note,save);
+form.addEventListener('submit',e=>{e.preventDefault();if(!form.reportValidity())return;card=input.value;if(payment!=='ready')payment='updated';complete('Test payment method updated.');if(payment==='updated')content.append(button('Retry payment',()=>show('retry')))});
+content.append(form);
+}
 if(mode==='retry'){if(payment==='updated'&&state!=='Cancelled')content.append(button('Confirm payment retry',()=>{payment='ready';history.unshift(['Renewal retry',dateLabel(new Date())+' · $34.99','Payment successful']);complete('Payment successful. Your next delivery is scheduled.')}));else content.append(button('Update payment method',()=>show('payment')))}
 if(!dialog.open)dialog.showModal();dialog.scrollTop=0;
 }
