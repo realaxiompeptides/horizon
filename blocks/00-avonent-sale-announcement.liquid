@@ -37,24 +37,31 @@
 
             const parts = ['hours', 'minutes', 'seconds'].map(unit => timer.querySelector('[data-bf-' + unit + ']'));
             const storageKey = 'avonent_vip_black_friday_2026_countdown_v2';
-            const initialSeconds = 6300 + Math.floor(Math.random() * 901);
-            let endTime = Date.now() + initialSeconds * 1000;
-            try {
-              const savedEndTime = Number(localStorage.getItem(storageKey));
-              if (Number.isFinite(savedEndTime) && savedEndTime > 0) {
-                endTime = savedEndTime;
-              } else {
-                localStorage.setItem(storageKey, String(endTime));
-              }
-            } catch {}
+            const getEndTime = now => {
+              try {
+                const savedEndTime = Number(localStorage.getItem(storageKey));
+                if (Number.isFinite(savedEndTime) && savedEndTime > now) return savedEndTime;
+              } catch {}
+
+              const durationSeconds = 6300 + Math.floor(Math.random() * 901);
+              const nextEndTime = now + durationSeconds * 1000;
+              try {
+                localStorage.setItem(storageKey, String(nextEndTime));
+              } catch {}
+              return nextEndTime;
+            };
+
+            let endTime = getEndTime(Date.now());
 
             const tick = () => {
               if (!root.isConnected) return;
-              const remaining = Math.max(0, Math.ceil((endTime - Date.now()) / 1000));
-              timer.hidden = false;
+              const now = Date.now();
+              if (endTime <= now) endTime = getEndTime(now);
+              const remaining = Math.ceil((endTime - now) / 1000);
               const digits = [Math.floor(remaining / 3600), Math.floor(remaining / 60) % 60, remaining % 60];
               parts.forEach((part, index) => { part.textContent = String(digits[index]).padStart(2, '0'); });
-              if (remaining > 0) window.setTimeout(tick, 1000);
+              timer.hidden = false;
+              window.setTimeout(tick, (endTime - now) % 1000 || 1000);
             };
             tick();
           })();
