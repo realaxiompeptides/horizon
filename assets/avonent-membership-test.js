@@ -62,13 +62,13 @@
     const money = new Intl.NumberFormat(undefined, { style: 'currency', currency });
     const savings = hasBase && base > total && money.format(base - total) !== money.format(0)
       ? new Intl.NumberFormat('en-US', { style: 'currency', currency, currencyDisplay: 'code' }).format(base - total) : '';
-    return { price: money.format(total), savings };
+    return { price: money.format(total), savings, discountPercent: savings ? Math.floor((base - total) / base * 100 + Number.EPSILON) : 0 };
   }
 
   function createPreviewRequest() {
     const day = (offset) => new Date(Date.now() + offset * 86400000).toISOString();
     const subscriptions = new Map(['101', '102'].map((id) => [id, {
-      id, status: 'ACTIVE', nextBillingDate: day(7),
+      id, status: 'ACTIVE', nextBillingDate: day(7), lastPaymentStatus: id === '102' ? 'FAILED' : 'SUCCEEDED',
       deliveryPolicy: { interval: 'MONTH', intervalCount: 1 },
       customerPaymentMethod: { instrument: { __typename: 'CustomerCreditCard' } },
       deliveryMethod: { __typename: 'SubscriptionDeliveryMethodShipping', address: {} },
@@ -83,7 +83,9 @@
       if (path === 'subscription-customers/valid/1') return [...subscriptions.keys()];
       if (path.startsWith('subscription-contracts/contract-external/')) return subscriptions.get(path.split('/').pop());
       if (path === 'subscription-billing-attempts/top-orders') return orders.get(params.contractId);
-      if (path === 'subscription-billing-attempts/past-orders') return [{ orderName: 'Sample order', billingDate: day(-23), status: 'SUCCESS' }];
+      if (path === 'subscription-billing-attempts/past-orders') return params.contractId === '102'
+        ? [{ billingDate: day(-1), status: 'FAILED', errorCode: 'INSUFFICIENT_FUNDS' }]
+        : [{ orderName: 'Sample order', billingDate: day(-23), status: 'SUCCESS' }];
       const subscription = subscriptions.get(params.contractId || params.subscriptionContractId);
       if (method === 'PUT' && subscription) {
         if (path === 'subscription-contracts-update-status') subscription.status = params.status;
@@ -105,6 +107,11 @@
     const find = (selector) => root.querySelector(selector);
     const preview = new URLSearchParams(location.search).get('preview-subscription') === '1';
     const request = preview ? createPreviewRequest() : appstleRequest;
+    const catalog = find('[data-subscription-price-catalog]');
+    const referencePrices = preview
+      ? new Map(['101', '102'].map(id => [id, { amount: 44.99, currencyCode: 'USD' }]))
+      : new Map([...catalog.content.querySelectorAll('[data-variant]')].map(({dataset}) =>
+        [dataset.variant, { amount: dataset.price, currencyCode: root.dataset.priceCurrency }]));
     find('[data-subscription-preview]').hidden = !preview;
     const status = find('[data-appstle-status]');
     const select = find('[data-contract]');
@@ -158,11 +165,13 @@
         address: (active || paused) && shipping && settings.changeShippingAddressFlag === true,
         payment: (active || paused) && settings.hidePaymentMethodEdit !== true
       };
+      find('[data-cancellation-settings]').hidden = !enabled.cancel;
       for (const button of actions) button.disabled = busy || !enabled[button.dataset.subscriptionAction];
     }
 
     async function loadContract() {
       contract = undefined;
+      find('[data-payment-alert]').hidden = true;
       for (const section of root.querySelectorAll('[data-contract-content]')) section.hidden = true;
       upcoming = [];
       renderOrders('upcoming', []);
@@ -185,7 +194,8 @@
       }
       upcoming = orderList(next.value);
       renderOrders('upcoming', upcoming);
-      renderOrders('past', orderList(past.value));
+      const pastOrders = orderList(past.value);
+      renderOrders('past', pastOrders);
       const title = contract.lines?.nodes?.map((line) => line.title).filter(Boolean).join(', ');
       if (title) select.selectedOptions[0].textContent = title + ' · #' + id;
       find('[data-contract-next-billing]').textContent = (contract.status === 'ACTIVE' && formatDate(contract.nextBillingDate)) || '—';
@@ -217,8 +227,26 @@
           style: 'currency', currency: price.currencyCode
         }).format(Number(price.amount)) + ' per item';
       }
-      find('[data-contract-billing-status]').textContent =
-        contract.lastPaymentStatus === 'FAILED' ? 'Payment failed' : label(contract.status) || '—';
+      const { discountPercent } = subscriptionPriceSummary(lines, referencePrices);
+      find('[data-vip-price-perk]').textContent = discountPercent > 0
+        ? discountPercent + '% off with your VIP rate' : 'Your special VIP rate';
+      find('[data-vip-price-note]').textContent = discountPercent > 0
+        ? 'Compared with buying the same items one time at today’s prices.'
+        : 'See your current rate in Subscription details.';
+      const paymentFailed = contract.lastPaymentStatus === 'FAILED';
+      find('[data-contract-billing-status]').textContent = paymentFailed ? 'Payment failed' : label(contract.status) || '—';
+      if (paymentFailed && contract.status === 'ACTIVE') {
+        const latestAttempt = [...pastOrders, ...upcoming].filter(order =>
+          ['FAILED', 'FAILURE', 'SUCCESS', 'SUCCEEDED'].includes(order.status || order.billingAttemptStatus) &&
+          Number.isFinite(Date.parse(order.attemptTime || dateOf(order)))
+        ).sort((left, right) => Date.parse(right.attemptTime || dateOf(right)) - Date.parse(left.attemptTime || dateOf(left)))[0];
+        const insufficient = ['FAILED', 'FAILURE'].includes(latestAttempt?.status || latestAttempt?.billingAttemptStatus) &&
+          latestAttempt.errorCode === 'INSUFFICIENT_FUNDS';
+        find('[data-payment-failure]').textContent = insufficient
+          ? 'Your card has insufficient funds.'
+          : 'We couldn’t process your latest renewal payment.';
+        find('[data-payment-alert]').hidden = false;
+      }
     }
 
     async function run(task, element = status) {
@@ -270,11 +298,6 @@
       const back = dialog.querySelector('[data-cancel-back]');
       const history = [];
       const lines = contract.lines?.nodes || [];
-      const catalog = find('[data-subscription-price-catalog]');
-      const referencePrices = preview
-        ? new Map(['101', '102'].map(id => [id, { amount: 44.99, currencyCode: 'USD' }]))
-        : new Map([...catalog.content.querySelectorAll('[data-variant]')].map(({dataset}) =>
-          [dataset.variant, { amount: dataset.price, currencyCode: root.dataset.priceCurrency }]));
       const { price, savings } = subscriptionPriceSummary(lines, referencePrices);
       const priceTag = dialog.querySelector('[data-cancel-price]');
       const savingsTag = dialog.querySelector('[data-cancel-savings]');

@@ -52,6 +52,10 @@
           <div><span>Subscription pricing</span><strong data-contract-price>—</strong></div>
           <div><span>Billing status</span><strong data-contract-billing-status>—</strong></div>
         </div>
+        <div class="av-m__payment-alert" data-payment-alert hidden>
+          <div><strong>Payment failed</strong><p data-payment-failure></p></div>
+          <button type="button" class="av-m__button" data-subscription-action="payment" disabled>Update payment</button>
+        </div>
         <h4>Manage your next delivery</h4>
         <div class="av-m__actions">
           <button type="button" data-subscription-action="skip" disabled><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf064;</i></span><strong>Skip next order</strong><small>Skip one shipment</small></button>
@@ -59,14 +63,14 @@
           <button type="button" data-subscription-action="frequency" disabled><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf021;</i></span><strong>Change frequency</strong><small>Unavailable for this test</small></button>
           <button type="button" data-subscription-action="pause" disabled><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf04c;</i></span><strong>Pause membership</strong><small>Take a temporary break</small></button>
         </div>
-        <div class="av-m__manage"><button type="button" data-subscription-action="resume" disabled>Resume subscription</button><button type="button" data-subscription-action="cancel" disabled>Cancel subscription</button></div>
+        <div class="av-m__manage"><button type="button" data-subscription-action="resume" disabled>Resume subscription</button></div>
       </div>
       </div>
       <aside class="av-m__card av-m__summary" data-contract-content hidden>
         <div class="av-m__kicker">SUBSCRIBER PERKS</div>
         <h3>Your VIP membership perks.</h3>
         <p>Enjoy extra value, exclusive opportunities and more flexibility than a standard one-time order.</p>
-        <ul><li><strong>Exclusive subscriber pricing</strong><span>Unlock the recurring price on your subscribed products.</span></li><li><strong>VIP sale access</strong><span>Enjoy exclusive VIP sales and early access to promotions.</span></li><li><strong>Special member offers</strong><span>Discover eligible promotions, bundles and product savings.</span></li><li><strong>Free shipping on all recurring orders</strong><span>Free shipping on all recurring orders.</span></li><li><strong>Automatic refills</strong><span>Keep your routine stocked with scheduled deliveries.</span></li><li><strong>Skip or pause anytime</strong><span>Take a break or skip a shipment when you need to.</span></li></ul>
+        <ul><li><strong data-vip-price-perk>VIP subscriber pricing</strong><span data-vip-price-note>Your current rate is shown in Subscription details.</span></li><li><strong>VIP sales and early access</strong><span>Get early access to new products and subscriber promotions.</span></li><li><strong>Special member offers</strong><span>Discover eligible promotions, bundles and product savings.</span></li><li><strong>Free shipping on all recurring orders</strong><span>Free shipping on all recurring orders.</span></li><li><strong>Automatic refills</strong><span>Keep your routine stocked with scheduled deliveries.</span></li><li><strong>Skip or pause anytime</strong><span>Take a break or skip a shipment when you need to.</span></li></ul>
       </aside>
     </div>
     <div class="av-m__deliveries" data-contract-content hidden id="av-deliveries-{{ section.id }}">
@@ -78,7 +82,7 @@
       <div class="av-m__kicker">MADE FOR YOUR ROUTINE</div><h2>Make the most of your membership.</h2><p>Discover the exclusive benefits of your AVONENT membership. </p>
       <div class="av-m__perks">
         <article><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf02b;</i></span><h3>Exclusive subscriber pricing</h3><p>Unlock the recurring price on your subscribed products.</p></article>
-        <article><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf521;</i></span><h3>VIP sale access</h3><p>Enjoy exclusive VIP sales and early access to promotions.</p></article>
+        <article><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf521;</i></span><h3>VIP sales and new products</h3><p>Get early access to new products and subscriber promotions.</p></article>
         <article><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf06b;</i></span><h3>Special member offers</h3><p>Discover eligible promotions, bundles and product savings.</p></article>
         <article><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf0d1;</i></span><h3>Free shipping on all recurring orders</h3><p>Free shipping on all recurring orders.</p></article>
         <article><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf466;</i></span><h3>Automatic refills</h3><p>Keep your routine stocked with scheduled deliveries.</p></article>
@@ -132,8 +136,8 @@
         <div class="av-m__cancel-step" data-cancel-step="start">
           <p>Here’s what comes with your current subscription.</p>
           <ul class="av-m__retention-benefits">
-            <li><strong>Your current subscriber price</strong><span>Canceling ends your current subscription pricing. If you rejoin, the price available at that time applies.</span></li>
-            <li><strong>VIP sales and special offers</strong><span>Get access to subscriber offers and early promotions.</span></li>
+            <li><strong>Your special VIP rate</strong><span>Keeping this subscription preserves your current plan. If you rejoin later, the rate available at that time applies.</span></li>
+            <li><strong>VIP sales and special offers</strong><span>Get early access to new products and subscriber offers.</span></li>
             <li><strong>Flexible deliveries</strong><span>Skip an eligible order when you already have enough.</span></li>
           </ul>
           <div class="av-m__cancel-actions">
@@ -223,6 +227,10 @@
       </form>
     </dialog>
     <div class="av-m__help" id="av-help-{{ section.id }}"><div><div class="av-m__kicker">WE'RE HERE FOR YOU</div><h2>Need a hand?</h2><p>Get help with your deliveries, subscription or account.</p></div><a class="av-m__button av-m__outline" href="/pages/contact">Contact support</a></div>
+    <section class="av-m__card av-m__cancellation-settings" data-cancellation-settings hidden>
+      <div><h3>Cancel subscription</h3><p>Stop future renewals for this subscription.</p></div>
+      <button type="button" class="av-m__button av-m__outline" data-subscription-action="cancel" disabled>Cancel subscription</button>
+    </section>
   </div>
 </section>
 {% endif %}
@@ -469,6 +477,11 @@ html:has([data-membership-preview]) #MainContent > .shopify-section:has([data-me
 #av-membership-{{ section.id }} [data-cancel-dialog] .av-m__cancel-plan{align-items:center;padding:12px 14px}
 #av-membership-{{ section.id }} [data-cancel-dialog] .av-m__cancel-reasons label{font-size:15px;font-weight:600;line-height:1.35}
 #av-membership-{{ section.id }} [data-cancel-dialog] [data-preview-next]{width:100%}
+#av-membership-{{ section.id }} .av-m__payment-alert[hidden],#av-membership-{{ section.id }} .av-m__cancellation-settings[hidden]{display:none!important}
+#av-membership-{{ section.id }} .av-m__payment-alert{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;background:var(--m-dark);color:white;border-radius:12px;padding:14px 16px;margin-top:18px}
+#av-membership-{{ section.id }} .av-m__payment-alert p,#av-membership-{{ section.id }} .av-m__cancellation-settings p{margin:3px 0 0}
+#av-membership-{{ section.id }} .av-m__payment-alert .av-m__button{background:white;color:var(--m-dark)}
+#av-membership-{{ section.id }} .av-m__cancellation-settings{margin-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
 </style>
 
 {% else %}
