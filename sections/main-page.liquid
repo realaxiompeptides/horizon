@@ -2,26 +2,24 @@
 {% assign membership_dashboard_url = routes.root_url | append: '/pages/membership-test' | replace: '//pages/', '/pages/' %}
 {% assign membership_sign_in_url = routes.root_url | append: '/pages/membership-test-sign-in' | replace: '//pages/', '/pages/' %}
 {% if page.handle == 'membership-test-sign-in' or customer == blank %}
-<section id="av-membership-{{ section.id }}" class="av-membership" data-membership-preview data-appstle-membership>
-  <div class="av-m__wrap av-m__body">
-    <div class="av-m__card">
-      <div class="av-m__kicker">AVONENT · MEMBERSHIP</div>
-      <h1>Subscription sign-in</h1>
+<section id="av-membership-{{ section.id }}" class="av-membership av-m__sign-in" data-membership-preview data-appstle-membership>
+  <div class="av-m__wrap">
+    <nav class="av-m__sign-in-nav" aria-label="Customer account">
+      <a href="{{ routes.account_url }}">My account</a>
+    </nav>
+    <div class="av-m__sign-in-panel">
+      <h1>Manage your subscription</h1>
       {% if customer %}
-        <a class="av-m__button av-m__outline" href="{{ membership_dashboard_url | escape }}">Open your dashboard</a>
-      {% elsif page.handle == 'membership-test-sign-in' %}
-        <p>Use your subscription email. Shopify will email you a one-time code and return you to your dashboard after sign-in.</p>
-        <a class="av-m__button av-m__outline" href="/customer_authentication/login?return_to={{ membership_dashboard_url | url_encode }}">Continue to email sign-in</a>
-        <form method="post" data-appstle-email-link>
+        <a class="av-m__button" href="{{ membership_dashboard_url | escape }}">Open your subscription dashboard</a>
+      {% else %}
+        <p>Enter the email you used for your subscription. Appstle will send a secure link to manage it.</p>
+        <form method="post" class="av-m__sign-in-form" data-appstle-email-link>
           <label for="av-subscription-email-{{ section.id }}">Subscription email</label>
-          <input id="av-subscription-email-{{ section.id }}" name="email" type="email" autocomplete="email" maxlength="254" required>
-          <button class="av-m__button av-m__outline" type="submit" disabled>Email me an Appstle link</button>
-          <p>The emailed link opens the Appstle portal.</p>
+          <input id="av-subscription-email-{{ section.id }}" name="email" type="email" autocomplete="email" maxlength="254" placeholder="you@example.com" required>
+          <button class="av-m__button" type="submit" disabled>Email me a link</button>
           <p role="status" data-appstle-email-status></p>
         </form>
-      {% else %}
-        <p>Sign in to see your subscriptions.</p>
-        <a class="av-m__button av-m__outline" href="{{ membership_sign_in_url | escape }}">Sign in</a>
+        <a class="av-m__shopify-sign-in" href="/customer_authentication/login?return_to={{ membership_dashboard_url | url_encode }}">Sign in with Shopify to open your Avonent dashboard</a>
       {% endif %}
     </div>
   </div>
@@ -125,6 +123,16 @@
 {% endif %}
 <script src="{{ 'avonent-membership-test.js' | asset_url }}" defer></script>
 <style>
+#av-membership-{{ section.id }}.av-m__sign-in{min-height:64vh;background:#fff;padding:24px 0 64px}
+#av-membership-{{ section.id }} .av-m__sign-in-nav{text-align:right}
+#av-membership-{{ section.id }} .av-m__sign-in-panel{margin:clamp(36px,8vw,88px) auto 0;max-width:520px;padding:clamp(22px,5vw,38px);background:var(--m-sage);border:1px solid var(--m-line);border-radius:18px;text-align:center}
+#av-membership-{{ section.id }} .av-m__sign-in-panel h1{font-size:clamp(29px,5vw,42px);margin-bottom:14px}
+#av-membership-{{ section.id }} .av-m__sign-in-form{display:grid;gap:10px;margin:24px 0 16px;text-align:left}
+#av-membership-{{ section.id }} .av-m__sign-in-form label{font-size:14px;font-weight:700}
+#av-membership-{{ section.id }} .av-m__sign-in-form input{width:100%;min-height:48px;border:1px solid var(--m-line);border-radius:10px;padding:10px 13px;background:#fff;color:var(--m-dark);font:inherit;font-size:16px}
+#av-membership-{{ section.id }} .av-m__sign-in-form .av-m__button{margin-top:4px}
+#av-membership-{{ section.id }} .av-m__sign-in-form [role="status"]{margin:0}
+#av-membership-{{ section.id }} .av-m__shopify-sign-in{color:var(--m-green);font-size:14px;font-weight:700;text-underline-offset:3px}
 #av-membership-{{ section.id }}{--m-dark:#0B2637;--m-green:#00647A;--m-accent:#02C6EA;--m-sage:#EAF9FC;--m-line:#CBE8EF;color:var(--m-dark);background:#F5FAFC;line-height:1.5;font-family:inherit}
 #av-membership-{{ section.id }} *{box-sizing:border-box}
 #av-membership-{{ section.id }} .av-m__wrap{width:min(1120px,100% - 40px);margin:auto}
