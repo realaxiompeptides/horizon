@@ -41,12 +41,12 @@
       event.preventDefault();
       if (button.disabled || !form.reportValidity()) return;
       button.disabled = true;
-      status.textContent = '';
+      status.textContent = 'Requesting your link…';
       try {
         await request('subscription-contracts-email-magic-link', {
           email: form.elements.email.value.trim()
         });
-        status.textContent = 'If this address has subscriptions, check your inbox for an Appstle link.';
+        status.textContent = 'If this email is linked to a subscription, check your inbox for a secure link to the Appstle portal.';
       } catch {
         status.textContent = 'The request could not be completed. Try again shortly or continue with Shopify sign-in.';
       } finally {
