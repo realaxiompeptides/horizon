@@ -1,7 +1,7 @@
 (() => {
   const base = '/apps/subscriptions/cp/api/';
 
-  async function request(path, params = {}, method = 'GET', body) {
+  async function appstleRequest(path, params = {}, method = 'GET', body) {
     const url = new URL(base + path, location.origin);
     url.search = new URLSearchParams(params);
     const options = { method, credentials: 'same-origin', cache: 'no-store', redirect: 'error' };
@@ -41,8 +41,47 @@
   const dateOf = (order) => order.billingDate || order.orderDate;
   const orderList = (data) => Array.isArray(data) ? data : Array.isArray(data?.content) ? data.content : [];
 
+  function createPreviewRequest() {
+    const day = (offset) => new Date(Date.now() + offset * 86400000).toISOString();
+    const subscriptions = new Map(['101', '102'].map((id) => [id, {
+      id, status: 'ACTIVE', nextBillingDate: day(7),
+      deliveryPolicy: { interval: 'MONTH', intervalCount: 1 },
+      customerPaymentMethod: { instrument: { __typename: 'CustomerCreditCard' } },
+      deliveryMethod: { __typename: 'SubscriptionDeliveryMethodShipping', address: {} },
+      lines: { nodes: [{ title: id === '101' ? 'Sample Black Walnut Drops' : 'Sample Soursop Softgels', quantity: 1, currentPrice: { amount: 34.99, currencyCode: 'USD' } }] }
+    }]));
+    const orders = new Map([...subscriptions.keys()].map((id) => [id, [7, 37, 67].map((offset, index) => ({
+      id: String(index + 1), billingDate: day(offset), status: 'QUEUED'
+    }))]));
+    return async (path, params = {}, method = 'GET', body) => {
+      if (path === 'logged-in-customer') return 1;
+      if (path.startsWith('customer-portal-settings/')) return { pauseResumeSub: true, resumeSub: true, cancelSub: true, changeShippingAddressFlag: true };
+      if (path === 'subscription-customers/valid/1') return [...subscriptions.keys()];
+      if (path.startsWith('subscription-contracts/contract-external/')) return subscriptions.get(path.split('/').pop());
+      if (path === 'subscription-billing-attempts/top-orders') return orders.get(params.contractId);
+      if (path === 'subscription-billing-attempts/past-orders') return [{ orderName: 'Sample order', billingDate: day(-23), status: 'SUCCESS' }];
+      const subscription = subscriptions.get(params.contractId || params.subscriptionContractId);
+      if (method === 'PUT' && subscription) {
+        if (path === 'subscription-contracts-update-status') subscription.status = params.status;
+        else if (path === 'subscription-contracts-update-shipping-address') subscription.deliveryMethod.address = body;
+        else if (path.startsWith('subscription-billing-attempts/skip-order/')) {
+          const schedule = orders.get(subscription.id);
+          schedule.find(order => order.id === path.split('/').pop()).status = 'SKIPPED';
+          subscription.nextBillingDate = schedule.find(order => order.status === 'QUEUED')?.billingDate;
+        } else if (path !== 'subscription-contracts-update-payment-method') {
+          throw new Error('This action is unavailable in the preview.');
+        }
+        return null;
+      }
+      throw new Error('This action is unavailable in the preview.');
+    };
+  }
+
   async function setupDashboard(root) {
     const find = (selector) => root.querySelector(selector);
+    const preview = new URLSearchParams(location.search).get('preview-subscription') === '1';
+    const request = preview ? createPreviewRequest() : appstleRequest;
+    find('[data-subscription-preview]').hidden = !preview;
     const status = find('[data-appstle-status]');
     const select = find('[data-contract]');
     const actions = [...root.querySelectorAll('[data-subscription-action]')];
@@ -252,7 +291,7 @@
         if (!window.confirm('Email a secure payment update link for this subscription?')) return;
         await run(async () => {
           await request('subscription-contracts-update-payment-method', params, 'PUT');
-          status.textContent = 'Check your inbox for Shopify’s payment update link.';
+          status.textContent = preview ? 'Preview complete. No email was sent.' : 'Check your inbox for Shopify’s payment update link.';
         });
         return;
       }
