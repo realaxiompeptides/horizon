@@ -96,19 +96,32 @@
     </div>
     <dialog class="av-m__dialog" data-cancel-dialog aria-labelledby="av-cancel-title-{{ section.id }}">
       <form method="dialog" class="av-m__modal av-m__cancel-panel">
-        <h2 id="av-cancel-title-{{ section.id }}">Cancel your subscription?</h2>
-        <p>Cancel to stop future renewals. Orders already placed are handled separately.</p>
-        <p data-cancel-skip-note hidden></p>
-        <div class="av-m__cancel-actions">
-          <button type="submit" value="skip" class="av-m__button av-m__outline" hidden>Skip next order instead</button>
+        <h2 id="av-cancel-title-{{ section.id }}" tabindex="-1" autofocus>Before you go</h2>
+        <div class="av-m__cancel-step" data-cancel-step="start">
+          <p>You can review your delivery options or continue to cancellation.</p>
+          <div class="av-m__cancel-actions">
+            <button type="button" class="av-m__button av-m__outline" data-cancel-next="review">Review my options</button>
+            <button type="button" class="av-m__button" data-cancel-next="confirm">Continue to cancellation</button>
+          </div>
+        </div>
+        <div class="av-m__cancel-step" data-cancel-step="review" hidden>
+          <p>If you have enough product for now, you can skip your next scheduled order.</p>
+          <p data-cancel-skip-note hidden></p>
+          <div class="av-m__cancel-actions">
+            <button type="submit" value="skip" class="av-m__button av-m__outline" hidden>Skip next order</button>
+            <button type="button" class="av-m__button" data-cancel-next="confirm">Continue to cancellation</button>
+          </div>
+        </div>
+        <div class="av-m__cancel-step" data-cancel-step="confirm" hidden>
+          <p>Cancel to stop future renewals. Orders already placed are handled separately.</p>
           <button type="submit" value="cancel" class="av-m__button">Confirm cancellation</button>
         </div>
-        <button type="submit" value="keep" class="av-m__button av-m__outline" autofocus>Keep subscription</button>
+        <button type="submit" value="keep" class="av-m__button av-m__outline">Keep subscription</button>
       </form>
     </dialog>
     <dialog class="av-m__dialog" data-address-dialog aria-label="Manage shipping address">
       <form class="av-m__modal av-m__address-form" method="post" data-address-form>
-        <h2 class="av-m__full">Manage shipping address</h2>
+        <h2 class="av-m__full" tabindex="-1" autofocus>Manage shipping address</h2>
         <label>First name<input name="firstName" autocomplete="given-name" required></label>
         <label>Last name<input name="lastName" autocomplete="family-name" required></label>
         <label class="av-m__full">Street address<input name="address1" autocomplete="address-line1" required></label>
@@ -340,6 +353,12 @@ html:has([data-membership-preview]) #MainContent > .shopify-section:has([data-me
 #av-membership-{{ section.id }} .av-m__training-grid p{margin:8px 0}
 #av-membership-{{ section.id }} .av-m__training-grid small{display:block;color:var(--m-green);font-weight:650}
 @media(max-width:760px){#av-membership-{{ section.id }} .av-m__training-grid{grid-template-columns:1fr}}
+#av-membership-{{ section.id }} .av-m__cancel-step{display:grid;gap:14px}
+#av-membership-{{ section.id }} .av-m__cancel-step[hidden],#av-membership-{{ section.id }} .av-m__cancel-panel [hidden]{display:none!important}
+#av-membership-{{ section.id }} [data-address-dialog]{width:min(520px,calc(100% - 24px));max-width:calc(100% - 24px);max-height:calc(100dvh - 24px);overflow:auto;overscroll-behavior:contain}
+#av-membership-{{ section.id }} .av-m__address-form label{min-width:0}
+#av-membership-{{ section.id }} .av-m__address-form input{width:100%;min-width:0;font-size:16px}
+@media(max-width:480px){#av-membership-{{ section.id }} .av-m__address-form{grid-template-columns:minmax(0,1fr)}}
 </style>
 
 {% else %}
