@@ -16,7 +16,7 @@
   <div class="av-hub__wrap av-hub__body" id="av-options-{{ section.id }}">
     <span class="av-hub__eyebrow">LET'S FIND THE RIGHT FIT</span>
     <h2>What would you like to change?</h2>
-    <p>Choose a reason to see an alternative, or go straight to cancellation.</p>
+    <p>Tell us what is not working for you, and we’ll show you options that fit your routine.</p>
     <div class="av-hub__reasons" role="group" aria-label="Optional reasons">
       <button data-reason="stock" aria-pressed="true">I have too much product</button>
       <button data-reason="price" aria-pressed="false">It's too expensive</button>
@@ -41,7 +41,7 @@
       <p>✓ &nbsp; Choose a schedule that works for you.</p>
       <p>✓ &nbsp; Cancel whenever you choose.</p>
     </div>
-    <div class="av-hub__bottom"><h3>Ready to cancel?</h3><p>You can cancel without answering any questions or accepting an offer.</p><button class="av-hub__btn av-hub__primary" data-open="guided">Explore cancellation options</button><button class="av-hub__btn av-hub__plain" data-reset>Reset preview</button></div>
+    <div class="av-hub__bottom"><h3>Ready to cancel?</h3><p>You can cancel without answering any questions or accepting an offer.</p><button class="av-hub__btn av-hub__primary" data-open="guided">Review membership options</button><button class="av-hub__btn av-hub__plain" data-open="cancel">Cancel subscription</button><button class="av-hub__reset-link" data-reset>Reset preview</button></div>
   </div>
   <dialog class="av-hub__dialog" aria-labelledby="av-dialog-title-{{ section.id }}">
     <div class="av-hub__modal">
@@ -52,8 +52,8 @@
       <div class="av-hub__account"><strong>Black Walnut Drops</strong><span>Recurring subscription</span><span data-status>Active · Every 30 days</span></div>
       <div data-modal-actions></div>
       <p class="av-hub__fine" data-message role="status"></p>
-      <button class="av-hub__btn av-hub__plain" data-act="cancel">Cancel subscription now</button>
-      <button class="av-hub__btn av-hub__plain" data-reset>Reset preview</button>
+      <div class="av-hub__cancel-tools" data-cancel-tools><button class="av-hub__btn av-hub__plain" data-act="guided-start">Review my membership options</button><button class="av-hub__btn av-hub__plain" data-act="cancel-confirm">Cancel subscription</button></div>
+      <button class="av-hub__reset-link" data-reset>Reset preview</button>
       <p class="av-hub__fine">Preview only · No actual billing changes.</p>
     </div>
   </dialog>
@@ -104,12 +104,27 @@
 #av-hub-{{ section.id }} [data-modal-actions]{display:grid;gap:10px}
 #av-hub-{{ section.id }} :focus-visible{outline:3px solid #8aaa77;outline-offset:3px}
 @media(max-width:640px){#av-hub-{{ section.id }} .av-hub__wrap{padding-inline:16px}#av-hub-{{ section.id }} .av-hub__hero{padding-top:42px}#av-hub-{{ section.id }} .av-hub__hero-actions{grid-template-columns:1fr}#av-hub-{{ section.id }} .av-hub__checks{gap:10px;font-size:14px}#av-hub-{{ section.id }} .av-hub__body{padding-top:35px}}
+#av-hub-{{ section.id }} .av-hub__dialog{max-height:min(760px,calc(100dvh - 36px));overscroll-behavior:contain;scrollbar-width:thin}
+#av-hub-{{ section.id }} .av-hub__modal{padding:24px}
+#av-hub-{{ section.id }} .av-hub__modal .av-hub__eyebrow{padding-right:40px}
+#av-hub-{{ section.id }} .av-hub__modal h2{font-size:clamp(26px,6vw,34px)}
+#av-hub-{{ section.id }} .av-hub__modal p{font-size:15px;margin-bottom:12px}
+#av-hub-{{ section.id }} .av-hub__account{margin:12px 0;padding:12px 15px}
+#av-hub-{{ section.id }} .av-hub__modal .av-hub__btn{min-height:46px;padding:10px 14px}
+#av-hub-{{ section.id }} .av-hub__modal .av-hub__plain{margin-top:0}
+#av-hub-{{ section.id }} .av-hub__cancel-tools{display:grid;gap:8px;margin:12px 0}
+#av-hub-{{ section.id }} .av-hub__reset-link{display:block;background:none;border:0;color:#355A38;text-decoration:underline;text-underline-offset:3px;font-size:13px;margin:12px auto;padding:8px}
+#av-hub-{{ section.id }} .av-hub__review-card{padding:14px;background:var(--light);border:1px solid var(--line);border-radius:12px}
+#av-hub-{{ section.id }} .av-hub__review-card p{margin:7px 0}
+#av-hub-{{ section.id }} .av-hub__modal progress{border:0;border-radius:999px;overflow:hidden}
+#av-hub-{{ section.id }} .av-hub__modal [aria-pressed=true]{background:var(--light);box-shadow:inset 0 0 0 1px var(--deep)}
+@media(max-width:640px){#av-hub-{{ section.id }} .av-hub__modal{padding:20px 18px}#av-hub-{{ section.id }} .av-hub__dialog{max-height:calc(100dvh - 36px);max-width:calc(100% - 24px)}}
 </style>
 <script>
 (function(){
 const root=document.getElementById('av-hub-{{ section.id }}');if(!root||root.dataset.ready)return;root.dataset.ready='1';
 const dialog=root.querySelector('dialog'), title=root.querySelector('[data-modal-title]'), desc=root.querySelector('[data-modal-description]'), actions=root.querySelector('[data-modal-actions]'), status=root.querySelector('[data-status]'), message=root.querySelector('[data-message]');
-let current='Active', frequency=30, step=0, selected='stock';
+let current='Active', frequency=30, step=0, selected='stock', detail='';
 const solutions={
 stock:['Skip a delivery or stretch your timing','Still stocked up? Try skipping your next order or changing your delivery schedule to match your routine.',[['Skip next order','skip'],['Move to a later date','delay'],['Change my timing','frequency']]],
 price:['Review your subscription pricing','Explore an exclusive offer to help make your subscription more affordable.',[['Review my offer','offer']]],
@@ -118,50 +133,63 @@ timing:['Find your ideal delivery schedule','Adjust how often you receive your n
 results:['Review your options','If the product is not right for you, you can change your plan or cancel it. No obligation to continue.',[['Review my plan','manage']]],
 other:['Manage your plan your way','Review your delivery options or cancel directly.',[['Open my portal','manage']]]};
 function btn(label,act,style){const el=document.createElement('button');el.type='button';el.className=style||'av-hub__btn av-hub__primary';el.dataset.act=act;el.textContent=label;return el}
-function display(){status.textContent=current==='Cancelled'?'Cancelled':current+' · Every '+frequency+' days';root.querySelector('[data-act="cancel"]').hidden=current==='Cancelled'}
+const followups={
+stock:{q:'How much product do you have left?',answers:['Less than one bottle','One or two bottles','Three or more bottles'],title:'Get deliveries when you need them',body:'Skip the next delivery or move it to a later date so you can use what you already have.',options:[['Skip next order','view-skip'],['Move next delivery','view-delay']]},
+price:{q:'What would make your plan more manageable?',answers:['A lower price','Less frequent payments','A temporary break'],title:'Make your subscription more affordable',body:'Review your next-order savings or a less frequent delivery schedule.',options:[['Review my savings','view-offer'],['Change delivery frequency','view-frequency']]},
+break:{q:'How long would you like a break?',answers:['30 days','60 days','90 days','Not sure'],title:'Take a break on your terms',body:'Pause or reschedule deliveries without having to place another order.',options:[['Pause my subscription','view-pause'],['Move next delivery','view-delay']]},
+timing:{q:'How often would you prefer deliveries?',answers:['Every 30 days','Every 60 days','Every 90 days'],title:'Choose a schedule that fits',body:'Adjust how often your subscription renews.',options:[['Change my delivery frequency','view-frequency']]},
+results:{q:'What is your main concern?',answers:['Not meeting expectations','Product does not suit me','Questions about using the product'],title:'Choose what is right for you',body:'If the product is not right for you, you can cancel. Our team can also answer product questions.',options:[]},
+other:{q:'What else is affecting your subscription?',answers:['Moving or travelling','I only wanted one order','Another reason'],title:'Manage your plan your way',body:'Review your delivery preferences or cancel your recurring plan.',options:[['Review delivery options','view-manage']]}
+};
+const cancelTools=root.querySelector('[data-cancel-tools]'), guideButton=root.querySelector('[data-act="guided-start"]');
+function display(){status.textContent=current==='Cancelled'?'Cancelled':current+' · Every '+frequency+' days';cancelTools.hidden=current==='Cancelled'}
+function top(){dialog.scrollTop=0}
 function guided(n){
 if(current==='Cancelled'){show('manage');return}
-step=Math.min(5,Math.max(0,n));actions.replaceChildren();message.textContent='';display();
-const progress=document.createElement('p');progress.className='av-hub__fine';progress.textContent='OPTIONAL REVIEW · STEP '+(step+1)+' OF 6';actions.append(progress);
-const bar=document.createElement('progress');bar.max=6;bar.value=step+1;bar.setAttribute('aria-label','Optional review progress');bar.style.cssText='width:100%;height:8px;accent-color:#557D4B';actions.append(bar);
+step=Math.min(6,Math.max(0,n));actions.replaceChildren();message.textContent='';display();guideButton.hidden=true;
+const branch=followups[selected];
+const progress=document.createElement('p');progress.className='av-hub__fine';progress.textContent='MEMBERSHIP REVIEW · STEP '+(step+1)+' OF 7';actions.append(progress);
+const bar=document.createElement('progress');bar.max=7;bar.value=step+1;bar.setAttribute('aria-label','Membership review progress');bar.style.cssText='width:100%;height:8px;accent-color:#557D4B';actions.append(bar);
 const screens=[
-['Why are you considering leaving?','Select a reason or continue without answering.'],
-[solutions[selected][0],solutions[selected][1]],
-['Would a lower price help?','Enjoy an additional 20% off your next delivery.'],
-['Need more flexibility?','Take a break or adjust your delivery schedule.'],
-['Review your current plan','Your plan includes Black Walnut Drops, delivered every '+frequency+' days.'],
-['Ready to cancel?','Confirm cancellation to stop future renewals.']
+['Let’s review your membership','Here are the options included with your subscription. Explore them before deciding, or cancel directly.'],
+['What’s your main reason for leaving?','Choose the option that best describes your situation.'],
+[branch.q,'Select an answer if you would like a more relevant recommendation.'],
+[branch.title,branch.body],
+['An offer for your next delivery','Save an additional 20% on your next shipment if you choose to continue.'],
+['Make deliveries fit your life','You can take a break or choose a different delivery frequency.'],
+['Confirm your cancellation','Your subscription will stop renewing after cancellation.']
 ];
 title.textContent=screens[step][0];desc.textContent=screens[step][1];
 const plain='av-hub__btn av-hub__plain';
-if(step===0){Object.entries({stock:'Too much product',price:'Too expensive',break:'Need a break',timing:'Too frequent',results:'Not seeing results',other:'Other'}).forEach(([k,label])=>{const b=btn(label,'reason-'+k,plain);b.setAttribute('aria-pressed',String(selected===k));if(selected===k)b.style.background='#EFF6EA';actions.append(b)})}
-if(step===1)solutions[selected][2].forEach(x=>actions.append(btn(x[0],'view-'+x[1])));
-if(step===2)actions.append(btn('Apply my discount','offer'));
-if(step===3){actions.append(btn('Pause for 30 days','pause30'),btn('Pause for 60 days','pause60'),btn('Change frequency','view-frequency'))}
-if(step===4)actions.append(btn('Keep my subscription','keep'));
-if(step<5)actions.append(btn('Continue review','guided-next',plain));else actions.append(btn('Confirm cancellation','cancel'));
+if(step===0){const box=document.createElement('div');box.className='av-hub__review-card';['✓ Manage your own delivery schedule','✓ Skip or reschedule upcoming orders','✓ Pause when you need a break'].forEach(t=>{const p=document.createElement('p');p.textContent=t;box.append(p)});actions.append(box)}
+if(step===1){Object.entries({stock:'Too much product',price:'Too expensive',break:'Need a break',timing:'Too frequent',results:'Not seeing results',other:'Other'}).forEach(([k,label])=>{const b=btn(label,'reason-'+k,plain);b.setAttribute('aria-pressed',String(selected===k));actions.append(b)})}
+if(step===2)branch.answers.forEach((label,i)=>{const b=btn(label,'detail-'+i,plain);b.setAttribute('aria-pressed',String(detail===label));actions.append(b)});
+if(step===3){if(detail){const p=document.createElement('p');p.className='av-hub__review-card';p.textContent='Your preference: '+detail;actions.append(p)}branch.options.forEach(x=>actions.append(btn(x[0],x[1])))}
+if(step===4)actions.append(btn('Apply my discount','offer'));
+if(step===5)actions.append(btn('Pause for 30 days','pause30'),btn('Pause for 60 days','pause60'),btn('Change my delivery schedule','view-frequency'));
+if(step<6)actions.append(btn(step===0?'Explore my options':'Continue review','guided-next',plain));else actions.append(btn('Confirm cancellation','cancel'));
 if(step>0)actions.append(btn('Back','guided-back',plain));
-if(!dialog.open)dialog.showModal();
+if(!dialog.open){dialog.showModal();top()}else top();
 }
 function show(mode){
 if(mode==='guided'){guided(0);return}
 
-message.textContent='';actions.replaceChildren();display();
-const modes={manage:['Open my portal','Manage your subscription using the options below.',[['Skip next order','view-skip'],['Move next delivery','view-delay'],['Pause subscription','view-pause'],['Change delivery frequency','view-frequency'],['Review my offer','view-offer']]],skip:['Skip next order','Skip your upcoming shipment and resume on your regular schedule.',[['Confirm skip','skip']]],delay:['Move next delivery','Choose a new delivery date.',[['Move 14 days later','delay']]],pause:['Pause subscription','How long would you like to pause deliveries?',[['Pause for 30 days','pause30'],['Pause for 60 days','pause60']]],frequency:['Change delivery frequency','Choose how often your subscription renews.',[['Every 30 days','freq30'],['Every 60 days','freq60'],['Every 90 days','freq90']]],offer:['Your exclusive offer','Save an additional 20% on your next delivery.',[['Apply my offer','offer']]],cancel:['Cancel your subscription','Cancel immediately without answering any questions.',[]]};
+message.textContent='';actions.replaceChildren();display();guideButton.hidden=mode==='cancel';
+const modes={manage:['Open my portal','Manage your subscription using the options below.',[['Skip next order','view-skip'],['Move next delivery','view-delay'],['Pause subscription','view-pause'],['Change delivery frequency','view-frequency'],['Review my offer','view-offer']]],skip:['Skip next order','Skip your upcoming shipment and resume on your regular schedule.',[['Confirm skip','skip']]],delay:['Move next delivery','Choose a new delivery date.',[['Move 14 days later','delay']]],pause:['Pause subscription','How long would you like to pause deliveries?',[['Pause for 30 days','pause30'],['Pause for 60 days','pause60'],['Pause for 90 days','pause90']]],frequency:['Change delivery frequency','Choose how often your subscription renews.',[['Every 30 days','freq30'],['Every 60 days','freq60'],['Every 90 days','freq90']]],offer:['Your exclusive offer','Save an additional 20% on your next delivery.',[['Apply my offer','offer']]],cancel:['Confirm your cancellation','Your subscription will stop renewing after cancellation.',[['Confirm cancellation','cancel']]]};
 const m=modes[mode]||modes.manage;title.textContent=m[0];desc.textContent=m[1];
 if(current!=='Cancelled'){m[2].forEach(x=>actions.append(btn(x[0],x[1])))}else{desc.textContent='Your subscription is cancelled. Reset the preview to test another action.'}
-if(!dialog.open)dialog.showModal();
+if(!dialog.open)dialog.showModal();top();
 }
-function apply(act){if(act==='guided-next'){guided(step+1);return}if(act==='guided-back'){guided(step-1);return}if(act.startsWith('reason-')){selected=act.slice(7);guided(0);return}if(act==='keep'){dialog.close();return}if(act.startsWith('view-')){show(act.slice(5));return}if(current==='Cancelled')return;
+function apply(act){if(act==='guided-start'){guided(0);return}if(act==='cancel-confirm'){show('cancel');return}if(act.startsWith('detail-')){detail=followups[selected].answers[Number(act.slice(7))]||'';guided(2);return}if(act==='guided-next'){guided(step+1);return}if(act==='guided-back'){guided(step-1);return}if(act.startsWith('reason-')){selected=act.slice(7);detail='';guided(1);return}if(act==='keep'){dialog.close();return}if(act.startsWith('view-')){show(act.slice(5));return}if(current==='Cancelled')return;
 if(act==='cancel'){current='Cancelled';title.textContent='Subscription cancelled';desc.textContent='Your subscription cancellation is complete in this preview.';actions.replaceChildren()}
 else if(act==='skip')current='Next shipment skipped';
 else if(act==='delay')current='Delivery moved 14 days';
-else if(act==='pause30'||act==='pause60')current='Paused for '+act.slice(5)+' days';
+else if(act==='pause30'||act==='pause60'||act==='pause90')current='Paused for '+act.slice(5)+' days';
 else if(act.startsWith('freq')){frequency=Number(act.slice(4));current='Active'}
 else if(act==='offer')current='Discount applied';
 display();message.textContent='Subscription status: '+current+'.';}
 root.addEventListener('click',function(e){const el=e.target.closest('button');if(!el||!root.contains(el))return;
-if(el.hasAttribute('data-reset')){current='Active';frequency=30;show('manage');message.textContent='Preview reset.';return}
+if(el.hasAttribute('data-reset')){current='Active';frequency=30;selected='stock';detail='';step=0;show('manage');message.textContent='Preview reset.';return}
 if(el.hasAttribute('data-close')){dialog.close();return}
 if(el.dataset.open){show(el.dataset.open);return}
 if(el.dataset.act){apply(el.dataset.act);return}
