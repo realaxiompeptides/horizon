@@ -75,7 +75,7 @@
   <dialog class="av-m__dialog" aria-labelledby="av-m-title-{{ section.id }}"><div class="av-m__modal">
     <button type="button" class="av-m__close" data-close aria-label="Close"><i class="av-m__fa" aria-hidden="true">&#xf00d;</i></button><div class="av-m__kicker">MY MEMBERSHIP</div>
     <h2 id="av-m-title-{{ section.id }}" data-modal-title></h2><p data-modal-text></p><div data-modal-content></div>
-    <p data-modal-status role="status" class="av-m__feedback"></p><button type="button" class="av-m__button av-m__outline" data-close>Back to my subscription</button>
+    <p data-modal-status role="status" class="av-m__feedback"></p><div class="av-m__modal-footer"><button type="button" class="av-m__button av-m__outline" data-close>Back to my subscription</button><button type="button" class="av-m__cancel-link" data-action="cancel" data-review-cancel hidden>Cancel subscription</button></div>
     
   </div></dialog>
 </section>
@@ -255,12 +255,21 @@ html:has([data-membership-preview]) #MainContent > .shopify-section:has([data-me
 #av-membership-{{ section.id }} .av-m__address-field input{font-size:16px;width:100%;min-width:0;min-height:46px}
 #av-membership-{{ section.id }} .av-m__full{grid-column:1/-1}
 #av-membership-{{ section.id }} .av-m__address-note{font-size:12px;margin:2px 0;color:#47616E}
+#av-membership-{{ section.id }} .av-m__survey-choice{justify-content:flex-start;gap:11px;text-align:left;font-weight:650;min-height:46px;padding:10px 12px;border-color:#CBE3EA;color:#0B2637}
+#av-membership-{{ section.id }} .av-m__choice-mark{width:17px;height:17px;border:1.5px solid #91B8C5;border-radius:50%;flex:0 0 17px}
+#av-membership-{{ section.id }} .av-m__survey-choice[aria-pressed=true] .av-m__choice-mark{background:#00647A;box-shadow:inset 0 0 0 3px #EAF9FC;border-color:#00647A}
+#av-membership-{{ section.id }} .av-m__response{border:1px solid #CBE8EF;background:#F3FBFD;padding:12px;border-radius:10px;font-size:13px}
+#av-membership-{{ section.id }} .av-m__response p{font-size:13px;margin:4px 0 0}
+#av-membership-{{ section.id }} .av-m__modal-footer{display:grid;gap:8px}
+#av-membership-{{ section.id }} .av-m__cancel-link{background:none;border:0;padding:12px;color:#00647A;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+#av-membership-{{ section.id }} .av-m__review-dialog .av-m__modal-footer{position:sticky;bottom:-1px;background:white;padding-top:8px}
+@media(max-width:760px){#av-membership-{{ section.id }} .av-m__review-dialog{max-height:calc(100dvh - 40px)}#av-membership-{{ section.id }} .av-m__review-dialog .av-m__modal{padding:19px 17px}#av-membership-{{ section.id }} .av-m__review-dialog h2{font-size:25px}#av-membership-{{ section.id }} .av-m__review-dialog [data-modal-content]{gap:7px}#av-membership-{{ section.id }} .av-m__review-dialog .av-m__button{min-height:43px;padding:9px 11px}#av-membership-{{ section.id }} .av-m__review-dialog .av-m__review-progress{letter-spacing:.07em}}
 </style>
 <script>
 (function(){
 const root=document.getElementById('av-membership-{{ section.id }}');if(!root||root.dataset.ready)return;root.dataset.ready='1';
 const q=s=>root.querySelector(s),dialog=q('dialog'),title=q('[data-modal-title]'),desc=q('[data-modal-text]'),content=q('[data-modal-content]'),feedback=q('[data-modal-status]');
-let recording=false,reviewStep=0,reason='stock',detail='',frequency=30,state='Active',nextDate=addDays(new Date(),30),payment='ready',card='4242',address={first:'Jamie',last:'Sample',line1:'123 Example Street',line2:'',city:'Roseville',region:'CA',postal:'95678',country:'United States',phone:''},history=[];
+let recording=false,reviewStep=0,reason='',detail='',frequency=30,state='Active',nextDate=addDays(new Date(),30),payment='ready',card='4242',address={first:'Jamie',last:'Sample',line1:'123 Example Street',line2:'',city:'Roseville',region:'CA',postal:'95678',country:'United States',phone:''},history=[];
 function addDays(date,days){const d=new Date(date);d.setDate(d.getDate()+days);return d}
 function dateLabel(date){return new Intl.DateTimeFormat('en-US',{month:'short',day:'numeric',year:'numeric'}).format(date)}
 function row(parent,name,detail,flag){const el=document.createElement('div');el.className='av-m__order-row';const left=document.createElement('div'),strong=document.createElement('strong'),small=document.createElement('small'),badge=document.createElement('span');strong.textContent=name;small.textContent=detail;badge.className='av-m__status';badge.textContent=flag;if(flag==='Payment failed')badge.dataset.state='failed';left.append(strong,small);const orderIcon=document.createElement('i');orderIcon.className='av-m__fa av-m__order-icon';orderIcon.setAttribute('aria-hidden','true');orderIcon.textContent=flag==='Delivered'?'\uf058':flag==='Payment failed'?'\uf071':'\uf466';el.append(orderIcon,left,badge);parent.append(el)}
@@ -290,26 +299,27 @@ results:{label:'The product is not right for me',question:'What would you like u
 other:{label:'Something else',question:'What best describes your situation?',answers:['Travel or moving','Only wanted one order','Another reason'],heading:'Manage your membership your way',copy:'Review your schedule or choose to end your subscription.',options:[['Review delivery date','date']]}
 };
 function renderReview(n){
-reviewStep=Math.min(6,Math.max(0,n));const branch=reviewPaths[reason];content.replaceChildren();feedback.textContent='';
+reviewStep=Math.min(6,Math.max(0,n));const branch=reviewPaths[reason]||reviewPaths.other;content.replaceChildren();feedback.textContent='';
+dialog.classList.add('av-m__review-dialog');q('[data-review-cancel]').hidden=recording||reviewStep===6;
 const progress=document.createElement('div');progress.className='av-m__review-progress';progress.textContent='MEMBERSHIP REVIEW · '+(reviewStep+1)+' / 7';const bar=document.createElement('progress');bar.max=7;bar.value=reviewStep+1;bar.setAttribute('aria-label','Membership review progress');content.append(progress,bar);
-const screens=[['Before you go','Would you like to review your membership benefits and delivery options before cancelling?'],['Why are you considering leaving?','Choose a reason to see relevant options.'],[branch.question,'Select an answer or continue without one.'],[branch.heading,branch.copy],['Your exclusive member benefits','Keep your $34.99 recurring price and access to eligible VIP promotions, member offers and free shipping on all subscription deliveries.'],['Need a little more flexibility?','You can pause or change your schedule instead of ending your membership.'],['Confirm cancellation','Your subscription will stop renewing.']];
+const screens=[['Before you go','Would you like to review your membership benefits and delivery options before cancelling?'],['Why are you considering leaving?','Choose a reason to see relevant options.'],[branch.question,recording?'Choose the answer that best fits your situation.':'Choose an answer if you would like.'],[branch.heading,branch.copy],['Your exclusive member benefits','Keep your $34.99 recurring price and access to eligible VIP promotions, member offers and free shipping on all subscription deliveries.'],['Need a little more flexibility?','You can pause or change your schedule instead of ending your membership.'],['Confirm cancellation','Your subscription will stop renewing.']];
 title.textContent=screens[reviewStep][0];desc.textContent=screens[reviewStep][1];
-function choice(label,selected,fn){const b=button(label,fn,true);b.setAttribute('aria-pressed',String(selected));return b}
+function choice(label,selected,fn){const b=button(label,fn,true);b.classList.add('av-m__survey-choice');b.setAttribute('aria-pressed',String(selected));const mark=document.createElement('span');mark.className='av-m__choice-mark';mark.setAttribute('aria-hidden','true');b.prepend(mark);return b}
 if(reviewStep===0){const perks=document.createElement('div');perks.className='av-m__review-perks';["Exclusive subscriber pricing","VIP sale access","Special member offers","Free shipping on all subscription deliveries","Automatic refills","Flexible delivery dates","Your choice of frequency","Skip or pause anytime","Dedicated membership support","Easy account management"].forEach(x=>{const line=document.createElement('p');const mark=document.createElement('i');mark.className='av-m__fa';mark.setAttribute('aria-hidden','true');mark.textContent='\uf058';line.append(mark,document.createTextNode(' '+x));perks.append(line)});content.append(perks)}
 if(reviewStep===1)Object.entries(reviewPaths).forEach(([key,val])=>content.append(choice(val.label,reason===key,()=>{reason=key;detail='';renderReview(1)})));
 if(reviewStep===2)branch.answers.forEach(a=>content.append(choice(a,detail===a,()=>{detail=a;renderReview(2)})));
-if(reviewStep===3)branch.options.forEach(([label,mode])=>content.append(button(label,()=>show(mode))));
+if(reviewStep===3){const note=document.createElement('div');note.className='av-m__response';const heading=document.createElement('strong');heading.textContent='Your feedback';const response=document.createElement('p');response.textContent=[reason?branch.label:'No reason selected',detail].filter(Boolean).join(' · ');note.append(heading,response);content.append(note);branch.options.forEach(([label,mode])=>content.append(button(label,()=>show(mode))))}
 if(reviewStep===4){const comparison=document.createElement('div');comparison.className='av-m__comparison';[['Member pricing','$34.99 per delivery'],['VIP sales','Early access when available'],['Member offers','Eligible exclusive promotions'],['Subscription shipping','Free on all deliveries'],['Standard purchases','Regular store pricing and offers']].forEach(([a,b])=>{const row=document.createElement('div'),label=document.createElement('strong'),value=document.createElement('span');label.textContent=a;value.textContent=b;row.append(label,value);comparison.append(row)});content.append(comparison,button('Keep my membership',()=>dialog.close()))}
 if(reviewStep===5)content.append(button('Pause my membership',()=>show('pause')),button('Change delivery frequency',()=>show('frequency')));
-if(reviewStep<6)content.append(button(reviewStep===0?'Review my membership':'Continue review',()=>renderReview(reviewStep+1),false));else content.append(button('Confirm cancellation',()=>{state='Cancelled';title.textContent='Subscription cancelled';desc.textContent='Your subscription will no longer renew.';complete('Cancellation confirmed in this preview.')}));
+if(reviewStep<6){const next=button(reviewStep===0?'Review my membership':'Continue review',()=>renderReview(reviewStep+1),false);next.disabled=recording&&((reviewStep===1&&!reason)||(reviewStep===2&&!detail));content.append(next)}else{const summary=document.createElement('div');summary.className='av-m__response';summary.textContent='Future renewals and scheduled subscription deliveries will stop.';content.append(summary,button('Confirm cancellation',()=>{state='Cancelled';title.textContent='Subscription cancelled';desc.textContent='Your subscription will no longer renew.';complete('Cancellation confirmed in this preview.')}))}
 if(reviewStep>0)content.append(button('Back',()=>renderReview(reviewStep-1),true));
-if(reviewStep<6&&!recording)content.append(button('Continue to cancellation',()=>show('cancel'),true));
+
 if(!dialog.open)dialog.showModal();dialog.scrollTop=0;
 }
 function show(mode){
-if(mode==='recording'){recording=true;reviewStep=0;reason='stock';detail='';renderReview(0);return}
-if(mode==='review'||mode==='cancel-start'){recording=false;reviewStep=0;reason='stock';detail='';renderReview(0);return}
-content.replaceChildren();feedback.textContent='';
+if(mode==='recording'){recording=true;reviewStep=0;reason='';detail='';renderReview(0);return}
+if(mode==='review'||mode==='cancel-start'){recording=false;reviewStep=0;reason='';detail='';renderReview(0);return}
+dialog.classList.remove('av-m__review-dialog');q('[data-review-cancel]').hidden=true;content.replaceChildren();feedback.textContent='';
 const modes={skip:['Skip next order','Skip your upcoming shipment and resume on your regular schedule.'],date:['Reschedule delivery','Choose a new date for your upcoming order.'],frequency:['Change delivery frequency','Choose a schedule that suits your routine.'],pause:['Pause membership','Select how long you would like to pause deliveries.'],resume:['Resume subscription','Resume scheduled deliveries.'],review:['Your membership options','Explore subscriber pricing, shipping benefits and flexible delivery choices.'],cancel:['Confirm cancellation','Your subscription will stop renewing.'],address:['Edit shipping address','Update the address for your future subscription deliveries.'],payment:['Update payment method','Choose a preset payment method. No real card details are required.'],retry:['Retry payment','Retry the failed renewal using your updated payment method.']};
 if(mode==='fail'){if(state!=='Cancelled'&&payment==='ready'){payment='failed';history.unshift(['Renewal attempt',dateLabel(new Date())+' · $34.99','Payment failed']);update();show('payment')}return}
 const m=modes[mode];if(!m)return;title.textContent=m[0];desc.textContent=m[1];
@@ -335,7 +345,7 @@ if(mode==='retry'){if(payment==='updated'&&state!=='Cancelled')content.append(bu
 if(!dialog.open)dialog.showModal();dialog.scrollTop=0;
 }
 root.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||!root.contains(b))return;if(b.hasAttribute('data-reset')){frequency=30;state='Active';nextDate=addDays(new Date(),30);payment='ready';card='4242';address={first:'Jamie',last:'Sample',line1:'123 Example Street',line2:'',city:'Roseville',region:'CA',postal:'95678',country:'United States',phone:''};history=[];update();return}if(b.hasAttribute('data-close')){recording=false;dialog.close();return}if(b.dataset.action)show(b.dataset.action)});
-dialog.addEventListener('close',()=>{recording=false});
+dialog.addEventListener('close',()=>{recording=false;q('[data-review-cancel]').hidden=true;dialog.classList.remove('av-m__review-dialog')});
 update();
 })();
 </script>
