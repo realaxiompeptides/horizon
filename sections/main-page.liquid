@@ -115,12 +115,33 @@
             <li><strong>Flexible deliveries</strong><span>Skip an eligible order when you already have enough.</span></li>
           </ul>
           <div class="av-m__cancel-actions">
-            <button type="button" class="av-m__button av-m__outline" data-cancel-next="review">Review my options</button>
+            <button type="button" class="av-m__button" data-cancel-next="questions">Answer a few questions</button>
+            <button type="button" class="av-m__button av-m__outline" data-cancel-next="confirm">Skip questions</button>
+          </div>
+        </div>
+        <div class="av-m__cancel-step" data-cancel-step="questions" hidden>
+          <p>Both questions are optional. Your answers help show delivery options here.</p>
+          <label for="av-cancel-reason-{{ section.id }}">What’s the main reason you’re leaving?</label>
+          <select id="av-cancel-reason-{{ section.id }}" data-cancel-reason>
+            <option value="">Choose a reason</option>
+            <option value="stock">I have enough product</option>
+            <option value="price">It costs too much</option>
+            <option value="timing">Orders arrive too often</option>
+            <option value="fit">The product isn’t right for me</option>
+            <option value="other">Something else</option>
+          </select>
+          <label for="av-cancel-delivery-{{ section.id }}">Would skipping an order help?</label>
+          <select id="av-cancel-delivery-{{ section.id }}" data-cancel-delivery>
+            <option value="">Choose an answer</option>
+            <option value="yes">Yes, I need more time</option>
+            <option value="no">No, I want to end future renewals</option>
+          </select>
+          <div class="av-m__cancel-actions">
+            <button type="button" class="av-m__button av-m__outline" data-cancel-next="review">See my options</button>
             <button type="button" class="av-m__button" data-cancel-next="confirm">Continue to cancellation</button>
           </div>
         </div>
         <div class="av-m__cancel-step" data-cancel-step="review" hidden>
-          <p>If you have enough product for now, you can skip your next scheduled order.</p>
           <p data-cancel-skip-note hidden></p>
           <div class="av-m__cancel-actions">
             <button type="submit" value="skip" class="av-m__button av-m__outline" hidden>Skip next order</button>
@@ -377,6 +398,8 @@ html:has([data-membership-preview]) #MainContent > .shopify-section:has([data-me
 #av-membership-{{ section.id }} .av-m__retention-benefits{list-style:none;padding:14px 16px;margin:0;background:var(--m-sage);border:1px solid var(--m-line);border-radius:12px;display:grid;gap:12px}
 #av-membership-{{ section.id }} .av-m__retention-benefits span{display:block;margin-top:2px;font-size:14px}
 @media(max-width:420px){#av-membership-{{ section.id }} .av-m__cancel-actions{grid-template-columns:minmax(0,1fr)}}
+#av-membership-{{ section.id }} [data-cancel-step="questions"] label{font-weight:700}
+#av-membership-{{ section.id }} [data-cancel-step="questions"] select{width:100%;min-height:46px;border:1px solid var(--m-line);border-radius:9px;padding:8px 12px;background:white;color:inherit;font-size:16px}
 </style>
 
 {% else %}
