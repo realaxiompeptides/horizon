@@ -1,4 +1,26 @@
-{% if request.page_type == 'page' and page.handle == 'membership-test' %}
+{% if page.handle == 'membership-test' or page.handle == 'membership-test-sign-in' %}
+{% assign membership_dashboard_url = routes.root_url | append: '/pages/membership-test' | replace: '//pages/', '/pages/' %}
+{% assign membership_sign_in_url = routes.root_url | append: '/pages/membership-test-sign-in' | replace: '//pages/', '/pages/' %}
+{% if page.handle == 'membership-test-sign-in' or customer == blank %}
+<section id="av-membership-{{ section.id }}" class="av-membership" data-membership-preview>
+  <div class="av-m__wrap av-m__body">
+    <div class="av-m__card">
+      <div class="av-m__kicker">AVONENT · MEMBERSHIP</div>
+      <h1>Subscription sign-in</h1>
+      {% if customer %}
+        <a class="av-m__button av-m__outline" href="{{ membership_dashboard_url | escape }}">Open your dashboard</a>
+      {% elsif page.handle == 'membership-test-sign-in' %}
+        <p>Use your subscription email. Shopify will email you a one-time code and return you to your dashboard after sign-in.</p>
+        <a class="av-m__button av-m__outline" href="/customer_authentication/login?return_to={{ membership_dashboard_url | url_encode }}">Continue to email sign-in</a>
+      {% else %}
+        <p>Sign in to see your subscriptions.</p>
+        <a class="av-m__button av-m__outline" href="{{ membership_sign_in_url | escape }}">Sign in</a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% else %}
+{% assign membership_subscriptions = customer.metafields.appstle_subscription.subscriptions.value %}
 <section id="av-membership-{{ section.id }}" class="av-membership" data-membership-preview>
   <form id="av-appstle-{{ section.id }}" action="/apps/subscriptions" method="get" hidden></form>
   <div class="av-m__hero">
@@ -20,7 +42,25 @@
           {% else %}
           <div class="av-m__product-placeholder" aria-hidden="true">AVONENT</div>
           {% endif %}
-          <div><h3>Subscription details</h3><p>View your subscription and confirm changes in Appstle.</p></div>
+          <div>
+            <h3>Subscription details</h3>
+            {% if membership_subscriptions != blank %}
+              <ul>
+                {% for contract in membership_subscriptions %}
+                  {% assign first_line = contract.lineItems | first %}
+                  <li>
+                    <strong>{{ first_line.title | default: 'Subscription' | escape }}</strong>
+                    {% if contract.status != blank %} · {{ contract.status | downcase | capitalize | escape }}{% endif %}
+                    {% if contract.nextBillingDate != blank and contract.status == 'ACTIVE' %}
+                      · Next billing {{ contract.nextBillingDate | date: '%b %d, %Y' }}
+                    {% endif %}
+                  </li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <p>Subscription details are available in Appstle.</p>
+            {% endif %}
+          </div>
         </div>
         <div class="av-m__facts">
           <div><span>Next scheduled delivery</span><strong>View in Appstle</strong></div>
@@ -72,6 +112,7 @@
     <div class="av-m__help" id="av-help-{{ section.id }}"><div><div class="av-m__kicker">WE'RE HERE FOR YOU</div><h2>Need a hand?</h2><p>Get help with your deliveries, subscription or account.</p></div><a class="av-m__button av-m__outline" href="/pages/contact">Contact support</a></div>
   </div>
 </section>
+{% endif %}
 <style>
 #av-membership-{{ section.id }}{--m-dark:#0B2637;--m-green:#00647A;--m-accent:#02C6EA;--m-sage:#EAF9FC;--m-line:#CBE8EF;color:var(--m-dark);background:#F5FAFC;line-height:1.5;font-family:inherit}
 #av-membership-{{ section.id }} *{box-sizing:border-box}
