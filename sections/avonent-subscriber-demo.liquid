@@ -1,0 +1,148 @@
+<section id="av-hub-{{ section.id }}" class="av-hub" data-av-demo>
+  <div class="av-hub__hero">
+    <div class="av-hub__wrap">
+      <span class="av-hub__eyebrow">SUBSCRIBER HUB · TEST MODE</span>
+      <h1>Welcome back to<br><em>your wellness routine.</em></h1>
+      <p>Make your deliveries fit your life. Manage your routine, take a break or explore your options whenever you need.</p>
+      <div class="av-hub__hero-actions">
+        <button class="av-hub__btn av-hub__accent" data-open="manage">Open my demo portal</button>
+        <a class="av-hub__btn av-hub__outline" href="#av-options-{{ section.id }}">Need a break?</a>
+        <button class="av-hub__btn av-hub__outline" data-open="cancel">Cancel demo subscription</button>
+      </div>
+      <div class="av-hub__checks"><span>✓ &nbsp; Skip a delivery</span><span>✓ &nbsp; Pause deliveries</span><span>✓ &nbsp; Adjust your timing</span><span>✓ &nbsp; Manage your plan</span></div>
+      <div class="av-hub__demo-note">Private-data-free demonstration. No purchase, login, email or payment is required. All actions are simulated.</div>
+    </div>
+  </div>
+  <div class="av-hub__wrap av-hub__body" id="av-options-{{ section.id }}">
+    <span class="av-hub__eyebrow">LET'S FIND THE RIGHT FIT</span>
+    <h2>What would you like to change?</h2>
+    <p>Choose a reason to see an alternative, or go straight to cancellation.</p>
+    <div class="av-hub__reasons" role="group" aria-label="Optional reasons">
+      <button data-reason="stock" aria-pressed="true">I have too much product</button>
+      <button data-reason="price" aria-pressed="false">It's too expensive</button>
+      <button data-reason="break" aria-pressed="false">I need a break</button>
+      <button data-reason="timing" aria-pressed="false">Deliveries are too frequent</button>
+      <button data-reason="results" aria-pressed="false">I'm not seeing results</button>
+      <button data-reason="other" aria-pressed="false">Something else</button>
+    </div>
+    <div class="av-hub__solution" aria-live="polite">
+      <span class="av-hub__tag">YOUR EASIEST OPTION</span>
+      <h3 data-solution-title>Skip a delivery or stretch your timing</h3>
+      <p data-solution-text>Still stocked up? Try skipping your next order or changing your delivery schedule to match your routine.</p>
+      <div class="av-hub__pills" data-solution-actions>
+        <button data-open="skip">Skip next order</button><button data-open="delay">Move to a later date</button><button data-open="frequency">Change my timing</button>
+      </div>
+      <button class="av-hub__btn av-hub__primary" data-open="manage">Open my demo portal</button>
+      <button class="av-hub__btn av-hub__plain" data-open="cancel">Cancel demo subscription</button>
+    </div>
+    <div class="av-hub__info">
+      <h3>You're always in control.</h3>
+      <p>✓ &nbsp; Review your next scheduled delivery.</p>
+      <p>✓ &nbsp; Choose a schedule that works for you.</p>
+      <p>✓ &nbsp; Cancel whenever you choose.</p>
+    </div>
+    <div class="av-hub__bottom"><h3>Ready to cancel?</h3><p>You can cancel without answering any questions or accepting an offer.</p><button class="av-hub__btn av-hub__primary" data-open="cancel">Cancel demo subscription</button><button class="av-hub__btn av-hub__plain" data-reset>Reset demo</button></div>
+  </div>
+  <dialog class="av-hub__dialog" aria-labelledby="av-dialog-title-{{ section.id }}">
+    <div class="av-hub__modal">
+      <button class="av-hub__close" data-close aria-label="Close portal">×</button>
+      <span class="av-hub__eyebrow">AVONENT · DEMO PORTAL</span>
+      <h2 id="av-dialog-title-{{ section.id }}" data-modal-title>Open my portal</h2>
+      <p data-modal-description>Explore a sample subscription without signing in.</p>
+      <div class="av-hub__account"><strong>Black Walnut Drops</strong><span>Example subscription · every 30 days</span><span data-status>Active · Demo only</span></div>
+      <div data-modal-actions></div>
+      <p class="av-hub__fine" data-message role="status"></p>
+      <button class="av-hub__btn av-hub__plain" data-act="cancel">Cancel demo subscription now</button>
+      <button class="av-hub__btn av-hub__plain" data-reset>Reset demo</button>
+      <p class="av-hub__fine">No real subscription or charge will be created, modified or cancelled.</p>
+    </div>
+  </dialog>
+</section>
+<style>
+#av-hub-{{ section.id }}{--green:#557D4B;--deep:#355A38;--dark:#243f2b;--light:#EFF6EA;--accent:#BBD9AD;--line:#DBE8D4;color:var(--dark);background:#fff;font-family:inherit;line-height:1.55}
+#av-hub-{{ section.id }} *{box-sizing:border-box}
+#av-hub-{{ section.id }} [hidden]{display:none!important}
+#av-hub-{{ section.id }} .av-hub__wrap{max-width:1080px;margin:auto;padding:0 24px}
+#av-hub-{{ section.id }} .av-hub__hero{background:var(--dark);color:white;padding:56px 0 40px}
+#av-hub-{{ section.id }} .av-hub__eyebrow{display:block;color:var(--green);font-size:12px;font-weight:800;letter-spacing:.16em;margin-bottom:14px}
+#av-hub-{{ section.id }} .av-hub__hero .av-hub__eyebrow{color:var(--accent)}
+#av-hub-{{ section.id }} h1,#av-hub-{{ section.id }} h2,#av-hub-{{ section.id }} h3{font-family:inherit;letter-spacing:-.04em;line-height:1.1;font-weight:800;margin:0 0 16px;color:inherit}
+#av-hub-{{ section.id }} h1{font-size:clamp(40px,6vw,76px)}
+#av-hub-{{ section.id }} h1 em{color:var(--accent);font-style:normal}
+#av-hub-{{ section.id }} h2{font-size:clamp(30px,4vw,46px)}
+#av-hub-{{ section.id }} h3{font-size:clamp(25px,3vw,36px)}
+#av-hub-{{ section.id }} p{font-size:17px;margin:0 0 20px;color:inherit}
+#av-hub-{{ section.id }} .av-hub__hero p{max-width:660px;color:#e5efe1;font-size:clamp(17px,2vw,23px)}
+#av-hub-{{ section.id }} .av-hub__hero-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:28px 0}
+#av-hub-{{ section.id }} button,#av-hub-{{ section.id }} a{font:inherit;cursor:pointer}
+#av-hub-{{ section.id }} .av-hub__btn{display:flex;align-items:center;justify-content:center;min-height:52px;width:100%;padding:13px 16px;border:2px solid transparent;border-radius:9px;font-size:15px;font-weight:800;text-decoration:none;text-align:center;line-height:1.3}
+#av-hub-{{ section.id }} .av-hub__accent{background:var(--accent);color:var(--dark)}
+#av-hub-{{ section.id }} .av-hub__outline{background:transparent;color:white;border-color:#fff}
+#av-hub-{{ section.id }} .av-hub__primary{background:var(--deep);color:#fff;border-color:var(--deep)}
+#av-hub-{{ section.id }} .av-hub__plain{background:#fff;color:var(--deep);border-color:var(--deep);margin-top:10px}
+#av-hub-{{ section.id }} .av-hub__checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;font-size:15px;font-weight:700;max-width:650px}
+#av-hub-{{ section.id }} .av-hub__demo-note{border-top:1px solid #ffffff33;margin-top:28px;padding-top:20px;color:#e5efe1;font-size:13px}
+#av-hub-{{ section.id }} .av-hub__body{padding-top:48px;padding-bottom:64px;scroll-margin-top:100px}
+#av-hub-{{ section.id }} .av-hub__reasons,#av-hub-{{ section.id }} .av-hub__pills{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0}
+#av-hub-{{ section.id }} .av-hub__reasons button,#av-hub-{{ section.id }} .av-hub__pills button{background:#fff;color:var(--dark);border:1.5px solid #afc3aa;border-radius:8px;padding:12px 15px;font-size:15px;font-weight:750;min-height:46px;text-align:left}
+#av-hub-{{ section.id }} .av-hub__reasons button[aria-pressed=true]{background:var(--deep);border-color:var(--deep);color:#fff}
+#av-hub-{{ section.id }} .av-hub__solution,#av-hub-{{ section.id }} .av-hub__info,#av-hub-{{ section.id }} .av-hub__bottom{border-radius:18px;padding:clamp(22px,4vw,40px);margin-top:26px}
+#av-hub-{{ section.id }} .av-hub__solution{background:var(--light)}
+#av-hub-{{ section.id }} .av-hub__tag{display:inline-block;background:var(--deep);color:#fff;font-size:11px;font-weight:800;letter-spacing:.12em;padding:9px 12px;border-radius:6px;margin-bottom:18px}
+#av-hub-{{ section.id }} .av-hub__pills button{border-radius:999px;border-color:var(--deep)}
+#av-hub-{{ section.id }} .av-hub__info{background:var(--dark);color:#fff}
+#av-hub-{{ section.id }} .av-hub__info p{margin:10px 0}
+#av-hub-{{ section.id }} .av-hub__bottom{border:1px solid var(--line)}
+#av-hub-{{ section.id }} .av-hub__dialog{max-width:min(540px,calc(100% - 28px));width:100%;max-height:90dvh;padding:0;border:0;border-radius:20px;color:var(--dark);background:#fff;box-shadow:0 20px 80px #0003;overflow:auto;position:fixed;inset:0;margin:auto}
+#av-hub-{{ section.id }} .av-hub__dialog::backdrop{background:#18291f99;backdrop-filter:blur(4px)}
+#av-hub-{{ section.id }} .av-hub__modal{padding:30px 24px;position:relative}
+#av-hub-{{ section.id }} .av-hub__modal h2{padding-right:32px;font-size:32px}
+#av-hub-{{ section.id }} .av-hub__close{position:absolute;right:16px;top:16px;background:var(--light);color:var(--dark);border:0;border-radius:8px;font-size:26px;width:42px;height:42px}
+#av-hub-{{ section.id }} .av-hub__account{background:var(--light);border-radius:12px;padding:15px;margin:18px 0;display:grid;gap:5px;font-size:14px}
+#av-hub-{{ section.id }} .av-hub__account strong{font-size:18px}
+#av-hub-{{ section.id }} .av-hub__fine{font-size:13px;margin:14px 0 0}
+#av-hub-{{ section.id }} [data-modal-actions]{display:grid;gap:10px}
+#av-hub-{{ section.id }} :focus-visible{outline:3px solid #8aaa77;outline-offset:3px}
+@media(max-width:640px){#av-hub-{{ section.id }} .av-hub__wrap{padding-inline:16px}#av-hub-{{ section.id }} .av-hub__hero{padding-top:42px}#av-hub-{{ section.id }} .av-hub__hero-actions{grid-template-columns:1fr}#av-hub-{{ section.id }} .av-hub__checks{gap:10px;font-size:14px}#av-hub-{{ section.id }} .av-hub__body{padding-top:35px}}
+</style>
+<script>
+(function(){
+const root=document.getElementById('av-hub-{{ section.id }}');if(!root||root.dataset.ready)return;root.dataset.ready='1';
+const dialog=root.querySelector('dialog'), title=root.querySelector('[data-modal-title]'), desc=root.querySelector('[data-modal-description]'), actions=root.querySelector('[data-modal-actions]'), status=root.querySelector('[data-status]'), message=root.querySelector('[data-message]');
+let current='Active', frequency=30;
+const solutions={
+stock:['Skip a delivery or stretch your timing','Still stocked up? Try skipping your next order or changing your delivery schedule to match your routine.',[['Skip next order','skip'],['Move to a later date','delay'],['Change my timing','frequency']]],
+price:['Review your subscription pricing','Check a sample retention offer and decide whether it would work for your budget.',[['Review demo offer','offer']]],
+break:['Take a break when you need one','Try pausing your deliveries for a period that suits you.',[['Pause my plan','pause'],['Skip next order','skip']]],
+timing:['Find your ideal delivery schedule','Adjust how often you receive your next shipment.',[['Change my timing','frequency'],['Move to a later date','delay']]],
+results:['Review your options','If the product is not right for you, you can change your plan or cancel it. No obligation to continue.',[['Review my plan','manage']]],
+other:['Manage your plan your way','Review your delivery options or cancel directly.',[['Open demo portal','manage']]]};
+function btn(label,act,style){const el=document.createElement('button');el.type='button';el.className=style||'av-hub__btn av-hub__primary';el.dataset.act=act;el.textContent=label;return el}
+function display(){status.textContent=current+' · Demo only · every '+frequency+' days';root.querySelector('[data-act="cancel"]').hidden=current==='Cancelled'}
+function show(mode){
+message.textContent='';actions.replaceChildren();display();
+const modes={manage:['Open my portal','Your sample subscription is ready. Choose any action below.',[['Skip next order','view-skip'],['Move next delivery','view-delay'],['Pause subscription','view-pause'],['Change delivery frequency','view-frequency'],['Review demo offer','view-offer']]],skip:['Skip next order','Simulate skipping one upcoming shipment.',[['Confirm demo skip','skip']]],delay:['Move next delivery','Choose a sample new delivery date.',[['Move 14 days later','delay']]],pause:['Pause subscription','Choose a sample pause duration.',[['Pause for 30 days','pause30'],['Pause for 60 days','pause60']]],frequency:['Change delivery frequency','Choose how often the demo plan renews.',[['Every 30 days','freq30'],['Every 60 days','freq60'],['Every 90 days','freq90']]],offer:['Review a sample offer','Example: 20% off one future order. This is not an actual offer.',[['Accept demo offer','offer']]],cancel:['Cancel your demo subscription','Cancel immediately without answering any questions.',[]]};
+const m=modes[mode]||modes.manage;title.textContent=m[0];desc.textContent=m[1];
+if(current!=='Cancelled'){m[2].forEach(x=>actions.append(btn(x[0],x[1])))}else{desc.textContent='This sample subscription has been cancelled. Reset it to try another action.'}
+if(!dialog.open)dialog.showModal();
+}
+function apply(act){if(act.startsWith('view-')){show(act.slice(5));return}if(current==='Cancelled')return;
+if(act==='cancel'){current='Cancelled';title.textContent='Demo subscription cancelled';desc.textContent='The sample plan is cancelled. No real subscription was affected.';actions.replaceChildren()}
+else if(act==='skip')current='Next shipment skipped';
+else if(act==='delay')current='Delivery moved 14 days';
+else if(act==='pause30'||act==='pause60')current='Paused for '+act.slice(5)+' days';
+else if(act.startsWith('freq')){frequency=Number(act.slice(4));current='Active'}
+else if(act==='offer')current='Demo offer accepted';
+display();message.textContent='Demo action completed: '+current+'.';}
+root.addEventListener('click',function(e){const el=e.target.closest('button');if(!el||!root.contains(el))return;
+if(el.hasAttribute('data-reset')){current='Active';frequency=30;show('manage');message.textContent='Demo reset.';return}
+if(el.hasAttribute('data-close')){dialog.close();return}
+if(el.dataset.open){show(el.dataset.open);return}
+if(el.dataset.act){apply(el.dataset.act);return}
+if(el.dataset.reason){root.querySelectorAll('[data-reason]').forEach(b=>b.setAttribute('aria-pressed',String(b===el)));const s=solutions[el.dataset.reason];root.querySelector('[data-solution-title]').textContent=s[0];root.querySelector('[data-solution-text]').textContent=s[1];const p=root.querySelector('[data-solution-actions]');p.replaceChildren();s[2].forEach(x=>{const b=document.createElement('button');b.type='button';b.dataset.open=x[1];b.textContent=x[0];p.append(b)});}
+});
+})();
+</script>
+{% schema %}
+{"name":"Avonent subscriber demo","settings":[],"presets":[{"name":"Avonent subscriber demo"}]}
+{% endschema %}
