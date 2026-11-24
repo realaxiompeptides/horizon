@@ -41,6 +41,30 @@
   const dateOf = (order) => order.billingDate || order.orderDate;
   const orderList = (data) => Array.isArray(data) ? data : Array.isArray(data?.content) ? data.content : [];
 
+  function subscriptionPriceSummary(lines) {
+    const currency = lines[0]?.currentPrice?.currencyCode;
+    if (!currency || !/^[A-Z]{3}$/.test(currency)) return {};
+    const amount = (money) => money?.currencyCode === currency &&
+      (typeof money.amount === 'string' && money.amount.trim() || typeof money.amount === 'number') &&
+      Number.isFinite(Number(money.amount)) && Number(money.amount) >= 0 ? Number(money.amount) : null;
+    let total = 0;
+    let base = 0;
+    let hasBase = true;
+    for (const line of lines) {
+      const current = amount(line.currentPrice);
+      const original = amount(line.pricingPolicy?.basePrice);
+      const quantity = Number(line.quantity);
+      if (current === null || !Number.isSafeInteger(quantity) || quantity < 1) return {};
+      total += current * quantity;
+      if (original === null) hasBase = false;
+      else base += original * quantity;
+    }
+    const money = new Intl.NumberFormat(undefined, { style: 'currency', currency });
+    const savings = hasBase && base > total && money.format(base - total) !== money.format(0)
+      ? money.format(base - total) : '';
+    return { price: money.format(total), savings };
+  }
+
   function createPreviewRequest() {
     const day = (offset) => new Date(Date.now() + offset * 86400000).toISOString();
     const subscriptions = new Map(['101', '102'].map((id) => [id, {
@@ -48,7 +72,7 @@
       deliveryPolicy: { interval: 'MONTH', intervalCount: 1 },
       customerPaymentMethod: { instrument: { __typename: 'CustomerCreditCard' } },
       deliveryMethod: { __typename: 'SubscriptionDeliveryMethodShipping', address: {} },
-      lines: { nodes: [{ title: id === '101' ? 'Sample Black Walnut Drops' : 'Sample Soursop Softgels', quantity: 1, currentPrice: { amount: 34.99, currencyCode: 'USD' } }] }
+      lines: { nodes: [{ title: id === '101' ? 'Sample Black Walnut Drops' : 'Sample Soursop Softgels', quantity: 1, currentPrice: { amount: 34.99, currencyCode: 'USD' }, pricingPolicy: { basePrice: { amount: 44.99, currencyCode: 'USD' } } }] }
     }]));
     const orders = new Map([...subscriptions.keys()].map((id) => [id, [7, 37, 67].map((offset, index) => ({
       id: String(index + 1), billingDate: day(offset), status: 'QUEUED'
@@ -243,19 +267,42 @@
     function openCancellation() {
       const dialog = find('[data-cancel-dialog]');
       const heading = dialog.querySelector('h2');
+      const back = dialog.querySelector('[data-cancel-back]');
+      const history = [];
+      const lines = contract.lines?.nodes || [];
+      const { price, savings } = subscriptionPriceSummary(lines);
+      const priceTag = dialog.querySelector('[data-cancel-price]');
+      const savingsTag = dialog.querySelector('[data-cancel-savings]');
+      dialog.querySelector('[data-cancel-product]').textContent = lines.map(line => line.title).filter(Boolean).join(' · ') || 'Your subscription';
+      const nextBill = contract.status === 'ACTIVE' && formatDate(contract.nextBillingDate);
+      const frequency = find('[data-contract-frequency]').textContent;
+      dialog.querySelector('[data-cancel-schedule]').textContent =
+        [frequency === '—' ? '' : frequency, nextBill ? 'Next billing ' + nextBill : ''].filter(Boolean).join(' · ');
+      priceTag.hidden = !price;
+      priceTag.textContent = price ? price + ' subtotal' : '';
+      savingsTag.hidden = !savings;
+      savingsTag.textContent = savings ? savings + ' less than your plan’s base price at current pricing' : '';
+      let currentStep;
       const titles = { start: 'Before you go', questions: 'Help us understand', review: 'Review your options', confirm: 'Cancel your subscription?' };
       function showStep(step) {
         for (const panel of dialog.querySelectorAll('[data-cancel-step]')) {
           panel.hidden = panel.dataset.cancelStep !== step;
         }
+        currentStep = step;
         heading.textContent = titles[step];
+        back.hidden = history.length === 0;
+        dialog.scrollTop = 0;
         if (dialog.open) heading.focus({ preventScroll: true });
       }
       dialog.querySelector('form').reset();
       showStep('start');
       for (const button of dialog.querySelectorAll('[data-cancel-next]')) {
-        button.onclick = () => showStep(button.dataset.cancelNext);
+        button.onclick = () => {
+          history.push(currentStep);
+          showStep(button.dataset.cancelNext);
+        };
       }
+      back.onclick = () => { if (history.length) showStep(history.pop()); };
       const order = nextOrder();
       const nextRenewal = order && upcoming
         .filter((item) => item !== order && ['QUEUED', 'SCHEDULED'].includes(item.status))
@@ -266,8 +313,9 @@
       const note = dialog.querySelector('[data-cancel-skip-note]');
       const reason = dialog.querySelector('[data-cancel-reason]');
       const delivery = dialog.querySelector('[data-cancel-delivery]');
+      const selectedReason = () => reason.querySelector('input:checked')?.value;
       function updateOffer() {
-        const declined = delivery.value === 'no' || reason.value === 'fit';
+        const declined = delivery.value === 'no' || selectedReason() === 'fit';
         skip.hidden = declined || !order || contract.status !== 'ACTIVE';
         note.hidden = false;
         note.textContent = declined ? 'You can continue to cancel your subscription.' :
@@ -288,7 +336,7 @@
       function updateQuestions() {
         updateOffer();
         for (const button of questionActions) {
-          button.disabled = preview && (!reason.value || !delivery.value);
+          button.disabled = preview && (!selectedReason() || !delivery.value);
         }
       }
       reason.onchange = updateQuestions;

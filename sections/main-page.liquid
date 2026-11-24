@@ -106,7 +106,18 @@
     </dialog>
     <dialog class="av-m__dialog" data-cancel-dialog aria-labelledby="av-cancel-title-{{ section.id }}">
       <form method="dialog" class="av-m__modal av-m__cancel-panel">
+        <div class="av-m__cancel-toolbar">
+          <button type="button" data-cancel-back hidden>← Back</button>
+          <button type="submit" value="keep" aria-label="Close cancellation dialog">✕</button>
+        </div>
         <h2 id="av-cancel-title-{{ section.id }}" tabindex="-1" autofocus>Before you go</h2>
+        <div class="av-m__cancel-summary">
+          <div class="av-m__cancel-plan">
+            <div><strong data-cancel-product></strong><div data-cancel-schedule></div></div>
+            <strong data-cancel-price hidden></strong>
+          </div>
+          <p class="av-m__cancel-savings" data-cancel-savings hidden></p>
+        </div>
         <div class="av-m__cancel-step" data-cancel-step="start">
           <p>Here’s what comes with your current subscription.</p>
           <ul class="av-m__retention-benefits">
@@ -121,15 +132,14 @@
         </div>
         <div class="av-m__cancel-step" data-cancel-step="questions" hidden>
           <p>Both questions are optional. Your answers help show delivery options here.</p>
-          <label for="av-cancel-reason-{{ section.id }}">What’s the main reason you’re leaving?</label>
-          <select id="av-cancel-reason-{{ section.id }}" data-cancel-reason>
-            <option value="">Choose a reason</option>
-            <option value="stock">I have enough product</option>
-            <option value="price">It costs too much</option>
-            <option value="timing">Orders arrive too often</option>
-            <option value="fit">The product isn’t right for me</option>
-            <option value="other">Something else</option>
-          </select>
+          <fieldset class="av-m__cancel-reasons" data-cancel-reason>
+            <legend>What’s the main reason you’re leaving?</legend>
+            <label><input type="radio" name="cancelReason" value="stock">I have enough product</label>
+            <label><input type="radio" name="cancelReason" value="price">It costs too much</label>
+            <label><input type="radio" name="cancelReason" value="timing">Orders arrive too often</label>
+            <label><input type="radio" name="cancelReason" value="fit">The product isn’t right for me</label>
+            <label><input type="radio" name="cancelReason" value="other">Something else</label>
+          </fieldset>
           <label for="av-cancel-delivery-{{ section.id }}">Would skipping an order help?</label>
           <select id="av-cancel-delivery-{{ section.id }}" data-cancel-delivery>
             <option value="">Choose an answer</option>
@@ -400,6 +410,18 @@ html:has([data-membership-preview]) #MainContent > .shopify-section:has([data-me
 @media(max-width:420px){#av-membership-{{ section.id }} .av-m__cancel-actions{grid-template-columns:minmax(0,1fr)}}
 #av-membership-{{ section.id }} [data-cancel-step="questions"] label{font-weight:700}
 #av-membership-{{ section.id }} [data-cancel-step="questions"] select{width:100%;min-height:46px;border:1px solid var(--m-line);border-radius:9px;padding:8px 12px;background:white;color:inherit;font-size:16px}
+#av-membership-{{ section.id }} .av-m__cancel-toolbar{display:flex;justify-content:space-between;gap:8px}
+#av-membership-{{ section.id }} .av-m__cancel-toolbar button{border:0;background:var(--m-sage);color:var(--m-dark);border-radius:8px;padding:0 14px;min-height:42px;font-weight:700;cursor:pointer}
+#av-membership-{{ section.id }} .av-m__cancel-toolbar button:last-child{margin-inline-start:auto}
+#av-membership-{{ section.id }} .av-m__cancel-summary{border:1px solid var(--m-line);border-radius:14px;overflow:hidden;background:#f8fcfd}
+#av-membership-{{ section.id }} .av-m__cancel-plan{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px}
+#av-membership-{{ section.id }} [data-cancel-schedule]{color:var(--m-green);font-size:14px}
+#av-membership-{{ section.id }} .av-m__cancel-savings{padding:12px 14px;background:#e0f3e8;color:#18583e;font-weight:700;font-size:14px}
+#av-membership-{{ section.id }} .av-m__cancel-reasons{display:grid;gap:8px;border:0;padding:0;margin:0;min-width:0}
+#av-membership-{{ section.id }} .av-m__cancel-reasons legend{font-weight:700;margin-bottom:8px}
+#av-membership-{{ section.id }} .av-m__cancel-reasons label{display:flex;align-items:center;gap:10px;padding:10px 12px;min-height:44px;border:1px solid var(--m-line);border-radius:10px;font-weight:500;cursor:pointer}
+#av-membership-{{ section.id }} .av-m__cancel-reasons label:has(:checked){border-color:var(--m-green);background:var(--m-sage)}
+#av-membership-{{ section.id }} .av-m__cancel-reasons input{accent-color:var(--m-green)}
 </style>
 
 {% else %}
