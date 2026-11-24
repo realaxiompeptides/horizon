@@ -24,7 +24,7 @@
         <div class="av-bf-bar__subtitle">Early access · Up to 70% off</div>
       </div>
       {% if block.settings.show_countdown %}
-        <div class="av-bf-bar__timer" role="timer" aria-label="Countdown to Black Friday" hidden>
+        <div class="av-bf-bar__timer" role="timer" aria-label="VIP Black Friday countdown" hidden>
           <div><span data-bf-hours></span><small>HR</small></div>
           <div><span data-bf-minutes></span><small>MIN</small></div>
           <div><span data-bf-seconds></span><small>SEC</small></div>
@@ -36,16 +36,25 @@
             if (!timer) return;
 
             const parts = ['hours', 'minutes', 'seconds'].map(unit => timer.querySelector('[data-bf-' + unit + ']'));
-            // Count down to the start of Black Friday in Pacific time.
-            const endTime = Date.parse('2026-11-27T00:00:00-08:00');
+            const storageKey = 'avonent_vip_black_friday_2026_countdown_v2';
+            const initialSeconds = 6300 + Math.floor(Math.random() * 901);
+            let endTime = Date.now() + initialSeconds * 1000;
+            try {
+              const savedEndTime = Number(localStorage.getItem(storageKey));
+              if (Number.isFinite(savedEndTime) && savedEndTime > 0) {
+                endTime = savedEndTime;
+              } else {
+                localStorage.setItem(storageKey, String(endTime));
+              }
+            } catch {}
 
             const tick = () => {
-              const remaining = Math.ceil((endTime - Date.now()) / 1000);
-              timer.hidden = remaining <= 0;
-              if (timer.hidden || !root.isConnected) return;
+              if (!root.isConnected) return;
+              const remaining = Math.max(0, Math.ceil((endTime - Date.now()) / 1000));
+              timer.hidden = false;
               const digits = [Math.floor(remaining / 3600), Math.floor(remaining / 60) % 60, remaining % 60];
               parts.forEach((part, index) => { part.textContent = String(digits[index]).padStart(2, '0'); });
-              window.setTimeout(tick, 1000);
+              if (remaining > 0) window.setTimeout(tick, 1000);
             };
             tick();
           })();
