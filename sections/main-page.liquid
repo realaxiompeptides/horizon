@@ -12,13 +12,7 @@
       {% if customer %}
         <a class="av-m__button" href="{{ membership_dashboard_url | escape }}">Open your subscription dashboard</a>
       {% else %}
-        <p>Enter the email you used for your subscription. Appstle will send a secure link to manage it.</p>
-        <form method="post" class="av-m__sign-in-form" data-appstle-email-link>
-          <label for="av-subscription-email-{{ section.id }}">Subscription email</label>
-          <input id="av-subscription-email-{{ section.id }}" name="email" type="email" autocomplete="email" maxlength="254" placeholder="you@example.com" required>
-          <button class="av-m__button" type="submit" disabled>Email me a link</button>
-          <p role="status" data-appstle-email-status></p>
-        </form>
+        <p>Use the email associated with your subscription. Shopify will email you a sign-in code.</p>
         <a class="av-m__shopify-sign-in" href="/customer_authentication/login?return_to={{ membership_dashboard_url | url_encode }}">Sign in with Shopify to open your Avonent dashboard</a>
       {% endif %}
     </div>
@@ -39,20 +33,14 @@
     <div class="av-m__layout" id="av-plan-{{ section.id }}">
       <div class="av-m__card av-m__plan">
         <div class="av-m__product">
-          {% assign preview_product = all_products['black-walnut-drops'] %}
-          {% if preview_product.featured_image != blank %}
-          {{ preview_product.featured_image | image_url: width: 240 | image_tag: class: 'av-m__product-img', loading: 'lazy', alt: preview_product.title }}
-          {% else %}
-          <div class="av-m__product-placeholder" aria-hidden="true">AVONENT</div>
-          {% endif %}
           <div>
             <h3>Subscription details</h3>
             <label for="av-contract-{{ section.id }}" data-contract-label hidden>Choose a subscription</label>
             <select id="av-contract-{{ section.id }}" data-contract hidden></select>
             <p role="status" data-appstle-status>Loading your subscriptions…</p>
-            <a href="/apps/subscriptions">Open Appstle portal</a>
           </div>
         </div>
+        <div data-contract-content hidden><ul class="av-m__contract-products" data-contract-products></ul>
         <div class="av-m__facts">
           <div><span>Next billing date</span><strong data-contract-next-billing>—</strong></div>
           <div><span>Delivery frequency</span><strong data-contract-frequency>—</strong></div>
@@ -68,19 +56,20 @@
         </div>
         <div class="av-m__manage"><button type="button" data-subscription-action="resume" disabled>Resume subscription</button><button type="button" data-subscription-action="cancel" disabled>Cancel subscription</button></div>
       </div>
-      <aside class="av-m__card av-m__summary">
+      </div>
+      <aside class="av-m__card av-m__summary" data-contract-content hidden>
         <div class="av-m__kicker">SUBSCRIBER PERKS</div>
         <h3>Your VIP membership perks.</h3>
         <p>Enjoy extra value, exclusive opportunities and more flexibility than a standard one-time order.</p>
         <ul><li><strong>Exclusive subscriber pricing</strong><span>Unlock the recurring price on your subscribed products.</span></li><li><strong>VIP sale access</strong><span>Enjoy exclusive VIP sales and early access to promotions.</span></li><li><strong>Special member offers</strong><span>Discover eligible promotions, bundles and product savings.</span></li><li><strong>Free shipping on all recurring orders</strong><span>Free shipping on all recurring orders.</span></li><li><strong>Automatic refills</strong><span>Keep your routine stocked with scheduled deliveries.</span></li><li><strong>Skip or pause anytime</strong><span>Take a break or skip a shipment when you need to.</span></li></ul>
       </aside>
     </div>
-    <div class="av-m__deliveries" id="av-deliveries-{{ section.id }}">
+    <div class="av-m__deliveries" data-contract-content hidden id="av-deliveries-{{ section.id }}">
       <div class="av-m__kicker">DELIVERY SCHEDULE</div><h2>Your deliveries</h2>
-      <div class="av-m__card"><h3 class="av-m__icon-heading"><i class="av-m__fa" aria-hidden="true">&#xf073;</i><span>Upcoming orders</span></h3><p><a href="/apps/subscriptions">Review upcoming orders in Appstle</a>.</p><ul data-orders-upcoming></ul></div>
-      <div class="av-m__card av-m__history"><h3 class="av-m__icon-heading"><i class="av-m__fa" aria-hidden="true">&#xf1da;</i><span>Order history</span></h3><p><a href="/apps/subscriptions">Review order history in Appstle</a>.</p><ul data-orders-past></ul></div>
+      <div class="av-m__card"><h3 class="av-m__icon-heading"><i class="av-m__fa" aria-hidden="true">&#xf073;</i><span>Upcoming orders</span></h3><ul data-orders-upcoming></ul></div>
+      <div class="av-m__card av-m__history"><h3 class="av-m__icon-heading"><i class="av-m__fa" aria-hidden="true">&#xf1da;</i><span>Order history</span></h3><ul data-orders-past></ul></div>
     </div>
-    <div id="av-benefits-{{ section.id }}" class="av-m__benefits">
+    <div id="av-benefits-{{ section.id }}" class="av-m__benefits" data-contract-content hidden>
       <div class="av-m__kicker">MADE FOR YOUR ROUTINE</div><h2>Make the most of your membership.</h2><p>Discover the exclusive benefits of your AVONENT membership. </p>
       <div class="av-m__perks">
         <article><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf02b;</i></span><h3>Exclusive subscriber pricing</h3><p>Unlock the recurring price on your subscribed products.</p></article>
@@ -95,7 +84,7 @@
         <article><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf2bd;</i></span><h3>Easy account management</h3><p>Manage your subscription, payment and delivery details in one place.</p></article>
       </div>
     </div>
-    <div id="av-billing-{{ section.id }}" class="av-m__billing"><div class="av-m__kicker">ACCOUNT SETTINGS</div><h2>Billing &amp; shipping</h2><div class="av-m__account-grid">
+    <div id="av-billing-{{ section.id }}" class="av-m__billing" data-contract-content hidden><div class="av-m__kicker">ACCOUNT SETTINGS</div><h2>Billing &amp; shipping</h2><div class="av-m__account-grid">
       <article class="av-m__card"><h3 class="av-m__icon-heading"><i class="av-m__fa" aria-hidden="true">&#xf3c5;</i><span>Shipping address</span></h3><p>Update where your subscription ships.</p><button class="av-m__button av-m__outline" type="button" data-subscription-action="address" disabled>Manage shipping address</button></article>
       <article class="av-m__card"><h3 class="av-m__icon-heading"><i class="av-m__fa" aria-hidden="true">&#xf09d;</i><span>Payment method</span></h3><p>Request a secure link to update your payment method.</p><button class="av-m__button av-m__outline" type="button" data-subscription-action="payment" disabled>Update payment method</button></article>
     </div>
@@ -135,6 +124,10 @@
 {% endif %}
 <script src="{{ 'avonent-membership-test.js' | asset_url }}" defer></script>
 <style>
+#av-membership-{{ section.id }} [data-contract-content][hidden]{display:none!important}
+#av-membership-{{ section.id }} .av-m__contract-products{display:grid;gap:14px;list-style:none;padding:0;margin:16px 0 22px}
+#av-membership-{{ section.id }} .av-m__contract-products li{display:flex;gap:14px;align-items:center}
+#av-membership-{{ section.id }} .av-m__contract-products img{width:64px;height:64px;object-fit:contain;border-radius:8px}
 #av-membership-{{ section.id }} .av-m__cancel-panel{display:grid;gap:14px}
 #av-membership-{{ section.id }} .av-m__cancel-panel h2,#av-membership-{{ section.id }} .av-m__cancel-panel p{margin:0}
 #av-membership-{{ section.id }} .av-m__cancel-actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,175px),1fr));gap:10px}
