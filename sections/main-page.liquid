@@ -5,12 +5,13 @@
       <div class="av-m__kicker">AVONENT · MEMBERSHIP</div>
       <h1>Welcome to your<br><span>subscriber dashboard.</span></h1>
       <p>Everything you need to manage your wellness routine, all in one place.</p>
-      <div class="av-m__nav"><a href="#av-plan-{{ section.id }}">My subscription</a><a href="#av-benefits-{{ section.id }}">My benefits</a><a href="#av-help-{{ section.id }}">Support</a></div>
+      <div class="av-m__nav"><a href="#av-plan-{{ section.id }}">My subscription</a><a href="#av-deliveries-{{ section.id }}">Deliveries</a><a href="#av-billing-{{ section.id }}">Billing</a><a href="#av-benefits-{{ section.id }}">My benefits</a><a href="#av-help-{{ section.id }}">Support</a></div>
       <small class="av-m__notice">Test environment · Example account only. No real billing or account changes.</small>
     </div>
   </div>
   <div class="av-m__wrap av-m__body">
     <div class="av-m__heading"><div><div class="av-m__kicker">YOUR MEMBERSHIP</div><h2>My subscription</h2></div><button type="button" class="av-m__text-btn" data-reset>Reset preview</button></div>
+    <div class="av-m__alert" data-payment-alert hidden role="status"><div><strong>Payment unsuccessful</strong><p>We couldn’t process your latest renewal. Update your payment method and retry to restore your delivery.</p></div><button type="button" class="av-m__button" data-action="payment">Update payment method</button></div>
     <div class="av-m__layout" id="av-plan-{{ section.id }}">
       <div class="av-m__card av-m__plan">
         <div class="av-m__product">
@@ -25,7 +26,7 @@
         <div class="av-m__facts">
           <div><span>Next scheduled delivery</span><strong data-date>—</strong></div>
           <div><span>Delivery frequency</span><strong data-frequency-label>Every 30 days</strong></div>
-          <div><span>Subscription pricing</span><strong data-price>Example plan</strong></div>
+          <div><span>Subscription pricing</span><strong data-price>$34.99 / delivery</strong><small>Sample recurring price</small></div>
           <div><span>Billing status</span><strong data-billing>Scheduled</strong></div>
         </div>
         <h4>Manage your next delivery</h4>
@@ -35,7 +36,7 @@
           <button type="button" data-action="frequency"><span aria-hidden="true">↻</span><strong>Change frequency</strong><small>Find your ideal timing</small></button>
           <button type="button" data-action="pause"><span aria-hidden="true">Ⅱ</span><strong>Pause membership</strong><small>Take a temporary break</small></button>
         </div>
-        <div class="av-m__manage"><button type="button" data-action="review">Review membership options</button><button type="button" data-action="cancel">Cancel subscription</button></div>
+        <div class="av-m__manage"><button type="button" data-action="resume" hidden>Resume subscription</button><button type="button" data-action="review">Review membership options</button><button type="button" data-action="cancel">Cancel subscription</button></div>
       </div>
       <aside class="av-m__card av-m__summary">
         <div class="av-m__kicker">SUBSCRIBER PERKS</div>
@@ -43,6 +44,11 @@
         <p>Your membership is designed to give you convenience, flexibility and access to subscriber pricing.</p>
         <ul><li><strong>Subscriber pricing</strong><span>Access the recurring price associated with your plan.</span></li><li><strong>Shipping benefits</strong><span>Eligible plans may include free shipping on qualifying orders.</span></li><li><strong>Flexible deliveries</strong><span>Skip, pause or reschedule when your routine changes.</span></li><li><strong>Personalized support</strong><span>Get help with orders and subscription questions.</span></li></ul>
       </aside>
+    </div>
+    <div class="av-m__deliveries" id="av-deliveries-{{ section.id }}">
+      <div class="av-m__kicker">DELIVERY SCHEDULE</div><h2>Your deliveries</h2>
+      <div class="av-m__card"><h3>Upcoming orders</h3><p>Review your next three scheduled renewals and manage your next shipment.</p><div data-upcoming class="av-m__order-list"></div></div>
+      <div class="av-m__card av-m__history"><h3>Order history</h3><p>Example orders associated with this account.</p><div data-history class="av-m__order-list"></div></div>
     </div>
     <div id="av-benefits-{{ section.id }}" class="av-m__benefits">
       <div class="av-m__kicker">MADE FOR YOUR ROUTINE</div><h2>Make the most of your membership.</h2><p>Your subscription is designed around you. Actual pricing, shipping and promotions depend on your selected plan.</p>
@@ -55,10 +61,11 @@
         <article><span aria-hidden="true">♡</span><h3>Here to help</h3><p>Our support team is available to help with your order questions.</p></article>
       </div>
     </div>
-    <div class="av-m__account-grid">
-      <article class="av-m__card"><h3>Shipping address</h3><p>Example address · Not connected to a customer account.</p><button class="av-m__button av-m__outline" type="button" data-action="address">Manage shipping address</button></article>
-      <article class="av-m__card"><h3>Payment method</h3><p>No payment information stored in this test environment.</p><button class="av-m__button av-m__outline" type="button" data-action="payment">Manage payment method</button></article>
+    <div id="av-billing-{{ section.id }}" class="av-m__billing"><div class="av-m__kicker">ACCOUNT SETTINGS</div><h2>Billing &amp; shipping</h2><div class="av-m__account-grid">
+      <article class="av-m__card"><h3>Shipping address</h3><p data-address-label>Sample address · Roseville, CA</p><button class="av-m__button av-m__outline" type="button" data-action="address">Manage shipping address</button></article>
+      <article class="av-m__card"><h3>Payment method</h3><p data-card-label>Visa ending in 4242 · Example card</p><p><strong data-payment-status>Ready for next renewal</strong></p><button class="av-m__button av-m__outline" type="button" data-action="payment">Update payment method</button><button class="av-m__button av-m__outline" type="button" data-action="retry" hidden>Retry payment</button></article>
     </div>
+    <article class="av-m__card av-m__test-tools"><h3>Preview controls</h3><p>Simulate a failed renewal to test the payment recovery experience. No real card details, messages or transactions are used.</p><button type="button" class="av-m__button av-m__outline" data-action="fail">Simulate failed payment</button></article></div>
     <div class="av-m__help" id="av-help-{{ section.id }}"><div><div class="av-m__kicker">WE'RE HERE FOR YOU</div><h2>Need a hand?</h2><p>Get help with your deliveries, subscription or account.</p></div><a class="av-m__button av-m__outline" href="/pages/contact">Contact support</a></div>
   </div>
   <dialog class="av-m__dialog" aria-labelledby="av-m-title-{{ section.id }}"><div class="av-m__modal">
@@ -69,7 +76,7 @@
   </div></dialog>
 </section>
 <style>
-#av-membership-{{ section.id }}{--m-dark:#243F2B;--m-green:#355A38;--m-accent:#BBD9AD;--m-sage:#EFF6EA;--m-line:#DBE8D4;color:var(--m-dark);background:#f8faf6;line-height:1.5;font-family:inherit}
+#av-membership-{{ section.id }}{--m-dark:#0B2637;--m-green:#00647A;--m-accent:#02C6EA;--m-sage:#EAF9FC;--m-line:#CBE8EF;color:var(--m-dark);background:#F5FAFC;line-height:1.5;font-family:inherit}
 #av-membership-{{ section.id }} *{box-sizing:border-box}
 #av-membership-{{ section.id }} .av-m__wrap{width:min(1120px,100% - 40px);margin:auto}
 #av-membership-{{ section.id }} .av-m__hero{background:var(--m-dark);color:white;padding:50px 0 34px}
@@ -80,12 +87,12 @@
 #av-membership-{{ section.id }} h3{font-size:23px}
 #av-membership-{{ section.id }} h4{font-size:19px;margin:24px 0 13px}
 #av-membership-{{ section.id }} p{margin:0 0 15px;font-size:15px;color:inherit}
-#av-membership-{{ section.id }} .av-m__hero p{font-size:18px;color:#e1eddb;max-width:620px}
+#av-membership-{{ section.id }} .av-m__hero p{font-size:18px;color:#DDF5FA;max-width:620px}
 #av-membership-{{ section.id }} .av-m__kicker{font-size:11px;font-weight:800;letter-spacing:.15em;color:var(--m-green);margin-bottom:13px}
 #av-membership-{{ section.id }} .av-m__hero .av-m__kicker{color:var(--m-accent)}
 #av-membership-{{ section.id }} .av-m__nav{display:flex;flex-wrap:wrap;gap:8px;margin:25px 0 20px}
 #av-membership-{{ section.id }} .av-m__nav a{color:white;text-decoration:none;border:1px solid #ffffff55;border-radius:7px;padding:10px 15px;font-weight:700;font-size:14px}
-#av-membership-{{ section.id }} .av-m__notice{font-size:12px;color:#e1eddb}
+#av-membership-{{ section.id }} .av-m__notice{font-size:12px;color:#DDF5FA}
 #av-membership-{{ section.id }} .av-m__body{padding:35px 0 60px}
 #av-membership-{{ section.id }} .av-m__heading{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}
 #av-membership-{{ section.id }} .av-m__layout{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(0,1fr);gap:20px;scroll-margin-top:100px}
@@ -98,14 +105,14 @@
 #av-membership-{{ section.id }} .av-m__product p{margin:0}
 #av-membership-{{ section.id }} .av-m__facts{display:grid;grid-template-columns:1fr 1fr;gap:15px;background:var(--m-sage);border-radius:12px;margin-top:24px;padding:18px}
 #av-membership-{{ section.id }} .av-m__facts span,#av-membership-{{ section.id }} .av-m__facts strong{display:block}
-#av-membership-{{ section.id }} .av-m__facts span{font-size:12px;margin-bottom:4px;color:#51624c}
+#av-membership-{{ section.id }} .av-m__facts span{font-size:12px;margin-bottom:4px;color:#47616E}
 #av-membership-{{ section.id }} .av-m__facts strong{font-size:16px}
 #av-membership-{{ section.id }} .av-m__actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 #av-membership-{{ section.id }} button,#av-membership-{{ section.id }} a{font:inherit;cursor:pointer}
-#av-membership-{{ section.id }} .av-m__actions button{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;padding:15px;background:#fff;color:var(--m-dark);border:1px solid #bacfb3;border-radius:10px;min-height:108px}
+#av-membership-{{ section.id }} .av-m__actions button{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;padding:15px;background:#fff;color:var(--m-dark);border:1px solid #B4D9E3;border-radius:10px;min-height:108px}
 #av-membership-{{ section.id }} .av-m__actions button span{font-size:25px;font-weight:700;line-height:1}
 #av-membership-{{ section.id }} .av-m__actions button strong{font-size:15px}
-#av-membership-{{ section.id }} .av-m__actions button small{font-size:12px;color:#53654f}
+#av-membership-{{ section.id }} .av-m__actions button small{font-size:12px;color:#47616E}
 #av-membership-{{ section.id }} .av-m__manage{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;border-top:1px solid var(--m-line);padding-top:17px;margin-top:22px}
 #av-membership-{{ section.id }} .av-m__manage button,#av-membership-{{ section.id }} .av-m__text-btn{border:0;background:none;color:var(--m-green);font-size:14px;font-weight:700;text-decoration:underline;text-underline-offset:3px;padding:7px 0}
 #av-membership-{{ section.id }} .av-m__summary{background:var(--m-sage)}
@@ -127,15 +134,15 @@
 #av-membership-{{ section.id }} .av-m__help .av-m__kicker{color:var(--m-accent)}
 #av-membership-{{ section.id }} .av-m__help a{color:white;border-color:white;width:auto;flex-shrink:0}
 #av-membership-{{ section.id }} .av-m__dialog{border:0;border-radius:18px;background:white;color:var(--m-dark);width:min(540px,100% - 24px);max-height:calc(100dvh - 32px);padding:0;overflow:auto;margin:auto;position:fixed;inset:0}
-#av-membership-{{ section.id }} .av-m__dialog::backdrop{background:#18291fa6;backdrop-filter:blur(4px)}
+#av-membership-{{ section.id }} .av-m__dialog::backdrop{background:#0B2637A6;backdrop-filter:blur(4px)}
 #av-membership-{{ section.id }} .av-m__modal{padding:24px;position:relative}
 #av-membership-{{ section.id }} .av-m__modal h2{padding-right:35px;font-size:29px}
 #av-membership-{{ section.id }} .av-m__close{position:absolute;right:12px;top:12px;width:40px;height:40px;border:0;border-radius:8px;background:var(--m-sage);color:var(--m-dark);font-size:25px}
 #av-membership-{{ section.id }} [data-modal-content]{display:grid;gap:8px;margin:15px 0}
 #av-membership-{{ section.id }} .av-m__feedback{font-weight:700;font-size:14px;color:var(--m-green)}
-#av-membership-{{ section.id }} .av-m__fine{display:block;margin-top:12px;font-size:12px;color:#53654f}
-#av-membership-{{ section.id }} input{font:inherit;border:1px solid #bacfb3;border-radius:8px;padding:12px;min-height:48px;width:100%;color:var(--m-dark);background:white}
-#av-membership-{{ section.id }} :focus-visible{outline:3px solid #7ca66d;outline-offset:3px}
+#av-membership-{{ section.id }} .av-m__fine{display:block;margin-top:12px;font-size:12px;color:#47616E}
+#av-membership-{{ section.id }} input{font:inherit;border:1px solid #B4D9E3;border-radius:8px;padding:12px;min-height:48px;width:100%;color:var(--m-dark);background:white}
+#av-membership-{{ section.id }} :focus-visible{outline:3px solid #009BB9;outline-offset:3px}
 @media(max-width:760px){#av-membership-{{ section.id }} .av-m__wrap{width:calc(100% - 28px)}#av-membership-{{ section.id }} .av-m__hero{padding:37px 0 26px}#av-membership-{{ section.id }} .av-m__layout{grid-template-columns:1fr}#av-membership-{{ section.id }} .av-m__perks{grid-template-columns:1fr 1fr}#av-membership-{{ section.id }} .av-m__perks article{padding:16px}#av-membership-{{ section.id }} .av-m__account-grid{grid-template-columns:1fr}#av-membership-{{ section.id }} .av-m__help{align-items:stretch;flex-direction:column}#av-membership-{{ section.id }} .av-m__help a{width:100%}#av-membership-{{ section.id }} .av-m__facts{padding:14px;gap:12px}#av-membership-{{ section.id }} .av-m__actions button{padding:12px;min-height:105px}}
 
 /* Membership Test uses a normal document scroll, including in mobile theme preview. */
@@ -166,27 +173,75 @@ html:has([data-membership-preview]) #MainContent > .shopify-section:has([data-me
   #av-membership-{{ section.id }} .av-m__nav a{padding:9px 10px;font-size:13px}
   #av-membership-{{ section.id }} .av-m__body{padding-top:24px}
 }
+
+#av-membership-{{ section.id }} .av-m__hero{background:linear-gradient(140deg,#0B2637,#103E52)}
+#av-membership-{{ section.id }} .av-m__button:not(.av-m__outline){background:#02C6EA;border-color:#02C6EA;color:#082C39}
+#av-membership-{{ section.id }} .av-m__status{background:#DDF7FC;color:#075D70}
+#av-membership-{{ section.id }} .av-m__status[data-state="failed"]{background:#FFF0DD;color:#843E00}
+#av-membership-{{ section.id }} .av-m__status[data-state="cancelled"]{background:#F0F2F4;color:#45515D}
+#av-membership-{{ section.id }} [hidden]{display:none!important}
+#av-membership-{{ section.id }} button:disabled{opacity:.5;cursor:not-allowed}
+#av-membership-{{ section.id }} .av-m__alert{display:flex;align-items:center;gap:18px;background:#FFF5E8;border:1px solid #E8B774;color:#743800;padding:18px;border-radius:12px;margin:0 0 18px}
+#av-membership-{{ section.id }} .av-m__alert strong{font-size:18px}
+#av-membership-{{ section.id }} .av-m__alert p{margin:5px 0 0;font-size:14px}
+#av-membership-{{ section.id }} .av-m__alert button{width:auto;flex-shrink:0}
+#av-membership-{{ section.id }} .av-m__deliveries,#av-membership-{{ section.id }} .av-m__billing{padding-top:40px;scroll-margin-top:calc(var(--header-group-height,100px) + 20px)}
+#av-membership-{{ section.id }} .av-m__order-list{display:grid}
+#av-membership-{{ section.id }} .av-m__order-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;padding:15px 0;border-top:1px solid var(--m-line)}
+#av-membership-{{ section.id }} .av-m__order-row:first-child{border-top:0}
+#av-membership-{{ section.id }} .av-m__order-row strong,#av-membership-{{ section.id }} .av-m__order-row small{display:block}
+#av-membership-{{ section.id }} .av-m__order-row small{color:#47616E;margin-top:4px;font-size:13px}
+#av-membership-{{ section.id }} .av-m__order-row .av-m__status{margin:0;white-space:normal;text-align:center}
+#av-membership-{{ section.id }} .av-m__history{margin-top:12px}
+#av-membership-{{ section.id }} .av-m__account-grid{margin:16px 0}
+#av-membership-{{ section.id }} .av-m__account-grid .av-m__button+.av-m__button{margin-top:9px}
+#av-membership-{{ section.id }} .av-m__test-tools{background:#F5FAFC;margin:12px 0 24px}
+#av-membership-{{ section.id }} .av-m__facts small{font-size:11px;color:#47616E}
+@media(max-width:760px){#av-membership-{{ section.id }} .av-m__alert{align-items:stretch;flex-direction:column}#av-membership-{{ section.id }} .av-m__alert button{width:100%}#av-membership-{{ section.id }} .av-m__nav{display:flex;gap:7px}#av-membership-{{ section.id }} .av-m__order-row{gap:8px}}
 </style>
 <script>
 (function(){
 const root=document.getElementById('av-membership-{{ section.id }}');if(!root||root.dataset.ready)return;root.dataset.ready='1';
-const dialog=root.querySelector('dialog'),title=root.querySelector('[data-modal-title]'),desc=root.querySelector('[data-modal-text]'),content=root.querySelector('[data-modal-content]'),feedback=root.querySelector('[data-modal-status]');
-let frequency=30,state='Active',nextDate=addDays(new Date(),30);
+const q=s=>root.querySelector(s),dialog=q('dialog'),title=q('[data-modal-title]'),desc=q('[data-modal-text]'),content=q('[data-modal-content]'),feedback=q('[data-modal-status]');
+let frequency=30,state='Active',nextDate=addDays(new Date(),30),payment='ready',card='4242',address='Roseville, CA',history=[];
 function addDays(date,days){const d=new Date(date);d.setDate(d.getDate()+days);return d}
 function dateLabel(date){return new Intl.DateTimeFormat('en-US',{month:'short',day:'numeric',year:'numeric'}).format(date)}
-function update(){root.querySelector('[data-status]').textContent=state;root.querySelector('[data-frequency]').textContent=frequency;root.querySelector('[data-frequency-label]').textContent='Every '+frequency+' days';root.querySelector('[data-date]').textContent=state==='Cancelled'?'No future deliveries':dateLabel(nextDate);root.querySelector('[data-billing]').textContent=state==='Cancelled'?'No future renewals':state==='Paused'?'Paused':'Scheduled';root.querySelectorAll('.av-m__actions button,[data-action="cancel"],[data-action="review"]').forEach(b=>b.disabled=state==='Cancelled')}
+function row(parent,name,detail,flag){const el=document.createElement('div');el.className='av-m__order-row';const left=document.createElement('div'),strong=document.createElement('strong'),small=document.createElement('small'),badge=document.createElement('span');strong.textContent=name;small.textContent=detail;badge.className='av-m__status';badge.textContent=flag;if(flag==='Payment failed')badge.dataset.state='failed';left.append(strong,small);el.append(left,badge);parent.append(el)}
+function update(){
+const cancelled=state==='Cancelled',paused=state==='Paused',failed=payment!=='ready'&&!cancelled;
+q('[data-status]').textContent=cancelled?state:failed?'Payment issue':state;q('[data-status]').dataset.state=cancelled?'cancelled':failed?'failed':'active';
+q('[data-frequency]').textContent=frequency;q('[data-frequency-label]').textContent='Every '+frequency+' days';
+q('[data-date]').textContent=cancelled?'No future deliveries':dateLabel(nextDate);
+q('[data-billing]').textContent=cancelled?'No future renewals':failed?'Payment failed':paused?'Paused':'Scheduled';
+q('[data-card-label]').textContent='Visa ending in '+card+' · Example card';q('[data-address-label]').textContent='Sample address · '+address;
+q('[data-payment-status]').textContent=payment==='failed'?'Payment failed':payment==='updated'?'Payment updated · retry available':'Ready for next renewal';
+q('[data-payment-alert]').hidden=!failed;q('[data-action="retry"]').hidden=payment!=='updated'||cancelled;
+q('[data-action="resume"]').hidden=!paused;q('[data-action="fail"]').disabled=cancelled||failed;
+root.querySelectorAll('.av-m__actions button,[data-action="cancel"],[data-action="review"]').forEach(b=>b.disabled=cancelled);
+const up=q('[data-upcoming]'),past=q('[data-history]');up.replaceChildren();past.replaceChildren();
+if(cancelled){const p=document.createElement('p');p.textContent='No upcoming deliveries.';up.append(p)}else for(let i=0;i<3;i++)row(up,dateLabel(addDays(nextDate,i*frequency)),'Black Walnut Drops · $34.99 sample price',i===0&&failed?'Payment failed':paused?'Paused':'Scheduled');
+history.forEach(h=>row(past,h[0],h[1],h[2]));row(past,'Order #1002',dateLabel(addDays(new Date(),-30))+' · $34.99','Delivered');row(past,'Order #1001',dateLabel(addDays(new Date(),-60))+' · $34.99','Delivered');
+}
 function button(text,fn,outline=false){const b=document.createElement('button');b.type='button';b.className='av-m__button'+(outline?' av-m__outline':'');b.textContent=text;b.addEventListener('click',fn);return b}
 function complete(text){update();content.replaceChildren();feedback.textContent=text}
-function show(mode){content.replaceChildren();feedback.textContent='';const modes={skip:['Skip next order','Your upcoming shipment will be skipped. Your regular schedule will resume after that.'],date:['Reschedule delivery','Choose a new date for your upcoming order.'],frequency:['Change delivery frequency','Choose a schedule that suits your routine.'],pause:['Pause membership','Select how long you would like to pause your upcoming deliveries.'],review:['Your membership options','Explore subscriber pricing, shipping benefits and flexible delivery choices.'],cancel:['Confirm cancellation','Your subscription will stop renewing. You can keep your membership or confirm cancellation below.'],address:['Shipping address','A live account would securely display your saved shipping address here.'],payment:['Payment method','A live account would open a secure payment update form here. Do not enter payment details in this preview.']};const m=modes[mode];if(!m)return;title.textContent=m[0];desc.textContent=m[1];
-if(mode==='skip')content.append(button('Confirm skip',()=>{nextDate=addDays(nextDate,frequency);state='Active';complete('Upcoming shipment skipped.')}));
-if(mode==='date'){const label=document.createElement('label');label.textContent='New delivery date';const input=document.createElement('input');input.type='date';const today=new Date();const ymd=d=>[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');input.min=ymd(today);input.value=ymd(nextDate);label.append(input);content.append(label,button('Save delivery date',()=>{if(!input.value||!input.checkValidity()){feedback.textContent='Please select a valid future date.';return}nextDate=new Date(input.value+'T12:00:00');state='Active';complete('Delivery date updated.')}))}
+function show(mode){
+content.replaceChildren();feedback.textContent='';
+const modes={skip:['Skip next order','Skip your upcoming shipment and resume on your regular schedule.'],date:['Reschedule delivery','Choose a new date for your upcoming order.'],frequency:['Change delivery frequency','Choose a schedule that suits your routine.'],pause:['Pause membership','Select how long you would like to pause deliveries.'],resume:['Resume subscription','Resume scheduled deliveries.'],review:['Your membership options','Explore subscriber pricing, shipping benefits and flexible delivery choices.'],cancel:['Confirm cancellation','Your subscription will stop renewing.'],address:['Shipping address','Select a fictional shipping address for this preview.'],payment:['Update payment method','Choose a test card below. A live portal would use Shopify or Appstle’s secure payment update flow. Do not enter real payment information.'],retry:['Retry payment','Retry the failed renewal using your updated test payment method.']};
+if(mode==='fail'){if(state!=='Cancelled'&&payment==='ready'){payment='failed';history.unshift(['Renewal attempt',dateLabel(new Date())+' · $34.99','Payment failed']);update();show('payment')}return}
+const m=modes[mode];if(!m)return;title.textContent=m[0];desc.textContent=m[1];
+if(mode==='skip')content.append(button('Confirm skip',()=>{nextDate=addDays(nextDate,frequency);complete('Upcoming shipment skipped.')}));
+if(mode==='date'){const label=document.createElement('label');label.textContent='New delivery date';const input=document.createElement('input');input.type='date';const today=new Date();const ymd=d=>[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');input.min=ymd(today);input.value=ymd(nextDate);label.append(input);content.append(label,button('Save delivery date',()=>{if(!input.value||!input.checkValidity()){feedback.textContent='Please select a valid future date.';return}nextDate=new Date(input.value+'T12:00:00');complete('Delivery date updated.')}))}
 if(mode==='frequency')[30,60,90].forEach(n=>content.append(button('Every '+n+' days',()=>{frequency=n;complete('Delivery frequency updated.')})));
 if(mode==='pause')[30,60,90].forEach(n=>content.append(button('Pause for '+n+' days',()=>{state='Paused';nextDate=addDays(new Date(),n);complete('Membership paused for '+n+' days.')})));
+if(mode==='resume')content.append(button('Resume deliveries',()=>{state='Active';complete('Subscription resumed.')}));
 if(mode==='review')content.append(button('Review delivery frequency',()=>show('frequency')),button('Pause my membership',()=>show('pause')),button('Skip next delivery',()=>show('skip')),button('Cancel subscription',()=>show('cancel'),true));
 if(mode==='cancel')content.append(button('Keep my membership',()=>dialog.close(),true),button('Confirm cancellation',()=>{state='Cancelled';complete('Subscription cancelled in this test account.')}));
+if(mode==='address')['Roseville, CA','Sacramento, CA','Reno, NV'].forEach(a=>content.append(button('Use sample address: '+a,()=>{address=a;complete('Sample shipping address updated.')})));
+if(mode==='payment')['1111','5556'].forEach(n=>content.append(button('Use test card ending in '+n,()=>{card=n;if(payment!=='ready')payment='updated';complete('Test payment method updated.');if(payment==='updated')content.append(button('Retry payment',()=>show('retry')))})));
+if(mode==='retry'){if(payment==='updated'&&state!=='Cancelled')content.append(button('Confirm test payment retry',()=>{payment='ready';history.unshift(['Renewal retry',dateLabel(new Date())+' · $34.99','Payment successful']);complete('Test payment successful. Your next delivery is scheduled.')}));else content.append(button('Update payment method',()=>show('payment')))}
 if(!dialog.open)dialog.showModal();dialog.scrollTop=0;
 }
-root.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||!root.contains(b))return;if(b.hasAttribute('data-reset')){frequency=30;state='Active';nextDate=addDays(new Date(),30);update();return}if(b.hasAttribute('data-close')){dialog.close();return}if(b.dataset.action)show(b.dataset.action)});
+root.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||!root.contains(b))return;if(b.hasAttribute('data-reset')){frequency=30;state='Active';nextDate=addDays(new Date(),30);payment='ready';card='4242';address='Roseville, CA';history=[];update();return}if(b.hasAttribute('data-close')){dialog.close();return}if(b.dataset.action)show(b.dataset.action)});
 update();
 })();
 </script>
