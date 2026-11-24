@@ -29,6 +29,11 @@
     </div>
   </div>
   <div class="av-m__wrap av-m__body">
+    <div class="av-m__card av-m__preview-banner" data-subscription-preview hidden>
+      <strong>Subscription preview</strong>
+      <p>These are sample subscriptions. Changes reset when you reload this page.</p>
+      <a href="{{ membership_dashboard_url | escape }}">Return to my real subscriptions</a>
+    </div>
     <div class="av-m__heading"><div><div class="av-m__kicker">YOUR MEMBERSHIP</div><h2>My subscription</h2></div></div>
     <div class="av-m__layout" id="av-plan-{{ section.id }}">
       <div class="av-m__card av-m__plan">
@@ -124,6 +129,10 @@
 {% endif %}
 <script src="{{ 'avonent-membership-test.js' | asset_url }}" defer></script>
 <style>
+#av-membership-{{ section.id }} .av-m__help{margin-top:clamp(22px,4vw,36px)}
+#av-membership-{{ section.id }} .av-m__preview-banner{margin-bottom:20px}
+#av-membership-{{ section.id }} .av-m__preview-banner p{margin:5px 0 8px}
+#av-membership-{{ section.id }} .av-m__preview-banner[hidden]{display:none!important}
 #av-membership-{{ section.id }} [data-contract-content][hidden]{display:none!important}
 #av-membership-{{ section.id }} .av-m__contract-products{display:grid;gap:14px;list-style:none;padding:0;margin:16px 0 22px}
 #av-membership-{{ section.id }} .av-m__contract-products li{display:flex;gap:14px;align-items:center}
