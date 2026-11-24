@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "avonent-membership-preview",
+      "settings": {
+        "preview_product": "black-walnut-drops"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
