@@ -230,6 +230,19 @@
 
     function openCancellation() {
       const dialog = find('[data-cancel-dialog]');
+      const heading = dialog.querySelector('h2');
+      const titles = { start: 'Before you go', review: 'Review your options', confirm: 'Cancel your subscription?' };
+      function showStep(step) {
+        for (const panel of dialog.querySelectorAll('[data-cancel-step]')) {
+          panel.hidden = panel.dataset.cancelStep !== step;
+        }
+        heading.textContent = titles[step];
+        if (dialog.open) heading.focus({ preventScroll: true });
+      }
+      showStep('start');
+      for (const button of dialog.querySelectorAll('[data-cancel-next]')) {
+        button.onclick = () => showStep(button.dataset.cancelNext);
+      }
       const order = nextOrder();
       const nextRenewal = order && upcoming
         .filter((item) => item !== order && ['QUEUED', 'SCHEDULED'].includes(item.status))
@@ -239,8 +252,8 @@
       const skip = dialog.querySelector('[value="skip"]');
       const note = dialog.querySelector('[data-cancel-skip-note]');
       skip.hidden = !order || contract.status !== 'ACTIVE';
-      note.hidden = skip.hidden;
-      note.textContent = nextRenewal
+      note.hidden = false;
+      note.textContent = skip.hidden ? 'There is no scheduled order available to skip.' : nextRenewal
         ? 'Skipping moves your next scheduled renewal to ' + formatDate(nextRenewal) + '.'
         : 'Skipping leaves your subscription active.';
       dialog.returnValue = '';
