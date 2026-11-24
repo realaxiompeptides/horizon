@@ -1,5 +1,6 @@
 (() => {
   const base = '/apps/subscriptions/cp/api/';
+  const previewRequested = new URLSearchParams(location.search).get('preview-subscription') === '1';
 
   async function appstleRequest(path, params = {}, method = 'GET', body) {
     const url = new URL(base + path, location.origin);
@@ -136,7 +137,7 @@
 
   async function setupDashboard(root) {
     const find = (selector) => root.querySelector(selector);
-    const preview = new URLSearchParams(location.search).get('preview-subscription') === '1';
+    const preview = root.hasAttribute('data-preview-only') || previewRequested;
     const request = preview ? createPreviewRequest() : appstleRequest;
     const orderTaxes = new Map([...find('[data-subscription-order-taxes]').content.querySelectorAll('[data-order-id]')]
       .map(({ dataset }) => [dataset.orderId, dataset.orderTax]));
@@ -547,7 +548,15 @@
     });
   }
 
-  for (const root of document.querySelectorAll('[data-appstle-membership]')) {
-    if (root.hasAttribute('data-dashboard')) setupDashboard(root);
+  if (previewRequested) {
+    const template = document.querySelector('[data-membership-test-preview]');
+    const signIn = template?.previousElementSibling;
+    if (signIn?.hasAttribute('data-membership-sign-in')) {
+      signIn.replaceWith(template.content.cloneNode(true));
+    }
+  }
+
+  for (const root of document.querySelectorAll('[data-appstle-membership][data-dashboard]')) {
+    setupDashboard(root);
   }
 })();

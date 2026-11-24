@@ -2,7 +2,7 @@
 {% assign membership_dashboard_url = routes.root_url | append: '/pages/membership-test' | replace: '//pages/', '/pages/' %}
 {% assign membership_sign_in_url = routes.root_url | append: '/pages/membership-test-sign-in' | replace: '//pages/', '/pages/' %}
 {% if page.handle == 'membership-test-sign-in' or customer == blank %}
-<section id="av-membership-{{ section.id }}" class="av-membership av-m__sign-in" data-membership-preview data-appstle-membership>
+<section id="av-membership-{{ section.id }}" class="av-membership av-m__sign-in" data-membership-preview data-appstle-membership data-membership-sign-in>
   <div class="av-m__wrap">
     <nav class="av-m__sign-in-nav" aria-label="Customer account">
       <a href="{{ routes.account_url }}">My account</a>
@@ -18,8 +18,10 @@
     </div>
   </div>
 </section>
-{% else %}
-<section id="av-membership-{{ section.id }}" class="av-membership" data-membership-preview data-appstle-membership data-dashboard data-shop-id="{{ shop.id | default: 107404886176 }}" data-price-country="{{ localization.country.iso_code | escape }}" data-sign-in-url="{{ membership_sign_in_url | escape }}">
+{% endif %}
+{% if page.handle == 'membership-test' %}
+{% unless customer %}<template data-membership-test-preview>{% endunless %}
+<section id="av-membership-{{ section.id }}" class="av-membership" data-membership-preview data-appstle-membership data-dashboard {% unless customer %}data-preview-only{% endunless %} data-shop-id="{{ shop.id | default: 107404886176 }}" data-price-country="{{ localization.country.iso_code | escape }}" data-sign-in-url="{{ membership_sign_in_url | escape }}">
   <div class="av-m__hero">
     <div class="av-m__wrap">
       <div class="av-m__kicker">AVONENT · MEMBERSHIP</div>
@@ -247,6 +249,7 @@
     </section>
   </div>
 </section>
+{% unless customer %}</template>{% endunless %}
 {% endif %}
 <script src="{{ 'avonent-membership-test.js' | asset_url }}" defer></script>
 <style>
