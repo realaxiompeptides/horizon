@@ -37,6 +37,27 @@
   }
 
   const contractId = (value) => String(value ?? '').match(/^(?:gid:\/\/shopify\/SubscriptionContract\/)?(\d+)$/)?.[1];
+  const savedPaymentEndpoint = 'subscription-contract-details/shopify/customer/payment-methods';
+  const switchPaymentEndpoint = 'subscription-contracts-update-existing-payment-method';
+
+  function savedPaymentOptions(data, currentId) {
+    if (!Array.isArray(data?.nodes)) throw new Error('Saved payment methods could not be loaded.');
+    const options = new Map();
+    for (const method of data.nodes) {
+      const id = method?.id;
+      const instrument = method?.instrument;
+      if (!/^gid:\/\/shopify\/CustomerPaymentMethod\/\d+$/.test(id || '') ||
+        id === currentId || method.revokedAt || method.revokedReason || !instrument ||
+        instrument.__typename === 'CustomerShopPayAgreement') continue;
+      const brand = instrument.__typename === 'CustomerPaypalBillingAgreement' ? 'PayPal' :
+        instrument.brand || 'Saved payment method';
+      const digits = String(instrument.lastDigits || '').match(/^\d{4}$/)?.[0];
+      const expiry = digits && instrument.expiryMonth && instrument.expiryYear
+        ? ' · Expires ' + instrument.expiryMonth + '/' + instrument.expiryYear : '';
+      options.set(id, brand + (digits ? ' ending in ' + digits : '') + expiry);
+    }
+    return options;
+  }
   const formatDate = (value) => {
     if (typeof value !== 'string' || !value) return '';
     const date = new Date(value);
@@ -108,10 +129,14 @@
       title: previewProducts[variantId], quantity, variantId,
       currentPrice: { amount: variantId === '101' ? 35 : 34.99, currencyCode: 'USD' }
     });
+    const methods = ['4242', '4444'].map((lastDigits, index) => ({
+      id: 'gid://shopify/CustomerPaymentMethod/' + (index + 1),
+      instrument: { __typename: 'CustomerCreditCard', brand: 'Visa', lastDigits }
+    }));
     const subscriptions = new Map(Object.keys(previewProducts).map((id) => [id, {
       id, status: 'ACTIVE', nextBillingDate: day(7), lastPaymentStatus: id === '102' ? 'FAILED' : 'SUCCEEDED',
       deliveryPolicy: { interval: 'MONTH', intervalCount: 1 },
-      customerPaymentMethod: { instrument: { __typename: 'CustomerCreditCard' } },
+      customerPaymentMethod: methods[0],
       deliveryMethod: { __typename: 'SubscriptionDeliveryMethodShipping', address: {} },
       lines: { nodes: id === '103' ? [previewLine('101', 2), previewLine('102')] : [previewLine(id)] }
     }]));
@@ -122,6 +147,7 @@
       if (path === 'logged-in-customer') return 1;
       if (path.startsWith('customer-portal-settings/')) return { pauseResumeSub: true, resumeSub: true, cancelSub: true, changeShippingAddressFlag: true };
       if (path === 'subscription-customers/valid/1') return [...subscriptions.keys()];
+      if (path === savedPaymentEndpoint) return { nodes: methods };
       if (path.startsWith('subscription-contracts/contract-external/')) return subscriptions.get(path.split('/').pop());
       if (path === 'subscription-billing-attempts/top-orders') return orders.get(params.contractId);
       if (path === 'subscription-billing-attempts/past-orders') return params.contractId === '102'
@@ -131,7 +157,11 @@
       if (method === 'PUT' && subscription) {
         if (path === 'subscription-contracts-update-status') subscription.status = params.status;
         else if (path === 'subscription-contracts-update-shipping-address') subscription.deliveryMethod.address = body;
-        else if (path.startsWith('subscription-billing-attempts/skip-order/')) {
+        else if (path === switchPaymentEndpoint) {
+          const method = methods.find(item => item.id === params.paymentMethodId);
+          if (!method) throw new Error('Payment method is unavailable.');
+          subscription.customerPaymentMethod = method;
+        } else if (path.startsWith('subscription-billing-attempts/skip-order/')) {
           const schedule = orders.get(subscription.id);
           schedule.find(order => order.id === path.split('/').pop()).status = 'SKIPPED';
           subscription.nextBillingDate = schedule.find(order => order.status === 'QUEUED')?.billingDate;
@@ -161,6 +191,10 @@
     const paymentHelp = find('[data-payment-help]');
     const sendPaymentLink = find('[data-send-payment-link]');
     const paymentDialogStatus = find('[data-payment-dialog-status]');
+    const choosePayment = find('[data-choose-payment]');
+    const savedPaymentForm = find('[data-saved-payment-form]');
+    const savedPaymentSelect = find('[data-saved-payment]');
+    let savedPayments = new Map();
     const cancellationReceipt = find('[data-cancel-receipt]');
     const requestedPaymentLinks = new Set();
     const actions = [...root.querySelectorAll('[data-subscription-action]')];
@@ -258,8 +292,6 @@
       };
       find('[data-cancellation-settings]').hidden = !enabled.cancel;
       find('[data-resume-controls]').hidden = !enabled.resume;
-      find('[data-add-products]').hidden = preview || busy || !active ||
-        (settings.addAdditionalProduct !== true && settings.addOneTimeProduct !== true);
       const skip = find('[data-subscription-action="skip"]');
       skip.hidden = !enabled.skip;
       const paymentAction = paymentAlert.querySelector('button');
@@ -534,12 +566,13 @@
         sendPaymentLink.hidden = !method || usesShopPay || Boolean(method.revokedAt);
         sendPaymentLink.disabled = requestedPaymentLinks.has(id);
         find('[data-payment-wallet]').hidden = !usesShopPay;
-        find('[data-choose-payment]').hidden = preview || usesShopPay;
+        choosePayment.hidden = usesShopPay;
+        savedPaymentForm.hidden = true;
+        savedPayments.clear();
         paymentHelp.textContent = usesShopPay ? 'This subscription uses Shop Pay. Open your wallet to manage the card used for renewals.' :
-          preview ? 'Try requesting a secure link. This preview uses sample data.' :
-            'Use a secure email link to update your card, or open Payment details in Appstle to switch to a saved method without an email.';
-        if (!preview && !usesShopPay && sendPaymentLink.hidden) {
-          paymentHelp.textContent = 'Open Payment details in Appstle to choose another saved method without an email.';
+          'Use a secure email link to update your card, or choose another saved method for future renewals.';
+        if (!usesShopPay && sendPaymentLink.hidden) {
+          paymentHelp.textContent = 'Choose another saved method for future renewals.';
         }
         paymentDialogStatus.textContent = requestedPaymentLinks.has(id)
           ? (preview ? 'Secure link requested in test mode. No email was sent.' : 'Secure link requested. Check your inbox to update your payment method.')
@@ -573,7 +606,7 @@
         await run(async () => {
           const result = await request('subscription-contracts-update-payment-method', { contractId: id, isExternal: true }, 'PUT');
           if (result === false || result?.success === false || result?.error) {
-            throw new Error('Appstle could not request the secure link. You can manage your payment method from your subscription in Appstle.');
+            throw new Error('Appstle could not request the secure link. Try again or choose a saved payment method.');
           }
           requestedPaymentLinks.add(id);
           showPaymentLinkRequested();
@@ -582,6 +615,50 @@
       } finally {
         sendPaymentLink.disabled = requestedPaymentLinks.has(id);
       }
+    });
+    choosePayment.addEventListener('click', async () => {
+      if (busy) return;
+      savedPaymentForm.hidden = true;
+      savedPayments.clear();
+      await run(async () => {
+        paymentDialogStatus.textContent = 'Loading saved payment methods…';
+        savedPayments = savedPaymentOptions(await request(savedPaymentEndpoint), contract.customerPaymentMethod?.id);
+        if (!savedPayments.size) {
+          paymentDialogStatus.textContent = 'There are no other saved payment methods available.';
+          return;
+        }
+        savedPaymentSelect.replaceChildren(new Option('Select a payment method', ''), ...[...savedPayments]
+          .map(([id, name]) => new Option(name, id)));
+        savedPaymentForm.hidden = false;
+        paymentDialogStatus.textContent = '';
+        savedPaymentSelect.focus();
+      }, paymentDialogStatus);
+    });
+    savedPaymentForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const id = contractId(contract?.id);
+      const paymentMethodId = savedPaymentSelect.value;
+      if (!id || busy || savedPaymentForm.hidden || !savedPayments.has(paymentMethodId)) return;
+      await run(async () => {
+        paymentDialogStatus.textContent = 'Updating payment method…';
+        const result = await request(switchPaymentEndpoint, { contractId: id, paymentMethodId, isExternal: true }, 'PUT');
+        if (result === false || result?.success === false || result?.error) {
+          throw new Error('The saved payment method could not be applied.');
+        }
+        savedPaymentForm.hidden = true;
+        savedPayments.clear();
+        requestedPaymentLinks.delete(id);
+        sendPaymentLink.disabled = false;
+        try {
+          await loadContract();
+        } catch {
+          paymentDialogStatus.textContent = 'The update was accepted. Refresh to check your payment method.';
+          return;
+        }
+        paymentDialogStatus.textContent = contract?.customerPaymentMethod?.id === paymentMethodId
+          ? 'Payment method updated for this subscription.'
+          : 'The update was accepted. Refresh to verify the payment method before trying again.';
+      }, paymentDialogStatus);
     });
     for (const button of actions) {
       button.addEventListener('click', () => act(button.dataset.subscriptionAction));

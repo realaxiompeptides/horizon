@@ -75,10 +75,6 @@
             <div><span>Billing status</span><strong data-contract-billing-status>—</strong></div>
           </div>
         </section>
-        <div class="av-m__add-products" data-add-products hidden>
-          <a class="av-m__button av-m__outline" href="/apps/subscriptions">Add products</a>
-          <p>Open your subscription in Appstle and select Add Products to review the price and billing frequency.</p>
-        </div>
         <div class="av-m__order-nav">
           <a class="av-m__button av-m__outline" href="#av-scheduled-{{ section.id }}">Scheduled orders</a>
           <a class="av-m__button av-m__outline" href="#av-past-{{ section.id }}">Past orders</a>
@@ -147,7 +143,12 @@
         <h2 id="av-payment-title-{{ section.id }}" tabindex="-1" autofocus>Payment method</h2>
         <p data-payment-help></p>
         <button type="button" class="av-m__button" data-send-payment-link>Send secure link</button>
-        <a class="av-m__button av-m__outline" href="/apps/subscriptions" data-choose-payment>Choose a saved payment method</a>
+        <button type="button" class="av-m__button av-m__outline" data-choose-payment>Choose a saved payment method</button>
+        <form class="av-m__saved-payment" data-saved-payment-form hidden>
+          <label for="av-saved-payment-{{ section.id }}">Saved payment method</label>
+          <select id="av-saved-payment-{{ section.id }}" data-saved-payment required></select>
+          <button type="submit" class="av-m__button">Use this payment method</button>
+        </form>
         <a class="av-m__button av-m__outline" href="https://shop.app/" data-payment-wallet hidden>Open Shop Pay</a>
         <p role="status" data-payment-dialog-status></p>
         <form method="dialog"><button type="submit" class="av-m__button av-m__outline">Close</button></form>
@@ -545,6 +546,8 @@ html:has([data-membership-preview]) #MainContent > .shopify-section:has([data-me
 #av-membership-{{ section.id }} .av-m__cancellation-settings{margin-top:24px;display:flex;justify-content:center}
 #av-membership-{{ section.id }} .av-m__cancellation-settings [data-subscription-action="cancel"]{width:fit-content;max-width:100%;min-height:44px;padding:8px 16px}
 #av-membership-{{ section.id }} [data-payment-dialog-status]:empty{display:none}
+#av-membership-{{ section.id }} .av-m__saved-payment{display:grid;gap:8px}
+#av-membership-{{ section.id }} .av-m__saved-payment select{width:100%;min-height:44px;font-size:16px}
 #av-membership-{{ section.id }} .av-m__order-nav{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 20px}
 #av-membership-{{ section.id }} .av-m__order-nav .av-m__button{min-height:42px;padding:8px 13px}
 #av-membership-{{ section.id }} .av-m__order-section{scroll-margin-top:calc(var(--header-group-height, 100px) + 20px)}
@@ -563,8 +566,6 @@ html:has([data-membership-preview]) #MainContent > .shopify-section:has([data-me
 #av-membership-{{ section.id }} .av-m__next-order{padding:16px;border:1px solid var(--m-line);border-radius:14px;margin-top:16px}
 #av-membership-{{ section.id }} .av-m__next-order-header{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:10px}
 #av-membership-{{ section.id }} .av-m__next-order-header h4,#av-membership-{{ section.id }} .av-m__next-order-header p{margin:0}
-#av-membership-{{ section.id }} .av-m__add-products{margin-top:14px}
-#av-membership-{{ section.id }} .av-m__add-products p{margin:7px 0 0;font-size:14px}
 #av-membership-{{ section.id }} .av-m__next-order .av-m__facts{margin:0}
 #av-membership-{{ section.id }} .av-m__payment-alert a{color:inherit;text-decoration:underline}
 #av-membership-{{ section.id }} [data-payment-update-status]:empty,#av-membership-{{ section.id }} .av-m__next-order [hidden],#av-membership-{{ section.id }} .av-m__payment-alert [hidden]{display:none!important}
