@@ -418,7 +418,6 @@
       const canPause = !find('[data-subscription-action="pause"]').disabled;
       skip.hidden = !canSkip;
       pause.hidden = !canPause;
-      dialog.querySelector('[data-cancel-options]').hidden = !canSkip && !canPause;
       dialog.querySelector('[data-no-cancel-options]').hidden = canSkip || canPause;
       note.textContent = nextRenewal
         ? 'Skip one order. The following renewal is currently scheduled for ' + formatDate(nextRenewal) + '.'

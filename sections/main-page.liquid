@@ -61,7 +61,6 @@
         <section class="av-m__next-order" aria-labelledby="av-next-order-title-{{ section.id }}">
           <div class="av-m__next-order-header">
             <div><h4 id="av-next-order-title-{{ section.id }}" data-next-order-heading>Next order</h4><p data-next-order-message hidden></p></div>
-            <button type="button" class="av-m__button av-m__outline" data-subscription-action="skip" disabled>Skip next order</button>
           </div>
           <ul class="av-m__contract-products" data-contract-products></ul>
           <div class="av-m__facts">
@@ -97,6 +96,7 @@
         <h3 class="av-m__icon-heading"><i class="av-m__fa" aria-hidden="true">&#xf073;</i><span>Scheduled orders</span></h3>
         <p>Taxes and shipping are finalized at billing.</p>
         <p data-orders-upcoming-status hidden></p><ul class="av-m__order-list" data-orders-upcoming></ul>
+        <button type="button" class="av-m__button av-m__outline av-m__scheduled-skip" data-subscription-action="skip" hidden disabled>Skip next order</button>
       </div>
       <div class="av-m__card av-m__history av-m__order-section" id="av-past-{{ section.id }}">
         <h3 class="av-m__icon-heading"><i class="av-m__fa" aria-hidden="true">&#xf1da;</i><span>Past orders</span></h3>
@@ -165,7 +165,6 @@
             <button type="button" class="av-m__button" data-cancel-next="questions">Answer a few questions</button>
             <button type="button" class="av-m__button av-m__outline" data-cancel-next="confirm">Skip questions</button>
           </div>
-          <button type="button" class="av-m__cancel-link" data-cancel-next="review" data-cancel-options hidden>Review delivery options</button>
         </div>
         <div class="av-m__cancel-step" data-cancel-step="questions" hidden>
           <p class="av-m__survey-hint">Choose the reason that best fits.</p>
@@ -531,6 +530,8 @@ html:has([data-membership-preview]) #MainContent > .shopify-section:has([data-me
 #av-membership-{{ section.id }} .av-m__order-section{scroll-margin-top:calc(var(--header-group-height, 100px) + 20px)}
 #av-membership-{{ section.id }} .av-m__order-list{list-style:none;margin:0;padding:0}
 #av-membership-{{ section.id }} .av-m__order-list li{padding:11px 0;border-top:1px solid var(--m-line);overflow-wrap:anywhere}
+#av-membership-{{ section.id }} .av-m__scheduled-skip{margin-top:12px}
+#av-membership-{{ section.id }} .av-m__scheduled-skip[hidden]{display:none}
 #av-membership-{{ section.id }} .av-m__next-order{padding:16px;border:1px solid var(--m-line);border-radius:14px;margin-top:16px}
 #av-membership-{{ section.id }} .av-m__next-order-header{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:10px}
 #av-membership-{{ section.id }} .av-m__next-order-header h4,#av-membership-{{ section.id }} .av-m__next-order-header p{margin:0}
