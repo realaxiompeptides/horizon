@@ -182,13 +182,48 @@
 
     function renderOrders(type, orders, failed = false) {
       const list = find('[data-orders-' + type + ']');
+      const isUpcoming = type === 'upcoming';
+      const next = isUpcoming && contract?.status === 'ACTIVE' ? nextOrder() : null;
       list.replaceChildren(...orders.map((order) => {
+        if (!order) return null;
+        const date = new Date(dateOf(order));
+        const hasDate = Boolean(dateOf(order)) && Number.isFinite(date.getTime());
+        const state = label(order.status || order.billingAttemptStatus);
+        if (!hasDate && !order.orderName && !state) return null;
         const row = document.createElement('li');
+        row.className = 'av-m__order-row';
+        row.classList.toggle('av-m__order-row--next', order === next);
         const orderId = String(order.graphOrderId || order.orderId || '').split('/').pop();
-        const tax = type === 'past' && orderTaxes.get(orderId);
-        row.textContent = [order.orderName, formatDate(dateOf(order)), label(order.status || order.billingAttemptStatus), tax ? 'Tax ' + tax : ''].filter(Boolean).join(' · ');
+        const tax = !isUpcoming && orderTaxes.get(orderId);
+        const details = document.createElement('div');
+        const title = document.createElement('strong');
+        if (hasDate && (isUpcoming || !order.orderName)) {
+          const time = document.createElement('time');
+          time.dateTime = date.toISOString();
+          time.textContent = date.toLocaleDateString(undefined, { dateStyle: 'medium' });
+          title.append(time);
+        } else {
+          title.textContent = order.orderName || (isUpcoming ? 'Scheduled order' : 'Order');
+        }
+        details.append(title);
+        const detailText = isUpcoming ? (order === next ? 'Next renewal' : '') :
+          [hasDate && order.orderName ? date.toLocaleDateString(undefined, { dateStyle: 'medium' }) : '', tax ? 'Tax ' + tax : ''].filter(Boolean).join(' · ');
+        if (detailText) {
+          const detail = document.createElement('small');
+          detail.textContent = detailText;
+          details.append(detail);
+        }
+        row.append(details);
+        if (state) {
+          const badge = document.createElement('span');
+          badge.className = 'av-m__status';
+          const statusLabels = { queued: 'Scheduled', success: 'Order placed', succeeded: 'Order placed', failed: 'Payment failed', failure: 'Payment failed', cancelled: 'Canceled' };
+          badge.dataset.state = state === 'failure' ? 'failed' : state;
+          badge.textContent = Object.hasOwn(statusLabels, state) ? statusLabels[state] : state.charAt(0).toUpperCase() + state.slice(1);
+          row.append(badge);
+        }
         return row;
-      }).filter((row) => row.textContent));
+      }).filter(Boolean));
       const message = find('[data-orders-' + type + '-status]');
       message.hidden = list.childElementCount > 0;
       message.textContent = failed ? 'Orders couldn’t be loaded. Refresh to try again.' :
@@ -198,7 +233,7 @@
 
     function nextOrder() {
       return upcoming.filter((order) =>
-        /^\d+$/.test(String(order.id)) && ['QUEUED', 'SCHEDULED'].includes(order.status) &&
+        order && /^\d+$/.test(String(order.id)) && ['QUEUED', 'SCHEDULED'].includes(order.status) &&
         Number.isFinite(Date.parse(dateOf(order)))
       ).sort((left, right) => Date.parse(dateOf(left)) - Date.parse(dateOf(right)))[0];
     }

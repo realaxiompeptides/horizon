@@ -103,9 +103,9 @@
       <div class="av-m__kicker">DELIVERY SCHEDULE</div><h2>Your deliveries</h2>
       <div class="av-m__card av-m__order-section" id="av-scheduled-{{ section.id }}">
         <h3 class="av-m__icon-heading"><i class="av-m__fa" aria-hidden="true">&#xf073;</i><span>Scheduled orders</span></h3>
-        <p>Taxes and shipping are finalized at billing.</p>
         <p data-orders-upcoming-status hidden></p><ul class="av-m__order-list" data-orders-upcoming></ul>
         <button type="button" class="av-m__button av-m__outline av-m__scheduled-skip" data-subscription-action="skip" hidden disabled>Skip next order</button>
+        <p class="av-m__order-note">Taxes and shipping are finalized at billing.</p>
       </div>
       <div class="av-m__card av-m__history av-m__order-section" id="av-past-{{ section.id }}">
         <h3 class="av-m__icon-heading"><i class="av-m__fa" aria-hidden="true">&#xf1da;</i><span>Past orders</span></h3>
@@ -537,8 +537,16 @@ html:has([data-membership-preview]) #MainContent > .shopify-section:has([data-me
 #av-membership-{{ section.id }} .av-m__order-nav{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 20px}
 #av-membership-{{ section.id }} .av-m__order-nav .av-m__button{min-height:42px;padding:8px 13px}
 #av-membership-{{ section.id }} .av-m__order-section{scroll-margin-top:calc(var(--header-group-height, 100px) + 20px)}
-#av-membership-{{ section.id }} .av-m__order-list{list-style:none;margin:0;padding:0}
-#av-membership-{{ section.id }} .av-m__order-list li{padding:11px 0;border-top:1px solid var(--m-line);overflow-wrap:anywhere}
+#av-membership-{{ section.id }} .av-m__order-section .av-m__icon-heading{margin-bottom:12px}
+#av-membership-{{ section.id }} .av-m__order-list{gap:3px;list-style:none;margin:0;padding:0}
+#av-membership-{{ section.id }} .av-m__order-list .av-m__order-row{grid-template-columns:minmax(0,1fr) auto;min-height:48px;padding:10px 12px;border:1px solid transparent;overflow-wrap:anywhere}
+#av-membership-{{ section.id }} .av-m__order-list .av-m__order-row + .av-m__order-row{border-top-color:var(--m-line)}
+#av-membership-{{ section.id }} .av-m__order-list .av-m__order-row--next{border-color:var(--m-line);border-radius:12px;background:#EAF9FC}
+#av-membership-{{ section.id }} .av-m__order-row--next + .av-m__order-row{border-top-color:transparent}
+#av-membership-{{ section.id }} .av-m__order-row .av-m__status{max-width:118px;padding:4px 9px}
+#av-membership-{{ section.id }} .av-m__order-row .av-m__status:is([data-state="success"],[data-state="succeeded"]){background:#E7F4EB;color:#235D40}
+#av-membership-{{ section.id }} .av-m__order-row .av-m__status[data-state="skipped"]{background:#F0F2F4;color:#45515D}
+#av-membership-{{ section.id }} .av-m__order-section .av-m__order-note{margin:12px 0 0;color:#47616E;font-size:13px}
 #av-membership-{{ section.id }} .av-m__scheduled-skip{margin-top:12px}
 #av-membership-{{ section.id }} .av-m__scheduled-skip[hidden]{display:none}
 #av-membership-{{ section.id }} .av-m__next-order{padding:16px;border:1px solid var(--m-line);border-radius:14px;margin-top:16px}
