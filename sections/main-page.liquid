@@ -61,7 +61,7 @@
         <div class="av-m__payment-alert" data-payment-alert hidden>
           <div><strong>Payment failed</strong><p data-payment-failure></p><p role="status" data-payment-update-status></p>
             <a href="/pages/contact" data-payment-support hidden>Contact support</a></div>
-          <button type="button" class="av-m__button" data-subscription-action="payment" disabled>Update payment</button>
+          <button type="button" class="av-m__button" data-subscription-action="payment" disabled>Update payment method or choose another</button>
         </div>
         <section class="av-m__next-order" aria-labelledby="av-next-order-title-{{ section.id }}">
           <div class="av-m__next-order-header">
@@ -129,7 +129,7 @@
     </div>
     <div id="av-billing-{{ section.id }}" class="av-m__billing" data-contract-content hidden><div class="av-m__kicker">ACCOUNT SETTINGS</div><h2>Billing &amp; shipping</h2><div class="av-m__account-grid">
       <article class="av-m__card"><h3 class="av-m__icon-heading"><i class="av-m__fa" aria-hidden="true">&#xf3c5;</i><span>Shipping address</span></h3><p>Update where your subscription ships.</p><button class="av-m__button av-m__outline" type="button" data-subscription-action="address" disabled>Manage shipping address</button></article>
-      <article class="av-m__card"><h3 class="av-m__icon-heading"><i class="av-m__fa" aria-hidden="true">&#xf09d;</i><span>Payment method</span></h3><p>Request a secure link to update your payment method.</p><button class="av-m__button av-m__outline" type="button" data-subscription-action="payment" disabled>Update payment method</button></article>
+      <article class="av-m__card"><h3 class="av-m__icon-heading"><i class="av-m__fa" aria-hidden="true">&#xf09d;</i><span>Payment method</span></h3><button class="av-m__button av-m__outline" type="button" data-subscription-action="payment" disabled>Update payment method or choose another</button></article>
     </div>
     </div>
     <dialog class="av-m__dialog" data-action-dialog aria-labelledby="av-action-title-{{ section.id }}" aria-describedby="av-action-description-{{ section.id }}">
@@ -141,6 +141,17 @@
           <button type="submit" value="confirm" class="av-m__button" data-confirm-action></button>
         </div>
       </form>
+    </dialog>
+    <dialog class="av-m__dialog" data-payment-dialog aria-labelledby="av-payment-title-{{ section.id }}">
+      <div class="av-m__modal av-m__cancel-panel">
+        <h2 id="av-payment-title-{{ section.id }}" tabindex="-1" autofocus>Payment method</h2>
+        <p data-payment-help></p>
+        <button type="button" class="av-m__button" data-send-payment-link>Send secure link</button>
+        <a class="av-m__button av-m__outline" href="/apps/subscriptions" data-choose-payment>Choose a saved payment method</a>
+        <a class="av-m__button av-m__outline" href="https://shop.app/" data-payment-wallet hidden>Open Shop Pay</a>
+        <p role="status" data-payment-dialog-status></p>
+        <form method="dialog"><button type="submit" class="av-m__button av-m__outline">Close</button></form>
+      </div>
     </dialog>
     <template data-subscription-order-taxes>
       {% for subscription_order in customer.orders limit: 20 %}
@@ -534,6 +545,8 @@ html:has([data-membership-preview]) #MainContent > .shopify-section:has([data-me
 #av-membership-{{ section.id }} .av-m__payment-alert p,#av-membership-{{ section.id }} .av-m__cancellation-settings p{margin:3px 0 0}
 #av-membership-{{ section.id }} .av-m__payment-alert .av-m__button{background:white;color:var(--m-dark)}
 #av-membership-{{ section.id }} .av-m__cancellation-settings{margin-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
+#av-membership-{{ section.id }} .av-m__cancellation-settings [data-subscription-action="cancel"]{width:50%;min-width:min(100%, 156px);max-width:220px;min-height:44px;padding:8px 12px}
+#av-membership-{{ section.id }} [data-payment-dialog-status]:empty{display:none}
 #av-membership-{{ section.id }} .av-m__order-nav{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 20px}
 #av-membership-{{ section.id }} .av-m__order-nav .av-m__button{min-height:42px;padding:8px 13px}
 #av-membership-{{ section.id }} .av-m__order-section{scroll-margin-top:calc(var(--header-group-height, 100px) + 20px)}

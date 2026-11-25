@@ -157,6 +157,10 @@
     const paymentAlert = find('[data-payment-alert]');
     const paymentUpdateStatus = find('[data-payment-update-status]');
     const paymentSupport = find('[data-payment-support]');
+    const paymentDialog = find('[data-payment-dialog]');
+    const paymentHelp = find('[data-payment-help]');
+    const sendPaymentLink = find('[data-send-payment-link]');
+    const paymentDialogStatus = find('[data-payment-dialog-status]');
     const cancellationReceipt = find('[data-cancel-receipt]');
     const requestedPaymentLinks = new Set();
     const actions = [...root.querySelectorAll('[data-subscription-action]')];
@@ -259,7 +263,7 @@
       const skip = find('[data-subscription-action="skip"]');
       skip.hidden = !enabled.skip;
       const paymentAction = paymentAlert.querySelector('button');
-      paymentAction.hidden = !enabled.payment || !contract?.customerPaymentMethod;
+      paymentAction.hidden = !enabled.payment;
       paymentSupport.hidden = !paymentAction.hidden;
       for (const button of actions) button.disabled = busy || !enabled[button.dataset.subscriptionAction];
     }
@@ -526,18 +530,21 @@
       }
       if (action === 'payment') {
         const method = contract.customerPaymentMethod;
-        if (!method) {
-          status.textContent = 'There is no saved payment method for this subscription. Contact support for help.';
-          return;
+        const usesShopPay = method?.instrument?.__typename === 'CustomerShopPayAgreement';
+        sendPaymentLink.hidden = !method || usesShopPay || Boolean(method.revokedAt);
+        sendPaymentLink.disabled = requestedPaymentLinks.has(id);
+        find('[data-payment-wallet]').hidden = !usesShopPay;
+        find('[data-choose-payment]').hidden = preview || usesShopPay;
+        paymentHelp.textContent = usesShopPay ? 'This subscription uses Shop Pay. Open your wallet to manage the card used for renewals.' :
+          preview ? 'Try requesting a secure link. This preview uses sample data.' :
+            'Use a secure email link to update your card, or open Payment details in Appstle to switch to a saved method without an email.';
+        if (!preview && !usesShopPay && sendPaymentLink.hidden) {
+          paymentHelp.textContent = 'Open Payment details in Appstle to choose another saved method without an email.';
         }
-        if (method.instrument?.__typename === 'CustomerShopPayAgreement') return location.assign('https://shop.app/');
-        if (!await confirmAction('Update payment method', 'Shopify will email a secure link to update the payment method for this subscription.', 'Send secure link')) return;
-        await run(async () => {
-          await request('subscription-contracts-update-payment-method', params, 'PUT');
-          requestedPaymentLinks.add(id);
-          showPaymentLinkRequested();
-          if (paymentAlert.hidden) status.textContent = paymentUpdateStatus.textContent;
-        }, paymentAlert.hidden ? status : paymentUpdateStatus);
+        paymentDialogStatus.textContent = requestedPaymentLinks.has(id)
+          ? (preview ? 'Secure link requested in test mode. No email was sent.' : 'Secure link requested. Check your inbox to update your payment method.')
+          : '';
+        paymentDialog.showModal();
         return;
       }
       if (action === 'skip') {
@@ -558,6 +565,24 @@
     }
 
     select.addEventListener('change', () => run(loadContract));
+    sendPaymentLink.addEventListener('click', async () => {
+      const id = contractId(contract?.id);
+      if (!id || busy || sendPaymentLink.hidden || sendPaymentLink.disabled) return;
+      sendPaymentLink.disabled = true;
+      try {
+        await run(async () => {
+          const result = await request('subscription-contracts-update-payment-method', { contractId: id, isExternal: true }, 'PUT');
+          if (result === false || result?.success === false || result?.error) {
+            throw new Error('Appstle could not request the secure link. You can manage your payment method from your subscription in Appstle.');
+          }
+          requestedPaymentLinks.add(id);
+          showPaymentLinkRequested();
+          paymentDialogStatus.textContent = paymentUpdateStatus.textContent;
+        }, paymentDialogStatus);
+      } finally {
+        sendPaymentLink.disabled = requestedPaymentLinks.has(id);
+      }
+    });
     for (const button of actions) {
       button.addEventListener('click', () => act(button.dataset.subscriptionAction));
     }
