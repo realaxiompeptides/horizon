@@ -1,6 +1,11 @@
-{% if page.handle == 'membership-test' or page.handle == 'membership-test-sign-in' %}
-{% assign membership_dashboard_url = routes.root_url | append: '/pages/membership-test' | replace: '//pages/', '/pages/' %}
-{% assign membership_sign_in_url = routes.root_url | append: '/pages/membership-test-sign-in' | replace: '//pages/', '/pages/' %}
+{% if page.handle == 'manage-your-subscription' or page.handle == 'membership-test' or page.handle == 'membership-test-sign-in' %}
+{% assign membership_dashboard_url = pages['manage-your-subscription'].url %}
+{% assign show_membership_dashboard = false %}
+{% if page.handle == 'membership-test' %}
+  {% assign show_membership_dashboard = true %}
+{% elsif page.handle == 'manage-your-subscription' and customer %}
+  {% assign show_membership_dashboard = true %}
+{% endif %}
 {% if page.handle == 'membership-test-sign-in' or customer == blank %}
 <section id="av-membership-{{ section.id }}" class="av-membership av-m__sign-in" data-membership-preview data-appstle-membership data-membership-sign-in>
   <div class="av-m__wrap">
@@ -19,9 +24,9 @@
   </div>
 </section>
 {% endif %}
-{% if page.handle == 'membership-test' %}
+{% if show_membership_dashboard %}
 {% unless customer %}<template data-membership-test-preview>{% endunless %}
-<section id="av-membership-{{ section.id }}" class="av-membership" data-membership-preview data-appstle-membership data-dashboard {% unless customer %}data-preview-only{% endunless %} data-shop-id="{{ shop.id | default: 107404886176 }}" data-price-country="{{ localization.country.iso_code | escape }}" data-sign-in-url="{{ membership_sign_in_url | escape }}">
+<section id="av-membership-{{ section.id }}" class="av-membership" data-membership-preview data-appstle-membership data-dashboard {% unless customer %}data-preview-only{% endunless %} data-shop-id="{{ shop.id | default: 107404886176 }}" data-price-country="{{ localization.country.iso_code | escape }}" data-sign-in-url="/customer_authentication/login?return_to={{ membership_dashboard_url | url_encode }}">
   <div class="av-m__hero">
     <div class="av-m__wrap">
       <div class="av-m__kicker">AVONENT · MEMBERSHIP</div>
@@ -81,8 +86,6 @@
         </div>
         <h4>Manage your next delivery</h4>
         <div class="av-m__actions">
-          <button type="button" data-subscription-action="reschedule" disabled><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf073;</i></span><strong>Reschedule</strong><small>Unavailable for this test</small></button>
-          <button type="button" data-subscription-action="frequency" disabled><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf021;</i></span><strong>Change frequency</strong><small>Unavailable for this test</small></button>
           <button type="button" data-subscription-action="pause" disabled><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf04c;</i></span><strong>Pause membership</strong><small>Take a temporary break</small></button>
         </div>
         <div class="av-m__manage" data-resume-controls hidden><button type="button" data-subscription-action="resume" disabled>Resume subscription</button></div>
@@ -92,7 +95,7 @@
         <div class="av-m__kicker">SUBSCRIBER PERKS</div>
         <h3>Your VIP membership perks.</h3>
         <p>Enjoy extra value, exclusive opportunities and more flexibility than a standard one-time order.</p>
-        <ul><li><strong data-vip-price-perk>VIP subscriber pricing</strong><span data-vip-price-note>Your current rate is shown in Subscription details.</span></li><li><strong>VIP sales and early access</strong><span>Get early access to new products and subscriber promotions.</span></li><li><strong>Special member offers</strong><span>Discover eligible promotions, bundles and product savings.</span></li><li><strong>Free shipping on all recurring orders</strong><span>Free shipping on all recurring orders.</span></li><li><strong>Automatic refills</strong><span>Keep your routine stocked with scheduled deliveries.</span></li><li><strong>Skip or pause anytime</strong><span>Take a break or skip a shipment when you need to.</span></li></ul>
+        <ul><li><strong data-vip-price-perk>VIP subscriber pricing</strong><span data-vip-price-note>Your current rate is shown in Subscription details.</span></li><li><strong>VIP sales and early access</strong><span>Get early access to new products and subscriber promotions.</span></li><li><strong>Special member offers</strong><span>Discover eligible promotions, bundles and product savings.</span></li><li><strong>Free shipping on eligible orders</strong><span>Shipping is confirmed at billing.</span></li><li><strong>Automatic refills</strong><span>Keep your routine stocked with scheduled deliveries.</span></li><li><strong>Skip or pause eligible deliveries</strong><span>See the options available for your subscription.</span></li></ul>
       </aside>
     </div>
     <div class="av-m__deliveries" data-contract-content hidden id="av-deliveries-{{ section.id }}">
@@ -114,11 +117,9 @@
         <article><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf02b;</i></span><h3>Exclusive subscriber pricing</h3><p>Unlock the recurring price on your subscribed products.</p></article>
         <article><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf521;</i></span><h3>VIP sales and new products</h3><p>Get early access to new products and subscriber promotions.</p></article>
         <article><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf06b;</i></span><h3>Special member offers</h3><p>Discover eligible promotions, bundles and product savings.</p></article>
-        <article><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf0d1;</i></span><h3>Free shipping on all recurring orders</h3><p>Free shipping on all recurring orders.</p></article>
+        <article><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf0d1;</i></span><h3>Free shipping on eligible orders</h3><p>Shipping is confirmed at billing.</p></article>
         <article><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf466;</i></span><h3>Automatic refills</h3><p>Keep your routine stocked with scheduled deliveries.</p></article>
-        <article><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf073;</i></span><h3>Flexible delivery dates</h3><p>Move your next shipment to a date that suits you.</p></article>
-        <article><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf021;</i></span><h3>Your choice of frequency</h3><p>Choose a delivery interval that fits your routine.</p></article>
-        <article><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf04c;</i></span><h3>Skip or pause anytime</h3><p>Take a break or skip a shipment when you need to.</p></article>
+        <article><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf04c;</i></span><h3>Skip or pause eligible deliveries</h3><p>See the options available for your subscription.</p></article>
         <article><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf590;</i></span><h3>Dedicated membership support</h3><p>Get assistance with your subscription and order questions.</p></article>
         <article><span class="av-m__icon-tile" aria-hidden="true"><i class="av-m__fa" aria-hidden="true">&#xf2bd;</i></span><h3>Easy account management</h3><p>Manage your subscription, payment and delivery details in one place.</p></article>
       </div>

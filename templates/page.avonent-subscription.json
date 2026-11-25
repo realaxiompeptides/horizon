@@ -10,10 +10,8 @@
 {
   "sections": {
     "main": {
-      "type": "avonent-service-page",
-      "settings": {
-        "service_type": "subscription"
-      }
+      "type": "main-page",
+      "settings": {}
     }
   },
   "order": [

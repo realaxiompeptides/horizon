@@ -34,6 +34,7 @@
           <li><a href="{{ contact_link }}">Contact Us</a></li>
           {% if pages['faq'] != blank %}<li><a href="{{ pages['faq'].url }}">FAQ</a></li>{% endif %}
           <li><a href="{{ tracking_link }}">Track Order</a></li>
+          <li><a href="{{ subscription_link }}">Manage Subscription</a></li>
         </ul>
       </nav>
       <nav class="avf__column" aria-label="Policies">
@@ -44,7 +45,6 @@
           {% if shop.refund_policy != blank %}<li><a href="{{ shop.refund_policy.url }}">Return &amp; Refund Policy</a></li>{% endif %}
           {% if shop.shipping_policy != blank %}<li><a href="{{ shop.shipping_policy.url }}">Shipping Policy</a></li>{% endif %}
           {% if section.settings.payment_policy_url != blank %}<li><a href="{{ section.settings.payment_policy_url }}">Payment Policy</a></li>{% endif %}
-          <li><a href="{{ subscription_link }}">Subscription &amp; Cancellation Policy</a></li>
         </ul>
       </nav>
     </div>
