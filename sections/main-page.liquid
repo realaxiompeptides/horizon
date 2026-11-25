@@ -165,6 +165,7 @@
             <button type="button" class="av-m__button" data-cancel-next="questions">Answer a few questions</button>
             <button type="button" class="av-m__button av-m__outline" data-cancel-next="confirm">Skip questions</button>
           </div>
+          <button type="button" class="av-m__cancel-link" data-cancel-next="review" data-cancel-options hidden>Review delivery options</button>
         </div>
         <div class="av-m__cancel-step" data-cancel-step="questions" hidden>
           <p class="av-m__survey-hint">Choose the reason that best fits.</p>
@@ -219,11 +220,18 @@
           <button type="button" class="av-m__button" data-cancel-next="review" data-preview-next>Continue</button>
         </div>
         <div class="av-m__cancel-step" data-cancel-step="review" hidden>
-          <p data-cancel-skip-note hidden></p>
-          <div class="av-m__cancel-actions">
-            <button type="submit" value="skip" class="av-m__button av-m__outline" hidden>Skip next order</button>
-            <button type="button" class="av-m__button" data-cancel-next="confirm">Continue to cancellation</button>
+          <div class="av-m__cancel-options">
+            <button type="submit" value="skip" class="av-m__cancel-option" hidden>
+              <strong>Skip next order</strong>
+              <span data-cancel-skip-note>Skip one order and keep your subscription active.</span>
+            </button>
+            <button type="submit" value="pause" class="av-m__cancel-option" hidden>
+              <strong>Pause subscription</strong>
+              <span>Pause scheduled renewals until you’re ready to resume.</span>
+            </button>
           </div>
+          <p data-no-cancel-options hidden>There are no delivery changes available for this subscription right now.</p>
+          <button type="button" class="av-m__button av-m__outline" data-cancel-next="confirm">Continue to cancellation</button>
         </div>
         <div class="av-m__cancel-step" data-cancel-step="confirm" hidden>
           <p>Cancel to stop future renewals. Orders already placed are handled separately.</p>
@@ -503,6 +511,13 @@ html:has([data-membership-preview]) #MainContent > .shopify-section:has([data-me
 #av-membership-{{ section.id }} [data-cancel-dialog] .av-m__cancel-reasons label:focus-within{outline:2px solid var(--m-green);outline-offset:2px}
 #av-membership-{{ section.id }} [data-cancel-dialog] .av-m__cancel-reasons label:has(:checked){box-shadow:inset 3px 0 var(--m-green)}
 #av-membership-{{ section.id }} [data-cancel-dialog] [data-preview-next]{width:100%}
+#av-membership-{{ section.id }} .av-m__cancel-options{display:grid;gap:9px}
+#av-membership-{{ section.id }} .av-m__cancel-options:not(:has(button:not([hidden]))){display:none}
+#av-membership-{{ section.id }} .av-m__cancel-option{display:grid;grid-template-columns:1fr auto;gap:3px 12px;align-items:center;width:100%;padding:12px 14px;border:1px solid var(--m-line);border-radius:12px;background:var(--m-sage);color:var(--m-dark);text-align:left;cursor:pointer}
+#av-membership-{{ section.id }} .av-m__cancel-option:hover,#av-membership-{{ section.id }} .av-m__cancel-option:focus-visible{border-color:var(--m-green)}
+#av-membership-{{ section.id }} .av-m__cancel-option strong,#av-membership-{{ section.id }} .av-m__cancel-option span{grid-column:1}
+#av-membership-{{ section.id }} .av-m__cancel-option span{font-size:14px;line-height:1.4}
+#av-membership-{{ section.id }} .av-m__cancel-option::after{content:'›';grid-area:1/2/3/3;font-size:24px;color:var(--m-green)}
 #av-membership-{{ section.id }} .av-m__payment-alert[hidden],#av-membership-{{ section.id }} .av-m__cancellation-settings[hidden]{display:none!important}
 #av-membership-{{ section.id }} .av-m__cancel-receipt{margin-top:16px;padding:16px;border:1px solid var(--m-line);border-radius:14px;background:var(--m-sage)}
 #av-membership-{{ section.id }} .av-m__cancel-receipt h4,#av-membership-{{ section.id }} .av-m__cancel-receipt p{margin:0 0 6px}

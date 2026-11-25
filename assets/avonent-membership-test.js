@@ -383,7 +383,7 @@
       savingsTag.hidden = !savings;
       savingsTag.textContent = savings ? (preview ? 'You saved ' : 'You save ') + savings : '';
       let currentStep;
-      const titles = { start: 'Before you go', questions: 'Why do you want to cancel?', experience: 'What mattered most in your decision?', timing: 'How did the delivery schedule work for you?', delivery: 'Would skipping your next order help?', decision: 'Are you sure you want to end your subscription?', review: 'Review your options', confirm: 'Cancel your subscription?' };
+      const titles = { start: 'Before you go', questions: 'Why do you want to cancel?', experience: 'What mattered most in your decision?', timing: 'How did the delivery schedule work for you?', delivery: 'Would skipping your next order help?', decision: 'Are you sure you want to end your subscription?', review: 'Would a break work better?', confirm: 'Cancel your subscription?' };
       function showStep(step) {
         for (const panel of dialog.querySelectorAll('[data-cancel-step]')) {
           panel.hidden = panel.dataset.cancelStep !== step;
@@ -412,8 +412,17 @@
         .filter((date) => formatDate(date) && Date.parse(date) > Date.parse(dateOf(order)))
         .sort((left, right) => Date.parse(left) - Date.parse(right))[0];
       const skip = dialog.querySelector('[value="skip"]');
+      const pause = dialog.querySelector('[value="pause"]');
       const note = dialog.querySelector('[data-cancel-skip-note]');
-      const answer = (name) => dialog.querySelector('input[name="' + name + '"]:checked')?.value;
+      const canSkip = !find('[data-subscription-action="skip"]').disabled;
+      const canPause = !find('[data-subscription-action="pause"]').disabled;
+      skip.hidden = !canSkip;
+      pause.hidden = !canPause;
+      dialog.querySelector('[data-cancel-options]').hidden = !canSkip && !canPause;
+      dialog.querySelector('[data-no-cancel-options]').hidden = canSkip || canPause;
+      note.textContent = nextRenewal
+        ? 'Skip one order. The following renewal is currently scheduled for ' + formatDate(nextRenewal) + '.'
+        : 'Skip one order and keep your subscription active.';
       const previewButtons = dialog.querySelectorAll('[data-preview-next]');
       const liveButtons = dialog.querySelectorAll('[data-live-next]');
       if (preview) {
@@ -423,13 +432,6 @@
       }
       for (const button of liveButtons) button.hidden = preview;
       function updateQuestions() {
-        const declined = answer('delivery') === 'no' || answer('cancelReason') === 'fit';
-        skip.hidden = declined || !order || contract.status !== 'ACTIVE';
-        note.hidden = false;
-        note.textContent = declined ? 'You can continue to cancel your subscription.' :
-          skip.hidden ? 'There is no scheduled order available to skip.' :
-            nextRenewal ? 'Skipping moves your next scheduled renewal to ' + formatDate(nextRenewal) + '.' :
-              'Skipping leaves your subscription active.';
         for (const button of previewButtons) {
           button.hidden = !preview;
           button.disabled = !button.closest('[data-cancel-step]').querySelector('input:checked');
@@ -439,8 +441,10 @@
       updateQuestions();
       dialog.returnValue = '';
       dialog.addEventListener('close', async () => {
-        if (dialog.returnValue === 'skip') {
-          await act('skip');
+        if (dialog.returnValue === 'skip' || dialog.returnValue === 'pause') {
+          const previousStatus = status.textContent;
+          await act(dialog.returnValue);
+          if (status.textContent && status.textContent !== previousStatus) status.focus();
         } else if (dialog.returnValue === 'cancel') {
           const id = contractId(contract?.id);
           if (!id) return;
@@ -472,7 +476,7 @@
 
     async function act(action) {
       const id = contractId(contract?.id);
-      if (!id) return;
+      if (!id || busy || find('[data-subscription-action="' + action + '"]')?.disabled) return;
       if (action === 'cancel') return openCancellation();
       const params = { contractId: id };
       if (action === 'address') {
