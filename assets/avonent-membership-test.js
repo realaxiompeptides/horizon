@@ -146,7 +146,7 @@
 
   async function setupDashboard(root) {
     const find = (selector) => root.querySelector(selector);
-    const preview = root.hasAttribute('data-preview-only') || previewRequested;
+    const preview = root.hasAttribute('data-preview-only');
     const request = preview ? createPreviewRequest() : appstleRequest;
     const orderTaxes = new Map([...find('[data-subscription-order-taxes]').content.querySelectorAll('[data-order-id]')]
       .map(({ dataset }) => [dataset.orderId, dataset.orderTax]));
@@ -283,7 +283,7 @@
       const id = select.value;
       if (!id) return;
       const [details, next, past] = await Promise.allSettled([
-        request('subscription-contracts/contract-external/' + id),
+        request('subscription-contracts/contract-external/' + id, { isExternal: true }),
         request('subscription-billing-attempts/top-orders', { contractId: id }),
         request('subscription-billing-attempts/past-orders', { contractId: id })
       ]);

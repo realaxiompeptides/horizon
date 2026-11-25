@@ -32,7 +32,7 @@
         <h1>Welcome to your<br><span>subscriber dashboard.</span></h1>
       {% endif %}
       <p>Everything you need to manage your wellness routine, all in one place.</p>
-      <div class="av-m__nav"><a href="#av-plan-{{ section.id }}"><i class="av-m__fa" aria-hidden="true">&#xf2bd;</i><span>My subscription</span></a><a href="#av-deliveries-{{ section.id }}"><i class="av-m__fa" aria-hidden="true">&#xf0d1;</i><span>Deliveries</span></a><a href="#av-billing-{{ section.id }}"><i class="av-m__fa" aria-hidden="true">&#xf09d;</i><span>Billing</span></a><a href="#av-benefits-{{ section.id }}"><i class="av-m__fa" aria-hidden="true">&#xf06b;</i><span>My benefits</span></a><a href="#av-help-{{ section.id }}"><i class="av-m__fa" aria-hidden="true">&#xf590;</i><span>Support</span></a></div>
+      <div class="av-m__nav"><a href="#av-plan-{{ section.id }}"><i class="av-m__fa" aria-hidden="true">&#xf2bd;</i><span>My subscription</span></a><a href="#av-deliveries-{{ section.id }}"><i class="av-m__fa" aria-hidden="true">&#xf0d1;</i><span>Deliveries</span></a><a href="#av-billing-{{ section.id }}"><i class="av-m__fa" aria-hidden="true">&#xf09d;</i><span>Billing</span></a><a href="#av-benefits-{{ section.id }}"><i class="av-m__fa" aria-hidden="true">&#xf06b;</i><span>My benefits</span></a><a href="/pages/contact"><i class="av-m__fa" aria-hidden="true">&#xf590;</i><span>Support</span></a></div>
     </div>
   </div>
   <div class="av-m__wrap av-m__body">
@@ -276,11 +276,9 @@
         <button type="button" class="av-m__button av-m__outline" data-close-address>Close</button>
       </form>
     </dialog>
-    <div class="av-m__help" id="av-help-{{ section.id }}"><div><div class="av-m__kicker">WE'RE HERE FOR YOU</div><h2>Need a hand?</h2><p>Get help with your deliveries, subscription or account.</p></div><a class="av-m__button av-m__outline" href="/pages/contact">Contact support</a></div>
-    <section class="av-m__card av-m__cancellation-settings" data-cancellation-settings hidden>
-      <div><h3>Cancel subscription</h3><p>Stop future renewals for this subscription.</p></div>
+    <div class="av-m__cancellation-settings" data-cancellation-settings hidden>
       <button type="button" class="av-m__button av-m__outline" data-subscription-action="cancel" disabled>Cancel subscription</button>
-    </section>
+    </div>
   </div>
 </section>
 {% unless customer %}</template>{% endunless %}
@@ -542,10 +540,10 @@ html:has([data-membership-preview]) #MainContent > .shopify-section:has([data-me
 #av-membership-{{ section.id }} .av-m__cancel-receipt h4,#av-membership-{{ section.id }} .av-m__cancel-receipt p{margin:0 0 6px}
 #av-membership-{{ section.id }} .av-m__cancel-receipt a{color:var(--m-green);font-weight:700}
 #av-membership-{{ section.id }} .av-m__payment-alert{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;background:var(--m-dark);color:white;border-radius:12px;padding:14px 16px;margin-top:18px}
-#av-membership-{{ section.id }} .av-m__payment-alert p,#av-membership-{{ section.id }} .av-m__cancellation-settings p{margin:3px 0 0}
+#av-membership-{{ section.id }} .av-m__payment-alert p{margin:3px 0 0}
 #av-membership-{{ section.id }} .av-m__payment-alert .av-m__button{background:white;color:var(--m-dark)}
-#av-membership-{{ section.id }} .av-m__cancellation-settings{margin-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
-#av-membership-{{ section.id }} .av-m__cancellation-settings [data-subscription-action="cancel"]{width:50%;min-width:min(100%, 156px);max-width:220px;min-height:44px;padding:8px 12px}
+#av-membership-{{ section.id }} .av-m__cancellation-settings{margin-top:24px;display:flex;justify-content:center}
+#av-membership-{{ section.id }} .av-m__cancellation-settings [data-subscription-action="cancel"]{width:fit-content;max-width:100%;min-height:44px;padding:8px 16px}
 #av-membership-{{ section.id }} [data-payment-dialog-status]:empty{display:none}
 #av-membership-{{ section.id }} .av-m__order-nav{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 20px}
 #av-membership-{{ section.id }} .av-m__order-nav .av-m__button{min-height:42px;padding:8px 13px}
