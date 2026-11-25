@@ -219,6 +219,8 @@
       };
       find('[data-cancellation-settings]').hidden = !enabled.cancel;
       find('[data-resume-controls]').hidden = !enabled.resume;
+      find('[data-add-products]').hidden = preview || busy || !active ||
+        (settings.addAdditionalProduct !== true && settings.addOneTimeProduct !== true);
       const skip = find('[data-subscription-action="skip"]');
       skip.hidden = !enabled.skip;
       const paymentAction = paymentAlert.querySelector('button');

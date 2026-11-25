@@ -25,7 +25,12 @@
   <div class="av-m__hero">
     <div class="av-m__wrap">
       <div class="av-m__kicker">AVONENT · MEMBERSHIP</div>
-      <h1>Welcome to your<br><span>subscriber dashboard.</span></h1>
+      {% assign membership_first_name = customer.first_name | strip %}
+      {% if membership_first_name != blank %}
+        <h1>Hi, {{ membership_first_name | escape }}!</h1>
+      {% else %}
+        <h1>Welcome to your<br><span>subscriber dashboard.</span></h1>
+      {% endif %}
       <p>Everything you need to manage your wellness routine, all in one place.</p>
       <div class="av-m__nav"><a href="#av-plan-{{ section.id }}"><i class="av-m__fa" aria-hidden="true">&#xf2bd;</i><span>My subscription</span></a><a href="#av-deliveries-{{ section.id }}"><i class="av-m__fa" aria-hidden="true">&#xf0d1;</i><span>Deliveries</span></a><a href="#av-billing-{{ section.id }}"><i class="av-m__fa" aria-hidden="true">&#xf09d;</i><span>Billing</span></a><a href="#av-benefits-{{ section.id }}"><i class="av-m__fa" aria-hidden="true">&#xf06b;</i><span>My benefits</span></a><a href="#av-help-{{ section.id }}"><i class="av-m__fa" aria-hidden="true">&#xf590;</i><span>Support</span></a></div>
     </div>
@@ -70,6 +75,10 @@
             <div><span>Billing status</span><strong data-contract-billing-status>—</strong></div>
           </div>
         </section>
+        <div class="av-m__add-products" data-add-products hidden>
+          <a class="av-m__button av-m__outline" href="/apps/subscriptions">Add products</a>
+          <p>Open your subscription in Appstle and select Add Products to review the price and billing frequency.</p>
+        </div>
         <div class="av-m__order-nav">
           <a class="av-m__button av-m__outline" href="#av-scheduled-{{ section.id }}">Scheduled orders</a>
           <a class="av-m__button av-m__outline" href="#av-past-{{ section.id }}">Past orders</a>
@@ -535,6 +544,8 @@ html:has([data-membership-preview]) #MainContent > .shopify-section:has([data-me
 #av-membership-{{ section.id }} .av-m__next-order{padding:16px;border:1px solid var(--m-line);border-radius:14px;margin-top:16px}
 #av-membership-{{ section.id }} .av-m__next-order-header{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:10px}
 #av-membership-{{ section.id }} .av-m__next-order-header h4,#av-membership-{{ section.id }} .av-m__next-order-header p{margin:0}
+#av-membership-{{ section.id }} .av-m__add-products{margin-top:14px}
+#av-membership-{{ section.id }} .av-m__add-products p{margin:7px 0 0;font-size:14px}
 #av-membership-{{ section.id }} .av-m__next-order .av-m__facts{margin:0}
 #av-membership-{{ section.id }} .av-m__payment-alert a{color:inherit;text-decoration:underline}
 #av-membership-{{ section.id }} [data-payment-update-status]:empty,#av-membership-{{ section.id }} .av-m__next-order [hidden],#av-membership-{{ section.id }} .av-m__payment-alert [hidden]{display:none!important}
