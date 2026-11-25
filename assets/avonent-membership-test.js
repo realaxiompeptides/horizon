@@ -209,11 +209,11 @@
     let busy = false;
 
     function report(error, element = status) {
-      element.textContent = error.status === 401 ? 'Your Shopify sign-in expired. Sign in again.' : error.message;
+      element.textContent = error.status === 401 ? 'Your sign-in expired. Log in again to continue.' : error.message;
       if (error.status === 401) {
         const link = document.createElement('a');
         link.href = root.dataset.signInUrl;
-        link.textContent = ' Sign in';
+        link.textContent = ' Log in';
         element.append(link);
       }
     }
@@ -695,7 +695,7 @@
         request('logged-in-customer'),
         request('customer-portal-settings/' + root.dataset.shopId)
       ]);
-      if (!/^\d+$/.test(String(owner))) throw new Error('Your Shopify sign-in could not be verified.');
+      if (!/^\d+$/.test(String(owner))) throw new Error('Your sign-in could not be verified.');
       settings = portalSettings || {};
       const ids = await request('subscription-customers/valid/' + owner);
       if (!Array.isArray(ids)) throw new Error('Appstle could not list your subscriptions.');
